@@ -1,8 +1,8 @@
 package com.ese.beans;
 
-import com.ese.model.ConveyorLineModel;
-import com.ese.model.WarehouseModel;
-import com.ese.model.view.PalletMeanegementView;
+import com.ese.model.db.ConveyorLineModel;
+import com.ese.model.db.WarehouseModel;
+import com.ese.model.view.PalletManagementView;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,9 +25,9 @@ public class PalletManagementBean extends Bean implements Serializable {
     @Getter
     ConveyorLineModel conveyorLineModel;
     @Getter
-    List<PalletMeanegementView> palletMeanegementViewList;
+    List<PalletManagementView> palletMeanegementViewList;
     @Getter
-    PalletMeanegementView palletMeanegementView;
+    PalletManagementView palletMeanegementView;
 
     @Getter @Setter
     int statusOnShow;
@@ -35,7 +35,7 @@ public class PalletManagementBean extends Bean implements Serializable {
     @PostConstruct
     public void onCreattion(){
         log.debug("onCreattion().");
-        palletMeanegementView = new PalletMeanegementView();
+        palletMeanegementView = new PalletManagementView();
         warehouseMode = new WarehouseModel();
         conveyorLineModel = new ConveyorLineModel();
         init();

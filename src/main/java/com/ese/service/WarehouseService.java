@@ -1,6 +1,6 @@
 package com.ese.service;
 
-import com.ese.model.WarehouseModel;
+import com.ese.model.db.WarehouseModel;
 import com.ese.model.dao.WarehouseDAO;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

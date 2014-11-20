@@ -1,6 +1,6 @@
 package com.ese.model.dao;
 
-import com.ese.model.ProfileModel;
+import com.ese.model.db.ProfileModel;
 import org.springframework.stereotype.Repository;
 
 @Repository

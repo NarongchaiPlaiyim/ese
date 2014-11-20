@@ -1,9 +1,9 @@
 package com.ese.model.view;
 
-import com.ese.model.ItemModel;
-import com.ese.model.LocationModel;
-import com.ese.model.WarehouseModel;
-import com.ese.model.WorkingAreaModel;
+import com.ese.model.db.ItemModel;
+import com.ese.model.db.LocationModel;
+import com.ese.model.db.WarehouseModel;
+import com.ese.model.db.WorkingAreaModel;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -14,7 +14,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class PalletMeanegementView {
+public class PalletManagementView {
     private int id;
     private String palletBarcode;
     private WarehouseModel warehouseModel;

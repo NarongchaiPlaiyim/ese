@@ -1,4 +1,4 @@
-package com.ese.model;
+package com.ese.model.db;
 
 import lombok.Getter;
 import lombok.Setter;

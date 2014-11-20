@@ -1,4 +1,4 @@
-package com.ese.model;
+package com.ese.model.db;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,9 +14,9 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @Entity
-@Table(name = "working_area")
+@Table(name = "conveyor_line")
 @Proxy(lazy=false)
-public class WorkingAreaModel {
+public class ConveyorLineModel {
     @Id
     private int id;
 

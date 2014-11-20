@@ -1,6 +1,6 @@
 package com.ese.model.dao;
 
-import com.ese.model.StaffModel;
+import com.ese.model.db.StaffModel;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;

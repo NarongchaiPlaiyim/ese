@@ -1,6 +1,6 @@
 package com.ese.service;
 
-import com.ese.model.ConveyorLineModel;
+import com.ese.model.db.ConveyorLineModel;
 import com.ese.model.dao.CoveyorLineDAO;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

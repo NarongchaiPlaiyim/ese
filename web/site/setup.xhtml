@@ -67,7 +67,8 @@
                                                               <table border="0" style="width: 100%">
                                                                   <tr>
                                                                       <td style="width: 20px">
-                                                                          <h:selectBooleanCheckbox id="mixChkBox"/>
+                                                                          <h:selectBooleanCheckbox id="mixChkBox"
+                                                                                                   value="#{setup.setupView.mix}"/>
                                                                       </td>
                                                                       <td class="left">
                                                                           <h:outputLabel value="Is Mix"/>
@@ -81,13 +82,15 @@
                                                               <h:outputText value="Location Code*"/>
                                                           </td>
                                                           <td colspan="2">
-                                                              <p:inputText style="min-width: 200px; width: 200px; max-width: 200px;"/>
+                                                              <p:inputText style="min-width: 200px; width: 200px; max-width: 200px;"
+                                                                           value="#{setup.setupView.locationCode}"/>
                                                           </td>
                                                           <td >
-                                                              <h:outputText value="Remark :"/>
+                                                              <h:outputText value="Remark"/>
                                                           </td>
                                                           <td colspan="2">
-                                                              <p:inputTextarea style="width: 200px; max-width: 200px;min-width: 200px; height: 50px;"/>
+                                                              <p:inputTextarea style="width: 200px; max-width: 200px;min-width: 200px; height: 50px;"
+                                                                               value="#{setup.setupView.remark}"/>
                                                           </td>
                                                       </tr>
 
@@ -96,7 +99,8 @@
                                                               <h:outputText value="Location Name*"/>
                                                           </td>
                                                           <td colspan="5">
-                                                              <p:inputText style="min-width: 200px; width: 200px; max-width: 200px;"/>
+                                                              <p:inputText style="min-width: 200px; width: 200px; max-width: 200px;"
+                                                                           value="#{setup.setupView.locationName}"/>
                                                           </td>
                                                       </tr>
 
@@ -105,7 +109,8 @@
                                                               <h:outputText value="Capacities (Pallets)"/>
                                                           </td>
                                                           <td >
-                                                              <p:spinner style="min-width: 200px; width: 200px; max-width: 200px;"/>
+                                                              <p:spinner style="min-width: 200px; width: 200px; max-width: 200px;"
+                                                                         value="#{setup.setupView.capacities}"/>
                                                           </td>
                                                           <td class="center">
                                                               <p:commandButton value="Show/Add Item"
@@ -154,6 +159,8 @@
                                                           </td>
                                                           <td>
                                                               <p:commandButton value="New" styleClass="medium" style="width: 80px"/>
+                                                          </td>
+                                                          <td>
                                                               <p:commandButton value="Save" styleClass="medium" style="width: 80px"/>
                                                           </td>
                                                       </tr>
@@ -161,43 +168,55 @@
                                                   <table border="0" style="width: 100%">
                                                       <tr>
                                                           <td style="width: 30px" class="top" colspan="4">
+
                                                               <table border="0" style="width: 100%">
+                                                                  <tr >
+                                                                      <td style="min-width: 100px; width: 100px; max-width: 100px;" class="left" />
+                                                                      <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
+                                                                      <td style="min-width: 100px; width: 100px; max-width: 100px;" class="center" />
+                                                                      <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
+                                                                      <td/>
+                                                                  </tr>
                                                                   <tr>
-                                                                      <td style="width: 150px" class="right">
-                                                                          <h:outputText value="Type :"/>
+                                                                      <td >
+                                                                          <h:outputText value="Type"/>
                                                                       </td>
-                                                                      <td style="width: 300px">
-                                                                          <p:selectOneRadio styleClass="radio_table" style="background-origin: border-box">
+                                                                      <td >
+                                                                          <p:selectOneRadio styleClass="radio_table" style="background-origin: border-box"
+                                                                                            value="#{setup.setupView.type}">
                                                                               <f:selectItem itemLabel="Receiving" itemValue="0"/>
-                                                                              <f:selectItem itemLabel="issuing" itemValue="1"/>
+                                                                              <f:selectItem itemLabel="Issuing" itemValue="1"/>
                                                                           </p:selectOneRadio>
                                                                       </td>
-                                                                      <td style="width: 80px" class="right">
-                                                                          <h:outputText value="Remark :"/>
+                                                                      <td >
+                                                                          <h:outputText value="Remark"/>
+                                                                      </td>
+                                                                      <td colspan="2">
+                                                                          <p:inputTextarea style="width: 200px; max-width: 200px;min-width: 200px; height: 50px;"
+                                                                                           value="#{setup.setupView.remark2}"/>
                                                                       </td>
                                                                   </tr>
                                                                   <tr>
-                                                                      <td style="width: 150px" class="right">
-                                                                          <h:outputText value="Code :"/>
+                                                                      <td>
+                                                                          <h:outputText value="Code"/>
                                                                       </td>
                                                                       <td colspan="2">
-                                                                          <p:inputText style="width: 150px"/>
+                                                                          <p:inputText style="min-width: 200px; width: 200px; max-width: 200px;"
+                                                                                       value="#{setup.setupView.code}"/>
                                                                       </td>
                                                                   </tr>
                                                                   <tr>
-                                                                      <td style="width: 150px" class="right">
-                                                                          <h:outputText value="Note :"/>
+                                                                      <td>
+                                                                          <h:outputText value="Note"/>
                                                                       </td>
                                                                       <td colspan="2">
-                                                                          <p:inputText style="width: 150px"/>
+                                                                          <p:inputText style="min-width: 200px; width: 200px; max-width: 200px;"
+                                                                                       value="#{setup.setupView.note}" />
                                                                       </td>
                                                                   </tr>
                                                               </table>
                                                           </td>
 
-                                                          <td style="width: 450px; max-width: 450px;min-width: 450px;" class="top">
-                                                              <p:inputTextarea style="width: 300px; max-width: 300px;min-width: 300px; height: 75px;"/>
-                                                          </td>
                                                       </tr>
                                                       <tr>
                                                           <td class="right" colspan="6">

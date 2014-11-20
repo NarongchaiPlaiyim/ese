@@ -1,7 +1,7 @@
 package com.ese.service;
 
 import com.ese.utils.Utils;
-import com.ese.model.StaffModel;
+import com.ese.model.db.StaffModel;
 import com.ese.model.dao.StaffDAO;
 import lombok.Getter;
 import org.springframework.stereotype.Component;

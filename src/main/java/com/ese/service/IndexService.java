@@ -1,6 +1,6 @@
 package com.ese.service;
 
-import com.ese.model.ProfileModel;
+import com.ese.model.db.ProfileModel;
 
 import com.ese.model.dao.ProfileDAO;
 import org.slf4j.Logger;

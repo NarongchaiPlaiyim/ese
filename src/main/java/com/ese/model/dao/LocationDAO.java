@@ -1,6 +1,6 @@
 package com.ese.model.dao;
 
-import com.ese.model.LocationModel;
+import com.ese.model.db.LocationModel;
 import org.springframework.stereotype.Repository;
 
 @Repository

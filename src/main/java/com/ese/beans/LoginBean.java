@@ -1,6 +1,6 @@
 package com.ese.beans;
 
-import com.ese.model.StaffModel;
+import com.ese.model.db.StaffModel;
 import com.ese.security.SimpleAuthenticationManager;
 import com.ese.utils.FacesUtil;
 import com.ese.utils.Utils;
