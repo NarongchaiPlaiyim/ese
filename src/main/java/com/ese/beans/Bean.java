@@ -11,7 +11,7 @@ import javax.faces.bean.ManagedProperty;
 
 @Getter
 @Setter
-public abstract class Bean {
+public class Bean {
     @ManagedProperty("#{indexService}") protected IndexService indexService;
     @ManagedProperty("#{loginService}") protected LoginService loginService;
     @ManagedProperty("#{sessionRegistry}") protected SessionRegistry sessionRegistry;
@@ -22,6 +22,5 @@ public abstract class Bean {
     @ManagedProperty("#{warehouseService}") protected WarehouseService warehouseService;
     @ManagedProperty("#{conveyorLineService}") protected ConveyorLineService conveyorLineService;
     @ManagedProperty("#{palletService}") protected PalletService palletService;
-
-
+    @ManagedProperty("#{workingAreaService}") protected WorkingAreaService workingAreaService;
 }

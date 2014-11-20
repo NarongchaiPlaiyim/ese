@@ -1,9 +1,12 @@
 package com.ese.model.dao;
 
+import com.ese.model.db.ConveyorLineModel;
 import com.ese.model.db.PalletModel;
+import com.ese.model.db.WarehouseModel;
 import com.ese.utils.Utils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -17,10 +20,10 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
         log.debug("findOnloadPallet().");
         try {
             Criteria criteria = getCriteria();
-            criteria.setFetchMode("locationId", FetchMode.EAGER);
-            criteria.setFetchMode("wherehouseId", FetchMode.EAGER);
-            criteria.setFetchMode("itemId", FetchMode.EAGER);
-            criteria.setFetchMode("conveyorLine", FetchMode.EAGER);
+//            criteria.setFetchMode("locationId", FetchMode.EAGER);
+//            criteria.setFetchMode("wherehouseId", FetchMode.EAGER);
+//            criteria.setFetchMode("itemId", FetchMode.EAGER);
+//            criteria.setFetchMode("conveyorLine", FetchMode.EAGER);
             criteria.add(Restrictions.eq("status", 2));
             List<PalletModel> palletModelList = criteria.list();
             log.debug("findOnloadPallet Size : {}", palletModelList.size());
@@ -31,21 +34,21 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
         }
     }
 
-    public List<PalletModel> findChang(int statusId, int warehouse, int conveyor){
+    public List<PalletModel> findChang(int statusId, int warehouse, int conveyorLine){
         log.debug("findUnPrint().");
         try {
             Criteria criteria = getCriteria();
-            criteria.setFetchMode("locationId", FetchMode.EAGER);
-            criteria.setFetchMode("wherehouseId", FetchMode.EAGER);
-            criteria.setFetchMode("itemId", FetchMode.EAGER);
-            criteria.setFetchMode("conveyorLine", FetchMode.EAGER);
+//            criteria.setFetchMode("locationId", FetchMode.EAGER);
+//            criteria.setFetchMode("wherehouseId", FetchMode.EAGER);
+//            criteria.setFetchMode("itemId", FetchMode.EAGER);
+//            criteria.setFetchMode("conveyorLine", FetchMode.EAGER);
 
             if (!Utils.isZero(warehouse)){
                 criteria.add(Restrictions.eq("wherehouseId.id", warehouse));
             }
 
-            if (!Utils.isZero(conveyor)){
-                criteria.add(Restrictions.eq("conveyorLine.id", conveyor));
+            if (!Utils.isZero(conveyorLine)){
+                criteria.add(Restrictions.eq("conveyorLine.id", conveyorLine));
             }
 
             if (statusId == 1){

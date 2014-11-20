@@ -1,10 +1,13 @@
 package com.ese.service;
 
+import com.ese.model.db.ConveyorLineModel;
 import com.ese.model.db.PalletModel;
+import com.ese.model.db.WarehouseModel;
 import com.ese.model.dao.PalletDAO;
-import com.ese.model.view.PalletManagementView;
+import com.ese.model.view.PalletMeanagementView;
 import com.ese.transform.PalletManagementTransform;
 import com.ese.utils.Utils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,9 +24,9 @@ public class PalletService extends Service implements Serializable {
     @Resource
     PalletManagementTransform palletManegementTranform;
 
-    public List<PalletManagementView> findPalletJoinLocation(){
+    public List<PalletMeanagementView> findPalletJoinLocation(){
         log.debug("findPalletJoinLocation().");
-        List<PalletManagementView> palletMeanegementViewList = new ArrayList<PalletManagementView>();
+        List<PalletMeanagementView> palletMeanegementViewList = new ArrayList<PalletMeanagementView>();
 
         List<PalletModel> palletModels = palletDAO.findPalletTable();
 
@@ -35,11 +38,11 @@ public class PalletService extends Service implements Serializable {
         return palletMeanegementViewList;
     }
 
-    public List<PalletManagementView> findByChang(int status, int warehouse, int conveyor){
+    public List<PalletMeanagementView> findByChang(int status, int warehouse, int conveyorLine){
         log.debug("findByChang().");
-        List<PalletManagementView> palletMeanegementViewList = new ArrayList<PalletManagementView>();
+        List<PalletMeanagementView> palletMeanegementViewList = new ArrayList<PalletMeanagementView>();
 
-        List<PalletModel> palletModels = palletDAO.findChang(status, warehouse, conveyor);
+        List<PalletModel> palletModels = palletDAO.findChang(status, warehouse, conveyorLine);
 
         if (Utils.isSafetyList(palletModels)){
             log.debug("palletModels size. {}", palletModels);

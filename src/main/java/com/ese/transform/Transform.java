@@ -9,5 +9,4 @@ public abstract class Transform implements Serializable {
     @Resource protected Logger log;
     @Resource protected Logger moLogger;
     @Resource protected Logger mtLogger;
-//
 }

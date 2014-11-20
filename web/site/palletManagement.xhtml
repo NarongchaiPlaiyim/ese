@@ -6,7 +6,7 @@
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Pallet Manegement</title>
+        <title>Pallet Management</title>
         <h:outputStylesheet name="css/style.css"/>
         <h:outputScript library="js" name="custom.js" />
     </h:head>
@@ -16,14 +16,14 @@
                 <h:form id="setupForm">
                     <div class="body_lpane" style="width: 200px">
                         <a class="step_border_select" href="barcodeRegister.xhtml">Barcode Register</a>
-                        <a class="step_border_selected" href="palletManagement.xhtml">Pallet Manegement</a>
+                        <a class="step_border_select" href="palletManagement.xhtml">Pallet Manegement</a>
                         <a class="step_border_select" href="setup.xhtml">Setup</a>
                     </div>
                     <div class="body_rpane" style="width: 80%">
-                    <label class="subject">Pallet Manegement</label>
-                        <table border="0" class="content_table_form">
+                        <label class="subject">Pallet Management</label>
+                        <table id="testTb" border="0" class="content_table_form">
                             <tr>
-                                <td colspan="6">
+                                <td colspan="100%">
                                     <table border="0" class="content_table_form">
                                         <tr>
                                             <td class="right">
@@ -37,7 +37,7 @@
                             </tr>
                             <tr>
                                 <td style="width: 195px">
-                                    <p:inputText style="width: 120px"/>
+                                    <p:inputText id="testtext" value="#{palletManegement.textTest}" style="width: 120px"/>
                                     <p:commandButton id="testName" value="Search" action="#{palletManegement.onfind}" />
                                 </td>
                                 <td>
@@ -57,9 +57,9 @@
                                     <h:outputLabel value="Conveyor Line :"/>
                                 </td>
                                 <td>
-                                    <p:selectOneMenu id="conveyorLineMenu" value="#{palletManegement.conveyorLineModel.id}" style="min-width: 150px; width: 150px; max-width: 150px; margin-top: 4px">
+                                    <p:selectOneMenu id="conveyorLineMenu" value="#{palletManegement.workingAreaModel.id}" style="min-width: 150px; width: 150px; max-width: 150px; margin-top: 4px">
                                         <f:selectItem itemLabel="- Please Select -" itemValue=""/>
-                                        <f:selectItems value="#{palletManegement.conveyorLineModelList}"
+                                        <f:selectItems value="#{palletManegement.workingAreaModelList}"
                                                        var="conveyorLineItem"
                                                        itemLabel="#{conveyorLineItem.name}"
                                                        itemValue="#{conveyorLineItem.id}"/>
@@ -78,40 +78,44 @@
                             <tr>
                                 <td colspan="6">
                                     <p:dataTable id="palletManegementTable" rowIndexVar="rowIndex"
-                                            value="#{palletManegement.palletMeanegementViewList}" var="palletView">
-                                        <p:column headerText="No" style="width: 20px">
+                                                 value="#{palletManegement.palletMeanegementViewList}"
+                                                 var="palletView" styleClass="full_table"
+                                                 selectionMode="single" rowKey="#{palletView.id}"
+                                                 selection="#{palletManegement.palletMeanegementView}">
+                                        <p:ajax event="rowSelect" update=":setupForm:testtext" listener="#{palletManegement.test}"/>
+                                        <p:column headerText="No" style="width: 20px" styleClass="center">
                                             <h:outputLabel value="#{rowIndex+1}"/>
                                         </p:column>
-                                        <p:column headerText="warehouse" style="width: 120px">
-                                            <h:outputLabel value="#{palletView.convetorLine.name}"/>
+                                        <p:column headerText="Convenyor Line " style="width: 100px; max-width: 100px; min-width: 100px" styleClass="center">
+                                            <h:outputLabel value="#{palletView.convetorLine.name}" />
                                         </p:column>
-                                        <p:column headerText="warehouse" style="width: 120px">
+                                        <p:column headerText="Warehouse" style="width: 80px; max-width: 80px; min-width: 80px" styleClass="center">
                                             <h:outputLabel value="#{palletView.warehouseModel.warehouseCode}"/>
                                         </p:column>
-                                        <p:column headerText="Item" style="width: 120px">
+                                        <p:column headerText="Item" style="width: 100px; max-width: 100px; min-width: 100px" styleClass="center">
                                             <h:outputLabel value="#{palletView.itemModel.itemName}"/>
                                         </p:column>
-                                        <p:column headerText="Description" style="width: 200px">
+                                        <p:column headerText="Description" style="width: 150px; max-width: 150px; min-width: 150px" styleClass="center">
                                             <h:outputLabel value="#{palletView.itemModel.DSGThaiItemDescription}"/>
                                         </p:column>
-                                        <p:column headerText="Pallet TAG ID" style="width: 150px">
+                                        <p:column headerText="Pallet TAG ID" style="width: 150px" styleClass="center">
                                             <h:outputLabel value="#{palletView.palletBarcode}"/>
                                         </p:column>
-                                        <p:column headerText="Datetime" style="width: 100px">
+                                        <p:column headerText="Datetime" style="width: 100px" styleClass="center">
                                             <h:outputLabel value="#{palletView.createDate}">
                                                 <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" locale="th_TH"/>
                                             </h:outputLabel>
                                         </p:column>
-                                        <p:column headerText="Location" style="width: 100px">
+                                        <p:column headerText="Location" style="width: 100px" styleClass="center">
                                             <h:outputLabel value="#{palletView.locationModel.locationBarcode}"/>
                                         </p:column>
-                                        <p:column headerText="Capacity" style="width: 120px">
+                                        <p:column headerText="Capacity" style="width: 70px; max-width: 70px; min-width: 70px" styleClass="center">
                                             <h:outputLabel value="#{palletView.capacity}"/>
                                         </p:column>
-                                        <p:column headerText="Qty" style="width: 50px">
+                                        <p:column headerText="Qty" style="width: 50px" styleClass="center">
                                             <h:outputLabel value="#{palletView.qty}"/>
                                         </p:column>
-                                        <p:column headerText="Status" style="width: 120px">
+                                        <p:column headerText="Status" style="width: 120px" styleClass="center">
                                             <h:outputLabel value="#{palletView.status}"/>
                                         </p:column>
                                     </p:dataTable>
@@ -127,6 +131,10 @@
                   modal="true" width="600" height="400">
             <ui:include src="../site/dialog/findLocationDialog.xhtml"/>
         </p:dialog>
+        <p:blockUI widgetVar="blockInbox" block=":setupForm">
+            LOADING<br/>
+            <h:graphicImage library="images" name="shared/ajax-loader.gif" />
+        </p:blockUI>
     </h:body>
 </f:view>
 </html>

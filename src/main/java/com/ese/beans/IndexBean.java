@@ -1,8 +1,11 @@
 package com.ese.beans;
 
 import com.ese.model.db.ProfileModel;
+import com.ese.service.IndexService;
 import lombok.Getter;
 import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.*;

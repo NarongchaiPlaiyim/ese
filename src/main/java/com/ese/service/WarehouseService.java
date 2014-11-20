@@ -17,7 +17,6 @@ public class WarehouseService extends Service implements Serializable {
 
     public List<WarehouseModel> getWarehouseList(){
         log.debug("getWarehouseList(). ");
-        System.out.println("getWarehouseList");
         try{
             return  warehouseDAO.findAll();
         } catch (Exception e){

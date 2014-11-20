@@ -22,7 +22,7 @@ public class ConveyorLineService extends Service implements Serializable {
         try {
             return coveyorLineDAO.findAll();
         } catch (Exception e){
-            log.debug("Exception : ", e);
+            log.debug("Exception : {}", e);
             return new ArrayList<ConveyorLineModel>();
         }
     }
