@@ -1,18 +1,23 @@
 package com.ese.beans;
 
 import com.ese.model.view.SetupView;
+import com.ese.service.SetupService;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import java.io.Serializable;
 
 @Getter
 @Setter
 @ViewScoped
 @ManagedBean(name = "setup")
-public class SetupBean extends Bean {
+public class SetupBean extends Bean implements Serializable{
+    @ManagedProperty("#{setupService}") private SetupService setupService;
+
     private SetupView setupView;
 
     public SetupBean() {
@@ -22,6 +27,7 @@ public class SetupBean extends Bean {
     @PostConstruct
     private void init(){
         setupView = new SetupView();
+
     }
 
     public void onClickNewButtonTAB(){

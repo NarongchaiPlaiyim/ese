@@ -8,4 +8,18 @@ import java.io.Serializable;
 @Component
 @Transactional
 public class SetupService extends Service implements Serializable {
+
+
+    public SetupService() {
+        init();
+    }
+
+    private void init(){
+        log.debug("-- init()");
+    }
+
+
+
+
+
 }
