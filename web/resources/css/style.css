@@ -824,6 +824,18 @@ tfoot {
     padding-left: 5px;
     width: 96%;
 }
+
+.step_border_selected {
+    background-color: #fbfffb;
+    border-top: 1px solid #FFF;
+    color: #0077c0;
+    cursor: pointer;
+    display: inline-block;
+    line-height: 20px;
+    padding-left: 5px;
+    width: 96%;
+}
+
 .step_label {
     color: #0077c0;
     cursor: pointer;
