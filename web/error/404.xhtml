@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:param name="active_navi" value="level"/>
+    <ui:define name="content">
+        <div class="maincontentinner">
+            <div class="widget">
+                <h4 class="widgettitle">Level</h4>
+                <div class="widgetcontent">
+                    <p:panel style="background-color: #ffffff;border:#ffffff ">
+                        <h:form id="frmMain" style="width: 100%">
+
+                            <div class="error-page">
+                                <h2 class="headline text-info"> 404</h2>
+                                <div class="error-content">
+                                    <h3><i class="fa fa-warning text-yellow"></i> Oops! Page not found.</h3>
+                                    <p>
+                                        We could not find the page you were looking for.
+                                        Meanwhile, you may <a href='/login.xhtml'>return to Backoffice</a> or try using the search form.
+                                    </p>
+                                </div><!-- /.error-content -->
+                            </div><!-- /.error-page -->
+
+                        </h:form>
+                    </p:panel>
+                    <h:form id="photoCam">
+                        <p:lightBox styleClass="imagebox" iframe="true" resizable="true" dynamic="true" height="auto" width="auto">
+                            <a href="/backoffice/resources/img/Haa.gif">
+                                <img src="/backoffice/resources/img/Haa.gif" style="width: auto; height: auto"/>
+                            </a>
+                        </p:lightBox>
+                    </h:form>
+
+                </div>
+            </div>
+
+        </div>
+
+
+    </ui:define>
+</ui:composition>
+
+
+

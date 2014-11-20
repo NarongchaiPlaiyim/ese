@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        >
+
+    <h:body>
+        <h:form id="frmLogin">
+            ADMIN[MAIN]
+
+            <p:commandButton id="submitOnClickISATest" value="LogOut" update="@form"
+                             action="#{loginBean.logout}"/>
+
+        </h:form>
+    </h:body>
+
+</f:view>
+</html>

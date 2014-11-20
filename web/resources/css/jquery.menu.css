@@ -1,0 +1,147 @@
+/** CSS Style for menu panel **/
+.selosmenu {
+    font: bold 11px Verdana;
+    background: #016db8 url("#{resource['images:shared/navbg.gif']}") repeat-x;
+    width: 100%;
+}
+
+.selosmenu ul {
+    z-index: 100;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+/*Top level list items*/
+.selosmenu ul li {
+    position: relative;
+    display: inline;
+    float: left;
+}
+
+/*Top level menu link items style*/
+.selosmenu ul li a {
+    display: block;
+    background: #016db8 url("#{resource['images:shared/navbg.gif']}") repeat-x;
+    color: white;
+    padding: 8px 10px;
+    border-right: 1px solid transparent;
+    text-decoration: none;
+}
+
+/* Sub level menu links style */
+.selosmenu ul li ul li a {
+    background: #107ecb;
+    color: white;
+    padding: 8px 25px 8px 10px;
+    border-right: 1px solid transparent;
+    text-decoration: none;
+}
+
+.selosmenu ul li.current a {
+    background: #075c9a;
+}
+
+.selosmenu ul li.current ul li a {
+    background: #107ecb;
+}
+
+.selosmenu ul li.current ul li.current a {
+    background: #075c9a;
+}
+
+.selosmenu ul li.current ul li a:hover {
+    background: #075c9a;
+}
+
+* html .selosmenu ul li a {
+    /*IE6 hack to get sub menu links to behave correctly*/
+    display: inline-block;
+}
+
+.selosmenu ul li a:link, .selosmenu ul li a:visited {
+    color: white;
+}
+
+.selosmenu ul li a.selected {
+    /*CSS class that's dynamically added to the currently active menu items' LI A element*/
+    background: #075c9a !important;
+    color: white;
+}
+
+.selosmenu ul li a:hover {
+    /*background: black; background of menu items during onmouseover (hover state)*/
+    background: #075c9a;
+    color: white;
+}
+
+/* sub menus */
+.selosmenu ul li ul {
+    position: absolute;
+    left: -3000px;
+    display: none; /*collapse all sub menus to begin with*/
+    visibility: hidden;
+}
+
+/*Sub level menu list items (alters style from Top level List Items)*/
+.selosmenu ul li ul li {
+    display: list-item;
+    float: none;
+}
+
+/*All subsequent sub menu levels vertical offset after 1st level sub menu */
+.selosmenu ul li ul li ul {
+    top: 0;
+}
+
+/* Holly Hack for IE \*/
+* html .selosmenu {
+    height: 1%;
+}
+
+/*Holly Hack for IE7 and below*/
+
+/* ######### CSS classes applied to down and right arrow images  ######### */
+
+.downarrowclass {
+    background: url("#{resource['images:shared/down.gif']}") no-repeat;
+    width: 11px;
+    height: 8px;
+    position: absolute;
+    top: 12px;
+    right: 7px;
+}
+
+.rightarrowclass {
+    position: absolute;
+    top: 6px;
+    right: 5px;
+}
+
+/* ######### CSS for shadow added to sub menus  ######### */
+.ddshadow {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 0;
+    background-color: #ccc; /* generally should be just a little lighter than the box-shadow color for CSS3 capable browsers */
+}
+
+.toplevelshadow {
+    margin: 5px 0 0 5px; /* in NON CSS3 capable browsers gives the offset of the shadow */
+    opacity: 0.8; /* shadow opacity mostly for NON CSS3 capable browsers. Doesn't work in IE */
+}
+
+.ddcss3support .ddshadow.toplevelshadow {
+    margin: 0; /* in CSS3 capable browsers overrides offset from NON CSS3 capable browsers, allowing the box-shadow values in the next selector to govern that */
+    /* opacity: 1; */
+    /* optionally uncomment this to remove partial opacity for browsers supporting a box-shadow property which has its own slight gradient opacity */
+}
+
+.ddcss3support .ddshadow {
+    background-color: transparent;
+    box-shadow: 5px 5px 5px #aaa; /* box-shadow color generally should be a little darker than that for the NON CSS3 capable browsers background-color */
+    -moz-box-shadow: 5px 5px 5px #aaa;
+    -webkit-box-shadow: 5px 5px 5px #aaa;
+}

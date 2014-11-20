@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        >
+
+    <h:body>
+        <h:form id="test">
+
+            <p:selectOneMenu id="locationOfPropertyId2"
+                             size="1" style="width: 275px; max-width: 275px; min-width: 275px;"
+                    >
+                <f:selectItem itemLabel="- Please Select -" itemValue=""/>
+                <f:selectItems value="#{index.profileModelList}"
+                               var="profile"
+                               itemLabel="#{profile.firstName}"
+                               itemValue="#{profile.lastName}"/>
+            </p:selectOneMenu>
+
+            <p:commandButton id="submitOnClickISATest" value="Update" update="@form"
+                             action="#{index.onSubmit()}"/>
+
+        </h:form>
+    </h:body>
+
+</f:view>
+</html>

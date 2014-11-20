@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        >
+
+    <h:body>
+        <h:form id="frmLogin">
+
+
+            <table >
+
+                <tr>
+                    <td style="height:53px;">
+                        <p:inputText value="#{loginBean.userName}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:password value="#{loginBean.password}" />
+                    </td>
+                </tr>
+            </table>
+
+            <p:commandButton id="test1" value="Login" update="@form"
+                             action="#{loginBean.login}"/>
+
+            <!--<p:commandButton id="test2" value="palletManegement" update="@form"-->
+                             <!--action="#{palletManegement.test}"/>-->
+
+        </h:form>
+    </h:body>
+
+</f:view>
+</html>

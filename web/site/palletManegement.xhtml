@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Pallet Manegement</title>
+        <h:outputStylesheet name="css/style.css"/>
+        <h:outputScript library="js" name="custom.js" />
+    </h:head>
+    <h:body>
+        <p:panel id="pnl_maincontainer">
+            <div id="main_container" >
+                <h:form id="setupForm">
+                    <div class="body_lpane" style="width: 200px">
+                        <a class="step_border_select" href="barcodeRegister.xhtml">Barcode Register</a>
+                        <a class="step_border_select" href="palletManegement.xhtml">Pallet Manegement</a>
+                        <a class="step_border_select" href="setup.xhtml">Setup</a>
+                    </div>
+                    <div class="body_rpane" style="width: 80%">
+                    <label class="subject">Pallet Manegement</label>
+                        <table border="0" class="content_table_form">
+                            <tr>
+                                <td colspan="6">
+                                    <table border="0" class="content_table_form">
+                                        <tr>
+                                            <td class="right">
+                                                <p:commandButton value="Find Location" oncomplete="findLocationDlg.show()"/>
+                                                <p:commandButton value="Print Tag"/>
+                                                <p:commandButton value="Close Pallet"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 195px">
+                                    <p:inputText style="width: 120px"/>
+                                    <p:commandButton id="testName" value="Search" action="#{palletManegement.onfind}" />
+                                </td>
+                                <td>
+                                    <h:outputLabel value="warehouse :"/>
+                                </td>
+                                <td>
+                                    <p:selectOneMenu id="warehouseMenu" value="#{palletManegement.warehouseMode.id}" style="min-width: 150px; width: 150px; max-width: 150px; margin-top: 4px">
+                                        <f:selectItem itemLabel="- Please Select -" itemValue=""/>
+                                        <f:selectItems value="#{palletManegement.warehouseModelList}"
+                                                       var="wareItem"
+                                                       itemLabel="#{wareItem.warehouseCode}"
+                                                       itemValue="#{wareItem.id}"/>
+                                        <p:ajax listener="#{palletManegement.onfind}" update="palletManegementTable"/>
+                                    </p:selectOneMenu>
+                                </td>
+                                <td>
+                                    <h:outputLabel value="Conveyor Line :"/>
+                                </td>
+                                <td>
+                                    <p:selectOneMenu id="conveyorLineMenu" value="#{palletManegement.conveyorLineModel.id}" style="min-width: 150px; width: 150px; max-width: 150px; margin-top: 4px">
+                                        <f:selectItem itemLabel="- Please Select -" itemValue=""/>
+                                        <f:selectItems value="#{palletManegement.conveyorLineModelList}"
+                                                       var="conveyorLineItem"
+                                                       itemLabel="#{conveyorLineItem.name}"
+                                                       itemValue="#{conveyorLineItem.id}"/>
+                                        <p:ajax listener="#{palletManegement.onfind}" update="palletManegementTable"/>
+                                    </p:selectOneMenu>
+                                </td>
+                                <td>
+                                    <p:selectOneRadio value="#{palletManegement.statusOnShow}" styleClass="radio_table" style="background-origin: border-box">
+                                        <f:selectItem itemLabel="Show All" itemValue="0"/>
+                                        <f:selectItem itemLabel="Show unprint only" itemValue="1"/>
+                                        <f:selectItem itemLabel="Show Empty Pallet" itemValue="2"/>
+                                        <p:ajax listener="#{palletManegement.onfind}" update="palletManegementTable"/>
+                                    </p:selectOneRadio>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6">
+                                    <p:dataTable id="palletManegementTable" rowIndexVar="rowIndex"
+                                            value="#{palletManegement.palletMeanegementViewList}" var="palletView">
+                                        <p:column headerText="No" style="width: 20px">
+                                            <h:outputLabel value="#{rowIndex+1}"/>
+                                        </p:column>
+                                        <p:column headerText="warehouse" style="width: 120px">
+                                            <h:outputLabel value="#{palletView.convetorLine.name}"/>
+                                        </p:column>
+                                        <p:column headerText="warehouse" style="width: 120px">
+                                            <h:outputLabel value="#{palletView.warehouseModel.warehouseCode}"/>
+                                        </p:column>
+                                        <p:column headerText="Item" style="width: 120px">
+                                            <h:outputLabel value="#{palletView.itemModel.itemName}"/>
+                                        </p:column>
+                                        <p:column headerText="Description" style="width: 200px">
+                                            <h:outputLabel value="#{palletView.itemModel.DSGThaiItemDescription}"/>
+                                        </p:column>
+                                        <p:column headerText="Pallet TAG ID" style="width: 150px">
+                                            <h:outputLabel value="#{palletView.palletBarcode}"/>
+                                        </p:column>
+                                        <p:column headerText="Datetime" style="width: 100px">
+                                            <h:outputLabel value="#{palletView.createDate}">
+                                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" locale="th_TH"/>
+                                            </h:outputLabel>
+                                        </p:column>
+                                        <p:column headerText="Location" style="width: 100px">
+                                            <h:outputLabel value="#{palletView.locationModel.locationBarcode}"/>
+                                        </p:column>
+                                        <p:column headerText="Capacity" style="width: 120px">
+                                            <h:outputLabel value="#{palletView.capacity}"/>
+                                        </p:column>
+                                        <p:column headerText="Qty" style="width: 50px">
+                                            <h:outputLabel value="#{palletView.qty}"/>
+                                        </p:column>
+                                        <p:column headerText="Status" style="width: 120px">
+                                            <h:outputLabel value="#{palletView.status}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </h:form>
+            </div>
+        </p:panel>
+        <p:dialog id="findLocationDialog" widgetVar="findLocationDlg" header="Find Location for Item"
+                  onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
+                  modal="true" width="600" height="400">
+            <ui:include src="../site/dialog/findLocationDialog.xhtml"/>
+        </p:dialog>
+    </h:body>
+</f:view>
+</html>

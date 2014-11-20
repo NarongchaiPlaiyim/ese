@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <h:outputStylesheet name="css/style.css" />
+    </h:head>
+    <p:panel id="findlocationPanel" styleClass="panel-dialog">
+        <table border="0">
+            <tr>
+                <td class="right">
+                    <p:commandButton value="Select Location"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p:dataTable id="searchLocationTable" rowKey="rowIndex">
+                        <p:column headerText="Select" selectionMode="multiple" style="height: 60px">
+                        </p:column>
+                        <p:column headerText="warehouse" style="width: 200px">
+                            <p:outputLabel value="aaaaa"/>
+                        </p:column>
+                        <p:column headerText="Location" style="width: 200px">
+                            <p:outputLabel value="bbbbb"/>
+                        </p:column>
+                        <p:column headerText="Capacity" style="width: 100px">
+                            <p:outputLabel value="cccc"/>
+                        </p:column>
+                        <p:column headerText="Avaliable" style="width: 100px">
+                            <p:outputLabel value="cccc"/>
+                        </p:column>
+                    </p:dataTable>
+                </td>
+            </tr>
+        </table>
+    </p:panel>
+</f:view>
+</html>

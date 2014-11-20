@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <h:outputStylesheet name="css/style.css" />
+        <h:outputScript library="js" name="custom.js" />
+    </h:head>
+    <p:panel id="productPanel" styleClass="panel-dialog">
+        <table  border="0">
+            <tr>
+                <td style="width: 160px">
+                    <p:selectOneMenu style="min-width: 150px; width: 150px; max-width: 150px; margin-top: 4px">
+                        <f:selectItem itemLabel="- Please Select -" itemValue=""/>
+                        <f:selectItem itemLabel="- Name Product -" itemValue="1"/>
+                        <f:selectItem itemLabel="- Code Product -" itemValue="2"/>
+                        <f:selectItem itemLabel="- Description Product -" itemValue="3"/>
+                    </p:selectOneMenu>
+                </td>
+                <td>
+                    <p:inputText/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <p:dataTable id="productTable" rowIndexVar="rowIndex">
+                        <p:column headerText="No" style="width: 30px">
+                            <p:outputLabel value="#{rowIndex+1}"/>
+                        </p:column>
+                        <p:column headerText="Product Name" style="width: 100px">
+                            <p:outputLabel value="aaaaa"/>
+                        </p:column>
+                        <p:column headerText="Product Code" style="width: 150px">
+                            <p:outputLabel value="bbbbb"/>
+                        </p:column>
+                        <p:column headerText="Product Description" style="width: 250px">
+                            <p:outputLabel value="cccc"/>
+                        </p:column>
+                    </p:dataTable>
+                </td>
+            </tr>
+        </table>
+    </p:panel>
+</f:view>
+</html>

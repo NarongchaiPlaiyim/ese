@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <h:outputStylesheet name="css/style.css" />
+    </h:head>
+    <p:panel id="warehousePanel" styleClass="panel-dialog">
+        <table border="0">
+            <tr>
+                <td colspan="2">
+                    <table border="0" class="top" style="width: 100%">
+                        <tr>
+                            <td class="right" style="width: 370px">
+                                <h:outputText value="Mode(New/Edit)"/>
+                            </td>
+                            <td class="right">
+                                <p:commandButton value="New" styleClass="medium" style="width: 80px"/>
+                                <p:commandButton value="Save" styleClass="medium" style="width: 80px"/>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0">
+                        <tr>
+                            <td>
+                                <h:outputLabel value="warehouse Code :"/>
+                            </td>
+                            <td>
+                                <p:inputText/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h:outputLabel value="warehouse Name :"/>
+                            </td>
+                            <td>
+                                <p:inputText/>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td class="right">
+                    <table border="0">
+                        <tr>
+                            <td class="top">
+                                <h:outputLabel value="Remark :"/>
+                            </td>
+                            <td class="top">
+                                <p:inputTextarea style="width: 180px"/>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="right">
+                    <p:commandButton value="Delete"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <p:dataTable id="warehouseTable" rowIndexVar="rowIndex">
+                        <p:column headerText="No">
+                            <p:outputLabel value="#{rowIndex+1}"/>
+                        </p:column>
+                        <p:column headerText="warehouse ID">
+                            <p:outputLabel value="aaaaa"/>
+                        </p:column>
+                        <p:column headerText="warehouse Name">
+                            <p:outputLabel value="bbbbb"/>
+                        </p:column>
+                        <p:column headerText="Remark">
+                            <p:outputLabel value="cccc"/>
+                        </p:column>
+                    </p:dataTable>
+                </td>
+            </tr>
+        </table>
+    </p:panel>
+</f:view>
+</html>

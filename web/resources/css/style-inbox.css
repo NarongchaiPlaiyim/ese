@@ -1,0 +1,43 @@
+table.ui-selectoneradio.nolabel_radio {
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+table.ui-selectoneradio.nolabel_radio tr,
+table.ui-selectoneradio.nolabel_radio td {
+    border-spacing: 0;
+    padding: 0;
+}
+.dialog_noheader.ui-dialog .ui-dialog-titlebar {
+    display:none;
+}
+.div_row {
+    display: block;
+    height: 28px;
+    line-height: 28px;
+    padding: 1px;
+}
+table table.ui-selectoneradio,
+table table.ui-selectoneradio td,
+table table.ui-selectoneradio tr {
+    border: medium none !important;
+}
+.full_table table.ui-selectoneradio td {
+    padding : 0 10px 0 0 !important;
+}
+.full_table table.ui-selectoneradio {
+    width : auto !important;
+}
+.ui-icon {
+    width: 16px!important;
+    height: 8px!important;
+}
+.ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td {
+    padding: 1px 10px !important;
+    overflow: hidden !important;
+    white-space: normal !important;
+    border-width: 1px !important;
+    border-style: solid !important;
+    border-color: #868686;
+}

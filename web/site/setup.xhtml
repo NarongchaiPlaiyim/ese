@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Setup</title>
+        <h:outputStylesheet name="css/style.css"/>
+        <h:outputScript library="js" name="custom.js" />
+    </h:head>
+    <h:body>
+        <p:panel id="pnl_maincontainer">
+            <div id="main_container" >
+                <h:form id="setupForm">
+                    <div class="body_lpane" style="width: 200px">
+                        <a class="step_border_select" href="barcodeRegister.xhtml">Barcode Register</a>
+                        <a class="step_border_select" href="palletManegement.xhtml">Pallet Manegement</a>
+                        <a class="step_border_select" href="setup.xhtml">Setup</a>
+                    </div>
+                    <div class="body_rpane" style="width: 80%">
+                        <label class="subject">SetUp</label>
+                        <h:form style="width: 100%;border-spacing: 0;">
+                              <p:tabView>
+                                  <p:tab title="warehouse and Location">
+                                      <table border="0" style="width: 100%">
+                                          <tr>
+                                              <td>
+                                                  <table border="0" class="top">
+                                                      <tr>
+                                                          <td style="width: 860px" class="right">
+                                                              <h:outputText value="Mode(New/Edit)"/>
+                                                          </td>
+                                                          <td>
+                                                              <p:commandButton value="New" styleClass="medium" style="width: 80px"/>
+                                                              <p:commandButton value="Save" styleClass="medium" style="width: 80px"/>
+                                                          </td>
+                                                      </tr>
+                                                  </table>
+                                                  <table border="0" style="width: 100%">
+                                                      <tr>
+                                                          <td style="min-width: 150px; width: 150px; max-width: 150px;" class="right">
+                                                              <h:outputText value="warehouse* :"/>
+                                                          </td>
+                                                          <td style="min-width: 190px; width: 190px; max-width: 190px;">
+                                                              <p:selectOneMenu style="min-width: 200px; width: 200px; max-width: 200px;">
+                                                                  <f:selectItem itemLabel="- Please Select -" itemValue=""/>
+                                                              </p:selectOneMenu>
+                                                          </td>
+                                                          <td style="min-width: 130px; width: 130px; max-width: 130px;">
+                                                              <p:commandButton value="New/Edit" styleClass="medium" style="width: 80px"
+                                                                               oncomplete="warehouseDlg.show()"/>
+                                                          </td>
+                                                          <td>
+                                                              <table border="0" style="width: 100%">
+                                                                  <tr>
+                                                                      <td style="width: 20px">
+                                                                          <h:selectBooleanCheckbox id="mixChkBox"/>
+                                                                      </td>
+                                                                      <td class="left">
+                                                                          <h:outputLabel value="Is Mix"/>
+                                                                      </td>
+                                                                  </tr>
+                                                              </table>
+                                                              <!--<p:selectBooleanCheckbox id="mixChkBox"/>-->
+                                                          </td>
+                                                      </tr>
+                                                      <tr>
+                                                          <td class="right">
+                                                              <h:outputText value="Location Code* :"/>
+                                                          </td>
+                                                          <td colspan="2">
+                                                              <p:inputText/>
+                                                          </td>
+                                                          <td>
+                                                              <h:outputText value="Remark :"/>
+                                                          </td>
+                                                      </tr>
+                                                      <tr>
+                                                          <td colspan="3">
+                                                              <table border="0" style="width: 100%">
+                                                                  <tr>
+                                                                      <td style="width: 165px;" class="right">
+                                                                          <h:outputText value="Location Name* :"/>
+                                                                      </td>
+                                                                      <td colspan="2">
+                                                                          <p:inputText/>
+                                                                      </td>
+                                                                  </tr>
+                                                                  <tr>
+                                                                      <td class="right">
+                                                                          <h:outputText value="Capocities (Pallets) :"/>
+                                                                      </td>
+                                                                      <td>
+                                                                          <p:spinner/>
+                                                                      </td>
+                                                                  </tr>
+                                                                  <tr>
+                                                                      <td/>
+                                                                      <td>
+                                                                          <p:commandButton value="Show/Add Item" styleClass="medium" style="width: 110px; margin-left: 80px"/>
+                                                                      </td>
+                                                                  </tr>
+                                                              </table>
+                                                          </td>
+                                                          <td style="width: 450px; max-width: 450px;min-width: 450px;" class="top">
+                                                              <p:inputTextarea style="width: 300px; max-width: 300px;min-width: 300px; height: 50px;"/>
+                                                          </td>
+                                                      </tr>
+                                                      <tr>
+                                                          <td class="right" colspan="6">
+                                                              <p:commandButton value="Delete" styleClass="medium" style="width: 80px"/>
+                                                          </td>
+                                                      </tr>
+                                                  </table>
+                                              </td>
+                                          </tr>
+                                          <tr>
+                                              <td colspan="4">
+                                                  <p:dataTable id="stockTable" rowIndexVar="rowIndex2">
+                                                      <p:column headerText="No" style="width: 20px">
+                                                          <p:outputLabel value="#{rowIndex2+1}"/>
+                                                      </p:column>
+                                                      <p:column headerText="warehouse" style="width: 200px">
+                                                          <p:outputLabel value="aaaaa"/>
+                                                      </p:column>
+                                                      <p:column headerText="Location" style="width: 200px">
+                                                          <p:outputLabel value="bbbbb"/>
+                                                      </p:column>
+                                                      <p:column headerText="Capacities (Pallet)" style="width: 200px">
+                                                          <p:outputLabel value="cccc"/>
+                                                      </p:column>
+                                                      <p:column headerText="Remark">
+                                                          <p:outputLabel value="dddd"/>
+                                                      </p:column>
+                                                  </p:dataTable>
+                                              </td>
+                                          </tr>
+                                      </table>
+                                  </p:tab>
+                                  <p:tab title="Stock In Out Note">
+                                      <table border="0" style="width: 100%">
+                                          <tr>
+                                              <td>
+                                                  <table border="0" class="top">
+                                                      <tr>
+                                                          <td style="width: 860px" class="right">
+                                                              <h:outputText value="Mode(New/Edit)"/>
+                                                          </td>
+                                                          <td>
+                                                              <p:commandButton value="New" styleClass="medium" style="width: 80px"/>
+                                                              <p:commandButton value="Save" styleClass="medium" style="width: 80px"/>
+                                                          </td>
+                                                      </tr>
+                                                  </table>
+                                                  <table border="0" style="width: 100%">
+                                                      <tr>
+                                                          <td style="width: 30px" class="top" colspan="4">
+                                                              <table border="0" style="width: 100%">
+                                                                  <tr>
+                                                                      <td style="width: 150px" class="right">
+                                                                          <h:outputText value="Type :"/>
+                                                                      </td>
+                                                                      <td style="width: 300px">
+                                                                          <p:selectOneRadio styleClass="radio_table" style="background-origin: border-box">
+                                                                              <f:selectItem itemLabel="Receiving" itemValue="0"/>
+                                                                              <f:selectItem itemLabel="issuing" itemValue="1"/>
+                                                                          </p:selectOneRadio>
+                                                                      </td>
+                                                                      <td style="width: 80px" class="right">
+                                                                          <h:outputText value="Remark :"/>
+                                                                      </td>
+                                                                  </tr>
+                                                                  <tr>
+                                                                      <td style="width: 150px" class="right">
+                                                                          <h:outputText value="Code :"/>
+                                                                      </td>
+                                                                      <td colspan="2">
+                                                                          <p:inputText style="width: 150px"/>
+                                                                      </td>
+                                                                  </tr>
+                                                                  <tr>
+                                                                      <td style="width: 150px" class="right">
+                                                                          <h:outputText value="Note :"/>
+                                                                      </td>
+                                                                      <td colspan="2">
+                                                                          <p:inputText style="width: 150px"/>
+                                                                      </td>
+                                                                  </tr>
+                                                              </table>
+                                                          </td>
+
+                                                          <td style="width: 450px; max-width: 450px;min-width: 450px;" class="top">
+                                                              <p:inputTextarea style="width: 300px; max-width: 300px;min-width: 300px; height: 75px;"/>
+                                                          </td>
+                                                      </tr>
+                                                      <tr>
+                                                          <td class="right" colspan="6">
+                                                              <p:commandButton value="Delete" styleClass="medium" style="width: 80px"/>
+                                                          </td>
+                                                      </tr>
+                                                      <tr>
+                                                          <td colspan="6">
+                                                              <p:dataTable id="warehouseTable" rowIndexVar="rowIndex">
+                                                                  <p:column headerText="No" style="width: 20px">
+                                                                      <p:outputLabel value="#{rowIndex+1}"/>
+                                                                  </p:column>
+                                                                  <p:column headerText="Type" style="width: 200px">
+                                                                      <p:outputLabel value="aaaaa"/>
+                                                                  </p:column>
+                                                                  <p:column headerText="Code" style="width: 200px">
+                                                                      <p:outputLabel value="bbbbb"/>
+                                                                  </p:column>
+                                                                  <p:column headerText="Note">
+                                                                      <p:outputLabel value="cccc"/>
+                                                                  </p:column>
+                                                              </p:dataTable>
+                                                          </td>
+                                                      </tr>
+                                                  </table>
+                                              </td>
+                                          </tr>
+                                      </table>
+                                  </p:tab>
+                              </p:tabView>
+                        </h:form>
+                    </div>
+                </h:form>
+            </div>
+        </p:panel>
+
+        <p:dialog id="warehouseDialog" widgetVar="warehouseDlg" header="Add/Edit warehouse"
+                  onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
+                  modal="true" width="600" height="400">
+            <ui:include src="../site/dialog/warehouseDialog.xhtml"/>
+        </p:dialog>
+    </h:body>
+</f:view>
+</html>

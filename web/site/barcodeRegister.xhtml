@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Barcode Register</title>
+        <h:outputStylesheet name="css/style.css"/>
+        <h:outputScript library="js" name="custom.js" />
+    </h:head>
+    <h:body>
+        <p:panel id="pnl_maincontainer">
+            <div id="main_container" >
+                <h:form id="setupForm">
+                    <div class="body_lpane" style="width: 200px">
+                        <a class="step_border_select" href="barcodeRegister.xhtml">Barcode Register</a>
+                        <a class="step_border_select" href="palletManegement.xhtml">Pallet Manegement</a>
+                        <a class="step_border_select" href="setup.xhtml">Setup</a>
+                    </div>
+                    <div class="body_rpane" style="width: 80%">
+                        <label class="subject">Barcode Register</label>
+                        <table border="0" class="content_table_form">
+                            <tr>
+                                <td colspan="6" class="right">
+                                    <p:commandButton value="Print"/>
+                                    <p:commandButton value="New"/>
+                                    <p:commandButton value="Save"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 100px"/>
+                                <td style="width: 100px">
+                                    <h:outputLabel value="Item*:"/>
+                                </td>
+                                <td style="width: 150px">
+                                    <p:inputText/>
+                                </td>
+                                <td>
+                                    <p:commandButton value="Select" oncomplete="findProductDlg.show()"/>
+                                </td>
+                                <td style="width: 100px">
+                                    <h:outputLabel value="Qty*:"/>
+                                </td>
+                                <td>
+                                    <p:spinner/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 100px"/>
+                                <td>
+                                    <h:outputLabel value="Document No :"/>
+                                </td>
+                                <td colspan="2">
+                                    <p:inputText/>
+                                </td>
+                                <td>
+                                    <h:outputLabel value="Start Barcode*:"/>
+                                </td>
+                                <td>
+                                    <p:inputText/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 100px"/>
+                                <td>
+                                    <p:outputLabel value="Document Date*:" for="docDate"/>
+                                </td>
+                                <td colspan="2">
+                                    <p:calendar id="docDate" showOn="button"/>
+                                </td>
+                                <td>
+                                    <h:outputLabel value="Finish Barcode*:"/>
+                                </td>
+                                <td>
+                                    <p:inputText/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 100px"/>
+                                <td>
+                                    <h:outputLabel value="Batch No*:"/>
+                                </td>
+                                <td colspan="2">
+                                    <p:inputText/>
+                                </td>
+                                <td>
+                                    <h:outputLabel value="Remark :"/>
+                                </td>
+                                <td>
+                                    <p:inputTextarea/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="right" colspan="6">
+                                    <p:commandButton value="Delete"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <table border="0">
+                            <tr>
+                                <td>
+                                    <p:dataTable id="barcodeRegisterTable" rowIndexVar="rowIndex">
+                                        <p:column headerText="No" style="width: 20px">
+                                            <p:outputLabel value="#{rowIndex+1}"/>
+                                        </p:column>
+                                        <p:column headerText="Item Code" style="width: 100px">
+                                            <p:outputLabel value="aaaaa"/>
+                                        </p:column>
+                                        <p:column headerText="Item Description" style="width: 150px">
+                                            <p:outputLabel value="bbbbb"/>
+                                        </p:column>
+                                        <p:column headerText="Product Order ID" style="width: 200px">
+                                            <p:outputLabel value="cccc"/>
+                                        </p:column>
+                                        <p:column headerText="Production Date" style="width: 100px">
+                                            <p:outputLabel value="cccc"/>
+                                        </p:column>
+                                        <p:column headerText="Bacth No" style="width: 120px">
+                                            <p:outputLabel value="aaaaa"/>
+                                        </p:column>
+                                        <p:column headerText="Qty" style="width: 80px">
+                                            <p:outputLabel value="bbbbb"/>
+                                        </p:column>
+                                        <p:column headerText="Start Barcode" style="width: 100px">
+                                            <p:outputLabel value="cccc"/>
+                                        </p:column>
+                                        <p:column headerText="Finish Barcode" style="width: 100px">
+                                            <p:outputLabel value="aaaaa"/>
+                                        </p:column>
+                                        <p:column headerText="Remark" style="width: 150px">
+                                            <p:outputLabel value="bbbbb"/>
+                                        </p:column>
+                                        <p:column headerText="Status" style="width: 80px">
+                                            <p:outputLabel value="cccc"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </h:form>
+                <p:dialog id="findProductDialog" widgetVar="findProductDlg" header="Find Product"
+                          onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
+                          modal="true" width="600" height="400">
+                    <ui:include src="../site/dialog/findProductDialog.xhtml"/>
+                </p:dialog>
+            </div>
+        </p:panel>
+    </h:body>
+</f:view>
+</html>
