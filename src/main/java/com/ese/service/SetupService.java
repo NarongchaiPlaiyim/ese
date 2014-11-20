@@ -10,13 +10,13 @@ import java.io.Serializable;
 public class SetupService extends Service implements Serializable {
 
 
-    public SetupService() {
-        init();
-    }
-
-    private void init(){
-        log.debug("-- init()");
-    }
+//    public SetupService() {
+//        init();
+//    }
+//
+//    private void init(){
+//        log.debug("-- init()");
+//    }
 
 
 
