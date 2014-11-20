@@ -3,7 +3,6 @@ package com.ese.beans;
 import com.ese.model.ConveyorLineModel;
 import com.ese.model.WarehouseModel;
 import com.ese.model.view.PalletMeanegementView;
-import com.ese.utils.Utils;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,12 +10,11 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
-@ManagedBean(name = "palletManegement")
+@ManagedBean(name = "palletManagement")
 @ViewScoped
-public class PalletManegementBean extends Bean implements Serializable {
+public class PalletManagementBean extends Bean implements Serializable {
 
     @Getter @Setter
     List<WarehouseModel> warehouseModelList;
