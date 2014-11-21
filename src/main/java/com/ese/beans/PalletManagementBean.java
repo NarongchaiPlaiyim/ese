@@ -56,7 +56,7 @@ public class PalletManagementBean extends Bean implements Serializable {
         workingAreaModelList = workingAreaService.getWorkingAreaList();
 //        conveyorLineModelList = conveyorLineService.getConveyorLineList();
         statusOnShow = 0;
-//        onloadPallet();
+        onloadPallet();
     }
 
     private void onloadPallet(){
@@ -68,7 +68,6 @@ public class PalletManagementBean extends Bean implements Serializable {
         log.debug("changeOn : {}", statusOnShow);
         palletMeanegementViewList = palletService.findByChang(statusOnShow, warehouseMode.getId(), workingAreaModel.getId());
     }
-
 
     public void test(){
         log.debug("palletMeanegementView : {}", palletMeanegementView.toString());
