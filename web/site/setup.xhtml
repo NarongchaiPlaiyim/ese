@@ -33,10 +33,14 @@
                                                               <h:outputText value="Mode(New/Edit)"/>
                                                           </td>
                                                           <td>
-                                                              <p:commandButton value="New" styleClass="medium" style="width: 80px"/>
+                                                              <p:commandButton value="New" styleClass="medium" style="width: 80px"
+                                                                               update="@form"
+                                                                               action="#{setup.onClickNewButtonTAB()}"/>
                                                           </td>
                                                           <td>
-                                                              <p:commandButton value="Save" styleClass="medium" style="width: 80px"/>
+                                                              <p:commandButton value="Save" styleClass="medium" style="width: 80px"
+                                                                               update="@form"
+                                                                               action="#{setup.onClickSaveButtonTAB()}"/>
                                                           </td>
                                                       </tr>
                                                   </table>
@@ -99,7 +103,8 @@
                                                               <h:outputText value="Location Name*"/>
                                                           </td>
                                                           <td colspan="5">
-                                                              <p:inputText style="min-width: 200px; width: 200px; max-width: 200px;"
+                                                              <p:inputText id = "locationName"
+                                                                           style="min-width: 200px; width: 200px; max-width: 200px;"
                                                                            value="#{setup.setupView.locationName}"/>
                                                           </td>
                                                       </tr>
@@ -119,7 +124,10 @@
                                                       </tr>
                                                       <tr>
                                                           <td class="right" colspan="6">
-                                                              <p:commandButton value="Delete" styleClass="medium" style="width: 80px"/>
+                                                              <p:commandButton value="Delete" styleClass="medium" style="width: 80px"
+                                                                               update="@form"
+                                                                               action="#{setup.onClickDeleteButtonTAB()}"
+                                                                      />
                                                           </td>
                                                       </tr>
                                                   </table>
@@ -127,23 +135,39 @@
                                           </tr>
                                           <tr>
                                               <td colspan="4">
-                                                  <p:dataTable id="stockTable" rowIndexVar="rowIndex2">
+                                                  <p:dataTable id="warehouseAndLocationTable"
+                                                               rowIndexVar="rowIndex"
+                                                               var="warehouseAndLocationView"
+                                                               rowKey="#{warehouseAndLocationView.id}"
+                                                               value="#{setup.warehouseAndLocationViewList}"
+                                                               rows="10"
+                                                               paginator="true"
+                                                               rowsPerPageTemplate="10,20,40,60"
+                                                               selectionMode="single"
+                                                               selection="#{setup.warehouseAndLocationView}"
+                                                               styleClass="full_table">
+                                                      <p:ajax event="rowSelect" listener="#{setup.test()}"/>
                                                       <p:column headerText="No" style="width: 20px">
-                                                          <p:outputLabel value="#{rowIndex2+1}"/>
+                                                          <h:outputLabel value="#{rowIndex+1}"/>
                                                       </p:column>
                                                       <p:column headerText="warehouse" style="width: 200px">
-                                                          <p:outputLabel value="aaaaa"/>
+                                                          <h:outputLabel value="#{warehouseAndLocationView.warehouseId}"/>
                                                       </p:column>
                                                       <p:column headerText="Location" style="width: 200px">
-                                                          <p:outputLabel value="bbbbb"/>
+                                                          <h:outputLabel value="#{warehouseAndLocationView.locationName}"/>
                                                       </p:column>
                                                       <p:column headerText="Capacities (Pallet)" style="width: 200px">
-                                                          <p:outputLabel value="cccc"/>
+                                                          <h:outputLabel value="#{warehouseAndLocationView.capacities}"/>
                                                       </p:column>
                                                       <p:column headerText="Remark">
-                                                          <p:outputLabel value="dddd"/>
+                                                          <h:outputLabel value="#{warehouseAndLocationView.remark}"/>
                                                       </p:column>
                                                   </p:dataTable>
+
+                                                  <!--<h3 style="margin-top: 0">Basic PickList</h3>-->
+                                                  <!--<p:pickList id="pickList" value="#{setup.warehouseAndLocationViewList}"-->
+                                                              <!--var="cities" itemLabel="#{cities.locationCode}"-->
+                                                              <!--itemValue="#{cities.id}" />-->
                                               </td>
                                           </tr>
                                       </table>
@@ -158,10 +182,14 @@
                                                               <h:outputText value="Mode(New/Edit)"/>
                                                           </td>
                                                           <td>
-                                                              <p:commandButton value="New" styleClass="medium" style="width: 80px"/>
+                                                              <p:commandButton value="New" styleClass="medium" style="width: 80px"
+                                                                               update="@form"
+                                                                               action="#{setup.onClickNewButtonTAB2()}"/>
                                                           </td>
                                                           <td>
-                                                              <p:commandButton value="Save" styleClass="medium" style="width: 80px"/>
+                                                              <p:commandButton value="Save" styleClass="medium" style="width: 80px"
+                                                                               update="@form"
+                                                                               action="#{setup.onClickSaveButtonTAB2()}"/>
                                                           </td>
                                                       </tr>
                                                   </table>
@@ -220,25 +248,33 @@
                                                       </tr>
                                                       <tr>
                                                           <td class="right" colspan="6">
-                                                              <p:commandButton value="Delete" styleClass="medium" style="width: 80px"/>
+                                                              <p:commandButton value="Delete" styleClass="medium" style="width: 80px"
+                                                                               update="@form"
+                                                                               action="#{setup.onClickDeleteButtonTAB2()}"
+                                                                      />
                                                           </td>
                                                       </tr>
                                                       <tr>
                                                           <td colspan="6">
-                                                              <p:dataTable id="warehouseTable" rowIndexVar="rowIndex">
-                                                                  <p:column headerText="No" style="width: 20px">
-                                                                      <p:outputLabel value="#{rowIndex+1}"/>
-                                                                  </p:column>
-                                                                  <p:column headerText="Type" style="width: 200px">
-                                                                      <p:outputLabel value="aaaaa"/>
-                                                                  </p:column>
-                                                                  <p:column headerText="Code" style="width: 200px">
-                                                                      <p:outputLabel value="bbbbb"/>
-                                                                  </p:column>
-                                                                  <p:column headerText="Note">
-                                                                      <p:outputLabel value="cccc"/>
-                                                                  </p:column>
-                                                              </p:dataTable>
+                                                              <!--<p:dataTable id="warehouseTable"-->
+                                                                           <!--var="view"-->
+                                                                           <!--rowKey="#{view}"-->
+                                                                           <!--value="#{setup.warehouseAndLocationViewList}"-->
+                                                                           <!--paginator="false"-->
+                                                                           <!--rowIndexVar="rowIndex">-->
+                                                                  <!--<p:column headerText="No" style="width: 20px">-->
+                                                                      <!--<h:outputLabel value="#{rowIndex+1}"/>-->
+                                                                  <!--</p:column>-->
+                                                                  <!--<p:column headerText="Type" style="width: 200px">-->
+                                                                      <!--<h:outputLabel value="aaaaa"/>-->
+                                                                  <!--</p:column>-->
+                                                                  <!--<p:column headerText="Code" style="width: 200px">-->
+                                                                      <!--<h:outputLabel value="bbbbb"/>-->
+                                                                  <!--</p:column>-->
+                                                                  <!--<p:column headerText="Note">-->
+                                                                      <!--<h:outputLabel value="cccc"/>-->
+                                                                  <!--</p:column>-->
+                                                              <!--</p:dataTable>-->
                                                           </td>
                                                       </tr>
                                                   </table>
@@ -255,7 +291,7 @@
 
         <p:dialog id="warehouseDialog" widgetVar="warehouseDlg" header="Add/Edit warehouse"
                   onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
-                  modal="true" width="600" height="400">
+                  modal="true" width="700" height="400">
             <ui:include src="../site/dialog/warehouseDialog.xhtml"/>
         </p:dialog>
     </h:body>
