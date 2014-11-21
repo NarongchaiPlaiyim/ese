@@ -8,12 +8,13 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+
 @Getter
 @Setter
 @Entity
-@Table(name = "inv_transaction")
+@Table(name = "forcing_line")
 @Proxy(lazy=false)
-public class InvTransactionModel {
+public class ForcingLineModel {
     @Id
     private int id;
 }

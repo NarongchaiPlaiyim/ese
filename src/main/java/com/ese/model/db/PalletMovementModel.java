@@ -11,9 +11,9 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @Entity
-@Table(name = "inv_transaction")
+@Table(name = "pallet_movement")
 @Proxy(lazy=false)
-public class InvTransactionModel {
+public class PalletMovementModel extends AbstractModel{
     @Id
     private int id;
 }

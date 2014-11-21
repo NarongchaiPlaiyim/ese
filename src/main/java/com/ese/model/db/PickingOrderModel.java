@@ -11,9 +11,9 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @Entity
-@Table(name = "inv_transaction")
+@Table(name = "picking_order")
 @Proxy(lazy=false)
-public class InvTransactionModel {
+public class PickingOrderModel {
     @Id
     private int id;
 }
