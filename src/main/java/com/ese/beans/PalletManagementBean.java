@@ -3,7 +3,6 @@ package com.ese.beans;
 import com.ese.model.db.ConveyorLineModel;
 import com.ese.model.db.WarehouseModel;
 import com.ese.model.db.WorkingAreaModel;
-//import com.ese.model.view.PalletMeanagementView;
 import com.ese.model.view.PalletManagementView;
 import lombok.Getter;
 import lombok.Setter;
