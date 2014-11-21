@@ -15,7 +15,7 @@ import java.util.Date;
 @Entity
 @Table(name = "warehouse")
 @Proxy(lazy=false)
-public class WarehouseModel {
+public class WarehouseModel extends AbstractModel{
     @Id
     private int id;
 
@@ -27,20 +27,6 @@ public class WarehouseModel {
 
     @Column(name = "remark")
     private String remark;
-
-    @Column(name = "create_by")
-    private int createBy;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "create_date")
-    private Date createDate;
-
-    @Column(name = "update_by")
-    private int updateBy;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "update_date")
-    private Date updateDate;
 
     @Column(name = "isvalid", length = 1, nullable = false, columnDefinition = "int default 0")
     private int isvalid;
@@ -58,10 +44,6 @@ public class WarehouseModel {
                 .append("warehouseCode", warehouseCode)
                 .append("warehouseName", warehouseName)
                 .append("remark", remark)
-                .append("createBy", createBy)
-                .append("createDate", createDate)
-                .append("updateBy", updateBy)
-                .append("updateDate", updateDate)
                 .append("isvalid", isvalid)
                 .append("status", status)
                 .append("version", version)

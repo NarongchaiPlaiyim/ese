@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @Table(name = "location")
 @Proxy(lazy=false)
-public class LocationModel {
+public class LocationModel extends AbstractModel{
     @Id
     private int id;
 
@@ -41,18 +41,6 @@ public class LocationModel {
     @Column(name = "status")
     private String status;
 
-    @Column(name = "create_by")
-    private int createBy;
-
-    @Column(name = "create_date")
-    private Date createDate;
-
-    @Column(name = "update_by")
-    private int updateBy;
-
-    @Column(name = "update_date")
-    private Date updateDate;
-
     @Column(name = "isvalid", length = 1, nullable = false, columnDefinition = "int default 0")
     private int isvalid;
 
@@ -76,10 +64,6 @@ public class LocationModel {
                 .append("remark", remark)
                 .append("qty", qty)
                 .append("status", status)
-                .append("createBy", createBy)
-                .append("createDate", createDate)
-                .append("updateBy", updateBy)
-                .append("updateDate", updateDate)
                 .append("isvalid", isvalid)
                 .append("version", version)
                 .append("reservedQty", reservedQty)

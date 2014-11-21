@@ -25,9 +25,9 @@ public class PalletManagementView {
     private int qty;
     private int reservedQty;
     private String status;
-    private String createBy;
+    private int createBy;
     private Date createDate;
-    private String updateBy;
+    private int updateBy;
     private Date updateDate;
     private int isValid;
     private int version;

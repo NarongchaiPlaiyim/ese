@@ -16,7 +16,7 @@ import java.util.List;
 @Entity
 @Table(name = "pallet")
 @Proxy(lazy=false)
-public class PalletModel {
+public class PalletModel extends AbstractModel{
     @Id
     private int id;
 
@@ -43,20 +43,6 @@ public class PalletModel {
 
     @Column(name = "status")
     private Integer status;
-
-    @Column(name = "create_by")
-    private String createBy;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "create_date")
-    private Date createDate;
-
-    @Column(name = "update_by")
-    private String updateBy;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "update_date")
-    private Date updateDate;
 
     @Column(name = "isvalid", length = 1, nullable = false, columnDefinition = "int default 0")
     private int isValid;
@@ -88,10 +74,6 @@ public class PalletModel {
                 .append("tagPrint", tagPrint)
                 .append("qty", qty)
                 .append("status", status)
-                .append("createBy", createBy)
-                .append("createDate", createDate)
-                .append("updateBy", updateBy)
-                .append("updateDate", updateDate)
                 .append("isValid", isValid)
                 .append("version", version)
                 .append("capacity", capacity)
