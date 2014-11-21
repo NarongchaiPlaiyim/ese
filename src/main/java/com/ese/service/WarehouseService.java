@@ -25,7 +25,7 @@ public class WarehouseService extends Service implements Serializable {
         }
     }
 
-    public WarehouseModel findByid(int warehouseId){
+    public WarehouseModel findById(int warehouseId){
         try {
             return warehouseDAO.findByID(warehouseId);
         } catch (Exception e){

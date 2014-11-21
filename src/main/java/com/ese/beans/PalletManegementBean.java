@@ -3,7 +3,7 @@ package com.ese.beans;
 import com.ese.model.db.ConveyorLineModel;
 import com.ese.model.db.WarehouseModel;
 import com.ese.model.db.WorkingAreaModel;
-import com.ese.model.view.PalletMeanagementView;
+//import com.ese.model.view.PalletMeanagementView;
 import com.ese.utils.Utils;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,10 +27,10 @@ public class PalletManegementBean extends Bean implements Serializable {
     List<ConveyorLineModel> conveyorLineModelList;
     @Getter
     ConveyorLineModel conveyorLineModel;
-    @Getter @Setter
-    List<PalletMeanagementView> palletMeanegementViewList;
-    @Getter @Setter
-    PalletMeanagementView palletMeanegementView;
+//    @Getter @Setter
+//    List<PalletMeanagementView> palletMeanegementViewList;
+//    @Getter @Setter
+//    PalletMeanagementView palletMeanegementView;
     @Getter
     WorkingAreaModel workingAreaModel;
     @Getter @Setter
@@ -43,12 +43,12 @@ public class PalletManegementBean extends Bean implements Serializable {
 
     @PostConstruct
     public void onCreattion(){
-        log.debug("onCreattion().");
-        palletMeanegementView = new PalletMeanagementView();
-        warehouseMode = new WarehouseModel();
-        conveyorLineModel = new ConveyorLineModel();
-        workingAreaModel = new WorkingAreaModel();
-        init();
+//        log.debug("onCreattion().");
+//        palletMeanegementView = new PalletMeanagementView();
+//        warehouseMode = new WarehouseModel();
+//        conveyorLineModel = new ConveyorLineModel();
+//        workingAreaModel = new WorkingAreaModel();
+//        init();
     }
 
     private void init(){
@@ -57,21 +57,21 @@ public class PalletManegementBean extends Bean implements Serializable {
         workingAreaModelList = workingAreaService.getWorkingAreaList();
 //        conveyorLineModelList = conveyorLineService.getConveyorLineList();
         statusOnShow = 0;
-        onloadPallet();
+//        onloadPallet();
     }
 
-    private void onloadPallet(){
-        log.debug("onloadPallet(). ");
-        palletMeanegementViewList = palletService.findPalletJoinLocation();
-    }
-
-    public void onfind(){
-        log.debug("changeOn : {}", statusOnShow);
-        palletMeanegementViewList = palletService.findByChang(statusOnShow, warehouseMode.getId(), workingAreaModel.getId());
-    }
-
-
-    public void test(){
-        log.debug("palletMeanegementView : {}", palletMeanegementView.toString());
-    }
+//    private void onloadPallet(){
+//        log.debug("onloadPallet(). ");
+//        palletMeanegementViewList = palletService.findPalletJoinLocation();
+//    }
+//
+//    public void onfind(){
+//        log.debug("changeOn : {}", statusOnShow);
+//        palletMeanegementViewList = palletService.findByChang(statusOnShow, warehouseMode.getId(), workingAreaModel.getId());
+//    }
+//
+//
+//    public void test(){
+//        log.debug("palletMeanegementView : {}", palletMeanegementView.toString());
+//    }
 }

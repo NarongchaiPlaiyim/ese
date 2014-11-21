@@ -8,18 +8,25 @@
     <h:head>
         <h:outputStylesheet name="css/style.css" />
     </h:head>
+    <h:form id="warehouseDialogForm">
     <p:panel id="warehousePanel" styleClass="panel-dialog">
         <table border="0">
             <tr>
                 <td colspan="2">
-                    <table border="0" class="top" style="width: 100%">
+                    <table border="0" class="top">
                         <tr>
-                            <td class="right" style="width: 370px">
+                            <td style="width: 860px" class="right">
                                 <h:outputText value="Mode(New/Edit)"/>
                             </td>
-                            <td class="right">
-                                <p:commandButton value="New" styleClass="medium" style="width: 80px"/>
-                                <p:commandButton value="Save" styleClass="medium" style="width: 80px"/>
+                            <td>
+                                <p:commandButton value="New" styleClass="medium" style="width: 80px"
+                                                 update="@form"
+                                                 action="#{setup.onClickNewButtonTABDialog}"/>
+                            </td>
+                            <td>
+                                <p:commandButton value="Save" styleClass="medium" style="width: 80px"
+                                                 update="@form"
+                                                 action="#{setup.onClickSaveButtonTABDialog()}"/>
                             </td>
                         </tr>
                     </table>
@@ -28,32 +35,37 @@
             <tr>
                 <td>
                     <table border="0">
+
+                        <tr >
+                            <td style="min-width: 100px; width: 100px; max-width: 100px;" class="left" />
+                            <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
+                            <td style="min-width: 100px; width: 100px; max-width: 100px;" class="center" />
+                            <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
+                        </tr>
+
                         <tr>
                             <td>
-                                <h:outputLabel value="warehouse Code :"/>
+                                <h:outputLabel value="Warehouse Code"/>
                             </td>
                             <td>
-                                <p:inputText/>
+                                <p:inputText style="min-width: 200px; width: 200px; max-width: 200px;"
+                                             value="#{setup.warehouseDialogView.warehouseCode}" />
+                            </td>
+                            <td>
+                                <h:outputLabel value="Remark"/>
+                            </td>
+                            <td>
+                                <p:inputTextarea style="width: 200px; max-width: 200px;min-width: 200px; height: 50px;"
+                                                 value="#{setup.warehouseDialogView.remark}"/>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <h:outputLabel value="warehouse Name :"/>
+                                <h:outputLabel value="Warehouse Name"/>
                             </td>
                             <td>
-                                <p:inputText/>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-                <td class="right">
-                    <table border="0">
-                        <tr>
-                            <td class="top">
-                                <h:outputLabel value="Remark :"/>
-                            </td>
-                            <td class="top">
-                                <p:inputTextarea style="width: 180px"/>
+                                <p:inputText style="min-width: 200px; width: 200px; max-width: 200px;"
+                                             value="#{setup.warehouseDialogView.warehouseName}" />
                             </td>
                         </tr>
                     </table>
@@ -61,28 +73,37 @@
             </tr>
             <tr>
                 <td colspan="2" class="right">
-                    <p:commandButton value="Delete"/>
+                    <p:commandButton value="Delete" styleClass="medium" style="width: 80px"
+                                     update="@form"
+                                     action="#{setup.onClickDeleteButtonTABDialog()}"
+                            />
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
-                    <p:dataTable id="warehouseTable" rowIndexVar="rowIndex">
-                        <p:column headerText="No">
-                            <p:outputLabel value="#{rowIndex+1}"/>
-                        </p:column>
-                        <p:column headerText="warehouse ID">
-                            <p:outputLabel value="aaaaa"/>
-                        </p:column>
-                        <p:column headerText="warehouse Name">
-                            <p:outputLabel value="bbbbb"/>
-                        </p:column>
-                        <p:column headerText="Remark">
-                            <p:outputLabel value="cccc"/>
-                        </p:column>
-                    </p:dataTable>
+                    <!--<p:dataTable id="warehouseTable"-->
+                                 <!--var="view"-->
+                                 <!--rowKey="#{view}"-->
+                                 <!--value="#{setup.warehouseAndLocationViewList}"-->
+                                 <!--paginator="false"-->
+                                 <!--rowIndexVar="rowIndex">-->
+                        <!--<p:column headerText="No">-->
+                            <!--<p:outputLabel value="#{rowIndex+1}"/>-->
+                        <!--</p:column>-->
+                        <!--<p:column headerText="warehouse ID">-->
+                            <!--<p:outputLabel value="#{view.warehouseId}"/>-->
+                        <!--</p:column>-->
+                        <!--<p:column headerText="warehouse Name">-->
+                            <!--<p:outputLabel value="bbbbb"/>-->
+                        <!--</p:column>-->
+                        <!--<p:column headerText="Remark">-->
+                            <!--<p:outputLabel value="cccc"/>-->
+                        <!--</p:column>-->
+                    <!--</p:dataTable>-->
                 </td>
             </tr>
         </table>
     </p:panel>
+    </h:form>
 </f:view>
 </html>

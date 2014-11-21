@@ -1,5 +1,6 @@
 package com.ese.model.view;
 
+import com.ese.model.view.dilog.WarehouseDialogView;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -23,6 +24,8 @@ public class SetupView {
     private String code;
     private String note;
     private String remark2;
+
+
 
     public SetupView() {
         init();
