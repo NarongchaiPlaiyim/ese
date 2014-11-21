@@ -7,6 +7,6 @@ import java.io.Serializable;
 
 @Component
 @Transactional
-public class ItemService extends Service implements Serializable {
+public class ItemService extends Service{
 
 }

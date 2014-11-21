@@ -14,7 +14,7 @@ import java.util.List;
 
 @Component
 @Transactional
-public class LoginService extends Service implements Serializable{
+public class LoginService extends Service{
     @Resource private StaffDAO staffDAO;
     @Getter StaffModel staffModel;
 

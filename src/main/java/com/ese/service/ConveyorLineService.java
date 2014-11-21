@@ -1,26 +1,24 @@
 package com.ese.service;
 
 import com.ese.model.db.ConveyorLineModel;
-import com.ese.model.dao.CoveyorLineDAO;
+import com.ese.model.dao.ConveyorLineDAO;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
 @Transactional
-public class ConveyorLineService extends Service implements Serializable {
+public class ConveyorLineService extends Service{
 
-    @Resource
-    CoveyorLineDAO coveyorLineDAO;
+    @Resource private ConveyorLineDAO conveyorLineDAO;
 
     public List<ConveyorLineModel> getConveyorLineList(){
         log.debug("getConveyorList()");
         try {
-            return coveyorLineDAO.findAll();
+            return conveyorLineDAO.findAll();
         } catch (Exception e){
             log.debug("Exception : {}", e);
             return new ArrayList<ConveyorLineModel>();
@@ -30,9 +28,9 @@ public class ConveyorLineService extends Service implements Serializable {
     public ConveyorLineModel findById(int conveyorId){
         log.debug("findById()");
         try{
-            return coveyorLineDAO.findByID(conveyorId);
+            return conveyorLineDAO.findByID(conveyorId);
         } catch (Exception e){
-            log.debug("Exception : {}", e);
+            log.error("Exception : {}", e);
             return new ConveyorLineModel();
         }
     }

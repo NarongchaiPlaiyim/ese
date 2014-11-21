@@ -10,17 +10,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
 @Transactional
-public class PalletService extends Service implements Serializable {
-    @Resource
-    PalletDAO palletDAO;
-    @Resource
-    PalletManagementTransform palletManegementTranform;
+public class PalletService extends Service{
+    @Resource private PalletDAO palletDAO;
+    @Resource private PalletManagementTransform palletManagementTransform;
 
     public List<PalletManagementView> findPalletJoinLocation(){
         log.debug("findPalletJoinLocation().");
@@ -30,7 +27,7 @@ public class PalletService extends Service implements Serializable {
 
         if (Utils.isSafetyList(palletModels)){
             log.debug("palletModels size. {}", palletModels);
-            palletMeanegementViewList = palletManegementTranform.tranformToViewList(palletModels);
+            palletMeanegementViewList = palletManagementTransform.tranformToViewList(palletModels);
         }
 
         return palletMeanegementViewList;
@@ -44,7 +41,7 @@ public class PalletService extends Service implements Serializable {
 
         if (Utils.isSafetyList(palletModels)){
             log.debug("palletModels size. {}", palletModels);
-            palletMeanegementViewList = palletManegementTranform.tranformToViewList(palletModels);
+            palletMeanegementViewList = palletManagementTransform.tranformToViewList(palletModels);
         }
 
         return palletMeanegementViewList;

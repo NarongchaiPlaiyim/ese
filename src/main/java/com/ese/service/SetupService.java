@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 @Component
 @Transactional
-public class SetupService extends Service implements Serializable {
+public class SetupService extends Service{
     @Resource private ProfileDAO profileDAO;
 
     public SetupService() {

@@ -12,7 +12,7 @@ import java.util.List;
 
 @Component
 @Transactional
-public class WarehouseService extends Service implements Serializable {
+public class WarehouseService extends Service{
     @Resource private WarehouseDAO warehouseDAO;
 
     public List<WarehouseModel> getWarehouseList(){
