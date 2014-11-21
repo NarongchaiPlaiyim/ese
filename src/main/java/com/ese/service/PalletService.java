@@ -40,7 +40,7 @@ public class PalletService extends Service{
         List<PalletModel> palletModels = palletDAO.findChang(status, warehouse, conveyorLine);
 
         if (Utils.isSafetyList(palletModels)){
-            log.debug("palletModels size. {}", palletModels);
+            log.debug("palletModels size. {}", palletModels.size());
             palletMeanegementViewList = palletManagementTransform.tranformToViewList(palletModels);
         }
 

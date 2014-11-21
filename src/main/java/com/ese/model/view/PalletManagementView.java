@@ -11,15 +11,16 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
 public class PalletManagementView {
     private int id;
     private String palletBarcode;
-    private WarehouseModel warehouseModel;
-    private ItemModel itemModel;
-    private LocationModel locationModel;
+    private List<WarehouseView> warehouseViewList;
+    private List<ItemView> itemViewList;
+    private List<LocationView> locationViewList;
     private int tagPrint;
     private int qty;
     private int reservedQty;
@@ -39,9 +40,9 @@ public class PalletManagementView {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("id", id)
                 .append("palletBarcode", palletBarcode)
-                .append("warehouseModel", warehouseModel)
-                .append("itemModel", itemModel)
-                .append("locationModel", locationModel)
+                .append("warehouseViewList", warehouseViewList)
+                .append("itemViewList", itemViewList)
+                .append("locationViewList", locationViewList)
                 .append("tagPrint", tagPrint)
                 .append("qty", qty)
                 .append("reservedQty", reservedQty)

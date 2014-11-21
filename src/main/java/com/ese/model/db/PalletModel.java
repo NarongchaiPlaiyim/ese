@@ -9,6 +9,7 @@ import org.hibernate.annotations.Proxy;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,17 +23,17 @@ public class PalletModel {
     @Column(name = "pallet_barcode")
     private String palletBarcode;
 
-    @OneToOne
+    @OneToMany
     @JoinColumn(name = "warehouse_id")
-    private WarehouseModel wherehouseId;
+    private List<WarehouseModel> wherehouseId;
 
-    @OneToOne
+    @OneToMany
     @JoinColumn(name = "item_id")
-    private ItemModel itemId;
+    private List<ItemModel> itemId;
 
-    @OneToOne
+    @OneToMany
     @JoinColumn(name = "location_id")
-    private LocationModel locationId;
+    private List<LocationModel> locationId;
 
     @Column(name = "tagprint", nullable=false, columnDefinition="int default 0")
     private Integer tagPrint;
@@ -57,8 +58,8 @@ public class PalletModel {
     @Column(name = "update_date")
     private Date updateDate;
 
-    @Column(name = "isvalid", nullable=false, columnDefinition="int default 0")
-    private Integer isValid;
+    @Column(name = "isvalid", length = 1, nullable = false, columnDefinition = "int default 0")
+    private int isValid;
 
     @Column(name = "version", nullable=false, columnDefinition="int default 0")
     private Integer version;

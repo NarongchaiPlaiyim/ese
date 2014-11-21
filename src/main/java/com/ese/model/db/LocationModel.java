@@ -8,6 +8,7 @@ import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,9 +25,9 @@ public class LocationModel {
     @Column(name = "location_name")
     private String locationName;
 
-    @OneToOne
+    @OneToMany
     @JoinColumn(name = "warehouse_id")
-    private WarehouseModel warehouseId;
+    private List<WarehouseModel> warehouseId;
 
     @Column(name = "capacity")
     private int capacity;
@@ -41,18 +42,18 @@ public class LocationModel {
     private String status;
 
     @Column(name = "create_by")
-    private String createBy;
+    private int createBy;
 
     @Column(name = "create_date")
     private Date createDate;
 
     @Column(name = "update_by")
-    private String updateBy;
+    private int updateBy;
 
     @Column(name = "update_date")
     private Date updateDate;
 
-    @Column(name = "isvalid", nullable=false, columnDefinition="int default 0")
+    @Column(name = "isvalid", length = 1, nullable = false, columnDefinition = "int default 0")
     private int isvalid;
 
     @Column(name = "version", nullable=false, columnDefinition="int default 0")
@@ -61,7 +62,7 @@ public class LocationModel {
     @Column(name = "reserved_qty")
     private int reservedQty;
 
-    @Column(name = "ismix", nullable=false, columnDefinition="int default 0")
+    @Column(name = "ismix", length = 1, nullable = false, columnDefinition = "int default 0")
     private int ismix;
 
     @Override

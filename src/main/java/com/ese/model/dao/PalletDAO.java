@@ -20,10 +20,6 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
         log.debug("findOnloadPallet().");
         try {
             Criteria criteria = getCriteria();
-//            criteria.setFetchMode("locationId", FetchMode.EAGER);
-//            criteria.setFetchMode("wherehouseId", FetchMode.EAGER);
-//            criteria.setFetchMode("itemId", FetchMode.EAGER);
-//            criteria.setFetchMode("conveyorLine", FetchMode.EAGER);
             criteria.add(Restrictions.eq("status", 2));
             List<PalletModel> palletModelList = criteria.list();
             log.debug("findOnloadPallet Size : {}", palletModelList.size());
@@ -38,10 +34,6 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
         log.debug("findUnPrint().");
         try {
             Criteria criteria = getCriteria();
-//            criteria.setFetchMode("locationId", FetchMode.EAGER);
-//            criteria.setFetchMode("wherehouseId", FetchMode.EAGER);
-//            criteria.setFetchMode("itemId", FetchMode.EAGER);
-//            criteria.setFetchMode("conveyorLine", FetchMode.EAGER);
 
             if (!Utils.isZero(warehouse)){
                 criteria.add(Restrictions.eq("wherehouseId.id", warehouse));

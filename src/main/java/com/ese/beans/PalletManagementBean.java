@@ -72,4 +72,8 @@ public class PalletManagementBean extends Bean implements Serializable {
     public void test(){
         log.debug("palletMeanegementView : {}", palletMeanegementView.toString());
     }
+
+    public void onFindLocation(){
+
+    }
 }
