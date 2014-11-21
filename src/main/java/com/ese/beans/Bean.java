@@ -22,6 +22,6 @@ public abstract class Bean implements Serializable {
     @ManagedProperty("#{mtLogger}") protected Logger mtLogger;
     @ManagedProperty("#{warehouseService}") protected WarehouseService warehouseService;
     @ManagedProperty("#{conveyorLineService}") protected ConveyorLineService conveyorLineService;
-    @ManagedProperty("#{palletService}") protected PalletService palletService;
+
     @ManagedProperty("#{workingAreaService}") protected WorkingAreaService workingAreaService;
 }

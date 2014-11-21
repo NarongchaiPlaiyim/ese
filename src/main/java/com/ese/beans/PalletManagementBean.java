@@ -4,45 +4,37 @@ import com.ese.model.db.ConveyorLineModel;
 import com.ese.model.db.WarehouseModel;
 import com.ese.model.db.WorkingAreaModel;
 import com.ese.model.view.PalletManagementView;
+import com.ese.service.PalletService;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@Setter
 @ManagedBean(name = "palletManegement")
 @ViewScoped
 public class PalletManagementBean extends Bean implements Serializable {
-
-    @Getter @Setter
-    List<WarehouseModel> warehouseModelList;
-    @Getter
-    WarehouseModel warehouseMode;
-    @Getter @Setter
-    List<ConveyorLineModel> conveyorLineModelList;
-    @Getter
-    ConveyorLineModel conveyorLineModel;
-    @Getter @Setter
-    List<PalletManagementView> palletMeanegementViewList;
-    @Getter @Setter
-    PalletManagementView palletMeanegementView;
-    @Getter
-    WorkingAreaModel workingAreaModel;
-    @Getter @Setter
-    List<WorkingAreaModel> workingAreaModelList;
-
-    @Getter @Setter
-    int statusOnShow;
-    @Getter @Setter
-    String textTest;
+    @ManagedProperty("#{palletService}") private PalletService palletService;
+    private List<WarehouseModel> warehouseModelList;
+    private WarehouseModel warehouseMode;
+    private List<ConveyorLineModel> conveyorLineModelList;
+    private ConveyorLineModel conveyorLineModel;
+    private List<PalletManagementView> palletMeanegementViewList;
+    private PalletManagementView palletMeanegementView;
+    private WorkingAreaModel workingAreaModel;
+    private List<WorkingAreaModel> workingAreaModelList;
+    private int statusOnShow;
+    private String textTest;
 
     @PostConstruct
-    public void onCreattion(){
-        log.debug("onCreattion().");
+    public void onCreation(){
+        log.debug("onCreation().");
         palletMeanegementView = new PalletManagementView();
         warehouseMode = new WarehouseModel();
         conveyorLineModel = new ConveyorLineModel();
@@ -59,18 +51,18 @@ public class PalletManagementBean extends Bean implements Serializable {
 //        onloadPallet();
     }
 
-    private void onloadPallet(){
-        log.debug("onloadPallet(). ");
+    private void onLoadPallet(){
+        log.debug("onLoadPallet(). ");
         palletMeanegementViewList = palletService.findPalletJoinLocation();
     }
 
-    public void onfind(){
+    public void onFind(){
         log.debug("changeOn : {}", statusOnShow);
         palletMeanegementViewList = palletService.findByChang(statusOnShow, warehouseMode.getId(), workingAreaModel.getId());
     }
 
 
     public void test(){
-        log.debug("palletMeanegementView : {}", palletMeanegementView.toString());
+        log.debug("palletManagementView : {}", palletMeanegementView.toString());
     }
 }
