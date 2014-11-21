@@ -2,7 +2,7 @@ package com.ese.transform;
 
 import com.ese.model.db.PalletModel;
 //import com.ese.model.view.PalletMeanagementView;
-import com.ese.model.view.PalletMeanagementView;
+import com.ese.model.view.PalletManagementView;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,21 +13,21 @@ import java.util.List;
 @Transactional
 public class PalletManagementTransform extends Transform {
 
-    public List<PalletMeanagementView> tranformToViewList(List<PalletModel> palletModelList){
+    public List<PalletManagementView> tranformToViewList(List<PalletModel> palletModelList){
         log.debug("tranformToViewList().");
-        List<PalletMeanagementView> palletMeanegementViewList = new ArrayList<PalletMeanagementView>();
+        List<PalletManagementView> palletMeanegementViewList = new ArrayList<PalletManagementView>();
 
         for (PalletModel model : palletModelList){
-            PalletMeanagementView palletMeanegementView = tranformToView(model);
+            PalletManagementView palletMeanegementView = tranformToView(model);
             palletMeanegementViewList.add(palletMeanegementView);
         }
 
         return palletMeanegementViewList;
     }
 
-    public PalletMeanagementView tranformToView(PalletModel palletModel){
+    public PalletManagementView tranformToView(PalletModel palletModel){
         log.debug("tranformToView().");
-        PalletMeanagementView palletMeanegementView = new PalletMeanagementView();
+        PalletManagementView palletMeanegementView = new PalletManagementView();
 
         palletMeanegementView.setId(palletModel.getId());
         palletMeanegementView.setPalletBarcode(palletModel.getPalletBarcode());

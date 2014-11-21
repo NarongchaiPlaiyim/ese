@@ -4,29 +4,28 @@ import com.ese.model.db.ConveyorLineModel;
 import com.ese.model.db.WarehouseModel;
 import com.ese.model.db.WorkingAreaModel;
 //import com.ese.model.view.PalletMeanagementView;
-import com.ese.model.view.PalletMeanagementView;
+import com.ese.model.view.PalletManagementView;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import java.io.Serializable;
 import java.util.List;
 
 @Getter
 @Setter
 @ManagedBean(name = "palletManegement")
 @ViewScoped
-public class PalletManagementBean extends Bean implements Serializable {
+public class PalletManagementBean extends Bean{
 
 
     private List<WarehouseModel> warehouseModelList;
     private WarehouseModel warehouseMode;
     private List<ConveyorLineModel> conveyorLineModelList;
     private ConveyorLineModel conveyorLineModel;
-    private List<PalletMeanagementView> palletMeanagementViews;
-    private PalletMeanagementView palletMeanegementView;
+    private List<PalletManagementView> palletManagementViews;
+    private PalletManagementView palletMeanegementView;
     private WorkingAreaModel workingAreaModel;
     private List<WorkingAreaModel> workingAreaModelList;
     private int statusOnShow;
@@ -35,7 +34,7 @@ public class PalletManagementBean extends Bean implements Serializable {
     @PostConstruct
     public void onCreation(){
         log.debug("onCreation().");
-        palletMeanegementView = new PalletMeanagementView();
+        palletMeanegementView = new PalletManagementView();
         warehouseMode = new WarehouseModel();
         conveyorLineModel = new ConveyorLineModel();
         workingAreaModel = new WorkingAreaModel();
@@ -53,12 +52,12 @@ public class PalletManagementBean extends Bean implements Serializable {
 
     private void onloadPallet(){
         log.debug("onloadPallet(). ");
-        palletMeanagementViews = palletService.findPalletJoinLocation();
+        palletManagementViews = palletService.findPalletJoinLocation();
     }
 
     public void onfind(){
         log.debug("changeOn : {}", statusOnShow);
-        palletMeanagementViews = palletService.findByChang(statusOnShow, warehouseMode.getId(), workingAreaModel.getId());
+        palletManagementViews = palletService.findByChang(statusOnShow, warehouseMode.getId(), workingAreaModel.getId());
     }
 
 

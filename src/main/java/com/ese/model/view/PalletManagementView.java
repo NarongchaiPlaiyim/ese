@@ -14,7 +14,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class PalletMeanagementView {
+public class PalletManagementView {
     private int id;
     private String palletBarcode;
     private WarehouseModel warehouseModel;

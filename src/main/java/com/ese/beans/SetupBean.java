@@ -19,7 +19,7 @@ import java.util.List;
 @Setter
 @ViewScoped
 @ManagedBean(name = "setup")
-public class SetupBean extends Bean implements Serializable{
+public class SetupBean extends Bean{
     @ManagedProperty("#{setupService}") private SetupService setupService;
 
     private SetupView setupView;
@@ -77,7 +77,9 @@ public class SetupBean extends Bean implements Serializable{
 
     public void onClickDeleteButtonTAB(){
         log.debug("-- onClickDeleteButtonTAB()");
-        setupService.test();
+        log.debug("--[BEFORE] warehouseAndLocationViewList.size()[{}]", warehouseAndLocationViewList.size());
+        warehouseAndLocationViewList.remove(warehouseAndLocationView);
+        log.debug("--[AFTER] warehouseAndLocationViewList.size()[{}]", warehouseAndLocationViewList.size());
     }
 
     public void onClickNewEditButtonTAB(){

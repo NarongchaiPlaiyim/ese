@@ -8,10 +8,11 @@ import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.web.authentication.session.CompositeSessionAuthenticationStrategy;
 
 import javax.faces.bean.ManagedProperty;
+import java.io.Serializable;
 
 @Getter
 @Setter
-public class Bean {
+public class Bean implements Serializable {
     @ManagedProperty("#{indexService}") protected IndexService indexService;
     @ManagedProperty("#{loginService}") protected LoginService loginService;
     @ManagedProperty("#{sessionRegistry}") protected SessionRegistry sessionRegistry;

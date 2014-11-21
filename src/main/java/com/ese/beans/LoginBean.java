@@ -24,7 +24,7 @@ import java.io.Serializable;
 
 @ViewScoped
 @ManagedBean(name = "loginBean")
-public class LoginBean extends Bean implements Serializable{
+public class LoginBean extends Bean{
     @Getter @Setter private String userName;
     @Getter @Setter private String password;
     @Getter @Setter private UserDetail userDetail;

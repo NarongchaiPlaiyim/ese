@@ -14,7 +14,7 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-public abstract class GenericDAO<T, ID extends Serializable> {
+public abstract class GenericDAO<T, ID extends Serializable> implements Serializable{
     @Resource private SessionFactory sessionFactory;
     @Resource protected Logger log;
     @Resource protected Logger moLogger;

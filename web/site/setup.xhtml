@@ -125,8 +125,7 @@
                                                       <tr>
                                                           <td class="right" colspan="6">
                                                               <p:commandButton value="Delete" styleClass="medium" style="width: 80px"
-                                                                               update="@form"
-                                                                               action="#{setup.onClickDeleteButtonTAB()}"
+                                                                               oncomplete="confirmDeleteWarehouseDlg.show()"
                                                                       />
                                                           </td>
                                                       </tr>
@@ -150,10 +149,13 @@
                                                       <p:column headerText="No" style="width: 20px">
                                                           <h:outputLabel value="#{rowIndex+1}"/>
                                                       </p:column>
-                                                      <p:column headerText="warehouse" style="width: 200px">
+                                                      <p:column headerText="Warehouse" style="width: 200px">
                                                           <h:outputLabel value="#{warehouseAndLocationView.warehouseId}"/>
                                                       </p:column>
-                                                      <p:column headerText="Location" style="width: 200px">
+                                                      <p:column headerText="Location Code" style="width: 200px">
+                                                          <h:outputLabel value="#{warehouseAndLocationView.locationCode}"/>
+                                                      </p:column>
+                                                      <p:column headerText="Location Name" style="width: 200px">
                                                           <h:outputLabel value="#{warehouseAndLocationView.locationName}"/>
                                                       </p:column>
                                                       <p:column headerText="Capacities (Pallet)" style="width: 200px">
@@ -288,6 +290,15 @@
                 </h:form>
             </div>
         </p:panel>
+
+        <ui:include src="../site/dialog/confirmDeleteDlg.xhtml">
+            <ui:param name="id" value="confirmDeleteWarehouseDialog"/>
+            <ui:param name="name" value="confirmDeleteWarehouseDlg"/>
+            <ui:param name="formId" value="frmConfirmDeleteWarehouse"/>
+            <ui:param name="controller" value="#{setup}"/>
+            <ui:param name="action" value="onClickDeleteButtonTAB"/>
+            <ui:param name="update" value=":setupForm:warehouseAndLocationTable"/>
+        </ui:include>
 
         <p:dialog id="warehouseDialog" widgetVar="warehouseDlg" header="Add/Edit warehouse"
                   onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"

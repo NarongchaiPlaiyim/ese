@@ -15,7 +15,7 @@ import java.util.List;
 
 @ManagedBean(name = "index")
 @ViewScoped
-public class IndexBean extends Bean implements Serializable {
+public class IndexBean extends Bean{
     @Getter @Setter private List<ProfileModel> profileModelList;
 
     @PostConstruct
