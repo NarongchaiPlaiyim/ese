@@ -20,7 +20,7 @@ public class InvTransactionModel {
 
     @OneToOne
     @JoinColumn(name = "stock_inout_note_id")
-    private StockInOutNoteModel stockInOutNoteId;
+    private MSStockInOutNoteModel stockInOutNoteId;
 
     @OneToOne
     @JoinColumn(name = "pallet_id")
@@ -28,11 +28,11 @@ public class InvTransactionModel {
 
     @OneToOne
     @JoinColumn(name = "location_id")
-    private LocationModel locationId;
+    private MSLocationModel msLocationModel;
 
     @OneToOne
     @JoinColumn(name = "item_id")
-    private ItemModel itemId;
+    private MSItemModel msItemModel;
 
     @Column(name = "sn_barcode")
     private String snBarcode;
@@ -77,8 +77,8 @@ public class InvTransactionModel {
                 .append("id", id)
                 .append("stockInOutNoteId", stockInOutNoteId)
                 .append("palletId", palletId)
-                .append("locationId", locationId)
-                .append("itemId", itemId)
+                .append("msLocationModel", msLocationModel)
+                .append("msItemModel", msItemModel)
                 .append("snBarcode", snBarcode)
                 .append("grade", grade)
                 .append("remark", remark)

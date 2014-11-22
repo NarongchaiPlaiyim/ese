@@ -9,18 +9,30 @@
         >
 <h:body>
 
-    <p:panel id="block" columns="1" header="Login Panel" style="width:272px;">
-        <h:form id="setupForm">
-            <p:commandButton id="trigger"
-                             value="Login" action="#{index.onSubmit()}"></p:commandButton>
-        </h:form>
-    </p:panel>
+    <p:layout fullPage="true">
 
-    <p:blockUI widgetVar="blockUI" block=":block"
-               trigger=":setupForm:trigger">
-        LOADING<br/>
-        <p:graphicImage value="/resources/images/shared/ajax-loader.gif"/>
-    </p:blockUI>
+        <p:layoutUnit position="north" size="100" header="Top" resizable="true" closable="true" collapsible="true">
+            <h:outputText value="North unit content." />
+        </p:layoutUnit>
+
+        <p:layoutUnit position="south" size="100" header="Bottom" resizable="true" closable="true" collapsible="true">
+            <h:outputText value="South unit content." />
+        </p:layoutUnit>
+
+        <p:layoutUnit position="west" size="200" header="Left" resizable="true" closable="true" collapsible="true">
+            <h:outputText value="West unit content." />
+        </p:layoutUnit>
+
+        <p:layoutUnit position="east" size="200" header="Right" resizable="true" closable="true" collapsible="true" effect="drop">
+            <h:outputText value="Right unit content." />
+        </p:layoutUnit>
+
+        <p:layoutUnit position="center">
+            //page code
+        </p:layoutUnit>
+
+    </p:layout>
+
 </h:body>
 </f:view>
 </html>

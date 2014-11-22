@@ -21,7 +21,7 @@ public class BarcodeRegisterModel extends AbstractModel {
 
     @OneToOne
     @JoinColumn(name = "item_id")
-    private ItemModel itemId;
+    private MSItemModel msItemModel;
 
     @Column(name = "docno")
     private String docNo;
@@ -67,7 +67,7 @@ public class BarcodeRegisterModel extends AbstractModel {
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("id", id)
-                .append("itemId", itemId)
+                .append("msItemModel", msItemModel)
                 .append("docNo", docNo)
                 .append("productionDate", productionDate)
                 .append("batchNo", batchNo)

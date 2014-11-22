@@ -14,7 +14,7 @@ import java.util.Date;
 @Entity
 @Table(name = "item_master")
 @Proxy(lazy=false)
-public class ItemModel {
+public class MSItemModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

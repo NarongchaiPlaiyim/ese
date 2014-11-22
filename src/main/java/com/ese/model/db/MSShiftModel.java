@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "shift")
 @Proxy(lazy=false)
-public class ShiftModel {
+public class MSShiftModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

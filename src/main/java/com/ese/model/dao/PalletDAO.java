@@ -1,12 +1,8 @@
 package com.ese.model.dao;
 
-import com.ese.model.db.ConveyorLineModel;
 import com.ese.model.db.PalletModel;
-import com.ese.model.db.WarehouseModel;
 import com.ese.utils.Utils;
 import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 

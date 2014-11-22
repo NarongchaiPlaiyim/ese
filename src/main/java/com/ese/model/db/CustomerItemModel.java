@@ -25,7 +25,7 @@ public class CustomerItemModel extends AbstractModel {
 
     @OneToOne
     @JoinColumn(name = "item_id")
-    private ItemModel itemId;
+    private MSItemModel itemId;
 
     @Column(name = "item_barcode")
     private String itemBarcode;

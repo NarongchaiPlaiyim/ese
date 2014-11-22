@@ -14,18 +14,18 @@ import javax.persistence.*;
 @Entity
 @Table(name = "location_items")
 @Proxy(lazy=false)
-public class LocationItemsModel extends AbstractModel {
+public class MSLocationItemsModel extends AbstractModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @OneToOne
     @JoinColumn(name = "location_id")
-    private LocationModel locationId;
+    private MSLocationModel msLocationModel;
 
     @OneToOne
     @JoinColumn(name = "item_id")
-    private ItemModel itemId;
+    private MSItemModel msItemModel;
 
     @Column(name = "isvalid")
     private Integer isValid;
@@ -37,8 +37,8 @@ public class LocationItemsModel extends AbstractModel {
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("id", id)
-                .append("locationId", locationId)
-                .append("itemId", itemId)
+                .append("msLocationModel", msLocationModel)
+                .append("msItemModel", msItemModel)
                 .append("isValid", isValid)
                 .append("version", version)
                 .toString();

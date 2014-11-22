@@ -19,14 +19,6 @@ public class StockInOutLineModel extends AbstractModel{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne
-    @JoinColumn(name = "stock_inout_id")
-    private StockInOutModel stockInOutId;
-
-    @OneToOne
-    @JoinColumn(name = "item_id")
-    private ItemModel itemId;
-
     @Column(name = "grade")
     private String grade;
 
@@ -35,14 +27,6 @@ public class StockInOutLineModel extends AbstractModel{
 
     @Column(name = "qty")
     private String qty;
-
-    @OneToOne
-    @JoinColumn(name = "pallet_id")
-    private PalletModel palletId;
-
-    @OneToOne
-    @JoinColumn(name = "location_id")
-    private LocationModel locationId;
 
     @Column(name = "remark")
     private String remark;
@@ -53,17 +37,33 @@ public class StockInOutLineModel extends AbstractModel{
     @Column(name = "version")
     private Integer version;
 
+    @OneToOne
+    @JoinColumn(name = "stock_inout_id")
+    private StockInOutModel stockInOutModel;
+
+    @OneToOne
+    @JoinColumn(name = "item_id")
+    private MSItemModel msItemModel;
+
+    @OneToOne
+    @JoinColumn(name = "pallet_id")
+    private PalletModel palletModel;
+
+    @OneToOne
+    @JoinColumn(name = "location_id")
+    private MSLocationModel msLocationModel;
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("id", id)
-                .append("stockInOutId", stockInOutId)
-                .append("itemId", itemId)
+                .append("stockInOutId", stockInOutModel)
+                .append("itemId", msItemModel)
                 .append("grade", grade)
                 .append("barcode", barcode)
                 .append("qty", qty)
-                .append("palletId", palletId)
-                .append("locationId", locationId)
+                .append("palletId", palletModel)
+                .append("locationId", msLocationModel)
                 .append("remark", remark)
                 .append("isValid", isValid)
                 .append("version", version)

@@ -1,8 +1,8 @@
 package com.ese.beans;
 
 import com.ese.model.db.ConveyorLineModel;
-import com.ese.model.db.WarehouseModel;
-import com.ese.model.db.WorkingAreaModel;
+import com.ese.model.db.MSWarehouseModel;
+import com.ese.model.db.MSWorkingAreaModel;
 import com.ese.model.view.PalletManagementView;
 import com.ese.service.PalletService;
 import lombok.Getter;
@@ -21,14 +21,14 @@ import java.util.List;
 @ViewScoped
 public class PalletManagementBean extends Bean implements Serializable {
     @ManagedProperty("#{palletService}") private PalletService palletService;
-    private List<WarehouseModel> warehouseModelList;
-    private WarehouseModel warehouseMode;
+    private List<MSWarehouseModel> warehouseModelList;
+    private MSWarehouseModel warehouseMode;
     private List<ConveyorLineModel> conveyorLineModelList;
     private ConveyorLineModel conveyorLineModel;
     private List<PalletManagementView> palletManegamentViewList;
     private PalletManagementView palletMeanegementView;
-    private WorkingAreaModel workingAreaModel;
-    private List<WorkingAreaModel> workingAreaModelList;
+    private MSWorkingAreaModel workingAreaModel;
+    private List<MSWorkingAreaModel> workingAreaModelList;
     private int statusOnShow;
     private String textTest;
 
@@ -36,9 +36,9 @@ public class PalletManagementBean extends Bean implements Serializable {
     public void onCreation(){
         log.debug("onCreation().");
         palletMeanegementView = new PalletManagementView();
-        warehouseMode = new WarehouseModel();
+        warehouseMode = new MSWarehouseModel();
         conveyorLineModel = new ConveyorLineModel();
-        workingAreaModel = new WorkingAreaModel();
+        workingAreaModel = new MSWorkingAreaModel();
         init();
     }
 

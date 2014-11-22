@@ -9,8 +9,10 @@
         xmlns:p="http://primefaces.org/ui">
     <h:body style="color:#dfffdf ">
         <p:blockUI block="#{block}" trigger="#{trigger}"  >
-            LOADING<br />
-            <p:graphicImage value="/resources/img/ajaxloadingbar.gif"/>
+            <h:panelGrid columns="2">
+                <h:outputText value="Please wait..." />
+                <p:graphicImage value="/resources/images/shared/ajax-loader.gif"/>
+            </h:panelGrid>
         </p:blockUI>
     </h:body>
 </f:view>

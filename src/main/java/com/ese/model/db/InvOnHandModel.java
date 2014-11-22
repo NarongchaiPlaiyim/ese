@@ -18,10 +18,6 @@ public class InvOnHandModel extends AbstractModel{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne
-    @JoinColumn(name = "item_id")
-    private ItemModel itemId;
-
     @Column(name = "sn_barcode")
     private String snBarcode;
 
@@ -30,14 +26,6 @@ public class InvOnHandModel extends AbstractModel{
 
     @Column(name = "grade")
     private String grade;
-
-    @OneToOne
-    @JoinColumn(name = "pallet_id")
-    private PalletModel palletId;
-
-    @OneToOne
-    @JoinColumn(name = "location_id")
-    private LocationModel locationId;
 
     @Column(name = "cost")
     private Long cost;
@@ -58,31 +46,43 @@ public class InvOnHandModel extends AbstractModel{
     private Integer isFoil;
 
     @OneToOne
+    @JoinColumn(name = "item_id")
+    private MSItemModel msItemModel;
+
+    @OneToOne
+    @JoinColumn(name = "pallet_id")
+    private PalletModel palletModel;
+
+    @OneToOne
+    @JoinColumn(name = "location_id")
+    private MSLocationModel msLocationModel;
+
+    @OneToOne
     @JoinColumn(name = "stock_inout_line_id")
-    private StockInOutLineModel stockInoutLineId;
+    private StockInOutLineModel stockInOutLineModel;
 
     @OneToOne
     @JoinColumn(name = "working_area_id")
-    private WorkingAreaModel workingAreaId;
+    private MSWorkingAreaModel msWorkingAreaModel;
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("id", id)
-                .append("itemId", itemId)
+                .append("msItemModel", msItemModel)
                 .append("snBarcode", snBarcode)
                 .append("batchNo", batchNo)
                 .append("grade", grade)
-                .append("pallet_id", palletId)
-                .append("locationId", locationId)
+                .append("palletModel", palletModel)
+                .append("msLocationModel", msLocationModel)
                 .append("cost", cost)
                 .append("status", status)
                 .append("isValid", isValid)
                 .append("version", version)
                 .append("barcode", barcode)
                 .append("isFoil", isFoil)
-                .append("stockInoutLineId", stockInoutLineId)
-                .append("workingAreaId", workingAreaId)
+                .append("stockInOutLineModel", stockInOutLineModel)
+                .append("msWorkingAreaModel", msWorkingAreaModel)
                 .toString();
     }
 }

@@ -22,11 +22,11 @@ public class ForcingLineModel {
 
     @OneToOne
     @JoinColumn(name = "barcode_register_id")
-    private ItemModel barcode_register_id;
+    private MSItemModel barcode_register_id;
 
     @OneToOne
     @JoinColumn(name = "working_area_id")
-    private WorkingAreaModel workingAreaId;
+    private MSWorkingAreaModel workingAreaId;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "start_datetime")

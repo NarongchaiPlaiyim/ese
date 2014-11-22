@@ -20,10 +20,6 @@ public class StockInOutModel extends AbstractModel{
     @Column(name = "docno")
     private String docNo;
 
-    @OneToOne
-    @JoinColumn(name = "stock_inout_note_id")
-    private StockInOutNoteModel stockInOutNoteId;
-
     @Column(name = "do_no")
     private String doNo;
 
@@ -32,10 +28,6 @@ public class StockInOutModel extends AbstractModel{
 
     @Column(name = "so_no")
     private String soNo;
-
-    @OneToOne
-    @JoinColumn(name = "customer_id")
-    private CustomerModel customerId;
 
     @Column(name = "status")
     private Integer status;
@@ -51,23 +43,31 @@ public class StockInOutModel extends AbstractModel{
 
     @OneToOne
     @JoinColumn(name = "working_area_id")
-    private WorkingAreaModel workingAreaId;
+    private MSWorkingAreaModel msWorkingAreaModel;
+
+    @OneToOne
+    @JoinColumn(name = "customer_id")
+    private CustomerModel customerModel;
+
+    @OneToOne
+    @JoinColumn(name = "stock_inout_note_id")
+    private MSStockInOutNoteModel msStockInOutNoteModel;
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("id", id)
                 .append("docNo", docNo)
-                .append("stockInOutNoteId", stockInOutNoteId)
+                .append("stockInOutNoteId", msStockInOutNoteModel)
                 .append("doNo", doNo)
                 .append("plNo", plNo)
                 .append("soNo", soNo)
-                .append("customerId", customerId)
+                .append("customerId", customerModel)
                 .append("status", status)
                 .append("remark", remark)
                 .append("isValid", isValid)
                 .append("version", version)
-                .append("workingAreaId", workingAreaId)
+                .append("workingAreaId", msWorkingAreaModel)
                 .toString();
     }
 }

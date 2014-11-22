@@ -21,7 +21,7 @@ public class DailyForceModel {
 
     @OneToOne
     @JoinColumn(name = "item_id")
-    private ItemModel itemId;
+    private MSItemModel itemId;
 
     @Column(name = "sn_barcode")
     private String snBarcode;
@@ -41,11 +41,11 @@ public class DailyForceModel {
 
     @OneToOne
     @JoinColumn(name = "stock_inout_note_id")
-    private StockInOutNoteModel stockInoutNoteId;
+    private MSStockInOutNoteModel stockInoutNoteId;
 
     @OneToOne
     @JoinColumn(name = "working_area_id")
-    private WorkingAreaModel workingAreaId;
+    private MSWorkingAreaModel workingAreaId;
 
     @OneToOne
     @JoinColumn(name = "forcing_line_id")

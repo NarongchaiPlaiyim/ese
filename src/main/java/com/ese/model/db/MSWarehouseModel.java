@@ -11,40 +11,40 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "stock_inout_note")
+@Table(name = "warehouse")
 @Proxy(lazy=false)
-public class StockInOutNoteModel extends AbstractModel{
+public class MSWarehouseModel extends AbstractModel{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "type")
-    private String type;
+    @Column(name = "warehouse_code")
+    private String warehouseCode;
 
-    @Column(name = "inout_code")
-    private String inoutCode;
-
-    @Column(name = "inout_note")
-    private String inoutNote;
+    @Column(name = "warehouse_name")
+    private String warehouseName;
 
     @Column(name = "remark")
     private String remark;
 
-    @Column(name = "isvalid")
+    @Column(name = "isvalid", nullable=false, columnDefinition="int default 0")
     private Integer isValid;
 
-    @Column(name = "version")
+    @Column(name = "status")
+    private String status;
+
+    @Column(name = "version", columnDefinition="int default 0")
     private Integer version;
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("id", id)
-                .append("type", type)
-                .append("inoutCode", inoutCode)
-                .append("inoutNote", inoutNote)
+                .append("warehouseCode", warehouseCode)
+                .append("warehouseName", warehouseName)
                 .append("remark", remark)
                 .append("isValid", isValid)
+                .append("status", status)
                 .append("version", version)
                 .toString();
     }

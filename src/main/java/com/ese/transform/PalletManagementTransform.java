@@ -46,7 +46,7 @@ public class PalletManagementTransform extends Transform {
         palletMeanegementView.setVersion(palletModel.getVersion());
         palletMeanegementView.setCapacity(palletModel.getCapacity());
         palletMeanegementView.setConvetorLine(palletModel.getConveyorLine());
-        palletMeanegementView.setShift(palletModel.getShift());
+//        palletMeanegementView.setShift(palletModel.getShift());
 
         return palletMeanegementView;
     }

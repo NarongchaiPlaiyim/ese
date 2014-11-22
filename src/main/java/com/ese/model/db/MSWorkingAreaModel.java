@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "working_area")
 @Proxy(lazy=false)
-public class WorkingAreaModel {
+public class MSWorkingAreaModel {
     @Id
     private int id;
 
