@@ -21,11 +21,11 @@ public class LocationItemsModel extends AbstractModel{
 
     @OneToOne
     @JoinColumn(name = "location_id")
-    private LocationModel locationId;
+    private MSLocationModel msLocationModel;
 
     @OneToOne
     @JoinColumn(name = "item_id")
-    private ItemModel itemId;
+    private MSItemModel msItemModel;
 
     @OneToOne
     @JoinColumn(name = "pallet_id")
@@ -41,8 +41,8 @@ public class LocationItemsModel extends AbstractModel{
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("id", id)
-                .append("locationId", locationId)
-                .append("itemId", itemId)
+                .append("msLocationModel", msLocationModel)
+                .append("msItemModel", msItemModel)
                 .append("palletId", palletId)
                 .append("isvalid", isvalid)
                 .append("version", version)

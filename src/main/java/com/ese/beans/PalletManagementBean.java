@@ -1,12 +1,14 @@
 package com.ese.beans;
 
 import com.ese.model.db.ConveyorLineModel;
+import com.ese.model.db.MSLocationModel;
 import com.ese.model.db.MSWarehouseModel;
 import com.ese.model.db.MSWorkingAreaModel;
 import com.ese.model.view.PalletManagementView;
 import com.ese.service.PalletService;
 import lombok.Getter;
 import lombok.Setter;
+import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -18,7 +20,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@ManagedBean(name = "palletManegement")
+@ManagedBean(name = "palletManagement")
 @ViewScoped
 public class PalletManagementBean extends Bean implements Serializable {
     @ManagedProperty("#{palletService}") private PalletService palletService;
@@ -32,39 +34,11 @@ public class PalletManagementBean extends Bean implements Serializable {
     private List<MSWorkingAreaModel> workingAreaModelList;
     private int statusOnShow;
     private String textTest;
-
-    @Getter @Setter
-    List<WarehouseModel> warehouseModelList;
-    @Getter
-    WarehouseModel warehouseMode;
-    @Getter @Setter
-    List<ConveyorLineModel> conveyorLineModelList;
-    @Getter
-    ConveyorLineModel conveyorLineModel;
-    @Getter @Setter
-    List<PalletManagementView> palletMeanegementViewList;
-    @Getter @Setter
-    PalletManagementView palletMeanegementView;
-    @Getter
-    WorkingAreaModel workingAreaModel;
-    @Getter @Setter
-    List<WorkingAreaModel> workingAreaModelList;
-
-    @Getter @Setter
-    int statusOnShow;
-    @Getter @Setter
-    String textTest;
-
-    @Getter @Setter
-    LocationModel locationModel;
-    @Getter @Setter
-    List<LocationModel> locationModelList;
-    @Getter @Setter
-    String messageHeader;
-    @Getter @Setter
-    String message;
-    @Getter @Setter
-    String findKeyItemDescription;
+    private String messageHeader;
+    private String message;
+    private String findKeyItemDescription;
+    private MSLocationModel msLocationModel;
+    private List<MSLocationModel> msLocationModelList;
 
     @PostConstruct
     public void onCreation(){
@@ -73,8 +47,8 @@ public class PalletManagementBean extends Bean implements Serializable {
         warehouseMode = new MSWarehouseModel();
         conveyorLineModel = new ConveyorLineModel();
         workingAreaModel = new MSWorkingAreaModel();
-        workingAreaModel = new WorkingAreaModel();
-        locationModel = new LocationModel();
+        workingAreaModel = new MSWorkingAreaModel();
+        msLocationModel = new MSLocationModel();
         init();
     }
 
@@ -82,9 +56,9 @@ public class PalletManagementBean extends Bean implements Serializable {
         log.debug("init().");
         warehouseModelList = warehouseService.getWarehouseList();
         workingAreaModelList = workingAreaService.getWorkingAreaList();
-        locationModelList = locationService.getLocationList();
+        msLocationModelList = locationService.getLocationList();
         statusOnShow = 0;
-        onloadPallet();
+        onLoadPallet();
     }
 
     private void onLoadPallet(){
@@ -94,8 +68,7 @@ public class PalletManagementBean extends Bean implements Serializable {
 
     public void onFind(){
         log.debug("changeOn : {}", statusOnShow);
-        palletManegamentViewList = palletService.findByChang(statusOnShow, warehouseMode.getId(), workingAreaModel.getId());
-        palletMeanegementViewList = palletService.findByChang(statusOnShow, warehouseMode.getId(), workingAreaModel.getId(), locationModel.getId(), findKeyItemDescription);
+        palletManegamentViewList = palletService.findByChang(statusOnShow, warehouseMode.getId(), workingAreaModel.getId(), msLocationModel.getId(), findKeyItemDescription);
     }
 
     public void test(){
@@ -114,17 +87,18 @@ public class PalletManagementBean extends Bean implements Serializable {
         RequestContext.getCurrentInstance().execute("PF('msgBoxSystemMessageDlg').show()");
         messageHeader = "Update";
         message = "Successfully Update";
-        onCreattion();
+        onCreation();
     }
 
     public void OnClosePallet(){
         log.debug("OnClosePallet().");
 
-        if (palletMeanegementView.getQty() == 0){
+        if (palletMeanegementView.getQty() == 0 && !"Closed".equalsIgnoreCase(palletMeanegementView.getStatus())){
             messageHeader = "Warning";
             message = "The Pallet ID can not be use again. Please click Yes to confirm close this pallet.";
             RequestContext.getCurrentInstance().execute("PF('confirmClosePalletDlg').show()");
         } else if ("Closed".equalsIgnoreCase(palletMeanegementView.getStatus())){
+            log.debug("Already Closed Pallet");
             messageHeader = "Warning";
             message = "Already Closed Pallet";
             RequestContext.getCurrentInstance().execute("PF('msgBoxSystemMessageDlg').show()");
@@ -142,6 +116,6 @@ public class PalletManagementBean extends Bean implements Serializable {
         messageHeader = "Update";
         message = "Successfully Update";
         RequestContext.getCurrentInstance().execute("PF('msgBoxSystemMessageDlg').show()");
-        onCreattion();
+        onCreation();
     }
 }

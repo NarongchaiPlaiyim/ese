@@ -32,20 +32,20 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
             Criteria criteria = getCriteria();
 
             if (!Utils.isZero(warehouse)){
-                criteria.add(Restrictions.eq("wherehouseId.id", warehouse));
+                criteria.add(Restrictions.eq("msWarehouseModel.id", warehouse));
             }
 
             if (!Utils.isZero(conveyorLine)){
-                criteria.add(Restrictions.eq("conveyorLine.id", conveyorLine));
+                criteria.add(Restrictions.eq("msWorkingAreaModel.id", conveyorLine));
             }
 
             if (!Utils.isZero(location)){
-                criteria.add(Restrictions.eq("locationId.id", location));
+                criteria.add(Restrictions.eq("msLocationModel.id", location));
             }
 
-            if (!Utils.isNull(keyItemDescription)){
-                criteria.add(Restrictions.like("itemId.dSGThaiItemDescription", "%"+keyItemDescription.trim()+"%"));
-            }
+//            if (!Utils.isNull(keyItemDescription)){
+//                criteria.add(Restrictions.like("msItemModel.dSGThaiItemDescription", "%"+keyItemDescription.trim()+"%"));
+//            }
 
             if (statusId == 1){
                 criteria.add(Restrictions.lt("status", 3));

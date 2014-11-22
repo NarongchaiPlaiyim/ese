@@ -1,10 +1,10 @@
 package com.ese.transform;
 
-import com.ese.model.db.ItemModel;
-import com.ese.model.db.LocationModel;
+import com.ese.model.db.MSItemModel;
+import com.ese.model.db.MSLocationModel;
+import com.ese.model.db.MSWarehouseModel;
 import com.ese.model.db.PalletModel;
 //import com.ese.model.view.PalletMeanagementView;
-import com.ese.model.db.WarehouseModel;
 import com.ese.model.view.ItemView;
 import com.ese.model.view.LocationView;
 import com.ese.model.view.PalletManagementView;
@@ -39,9 +39,9 @@ public class PalletManagementTransform extends Transform {
 
         palletMeanegementView.setId(palletModel.getId());
         palletMeanegementView.setPalletBarcode(palletModel.getPalletBarcode());
-        palletMeanegementView.setWarehouseModel(palletModel.getWherehouseId());
-        palletMeanegementView.setItemModel(palletModel.getItemId());
-        palletMeanegementView.setLocationModel(palletModel.getLocationId());
+        palletMeanegementView.setWarehouseModel(palletModel.getMsWarehouseModel());
+        palletMeanegementView.setItemModel(palletModel.getMsItemModel());
+        palletMeanegementView.setLocationModel(palletModel.getMsLocationModel());
 
         palletMeanegementView.setTagPrint(palletModel.getTagPrint());
         palletMeanegementView.setQty(palletModel.getQty());
@@ -55,19 +55,19 @@ public class PalletManagementTransform extends Transform {
         palletMeanegementView.setIsValid(palletModel.getIsValid());
         palletMeanegementView.setVersion(palletModel.getVersion());
         palletMeanegementView.setCapacity(palletModel.getCapacity());
-        palletMeanegementView.setConvetorLine(palletModel.getConveyorLine());
-        palletMeanegementView.setShift(palletModel.getShift());
+        palletMeanegementView.setConvetorLine(palletModel.getMsWorkingAreaModel());
+        palletMeanegementView.setShift(palletModel.getMsShiftModel());
 
         return palletMeanegementView;
     }
 
-    private List<WarehouseView> transformWarehouseToViewList(List<WarehouseModel> warehouseModelList){
+    private List<WarehouseView> transformWarehouseToViewList(List<MSWarehouseModel> warehouseModelList){
         log.debug("transFormWarehouseToView().");
         List<WarehouseView> warehouseViewList = new ArrayList<WarehouseView>();
 
         if (Utils.isSafetyList(warehouseModelList)){
             log.debug("warehouseModelList Size : {}",warehouseModelList.size());
-            for (WarehouseModel model : warehouseModelList){
+            for (MSWarehouseModel model : warehouseModelList){
                 WarehouseView warehouseView = tramsformWarehouseToView(model);
                 warehouseViewList.add(warehouseView);
             }
@@ -77,7 +77,7 @@ public class PalletManagementTransform extends Transform {
         return warehouseViewList;
     }
 
-    private WarehouseView tramsformWarehouseToView(WarehouseModel warehouseModel){
+    private WarehouseView tramsformWarehouseToView(MSWarehouseModel warehouseModel){
         log.debug("tramsformWarehouseToView().");
         WarehouseView warehouseView = new WarehouseView();
 
@@ -90,20 +90,20 @@ public class PalletManagementTransform extends Transform {
             warehouseView.setCreateDate(warehouseModel.getCreateDate());
             warehouseView.setUpdateBy(warehouseModel.getUpdateBy());
             warehouseView.setUpdateDate(warehouseModel.getUpdateDate());
-            warehouseView.setIsvalid(warehouseModel.getIsvalid());
+            warehouseView.setIsvalid(warehouseModel.getIsValid());
             warehouseView.setStatus(warehouseModel.getStatus());
             warehouseView.setVersion(warehouseModel.getVersion());
         }
         return warehouseView;
     }
 
-    private List<ItemView> transformItemToViewList(List<ItemModel> itemModelList){
+    private List<ItemView> transformItemToViewList(List<MSItemModel> itemModelList){
         log.debug("transformItemToViewList().");
         List<ItemView> itemViewList = new ArrayList<ItemView>();
 
         if (Utils.isSafetyList(itemModelList)){
             log.debug("itemModelList Size : {}", itemModelList.size());
-            for (ItemModel modelList : itemModelList){
+            for (MSItemModel modelList : itemModelList){
                 ItemView itemView = transformItemToView(modelList);
                 itemViewList.add(itemView);
             }
@@ -114,7 +114,7 @@ public class PalletManagementTransform extends Transform {
         return itemViewList;
     }
 
-    private ItemView transformItemToView(ItemModel itemModel){
+    private ItemView transformItemToView(MSItemModel itemModel){
         log.debug("transformItemToViewList().");
         ItemView itemView = new ItemView();
 
@@ -122,7 +122,7 @@ public class PalletManagementTransform extends Transform {
             itemView.setId(itemModel.getId());
             itemView.setItemId(itemModel.getItemId());
             itemView.setItemName(itemModel.getItemName());
-            itemView.setItemGrpupId(itemModel.getItemGrpupId());
+            itemView.setItemGrpupId(itemModel.getItemGroupId());
             itemView.setItemType(itemModel.getItemType());
             itemView.setPackagingGroupId(itemModel.getPackagingGroupId());
             itemView.setNetWeight(itemModel.getNetWeight());
@@ -182,13 +182,13 @@ public class PalletManagementTransform extends Transform {
         return itemView;
     }
 
-    private List<LocationView> transformLocationToViewList(List<LocationModel> locationModelList){
+    private List<LocationView> transformLocationToViewList(List<MSLocationModel> locationModelList){
         log.debug("transformLocationToViewList().");
         List<LocationView> locationViewList = new ArrayList<LocationView>();
 
         if (Utils.isSafetyList(locationModelList)){
             log.debug("locationModelList Size : {}", locationModelList.size());
-            for (LocationModel model : locationModelList){
+            for (MSLocationModel model : locationModelList){
                 LocationView locationView = transformLocationToView(model);
                 locationViewList.add(locationView);
             }
@@ -199,14 +199,14 @@ public class PalletManagementTransform extends Transform {
         return locationViewList;
     }
 
-    private LocationView transformLocationToView(LocationModel locationModel){
+    private LocationView transformLocationToView(MSLocationModel locationModel){
         LocationView locationView = new LocationView();
 
         if (!Utils.isNull(locationModel)){
             locationView.setId(locationModel.getId());
             locationView.setLocationBarcode(locationModel.getLocationBarcode());
             locationView.setLocationName(locationModel.getLocationName());
-            locationView.setWarehouseModel(locationModel.getWarehouseId());
+            locationView.setWarehouseModel(locationModel.getMsWarehouseModel());
             locationView.setCapacity(locationModel.getCapacity());
             locationView.setRemark(locationModel.getRemark());
             locationView.setQty(locationModel.getQty());
@@ -215,10 +215,10 @@ public class PalletManagementTransform extends Transform {
             locationView.setCreateDate(locationModel.getCreateDate());
             locationView.setUpdateBy(locationModel.getUpdateBy());
             locationView.setUpdateDate(locationModel.getUpdateDate());
-            locationModel.setIsvalid(locationModel.getIsvalid());
+            locationModel.setIsValid(locationModel.getIsValid());
             locationView.setVersion(locationModel.getVersion());
             locationView.setReservedQty(locationModel.getReservedQty());
-            locationView.setIsMix(locationModel.getIsmix());
+            locationView.setIsMix(locationModel.getIsMix());
         }
 
         return locationView;
@@ -266,9 +266,9 @@ public class PalletManagementTransform extends Transform {
 
         palletModel.setId(palletManagementView.getId());
         palletModel.setPalletBarcode(palletManagementView.getPalletBarcode());
-        palletModel.setWarehouseId(palletManagementView.getWarehouseModel());
-        palletModel.setItemId(palletManagementView.getItemModel());
-        palletModel.setLocationId(palletManagementView.getLocationModel());
+        palletModel.setMsWarehouseModel(palletManagementView.getWarehouseModel());
+        palletModel.setMsItemModel(palletManagementView.getItemModel());
+        palletModel.setMsLocationModel(palletManagementView.getLocationModel());
         palletModel.setTagPrint(palletManagementView.getTagPrint() + 1);
         palletModel.setQty(palletManagementView.getQty());
         palletModel.setReservedQty(palletManagementView.getReservedQty());
@@ -292,8 +292,8 @@ public class PalletManagementTransform extends Transform {
         palletModel.setIsValid(palletManagementView.getIsValid());
         palletModel.setVersion(palletManagementView.getVersion());
         palletModel.setCapacity(palletManagementView.getCapacity());
-        palletModel.setConveyorLine(palletManagementView.getConvetorLine());
-        palletModel.setShift(palletManagementView.getShift());
+        palletModel.setMsWorkingAreaModel(palletManagementView.getConvetorLine());
+        palletModel.setMsShiftModel(palletManagementView.getShift());
 
         return palletModel;
     }

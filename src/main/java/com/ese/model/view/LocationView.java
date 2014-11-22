@@ -1,6 +1,6 @@
 package com.ese.model.view;
 
-import com.ese.model.db.WarehouseModel;
+import com.ese.model.db.MSWarehouseModel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +13,7 @@ public class LocationView {
     private int id;
     private String locationBarcode;
     private String locationName;
-    private WarehouseModel warehouseModel;
+    private MSWarehouseModel warehouseModel;
     private int capacity;
     private String remark;
     private int qty;

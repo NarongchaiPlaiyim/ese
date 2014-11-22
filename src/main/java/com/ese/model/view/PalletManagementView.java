@@ -1,9 +1,6 @@
 package com.ese.model.view;
 
-import com.ese.model.db.MSItemModel;
-import com.ese.model.db.MSLocationModel;
-import com.ese.model.db.MSWarehouseModel;
-import com.ese.model.db.MSWorkingAreaModel;
+import com.ese.model.db.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -33,7 +30,7 @@ public class PalletManagementView {
     private int version;
     private BigDecimal capacity;
     private MSWorkingAreaModel convetorLine;
-    private String shift;
+    private MSShiftModel shift;
 
     @Override
     public String toString() {

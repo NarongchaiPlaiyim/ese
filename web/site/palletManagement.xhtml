@@ -28,9 +28,9 @@
                                         <tr>
                                             <td class="right">
                                                 <p:commandButton value="Find Location" oncomplete="PF('findLocationDlg').show()"/>
-                                                <p:commandButton value="Print Tag" process="@form" action="#{palletManegement.OnPrintTag('PrintTag')}"
+                                                <p:commandButton value="Print Tag" process="@form" action="#{palletManagement.OnPrintTag('PrintTag')}"
                                                                  update=":palletForm, :msgBoxSystemMessagePanel"/>
-                                                <p:commandButton value="Close Pallet" action="#{palletManegement.OnClosePallet}" update=":palletForm, :msgBoxSystemMessagePanel, :confirmClosePalletPanel" process="@form"/>
+                                                <p:commandButton value="Close Pallet" action="#{palletManagement.OnClosePallet}" update=":palletForm, :msgBoxSystemMessagePanel, :confirmClosePalletPanel" process="@form"/>
                                             </td>
                                         </tr>
                                     </table>
@@ -38,68 +38,68 @@
                             </tr>
                             <tr>
                                 <td colspan="7">
-                                    <p:selectOneRadio value="#{palletManegement.statusOnShow}" styleClass="radio_table" style="background-origin: border-box">
+                                    <p:selectOneRadio value="#{palletManagement.statusOnShow}" styleClass="radio_table" style="background-origin: border-box">
                                         <f:selectItem itemLabel="Show All" itemValue="0"/>
                                         <f:selectItem itemLabel="Show unprint only" itemValue="1"/>
                                         <f:selectItem itemLabel="Show Empty Pallet" itemValue="2"/>
-                                        <p:ajax listener="#{palletManegement.onfind}" update="palletManegementTable"/>
+                                        <p:ajax listener="#{palletManagement.onFind}" update="palletManagementTable"/>
                                     </p:selectOneRadio>
                                 </td>
                             </tr>
                             <tr>
                                 <td style="width: 110px">
-                                    <p:inputText id="testtext" value="#{palletManegement.findKeyItemDescription}" style="width: 120px"/>
-                                    <p:commandButton id="testName" value="Search" action="#{palletManegement.onfind}" process="@form" update="palletManegementTable"/>
+                                    <p:inputText id="testtext" value="#{palletManagement.findKeyItemDescription}" style="width: 120px"/>
+                                    <p:commandButton id="testName" value="Search" action="#{palletManagement.onFind}" process="@form" update="palletManagementTable"/>
                                 </td>
                                 <td style="width: 40px">
                                     <h:outputLabel value="warehouse :"/>
                                 </td>
                                 <td style="width: 100px">
-                                    <p:selectOneMenu id="warehouseMenu" value="#{palletManegement.warehouseMode.id}" style="min-width: 150px; width: 150px; max-width: 150px; margin-top: 4px">
+                                    <p:selectOneMenu id="warehouseMenu" value="#{palletManagement.warehouseMode.id}" style="min-width: 150px; width: 150px; max-width: 150px; margin-top: 4px">
                                         <f:selectItem itemLabel="- Please Select -" itemValue=""/>
-                                        <f:selectItems value="#{palletManegement.warehouseModelList}"
+                                        <f:selectItems value="#{palletManagement.warehouseModelList}"
                                                        var="wareItem"
                                                        itemLabel="#{wareItem.warehouseCode}"
                                                        itemValue="#{wareItem.id}"/>
-                                        <p:ajax listener="#{palletManegement.onfind}" update="palletManegementTable"/>
+                                        <p:ajax listener="#{palletManagement.onFind}" update="palletManagementTable"/>
                                     </p:selectOneMenu>
                                 </td>
                                 <td style="width: 50px">
                                     <h:outputLabel value="Conveyor Line :"/>
                                 </td>
                                 <td style="width: 100px">
-                                    <p:selectOneMenu id="conveyorLineMenu" value="#{palletManegement.workingAreaModel.id}" style="min-width: 150px; width: 150px; max-width: 150px; margin-top: 4px">
+                                    <p:selectOneMenu id="conveyorLineMenu" value="#{palletManagement.workingAreaModel.id}" style="min-width: 150px; width: 150px; max-width: 150px; margin-top: 4px">
                                         <f:selectItem itemLabel="- Please Select -" itemValue=""/>
-                                        <f:selectItems value="#{palletManegement.workingAreaModelList}"
+                                        <f:selectItems value="#{palletManagement.workingAreaModelList}"
                                                        var="conveyorLineItem"
                                                        itemLabel="#{conveyorLineItem.name}"
                                                        itemValue="#{conveyorLineItem.id}"/>
-                                        <p:ajax listener="#{palletManegement.onfind}" update="palletManegementTable"/>
+                                        <p:ajax listener="#{palletManagement.onFind}" update="palletManagementTable"/>
                                     </p:selectOneMenu>
                                 </td>
                                 <td style="width: 30px">
                                     <h:outputLabel value="Location :"/>
                                 </td>
                                 <td style="width: 100px">
-                                    <p:selectOneMenu id="locationMenu" value="#{palletManegement.locationModel.id}" style="min-width: 150px; width: 150px; max-width: 150px; margin-top: 4px">
+                                    <p:selectOneMenu id="locationMenu" value="#{palletManagement.msLocationModel.id}" style="min-width: 150px; width: 150px; max-width: 150px; margin-top: 4px">
                                         <f:selectItem itemLabel="- Please Select -" itemValue=""/>
-                                        <f:selectItems value="#{palletManegement.locationModelList}"
+                                        <f:selectItems value="#{palletManagement.msLocationModelList}"
                                                        var="locationItem"
                                                        itemLabel="#{locationItem.locationBarcode}"
                                                        itemValue="#{locationItem.id}"/>
-                                        <p:ajax listener="#{palletManegement.onfind}" update="palletManegementTable"/>
+                                        <p:ajax listener="#{palletManagement.onFind}" update="palletManagementTable"/>
                                     </p:selectOneMenu>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="7">
-                                    <p:dataTable id="palletManegementTable" rowIndexVar="rowIndex"
-                                                 value="#{palletManegement.palletManegamentViewList}"
+                                    <p:dataTable id="palletManagementTable" rowIndexVar="rowIndex"
+                                                 value="#{palletManagement.palletManegamentViewList}"
                                                  var="palletView" styleClass="full_table"
                                                  selectionMode="single" rowKey="#{palletView.id}"
-                                                 selection="#{palletManegement.palletMeanegementView}"
+                                                 selection="#{palletManagement.palletMeanegementView}"
                                                  style="width: 100%; max-width: 100%; min-width: 100%">
-                                        <p:ajax event="rowSelect" update=":palletForm:testtext" listener="#{palletManegement.test}"/>
+                                        <p:ajax event="rowSelect" update=":palletForm:testtext" listener="#{palletManagement.test}"/>
                                         <p:column headerText="No" style="width: 20px" styleClass="center">
                                             <h:outputLabel value="#{rowIndex+1}"/>
                                         </p:column>
@@ -155,11 +155,11 @@
 
         <p:panel id="confirmClosePalletPanel" styleClass="panel">
             <p:confirmDialog id="confirmClosePalletDialog" widgetVar="confirmClosePalletDlg" width="350px"
-                             header="#{palletManegement.messageHeader}" message="#{palletManegement.message}" >
+                             header="#{palletManagement.messageHeader}" message="#{palletManagement.message}" >
                 <table border="0" style="width: 100%">
                     <tr>
                         <td colspan="100%" class="right">
-                            <p:commandButton value="Yes" action="#{palletManegement.changStatusOnClosePallet('ClosePallet')}"
+                            <p:commandButton value="Yes" action="#{palletManagement.changStatusOnClosePallet('ClosePallet')}"
                                              process="@this" update="palletForm, :msgBoxSystemMessagePanel"
                                              oncomplete="PF('confirmClosePalletDlg').hide()"/>
                             <p:commandButton value="Cancel"
@@ -174,7 +174,7 @@
 
         <p:panel id="msgBoxSystemMessagePanel" styleClass="panel">
             <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="350px"
-                             header="#{palletManegement.messageHeader}" message="#{palletManegement.message}" >
+                             header="#{palletManagement.messageHeader}" message="#{palletManagement.message}" >
                <table border="0" style="width: 100%">
                    <tr>
                        <td colspan="100%" class="right">
