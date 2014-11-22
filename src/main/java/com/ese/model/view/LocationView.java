@@ -1,5 +1,6 @@
 package com.ese.model.view;
 
+import com.ese.model.db.WarehouseModel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +13,7 @@ public class LocationView {
     private int id;
     private String locationBarcode;
     private String locationName;
-    private List<WarehouseView> warehouseViews;
+    private WarehouseModel warehouseModel;
     private int capacity;
     private String remark;
     private int qty;

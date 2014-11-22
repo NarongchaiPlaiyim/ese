@@ -2,24 +2,14 @@
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:p="http://primefaces.org/ui">
-
-    <p:confirmDialog id="#{id}" widgetVar="#{name}"
-                     header="Confirm Delete"
-                     message="Are you want to delete this item?"
-                     showEffect="fade" hideEffect="fade"
-                     width="380" severity="alert"
-                     closable="false" closeOnEscape="false">
+    <p:confirmDialog id="#{id}" header="#{headerMessage}" message="#{message}"
+                     showEffect="fade" hideEffect="fade" width="250"
+                     severity="alert" widgetVar="#{name}">
         <h:form id="#{formId}">
             <div class="onRight">
-                <p:commandButton id="#{id}OkBtn" widgetVar="#{id}wOkBtn" styleClass="smallest"
-                                 value="#{msg.get('app.button.ok')}"
-                                 update="#{update}"
-                                 oncomplete="#{name}.hide(); #{id}wOkBtn.enable(); #{id}wCancelBtn.enable()"
-                                 onclick="#{id}wOkBtn.disable(); #{id}wCancelBtn.disable()"
-                                 actionListener="#{controller[action]}"/>
-                <p:commandButton widgetVar="#{id}wCancelBtn" styleClass="smaller"
-                                 value="#{msg.get('app.button.cancel')}"
-                                 onclick="#{name}.hide()"/>
+                <p:commandButton value="Yes" update="#{update}" action="#{controller[action]}"
+                                 oncomplete="PF('#{name}').hide()"/>
+                <p:commandButton value="Calcel" onclick="PF('#{name}').hide()"/>
             </div>
         </h:form>
     </p:confirmDialog>

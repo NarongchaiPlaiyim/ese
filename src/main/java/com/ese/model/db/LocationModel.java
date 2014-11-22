@@ -25,9 +25,9 @@ public class LocationModel extends AbstractModel{
     @Column(name = "location_name")
     private String locationName;
 
-    @OneToMany
+    @OneToOne
     @JoinColumn(name = "warehouse_id")
-    private List<WarehouseModel> warehouseId;
+    private WarehouseModel warehouseId;
 
     @Column(name = "capacity")
     private int capacity;

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -39,14 +40,15 @@ public class PalletManagementTransform extends Transform {
         palletMeanegementView.setId(palletModel.getId());
         palletMeanegementView.setPalletBarcode(palletModel.getPalletBarcode());
 
-        palletMeanegementView.setWarehouseViewList(transformWarehouseToViewList(palletModel.getWherehouseId()));
-        palletMeanegementView.setItemViewList(transformItemToViewList(palletModel.getItemId()));
-        palletMeanegementView.setLocationViewList(transformLocationToViewList(palletModel.getLocationId()));
+        palletMeanegementView.setWarehouseModel(palletModel.getWarehouseId());
+        palletMeanegementView.setItemModel(palletModel.getItemId());
+        palletMeanegementView.setLocationModel(palletModel.getLocationId());
 
         palletMeanegementView.setTagPrint(palletModel.getTagPrint());
         palletMeanegementView.setQty(palletModel.getQty());
         palletMeanegementView.setReservedQty(palletModel.getReservedQty());
-        palletMeanegementView.setStatus(tranformStatus(palletModel.getStatus()));
+        log.debug("palletModel.getStatus() {}", palletModel.getStatus());
+        palletMeanegementView.setStatus(transformStatusToString(palletModel.getStatus()));
         palletMeanegementView.setCreateBy(palletModel.getCreateBy());
         palletMeanegementView.setCreateDate(palletModel.getCreateDate());
         palletMeanegementView.setUpdateBy(palletModel.getUpdateBy());
@@ -82,7 +84,7 @@ public class PalletManagementTransform extends Transform {
 
         if (!Utils.isNull(warehouseModel)){
             warehouseView.setId(warehouseModel.getId());
-            warehouseView.setWarehouseCaode(warehouseModel.getWarehouseCode());
+            warehouseView.setWarehouseCode(warehouseModel.getWarehouseCode());
             warehouseView.setWarehouseName(warehouseModel.getWarehouseName());
             warehouseView.setRemark(warehouseModel.getRemark());
             warehouseView.setCreateBy(warehouseModel.getCreateBy());
@@ -120,6 +122,7 @@ public class PalletManagementTransform extends Transform {
         if (!Utils.isNull(itemModel)){
             itemView.setId(itemModel.getId());
             itemView.setItemId(itemModel.getItemId());
+            itemView.setItemName(itemModel.getItemName());
             itemView.setItemGrpupId(itemModel.getItemGrpupId());
             itemView.setItemType(itemModel.getItemType());
             itemView.setPackagingGroupId(itemModel.getPackagingGroupId());
@@ -204,7 +207,7 @@ public class PalletManagementTransform extends Transform {
             locationView.setId(locationModel.getId());
             locationView.setLocationBarcode(locationModel.getLocationBarcode());
             locationView.setLocationName(locationModel.getLocationName());
-            locationView.setWarehouseViews(transformWarehouseToViewList(locationModel.getWarehouseId()));
+            locationView.setWarehouseModel(locationModel.getWarehouseId());
             locationView.setCapacity(locationModel.getCapacity());
             locationView.setRemark(locationModel.getRemark());
             locationView.setQty(locationModel.getQty());
@@ -222,7 +225,7 @@ public class PalletManagementTransform extends Transform {
         return locationView;
     }
 
-    public String tranformStatus(int status){
+    public String transformStatusToString(int status){
         log.debug("tranformStatus().");
         String statusName = "";
         switch (status){
@@ -235,5 +238,64 @@ public class PalletManagementTransform extends Transform {
             case 6 : statusName = "Closed";break;
         }
         return statusName;
+    }
+
+    public int transformStatusInt(String status){
+        log.debug("transformStatusInt().");
+        int statusId;
+
+        if (("Cancel").equalsIgnoreCase(status)){
+            return statusId = 0;
+        } else if (("Create").equalsIgnoreCase(status)){
+            return statusId = 1;
+        } else if (("Completed").equalsIgnoreCase(status)){
+            return statusId = 2;
+        } else if (("Printed").equalsIgnoreCase(status)){
+            return statusId = 3;
+        } else if (("Located").equalsIgnoreCase(status)){
+            return statusId = 4;
+        } else if (("reserved").equalsIgnoreCase(status)){
+            return statusId = 5;
+        } else {
+            return statusId = 6;
+        }
+    }
+
+    public PalletModel transformToMode(PalletManagementView palletManagementView, String redirect){
+        log.debug("transformToMode().");
+        PalletModel palletModel = new PalletModel();
+
+        palletModel.setId(palletManagementView.getId());
+        palletModel.setPalletBarcode(palletManagementView.getPalletBarcode());
+        palletModel.setWarehouseId(palletManagementView.getWarehouseModel());
+        palletModel.setItemId(palletManagementView.getItemModel());
+        palletModel.setLocationId(palletManagementView.getLocationModel());
+        palletModel.setTagPrint(palletManagementView.getTagPrint() + 1);
+        palletModel.setQty(palletManagementView.getQty());
+        palletModel.setReservedQty(palletManagementView.getReservedQty());
+
+        if ("PrintTag".equalsIgnoreCase(redirect)){
+            if (transformStatusInt(palletManagementView.getStatus()) == 2){
+                palletModel.setStatus(transformStatusInt(palletManagementView.getStatus()) + 1);
+            } else {
+                palletModel.setStatus(transformStatusInt(palletManagementView.getStatus()));
+            }
+        } else if ("ClosePallet".equalsIgnoreCase(redirect)){
+            log.debug("redirect : {}", redirect);
+            palletModel.setStatus(6);
+        }
+
+
+        palletModel.setCreateBy(palletManagementView.getCreateBy());
+        palletModel.setCreateDate(palletManagementView.getCreateDate());
+        palletModel.setUpdateBy(palletManagementView.getUpdateBy());
+        palletModel.setUpdateDate(new Date());
+        palletModel.setIsValid(palletManagementView.getIsValid());
+        palletModel.setVersion(palletManagementView.getVersion());
+        palletModel.setCapacity(palletManagementView.getCapacity());
+        palletModel.setConveyorLine(palletManagementView.getConvetorLine());
+        palletModel.setShift(palletManagementView.getShift());
+
+        return palletModel;
     }
 }

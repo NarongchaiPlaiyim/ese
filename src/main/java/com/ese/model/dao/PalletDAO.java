@@ -30,7 +30,7 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
         }
     }
 
-    public List<PalletModel> findChang(int statusId, int warehouse, int conveyorLine){
+    public List<PalletModel> findChang(int statusId, int warehouse, int conveyorLine, int location, String keyItemDescription){
         log.debug("findUnPrint().");
         try {
             Criteria criteria = getCriteria();
@@ -41,6 +41,14 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
 
             if (!Utils.isZero(conveyorLine)){
                 criteria.add(Restrictions.eq("conveyorLine.id", conveyorLine));
+            }
+
+            if (!Utils.isZero(location)){
+                criteria.add(Restrictions.eq("locationId.id", location));
+            }
+
+            if (!Utils.isNull(keyItemDescription)){
+                criteria.add(Restrictions.like("itemId.dSGThaiItemDescription", "%"+keyItemDescription.trim()+"%"));
             }
 
             if (statusId == 1){

@@ -23,17 +23,17 @@ public class PalletModel extends AbstractModel{
     @Column(name = "pallet_barcode")
     private String palletBarcode;
 
-    @OneToMany
+    @OneToOne
     @JoinColumn(name = "warehouse_id")
-    private List<WarehouseModel> wherehouseId;
+    private WarehouseModel warehouseId;
 
-    @OneToMany
+    @OneToOne
     @JoinColumn(name = "item_id")
-    private List<ItemModel> itemId;
+    private ItemModel itemId;
 
-    @OneToMany
+    @OneToOne
     @JoinColumn(name = "location_id")
-    private List<LocationModel> locationId;
+    private LocationModel locationId;
 
     @Column(name = "tagprint", nullable=false, columnDefinition="int default 0")
     private Integer tagPrint;
@@ -68,7 +68,7 @@ public class PalletModel extends AbstractModel{
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("id", id)
                 .append("palletBarcode", palletBarcode)
-                .append("wherehouseId", wherehouseId)
+                .append("warehouseId", warehouseId)
                 .append("itemId", itemId)
                 .append("locationId", locationId)
                 .append("tagPrint", tagPrint)

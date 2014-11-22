@@ -25,4 +25,5 @@ public abstract class Bean implements Serializable {
     @ManagedProperty("#{palletService}") protected PalletService palletService;
     @ManagedProperty("#{workingAreaService}") protected WorkingAreaService workingAreaService;
     @ManagedProperty("#{locationItemService}") protected LocationItemService locationItemService;
+    @ManagedProperty("#{locationService}") protected LocationService locationService;
 }

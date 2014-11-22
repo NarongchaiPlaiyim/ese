@@ -11,7 +11,7 @@ import java.util.Date;
 @Setter
 public class WarehouseView {
     private int id;
-    private String warehouseCaode;
+    private String warehouseCode;
     private String warehouseName;
     private String remark;
     private int createBy;
@@ -26,7 +26,7 @@ public class WarehouseView {
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("id", id)
-                .append("warehouseCaode", warehouseCaode)
+                .append("warehouseCode", warehouseCode)
                 .append("warehouseName", warehouseName)
                 .append("remark", remark)
                 .append("createBy", createBy)

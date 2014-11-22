@@ -18,9 +18,9 @@ import java.util.List;
 public class PalletManagementView {
     private int id;
     private String palletBarcode;
-    private List<WarehouseView> warehouseViewList;
-    private List<ItemView> itemViewList;
-    private List<LocationView> locationViewList;
+    private WarehouseModel warehouseModel;
+    private ItemModel itemModel;
+    private LocationModel locationModel;
     private int tagPrint;
     private int qty;
     private int reservedQty;
@@ -40,9 +40,9 @@ public class PalletManagementView {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("id", id)
                 .append("palletBarcode", palletBarcode)
-                .append("warehouseViewList", warehouseViewList)
-                .append("itemViewList", itemViewList)
-                .append("locationViewList", locationViewList)
+                .append("warehouseModel", warehouseModel)
+                .append("itemModel", itemModel)
+                .append("locationModel", locationModel)
                 .append("tagPrint", tagPrint)
                 .append("qty", qty)
                 .append("reservedQty", reservedQty)
