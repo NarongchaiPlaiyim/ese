@@ -291,13 +291,13 @@
             </div>
         </p:panel>
 
-        <ui:include src="../site/dialog/confirmDeleteDlg.xhtml">
+        <ui:include src="/site/dialog/confirmDeleteDlg.xhtml">
             <ui:param name="id" value="confirmDeleteWarehouseDialog"/>
             <ui:param name="name" value="confirmDeleteWarehouseDlg"/>
             <ui:param name="formId" value="frmConfirmDeleteWarehouse"/>
             <ui:param name="controller" value="#{setup}"/>
             <ui:param name="action" value="onClickDeleteButtonTAB"/>
-            <ui:param name="update" value=":setupForm:warehouseAndLocationTable"/>
+            <!--<ui:param name="update" value=":setupForm:warehouseAndLocationTable"/>-->
         </ui:include>
 
         <p:dialog id="warehouseDialog" widgetVar="warehouseDlg" header="Add/Edit warehouse"

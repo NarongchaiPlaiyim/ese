@@ -25,7 +25,7 @@ public class PalletManagementBean extends Bean implements Serializable {
     private WarehouseModel warehouseMode;
     private List<ConveyorLineModel> conveyorLineModelList;
     private ConveyorLineModel conveyorLineModel;
-    private List<PalletManagementView> palletMeanegementViewList;
+    private List<PalletManagementView> palletManegamentViewList;
     private PalletManagementView palletMeanegementView;
     private WorkingAreaModel workingAreaModel;
     private List<WorkingAreaModel> workingAreaModelList;
@@ -53,12 +53,12 @@ public class PalletManagementBean extends Bean implements Serializable {
 
     private void onLoadPallet(){
         log.debug("onLoadPallet(). ");
-        palletMeanegementViewList = palletService.findPalletJoinLocation();
+        palletManegamentViewList = palletService.findPalletJoinLocation();
     }
 
     public void onFind(){
         log.debug("changeOn : {}", statusOnShow);
-        palletMeanegementViewList = palletService.findByChang(statusOnShow, warehouseMode.getId(), workingAreaModel.getId());
+        palletManegamentViewList = palletService.findByChang(statusOnShow, warehouseMode.getId(), workingAreaModel.getId());
     }
 
 

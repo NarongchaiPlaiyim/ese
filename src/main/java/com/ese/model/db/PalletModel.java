@@ -17,6 +17,7 @@ import java.util.Date;
 @Proxy(lazy=false)
 public class PalletModel {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "pallet_barcode")
