@@ -15,6 +15,7 @@ import javax.persistence.*;
 @Proxy(lazy=false)
 public class StaffModel {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "password")
     private String password;

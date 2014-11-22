@@ -37,7 +37,7 @@ public class CustomerModel extends AbstractModel {
     private String remark;
 
     @Column(name = "isvalid")
-    private Integer isvalid;
+    private Integer isValid;
 
     @Column(name = "version")
     private Integer version;
@@ -52,7 +52,7 @@ public class CustomerModel extends AbstractModel {
                 .append("searchName", searchName)
                 .append("address", address)
                 .append("remark", remark)
-                .append("isvalid", isvalid)
+                .append("isvalid", isValid)
                 .append("version", version)
                 .toString();
     }

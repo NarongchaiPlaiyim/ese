@@ -15,7 +15,7 @@ import java.util.Date;
 @Entity
 @Table(name = "pallet")
 @Proxy(lazy=false)
-public class PalletModel {
+public class PalletModel extends AbstractModel{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -25,7 +25,7 @@ public class PalletModel {
 
     @OneToOne
     @JoinColumn(name = "warehouse_id")
-    private WarehouseModel wherehouseId;
+    private WarehouseModel warehouseId;
 
     @OneToOne
     @JoinColumn(name = "item_id")
@@ -43,20 +43,6 @@ public class PalletModel {
 
     @Column(name = "status")
     private Integer status;
-
-    @Column(name = "create_by")
-    private String createBy;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "create_date")
-    private Date createDate;
-
-    @Column(name = "update_by")
-    private String updateBy;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "update_date")
-    private Date updateDate;
 
     @Column(name = "isvalid", nullable=false, columnDefinition="int default 0")
     private Integer isValid;
@@ -82,16 +68,12 @@ public class PalletModel {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("id", id)
                 .append("palletBarcode", palletBarcode)
-                .append("wherehouseId", wherehouseId)
+                .append("warehouseId", warehouseId)
                 .append("itemId", itemId)
                 .append("locationId", locationId)
                 .append("tagPrint", tagPrint)
                 .append("qty", qty)
                 .append("status", status)
-                .append("createBy", createBy)
-                .append("createDate", createDate)
-                .append("updateBy", updateBy)
-                .append("updateDate", updateDate)
                 .append("isValid", isValid)
                 .append("version", version)
                 .append("capacity", capacity)

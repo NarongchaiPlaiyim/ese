@@ -24,7 +24,7 @@ public class DailyForceModel {
     private ItemModel itemId;
 
     @Column(name = "sn_barcode")
-    private String sn_barcode;
+    private String snBarcode;
 
     @Column(name = "batchno")
     private String batchNo;
@@ -56,7 +56,7 @@ public class DailyForceModel {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("id", id)
                 .append("itemId", itemId)
-                .append("sn_barcode", sn_barcode)
+                .append("snBarcode", snBarcode)
                 .append("batchNo", batchNo)
                 .append("grade", grade)
                 .append("cost", cost)

@@ -7,16 +7,15 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
-import java.util.Date;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "warehouse")
 @Proxy(lazy=false)
-public class WarehouseModel {
+public class WarehouseModel extends AbstractModel{
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "warehouse_code")
@@ -28,22 +27,8 @@ public class WarehouseModel {
     @Column(name = "remark")
     private String remark;
 
-    @Column(name = "create_by")
-    private BigDecimal createBy;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "create_date")
-    private Date createDate;
-
-    @Column(name = "update_by")
-    private String updateBy;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "update_date")
-    private Date updateDate;
-
     @Column(name = "isvalid", nullable=false, columnDefinition="int default 0")
-    private Integer isvalid;
+    private Integer isValid;
 
     @Column(name = "status")
     private String status;
@@ -58,11 +43,7 @@ public class WarehouseModel {
                 .append("warehouseCode", warehouseCode)
                 .append("warehouseName", warehouseName)
                 .append("remark", remark)
-                .append("createBy", createBy)
-                .append("createDate", createDate)
-                .append("updateBy", updateBy)
-                .append("updateDate", updateDate)
-                .append("isvalid", isvalid)
+                .append("isValid", isValid)
                 .append("status", status)
                 .append("version", version)
                 .toString();

@@ -16,6 +16,7 @@ import java.util.Date;
 @Proxy(lazy=false)
 public class ItemModel {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "ItemId")
@@ -25,7 +26,7 @@ public class ItemModel {
     private String itemName;
 
     @Column(name = "ItemGroupId")
-    private String itemGrpupId;
+    private String itemGroupId;
 
     @Column(name = "ItemType")
     private int itemType;
@@ -196,7 +197,7 @@ public class ItemModel {
                 .append("id", id)
                 .append("itemId", itemId)
                 .append("itemName", itemName)
-                .append("itemGrpupId", itemGrpupId)
+                .append("itemGrpupId", itemGroupId)
                 .append("itemType", itemType)
                 .append("packagingGroupId", packagingGroupId)
                 .append("netWeight", netWeight)

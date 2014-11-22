@@ -14,8 +14,9 @@ import java.util.Date;
 @Entity
 @Table(name = "location")
 @Proxy(lazy=false)
-public class LocationModel {
+public class LocationModel extends AbstractModel{
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "location_barcode")
@@ -40,20 +41,8 @@ public class LocationModel {
     @Column(name = "status")
     private String status;
 
-    @Column(name = "create_by")
-    private String createBy;
-
-    @Column(name = "create_date")
-    private Date createDate;
-
-    @Column(name = "update_by")
-    private String updateBy;
-
-    @Column(name = "update_date")
-    private Date updateDate;
-
     @Column(name = "isvalid", nullable=false, columnDefinition="int default 0")
-    private int isvalid;
+    private int isValid;
 
     @Column(name = "version", nullable=false, columnDefinition="int default 0")
     private Integer version;
@@ -62,7 +51,7 @@ public class LocationModel {
     private int reservedQty;
 
     @Column(name = "ismix", nullable=false, columnDefinition="int default 0")
-    private int ismix;
+    private int isMix;
 
     @Override
     public String toString() {
@@ -75,14 +64,10 @@ public class LocationModel {
                 .append("remark", remark)
                 .append("qty", qty)
                 .append("status", status)
-                .append("createBy", createBy)
-                .append("createDate", createDate)
-                .append("updateBy", updateBy)
-                .append("updateDate", updateDate)
-                .append("isvalid", isvalid)
+                .append("isValid", isValid)
                 .append("version", version)
                 .append("reservedQty", reservedQty)
-                .append("ismix", ismix)
+                .append("ismix", isMix)
                 .toString();
     }
 }
