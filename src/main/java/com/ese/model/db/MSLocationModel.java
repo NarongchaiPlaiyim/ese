@@ -7,16 +7,15 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "location")
 @Proxy(lazy=false)
-public class LocationModel extends AbstractModel{
+public class MSLocationModel extends AbstractModel{
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "location_barcode")
@@ -27,7 +26,7 @@ public class LocationModel extends AbstractModel{
 
     @OneToOne
     @JoinColumn(name = "warehouse_id")
-    private WarehouseModel warehouseId;
+    private MSWarehouseModel msWarehouseModel;
 
     @Column(name = "capacity")
     private int capacity;
@@ -41,8 +40,8 @@ public class LocationModel extends AbstractModel{
     @Column(name = "status")
     private String status;
 
-    @Column(name = "isvalid", length = 1, nullable = false, columnDefinition = "int default 0")
-    private int isvalid;
+    @Column(name = "isvalid", nullable=false, columnDefinition="int default 0")
+    private int isValid;
 
     @Column(name = "version", nullable=false, columnDefinition="int default 0")
     private Integer version;
@@ -50,8 +49,8 @@ public class LocationModel extends AbstractModel{
     @Column(name = "reserved_qty")
     private int reservedQty;
 
-    @Column(name = "ismix", length = 1, nullable = false, columnDefinition = "int default 0")
-    private int ismix;
+    @Column(name = "ismix", nullable=false, columnDefinition="int default 0")
+    private int isMix;
 
     @Override
     public String toString() {
@@ -59,15 +58,15 @@ public class LocationModel extends AbstractModel{
                 .append("id", id)
                 .append("locationBarcode", locationBarcode)
                 .append("locationName", locationName)
-                .append("warehouseId", warehouseId)
+                .append("msWarehouseModel", msWarehouseModel)
                 .append("capacity", capacity)
                 .append("remark", remark)
                 .append("qty", qty)
                 .append("status", status)
-                .append("isvalid", isvalid)
+                .append("isValid", isValid)
                 .append("version", version)
                 .append("reservedQty", reservedQty)
-                .append("ismix", ismix)
+                .append("ismix", isMix)
                 .toString();
     }
 }

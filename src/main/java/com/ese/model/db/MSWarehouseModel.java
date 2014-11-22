@@ -15,8 +15,9 @@ import java.util.Date;
 @Entity
 @Table(name = "warehouse")
 @Proxy(lazy=false)
-public class WarehouseModel extends AbstractModel{
+public class MSWarehouseModel extends AbstractModel{
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "warehouse_code")
@@ -28,8 +29,8 @@ public class WarehouseModel extends AbstractModel{
     @Column(name = "remark")
     private String remark;
 
-    @Column(name = "isvalid", length = 1, nullable = false, columnDefinition = "int default 0")
-    private int isvalid;
+    @Column(name = "isvalid", nullable=false, columnDefinition="int default 0")
+    private Integer isValid;
 
     @Column(name = "status")
     private String status;
@@ -44,7 +45,7 @@ public class WarehouseModel extends AbstractModel{
                 .append("warehouseCode", warehouseCode)
                 .append("warehouseName", warehouseName)
                 .append("remark", remark)
-                .append("isvalid", isvalid)
+                .append("isValid", isValid)
                 .append("status", status)
                 .append("version", version)
                 .toString();

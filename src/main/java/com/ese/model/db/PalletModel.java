@@ -8,8 +8,6 @@ import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
 
 @Getter
 @Setter
@@ -18,22 +16,11 @@ import java.util.List;
 @Proxy(lazy=false)
 public class PalletModel extends AbstractModel{
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "pallet_barcode")
     private String palletBarcode;
-
-    @OneToOne
-    @JoinColumn(name = "warehouse_id")
-    private WarehouseModel warehouseId;
-
-    @OneToOne
-    @JoinColumn(name = "item_id")
-    private ItemModel itemId;
-
-    @OneToOne
-    @JoinColumn(name = "location_id")
-    private LocationModel locationId;
 
     @Column(name = "tagprint", nullable=false, columnDefinition="int default 0")
     private Integer tagPrint;
@@ -44,8 +31,8 @@ public class PalletModel extends AbstractModel{
     @Column(name = "status")
     private Integer status;
 
-    @Column(name = "isvalid", length = 1, nullable = false, columnDefinition = "int default 0")
-    private int isValid;
+    @Column(name = "isvalid", nullable=false, columnDefinition="int default 0")
+    private Integer isValid;
 
     @Column(name = "version", nullable=false, columnDefinition="int default 0")
     private Integer version;
@@ -53,33 +40,46 @@ public class PalletModel extends AbstractModel{
     @Column(name = "capacity")
     private BigDecimal capacity;
 
-    @OneToOne
-    @JoinColumn(name = "conveyor_line", nullable=false, columnDefinition="int default 0")
-    private WorkingAreaModel conveyorLine;
-
     @Column(name = "reserved_qty", nullable=false, columnDefinition="int default 0")
     private Integer reservedQty;
 
-    @Column(name = "shift")
-    private String shift;
+    @OneToOne
+    @JoinColumn(name = "conveyor_line", nullable=false, columnDefinition="int default 0")
+    private MSWorkingAreaModel msWorkingAreaModel;
+
+    @OneToOne
+    @JoinColumn(name = "shift_id")
+    private MSShiftModel msShiftModel;
+
+    @OneToOne
+    @JoinColumn(name = "warehouse_id")
+    private MSWarehouseModel msWarehouseModel;
+
+    @OneToOne
+    @JoinColumn(name = "item_id")
+    private MSItemModel msItemModel;
+
+    @OneToOne
+    @JoinColumn(name = "location_id")
+    private MSLocationModel msLocationModel;
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("id", id)
                 .append("palletBarcode", palletBarcode)
-                .append("warehouseId", warehouseId)
-                .append("itemId", itemId)
-                .append("locationId", locationId)
                 .append("tagPrint", tagPrint)
                 .append("qty", qty)
                 .append("status", status)
                 .append("isValid", isValid)
                 .append("version", version)
                 .append("capacity", capacity)
-                .append("conveyorLine", conveyorLine)
                 .append("reservedQty", reservedQty)
-                .append("shift", shift)
+                .append("msWorkingAreaModel", msWorkingAreaModel)
+                .append("msShiftModel", msShiftModel)
+                .append("msWarehouseModel", msWarehouseModel)
+                .append("msItemModel", msItemModel)
+                .append("msLocationModel", msLocationModel)
                 .toString();
     }
 }

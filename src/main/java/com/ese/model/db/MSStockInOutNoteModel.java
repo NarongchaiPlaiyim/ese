@@ -11,29 +11,41 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "pallet_movement")
+@Table(name = "stock_inout_note")
 @Proxy(lazy=false)
-public class PalletMovementModel extends AbstractModel{
+public class MSStockInOutNoteModel extends AbstractModel{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "sn_barcode")
-    private String snBarcode;
+    @Column(name = "type")
+    private String type;
 
-    @Column(name = "pallet_barcode")
-    private String palletBarcode;
+    @Column(name = "inout_code")
+    private String inoutCode;
+
+    @Column(name = "inout_note")
+    private String inoutNote;
+
+    @Column(name = "remark")
+    private String remark;
 
     @Column(name = "isvalid")
     private Integer isValid;
+
+    @Column(name = "version")
+    private Integer version;
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("id", id)
-                .append("snBarcode", snBarcode)
-                .append("palletBarcode", palletBarcode)
+                .append("type", type)
+                .append("inoutCode", inoutCode)
+                .append("inoutNote", inoutNote)
+                .append("remark", remark)
                 .append("isValid", isValid)
+                .append("version", version)
                 .toString();
     }
 }

@@ -1,24 +1,37 @@
 package com.ese.beans;
 
 import com.ese.model.db.ConveyorLineModel;
-import com.ese.model.db.LocationModel;
-import com.ese.model.db.WarehouseModel;
-import com.ese.model.db.WorkingAreaModel;
+import com.ese.model.db.MSWarehouseModel;
+import com.ese.model.db.MSWorkingAreaModel;
 import com.ese.model.view.PalletManagementView;
+import com.ese.service.PalletService;
 import lombok.Getter;
 import lombok.Setter;
-import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@Setter
 @ManagedBean(name = "palletManegement")
 @ViewScoped
 public class PalletManagementBean extends Bean implements Serializable {
+    @ManagedProperty("#{palletService}") private PalletService palletService;
+    private List<MSWarehouseModel> warehouseModelList;
+    private MSWarehouseModel warehouseMode;
+    private List<ConveyorLineModel> conveyorLineModelList;
+    private ConveyorLineModel conveyorLineModel;
+    private List<PalletManagementView> palletManegamentViewList;
+    private PalletManagementView palletMeanegementView;
+    private MSWorkingAreaModel workingAreaModel;
+    private List<MSWorkingAreaModel> workingAreaModelList;
+    private int statusOnShow;
+    private String textTest;
 
     @Getter @Setter
     List<WarehouseModel> warehouseModelList;
@@ -54,11 +67,12 @@ public class PalletManagementBean extends Bean implements Serializable {
     String findKeyItemDescription;
 
     @PostConstruct
-    public void onCreattion(){
-        log.debug("onCreattion().");
+    public void onCreation(){
+        log.debug("onCreation().");
         palletMeanegementView = new PalletManagementView();
-        warehouseMode = new WarehouseModel();
+        warehouseMode = new MSWarehouseModel();
         conveyorLineModel = new ConveyorLineModel();
+        workingAreaModel = new MSWorkingAreaModel();
         workingAreaModel = new WorkingAreaModel();
         locationModel = new LocationModel();
         init();
@@ -73,17 +87,19 @@ public class PalletManagementBean extends Bean implements Serializable {
         onloadPallet();
     }
 
-    private void onloadPallet(){
-        log.debug("onloadPallet(). ");
-        palletMeanegementViewList = palletService.findPalletJoinLocation();
+    private void onLoadPallet(){
+        log.debug("onLoadPallet(). ");
+        palletManegamentViewList = palletService.findPalletJoinLocation();
     }
 
-    public void onfind(){
+    public void onFind(){
         log.debug("changeOn : {}", statusOnShow);
+        palletManegamentViewList = palletService.findByChang(statusOnShow, warehouseMode.getId(), workingAreaModel.getId());
         palletMeanegementViewList = palletService.findByChang(statusOnShow, warehouseMode.getId(), workingAreaModel.getId(), locationModel.getId(), findKeyItemDescription);
     }
 
     public void test(){
+        log.debug("palletManagementView : {}", palletMeanegementView.toString());
         log.debug("palletMeanegementView : {}", palletMeanegementView.toString());
     }
 

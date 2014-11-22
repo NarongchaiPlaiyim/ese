@@ -39,8 +39,7 @@ public class PalletManagementTransform extends Transform {
 
         palletMeanegementView.setId(palletModel.getId());
         palletMeanegementView.setPalletBarcode(palletModel.getPalletBarcode());
-
-        palletMeanegementView.setWarehouseModel(palletModel.getWarehouseId());
+        palletMeanegementView.setWarehouseModel(palletModel.getWherehouseId());
         palletMeanegementView.setItemModel(palletModel.getItemId());
         palletMeanegementView.setLocationModel(palletModel.getLocationId());
 

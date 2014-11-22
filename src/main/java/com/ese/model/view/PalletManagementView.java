@@ -1,9 +1,9 @@
 package com.ese.model.view;
 
-import com.ese.model.db.ItemModel;
-import com.ese.model.db.LocationModel;
-import com.ese.model.db.WarehouseModel;
-import com.ese.model.db.WorkingAreaModel;
+import com.ese.model.db.MSItemModel;
+import com.ese.model.db.MSLocationModel;
+import com.ese.model.db.MSWarehouseModel;
+import com.ese.model.db.MSWorkingAreaModel;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -18,9 +18,9 @@ import java.util.List;
 public class PalletManagementView {
     private int id;
     private String palletBarcode;
-    private WarehouseModel warehouseModel;
-    private ItemModel itemModel;
-    private LocationModel locationModel;
+    private MSWarehouseModel warehouseModel;
+    private MSItemModel itemModel;
+    private MSLocationModel locationModel;
     private int tagPrint;
     private int qty;
     private int reservedQty;
@@ -32,7 +32,7 @@ public class PalletManagementView {
     private int isValid;
     private int version;
     private BigDecimal capacity;
-    private WorkingAreaModel convetorLine;
+    private MSWorkingAreaModel convetorLine;
     private String shift;
 
     @Override

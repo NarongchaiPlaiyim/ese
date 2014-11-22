@@ -14,14 +14,14 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @Entity
-@Table(name = "system_role")
+@Table(name = "working_area")
 @Proxy(lazy=false)
-public class SystemRoleModel {
+public class MSWorkingAreaModel {
     @Id
     private int id;
 
-    @Column(name = "code")
-    private String code;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "version")
     private Integer version;
@@ -30,7 +30,7 @@ public class SystemRoleModel {
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("id", id)
-                .append("code", code)
+                .append("name", name)
                 .append("version", version)
                 .toString();
     }

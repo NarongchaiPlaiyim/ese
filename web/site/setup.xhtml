@@ -124,10 +124,16 @@
                                                       </tr>
                                                       <tr>
                                                           <td class="right" colspan="6">
-                                                              <p:commandButton value="Delete" styleClass="medium" style="width: 80px"
-                                                                               oncomplete="confirmDeleteWarehouseDlg.show()"
+                                                              <p:commandButton id="btnDeleteTab" value="Delete" styleClass="medium" style="width: 80px"
+                                                                               onstart="PF('bui').show()"
+                                                                               action="#{index.onSubmit()}"
+                                                                               oncomplete="PF('bui').hide()"
                                                                       />
                                                           </td>
+
+                                                          <!--<p:commandButton id="pnlBtn" value="Block Panel" type="button" onclick="PF('bui').show()"/>-->
+                                                          <!--<p:commandButton id="pnlBtn2" value="Unblock Panel" type="button" onclick="PF('bui').hide()"/>-->
+
                                                       </tr>
                                                   </table>
                                               </td>
@@ -287,17 +293,28 @@
                               </p:tabView>
                         </h:form>
                     </div>
+
                 </h:form>
             </div>
         </p:panel>
 
-        <ui:include src="../site/dialog/confirmDeleteDlg.xhtml">
+
+
+        <p:blockUI block="pnl_maincontainer" widgetVar="bui">
+            <h:panelGrid columns="2">
+                <h:outputText value="Please wait..." />
+                <p:graphicImage value="/resources/images/shared/ajax-loader.gif"/>
+            </h:panelGrid>
+        </p:blockUI>
+
+
+        <ui:include src="/site/dialog/confirmDeleteDlg.xhtml">
             <ui:param name="id" value="confirmDeleteWarehouseDialog"/>
             <ui:param name="name" value="confirmDeleteWarehouseDlg"/>
             <ui:param name="formId" value="frmConfirmDeleteWarehouse"/>
             <ui:param name="controller" value="#{setup}"/>
             <ui:param name="action" value="onClickDeleteButtonTAB"/>
-            <ui:param name="update" value=":setupForm:warehouseAndLocationTable"/>
+            <!--<ui:param name="update" value=":setupForm:warehouseAndLocationTable"/>-->
         </ui:include>
 
         <p:dialog id="warehouseDialog" widgetVar="warehouseDlg" header="Add/Edit warehouse"

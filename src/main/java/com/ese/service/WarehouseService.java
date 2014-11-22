@@ -1,12 +1,11 @@
 package com.ese.service;
 
-import com.ese.model.db.WarehouseModel;
+import com.ese.model.db.MSWarehouseModel;
 import com.ese.model.dao.WarehouseDAO;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,21 +14,21 @@ import java.util.List;
 public class WarehouseService extends Service{
     @Resource private WarehouseDAO warehouseDAO;
 
-    public List<WarehouseModel> getWarehouseList(){
+    public List<MSWarehouseModel> getWarehouseList(){
         log.debug("getWarehouseList(). ");
         try{
             return  warehouseDAO.findAll();
         } catch (Exception e){
             log.debug("Exception {}",e);
-            return new ArrayList<WarehouseModel>();
+            return new ArrayList<MSWarehouseModel>();
         }
     }
 
-    public WarehouseModel findById(int warehouseId){
+    public MSWarehouseModel findById(int warehouseId){
         try {
             return warehouseDAO.findByID(warehouseId);
         } catch (Exception e){
-            return new WarehouseModel();
+            return new MSWarehouseModel();
         }
     }
 }
