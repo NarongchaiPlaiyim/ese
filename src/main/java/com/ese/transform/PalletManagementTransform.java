@@ -31,16 +31,16 @@ public class PalletManagementTransform extends Transform {
 
         palletMeanegementView.setId(palletModel.getId());
         palletMeanegementView.setPalletBarcode(palletModel.getPalletBarcode());
-        palletMeanegementView.setWarehouseModel(palletModel.getWherehouseId());
+        palletMeanegementView.setWarehouseModel(palletModel.getWarehouseId());
         palletMeanegementView.setItemModel(palletModel.getItemId());
         palletMeanegementView.setLocationModel(palletModel.getLocationId());
         palletMeanegementView.setTagPrint(palletModel.getTagPrint());
         palletMeanegementView.setQty(palletModel.getQty());
         palletMeanegementView.setReservedQty(palletModel.getReservedQty());
         palletMeanegementView.setStatus(tranformStatus(palletModel.getStatus()));
-        palletMeanegementView.setCreateBy(palletModel.getCreateBy());
+//        palletMeanegementView.setCreateBy(palletModel.getCreateBy());
         palletMeanegementView.setCreateDate(palletModel.getCreateDate());
-        palletMeanegementView.setUpdateBy(palletModel.getUpdateBy());
+//        palletMeanegementView.setUpdateBy(palletModel.getUpdateBy());
         palletMeanegementView.setUpdateDate(palletModel.getUpdateDate());
         palletMeanegementView.setIsValid(palletModel.getIsValid());
         palletMeanegementView.setVersion(palletModel.getVersion());

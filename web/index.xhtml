@@ -3,27 +3,24 @@
 <f:view xmlns="http://www.w3.org/1999/xhtml"
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:p="http://primefaces.org/ui"
+        xmlns:fn="http://java.sun.com/jsp/jstl/functions"
         >
+<h:body>
 
-    <h:body>
-        <h:form id="test">
-
-            <p:selectOneMenu id="locationOfPropertyId2"
-                             size="1" style="width: 275px; max-width: 275px; min-width: 275px;"
-                    >
-                <f:selectItem itemLabel="- Please Select -" itemValue=""/>
-                <f:selectItems value="#{index.profileModelList}"
-                               var="profile"
-                               itemLabel="#{profile.firstName}"
-                               itemValue="#{profile.lastName}"/>
-            </p:selectOneMenu>
-
-            <p:commandButton id="submitOnClickISATest" value="Update" update="@form"
-                             action="#{index.onSubmit()}"/>
-
+    <p:panel id="block" columns="1" header="Login Panel" style="width:272px;">
+        <h:form id="setupForm">
+            <p:commandButton id="trigger"
+                             value="Login" action="#{index.onSubmit()}"></p:commandButton>
         </h:form>
-    </h:body>
+    </p:panel>
 
+    <p:blockUI widgetVar="blockUI" block=":block"
+               trigger=":setupForm:trigger">
+        LOADING<br/>
+        <p:graphicImage value="/resources/images/shared/ajax-loader.gif"/>
+    </p:blockUI>
+</h:body>
 </f:view>
 </html>

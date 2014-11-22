@@ -61,7 +61,7 @@ public class PalletModel extends AbstractModel{
     private Integer reservedQty;
 
     @Column(name = "shift")
-    private String shift;
+    private Integer shift;
 
     @Override
     public String toString() {
