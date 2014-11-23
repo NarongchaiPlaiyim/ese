@@ -2,6 +2,7 @@ package com.ese.beans;
 
 import com.ese.model.db.StaffModel;
 import com.ese.security.SimpleAuthenticationManager;
+import com.ese.service.LoginService;
 import com.ese.utils.FacesUtil;
 import com.ese.utils.Utils;
 import com.ese.security.UserDetail;
@@ -14,6 +15,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetails;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
@@ -21,13 +23,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.Serializable;
 
-
+@Getter
+@Setter
 @ViewScoped
 @ManagedBean(name = "loginBean")
 public class LoginBean extends Bean{
-    @Getter @Setter private String userName;
-    @Getter @Setter private String password;
-    @Getter @Setter private UserDetail userDetail;
+    private String userName;
+    private String password;
+    private UserDetail userDetail;
+
+    @ManagedProperty("#{loginService}") private LoginService loginService;
 
     @PostConstruct
     private void init(){
@@ -38,6 +43,7 @@ public class LoginBean extends Bean{
 
     public String login(){
         log.info("SessionRegistry principle size: {}", sessionRegistry.getAllPrincipals().size());
+        System.out.println("login()");
         if(loginService.isUserExist(getUserName(), getPassword())){
             StaffModel staffModel = loginService.getStaffModel();
             userDetail = new UserDetail(userName,password, staffModel.getRole());
@@ -66,12 +72,16 @@ public class LoginBean extends Bean{
         System.out.println(loginService.getList().toString());
         System.out.println(loginService.getObject().toString());
         System.out.println(loginService.isUserExist(getUserName(), getPassword()));
-        return "aaaaaa";
+        return "loggedOut";
     }
 
     public String logout(){
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         SecurityContextHolder.clearContext();
         return "loggedOut";
+    }
+
+    public void test(){
+        loginService.test();
     }
 }

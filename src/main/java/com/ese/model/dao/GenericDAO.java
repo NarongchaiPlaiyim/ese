@@ -95,4 +95,7 @@ public abstract class GenericDAO<T, ID extends Serializable> implements Serializ
         }
         return Utils.safetyList(query.list());
     }
+    protected List<T> findBySQL(String sql) throws Exception {
+        return Utils.safetyList(getSession().createSQLQuery(sql).list());
+    }
 }

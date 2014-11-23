@@ -1,5 +1,8 @@
 package com.ese.service;
 
+import com.ese.model.dao.LocationDAO;
+import com.ese.model.dao.MSLocationItemsDAO;
+import com.ese.model.dao.WarehouseDAO;
 import com.ese.utils.Utils;
 import com.ese.model.db.StaffModel;
 import com.ese.model.dao.StaffDAO;
@@ -8,7 +11,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,6 +18,10 @@ import java.util.List;
 @Transactional
 public class LoginService extends Service{
     @Resource private StaffDAO staffDAO;
+    @Resource private LocationDAO locationDAO;
+    @Resource private WarehouseDAO warehouseDAO;
+    @Resource private MSLocationItemsDAO locationItemsDAO;
+
     @Getter StaffModel staffModel;
 
     public boolean isUserExist(final String userName, final String password){
@@ -48,6 +54,18 @@ public class LoginService extends Service{
         } catch (Exception e){
             System.out.println("e :"+e);
             return new StaffModel();
+        }
+    }
+
+
+    public void test(){
+        try {
+
+//            System.out.println(warehouseDAO.findByStatus2().toString()+"");
+            System.out.println(locationItemsDAO.eeeeeeee());
+//            System.out.println(locationDAO.getLocationModelList());
+        } catch (Exception e) {
+            System.err.println(e);
         }
     }
 }

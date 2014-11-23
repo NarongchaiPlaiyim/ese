@@ -1,12 +1,18 @@
 package com.ese.utils;
 import org.apache.commons.lang3.StringUtils;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 public enum Utils {
     ;
     public final static boolean TRUE = true;
+
+
 
     public static boolean isNull(final Object object){
         return object == null;
@@ -38,5 +44,13 @@ public enum Utils {
         } catch (NullPointerException e) {
             return false;
         }
+    }
+
+    public static Date currentDate(){
+       return Calendar.getInstance().getTime();
+    }
+
+    public static String getDocumentNo(){
+        return new SimpleDateFormat("yyyyMMddHHmmss").format(currentDate());
     }
 }

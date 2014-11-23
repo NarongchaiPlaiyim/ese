@@ -210,7 +210,7 @@ public class PalletManagementTransform extends Transform {
             locationView.setCapacity(locationModel.getCapacity());
             locationView.setRemark(locationModel.getRemark());
             locationView.setQty(locationModel.getQty());
-            locationView.setStatus(locationModel.getStatus());
+//            locationView.setStatus(locationModel.getStatus());
             locationView.setCreateBy(locationModel.getCreateBy());
             locationView.setCreateDate(locationModel.getCreateDate());
             locationView.setUpdateBy(locationModel.getUpdateBy());
