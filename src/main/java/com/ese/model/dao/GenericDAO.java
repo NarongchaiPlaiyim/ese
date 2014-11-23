@@ -30,7 +30,7 @@ public abstract class GenericDAO<T, ID extends Serializable> implements Serializ
         return entityClass;
     }
 
-    private Session getSession() throws Exception {
+    protected Session getSession() throws Exception {
         return sessionFactory.getCurrentSession();
     }
 
@@ -96,5 +96,8 @@ public abstract class GenericDAO<T, ID extends Serializable> implements Serializ
             query.setParameter(i, params[i]);
         }
         return Utils.safetyList(query.list());
+    }
+    protected List<T> findBySQL(String sql) throws Exception {
+        return Utils.safetyList(getSession().createSQLQuery(sql).list());
     }
 }

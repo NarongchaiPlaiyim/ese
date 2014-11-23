@@ -13,17 +13,17 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "location_items")
-@Proxy(lazy=false)
+//@Proxy(lazy=false)
 public class MSLocationItemsModel extends AbstractModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
-    @OneToOne
+    @OneToOne//(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "location_id")
     private MSLocationModel msLocationModel;
 
-    @OneToOne
+    @OneToOne//(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "item_id")
     private MSItemModel msItemModel;
 

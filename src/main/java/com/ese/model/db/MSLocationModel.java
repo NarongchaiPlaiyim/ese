@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class MSLocationModel extends AbstractModel{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(name = "location_barcode")
     private String locationBarcode;
@@ -29,28 +29,28 @@ public class MSLocationModel extends AbstractModel{
     private MSWarehouseModel msWarehouseModel;
 
     @Column(name = "capacity")
-    private int capacity;
+    private Integer capacity;
 
     @Column(name = "remark")
     private String remark;
 
     @Column(name = "qty")
-    private int qty;
+    private Integer qty;
 
     @Column(name = "status")
-    private String status;
+    private Integer status;
 
     @Column(name = "isvalid", nullable=false, columnDefinition="int default 0")
-    private int isValid;
+    private Integer isValid;
 
     @Column(name = "version", nullable=false, columnDefinition="int default 0")
     private Integer version;
 
     @Column(name = "reserved_qty")
-    private int reservedQty;
+    private Integer reservedQty;
 
     @Column(name = "ismix", nullable=false, columnDefinition="int default 0")
-    private int isMix;
+    private Integer isMix;
 
     @Override
     public String toString() {

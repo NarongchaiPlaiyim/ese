@@ -31,9 +31,9 @@ public class PalletManagementTransform extends Transform {
 
         palletMeanegementView.setId(palletModel.getId());
         palletMeanegementView.setPalletBarcode(palletModel.getPalletBarcode());
-        palletMeanegementView.setWarehouseModel(palletModel.getWarehouseId());
-        palletMeanegementView.setItemModel(palletModel.getItemId());
-        palletMeanegementView.setLocationModel(palletModel.getLocationId());
+//        palletMeanegementView.setWarehouseModel(palletModel.getWarehouseId());
+//        palletMeanegementView.setItemModel(palletModel.getItemId());
+//        palletMeanegementView.setLocationModel(palletModel.getLocationId());
         palletMeanegementView.setTagPrint(palletModel.getTagPrint());
         palletMeanegementView.setQty(palletModel.getQty());
         palletMeanegementView.setReservedQty(palletModel.getReservedQty());
@@ -45,7 +45,7 @@ public class PalletManagementTransform extends Transform {
         palletMeanegementView.setIsValid(palletModel.getIsValid());
         palletMeanegementView.setVersion(palletModel.getVersion());
         palletMeanegementView.setCapacity(palletModel.getCapacity());
-        palletMeanegementView.setConvetorLine(palletModel.getConveyorLine());
+//        palletMeanegementView.setConvetorLine(palletModel.getConveyorLine());
 //        palletMeanegementView.setShift(palletModel.getShift());
 
         return palletMeanegementView;

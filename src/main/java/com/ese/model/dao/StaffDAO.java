@@ -5,6 +5,8 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class StaffDAO extends GenericDAO<StaffModel, Integer>{
 
@@ -15,4 +17,8 @@ public class StaffDAO extends GenericDAO<StaffModel, Integer>{
         )).uniqueResult();
     }
 
+    public List<StaffModel> test() throws Exception {
+//        SELECT * FROM dbo.staff
+        return findBySQL("SELECT * FROM dbo.staff", "3", 5, 6);
+    }
 }

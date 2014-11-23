@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Setter
 public abstract class Bean implements Serializable {
     @ManagedProperty("#{indexService}") protected IndexService indexService;
-    @ManagedProperty("#{loginService}") protected LoginService loginService;
+
     @ManagedProperty("#{sessionRegistry}") protected SessionRegistry sessionRegistry;
     @ManagedProperty("#{sas}") protected CompositeSessionAuthenticationStrategy compositeSessionAuthenticationStrategy;
     @ManagedProperty("#{log}") protected Logger log;
