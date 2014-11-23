@@ -1,8 +1,13 @@
 package com.ese.service;
 
-import com.ese.model.dao.LocationItemsDAO;
+import com.ese.model.dao.LocationDAO;
+import com.ese.model.dao.MSLocationItemsDAO;
+import com.ese.model.db.MSLocationItemsModel;
+import com.ese.model.db.MSLocationModel;
 import com.ese.model.db.PalletModel;
 import com.ese.model.dao.PalletDAO;
+import com.ese.model.view.LocationItemView;
+import com.ese.model.view.LocationView;
 import com.ese.model.view.PalletManagementView;
 import com.ese.transform.PalletManagementTransform;
 import com.ese.utils.Utils;
@@ -17,11 +22,17 @@ import java.util.List;
 @Transactional
 public class PalletService extends Service{
     @Resource private PalletDAO palletDAO;
-    @Resource private LocationItemsDAO locationItemsDAO;
+    @Resource private MSLocationItemsDAO msLocationItemsDAO;
+    @Resource private LocationDAO locationDAO;
     @Resource private PalletManagementTransform palletManagementTransform;
 
     public void test(){
-        locationItemsDAO.findLocationByPallet();
+        int i = 58;
+        try {
+            msLocationItemsDAO.findLocationByItemId(i);
+        } catch (Exception e) {
+            log.debug("-------------");
+        }
     }
 
     public List<PalletManagementView> findPalletJoinLocation(){
@@ -65,6 +76,20 @@ public class PalletService extends Service{
 
             palletDAO.update(palletModel);
         } catch (Exception e){
+            log.debug("Exception : {}", e);
+        }
+    }
+
+    public void changeLocation(PalletManagementView palletManagementView, LocationItemView locationItemView){
+        log.debug("changeLocation().");
+        try {
+            MSLocationModel model = locationDAO.findByID(locationItemView.getId());
+            PalletModel palletModel = palletDAO.findByID(palletManagementView.getId());
+
+            palletDAO.updauePalletByChangeLocation(palletModel.getId(), model.getId());
+            palletDAO.updateLocationByChangeLocation(model.getId());
+
+        } catch (Exception e) {
             log.debug("Exception : {}", e);
         }
     }

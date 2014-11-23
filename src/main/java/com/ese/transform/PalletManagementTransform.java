@@ -27,6 +27,8 @@ public class PalletManagementTransform extends Transform {
 
         for (PalletModel model : palletModelList){
             PalletManagementView palletMeanegementView = tranformToView(model);
+            log.debug("------Model : {}",model.getId());
+            log.debug("###### View : {}",palletMeanegementView.getId());
             palletMeanegementViewList.add(palletMeanegementView);
         }
 
@@ -61,168 +63,168 @@ public class PalletManagementTransform extends Transform {
         return palletMeanegementView;
     }
 
-    private List<WarehouseView> transformWarehouseToViewList(List<MSWarehouseModel> warehouseModelList){
-        log.debug("transFormWarehouseToView().");
-        List<WarehouseView> warehouseViewList = new ArrayList<WarehouseView>();
-
-        if (Utils.isSafetyList(warehouseModelList)){
-            log.debug("warehouseModelList Size : {}",warehouseModelList.size());
-            for (MSWarehouseModel model : warehouseModelList){
-                WarehouseView warehouseView = tramsformWarehouseToView(model);
-                warehouseViewList.add(warehouseView);
-            }
-        } else {
-            log.debug("warehouseModels Size Zero.");
-        }
-        return warehouseViewList;
-    }
-
-    private WarehouseView tramsformWarehouseToView(MSWarehouseModel warehouseModel){
-        log.debug("tramsformWarehouseToView().");
-        WarehouseView warehouseView = new WarehouseView();
-
-        if (!Utils.isNull(warehouseModel)){
-            warehouseView.setId(warehouseModel.getId());
-            warehouseView.setWarehouseCode(warehouseModel.getWarehouseCode());
-            warehouseView.setWarehouseName(warehouseModel.getWarehouseName());
-            warehouseView.setRemark(warehouseModel.getRemark());
-            warehouseView.setCreateBy(warehouseModel.getCreateBy());
-            warehouseView.setCreateDate(warehouseModel.getCreateDate());
-            warehouseView.setUpdateBy(warehouseModel.getUpdateBy());
-            warehouseView.setUpdateDate(warehouseModel.getUpdateDate());
-            warehouseView.setIsvalid(warehouseModel.getIsValid());
-            warehouseView.setStatus(warehouseModel.getStatus());
-            warehouseView.setVersion(warehouseModel.getVersion());
-        }
-        return warehouseView;
-    }
-
-    private List<ItemView> transformItemToViewList(List<MSItemModel> itemModelList){
-        log.debug("transformItemToViewList().");
-        List<ItemView> itemViewList = new ArrayList<ItemView>();
-
-        if (Utils.isSafetyList(itemModelList)){
-            log.debug("itemModelList Size : {}", itemModelList.size());
-            for (MSItemModel modelList : itemModelList){
-                ItemView itemView = transformItemToView(modelList);
-                itemViewList.add(itemView);
-            }
-        } else {
-            log.debug("itemModelList Size Zero");
-        }
-
-        return itemViewList;
-    }
-
-    private ItemView transformItemToView(MSItemModel itemModel){
-        log.debug("transformItemToViewList().");
-        ItemView itemView = new ItemView();
-
-        if (!Utils.isNull(itemModel)){
-            itemView.setId(itemModel.getId());
-            itemView.setItemId(itemModel.getItemId());
-            itemView.setItemName(itemModel.getItemName());
-            itemView.setItemGrpupId(itemModel.getItemGroupId());
-            itemView.setItemType(itemModel.getItemType());
-            itemView.setPackagingGroupId(itemModel.getPackagingGroupId());
-            itemView.setNetWeight(itemModel.getNetWeight());
-            itemView.setDSG_MaxStock(itemModel.getDSG_MaxStock());
-            itemView.setDSG_MinStock(itemModel.getDSG_MinStock());
-            itemView.setDSG_SafetyStock(itemModel.getDSG_SafetyStock());
-            itemView.setDSG_InternalItemId(itemModel.getDSG_InternalItemId());
-            itemView.setDSGSize(itemModel.getDSGSize());
-            itemView.setDSG_RimWidth(itemModel.getDSG_RimWidth());
-            itemView.setDSG_MaxLoad(itemModel.getDSG_MaxLoad());
-            itemView.setDSG_MaxInflation(itemModel.getDSG_MaxInflation());
-            itemView.setDSG_MaxSpeed(itemModel.getDSG_MaxSpeed());
-            itemView.setDSG_E_Mark(itemModel.getDSG_E_Mark());
-            itemView.setDSG_ETRTO(itemModel.getDSG_ETRTO());
-            itemView.setDSG_LoadIndex(itemModel.getDSG_LoadIndex());
-            itemView.setDSG_SpeedIndex(itemModel.getDSG_SpeedIndex());
-            itemView.setDSG_RecommendedRim(itemModel.getDSG_RecommendedRim());
-            itemView.setDSG_TreadDept(itemModel.getDSG_TreadDept());
-            itemView.setDSG_AlternativeRim(itemModel.getDSG_AlternativeRim());
-            itemView.setDSG_OfMold(itemModel.getDSG_OfMold());
-            itemView.setDSG_Valve(itemModel.getDSG_Valve());
-            itemView.setDSG_ID(itemModel.getDSG_ID());
-            itemView.setDSG_QtyPerPallet(itemModel.getDSG_QtyPerPallet());
-            itemView.setDSG_CurPerShif(itemModel.getDSG_CurPerShif());
-            itemView.setDSG_ColorId1(itemModel.getDSG_ColorId1());
-            itemView.setDSG_ColorSeparate1(itemModel.getDSG_ColorSeparate1());
-            itemView.setDSG_ColorId2(itemModel.getDSG_ColorId2());
-            itemView.setDSG_ColorSeparate2(itemModel.getDSG_ColorSeparate2());
-            itemView.setDSG_ColorId3(itemModel.getDSG_ColorId3());
-            itemView.setDSG_CreateDate(itemModel.getDSG_CreateDate());
-            itemView.setDSG_Originator(itemModel.getDSG_Originator());
-            itemView.setDSG_ImageDir(itemModel.getDSG_ImageDir());
-            itemView.setDSGProductGroupID(itemModel.getDSGProductGroupID());
-            itemView.setDSGSubGroupID(itemModel.getDSGSubGroupID());
-            itemView.setDSGPatternID(itemModel.getDSGPatternID());
-            itemView.setDSGBandID(itemModel.getDSGBandID());
-            itemView.setDSG_Model(itemModel.getDSG_Model());
-            itemView.setDSGTyre_Types(itemModel.getDSGTyre_Types());
-            itemView.setTyre_Type(itemModel.getTyre_Type());
-            itemView.setDSGRimSize(itemModel.getDSGRimSize());
-            itemView.setDSGPLYRating(itemModel.getDSGPLYRating());
-            itemView.setDSGThaiItemDescription(itemModel.getDSGThaiItemDescription());
-            itemView.setDSG_EU(itemModel.getDSG_EU());
-            itemView.setDSG_ItemLabelId(itemModel.getDSG_ItemLabelId());
-            itemView.setDSG_DescriptionTextId(itemModel.getDSG_DescriptionTextId());
-            itemView.setDSG_GradeProductId(itemModel.getDSG_GradeProductId());
-            itemView.setDSG_FeatureProductId(itemModel.getDSG_FeatureProductId());
-            itemView.setDSG_DescriptionPrefixId(itemModel.getDSG_DescriptionPrefixId());
-            itemView.setDSG_GroupDescription(itemModel.getDSG_GroupDescription());
-            itemView.setDSG_CopyFrom(itemModel.getDSG_CopyFrom());
-            itemView.setDSG_MKProductGroupId(itemModel.getDSG_MKProductGroupId());
-            itemView.setDSG_MKSubproductGroupId(itemModel.getDSG_MKSubproductGroupId());
-            itemView.setDSG_MKProductTypeId(itemModel.getDSG_MKProductTypeId());
-            itemView.setVersion(itemModel.getVersion());
-        }
-
-        return itemView;
-    }
-
-    private List<LocationView> transformLocationToViewList(List<MSLocationModel> locationModelList){
-        log.debug("transformLocationToViewList().");
-        List<LocationView> locationViewList = new ArrayList<LocationView>();
-
-        if (Utils.isSafetyList(locationModelList)){
-            log.debug("locationModelList Size : {}", locationModelList.size());
-            for (MSLocationModel model : locationModelList){
-                LocationView locationView = transformLocationToView(model);
-                locationViewList.add(locationView);
-            }
-        } else {
-            log.debug("locationModelList Size Zero");
-        }
-
-        return locationViewList;
-    }
-
-    private LocationView transformLocationToView(MSLocationModel locationModel){
-        LocationView locationView = new LocationView();
-
-        if (!Utils.isNull(locationModel)){
-            locationView.setId(locationModel.getId());
-            locationView.setLocationBarcode(locationModel.getLocationBarcode());
-            locationView.setLocationName(locationModel.getLocationName());
-            locationView.setWarehouseModel(locationModel.getMsWarehouseModel());
-            locationView.setCapacity(locationModel.getCapacity());
-            locationView.setRemark(locationModel.getRemark());
-            locationView.setQty(locationModel.getQty());
-//            locationView.setStatus(locationModel.getStatus());
-            locationView.setCreateBy(locationModel.getCreateBy());
-            locationView.setCreateDate(locationModel.getCreateDate());
-            locationView.setUpdateBy(locationModel.getUpdateBy());
-            locationView.setUpdateDate(locationModel.getUpdateDate());
-            locationModel.setIsValid(locationModel.getIsValid());
-            locationView.setVersion(locationModel.getVersion());
-            locationView.setReservedQty(locationModel.getReservedQty());
-            locationView.setIsMix(locationModel.getIsMix());
-        }
-
-        return locationView;
-    }
+//    private List<WarehouseView> transformWarehouseToViewList(List<MSWarehouseModel> warehouseModelList){
+//        log.debug("transFormWarehouseToView().");
+//        List<WarehouseView> warehouseViewList = new ArrayList<WarehouseView>();
+//
+//        if (Utils.isSafetyList(warehouseModelList)){
+//            log.debug("warehouseModelList Size : {}",warehouseModelList.size());
+//            for (MSWarehouseModel model : warehouseModelList){
+//                WarehouseView warehouseView = tramsformWarehouseToView(model);
+//                warehouseViewList.add(warehouseView);
+//            }
+//        } else {
+//            log.debug("warehouseModels Size Zero.");
+//        }
+//        return warehouseViewList;
+//    }
+//
+//    private WarehouseView tramsformWarehouseToView(MSWarehouseModel warehouseModel){
+//        log.debug("tramsformWarehouseToView().");
+//        WarehouseView warehouseView = new WarehouseView();
+//
+//        if (!Utils.isNull(warehouseModel)){
+//            warehouseView.setId(warehouseModel.getId());
+//            warehouseView.setWarehouseCode(warehouseModel.getWarehouseCode());
+//            warehouseView.setWarehouseName(warehouseModel.getWarehouseName());
+//            warehouseView.setRemark(warehouseModel.getRemark());
+//            warehouseView.setCreateBy(warehouseModel.getCreateBy());
+//            warehouseView.setCreateDate(warehouseModel.getCreateDate());
+//            warehouseView.setUpdateBy(warehouseModel.getUpdateBy());
+//            warehouseView.setUpdateDate(warehouseModel.getUpdateDate());
+//            warehouseView.setIsvalid(warehouseModel.getIsValid());
+//            warehouseView.setStatus(warehouseModel.getStatus());
+//            warehouseView.setVersion(warehouseModel.getVersion());
+//        }
+//        return warehouseView;
+//    }
+//
+//    private List<ItemView> transformItemToViewList(List<MSItemModel> itemModelList){
+//        log.debug("transformItemToViewList().");
+//        List<ItemView> itemViewList = new ArrayList<ItemView>();
+//
+//        if (Utils.isSafetyList(itemModelList)){
+//            log.debug("itemModelList Size : {}", itemModelList.size());
+//            for (MSItemModel modelList : itemModelList){
+//                ItemView itemView = transformItemToView(modelList);
+//                itemViewList.add(itemView);
+//            }
+//        } else {
+//            log.debug("itemModelList Size Zero");
+//        }
+//
+//        return itemViewList;
+//    }
+//
+//    private ItemView transformItemToView(MSItemModel itemModel){
+//        log.debug("transformItemToViewList().");
+//        ItemView itemView = new ItemView();
+//
+//        if (!Utils.isNull(itemModel)){
+//            itemView.setId(itemModel.getId());
+//            itemView.setItemId(itemModel.getItemId());
+//            itemView.setItemName(itemModel.getItemName());
+//            itemView.setItemGrpupId(itemModel.getItemGroupId());
+//            itemView.setItemType(itemModel.getItemType());
+//            itemView.setPackagingGroupId(itemModel.getPackagingGroupId());
+//            itemView.setNetWeight(itemModel.getNetWeight());
+//            itemView.setDSG_MaxStock(itemModel.getDSG_MaxStock());
+//            itemView.setDSG_MinStock(itemModel.getDSG_MinStock());
+//            itemView.setDSG_SafetyStock(itemModel.getDSG_SafetyStock());
+//            itemView.setDSG_InternalItemId(itemModel.getDSG_InternalItemId());
+//            itemView.setDSGSize(itemModel.getDSGSize());
+//            itemView.setDSG_RimWidth(itemModel.getDSG_RimWidth());
+//            itemView.setDSG_MaxLoad(itemModel.getDSG_MaxLoad());
+//            itemView.setDSG_MaxInflation(itemModel.getDSG_MaxInflation());
+//            itemView.setDSG_MaxSpeed(itemModel.getDSG_MaxSpeed());
+//            itemView.setDSG_E_Mark(itemModel.getDSG_E_Mark());
+//            itemView.setDSG_ETRTO(itemModel.getDSG_ETRTO());
+//            itemView.setDSG_LoadIndex(itemModel.getDSG_LoadIndex());
+//            itemView.setDSG_SpeedIndex(itemModel.getDSG_SpeedIndex());
+//            itemView.setDSG_RecommendedRim(itemModel.getDSG_RecommendedRim());
+//            itemView.setDSG_TreadDept(itemModel.getDSG_TreadDept());
+//            itemView.setDSG_AlternativeRim(itemModel.getDSG_AlternativeRim());
+//            itemView.setDSG_OfMold(itemModel.getDSG_OfMold());
+//            itemView.setDSG_Valve(itemModel.getDSG_Valve());
+//            itemView.setDSG_ID(itemModel.getDSG_ID());
+//            itemView.setDSG_QtyPerPallet(itemModel.getDSG_QtyPerPallet());
+//            itemView.setDSG_CurPerShif(itemModel.getDSG_CurPerShif());
+//            itemView.setDSG_ColorId1(itemModel.getDSG_ColorId1());
+//            itemView.setDSG_ColorSeparate1(itemModel.getDSG_ColorSeparate1());
+//            itemView.setDSG_ColorId2(itemModel.getDSG_ColorId2());
+//            itemView.setDSG_ColorSeparate2(itemModel.getDSG_ColorSeparate2());
+//            itemView.setDSG_ColorId3(itemModel.getDSG_ColorId3());
+//            itemView.setDSG_CreateDate(itemModel.getDSG_CreateDate());
+//            itemView.setDSG_Originator(itemModel.getDSG_Originator());
+//            itemView.setDSG_ImageDir(itemModel.getDSG_ImageDir());
+//            itemView.setDSGProductGroupID(itemModel.getDSGProductGroupID());
+//            itemView.setDSGSubGroupID(itemModel.getDSGSubGroupID());
+//            itemView.setDSGPatternID(itemModel.getDSGPatternID());
+//            itemView.setDSGBandID(itemModel.getDSGBandID());
+//            itemView.setDSG_Model(itemModel.getDSG_Model());
+//            itemView.setDSGTyre_Types(itemModel.getDSGTyre_Types());
+//            itemView.setTyre_Type(itemModel.getTyre_Type());
+//            itemView.setDSGRimSize(itemModel.getDSGRimSize());
+//            itemView.setDSGPLYRating(itemModel.getDSGPLYRating());
+//            itemView.setDSGThaiItemDescription(itemModel.getDSGThaiItemDescription());
+//            itemView.setDSG_EU(itemModel.getDSG_EU());
+//            itemView.setDSG_ItemLabelId(itemModel.getDSG_ItemLabelId());
+//            itemView.setDSG_DescriptionTextId(itemModel.getDSG_DescriptionTextId());
+//            itemView.setDSG_GradeProductId(itemModel.getDSG_GradeProductId());
+//            itemView.setDSG_FeatureProductId(itemModel.getDSG_FeatureProductId());
+//            itemView.setDSG_DescriptionPrefixId(itemModel.getDSG_DescriptionPrefixId());
+//            itemView.setDSG_GroupDescription(itemModel.getDSG_GroupDescription());
+//            itemView.setDSG_CopyFrom(itemModel.getDSG_CopyFrom());
+//            itemView.setDSG_MKProductGroupId(itemModel.getDSG_MKProductGroupId());
+//            itemView.setDSG_MKSubproductGroupId(itemModel.getDSG_MKSubproductGroupId());
+//            itemView.setDSG_MKProductTypeId(itemModel.getDSG_MKProductTypeId());
+//            itemView.setVersion(itemModel.getVersion());
+//        }
+//
+//        return itemView;
+//    }
+//
+//    private List<LocationView> transformLocationToViewList(List<MSLocationModel> locationModelList){
+//        log.debug("transformLocationToViewList().");
+//        List<LocationView> locationViewList = new ArrayList<LocationView>();
+//
+//        if (Utils.isSafetyList(locationModelList)){
+//            log.debug("locationModelList Size : {}", locationModelList.size());
+//            for (MSLocationModel model : locationModelList){
+//                LocationView locationView = transformLocationToView(model);
+//                locationViewList.add(locationView);
+//            }
+//        } else {
+//            log.debug("locationModelList Size Zero");
+//        }
+//
+//        return locationViewList;
+//    }
+//
+//    private LocationView transformLocationToView(MSLocationModel locationModel){
+//        LocationView locationView = new LocationView();
+//
+//        if (!Utils.isNull(locationModel)){
+//            locationView.setId(locationModel.getId());
+//            locationView.setLocationBarcode(locationModel.getLocationBarcode());
+//            locationView.setLocationName(locationModel.getLocationName());
+//            locationView.setWarehouseModel(locationModel.getMsWarehouseModel());
+//            locationView.setCapacity(locationModel.getCapacity());
+//            locationView.setRemark(locationModel.getRemark());
+//            locationView.setQty(locationModel.getQty());
+////            locationView.setStatus(locationModel.getStatus());
+//            locationView.setCreateBy(locationModel.getCreateBy());
+//            locationView.setCreateDate(locationModel.getCreateDate());
+//            locationView.setUpdateBy(locationModel.getUpdateBy());
+//            locationView.setUpdateDate(locationModel.getUpdateDate());
+//            locationModel.setIsValid(locationModel.getIsValid());
+//            locationView.setVersion(locationModel.getVersion());
+//            locationView.setReservedQty(locationModel.getReservedQty());
+//            locationView.setIsMix(locationModel.getIsMix());
+//        }
+//
+//        return locationView;
+//    }
 
     public String transformStatusToString(int status){
         log.debug("tranformStatus().");
@@ -295,6 +297,31 @@ public class PalletManagementTransform extends Transform {
         palletModel.setMsWorkingAreaModel(palletManagementView.getConvetorLine());
         palletModel.setMsShiftModel(palletManagementView.getShift());
 
+        return palletModel;
+    }
+
+    public PalletModel transformToModelByChangeLocation(PalletManagementView palletManagementView, MSLocationModel msLocationModel){
+        PalletModel palletModel = new PalletModel();
+
+        palletModel.setId(palletManagementView.getId());
+        palletModel.setPalletBarcode(palletManagementView.getPalletBarcode());
+        palletModel.setMsWarehouseModel(palletManagementView.getWarehouseModel());
+        palletModel.setMsItemModel(palletManagementView.getItemModel());
+        log.debug("msLocationModel : {}", msLocationModel.getId());
+        palletModel.setMsLocationModel(msLocationModel);
+        palletModel.setTagPrint(palletManagementView.getTagPrint() + 1);
+        palletModel.setQty(palletManagementView.getQty());
+        palletModel.setReservedQty(palletManagementView.getReservedQty());
+        palletModel.setStatus(transformStatusInt(palletManagementView.getStatus()));
+        palletModel.setCreateBy(palletManagementView.getCreateBy());
+        palletModel.setCreateDate(palletManagementView.getCreateDate());
+        palletModel.setUpdateBy(palletManagementView.getUpdateBy());
+        palletModel.setUpdateDate(new Date());
+        palletModel.setIsValid(palletManagementView.getIsValid());
+        palletModel.setVersion(palletManagementView.getVersion());
+        palletModel.setCapacity(palletManagementView.getCapacity());
+        palletModel.setMsWorkingAreaModel(palletManagementView.getConvetorLine());
+        palletModel.setMsShiftModel(palletManagementView.getShift());
         return palletModel;
     }
 }

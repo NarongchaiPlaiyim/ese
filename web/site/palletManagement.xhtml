@@ -27,7 +27,8 @@
                                     <table border="0" class="content_table_form">
                                         <tr>
                                             <td class="right">
-                                                <p:commandButton value="Find Location" action="#{palletManagement.onFindLocation}" disabled="#{}" oncomplete="PF('findLocationDlg').show()" update=":findlocationPanel"/>
+                                                <p:commandButton id="findlocation" value="Find Location" action="#{palletManagement.onFindLocation}"
+                                                                 disabled="#{palletManagement.isCheck()}" oncomplete="PF('findLocationDlg').show()" update=":findlocationForm"/>
                                                 <p:commandButton value="Print Tag" process="@form" action="#{palletManagement.OnPrintTag('PrintTag')}"
                                                                  update=":palletForm, :msgBoxSystemMessagePanel"/>
                                                 <p:commandButton value="Close Pallet" action="#{palletManagement.OnClosePallet}" update=":palletForm, :msgBoxSystemMessagePanel, :confirmClosePalletPanel" process="@form"/>
@@ -51,7 +52,7 @@
                                     <p:inputText id="findKey" value="#{palletManagement.findKeyItemDescription}" style="width: 120px">
                                         <p:ajax event="blur" update=":palletForm:findKey"/>
                                     </p:inputText>
-                                    <p:commandButton id="testName" value="Search" action="#{palletManagement.onFind}" process="@form" update=":palletForm:palletManagementTable, :palletForm:findKey"/>
+                                    <p:commandButton id="btnsearch" icon="ui-icon-search" action="#{palletManagement.onFind}" process="@form" update=":palletForm:palletManagementTable, :palletForm:findKey"/>
                                 </td>
                                 <td style="width: 40px">
                                     <h:outputLabel value="warehouse :"/>
@@ -101,7 +102,8 @@
                                                  selectionMode="single" rowKey="#{palletView.id}"
                                                  selection="#{palletManagement.palletMeanegementView}"
                                                  style="width: 100%; max-width: 100%; min-width: 100%">
-                                        <p:ajax event="rowSelect" update=":palletForm:palletManagementTable" listener="#{palletManagement.test}"/>
+                                        <p:ajax event="rowSelect" update=":palletForm:palletManagementTable, :palletForm:findlocation"
+                                                listener="#{palletManagement.onClickPalletTB}"/>
                                         <p:column headerText="No" style="width: 20px" styleClass="center">
                                             <h:outputLabel value="#{rowIndex+1}"/>
                                         </p:column>

@@ -53,4 +53,39 @@ public enum Utils {
     public static String getDocumentNo(){
         return new SimpleDateFormat("yyyyMMddHHmmss").format(currentDate());
     }
+
+    public static int parseInt(Object input, int defaultValue){
+        if(input == null)
+            return defaultValue;
+        else if (input instanceof Integer)
+            return (Integer) input;
+        else {
+            String inputStr = input.toString();
+            if(isEmpty(inputStr))
+                return defaultValue;
+            try{
+                return Integer.parseInt(inputStr);
+            }catch (ClassCastException e){
+                return defaultValue;
+            }
+        }
+    }
+
+    public static String parseString(Object input, String defaultValue){
+        if(input == null)
+            return defaultValue;
+        else if (input instanceof String)
+            return (String) input;
+        else {
+            try{
+                if(isEmpty(input.toString())){
+                    return defaultValue;
+                } else {
+                    return input.toString();
+                }
+            } catch (ClassCastException e){
+                return defaultValue;
+            }
+        }
+    }
 }
