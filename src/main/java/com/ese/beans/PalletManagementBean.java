@@ -4,8 +4,10 @@ import com.ese.model.db.ConveyorLineModel;
 import com.ese.model.db.MSLocationModel;
 import com.ese.model.db.MSWarehouseModel;
 import com.ese.model.db.MSWorkingAreaModel;
+import com.ese.model.view.LocationItemView;
 import com.ese.model.view.PalletManagementView;
 import com.ese.service.PalletService;
+import com.ese.utils.Utils;
 import lombok.Getter;
 import lombok.Setter;
 import org.primefaces.context.RequestContext;
@@ -39,6 +41,8 @@ public class PalletManagementBean extends Bean implements Serializable {
     private String findKeyItemDescription;
     private MSLocationModel msLocationModel;
     private List<MSLocationModel> msLocationModelList;
+    private List<LocationItemView> locationItemViewList;
+    private LocationItemView locationItemViews;
 
     @PostConstruct
     public void onCreation(){
@@ -49,6 +53,7 @@ public class PalletManagementBean extends Bean implements Serializable {
         workingAreaModel = new MSWorkingAreaModel();
         workingAreaModel = new MSWorkingAreaModel();
         msLocationModel = new MSLocationModel();
+        locationItemViews = new LocationItemView();
         init();
     }
 
@@ -72,12 +77,16 @@ public class PalletManagementBean extends Bean implements Serializable {
     }
 
     public void test(){
-        log.debug("palletManagementView : {}", palletMeanegementView.toString());
-        log.debug("palletMeanegementView : {}", palletMeanegementView.toString());
+        log.debug("test().");
+//        System.out.println(Utils.safetyList(palletService.findPalletJoinLocation()).toString());
+//
+//        log.debug("Location Select. {}", locationItemViews.getId());
+        palletService.test();
     }
 
     public void onFindLocation(){
-
+        locationItemViews = new LocationItemView();
+        locationItemViewList = locationItemService.getfindLocationAll();
     }
 
     public void OnPrintTag(String redirect){

@@ -1,8 +1,8 @@
 package com.ese.service;
 
+import com.ese.model.dao.LocationItemsDAO;
 import com.ese.model.db.PalletModel;
 import com.ese.model.dao.PalletDAO;
-//import com.ese.model.view.PalletMeanagementView;
 import com.ese.model.view.PalletManagementView;
 import com.ese.transform.PalletManagementTransform;
 import com.ese.utils.Utils;
@@ -17,7 +17,12 @@ import java.util.List;
 @Transactional
 public class PalletService extends Service{
     @Resource private PalletDAO palletDAO;
+    @Resource private LocationItemsDAO locationItemsDAO;
     @Resource private PalletManagementTransform palletManagementTransform;
+
+    public void test(){
+        locationItemsDAO.findLocationByPallet();
+    }
 
     public List<PalletManagementView> findPalletJoinLocation(){
         log.debug("findPalletJoinLocation().");
@@ -62,9 +67,5 @@ public class PalletService extends Service{
         } catch (Exception e){
             log.debug("Exception : {}", e);
         }
-    }
-
-    public void onUpdateByClosePallet(){
-
     }
 }

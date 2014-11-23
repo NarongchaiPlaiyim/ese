@@ -3,6 +3,7 @@ package com.ese.model.dao;
 import com.ese.model.db.PalletModel;
 import com.ese.utils.Utils;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -52,6 +53,7 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
             } else if (statusId == 2){
                 criteria.add(Restrictions.eq("qty", 0));
             }
+            criteria.addOrder(Order.desc("updateDate"));
             List<PalletModel> palletModelList = criteria.list();
             log.debug("findOnloadPallet Size : {}", palletModelList.size());
             return palletModelList;

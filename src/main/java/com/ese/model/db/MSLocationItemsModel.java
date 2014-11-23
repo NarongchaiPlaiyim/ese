@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "location_items")
-@Proxy(lazy=false)
+//@Proxy(lazy=false)
 public class MSLocationItemsModel extends AbstractModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +32,8 @@ public class MSLocationItemsModel extends AbstractModel {
 
     @Column(name = "version")
     private Integer version;
+
+
 
     @Override
     public String toString() {
