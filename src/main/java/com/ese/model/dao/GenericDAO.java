@@ -54,8 +54,6 @@ public abstract class GenericDAO<T, ID extends Serializable> implements Serializ
     }
 
     public List<T> findAll() throws Exception {
-        log.debug("-- DAO {}", findByCriteria());
-        System.out.println("--DAO " + findByCriteria());
         return findByCriteria();
     }
 

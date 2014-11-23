@@ -62,7 +62,7 @@ public class LoginService extends Service{
         try {
 
 //            System.out.println(warehouseDAO.findByStatus2().toString()+"");
-            System.out.println(locationItemsDAO.eeeeeeee());
+            System.out.println(locationItemsDAO.findLocationByItemId(58));
 //            System.out.println(locationDAO.getLocationModelList());
         } catch (Exception e) {
             System.err.println(e);

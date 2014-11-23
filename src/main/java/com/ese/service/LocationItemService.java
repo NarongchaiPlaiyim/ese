@@ -2,6 +2,7 @@ package com.ese.service;
 
 import com.ese.model.dao.MSLocationItemsDAO;
 import com.ese.model.db.MSLocationItemsModel;
+import com.ese.model.view.LocationItemView;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,15 @@ public class LocationItemService extends Service{
         } catch (Exception e){
             log.debug("Exception : {}", e);
             return new ArrayList<MSLocationItemsModel>();
+        }
+    }
+
+    public List<LocationItemView> findLocationByItemId(int itemId){
+        try {
+            return msLocationItemsDAO.findLocationByItemId(itemId);
+        } catch (Exception e) {
+            log.debug("Exception : {}", e);
+            return new ArrayList<LocationItemView>();
         }
     }
 }

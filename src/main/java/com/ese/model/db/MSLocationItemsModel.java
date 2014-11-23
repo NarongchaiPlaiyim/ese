@@ -33,6 +33,8 @@ public class MSLocationItemsModel extends AbstractModel {
     @Column(name = "version")
     private Integer version;
 
+
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)

@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="lib_jasport">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/lib/lib_jasport" />
+      <root url="jar://$PROJECT_DIR$/lib/jasperreports-5.0.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/lib/lib_jasport" recursive="false" />
+  </library>
+</component>

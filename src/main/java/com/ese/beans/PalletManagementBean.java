@@ -4,8 +4,10 @@ import com.ese.model.db.ConveyorLineModel;
 import com.ese.model.db.MSLocationModel;
 import com.ese.model.db.MSWarehouseModel;
 import com.ese.model.db.MSWorkingAreaModel;
+import com.ese.model.view.LocationItemView;
 import com.ese.model.view.PalletManagementView;
 import com.ese.service.PalletService;
+import com.ese.utils.Utils;
 import lombok.Getter;
 import lombok.Setter;
 import org.primefaces.context.RequestContext;
@@ -27,7 +29,7 @@ public class PalletManagementBean extends Bean implements Serializable {
     private List<MSWarehouseModel> warehouseModelList;
     private MSWarehouseModel warehouseMode;
     private List<ConveyorLineModel> conveyorLineModelList;
-    private ConveyorLineModel conveyorLineModel;
+//    private ConveyorLineModel conveyorLineModel;
     private List<PalletManagementView> palletManegamentViewList;
     private PalletManagementView palletMeanegementView;
     private MSWorkingAreaModel workingAreaModel;
@@ -39,25 +41,31 @@ public class PalletManagementBean extends Bean implements Serializable {
     private String findKeyItemDescription;
     private MSLocationModel msLocationModel;
     private List<MSLocationModel> msLocationModelList;
+    private List<LocationItemView> locationItemViewList;
+    private LocationItemView locationItemViews;
+    private boolean isCheck;
+    private boolean isCheckLocation;
 
     @PostConstruct
     public void onCreation(){
         log.debug("onCreation().");
-        palletMeanegementView = new PalletManagementView();
-        warehouseMode = new MSWarehouseModel();
-        conveyorLineModel = new ConveyorLineModel();
-        workingAreaModel = new MSWorkingAreaModel();
-        workingAreaModel = new MSWorkingAreaModel();
-        msLocationModel = new MSLocationModel();
+
         init();
     }
 
     private void init(){
         log.debug("init().");
+        palletMeanegementView = new PalletManagementView();
+        warehouseMode = new MSWarehouseModel();
+        workingAreaModel = new MSWorkingAreaModel();
+        msLocationModel = new MSLocationModel();
+
         warehouseModelList = warehouseService.getWarehouseList();
         workingAreaModelList = workingAreaService.getWorkingAreaList();
         msLocationModelList = locationService.getLocationList();
         statusOnShow = 0;
+        findKeyItemDescription = "";
+        isCheck = true;
         onLoadPallet();
     }
 
@@ -67,17 +75,37 @@ public class PalletManagementBean extends Bean implements Serializable {
     }
 
     public void onFind(){
-        log.debug("changeOn : {}", statusOnShow);
-        palletManegamentViewList = palletService.findByChang(statusOnShow, warehouseMode.getId(), workingAreaModel.getId(), msLocationModel.getId(), findKeyItemDescription);
+        log.debug("changeOn : {}, findKeyItemDescription : {}", statusOnShow, findKeyItemDescription);
+        log.debug("{},{},{}",warehouseMode.getId(),workingAreaModel.getId(),msLocationModel.getId());
+        int warehouseId = 0;
+        int waokingAreaId = 0;
+        int locationId = 0;
+
+        if (!Utils.isNull(warehouseMode.getId())){
+            warehouseId = warehouseMode.getId();
+        }
+
+        if (!Utils.isNull(workingAreaModel.getId())){
+            waokingAreaId = workingAreaModel.getId();
+        }
+
+        if (!Utils.isNull(msLocationModel.getId())){
+            locationId = msLocationModel.getId();
+        }
+
+        palletManegamentViewList = palletService.findByChang(statusOnShow, warehouseId, waokingAreaId, locationId, findKeyItemDescription);
     }
 
-    public void test(){
-        log.debug("palletManagementView : {}", palletMeanegementView.toString());
-        log.debug("palletMeanegementView : {}", palletMeanegementView.toString());
+    public void onClickPalletTB(){
+        log.debug("onClickPalletTB(). {}", palletMeanegementView);
+        isCheck = false;
     }
 
     public void onFindLocation(){
-
+        locationItemViews = new LocationItemView();
+        log.debug("onFindLocation : {}",locationItemViews.toString());
+        isCheckLocation = true;
+        locationItemViewList = locationItemService.findLocationByItemId(palletMeanegementView.getItemModel().getId());
     }
 
     public void OnPrintTag(String redirect){
@@ -113,6 +141,21 @@ public class PalletManagementBean extends Bean implements Serializable {
     public void changStatusOnClosePallet(String redirect){
         log.debug("changStatusOnClosePallet().");
         palletService.onUpdateByPrintTag(palletMeanegementView, redirect);
+        messageHeader = "Update";
+        message = "Successfully Update";
+        RequestContext.getCurrentInstance().execute("PF('msgBoxSystemMessageDlg').show()");
+        onCreation();
+    }
+
+    public void onClickLocationTB(){
+        log.debug("onClickLocationTB {}", locationItemViews.toString());
+        isCheckLocation = false;
+    }
+
+    public void OnChangeLocationToPallet(){
+        log.debug("OnChangeLocationToPallet().");
+        log.debug("PalletView : {}, locationView : {}",palletMeanegementView.getId(),locationItemViews.getId());
+        palletService.changeLocation(palletMeanegementView, locationItemViews);
         messageHeader = "Update";
         message = "Successfully Update";
         RequestContext.getCurrentInstance().execute("PF('msgBoxSystemMessageDlg').show()");

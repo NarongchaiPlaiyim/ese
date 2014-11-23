@@ -9,33 +9,48 @@
         <h:outputStylesheet name="css/style.css" />
     </h:head>
     <p:panel id="findlocationPanel" styleClass="panel-dialog">
-        <table border="0">
-            <tr>
-                <td class="right">
-                    <p:commandButton value="Select Location"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <p:dataTable id="searchLocationTable" rowKey="rowIndex">
-                        <p:column headerText="Select" selectionMode="multiple" style="height: 60px">
-                        </p:column>
-                        <p:column headerText="warehouse" style="width: 200px">
-                            <p:outputLabel value="aaaaa"/>
-                        </p:column>
-                        <p:column headerText="Location" style="width: 200px">
-                            <p:outputLabel value="bbbbb"/>
-                        </p:column>
-                        <p:column headerText="Capacity" style="width: 100px">
-                            <p:outputLabel value="cccc"/>
-                        </p:column>
-                        <p:column headerText="Avaliable" style="width: 100px">
-                            <p:outputLabel value="cccc"/>
-                        </p:column>
-                    </p:dataTable>
-                </td>
-            </tr>
-        </table>
+        <div>
+            <h:form id="findlocationForm">
+                <table border="0">
+                    <tr>
+                        <td class="right">
+                            <p:commandButton id="btnFindLocation" value="Select Location" update=":findlocationForm:btnFindLocation, :msgBoxSystemMessageDialog"
+                                             action="#{palletManagement.OnChangeLocationToPallet}" process="@form"
+                                             oncomplete="PF('findLocationDlg').hide()" disabled="#{palletManagement.isCheckLocation()}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p:dataTable id="searchLocationTable" rowKey="#{location.id}"
+                                         value="#{palletManagement.locationItemViewList}"
+                                         var="location" styleClass="full_table"
+                                         selectionMode="single" rowIndexVar="rowIndex"
+                                         selection="#{palletManagement.locationItemViews}"
+                                         style="width: 100%; max-width: 100%; min-width: 100%">
+                                <p:ajax event="rowSelect" update=":findlocationForm:searchLocationTable, :findlocationForm:btnFindLocation" listener="#{palletManagement.onClickLocationTB}"/>
+                                <!--<p:column headerText="Select" selectionMode="multiple" style="height: 60px">-->
+                                <!--</p:column>-->
+                                <p:column headerText="No" style="width: 20px" styleClass="center">
+                                    <h:outputLabel value="#{rowIndex+1}"/>
+                                </p:column>
+                                <p:column headerText="warehouse" style="width: 200px">
+                                    <p:outputLabel value="#{location.warehouse}"/>
+                                </p:column>
+                                <p:column headerText="Location" style="width: 200px">
+                                    <p:outputLabel value="#{location.location}"/>
+                                </p:column>
+                                <p:column headerText="Capacity" style="width: 100px">
+                                    <p:outputLabel value="#{location.capacity}"/>
+                                </p:column>
+                                <p:column headerText="Avaliable" style="width: 100px">
+                                    <p:outputLabel value="#{location.avaliable}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </td>
+                    </tr>
+                </table>
+            </h:form>
+        </div>
     </p:panel>
 </f:view>
 </html>
