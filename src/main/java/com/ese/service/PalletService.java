@@ -33,17 +33,38 @@ public class PalletService extends Service{
         return palletMeanegementViewList;
     }
 
-    public List<PalletManagementView> findByChang(int status, int warehouse, int conveyorLine){
+    public List<PalletManagementView> findByChang(int status, int warehouse, int conveyorLine, int location, String keyItemDescription){
         log.debug("findByChang().");
         List<PalletManagementView> palletMeanegementViewList = new ArrayList<PalletManagementView>();
 
-        List<PalletModel> palletModels = palletDAO.findChang(status, warehouse, conveyorLine);
+        List<PalletModel> palletModels = palletDAO.findChang(status, warehouse, conveyorLine, location, keyItemDescription);
 
         if (Utils.isSafetyList(palletModels)){
-            log.debug("palletModels size. {}", palletModels);
+            log.debug("palletModels size. {}", palletModels.size());
             palletMeanegementViewList = palletManagementTransform.tranformToViewList(palletModels);
         }
 
         return palletMeanegementViewList;
+    }
+
+    public void onUpdateByPrintTag(PalletManagementView palletManagementView, String redirect) {
+        log.debug("onSaveByPrintTag().");
+        PalletModel palletModel = null;
+
+        try{
+            if (!Utils.isNull(palletManagementView)){
+                palletModel = palletManagementTransform.transformToMode(palletManagementView, redirect);
+            } else {
+                palletModel = new PalletModel();
+            }
+
+            palletDAO.update(palletModel);
+        } catch (Exception e){
+            log.debug("Exception : {}", e);
+        }
+    }
+
+    public void onUpdateByClosePallet(){
+
     }
 }

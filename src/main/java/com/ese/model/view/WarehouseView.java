@@ -1,42 +1,26 @@
-package com.ese.model.db;
+package com.ese.model.view;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.hibernate.annotations.Proxy;
 
-import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Date;
 
 @Getter
 @Setter
-@Entity
-@Table(name = "warehouse")
-@Proxy(lazy=false)
-public class MSWarehouseModel extends AbstractModel{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @Column(name = "warehouse_code")
+public class WarehouseView {
+    private int id;
     private String warehouseCode;
-
-    @Column(name = "warehouse_name")
     private String warehouseName;
-
-    @Column(name = "remark")
     private String remark;
-
-    @Column(name = "isvalid", nullable=false, columnDefinition="int default 0")
-    private Integer isValid;
-
-    @Column(name = "status")
+    private int createBy;
+    private Date createDate;
+    private int updateBy;
+    private Date updateDate;
+    private int isvalid;
     private String status;
-
-    @Column(name = "version", columnDefinition="int default 0")
-    private Integer version;
+    private int version;
 
     @Override
     public String toString() {
@@ -45,7 +29,11 @@ public class MSWarehouseModel extends AbstractModel{
                 .append("warehouseCode", warehouseCode)
                 .append("warehouseName", warehouseName)
                 .append("remark", remark)
-                .append("isValid", isValid)
+                .append("createBy", createBy)
+                .append("createDate", createDate)
+                .append("updateBy", updateBy)
+                .append("updateDate", updateDate)
+                .append("isvalid", isvalid)
                 .append("status", status)
                 .append("version", version)
                 .toString();
