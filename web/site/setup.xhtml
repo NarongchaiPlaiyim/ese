@@ -147,10 +147,11 @@
                                                                value="#{setup.warehouseAndLocationViewList}"
                                                                rows="10"
                                                                paginator="true"
-                                                               rowsPerPageTemplate="10,20,40,60"
+
                                                                selectionMode="single"
                                                                selection="#{setup.warehouseAndLocationView}"
                                                                styleClass="full_table">
+                                                      <!--rowsPerPageTemplate="10,20,40,60"-->
                                                       <p:ajax event="rowSelect" listener="#{setup.test()}"/>
                                                       <p:column headerText="No" style="width: 20px">
                                                           <h:outputLabel value="#{rowIndex+1}"/>
