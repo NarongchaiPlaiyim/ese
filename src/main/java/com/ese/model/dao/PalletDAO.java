@@ -66,10 +66,12 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
     }
 
     public void updauePalletByChangeLocation(int palletId, int locationId){
+        log.debug("updauePalletByChangeLocation().");
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(" UPDATE ppwms03.dbo.pallet SET ppwms03.dbo.pallet.location_id = ").append(locationId);
-        stringBuilder.append("WHERE ppwms03.dbo.pallet.id = ").append(palletId);
+        stringBuilder.append(" UPDATE ppwms03.dbo.pallet SET ppwms03.dbo.pallet.location_id = ").append("'").append(locationId).append("'");
+        stringBuilder.append(" WHERE ppwms03.dbo.pallet.id = ").append("'").append(palletId).append("'");
 
+        log.debug("SQL Pallet : {}",stringBuilder.toString());
         try {
             SQLQuery q = getSession().createSQLQuery(stringBuilder.toString());
             q.executeUpdate();
@@ -79,9 +81,12 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
     }
 
     public void updateLocationByChangeLocation(int locationId){
+        log.debug("updateLocationByChangeLocation().");
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(" UPDATE ppwms03.dbo.location SET ppwms03.dbo.location.reserved_qty += 1 ");
-        stringBuilder.append("WHERE ppwms03.dbo.location.id = ").append(locationId);
+        stringBuilder.append(" WHERE ppwms03.dbo.location.id = ").append("'").append(locationId).append("'");
+
+        log.debug("SQL Location : {}", stringBuilder.toString());
 
         try {
             SQLQuery q = getSession().createSQLQuery(stringBuilder.toString());

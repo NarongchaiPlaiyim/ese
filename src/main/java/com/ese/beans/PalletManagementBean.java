@@ -105,6 +105,7 @@ public class PalletManagementBean extends Bean implements Serializable {
         locationItemViews = new LocationItemView();
         log.debug("onFindLocation : {}",locationItemViews.toString());
         isCheckLocation = true;
+        messageHeader = "Find Location for Item " + palletMeanegementView.getItemModel().getDSGThaiItemDescription();
         locationItemViewList = locationItemService.findLocationByItemId(palletMeanegementView.getItemModel().getId());
     }
 

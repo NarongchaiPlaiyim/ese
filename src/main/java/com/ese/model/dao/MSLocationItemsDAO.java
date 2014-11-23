@@ -44,6 +44,7 @@ public class MSLocationItemsDAO extends GenericDAO<MSLocationItemsModel, Integer
         stringBuilder.append(" WHERE ppwms03.dbo.location_items.item_id = " + itemId);
         stringBuilder.append(" AND ppwms03.dbo.location.status < 2");
         stringBuilder.append(" AND ppwms03.dbo.location.qty - ppwms03.dbo.location.reserved_qty < ppwms03.dbo.location.capacity");
+        stringBuilder.append(" AND ppwms03.dbo.location.capacity - ppwms03.dbo.location.qty - ppwms03.dbo.location.reserved_qty > 0");
         stringBuilder.append(" ORDER BY (ppwms03.dbo.location.capacity - ppwms03.dbo.location.qty - ppwms03.dbo.location.reserved_qty), ppwms03.dbo.location.ismix");
 
         SQLQuery q = getSession().createSQLQuery(stringBuilder.toString());
