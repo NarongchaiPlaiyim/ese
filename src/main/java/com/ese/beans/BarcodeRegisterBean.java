@@ -26,44 +26,20 @@ public class BarcodeRegisterBean extends Bean{
     private List<MSItemModel> msItemModelList;
     private String selectType;
     private String productSearch;
+    private boolean flagBtnSelect;
+    private MSItemModel msItemModel;
 
     @PostConstruct
     private void init(){
         barcodeRegisterView = new BarcodeRegisterView();
-//        msItemModelList = barcodeRegisterService.getAllItemMaster();
         msItemModelList = new ArrayList<MSItemModel>();
-//        MSItemModel msItemModel;
-//        for (int i = 0; i < 100; i++) {
-//            msItemModel = new MSItemModel();
-//            msItemModel.setId(i);
-//            msItemModel.setItemId(i+"id");
-//            msItemModel.setItemName(i+"name");
-//            msItemModel.setDSGThaiItemDescription(i+"DSG");
-//            msItemModelList.add(msItemModel);
-//        }
+        msItemModel = new MSItemModel();
+        flagBtnSelect = true;
     }
 
-    public void q(){
-        System.out.println("q");
-    }
-    public void q2(){
-        System.out.println("q2");
-    }
-    public void q3(){
-        System.out.println("q3");
-    }
-    public void q4(){
-        System.out.println("q4");
-    }
-    public void q5(){
-        System.out.println("q5");
-    }
-    public void q6(){
-        System.out.println("q6");
-    }
+
 
     public void onInitSearch(){
-        System.out.println("onInitSearch");
         selectType = "3";
         productSearch = "";
     }
@@ -71,5 +47,10 @@ public class BarcodeRegisterBean extends Bean{
     public void onSubmitSearch(){
         log.debug("-- onSubmitSearch()");
         msItemModelList = barcodeRegisterService.findByCondition(selectType, productSearch);
+    }
+
+    public void onClickTable(){
+        flagBtnSelect = false;
+        System.out.println(msItemModel.toString());
     }
 }
