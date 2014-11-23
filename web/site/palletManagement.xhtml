@@ -27,7 +27,7 @@
                                     <table border="0" class="content_table_form">
                                         <tr>
                                             <td class="right">
-                                                <p:commandButton value="Find Location" action="#{palletManagement.onFindLocation}" oncomplete="PF('findLocationDlg').show()" update=":findlocationPanel"/>
+                                                <p:commandButton value="Find Location" action="#{palletManagement.onFindLocation}" disabled="#{}" oncomplete="PF('findLocationDlg').show()" update=":findlocationPanel"/>
                                                 <p:commandButton value="Print Tag" process="@form" action="#{palletManagement.OnPrintTag('PrintTag')}"
                                                                  update=":palletForm, :msgBoxSystemMessagePanel"/>
                                                 <p:commandButton value="Close Pallet" action="#{palletManagement.OnClosePallet}" update=":palletForm, :msgBoxSystemMessagePanel, :confirmClosePalletPanel" process="@form"/>
@@ -42,14 +42,16 @@
                                         <f:selectItem itemLabel="Show All" itemValue="0"/>
                                         <f:selectItem itemLabel="Show unprint only" itemValue="1"/>
                                         <f:selectItem itemLabel="Show Empty Pallet" itemValue="2"/>
-                                        <p:ajax listener="#{palletManagement.onFind}" update="palletManagementTable"/>
+                                        <p:ajax listener="#{palletManagement.onFind}" update=":palletForm:palletManagementTable, :palletForm:findKey"/>
                                     </p:selectOneRadio>
                                 </td>
                             </tr>
                             <tr>
                                 <td style="width: 110px">
-                                    <p:inputText id="testtext" value="#{palletManagement.findKeyItemDescription}" style="width: 120px"/>
-                                    <p:commandButton id="testName" value="Search" action="#{palletManagement.onFind}" process="@form" update="palletManagementTable"/>
+                                    <p:inputText id="findKey" value="#{palletManagement.findKeyItemDescription}" style="width: 120px">
+                                        <p:ajax event="blur" update=":palletForm:findKey"/>
+                                    </p:inputText>
+                                    <p:commandButton id="testName" value="Search" action="#{palletManagement.onFind}" process="@form" update=":palletForm:palletManagementTable, :palletForm:findKey"/>
                                 </td>
                                 <td style="width: 40px">
                                     <h:outputLabel value="warehouse :"/>
@@ -61,7 +63,7 @@
                                                        var="wareItem"
                                                        itemLabel="#{wareItem.warehouseCode}"
                                                        itemValue="#{wareItem.id}"/>
-                                        <p:ajax listener="#{palletManagement.onFind}" update="palletManagementTable"/>
+                                        <p:ajax listener="#{palletManagement.onFind}" update=":palletForm:palletManagementTable, :palletForm:findKey"/>
                                     </p:selectOneMenu>
                                 </td>
                                 <td style="width: 50px">
@@ -74,7 +76,7 @@
                                                        var="conveyorLineItem"
                                                        itemLabel="#{conveyorLineItem.name}"
                                                        itemValue="#{conveyorLineItem.id}"/>
-                                        <p:ajax listener="#{palletManagement.onFind}" update="palletManagementTable"/>
+                                        <p:ajax listener="#{palletManagement.onFind}" update=":palletForm:palletManagementTable, :palletForm:findKey"/>
                                     </p:selectOneMenu>
                                 </td>
                                 <td style="width: 30px">
@@ -87,7 +89,7 @@
                                                        var="locationItem"
                                                        itemLabel="#{locationItem.locationBarcode}"
                                                        itemValue="#{locationItem.id}"/>
-                                        <p:ajax listener="#{palletManagement.onFind}" update="palletManagementTable"/>
+                                        <p:ajax listener="#{palletManagement.onFind}" update=":palletForm:palletManagementTable, :palletForm:findKey"/>
                                     </p:selectOneMenu>
                                 </td>
                             </tr>

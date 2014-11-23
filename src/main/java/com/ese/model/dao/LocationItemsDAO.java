@@ -6,6 +6,7 @@ import com.ese.utils.Utils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.SQLQuery;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
@@ -24,7 +25,8 @@ public class LocationItemsDAO extends GenericDAO<MSLocationItemsModel, Integer> 
         try{
             Criteria criteria = getSession().createCriteria(MSLocationItemsModel.class, "b");
             criteria.createAlias("b.msLocationModel", "c");
-            criteria.add(Restrictions.eq("status", 2));
+            criteria.add(Restrictions.ne("c.status", 2));
+            criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 
 //            criteria.createCriteria("location_items.msLocationModel", "msLocationModel", JoinType.LEFT_OUTER_JOIN, Restrictions.ne("msLocationModel.status", 2));
 
@@ -43,7 +45,7 @@ public class LocationItemsDAO extends GenericDAO<MSLocationItemsModel, Integer> 
             log.debug("Exception : {}", e);
             return new ArrayList<MSLocationItemsModel>();
         }
-    }
-
-
 }
+
+
+        }

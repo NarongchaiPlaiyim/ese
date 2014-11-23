@@ -38,7 +38,7 @@ public class MSLocationModel extends AbstractModel{
     private int qty;
 
     @Column(name = "status")
-    private int status;
+    private Integer status;
 
     @Column(name = "isvalid", nullable=false, columnDefinition="int default 0")
     private int isValid;

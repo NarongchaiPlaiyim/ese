@@ -43,6 +43,7 @@ public class PalletManagementBean extends Bean implements Serializable {
     private List<MSLocationModel> msLocationModelList;
     private List<LocationItemView> locationItemViewList;
     private LocationItemView locationItemViews;
+    private boolean isCheck;
 
     @PostConstruct
     public void onCreation(){
@@ -63,6 +64,7 @@ public class PalletManagementBean extends Bean implements Serializable {
         workingAreaModelList = workingAreaService.getWorkingAreaList();
         msLocationModelList = locationService.getLocationList();
         statusOnShow = 0;
+        isCheck = true;
         onLoadPallet();
     }
 
