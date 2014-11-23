@@ -41,12 +41,21 @@ public class MSLocationItemsDAO extends GenericDAO<MSLocationItemsModel, Integer
         }
 
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(" select * from ppwms03.dbo.location_items");
-        stringBuilder.append(" left join ppwms03.dbo.location on ppwms03.dbo.location_items.location_id = ppwms03.dbo.location.id");
-        stringBuilder.append(" left join ppwms03.dbo.pallet on ppwms03.dbo.location_items.item_id = ppwms03.dbo.pallet.item_id");
-        stringBuilder.append(" LEFT JOIN ppwms03.dbo.warehouse on ppwms03.dbo.pallet.warehouse_id = warehouse.id");
-        stringBuilder.append(" where ppwms03.dbo.location.status < 2 and ppwms03.dbo.location.qty + ppwms03.dbo.location.reserved_qty < ppwms03.dbo.location.capacity");
-        stringBuilder.append(" order by (ppwms03.dbo.location.capacity - ppwms03.dbo.location.qty - ppwms03.dbo.location.reserved_qty), ppwms03.dbo.location.ismix");
+//        stringBuilder.append(" select * from ppwms03.dbo.location_items");
+//        stringBuilder.append(" left join ppwms03.dbo.location on ppwms03.dbo.location_items.location_id = ppwms03.dbo.location.id");
+//        stringBuilder.append(" left join ppwms03.dbo.pallet on ppwms03.dbo.location_items.item_id = ppwms03.dbo.pallet.item_id");
+//        stringBuilder.append(" LEFT JOIN ppwms03.dbo.warehouse on ppwms03.dbo.pallet.warehouse_id = warehouse.id");
+//        stringBuilder.append(" where ppwms03.dbo.location.status < 2 and ppwms03.dbo.location.qty + ppwms03.dbo.location.reserved_qty < ppwms03.dbo.location.capacity");
+//        stringBuilder.append(" order by (ppwms03.dbo.location.capacity - ppwms03.dbo.location.qty - ppwms03.dbo.location.reserved_qty), ppwms03.dbo.location.ismix");
+
+        stringBuilder.append(" SELECT ppwms03.dbo.location.id, ppwms03.dbo.warehouse.warehouse_code, ppwms03.dbo.location.capacity, (ppwms03.dbo.location.capacity - ppwms03.dbo.location.qty - ppwms03.dbo.location.reserved_qty) as avaliable");
+        stringBuilder.append(" FROM ppwms03.dbo.location_items");
+        stringBuilder.append(" LEFT JOIN ppwms03.dbo.location on ppwms03.dbo.location_items.location_id = location.id");
+        stringBuilder.append(" LEFT JOIN ppwms03.dbo.warehouse on ppwms03.dbo.location.warehouse_id = warehouse.id");
+        stringBuilder.append(" WHERE ppwms03.dbo.location_items.item_id = 58");
+        stringBuilder.append(" AND ppwms03.dbo.location.status < 2");
+        stringBuilder.append(" AND ppwms03.dbo.location.qty - ppwms03.dbo.location.reserved_qty < ppwms03.dbo.location.capacity");
+        stringBuilder.append(" ORDER BY (ppwms03.dbo.location.capacity - ppwms03.dbo.location.qty - ppwms03.dbo.location.reserved_qty), ppwms03.dbo.location.ismix");
 
         q = getSession().createSQLQuery(stringBuilder.toString());
         List<Object[]> objects = q.list();
