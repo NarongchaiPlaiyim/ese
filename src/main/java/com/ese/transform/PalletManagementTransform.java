@@ -13,6 +13,7 @@ import com.ese.utils.Utils;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -45,18 +46,78 @@ public class PalletManagementTransform extends Transform {
         palletMeanegementView.setItemModel(palletModel.getMsItemModel());
         palletMeanegementView.setLocationModel(palletModel.getMsLocationModel());
 
-        palletMeanegementView.setTagPrint(palletModel.getTagPrint());
-        palletMeanegementView.setQty(palletModel.getQty());
-        palletMeanegementView.setReservedQty(palletModel.getReservedQty());
-        log.debug("palletModel.getStatus() {}", palletModel.getStatus());
-        palletMeanegementView.setStatus(transformStatusToString(palletModel.getStatus()));
-        palletMeanegementView.setCreateBy(palletModel.getCreateBy());
-        palletMeanegementView.setCreateDate(palletModel.getCreateDate());
-        palletMeanegementView.setUpdateBy(palletModel.getUpdateBy());
-        palletMeanegementView.setUpdateDate(palletModel.getUpdateDate());
-        palletMeanegementView.setIsValid(palletModel.getIsValid());
-        palletMeanegementView.setVersion(palletModel.getVersion());
-        palletMeanegementView.setCapacity(palletModel.getCapacity());
+        if(Utils.isNull(palletModel.getTagPrint())){
+            palletMeanegementView.setTagPrint(0);
+        } else {
+            palletMeanegementView.setTagPrint(palletModel.getTagPrint());
+        }
+        if(Utils.isNull(palletModel.getQty())){
+            palletMeanegementView.setQty(0);
+        } else {
+            palletMeanegementView.setQty(palletModel.getQty());
+        }
+        if(Utils.isNull(palletModel.getReservedQty())){
+            palletMeanegementView.setReservedQty(0);
+        } else {
+            palletMeanegementView.setReservedQty(palletModel.getReservedQty());
+        }
+
+        if(Utils.isNull(palletModel.getStatus())){
+            palletMeanegementView.setStatus(transformStatusToString(0));
+        } else {
+            palletMeanegementView.setStatus(transformStatusToString(palletModel.getStatus()));
+        }
+
+
+        if(Utils.isNull(palletModel.getCreateBy())){
+            palletMeanegementView.setCreateBy(0);
+        } else {
+            palletMeanegementView.setCreateBy(palletModel.getCreateBy());
+        }
+
+
+//        if(Utils.isNull(palletModel.getCreateDate())){
+//            palletMeanegementView.setCreateDate(palletModel.getCreateDate());
+//        } else {
+            palletMeanegementView.setCreateDate(palletModel.getCreateDate());
+//        }
+
+
+        if(Utils.isNull(palletModel.getUpdateBy())){
+            palletMeanegementView.setUpdateBy(0);
+        } else {
+            palletMeanegementView.setUpdateBy(palletModel.getUpdateBy());
+        }
+
+
+//        if(Utils.isNull(palletModel.getUpdateDate())){
+//            palletMeanegementView.setUpdateDate(palletModel.getUpdateDate());
+//        } else {
+            palletMeanegementView.setUpdateDate(palletModel.getUpdateDate());
+//        }
+
+
+        if(Utils.isNull(palletModel.getIsValid())){
+            palletMeanegementView.setIsValid(0);
+        } else {
+            palletMeanegementView.setIsValid(palletModel.getIsValid());
+        }
+
+
+        if(Utils.isNull(palletModel.getVersion())){
+            palletMeanegementView.setVersion(0);
+        } else {
+            palletMeanegementView.setVersion(palletModel.getVersion());
+        }
+
+
+        if(Utils.isNull(palletModel.getCapacity())){
+            palletMeanegementView.setCapacity(BigDecimal.ZERO);
+        } else {
+            palletMeanegementView.setCapacity(palletModel.getCapacity());
+        }
+
+
         palletMeanegementView.setConvetorLine(palletModel.getMsWorkingAreaModel());
         palletMeanegementView.setShift(palletModel.getMsShiftModel());
 

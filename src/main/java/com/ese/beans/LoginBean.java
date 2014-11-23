@@ -42,37 +42,38 @@ public class LoginBean extends Bean{
     }
 
     public String login(){
-        log.info("SessionRegistry principle size: {}", sessionRegistry.getAllPrincipals().size());
-        System.out.println("login()");
-        if(loginService.isUserExist(getUserName(), getPassword())){
-            StaffModel staffModel = loginService.getStaffModel();
-            userDetail = new UserDetail(userName,password, staffModel.getRole());
-//            loginService.getStaffModel();
-            HttpServletRequest httpServletRequest = FacesUtil.getRequest();
-            HttpServletResponse httpServletResponse = FacesUtil.getResponse();
-            UsernamePasswordAuthenticationToken request = new UsernamePasswordAuthenticationToken(userDetail, this.password);
-            request.setDetails(new WebAuthenticationDetails(httpServletRequest));
-            SimpleAuthenticationManager simpleAuthenticationManager = new SimpleAuthenticationManager();
-            Authentication result = simpleAuthenticationManager.authenticate(request);
-            log.debug("authentication result: {}", result.toString());
-            SecurityContextHolder.getContext().setAuthentication(result);
+//        log.info("SessionRegistry principle size: {}", sessionRegistry.getAllPrincipals().size());
+//        System.out.println("login()");
+//        if(loginService.isUserExist(getUserName(), getPassword())){
+//            StaffModel staffModel = loginService.getStaffModel();
+//            userDetail = new UserDetail(userName,password, staffModel.getRole());
+////            loginService.getStaffModel();
+//            HttpServletRequest httpServletRequest = FacesUtil.getRequest();
+//            HttpServletResponse httpServletResponse = FacesUtil.getResponse();
+//            UsernamePasswordAuthenticationToken request = new UsernamePasswordAuthenticationToken(userDetail, this.password);
+//            request.setDetails(new WebAuthenticationDetails(httpServletRequest));
+//            SimpleAuthenticationManager simpleAuthenticationManager = new SimpleAuthenticationManager();
+//            Authentication result = simpleAuthenticationManager.authenticate(request);
+//            log.debug("authentication result: {}", result.toString());
+//            SecurityContextHolder.getContext().setAuthentication(result);
+//
+//            compositeSessionAuthenticationStrategy.onAuthentication(request, httpServletRequest, httpServletResponse);
+//
+//            HttpSession httpSession = FacesUtil.getSession(false);
+//            httpSession.setAttribute("userdetail", userDetail);
+//
+//            return "USER";//userDetail.getRole();
+//        }
 
-            compositeSessionAuthenticationStrategy.onAuthentication(request, httpServletRequest, httpServletResponse);
-
-            HttpSession httpSession = FacesUtil.getSession(false);
-            httpSession.setAttribute("userdetail", userDetail);
-
-            return "USER";//userDetail.getRole();
-        }
 
 
-
-        System.out.println(userName);
-        System.out.println(password);
-        System.out.println(loginService.getList().toString());
-        System.out.println(loginService.getObject().toString());
-        System.out.println(loginService.isUserExist(getUserName(), getPassword()));
-        return "loggedOut";
+//        System.out.println(userName);
+//        System.out.println(password);
+//        System.out.println(loginService.getList().toString());
+//        System.out.println(loginService.getObject().toString());
+//        System.out.println(loginService.isUserExist(getUserName(), getPassword()));
+//        return "loggedOut";
+        return "USER";
     }
 
     public String logout(){
