@@ -2,6 +2,7 @@ package com.ese.beans;
 
 
 
+import com.ese.model.db.MSItemModel;
 import com.ese.model.view.BarcodeRegisterView;
 import com.ese.service.BarcodeRegisterService;
 import lombok.Getter;
@@ -11,19 +12,35 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
 @ViewScoped
 @ManagedBean(name = "barcodeRegisterBean")
 public class BarcodeRegisterBean extends Bean{
-//    @ManagedProperty("#{setupService}") private BarcodeRegisterService barcodeRegisterService;
+    @ManagedProperty("#{barcodeRegisterService}") private BarcodeRegisterService barcodeRegisterService;
 
     private BarcodeRegisterView barcodeRegisterView;
+    private List<MSItemModel> msItemModelList;
+    private String selectType;
+    private String productSearch;
 
     @PostConstruct
     private void init(){
         barcodeRegisterView = new BarcodeRegisterView();
+//        msItemModelList = barcodeRegisterService.getAllItemMaster();
+        msItemModelList = new ArrayList<MSItemModel>();
+//        MSItemModel msItemModel;
+//        for (int i = 0; i < 100; i++) {
+//            msItemModel = new MSItemModel();
+//            msItemModel.setId(i);
+//            msItemModel.setItemId(i+"id");
+//            msItemModel.setItemName(i+"name");
+//            msItemModel.setDSGThaiItemDescription(i+"DSG");
+//            msItemModelList.add(msItemModel);
+//        }
     }
 
     public void q(){
@@ -43,5 +60,10 @@ public class BarcodeRegisterBean extends Bean{
     }
     public void q6(){
         System.out.println("q6");
+    }
+
+    public void onSubmitSearch(){
+        log.debug("-- onSubmitSearch()");
+        msItemModelList = barcodeRegisterService.findByCondition(selectType, productSearch);
     }
 }

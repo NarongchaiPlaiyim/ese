@@ -51,6 +51,7 @@
                                 </td>
                                 <td>
                                     <p:commandButton value="Select" styleClass="medium" style="width: 80px"
+                                                     onclick="PF('findProductDlg').show()"
                                                      update="@form"/>
                                 </td>
                                 <td>
@@ -169,11 +170,17 @@
                 </h:form>
                 <p:dialog id="findProductDialog" widgetVar="findProductDlg" header="Find Product"
                           onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
-                          modal="true" width="600" height="400">
+                          modal="true" width="650" height="400">
                     <ui:include src="../site/dialog/findProductDialog.xhtml"/>
                 </p:dialog>
             </div>
         </p:panel>
+        <p:blockUI block="pnl_maincontainer" widgetVar="bui">
+            <h:panelGrid columns="2">
+                <h:outputText value="Please wait..." />
+                <p:graphicImage value="/resources/images/shared/ajax-loader.gif"/>
+            </h:panelGrid>
+        </p:blockUI>
     </h:body>
 </f:view>
 </html>
