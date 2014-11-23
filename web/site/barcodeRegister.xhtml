@@ -46,8 +46,10 @@
                                     <h:outputLabel value="Item*"/>
                                 </td>
                                 <td>
-                                    <h:outputLabel style="min-width: 200px; width: 200px; max-width: 200px;"
-                                                 value="#{barcodeRegisterBean.barcodeRegisterView.msItemModel.id}"/>
+                                    <h:outputLabel
+                                            id="itemLabel"
+                                            style="min-width: 200px; width: 200px; max-width: 200px;"
+                                                 value="#{barcodeRegisterBean.msItemModel.DSGThaiItemDescription}"/>
                                 </td>
                                 <td>
                                     <p:commandButton value="Select" styleClass="medium" style="width: 80px"
