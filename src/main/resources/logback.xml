@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
-    <property name="LOG_HOME" value="D:/ese/logs"/>
+    <property name="LOG_HOME" value="C:/ese/logs"/>
 
     <appender name="MO-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_HOME}/MO.log</file>

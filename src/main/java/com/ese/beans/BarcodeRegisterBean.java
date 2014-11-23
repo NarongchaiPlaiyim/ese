@@ -62,6 +62,12 @@ public class BarcodeRegisterBean extends Bean{
         System.out.println("q6");
     }
 
+    public void onInitSearch(){
+        System.out.println("onInitSearch");
+        selectType = "3";
+        productSearch = "";
+    }
+
     public void onSubmitSearch(){
         log.debug("-- onSubmitSearch()");
         msItemModelList = barcodeRegisterService.findByCondition(selectType, productSearch);

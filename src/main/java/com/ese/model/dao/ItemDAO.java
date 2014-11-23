@@ -13,7 +13,7 @@ public class ItemDAO extends GenericDAO<MSItemModel, Integer>{
 
     public List<MSItemModel> findByLike(String filed, String text) throws Exception {
         Criteria criteria = getCriteria();
-        criteria.add(Restrictions.like(filed, text+"%"));
+        criteria.add(Restrictions.like(filed, "%"+text+"%"));
         return Utils.safetyList(criteria.list());
     }
 }

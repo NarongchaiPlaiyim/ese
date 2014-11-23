@@ -51,8 +51,9 @@
                                 </td>
                                 <td>
                                     <p:commandButton value="Select" styleClass="medium" style="width: 80px"
-                                                     onclick="PF('findProductDlg').show()"
-                                                     update="@form"/>
+                                                     action="#{barcodeRegisterBean.onInitSearch()}"
+                                                     update="@form"
+                                                     oncomplete="PF('findProductDlg').show()"/>
                                 </td>
                                 <td>
                                     <h:outputLabel value="Qty*"/>

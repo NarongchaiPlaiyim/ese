@@ -62,7 +62,7 @@ public class LoginBean extends Bean{
             HttpSession httpSession = FacesUtil.getSession(false);
             httpSession.setAttribute("userdetail", userDetail);
 
-            return userDetail.getRole();
+            return "USER";//userDetail.getRole();
         }
 
 
