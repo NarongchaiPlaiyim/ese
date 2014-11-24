@@ -36,8 +36,28 @@
                             <tr>
                                 <td colspan="5" class="right">
                                     <p:commandButton value="Print"/>
-                                    <p:commandButton value="New" onclick="#{barcodeRegisterBean.onClickButtonNew()}" update="@form" />
-                                    <p:commandButton value="Save"/>
+                                    <p:commandButton value="New" action="#{barcodeRegisterBean.onClickButtonNew()}" update="@form" />
+
+                                    <p:commandButton value="Save"
+                                                     id="btnSave"
+                                                     disabled="#{barcodeRegisterBean.flagBtnSave}"
+                                                     styleClass="medium" style="width: 80px"
+                                                     icon="ui-icon-check"
+                                                     onstart="PF('bui').show()"
+                                                     action="#{barcodeRegisterBean.onSave()}"
+                                                     oncomplete="PF('bui').hide()"
+                                                     update="@this, :setupForm:btnDelete"
+                                            />
+                                    <p:commandButton value="Edit"
+                                                     id="btnEdit"
+                                                     disabled="#{barcodeRegisterBean.flagBtnEdit}"
+                                                     styleClass="medium" style="width: 80px"
+                                                     icon="ui-icon-wrench"
+                                                     onstart="PF('bui').show()"
+                                                     action="#{barcodeRegisterBean.onEdit()}"
+                                                     oncomplete="PF('bui').hide()"
+                                                     update="@this, :setupForm:btnDelete"
+                                            />
                                 </td>
                             </tr>
 
@@ -180,7 +200,10 @@
                                         :setupForm:labelFinishBarcode,
                                         :setupForm:docDateLabel,
                                         :setupForm:startLabel,
-                                        :setupForm:otyLabel"
+                                        :setupForm:otyLabel
+                                        :setupForm:btnSave,
+                                        :setupForm:btnEdit
+                                        "
                                                 listener="#{barcodeRegisterBean.onClickTable()}"/>
                                         <p:column headerText="No" style="min-width: 5px; width: 5px; max-width: 5px;">
                                             <p:outputLabel value="#{rowIndex+1}" styleClass="center"/>

@@ -33,15 +33,23 @@ public class BarcodeRegisterBean extends Bean{
     private String productSearch;
     private boolean flagBtnSelect;
     private boolean flagBtnDelete;
+    private boolean flagBtnSave;
+    private boolean flagBtnEdit;
 
     @PostConstruct
     private void init(){
         barcodeRegisterView = new BarcodeRegisterView();
         msItemModelList = Collections.EMPTY_LIST;
         barcodeRegisterModelList = Collections.EMPTY_LIST;
+        initBtn();
+        onLoadDataTable();
+    }
+
+    private void initBtn(){
         flagBtnSelect = true;
         flagBtnDelete = true;
-        onLoadDataTable();
+        flagBtnSave = true;
+        flagBtnEdit = true;
     }
 
     private void onLoadDataTable(){
@@ -51,8 +59,11 @@ public class BarcodeRegisterBean extends Bean{
 
     public void onClickButtonNew(){
         log.debug("-- onClickButtonNew()");
+        System.out.println("-- onClickButtonNew()");
         barcodeRegisterView = new BarcodeRegisterView();
         flagBtnDelete = true;
+        flagBtnSave = false;
+        flagBtnEdit = true;
     }
 
     public void calculator(){
@@ -82,7 +93,9 @@ public class BarcodeRegisterBean extends Bean{
 
     public void onClickTable(){
         log.debug("-- onClickTable()");
+        flagBtnSave = true;
         flagBtnDelete = false;
+        flagBtnEdit = flagBtnDelete;
         barcodeRegisterView = barcodeRegisterService.convertToView(barcodeRegisterModel);
     }
 
@@ -96,5 +109,27 @@ public class BarcodeRegisterBean extends Bean{
         flagBtnDelete = true;
         barcodeRegisterService.delete(barcodeRegisterModel);
         onLoadDataTable();
+        initBtn();
     }
+
+    public void onSave(){
+        System.out.println("onSave()");
+        try {
+            Thread.sleep(2000);
+            initBtn();
+        } catch (InterruptedException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+    }
+
+    public void onEdit(){
+        System.out.println("onEdit()");
+        try {
+            Thread.sleep(2000);
+            initBtn();
+        } catch (InterruptedException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+    }
+
 }
