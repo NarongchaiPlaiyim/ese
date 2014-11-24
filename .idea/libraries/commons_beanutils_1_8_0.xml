@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="commons-beanutils-1.8.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/lib_jasport/commons-beanutils-1.8.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/lib_jasport/commons-collections-2.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/lib_jasport/commons-digester-2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/lib_jasport/commons-javaflow-20060411.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/lib_jasport/commons-logging-1.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/lib_jasport/iText-2.1.7.js2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/lib_jasport/itextpdf-5.5.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

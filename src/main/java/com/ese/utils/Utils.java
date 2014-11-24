@@ -51,7 +51,15 @@ public enum Utils {
     }
 
     public static String getDocumentNo(){
-        return new SimpleDateFormat("yyyyMMddHHmmss").format(currentDate());
+        return "i-"+new SimpleDateFormat("yyyyMMddHHmmss").format(currentDate());
+    }
+
+    public static boolean isTrue(int value) {
+        return value == 1 ? true : false ;
+    }
+
+    public static int isTrue(boolean value) {
+        return value == true ? 1 : 0 ;
     }
 
     public static int parseInt(Object input, int defaultValue){
