@@ -1,5 +1,6 @@
 package com.ese.model.view;
 
+import com.ese.model.StatusValue;
 import com.ese.model.db.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,7 +22,7 @@ public class PalletManagementView {
     private int tagPrint;
     private int qty;
     private int reservedQty;
-    private String status;
+    private StatusValue status;
     private int createBy;
     private Date createDate;
     private int updateBy;

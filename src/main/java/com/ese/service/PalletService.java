@@ -9,6 +9,7 @@ import com.ese.model.dao.PalletDAO;
 import com.ese.model.view.LocationItemView;
 import com.ese.model.view.LocationView;
 import com.ese.model.view.PalletManagementView;
+import com.ese.model.view.report.PalletManagemengReportView;
 import com.ese.transform.PalletManagementTransform;
 import com.ese.utils.Utils;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Component
@@ -25,6 +27,7 @@ public class PalletService extends Service{
     @Resource private MSLocationItemsDAO msLocationItemsDAO;
     @Resource private LocationDAO locationDAO;
     @Resource private PalletManagementTransform palletManagementTransform;
+    @Resource private ReportService reportService;
 
     public void test(){
         int i = 58;
@@ -75,8 +78,21 @@ public class PalletService extends Service{
             }
 
             palletDAO.update(palletModel);
+//            onPrintTag(palletManagementView.getId());
         } catch (Exception e){
             log.debug("Exception : {}", e);
+        }
+    }
+
+    public void onPrintTag(int palletId){
+        String printTagReportname = "test_report";
+        List<PalletManagemengReportView> reportViews = palletDAO.genSQLReportPallet(palletId);
+        log.debug("reportViews {}", reportViews.size());
+        HashMap map = new HashMap<String, Object>();
+        try {
+            reportService.exportPDF("D:/parttime/ESE's source/ese/web/site/report/PalletManagement.jrxml", map, printTagReportname, reportViews);
+        } catch (Exception e) {
+            log.debug("Exception Report : ", e);
         }
     }
 

@@ -16,7 +16,7 @@
                         <td class="right">
                             <p:commandButton id="btnFindLocation" value="Select Location" update=":findlocationForm:btnFindLocation, :msgBoxSystemMessageDialog, :palletForm"
                                              action="#{palletManagement.OnChangeLocationToPallet}" process="@form"
-                                             oncomplete="PF('findLocationDlg').hide()" disabled="#{palletManagement.isCheckLocation()}"/>
+                                             oncomplete="PF('findLocationDlg').hide()" disabled="#{palletManagement.isCheckLocationDialog()}"/>
                         </td>
                     </tr>
                     <tr>
