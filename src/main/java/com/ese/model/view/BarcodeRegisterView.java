@@ -19,8 +19,8 @@ public class BarcodeRegisterView {
     private Date documentDate;
     private String batchNo;
     private int qty;
-    private int startBarcode;
-    private int finishBarcode;
+    private String startBarcode;
+    private String finishBarcode;
     private String remark;
 
     public BarcodeRegisterView() {
@@ -32,10 +32,10 @@ public class BarcodeRegisterView {
         Calendar calendar = Calendar.getInstance();
         documentNo = Utils.getDocumentNo();
         documentDate = Utils.currentDate();
-        batchNo = calendar.get(Calendar.YEAR) + "" + calendar.get(Calendar.WEEK_OF_YEAR);
+        batchNo = calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.WEEK_OF_YEAR);
         qty = 0;
-        startBarcode = 0;
-        finishBarcode = 0;
+        startBarcode =  "000000000";
+        finishBarcode = "000000000";
     }
 
     @Override

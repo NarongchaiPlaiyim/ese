@@ -52,16 +52,16 @@ public class BarcodeRegisterModel extends AbstractModel {
     private String remark;
 
     @Column(name = "status")
-    private Integer status;
+    private int status;
 
     @Column(name = "isvalid")
-    private Integer isValid;
+    private int isValid;
 
     @Column(name = "version")
-    private Integer version;
+    private int version;
 
     @Column(name = "cost")
-    private Long cost;
+    private long cost;
 
     @Override
     public String toString() {

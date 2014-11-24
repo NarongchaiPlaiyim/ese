@@ -1,11 +1,9 @@
 package com.ese.service;
 
-import com.ese.model.dao.LocationDAO;
-import com.ese.model.dao.MSLocationItemsDAO;
-import com.ese.model.dao.WarehouseDAO;
+import com.ese.model.dao.*;
+import com.ese.model.db.BarcodeRegisterModel;
 import com.ese.utils.Utils;
 import com.ese.model.db.StaffModel;
-import com.ese.model.dao.StaffDAO;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +19,7 @@ public class LoginService extends Service{
     @Resource private LocationDAO locationDAO;
     @Resource private WarehouseDAO warehouseDAO;
     @Resource private MSLocationItemsDAO locationItemsDAO;
+    @Resource private BarcodeRegisterDAO barcodeRegisterDAO;
 
     @Getter StaffModel staffModel;
 
@@ -62,8 +61,12 @@ public class LoginService extends Service{
         try {
 
 //            System.out.println(warehouseDAO.findByStatus2().toString()+"");
-            System.out.println(locationItemsDAO.findLocationByItemId(58));
+//            System.out.println(locationItemsDAO.findLocationByItemId(58));
 //            System.out.println(locationDAO.getLocationModelList());
+//            barcodeRegisterDAO.getDataTable();
+            List<BarcodeRegisterModel> barcodeRegisterModelList = barcodeRegisterDAO.findByIsValid();
+            System.out.println(barcodeRegisterModelList.toString());
+            System.out.println(barcodeRegisterModelList.size());
         } catch (Exception e) {
             System.err.println(e);
         }

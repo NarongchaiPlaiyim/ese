@@ -37,21 +37,30 @@
                                 />
                     </td>
                     <td class="right">
+                        <p:commandButton
+                                id="btnSelect"
+                                value="Select"
+                                disabled="#{barcodeRegisterBean.flagBtnSelect}"
+                                styleClass="medium" style="width: 80px"
+                                onstart="#{barcodeRegisterBean.onClickSelectOnDialog()}"
+                                oncomplete="PF('findProductDlg').hide()"
+                                update=":setupForm:itemLabel"
+                                />
                     </td>
                 </tr>
                 <tr>
                     <td colspan="3">
                         <p:dataTable id="productTable"
-                                     rows="6"
+                                     rows="7"
                                      paginator="true"
                                      var="itemModel"
                                      selectionMode="single"
                                      rowKey="#{itemModel.id}"
-                                     selection="#{barcodeRegisterBean.msItemModel}"
+                                     selection="#{barcodeRegisterBean.barcodeRegisterView.msItemModel}"
                                      value="#{barcodeRegisterBean.msItemModelList}"
                                      rowIndexVar="rowIndex">
                             <p:ajax event="rowSelect" update=":frmFindProduct:productTable, :frmFindProduct:btnSelect"
-                                    listener="#{barcodeRegisterBean.onClickTable()}"/>
+                                    listener="#{barcodeRegisterBean.onClickTableDialog()}"/>
                             <p:column headerText="No" style="min-width: 10px; width: 10px; max-width: 10px;" styleClass="right">
                                 <p:outputLabel value="#{rowIndex+1}"/>
                             </p:column>
@@ -65,18 +74,6 @@
                                 <p:outputLabel value="#{itemModel.DSGThaiItemDescription}"/>
                             </p:column>
                         </p:dataTable>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="right" colspan="3">
-                        <p:commandButton
-                                id="btnSelect"
-                                value="Select"
-                                disabled="#{barcodeRegisterBean.flagBtnSelect}"
-                                         styleClass="medium" style="width: 80px"
-                                         oncomplete="PF('findProductDlg').hide()"
-                                         update=":setupForm:itemLabel"
-                                />
                     </td>
                 </tr>
             </table>

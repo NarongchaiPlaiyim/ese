@@ -36,8 +36,28 @@
                             <tr>
                                 <td colspan="5" class="right">
                                     <p:commandButton value="Print"/>
-                                    <p:commandButton value="New"/>
-                                    <p:commandButton value="Save"/>
+                                    <p:commandButton value="New" action="#{barcodeRegisterBean.onClickButtonNew()}" update="@form" />
+
+                                    <p:commandButton value="Save"
+                                                     id="btnSave"
+                                                     disabled="#{barcodeRegisterBean.flagBtnSave}"
+                                                     styleClass="medium" style="width: 80px"
+                                                     icon="ui-icon-check"
+                                                     onstart="PF('bui').show()"
+                                                     action="#{barcodeRegisterBean.onSave()}"
+                                                     oncomplete="PF('bui').hide()"
+                                                     update="@this, :setupForm:btnDelete"
+                                            />
+                                    <p:commandButton value="Edit"
+                                                     id="btnEdit"
+                                                     disabled="#{barcodeRegisterBean.flagBtnEdit}"
+                                                     styleClass="medium" style="width: 80px"
+                                                     icon="ui-icon-wrench"
+                                                     onstart="PF('bui').show()"
+                                                     action="#{barcodeRegisterBean.onEdit()}"
+                                                     oncomplete="PF('bui').hide()"
+                                                     update="@this, :setupForm:btnDelete"
+                                            />
                                 </td>
                             </tr>
 
@@ -49,22 +69,30 @@
                                     <h:outputLabel
                                             id="itemLabel"
                                             style="min-width: 200px; width: 200px; max-width: 200px;"
-                                                 value="#{barcodeRegisterBean.msItemModel.DSGThaiItemDescription}"/>
+                                                 value="#{barcodeRegisterBean.barcodeRegisterView.msItemModel.DSGThaiItemDescription}"/>
                                 </td>
                                 <td>
                                     <p:commandButton value="Select" styleClass="medium" style="width: 80px"
                                                      action="#{barcodeRegisterBean.onInitSearch()}"
-                                                     update="@form"
+                                                     update=":frmFindProduct"
                                                      oncomplete="PF('findProductDlg').show()"/>
                                 </td>
                                 <td>
                                     <h:outputLabel value="Qty*"/>
                                 </td>
                                 <td colspan="2">
-                                    <p:spinner style="min-width: 200px; width: 200px; max-width: 200px;"
-                                               value="#{barcodeRegisterBean.barcodeRegisterView.qty}"
-                                               min="0"
-                                               />
+                                    <p:inputText style="min-width: 80px; width: 80px; max-width: 80px;"
+                                                 id="otyLabel"
+                                                 styleClass="right"
+                                                 maxlength="8"
+                                                 onkeydown="return onKeyDownNumber(event);"
+                                                 onkeypress="return onKeyPressNumber(event);"
+                                                 value="#{barcodeRegisterBean.barcodeRegisterView.qty}">
+                                        <p:ajax event="keyup" listener="#{barcodeRegisterBean.calculator()}"
+                                                update=":setupForm:labelFinishBarcode" />
+                                        <p:ajax event="blur" listener="#{barcodeRegisterBean.calculator()}"
+                                                update=":setupForm:labelFinishBarcode" />
+                                    </p:inputText>
                                 </td>
                             </tr>
 
@@ -79,10 +107,20 @@
                                 <td>
                                     <h:outputLabel value="Start Barcode*"/>
                                 </td>
-                                <td >
-                                    <p:inputText style="min-width: 200px; width: 200px; max-width: 200px;"
-                                                 styleClass="right"
-                                                 value="#{barcodeRegisterBean.barcodeRegisterView.startBarcode}"/>
+                                <td > T
+                                    <p:inputText style="min-width: 70px; width: 70px; max-width: 70px;"
+                                                 id="startLabel"
+                                                 styleClass="left"
+                                                 maxlength="9"
+                                                 onkeydown="return onKeyDownNumber(event);"
+                                                 onkeypress="return onKeyPressNumber(event);"
+                                                 value="#{barcodeRegisterBean.barcodeRegisterView.startBarcode}">
+
+                                        <p:ajax event="keyup" listener="#{barcodeRegisterBean.calculator()}"
+                                                update=":setupForm:labelFinishBarcode" />
+                                        <p:ajax event="blur" listener="#{barcodeRegisterBean.calculator()}"
+                                                update=":setupForm:labelFinishBarcode" />
+                                    </p:inputText>
                                 </td>
                             </tr>
 
@@ -92,6 +130,7 @@
                                 </td>
                                 <td colspan="2">
                                     <p:calendar value="#{barcodeRegisterBean.barcodeRegisterView.documentDate}"
+                                                id="docDateLabel"
                                                 readonly="true"
                                             showOn="button">
                                         <f:convertDateTime pattern="dd/MM/yyyy" />
@@ -100,8 +139,9 @@
                                 <td>
                                     <h:outputLabel value="Finish Barcode*"/>
                                 </td>
-                                <td class="right">
-                                    <h:outputLabel style="min-width: 190px; width: 200px; max-width: 200px;"
+                                <td>  T
+                                    <h:outputLabel style="min-width: 70px; width: 70px; max-width: 70px;"
+                                                   id="labelFinishBarcode"
                                                  value="#{barcodeRegisterBean.barcodeRegisterView.finishBarcode}"/>
                                 </td>
                             </tr>
@@ -111,6 +151,7 @@
                                 </td>
                                 <td colspan="2">
                                     <p:inputText style="min-width: 200px; width: 200px; max-width: 200px;"
+                                                 id="batchNoLabel"
                                                  value="#{barcodeRegisterBean.barcodeRegisterView.batchNo}"/>
                                 </td>
                                 <td>
@@ -118,12 +159,22 @@
                                 </td>
                                 <td colspan="3">
                                     <p:inputTextarea style="width: 200px; max-width: 200px;min-width: 200px; height: 50px;"
+                                                     id="remarkLabel"
                                                      value="#{barcodeRegisterBean.barcodeRegisterView.remark}"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="right" colspan="5">
-                                    <p:commandButton value="Delete"/>
+                                    <p:commandButton value="delete"
+                                                     id="btnDelete"
+                                                     disabled="#{barcodeRegisterBean.flagBtnDelete}"
+                                                     styleClass="medium" style="width: 80px"
+                                                     icon="ui-icon-trash"
+                                                     onstart="PF('bui').show()"
+                                                     action="#{barcodeRegisterBean.onDelete()}"
+                                                     oncomplete="PF('bui').hide()"
+                                                     update=":setupForm:barcodeRegisterTable, :setupForm:btnDelete"
+                                            />
                                 </td>
                             </tr>
                         </table>
@@ -131,39 +182,63 @@
                         <table border="2" class="content_table_form">
                             <tr>
                                 <td colspan="6">
-                                    <p:dataTable id="barcodeRegisterTable" rowIndexVar="rowIndex">
-                                        <p:column headerText="No" style="width: 20px">
-                                            <p:outputLabel value="#{rowIndex+1}"/>
+                                    <p:dataTable id="barcodeRegisterTable"
+                                                 rows="10"
+                                                 paginator="true"
+                                                 var="barcodeModel"
+                                                 value="#{barcodeRegisterBean.barcodeRegisterModelList}"
+                                                 selectionMode="single"
+                                                 selection="#{barcodeRegisterBean.barcodeRegisterModel}"
+                                                 rowKey="#{barcodeModel.id}"
+                                                 rowIndexVar="rowIndex">
+                                        <p:ajax event="rowSelect" update="
+                                        :setupForm:barcodeRegisterTable,
+                                        :setupForm:btnDelete,
+                                        :setupForm:itemLabel,
+                                        :setupForm:remarkLabel,
+                                        :setupForm:batchNoLabel,
+                                        :setupForm:labelFinishBarcode,
+                                        :setupForm:docDateLabel,
+                                        :setupForm:startLabel,
+                                        :setupForm:otyLabel
+                                        :setupForm:btnSave,
+                                        :setupForm:btnEdit
+                                        "
+                                                listener="#{barcodeRegisterBean.onClickTable()}"/>
+                                        <p:column headerText="No" style="min-width: 5px; width: 5px; max-width: 5px;">
+                                            <p:outputLabel value="#{rowIndex+1}" styleClass="center"/>
                                         </p:column>
-                                        <p:column headerText="Item Code" style="width: 100px">
-                                            <p:outputLabel value="aaaaa"/>
+                                        <p:column headerText="Item Code" style="min-width: 60px; width: 60px; max-width: 60px;" styleClass="center">
+                                            <p:outputLabel value="#{barcodeModel.msItemModel.itemId}"/>
                                         </p:column>
-                                        <p:column headerText="Item Description" style="width: 150px">
-                                            <p:outputLabel value="bbbbb"/>
+                                        <p:column headerText="Item Description" style="min-width: 250px; width: 250px; max-width: 250px;" styleClass="left">
+                                            <p:outputLabel value="#{barcodeModel.msItemModel.DSGThaiItemDescription}"/>
                                         </p:column>
-                                        <p:column headerText="Product Order ID" style="width: 200px">
-                                            <p:outputLabel value="cccc"/>
+                                        <p:column headerText="Document No." style="min-width: 110px; width: 110px; max-width: 110px;" styleClass="center">
+                                            <p:outputLabel value="#{barcodeModel.docNo}"/>
                                         </p:column>
-                                        <p:column headerText="Production Date" style="width: 100px">
-                                            <p:outputLabel value="cccc"/>
+                                        <p:column headerText="Document Date" style="min-width: 70px; width: 70px; max-width: 70px;" styleClass="center">
+                                            <p:outputLabel value="#{barcodeModel.productionDate}">
+                                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                                            </p:outputLabel>
                                         </p:column>
-                                        <p:column headerText="Bacth No" style="width: 120px">
-                                            <p:outputLabel value="aaaaa"/>
+                                        <p:column headerText="Bacth No" style="min-width: 50px; width: 50px; max-width: 50px;" styleClass="center">
+                                            <p:outputLabel value="#{barcodeModel.batchNo}"/>
                                         </p:column>
-                                        <p:column headerText="Qty" style="width: 80px">
-                                            <p:outputLabel value="bbbbb"/>
+                                        <p:column headerText="Qty" style="min-width: 10px; width: 10px; max-width: 10px;" styleClass="center">
+                                            <p:outputLabel value="#{barcodeModel.qty}"/>
                                         </p:column>
-                                        <p:column headerText="Start Barcode" style="width: 100px">
-                                            <p:outputLabel value="cccc"/>
+                                        <p:column headerText="Start Barcode" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
+                                            <p:outputLabel value="#{barcodeModel.startBarcodeText}"/>
                                         </p:column>
-                                        <p:column headerText="Finish Barcode" style="width: 100px">
-                                            <p:outputLabel value="aaaaa"/>
+                                        <p:column headerText="Finish Barcode" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
+                                            <p:outputLabel value="#{barcodeModel.finishBarcodeText}"/>
                                         </p:column>
-                                        <p:column headerText="Remark" style="width: 150px">
-                                            <p:outputLabel value="bbbbb"/>
+                                        <p:column headerText="Remark" style="min-width: 110px; width: 110px; max-width: 110px;" styleClass="center">
+                                            <p:outputLabel value="#{barcodeModel.remark}"/>
                                         </p:column>
-                                        <p:column headerText="Status" style="width: 80px">
-                                            <p:outputLabel value="cccc"/>
+                                        <p:column headerText="Status" style="min-width: 30px; width: 30px; max-width: 30px;" styleClass="center">
+                                            <p:outputLabel value="#{barcodeModel.status}"/>
                                         </p:column>
                                     </p:dataTable>
                                 </td>
