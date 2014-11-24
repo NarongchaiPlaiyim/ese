@@ -37,6 +37,15 @@
                                 />
                     </td>
                     <td class="right">
+                        <p:commandButton
+                                id="btnSelect"
+                                value="Select"
+                                disabled="#{barcodeRegisterBean.flagBtnSelect}"
+                                styleClass="medium" style="width: 80px"
+                                onstart="#{barcodeRegisterBean.onClickSelectOnDialog()}"
+                                oncomplete="PF('findProductDlg').hide()"
+                                update=":setupForm:itemLabel"
+                                />
                     </td>
                 </tr>
                 <tr>
@@ -65,19 +74,6 @@
                                 <p:outputLabel value="#{itemModel.DSGThaiItemDescription}"/>
                             </p:column>
                         </p:dataTable>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="right" colspan="3">
-                        <p:commandButton
-                                id="btnSelect"
-                                value="Select"
-                                disabled="#{barcodeRegisterBean.flagBtnSelect}"
-                                         styleClass="medium" style="width: 80px"
-                                         onstart="#{barcodeRegisterBean.onClickSelectOnDialog()}"
-                                         oncomplete="PF('findProductDlg').hide()"
-                                         update=":setupForm:itemLabel"
-                                />
                     </td>
                 </tr>
             </table>

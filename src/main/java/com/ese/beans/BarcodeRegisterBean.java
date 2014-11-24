@@ -52,13 +52,14 @@ public class BarcodeRegisterBean extends Bean{
     public void onClickButtonNew(){
         log.debug("-- onClickButtonNew()");
         barcodeRegisterView = new BarcodeRegisterView();
+        flagBtnDelete = true;
     }
 
     public void calculator(){
         log.debug("-- calculator()");
         final int qty = barcodeRegisterView.getQty();
         final int start = Utils.parseInt(barcodeRegisterView.getStartBarcode(), 0);
-        final int finish = qty + start;
+        final int finish = (qty + start) - 1;
         final String result = finish > 999999999 ? "999999999" : String.format("%09d", finish);
         barcodeRegisterView.setFinishBarcode(result);
     }
@@ -76,18 +77,18 @@ public class BarcodeRegisterBean extends Bean{
 
     public void onClickTableDialog(){
         log.debug("-- onClickTable()");
-        System.out.println(barcodeRegisterModel.getId());
         flagBtnSelect = false;
     }
 
     public void onClickTable(){
         log.debug("-- onClickTable()");
         flagBtnDelete = false;
+        barcodeRegisterView = barcodeRegisterService.convertToView(barcodeRegisterModel);
     }
 
     public void onClickSelectOnDialog(){
         log.debug("-- onClickSelectOnDialog()");
-        flagBtnSelect = false;
+        flagBtnSelect = true;
     }
 
     public void onDelete(){

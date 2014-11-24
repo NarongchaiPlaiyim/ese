@@ -19,6 +19,7 @@ public class BarcodeRegisterDAO extends GenericDAO<BarcodeRegisterModel, Integer
 
     public void deleteByUpdate(final BarcodeRegisterModel model) throws Exception {
         model.setIsValid(0); //0 is flag for delete
+        model.setUpdateDate(Utils.currentDate());
         update(model);
     }
 

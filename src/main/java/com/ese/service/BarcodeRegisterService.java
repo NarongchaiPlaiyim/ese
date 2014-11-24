@@ -4,6 +4,8 @@ import com.ese.model.dao.BarcodeRegisterDAO;
 import com.ese.model.dao.ItemDAO;
 import com.ese.model.db.BarcodeRegisterModel;
 import com.ese.model.db.MSItemModel;
+import com.ese.model.view.BarcodeRegisterView;
+import com.ese.transform.BarcodeRegisterTransform;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +18,7 @@ import java.util.List;
 public class BarcodeRegisterService extends Service{
     @Resource private ItemDAO itemDAO;
     @Resource private BarcodeRegisterDAO barcodeRegisterDAO;
+    @Resource private BarcodeRegisterTransform barcodeRegisterTransform;
 
     public List<MSItemModel> findByCondition(final String type, final String text){
         log.debug("-- findByCondition({}, {})", type, text);
@@ -30,6 +33,7 @@ public class BarcodeRegisterService extends Service{
             }
             return msItemModelList;
         } catch (Exception e) {
+            log.error("{}",e);
             return Collections.EMPTY_LIST;
         }
     }
@@ -39,6 +43,7 @@ public class BarcodeRegisterService extends Service{
         try {
             return barcodeRegisterDAO.findByIsValid();
         } catch (Exception e) {
+            log.error("{}",e);
             return Collections.EMPTY_LIST;
         }
     }
@@ -50,6 +55,15 @@ public class BarcodeRegisterService extends Service{
             barcodeRegisterDAO.deleteByUpdate(model);
         } catch (Exception e) {
             log.error("{}",e);
+        }
+    }
+
+    public BarcodeRegisterView convertToView(BarcodeRegisterModel model){
+        try {
+            return barcodeRegisterTransform.transformToView(model);
+        } catch (Exception e) {
+            log.error("{}",e);
+            return new BarcodeRegisterView();
         }
     }
 }
