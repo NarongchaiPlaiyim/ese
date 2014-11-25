@@ -4,10 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public enum Utils {
     ;
@@ -37,6 +34,10 @@ public enum Utils {
 
     public static<T> boolean isSafetyList(final List<T> list){
         return !isNull(list) && !isZero(list.size());
+    }
+
+    public static<T> boolean isCollection(final Collection collection){
+        return !isNull(collection) && !isZero(collection.size());
     }
 
     public static boolean isZero(int id){
@@ -137,6 +138,34 @@ public enum Utils {
             } catch (ClassCastException e){
                 return defaultValue;
             }
+        }
+    }
+
+    public static Date parseDate(Object input, Date defaultValue){
+        if(input == null)
+            return defaultValue;
+        else if (input instanceof Date)
+            return (Date) input;
+        else {
+            try{
+                if(isNull(input)){
+                    return defaultValue;
+                } else {
+                    return null;
+                }
+            } catch (ClassCastException e){
+                return defaultValue;
+            }
+        }
+    }
+
+    public static String convertToStringDDMMYYYY(Date date){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.ENGLISH);
+        if (Utils.isNull(date)){
+            return "";
+        } else {
+            String dateString = simpleDateFormat.format(date);
+            return dateString;
         }
     }
 }
