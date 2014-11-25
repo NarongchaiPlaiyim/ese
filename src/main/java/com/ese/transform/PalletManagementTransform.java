@@ -1,15 +1,13 @@
 package com.ese.transform;
 
 import com.ese.model.StatusValue;
-import com.ese.model.db.MSItemModel;
 import com.ese.model.db.MSLocationModel;
-import com.ese.model.db.MSWarehouseModel;
 import com.ese.model.db.PalletModel;
 //import com.ese.model.view.PalletMeanagementView;
-import com.ese.model.view.ItemView;
-import com.ese.model.view.LocationView;
 import com.ese.model.view.PalletManagementView;
-import com.ese.model.view.WarehouseView;
+import com.ese.model.view.report.PalletListReport;
+import com.ese.model.view.report.PalletManagemengModelReport;
+import com.ese.model.view.report.PalletManagementViewReport;
 import com.ese.utils.Utils;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -222,5 +220,70 @@ public class PalletManagementTransform extends Transform {
         palletModel.setMsWorkingAreaModel(palletManagementView.getConvetorLine());
         palletModel.setMsShiftModel(palletManagementView.getShift());
         return palletModel;
+    }
+
+    public List<PalletManagementViewReport> transformSQL(List<PalletManagemengModelReport> modelReportList){
+        log.debug("transformSQL().");
+        List<PalletManagementViewReport> reportViews = new ArrayList<PalletManagementViewReport>();
+        PalletListReport palletListReport = new PalletListReport();
+
+        String dSGThaiItemDescription = "";
+        String warehouseCode = "";
+        String palletBarcode = "";
+        String locationBarcode = "";
+        String createDate = "";
+        String grade = "";
+        String workingName = "";
+        String bathcgNo = "";
+        int countId = 0;
+
+        for (PalletManagemengModelReport model : modelReportList){
+            PalletManagementViewReport palletManagementViewReport = new PalletManagementViewReport();
+            List<PalletListReport> palletListReports = new ArrayList<PalletListReport>();
+
+            if (!dSGThaiItemDescription.equalsIgnoreCase(model.getDSGThaiItemDescription())){
+                palletManagementViewReport.setDSGThaiItemDescription(model.getDSGThaiItemDescription());
+                dSGThaiItemDescription = model.getDSGThaiItemDescription();
+            }
+
+            if (!warehouseCode.equalsIgnoreCase(model.getWarehouseCode())){
+                palletManagementViewReport.setWarehouseCode(model.getWarehouseCode());
+                warehouseCode = model.getWarehouseCode();
+            }
+
+            if (!palletBarcode.equalsIgnoreCase(model.getPalletBarcode())){
+                palletManagementViewReport.setPalletBarcode(model.getPalletBarcode());
+                palletBarcode = model.getPalletBarcode();
+            }
+
+            if (!locationBarcode.equalsIgnoreCase(model.getLocationBarcode())){
+                palletManagementViewReport.setLocationBarcode(model.getLocationBarcode());
+                locationBarcode = model.getLocationBarcode();
+            }
+
+            if (!createDate.equalsIgnoreCase(model.getCreateDate())){
+                palletManagementViewReport.setCreateDate(model.getCreateDate());
+                createDate = model.getCreateDate();
+            }
+
+            if (!grade.equalsIgnoreCase(model.getGrade())){
+                palletManagementViewReport.setGrade(model.getGrade());
+                grade = model.getGrade();
+            }
+
+            if (!workingName.equalsIgnoreCase(model.getWorkingName())){
+                palletManagementViewReport.setWorkingName(model.getWorkingName());
+                workingName = model.getWorkingName();
+            }
+
+            if (!bathcgNo.equalsIgnoreCase(model.getBathcgNo()) && countId != model.getCountId()){
+                palletListReport.setBathcgNo(model.getBathcgNo());
+                palletListReport.setCountId(model.getCountId());
+                palletListReports.add(palletListReport);
+            }
+            palletManagementViewReport.setPalletListReports(palletListReports);
+            reportViews.add(palletManagementViewReport);
+        }
+        return reportViews;
     }
 }

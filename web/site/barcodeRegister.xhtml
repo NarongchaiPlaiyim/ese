@@ -35,7 +35,13 @@
 
                             <tr>
                                 <td colspan="5" class="right">
-                                    <p:commandButton value="Print"/>
+                                    <p:commandButton id="btnPrint"
+                                                     value="Print"
+                                                     process="@form"
+                                                     update=":setupForm"
+                                                     disabled="#{barcodeRegisterBean.flagBtnPrint}"
+                                                     action="#{barcodeRegisterBean.onPrint}"
+                                                     ajax="false"/>
 
                                     <p:commandButton value="New" action="#{barcodeRegisterBean.onClickButtonNew()}" update="@form" />
 
@@ -215,7 +221,8 @@
                                         :setupForm:docDateLabel,
                                         :setupForm:startLabel,
                                         :setupForm:otyLabel,
-                                        :setupForm:btnEdit
+                                        :setupForm:btnEdit,
+                                        :setupForm:btnPrint
                                         "
                                                 listener="#{barcodeRegisterBean.onClickTable()}"/>
                                         <p:column headerText="No" style="min-width: 5px; width: 5px; max-width: 5px;">

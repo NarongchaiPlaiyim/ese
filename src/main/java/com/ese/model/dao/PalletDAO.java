@@ -1,14 +1,12 @@
 package com.ese.model.dao;
 
 import com.ese.model.db.PalletModel;
-import com.ese.model.view.report.PalletManagemengReportView;
+import com.ese.model.view.report.PalletManagemengModelReport;
 import com.ese.utils.Utils;
 import org.hibernate.Criteria;
-import org.hibernate.Hibernate;
 import org.hibernate.SQLQuery;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.type.DateType;
 import org.hibernate.type.IntegerType;
 import org.hibernate.type.StringType;
 import org.hibernate.type.TimestampType;
@@ -102,37 +100,37 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
         }
     }
 
-    public List<PalletManagemengReportView> genSQLReportPallet(int palletId){
-        log.debug("genSQLReportPallet().");
-        List<PalletManagemengReportView> reportViews = new ArrayList<PalletManagemengReportView>();
+    public List<PalletManagemengModelReport> genSQLReportPallet(int palletId){
+        log.debug("genSQLReportPallet(). {}", palletId);
+        List<PalletManagemengModelReport> reportViews = new ArrayList<PalletManagemengModelReport>();
         StringBuilder sqlBuilder = new StringBuilder();
 
         sqlBuilder.append(" SELECT DISTINCT\n" +
-                " ppwms03.dbo.item_master.DSGThaiItemDescription AS DESCRIPTION,\n" +
-                " ppwms03.dbo.warehouse.warehouse_code AS WAREHOUSE_CODE,\n" +
-                " ppwms03.dbo.pallet.pallet_barcode AS PALLET_BARCODE,\n" +
-                " ppwms03.dbo.location.location_barcode AS LOCATION_BARCODE,\n" +
-                " ppwms03.dbo.pallet.create_date AS CREATE_DATE,\n" +
-                " ppwms03.dbo.inv_onhand.grade AS GRADE,\n" +
-                " ppwms03.dbo.inv_onhand.batchno AS BATHCH_NO,\n" +
-                " ppwms03.dbo.working_area.name AS WORKING_NAME,\n" +
-                " Count(ppwms03.dbo.inv_onhand.id) AS COUNT_ID\n" +
-                " FROM ppwms03.dbo.pallet\n" +
-                " LEFT JOIN ppwms03.dbo.item_master\n" +
-                " ON  ppwms03.dbo.pallet.item_id = ppwms03.dbo.item_master.id\n" +
-                " LEFT JOIN ppwms03.dbo.warehouse\n" +
-                " ON ppwms03.dbo.pallet.warehouse_id = ppwms03.dbo.warehouse.id\n" +
-                " LEFT JOIN ppwms03.dbo.working_area\n" +
-                " ON ppwms03.dbo.pallet.conveyor_line = ppwms03.dbo.working_area.id\n" +
-                " LEFT JOIN ppwms03.dbo.location\n" +
-                " ON ppwms03.dbo.pallet.location_id = ppwms03.dbo.location.id\n" +
-                " LEFT JOIN ppwms03.dbo.inv_onhand\n" +
-                " ON ppwms03.dbo.pallet.id = ppwms03.dbo.inv_onhand.pallet_id\n" +
-                " WHERE ppwms03.dbo.pallet.ID = 13\n" +
-                " GROUP BY ppwms03.dbo.item_master.DSGThaiItemDescription,\n" +
-                " ppwms03.dbo.warehouse.warehouse_code,ppwms03.dbo.pallet.pallet_barcode,\n" +
-                " ppwms03.dbo.location.location_barcode,ppwms03.dbo.pallet.create_date,ppwms03.dbo.inv_onhand.grade,\n" +
-                " ppwms03.dbo.working_area.name,ppwms03.dbo.inv_onhand.batchno");
+                            " ppwms03.dbo.item_master.DSGThaiItemDescription AS DESCRIPTION,\n" +
+                            " ppwms03.dbo.warehouse.warehouse_code AS WAREHOUSE_CODE,\n" +
+                            " ppwms03.dbo.pallet.pallet_barcode AS PALLET_BARCODE,\n" +
+                            " ppwms03.dbo.location.location_barcode AS LOCATION_BARCODE,\n" +
+                            " ppwms03.dbo.pallet.create_date AS CREATE_DATE,\n" +
+                            " ppwms03.dbo.inv_onhand.grade AS GRADE,\n" +
+                            " ppwms03.dbo.inv_onhand.batchno AS BATHCH_NO,\n" +
+                            " ppwms03.dbo.working_area.name AS WORKING_NAME,\n" +
+                            " Count(ppwms03.dbo.inv_onhand.id) AS COUNT_ID\n" +
+                            " FROM ppwms03.dbo.pallet\n" +
+                            " LEFT JOIN ppwms03.dbo.item_master\n" +
+                            " ON  ppwms03.dbo.pallet.item_id = ppwms03.dbo.item_master.id\n" +
+                            " LEFT JOIN ppwms03.dbo.warehouse\n" +
+                            " ON ppwms03.dbo.pallet.warehouse_id = ppwms03.dbo.warehouse.id\n" +
+                            " LEFT JOIN ppwms03.dbo.working_area\n" +
+                            " ON ppwms03.dbo.pallet.conveyor_line = ppwms03.dbo.working_area.id\n" +
+                            " LEFT JOIN ppwms03.dbo.location\n" +
+                            " ON ppwms03.dbo.pallet.location_id = ppwms03.dbo.location.id\n" +
+                            " LEFT JOIN ppwms03.dbo.inv_onhand\n" +
+                            " ON ppwms03.dbo.pallet.id = ppwms03.dbo.inv_onhand.pallet_id\n" +
+                            " WHERE ppwms03.dbo.pallet.ID = " + palletId + " \n" +
+                            " GROUP BY ppwms03.dbo.item_master.DSGThaiItemDescription,\n" +
+                            " ppwms03.dbo.warehouse.warehouse_code,ppwms03.dbo.pallet.pallet_barcode,\n" +
+                            " ppwms03.dbo.location.location_barcode,ppwms03.dbo.pallet.create_date,ppwms03.dbo.inv_onhand.grade,\n" +
+                            " ppwms03.dbo.working_area.name,ppwms03.dbo.inv_onhand.batchno");
 
         log.debug(sqlBuilder.toString());
 
@@ -148,8 +146,9 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
                     .addScalar("WORKING_NAME", StringType.INSTANCE)
                     .addScalar("COUNT_ID", IntegerType.INSTANCE);
             List<Object[]> objects = query.list();
+
             for (Object[] entity : objects) {
-                PalletManagemengReportView report = new PalletManagemengReportView();
+                PalletManagemengModelReport report = new PalletManagemengModelReport();
                 report.setDSGThaiItemDescription(Utils.parseString(entity[0], ""));
                 report.setWarehouseCode(Utils.parseString(entity[1], ""));
                 report.setPalletBarcode(Utils.parseString(entity[2], ""));

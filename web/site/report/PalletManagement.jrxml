@@ -36,8 +36,8 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement>
-					<font pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="56" isBold="true" pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{dSGThaiItemDescription}]]></textFieldExpression>
 			</textField>
@@ -49,8 +49,8 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement>
-					<font pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="26" isBold="true" pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{warehouseCode}]]></textFieldExpression>
 			</textField>
@@ -62,8 +62,8 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement>
-					<font pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="20" isBold="true" pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{palletBarcode}]]></textFieldExpression>
 			</textField>
@@ -75,8 +75,8 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement>
-					<font pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="26" isBold="true" pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{locationBarcode}]]></textFieldExpression>
 			</textField>
@@ -88,8 +88,8 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement>
-					<font pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="26" isBold="true" pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{createDate}]]></textFieldExpression>
 			</textField>
@@ -101,8 +101,8 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement>
-					<font pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="26" isBold="true" pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{grade}]]></textFieldExpression>
 			</textField>
@@ -114,8 +114,8 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement>
-					<font pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="26" isBold="true" pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{workingName}]]></textFieldExpression>
 			</textField>
@@ -127,8 +127,9 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="0.0"/>
 				</box>
-				<textElement>
-					<font pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
+				<textElement textAlignment="Center">
+					<font size="20" isBold="true" pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<paragraph spacingBefore="10" spacingAfter="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{bathcgNo}]]></textFieldExpression>
 			</textField>
@@ -140,8 +141,9 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement>
-					<font pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
+				<textElement textAlignment="Center">
+					<font size="20" isBold="true" pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<paragraph spacingBefore="10" spacingAfter="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{countId}]]></textFieldExpression>
 			</textField>

@@ -2,14 +2,13 @@ package com.ese.service;
 
 import com.ese.model.dao.LocationDAO;
 import com.ese.model.dao.MSLocationItemsDAO;
-import com.ese.model.db.MSLocationItemsModel;
 import com.ese.model.db.MSLocationModel;
 import com.ese.model.db.PalletModel;
 import com.ese.model.dao.PalletDAO;
 import com.ese.model.view.LocationItemView;
-import com.ese.model.view.LocationView;
 import com.ese.model.view.PalletManagementView;
-import com.ese.model.view.report.PalletManagemengReportView;
+import com.ese.model.view.report.PalletManagemengModelReport;
+import com.ese.model.view.report.PalletManagementViewReport;
 import com.ese.transform.PalletManagementTransform;
 import com.ese.utils.Utils;
 import org.springframework.stereotype.Component;
@@ -17,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -82,27 +82,13 @@ public class PalletService extends Service{
     }
 
     public void onPrintTag(int palletId){
-        String printTagReportname = "test_report";
-        List<PalletManagemengReportView> reportViews = palletDAO.genSQLReportPallet(palletId);
+        String printTagReportname = Utils.convertToStringDDMMYYYY(new Date()) + "_PrintTag";
+        List<PalletManagemengModelReport> reportViews = palletDAO.genSQLReportPallet(palletId);
+//        List<PalletManagementViewReport> palletManagementViewReports = palletManagementTransform.transformSQL(reportViews);
         log.debug("reportViews {}", reportViews.size());
         HashMap map = new HashMap<String, Object>();
         try {
             reportService.exportPDF("D:/parttime/ESE's source/ese/web/site/report/PalletManagement.jrxml", map, printTagReportname, reportViews);
-        } catch (Exception e) {
-            log.debug("Exception Report : ", e);
-        }
-    }
-
-    public void onPrintTag2(int palletId){
-        String printTagReportname = "test_report";
-        List<PalletManagemengReportView> reportViews = palletDAO.genSQLReportPallet(palletId);
-        log.debug("reportViews {}", reportViews.size());
-        String pathName = "PalletManagement";
-
-        HashMap map = new HashMap<String, Object>();
-        try {
-            log.debug("*****************************");
-            reportService.exportPDF2(map, reportViews, pathName, printTagReportname);
         } catch (Exception e) {
             log.debug("Exception Report : ", e);
         }

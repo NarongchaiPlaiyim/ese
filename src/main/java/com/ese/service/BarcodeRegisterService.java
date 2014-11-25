@@ -5,12 +5,16 @@ import com.ese.model.dao.ItemDAO;
 import com.ese.model.db.BarcodeRegisterModel;
 import com.ese.model.db.MSItemModel;
 import com.ese.model.view.BarcodeRegisterView;
+import com.ese.model.view.report.BarcodeRegisterModelReport;
 import com.ese.transform.BarcodeRegisterTransform;
+import com.ese.utils.Utils;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Component
@@ -19,6 +23,7 @@ public class BarcodeRegisterService extends Service{
     @Resource private ItemDAO itemDAO;
     @Resource private BarcodeRegisterDAO barcodeRegisterDAO;
     @Resource private BarcodeRegisterTransform barcodeRegisterTransform;
+    @Resource private ReportService reportService;
 
     public List<MSItemModel> findByCondition(final String type, final String text){
         log.debug("-- findByCondition({}, {})", type, text);
@@ -85,6 +90,19 @@ public class BarcodeRegisterService extends Service{
             barcodeRegisterDAO.update(barcodeRegisterTransform.transformToModel(view));
         } catch (Exception e) {
             log.error("{}",e);
+        }
+    }
+
+    public void onPrintBarcode(int barcodeId){
+        String printBarcodeName = Utils.convertToStringDDMMYYYY(new Date()) + "_BarcodeRegister";
+        List<BarcodeRegisterModelReport> reports = barcodeRegisterDAO.genSQLReportBarcode(barcodeId);
+
+        log.debug("reportViews {}", reports.size());
+        HashMap map = new HashMap<String, Object>();
+        try {
+            reportService.exportPDF("D:/parttime/ESE's source/ese/web/site/report/BarcodeRegisterReport.jrxml", map, printBarcodeName, reports);
+        } catch (Exception e) {
+            log.debug("Exception Report : ", e);
         }
     }
 }

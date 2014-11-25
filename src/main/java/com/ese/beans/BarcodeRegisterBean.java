@@ -39,6 +39,7 @@ public class BarcodeRegisterBean extends Bean{
     private boolean flagBtnSelect;
     private boolean flagBtnDelete;
     private boolean flagBtnSave;
+    private boolean flagBtnPrint;
     private boolean flagBtnEdit;
     private String messageHeader;
     private String message;
@@ -68,6 +69,7 @@ public class BarcodeRegisterBean extends Bean{
         flagBtnDelete = true;
         flagBtnSave = true;
         flagBtnEdit = true;
+        flagBtnPrint = true;
     }
 
     private void onLoadDataTable(){
@@ -96,18 +98,19 @@ public class BarcodeRegisterBean extends Bean{
 
     private boolean mandate(){
         System.out.println("mandate()");
+
         if(!mandateQty() && !mandateItem() && !mandateStartBarcode()){
             return true;
         } else {
             message = "";
             if(mandateQty()){
-                this.message += "Qtr should be greater than 0. \n";
+                this.message += "Qtr should be greater than 0.\n";
             }
             if(mandateItem()){
-                this.message += "Item should not be empty. \n";
+                this.message += "Item should not be empty.\n";
             }
             if(mandateStartBarcode()){
-                this.message += "StartBarcode should be 9 characters.";
+                this.message +=  "StartBarcode should be 9 characters.";
             }
             return false;
         }
@@ -148,10 +151,11 @@ public class BarcodeRegisterBean extends Bean{
     }
 
     public void onClickTable(){
-        log.debug("-- onClickTable()");
+        log.debug("-- onClickTable() {}", barcodeRegisterModel);
         flagBtnSave = true;
         flagBtnDelete = false;
         flagBtnEdit = false;
+        flagBtnPrint = false;
         barcodeRegisterView = barcodeRegisterService.convertToView(barcodeRegisterModel);
     }
 
@@ -216,4 +220,7 @@ public class BarcodeRegisterBean extends Bean{
         FacesUtil.showDialog(DIALOG_NAME);
     }
 
+    public void onPrint(){
+        barcodeRegisterService.onPrintBarcode(barcodeRegisterModel.getId());
+    }
 }

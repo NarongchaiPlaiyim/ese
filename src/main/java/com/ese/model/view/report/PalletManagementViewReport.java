@@ -5,20 +5,20 @@ import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
-public class PalletManagemengReportView {
+public class PalletManagementViewReport {
+
     private String dSGThaiItemDescription;
     private String warehouseCode;
     private String palletBarcode;
     private String locationBarcode;
     private String createDate;
     private String grade;
-    private String bathcgNo;
     private String workingName;
-    private int countId;
+    private List<PalletListReport> palletListReports;
 
     @Override
     public String toString() {
@@ -29,9 +29,8 @@ public class PalletManagemengReportView {
                 .append("locationBarcode", locationBarcode)
                 .append("createDate", createDate)
                 .append("grade", grade)
-                .append("bathcgNo", bathcgNo)
                 .append("workingName", workingName)
-                .append("countId", countId)
+                .append("palletListReports", palletListReports)
                 .toString();
     }
 }
