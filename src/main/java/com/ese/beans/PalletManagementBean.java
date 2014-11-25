@@ -49,6 +49,8 @@ public class PalletManagementBean extends Bean implements Serializable {
     private boolean isCheckClosePallet;
     private boolean isCheckLocationDialog;
 
+    private int pmvId;
+
     @PostConstruct
     public void onCreation(){
         log.debug("onCreation().");
@@ -119,15 +121,21 @@ public class PalletManagementBean extends Bean implements Serializable {
         locationItemViewList = locationItemService.findLocationByItemId(palletMeanegementView.getItemModel().getId());
     }
 
-    public void OnPrintTag(String redirect){
+    public void onPrintTag(String redirect){
         log.debug("OnPrintTag(). {}",palletMeanegementView);
 
+        pmvId = palletMeanegementView.getId();
+
         palletService.onUpdateByPrintTag(palletMeanegementView, redirect);
-        palletService.onPrintTag(palletMeanegementView.getId());
-        RequestContext.getCurrentInstance().execute("PF('msgBoxSystemMessageDlg').show()");
+
         messageHeader = "Update";
         message = "Successfully Update";
+
         onCreation();
+    }
+
+    public void callReport() {
+        palletService.onPrintTag(pmvId);
     }
 
     public void OnClosePallet(){

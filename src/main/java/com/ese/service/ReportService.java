@@ -52,4 +52,38 @@ public class ReportService extends Service{
         }
 
     }
+
+    public void exportPDF2(Map map, Collection reportList, String jasperName, String nameReport)
+            throws Exception {
+
+        log.debug("exportPDF2() {}, {}, {}.", map, reportList, jasperName);
+
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        log.debug("request ; {}", request);
+        HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+        log.debug("response : {}", response);
+        response.setHeader("Content-Disposition", "attachment;filename="+nameReport+".pdf");
+
+        ServletOutputStream servletOutputStream = response.getOutputStream();
+        InputStream reportStream = request.getSession().getServletContext().getResourceAsStream("D:/parttime/ESE's source/ese/web/site/report/PalletManagement.jasper");
+        log.debug("reportStream : {}", reportStream);
+//        response.setContentType("application/pdf");
+        try {
+            JRDataSource dataSource = null;
+            dataSource = new JRBeanCollectionDataSource(reportList);
+            if(dataSource != null && reportList != null && reportList.size() > 0)
+                JasperRunManager.runReportToPdfStream(reportStream, servletOutputStream, map, dataSource);
+            else
+                JasperRunManager.runReportToPdfStream(reportStream, servletOutputStream, map, new JREmptyDataSource());
+
+        } catch (Exception e) {
+            log.debug("Exception Export Report : ", e);
+        } finally {
+            reportStream.close();
+            servletOutputStream.flush();
+            servletOutputStream.close();
+
+        }
+    }
 }
