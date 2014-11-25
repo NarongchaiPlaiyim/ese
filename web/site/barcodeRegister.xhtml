@@ -40,13 +40,15 @@
 
                                     <p:commandButton value="Save"
                                                      id="btnSave"
+                                                     process="@form"
+                                                     binding="#{addBarcode}"
                                                      disabled="#{barcodeRegisterBean.flagBtnSave}"
                                                      styleClass="medium" style="width: 80px"
                                                      icon="ui-icon-check"
                                                      onstart="PF('bui').show()"
                                                      action="#{barcodeRegisterBean.onSave()}"
                                                      oncomplete="PF('bui').hide()"
-                                                     update="@this, :setupForm:btnDelete"
+                                                     update="@this, :setupForm:btnDelete, :setupForm"
                                             />
                                     <p:commandButton value="Edit"
                                                      id="btnEdit"
@@ -85,6 +87,7 @@
                                                  id="otyLabel"
                                                  styleClass="right"
                                                  maxlength="8"
+                                                 required="#{not empty param[addBarcode.clientId]}"
                                                  onkeydown="return onKeyDownNumber(event);"
                                                  onkeypress="return onKeyPressNumber(event);"
                                                  value="#{barcodeRegisterBean.barcodeRegisterView.qty}">
@@ -160,6 +163,7 @@
                                 <td colspan="3">
                                     <p:inputTextarea style="width: 200px; max-width: 200px;min-width: 200px; height: 50px;"
                                                      id="remarkLabel"
+                                                     required="#{not empty param[addBarcode.clientId]}"
                                                      value="#{barcodeRegisterBean.barcodeRegisterView.remark}"/>
                                 </td>
                             </tr>
