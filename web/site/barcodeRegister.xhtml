@@ -46,7 +46,11 @@
                                                      onstart="PF('bui').show()"
                                                      action="#{barcodeRegisterBean.onSave()}"
                                                      oncomplete="PF('bui').hide()"
-                                                     update="@this, :setupForm:btnDelete"
+                                                     update="@this,
+                                                     :setupForm:btnDelete,
+                                                     :setupForm:barcodeRegisterTable,
+                                                     :msgBoxSystemMessagePanel
+                                                     "
                                             />
                                     <p:commandButton value="Edit"
                                                      id="btnEdit"
@@ -56,7 +60,11 @@
                                                      onstart="PF('bui').show()"
                                                      action="#{barcodeRegisterBean.onEdit()}"
                                                      oncomplete="PF('bui').hide()"
-                                                     update="@this, :setupForm:btnDelete"
+                                                     update="@this,
+                                                     :setupForm:btnDelete,
+                                                     :setupForm:barcodeRegisterTable,
+                                                     :msgBoxSystemMessagePanel
+                                                     "
                                             />
                                 </td>
                             </tr>
@@ -132,8 +140,9 @@
                                     <p:calendar value="#{barcodeRegisterBean.barcodeRegisterView.documentDate}"
                                                 id="docDateLabel"
                                                 readonly="true"
+                                                pattern="dd/MM/yyyy"
                                             showOn="button">
-                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                        <f:convertDateTime pattern="dd/MM/yyyy" locale="en_EN"/>
                                     </p:calendar>
                                 </td>
                                 <td>
@@ -173,7 +182,10 @@
                                                      onstart="PF('bui').show()"
                                                      action="#{barcodeRegisterBean.onDelete()}"
                                                      oncomplete="PF('bui').hide()"
-                                                     update=":setupForm:barcodeRegisterTable, :setupForm:btnDelete"
+                                                     update=":setupForm:barcodeRegisterTable,
+                                                     :setupForm:btnDelete,
+                                                     :msgBoxSystemMessagePanel
+                                                     "
                                             />
                                 </td>
                             </tr>
@@ -259,6 +271,21 @@
                 <p:graphicImage value="/resources/images/shared/ajax-loader.gif"/>
             </h:panelGrid>
         </p:blockUI>
+        <p:panel id="msgBoxSystemMessagePanel" styleClass="panel">
+            <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="350px" closable="false"
+                             header="#{barcodeRegisterBean.messageHeader}" message="#{barcodeRegisterBean.message}" >
+                <table border="0" style="width: 100%">
+                    <tr>
+                        <td colspan="100%" class="right">
+                            <p:commandButton value="OK"
+                                             process="@this"
+                                             update="setupForm"
+                                             oncomplete="PF('msgBoxSystemMessageDlg').hide()"/>
+                        </td>
+                    </tr>
+                </table>
+            </p:confirmDialog>
+        </p:panel>
     </h:body>
 </f:view>
 </html>

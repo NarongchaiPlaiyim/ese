@@ -7,12 +7,15 @@
         >
 
     <h:body>
-        <h:form id="frmLogin">
-            SITE[MAIN]
+        <h:form id="test">
+            <p:inputText id="user" required="#{empty param[saveBtn.clientId]}" />
 
-            <p:commandButton id="submitOnClickISATest" value="LogOut" update="@form"
-                             action="#{loginBean.logout}"/>
 
+            <p:commandButton id="saveBtn"
+                             action="#{loginBean.test()}"
+                             binding="#{saveBtn}"
+                             process="@form"
+                             value="Submit" update=":test" />
         </h:form>
     </h:body>
 

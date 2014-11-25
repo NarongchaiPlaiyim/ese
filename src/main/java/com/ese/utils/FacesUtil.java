@@ -1,5 +1,6 @@
 package com.ese.utils;
 
+import org.primefaces.context.RequestContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,6 +33,10 @@ public class FacesUtil implements Serializable {
 
     public static ExternalContext getExternalContext() {
         return FacesContext.getCurrentInstance().getExternalContext();
+    }
+
+    public static void showDialog(String nameOfDialog){
+        RequestContext.getCurrentInstance().execute("PF('"+nameOfDialog+"').show()");
     }
 
 

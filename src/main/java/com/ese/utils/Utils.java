@@ -1,6 +1,7 @@
 package com.ese.utils;
 import org.apache.commons.lang3.StringUtils;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -46,8 +47,16 @@ public enum Utils {
         }
     }
 
+    private static Calendar getCalendar(){
+        return Calendar.getInstance();
+    }
+
     public static Date currentDate(){
-       return Calendar.getInstance().getTime();
+       return getCalendar().getTime();
+    }
+
+    public static String getBatchNo(){
+        return getCalendar().get(Calendar.YEAR) + "-" + getCalendar().get(Calendar.WEEK_OF_YEAR);
     }
 
     public static String getDocumentNo(){
@@ -74,6 +83,40 @@ public enum Utils {
             try{
                 return Integer.parseInt(inputStr);
             }catch (ClassCastException e){
+                return defaultValue;
+            }
+        }
+    }
+
+    public static BigDecimal parseBigDecimal(Object input, BigDecimal defaultValue){
+        if(input == null)
+            return defaultValue;
+        else if (input instanceof BigDecimal)
+            return (BigDecimal) input;
+        else {
+            String inputStr = input.toString();
+            if(isEmpty(inputStr))
+                return defaultValue;
+            try{
+                return BigDecimal.valueOf(parseLong(inputStr, 0));
+            }catch (ClassCastException e){
+                return defaultValue;
+            }
+        }
+    }
+
+    public static long parseLong(Object input,long defaultValue) {
+        if (input == null)
+            return defaultValue;
+        else if (input instanceof Long)
+            return (Long) input;
+        else {
+            String inputStr = input.toString();
+            if (isEmpty(inputStr))
+                return defaultValue;
+            try {
+                return Long.parseLong(inputStr);
+            } catch (NumberFormatException e) {
                 return defaultValue;
             }
         }

@@ -7,12 +7,13 @@ import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 
 @Getter
 @Setter
-public class BarcodeRegisterView {
+public class BarcodeRegisterView extends View{
     private int id;
     private MSItemModel msItemModel;
     private String documentNo;
@@ -21,7 +22,13 @@ public class BarcodeRegisterView {
     private int qty;
     private String startBarcode;
     private String finishBarcode;
+    private String startBarcodeText;
+    private String finishBarcodeText;
     private String remark;
+    private int status;
+    private int isValid;
+    private int version;
+    private BigDecimal cost;
 
     public BarcodeRegisterView() {
         init();
@@ -29,10 +36,9 @@ public class BarcodeRegisterView {
 
     private void init(){
         msItemModel = new MSItemModel();
-        Calendar calendar = Calendar.getInstance();
         documentNo = Utils.getDocumentNo();
         documentDate = Utils.currentDate();
-        batchNo = calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.WEEK_OF_YEAR);
+        batchNo = Utils.getBatchNo();
         qty = 0;
         startBarcode =  "000000000";
         finishBarcode = "000000000";

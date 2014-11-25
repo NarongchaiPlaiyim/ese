@@ -45,7 +45,7 @@ public abstract class GenericDAO<T, ID extends Serializable> implements Serializ
     }
 
     public T update(T entity) throws Exception {
-        getSession().saveOrUpdate(entity);
+        getSession().update(entity);
         return entity;
     }
 

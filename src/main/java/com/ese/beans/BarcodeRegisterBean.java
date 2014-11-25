@@ -6,9 +6,12 @@ import com.ese.model.db.BarcodeRegisterModel;
 import com.ese.model.db.MSItemModel;
 import com.ese.model.view.BarcodeRegisterView;
 import com.ese.service.BarcodeRegisterService;
+import com.ese.utils.FacesUtil;
+import com.ese.utils.MessageDialog;
 import com.ese.utils.Utils;
 import lombok.Getter;
 import lombok.Setter;
+import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -25,6 +28,8 @@ import java.util.List;
 public class BarcodeRegisterBean extends Bean{
     @ManagedProperty("#{barcodeRegisterService}") private BarcodeRegisterService barcodeRegisterService;
 
+    private final String DIALOG_NAME = "msgBoxSystemMessageDlg";
+
     private BarcodeRegisterView barcodeRegisterView;
     private List<MSItemModel> msItemModelList;
     private List<BarcodeRegisterModel> barcodeRegisterModelList;
@@ -35,6 +40,8 @@ public class BarcodeRegisterBean extends Bean{
     private boolean flagBtnDelete;
     private boolean flagBtnSave;
     private boolean flagBtnEdit;
+    private String messageHeader;
+    private String message;
 
     @PostConstruct
     private void init(){
@@ -59,7 +66,6 @@ public class BarcodeRegisterBean extends Bean{
 
     public void onClickButtonNew(){
         log.debug("-- onClickButtonNew()");
-        System.out.println("-- onClickButtonNew()");
         barcodeRegisterView = new BarcodeRegisterView();
         flagBtnDelete = true;
         flagBtnSave = false;
@@ -73,6 +79,8 @@ public class BarcodeRegisterBean extends Bean{
         final int finish = (qty + start) - 1;
         final String result = finish > 999999999 ? "999999999" : String.format("%09d", finish);
         barcodeRegisterView.setFinishBarcode(result);
+        barcodeRegisterView.setFinishBarcodeText("T" + result);
+        barcodeRegisterView.setStartBarcodeText("T" + String.format("%09d", start));
     }
 
     public void onInitSearch(){
@@ -83,7 +91,9 @@ public class BarcodeRegisterBean extends Bean{
 
     public void onSubmitSearch(){
         log.debug("-- onSubmitSearch()");
-        msItemModelList = barcodeRegisterService.findByCondition(selectType, productSearch);
+        if(!Utils.isZero(productSearch.length())){
+            msItemModelList = barcodeRegisterService.findByCondition(selectType, productSearch);
+        }
     }
 
     public void onClickTableDialog(){
@@ -95,7 +105,7 @@ public class BarcodeRegisterBean extends Bean{
         log.debug("-- onClickTable()");
         flagBtnSave = true;
         flagBtnDelete = false;
-        flagBtnEdit = flagBtnDelete;
+        flagBtnEdit = false;
         barcodeRegisterView = barcodeRegisterService.convertToView(barcodeRegisterModel);
     }
 
@@ -106,30 +116,30 @@ public class BarcodeRegisterBean extends Bean{
 
     public void onDelete(){
         log.debug("-- onDelete()");
-        flagBtnDelete = true;
         barcodeRegisterService.delete(barcodeRegisterModel);
-        onLoadDataTable();
-        initBtn();
+        init();
+        showDialog(MessageDialog.DELETE.getMessageHeader(), MessageDialog.DELETE.getMessage());
     }
 
     public void onSave(){
-        System.out.println("onSave()");
-        try {
-            Thread.sleep(2000);
-            initBtn();
-        } catch (InterruptedException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
+        log.debug("-- onSave()");
+        barcodeRegisterService.save(barcodeRegisterView);
+        init();
+        showDialog(MessageDialog.SAVE.getMessageHeader(), MessageDialog.SAVE.getMessage());
+
     }
 
     public void onEdit(){
-        System.out.println("onEdit()");
-        try {
-            Thread.sleep(2000);
-            initBtn();
-        } catch (InterruptedException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
+        log.debug("-- onEdit()");
+        barcodeRegisterService.edit(barcodeRegisterView);
+        init();
+        showDialog(MessageDialog.EDIT.getMessageHeader(), MessageDialog.EDIT.getMessage());
+    }
+
+    private void showDialog(String messageHeader, String message){
+        this.messageHeader = messageHeader;
+        this.message = message;
+        FacesUtil.showDialog(DIALOG_NAME);
     }
 
 }

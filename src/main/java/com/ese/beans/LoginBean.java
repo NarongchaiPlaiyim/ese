@@ -83,6 +83,7 @@ public class LoginBean extends Bean{
     }
 
     public void test(){
-        loginService.test();
+        System.out.println("test");
+//        loginService.test();
     }
 }

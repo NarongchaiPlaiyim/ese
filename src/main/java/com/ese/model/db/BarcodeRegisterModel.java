@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Getter
@@ -61,7 +62,7 @@ public class BarcodeRegisterModel extends AbstractModel {
     private int version;
 
     @Column(name = "cost")
-    private long cost;
+    private BigDecimal cost;
 
     @Override
     public String toString() {
