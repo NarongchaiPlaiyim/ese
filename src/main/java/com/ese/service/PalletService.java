@@ -73,12 +73,9 @@ public class PalletService extends Service{
         try{
             if (!Utils.isNull(palletManagementView)){
                 palletModel = palletManagementTransform.transformToMode(palletManagementView, redirect);
-            } else {
-                palletModel = new PalletModel();
             }
 
             palletDAO.update(palletModel);
-//            onPrintTag(palletManagementView.getId());
         } catch (Exception e){
             log.debug("Exception : {}", e);
         }
@@ -91,6 +88,21 @@ public class PalletService extends Service{
         HashMap map = new HashMap<String, Object>();
         try {
             reportService.exportPDF("D:/parttime/ESE's source/ese/web/site/report/PalletManagement.jrxml", map, printTagReportname, reportViews);
+        } catch (Exception e) {
+            log.debug("Exception Report : ", e);
+        }
+    }
+
+    public void onPrintTag2(int palletId){
+        String printTagReportname = "test_report";
+        List<PalletManagemengReportView> reportViews = palletDAO.genSQLReportPallet(palletId);
+        log.debug("reportViews {}", reportViews.size());
+        String pathName = "PalletManagement";
+
+        HashMap map = new HashMap<String, Object>();
+        try {
+            log.debug("*****************************");
+            reportService.exportPDF2(map, reportViews, pathName, printTagReportname);
         } catch (Exception e) {
             log.debug("Exception Report : ", e);
         }

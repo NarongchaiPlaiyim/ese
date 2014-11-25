@@ -28,13 +28,19 @@
                                         <tr>
                                             <td class="right">
                                                 <p:commandButton id="btnFindlocation" value="Find Location" action="#{palletManagement.onFindLocation}"
-                                                                 disabled="#{palletManagement.isCheckLocation()}" oncomplete="PF('findLocationDlg').show()"
+                                                                 disabled="#{palletManagement.isCheckLocation()}"
+                                                                 oncomplete="PF('findLocationDlg').show()"
                                                                  update=":findlocationForm"/>
-                                                <p:commandButton id="btnPrintTag" value="Print Tag" process="@form" actionListener="#{palletManagement.OnPrintTag('PrintTag')}"
-                                                                 update=":palletForm, :palletForm:palletManagementTable, :msgBoxSystemMessagePanel" disabled="#{palletManagement.isCheckPrintTag()}"
-                                                                 ajax="false"/>
+                                                <p:commandButton id="btnPrintTag"
+                                                                 value="Print Tag"
+                                                                 process="@form"
+                                                                 actionListener="#{palletManagement.onPrintTag('PrintTag')}"
+                                                                 update=":palletForm, :palletForm:palletManagementTable, :msgBoxSystemMessagePanel"
+                                                                 disabled="#{palletManagement.isCheckPrintTag()}"
+                                                                 oncomplete="PF('msgBoxSystemMessageDlg2').show()"/>
                                                 <p:commandButton id="btnClosePallet" value="Close Pallet" action="#{palletManagement.OnClosePallet}" disabled="#{palletManagement.isCheckClosePallet()}"
-                                                                 update=":palletForm, :msgBoxSystemMessagePanel, :confirmClosePalletPanel" process="@form"/>
+                                                                 update=":palletForm, :msgBoxSystemMessagePanel, :confirmClosePalletPanel"
+                                                                 process="@form"/>
                                             </td>
                                         </tr>
                                     </table>
@@ -147,6 +153,24 @@
                             </tr>
                         </table>
                     </div>
+
+                    <p:panel id="pnlDlg" styleClass="panel">
+                        <p:confirmDialog id="msgBoxSystemMessageDialog2" widgetVar="msgBoxSystemMessageDlg2" width="350px"
+                                         header="#{palletManagement.messageHeader}" message="#{palletManagement.message}" >
+                            <table border="0" style="width: 100%">
+                                <tr>
+                                    <td colspan="100%" class="right">
+                                        <p:commandButton value="OK"
+                                                         process="@form"
+                                                         update="palletForm"
+                                                         action="#{palletManagement.callReport()}"
+                                                         ajax="false"
+                                                         onclick="PF('msgBoxSystemMessageDlg2').hide()"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </p:confirmDialog>
+                    </p:panel>
                 </h:form>
             </div>
         </p:panel>
