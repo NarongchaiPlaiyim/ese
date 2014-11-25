@@ -1,5 +1,8 @@
 package com.ese.beans;
 
+import com.ese.model.db.MSLocationModel;
+import com.ese.model.db.MSWarehouseModel;
+import com.ese.model.view.LocationView;
 import com.ese.model.view.SetupView;
 import com.ese.model.view.WarehouseAndLocationView;
 import com.ese.model.view.dilog.WarehouseDialogView;
@@ -26,53 +29,53 @@ public class SetupBean extends Bean{
     private WarehouseAndLocationView warehouseAndLocationView;
     private WarehouseDialogView warehouseDialogView;
     private List<WarehouseAndLocationView> warehouseAndLocationViewList;
+    private boolean flagBtnNewWarehouse;
+    private boolean flagBtnAddShowItem;
+    private boolean flagBtnAddEdit;
+    private boolean flagBtnDelete;
+    private String modeWarehouse;
+    private String nameBtn;
+    private List<LocationView> locationViewList;
+    private LocationView locationView;
+    private List<MSWarehouseModel> msWarehouseModelList;
+    private MSWarehouseModel msWarehouseModel;
 
     public SetupBean() {
 
     }
 
-//    @PostConstruct
-//    private void pre(){
-//        log.debug("-- pre()");
-//    }
-
     @PostConstruct
     private void init(){
         setupView = new SetupView();
         warehouseDialogView = new WarehouseDialogView();
-        warehouseAndLocationViewList = new ArrayList();
-        warehouseAndLocationView = new WarehouseAndLocationView();
-        onLoadTableWarehouseAndLocation();
+        locationView = new LocationView();
+        msWarehouseModel = new MSWarehouseModel();
+        modeWarehouse = "Mode(New)";
+        nameBtn = "Cancel";
+        btnOnload();
+        onLoadLocationTB();
+        warehouseOnload();
     }
 
-    private void onLoadTableWarehouseAndLocation(){
-        log.debug("-- onLoadTableWarehouseAndLocation()");
-        WarehouseAndLocationView warehouseAndLocationView;
-        for (int i = 0; i < 101; i++) {
-            warehouseAndLocationView = new WarehouseAndLocationView();
-            warehouseAndLocationView.setId(i);
-            warehouseAndLocationView.setWarehouseId(i + 3000);
-            warehouseAndLocationView.setCapacities(i + 4000);
-            warehouseAndLocationView.setLocationCode("LocationCode"+i);
-            warehouseAndLocationView.setLocationName("LocationName"+i);
-            warehouseAndLocationView.setRemark("Remark"+i);
-            warehouseAndLocationViewList.add(warehouseAndLocationView);
-        }
-        log.debug("-- warehouseAndLocationViewList.size()[{}]", warehouseAndLocationViewList.size());
+    private void btnOnload(){
+        flagBtnNewWarehouse = false;
+        flagBtnAddShowItem = true;
+        flagBtnAddEdit = false;
+        flagBtnDelete = true;
     }
 
-    public void test(){
-        log.debug("test(View[{}])", warehouseAndLocationView.toString());
-        log.debug("");
+    private void warehouseOnload(){
+        msWarehouseModelList = locationService.getWarehouseAll();
     }
 
-    //TAB Warehouse and location
-    public void onClickNewButtonTAB(){
-        log.debug("-- onClickNewButtonTAB()");
+    private void onLoadLocationTB(){
+        locationViewList = locationService.getLocationAll();
     }
 
-    public void onClickSaveButtonTAB(){
-        log.debug("-- onClickSaveButtonTAB()");
+    public void onClickToLocationTB(){
+        log.debug("onClickToLocationTB(), {}", locationView.toString());
+        modeWarehouse = "Mode(Edit)";
+        nameBtn = "New";
     }
 
     public void onClickDeleteButtonTAB(){
@@ -80,40 +83,5 @@ public class SetupBean extends Bean{
         log.debug("--[BEFORE] warehouseAndLocationViewList.size()[{}]", warehouseAndLocationViewList.size());
         warehouseAndLocationViewList.remove(warehouseAndLocationView);
         log.debug("--[AFTER] warehouseAndLocationViewList.size()[{}]", warehouseAndLocationViewList.size());
-    }
-
-    public void onClickNewEditButtonTAB(){
-        log.debug("-- onClickNewEditButtonTAB()");
-    }
-
-    public void onClickShowAddItemButtonTAB(){
-        log.debug("-- onClickShowAddItemButtonTAB()");
-    }
-
-    //Dialog of above Tab
-    public void onClickNewButtonTABDialog(){
-        log.debug("-- onClickNewButtonTABDialog()");
-    }
-
-    public void onClickSaveButtonTABDialog(){
-        log.debug("-- onClickSaveButtonTABDialog()");
-    }
-
-    public void onClickDeleteButtonTABDialog(){
-        log.debug("-- onClickDeleteButtonTABDialog()");
-    }
-
-
-    //Tab Stock in out note
-    public void onClickNewButtonTAB2(){
-        log.debug("-- onClickNewButtonTAB2()");
-    }
-
-    public void onClickSaveButtonTAB2(){
-        log.debug("-- onClickSaveButtonTAB2()");
-    }
-
-    public void onClickDeleteButtonTAB2(){
-        log.debug("-- onClickDeleteButtonTAB2()");
     }
 }

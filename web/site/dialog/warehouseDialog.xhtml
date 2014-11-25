@@ -37,7 +37,7 @@
                     <table border="0">
 
                         <tr >
-                            <td style="min-width: 100px; width: 100px; max-width: 100px;" class="left" />
+                            <td style="min-width: 105px; width: 105px; max-width: 105px;" class="left" />
                             <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
                             <td style="min-width: 100px; width: 100px; max-width: 100px;" class="center" />
                             <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
@@ -45,14 +45,14 @@
 
                         <tr>
                             <td>
-                                <h:outputLabel value="Warehouse Code"/>
+                                <h:outputLabel value="Warehouse Code :"/>
                             </td>
                             <td>
                                 <p:inputText style="min-width: 200px; width: 200px; max-width: 200px;"
                                              value="#{setup.warehouseDialogView.warehouseCode}" />
                             </td>
                             <td>
-                                <h:outputLabel value="Remark"/>
+                                <h:outputLabel value="Remark :"/>
                             </td>
                             <td>
                                 <p:inputTextarea style="width: 200px; max-width: 200px;min-width: 200px; height: 50px;"
@@ -61,7 +61,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <h:outputLabel value="Warehouse Name"/>
+                                <h:outputLabel value="Warehouse Name :"/>
                             </td>
                             <td>
                                 <p:inputText style="min-width: 200px; width: 200px; max-width: 200px;"
@@ -81,25 +81,25 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <!--<p:dataTable id="warehouseTable"-->
-                                 <!--var="view"-->
-                                 <!--rowKey="#{view}"-->
-                                 <!--value="#{setup.warehouseAndLocationViewList}"-->
-                                 <!--paginator="false"-->
-                                 <!--rowIndexVar="rowIndex">-->
-                        <!--<p:column headerText="No">-->
-                            <!--<p:outputLabel value="#{rowIndex+1}"/>-->
-                        <!--</p:column>-->
-                        <!--<p:column headerText="warehouse ID">-->
-                            <!--<p:outputLabel value="#{view.warehouseId}"/>-->
-                        <!--</p:column>-->
-                        <!--<p:column headerText="warehouse Name">-->
-                            <!--<p:outputLabel value="bbbbb"/>-->
-                        <!--</p:column>-->
-                        <!--<p:column headerText="Remark">-->
-                            <!--<p:outputLabel value="cccc"/>-->
-                        <!--</p:column>-->
-                    <!--</p:dataTable>-->
+                    <p:dataTable id="warehouseTable"
+                                 var="view"
+                                 rowKey="#{view}"
+                                 value="#{setup.warehouseAndLocationViewList}"
+                                 paginator="false"
+                                 rowIndexVar="rowIndex">
+                        <p:column headerText="No">
+                            <p:outputLabel value="#{rowIndex+1}"/>
+                        </p:column>
+                        <p:column headerText="warehouse ID">
+                            <p:outputLabel value=""/>
+                        </p:column>
+                        <p:column headerText="warehouse Name">
+                            <p:outputLabel value="bbbbb"/>
+                        </p:column>
+                        <p:column headerText="Remark">
+                            <p:outputLabel value="cccc"/>
+                        </p:column>
+                    </p:dataTable>
                 </td>
             </tr>
         </table>

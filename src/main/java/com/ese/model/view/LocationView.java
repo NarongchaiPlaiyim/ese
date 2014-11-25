@@ -29,6 +29,18 @@ public class LocationView {
     private int reservedQty;
     private int isMix;
 
+    public void setMix(int mix) {
+        isMix = mix;
+    }
+
+    public boolean isMix(){
+        return isMix != 0;
+    }
+
+    public void setMix(boolean mix){
+        setMix(mix ? 1 : 0);
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
