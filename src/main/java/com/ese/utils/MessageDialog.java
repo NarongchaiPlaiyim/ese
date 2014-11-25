@@ -8,6 +8,7 @@ public enum MessageDialog {
     EDIT("Edit", "Successfully edited."),
     CREATE("Create", "Successfully created."),
     DELETE("Delete", "Successfully deleted."),
+    WARNING("Warning", ""),
     SAVE("Save", "Successfully saved.");
     private String messageHeader;
     private String message;

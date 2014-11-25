@@ -43,13 +43,24 @@ public class BarcodeRegisterBean extends Bean{
     private String messageHeader;
     private String message;
 
+    private boolean flagItem;
+    private boolean flagQty;
+    private boolean flagStartBarcode;
+
     @PostConstruct
     private void init(){
         barcodeRegisterView = new BarcodeRegisterView();
         msItemModelList = Collections.EMPTY_LIST;
         barcodeRegisterModelList = Collections.EMPTY_LIST;
         initBtn();
+        initField();
         onLoadDataTable();
+    }
+
+    private void initField(){
+        flagItem = false;
+        flagQty = false;
+        flagStartBarcode = false;
     }
 
     private void initBtn(){
@@ -81,6 +92,41 @@ public class BarcodeRegisterBean extends Bean{
         barcodeRegisterView.setFinishBarcode(result);
         barcodeRegisterView.setFinishBarcodeText("T" + result);
         barcodeRegisterView.setStartBarcodeText("T" + String.format("%09d", start));
+    }
+
+    private boolean mandate(){
+        System.out.println("mandate()");
+        if(!mandateQty() && !mandateItem() && !mandateStartBarcode()){
+            return true;
+        } else {
+            message = "";
+            if(mandateQty()){
+                this.message += "Qtr should be greater than 0. \n";
+            }
+            if(mandateItem()){
+                this.message += "Item should not be empty. \n";
+            }
+            if(mandateStartBarcode()){
+                this.message += "StartBarcode should be 9 characters.";
+            }
+            return false;
+        }
+    }
+
+    private boolean mandateQty(){
+        flagQty = (Utils.isZero(Utils.parseString(barcodeRegisterView.getQty(), "")) || barcodeRegisterView.getQty() < 1 )? true : false ;
+        return flagQty;
+    }
+
+    private boolean mandateStartBarcode(){
+        final int FIX_LENGTH = 9;
+        flagStartBarcode = barcodeRegisterView.getStartBarcode().length() != FIX_LENGTH ? true : false ;
+        return flagStartBarcode;
+    }
+
+    private boolean mandateItem(){
+        flagItem = Utils.isZero(barcodeRegisterView.getMsItemModel().getId()) ? true : false ;
+        return flagItem;
     }
 
     public void onInitSearch(){
@@ -116,24 +162,52 @@ public class BarcodeRegisterBean extends Bean{
 
     public void onDelete(){
         log.debug("-- onDelete()");
-        barcodeRegisterService.delete(barcodeRegisterModel);
-        init();
-        showDialog(MessageDialog.DELETE.getMessageHeader(), MessageDialog.DELETE.getMessage());
+        try {
+            barcodeRegisterService.delete(barcodeRegisterModel);
+            showDialog(MessageDialog.DELETE.getMessageHeader(), MessageDialog.DELETE.getMessage());
+            init();
+        } catch (Exception e) {
+            log.error("{}",e);
+            showDialogError(e.getMessage());
+        }
     }
 
     public void onSave(){
         log.debug("-- onSave()");
-        barcodeRegisterService.save(barcodeRegisterView);
-        init();
-        showDialog(MessageDialog.SAVE.getMessageHeader(), MessageDialog.SAVE.getMessage());
-
+        try {
+            if(mandate()){
+                barcodeRegisterService.save(barcodeRegisterView);
+                showDialog(MessageDialog.SAVE.getMessageHeader(), MessageDialog.SAVE.getMessage());
+                init();
+            } else {
+                showDialog(MessageDialog.WARNING.getMessageHeader(), message);
+            }
+        } catch (Exception e) {
+            log.error("{}",e);
+            showDialogError(e.getMessage());
+        }
     }
 
     public void onEdit(){
         log.debug("-- onEdit()");
-        barcodeRegisterService.edit(barcodeRegisterView);
+        try {
+            if(mandate()){
+                barcodeRegisterService.edit(barcodeRegisterView);
+                showDialog(MessageDialog.EDIT.getMessageHeader(), MessageDialog.EDIT.getMessage());
+                init();
+            } else {
+                showDialog(MessageDialog.WARNING.getMessageHeader(), message);
+            }
+        } catch (Exception e) {
+            log.error("{}",e);
+            showDialogError(e.getMessage());
+        }
+
+    }
+
+    private void showDialogError(String message){
+        showDialog(MessageDialog.ERROR.getMessageHeader(), message);
         init();
-        showDialog(MessageDialog.EDIT.getMessageHeader(), MessageDialog.EDIT.getMessage());
     }
 
     private void showDialog(String messageHeader, String message){

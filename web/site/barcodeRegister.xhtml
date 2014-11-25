@@ -36,12 +36,11 @@
                             <tr>
                                 <td colspan="5" class="right">
                                     <p:commandButton value="Print"/>
+
                                     <p:commandButton value="New" action="#{barcodeRegisterBean.onClickButtonNew()}" update="@form" />
 
                                     <p:commandButton value="Save"
                                                      id="btnSave"
-                                                     process="@form"
-                                                     binding="#{addBarcode}"
                                                      disabled="#{barcodeRegisterBean.flagBtnSave}"
                                                      styleClass="medium" style="width: 80px"
                                                      icon="ui-icon-check"
@@ -52,9 +51,9 @@
                                                      :setupForm:btnDelete,
                                                      :setupForm:barcodeRegisterTable,
                                                      :msgBoxSystemMessagePanel,
-                                                     :setupForm
                                                      "
                                             />
+
                                     <p:commandButton value="Edit"
                                                      id="btnEdit"
                                                      disabled="#{barcodeRegisterBean.flagBtnEdit}"
@@ -66,7 +65,7 @@
                                                      update="@this,
                                                      :setupForm:btnDelete,
                                                      :setupForm:barcodeRegisterTable,
-                                                     :msgBoxSystemMessagePanel
+                                                     :msgBoxSystemMessagePanel,
                                                      "
                                             />
                                 </td>
@@ -77,7 +76,7 @@
                                     <h:outputLabel value="Item*"/>
                                 </td>
                                 <td>
-                                    <h:outputLabel
+                                    <p:outputLabel
                                             id="itemLabel"
                                             style="min-width: 200px; width: 200px; max-width: 200px;"
                                                  value="#{barcodeRegisterBean.barcodeRegisterView.msItemModel.DSGThaiItemDescription}"/>
@@ -96,7 +95,6 @@
                                                  id="otyLabel"
                                                  styleClass="right"
                                                  maxlength="8"
-                                                 required="#{not empty param[addBarcode.clientId]}"
                                                  onkeydown="return onKeyDownNumber(event);"
                                                  onkeypress="return onKeyPressNumber(event);"
                                                  value="#{barcodeRegisterBean.barcodeRegisterView.qty}">
@@ -173,7 +171,6 @@
                                 <td colspan="3">
                                     <p:inputTextarea style="width: 200px; max-width: 200px;min-width: 200px; height: 50px;"
                                                      id="remarkLabel"
-                                                     required="#{not empty param[addBarcode.clientId]}"
                                                      value="#{barcodeRegisterBean.barcodeRegisterView.remark}"/>
                                 </td>
                             </tr>
@@ -196,7 +193,7 @@
                             </tr>
                         </table>
 
-                        <table border="2" class="content_table_form">
+                        <table border="0" class="content_table_form">
                             <tr>
                                 <td colspan="6">
                                     <p:dataTable id="barcodeRegisterTable"
@@ -217,8 +214,7 @@
                                         :setupForm:labelFinishBarcode,
                                         :setupForm:docDateLabel,
                                         :setupForm:startLabel,
-                                        :setupForm:otyLabel
-                                        :setupForm:btnSave,
+                                        :setupForm:otyLabel,
                                         :setupForm:btnEdit
                                         "
                                                 listener="#{barcodeRegisterBean.onClickTable()}"/>
