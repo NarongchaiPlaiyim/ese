@@ -46,6 +46,7 @@ public class SetupBean extends Bean{
 
     @PostConstruct
     private void init(){
+        preLoad();
         setupView = new SetupView();
         warehouseDialogView = new WarehouseDialogView();
         locationView = new LocationView();

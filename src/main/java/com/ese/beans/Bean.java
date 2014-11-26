@@ -1,6 +1,11 @@
 package com.ese.beans;
 
+import com.ese.security.UserDetail;
 import com.ese.service.*;
+import com.ese.utils.AttributeName;
+import com.ese.utils.FacesUtil;
+import com.ese.utils.MessageDialog;
+import com.ese.utils.Utils;
 import lombok.Getter;
 import lombok.Setter;
 import org.slf4j.Logger;
@@ -26,4 +31,30 @@ public abstract class Bean implements Serializable {
     @ManagedProperty("#{workingAreaService}") protected WorkingAreaService workingAreaService;
     @ManagedProperty("#{locationItemService}") protected LocationItemService locationItemService;
     @ManagedProperty("#{locationService}") protected LocationService locationService;
+
+    private String messageHeader;
+    private String message;
+    private UserDetail userDetail;
+
+    protected void showDialogError(String message){
+        showDialog(MessageDialog.ERROR.getMessageHeader(), message);
+    }
+
+    protected void showDialog(String messageHeader, String message){
+        setMessageHeader(messageHeader);
+        setMessage(message);
+        FacesUtil.showDialog("msgBoxSystemMessageDlg");
+    }
+
+    protected void preLoad(){
+        try{
+            UserDetail userDetail = (UserDetail) FacesUtil.getSession(false).getAttribute(AttributeName.USER_DETAIL.getName());
+            if(Utils.isNull(userDetail)){
+                FacesUtil.redirect("/login.xhtml");
+            }
+            setUserDetail(userDetail);
+        } catch (Exception e) {
+            FacesUtil.redirect("/login.xhtml");
+        }
+    }
 }

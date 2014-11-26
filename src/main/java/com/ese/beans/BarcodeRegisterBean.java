@@ -5,6 +5,7 @@ package com.ese.beans;
 import com.ese.model.db.BarcodeRegisterModel;
 import com.ese.model.db.MSItemModel;
 import com.ese.model.view.BarcodeRegisterView;
+import com.ese.security.UserDetail;
 import com.ese.service.BarcodeRegisterService;
 import com.ese.utils.FacesUtil;
 import com.ese.utils.MessageDialog;
@@ -17,6 +18,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -50,6 +52,7 @@ public class BarcodeRegisterBean extends Bean{
 
     @PostConstruct
     private void init(){
+        preLoad();
         barcodeRegisterView = new BarcodeRegisterView();
         msItemModelList = Collections.EMPTY_LIST;
         barcodeRegisterModelList = Collections.EMPTY_LIST;
@@ -209,16 +212,16 @@ public class BarcodeRegisterBean extends Bean{
 
     }
 
-    private void showDialogError(String message){
-        showDialog(MessageDialog.ERROR.getMessageHeader(), message);
-        init();
-    }
-
-    private void showDialog(String messageHeader, String message){
-        this.messageHeader = messageHeader;
-        this.message = message;
-        FacesUtil.showDialog(DIALOG_NAME);
-    }
+//    private void showDialogError(String message){
+//        showDialog(MessageDialog.ERROR.getMessageHeader(), message);
+//        init();
+//    }
+//
+//    private void showDialog(String messageHeader, String message){
+//        this.messageHeader = messageHeader;
+//        this.message = message;
+//        FacesUtil.showDialog(DIALOG_NAME);
+//    }
 
     public void onPrint(){
         barcodeRegisterService.onPrintBarcode(barcodeRegisterModel.getId());
