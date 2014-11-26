@@ -43,8 +43,6 @@ public class BarcodeRegisterBean extends Bean{
     private boolean flagBtnSave;
     private boolean flagBtnPrint;
     private boolean flagBtnEdit;
-    private String messageHeader;
-    private String message;
 
     private boolean flagItem;
     private boolean flagQty;
@@ -100,22 +98,21 @@ public class BarcodeRegisterBean extends Bean{
     }
 
     private boolean mandate(){
-        System.out.println("mandate()");
-
         if(!mandateQty() && !mandateItem() && !mandateStartBarcode()){
             return true;
         } else {
-            message = "";
             if(mandateQty()){
-                this.message += "Qtr should be greater than 0.\n";
+                setMessage("Qtr should be greater than 0.");
+                return false;
+            } else if(mandateItem()){
+                setMessage("Item should not be empty.");
+                return false;
+            } else if(mandateStartBarcode()){
+                setMessage("StartBarcode should be 9 characters.");
+                return false;
+            } else {
+                return false;
             }
-            if(mandateItem()){
-                this.message += "Item should not be empty.\n";
-            }
-            if(mandateStartBarcode()){
-                this.message +=  "StartBarcode should be 9 characters.";
-            }
-            return false;
         }
     }
 
@@ -187,7 +184,7 @@ public class BarcodeRegisterBean extends Bean{
                 showDialog(MessageDialog.SAVE.getMessageHeader(), MessageDialog.SAVE.getMessage());
                 init();
             } else {
-                showDialog(MessageDialog.WARNING.getMessageHeader(), message);
+                showDialog(MessageDialog.WARNING.getMessageHeader(), getMessage());
             }
         } catch (Exception e) {
             log.error("{}",e);
@@ -203,7 +200,7 @@ public class BarcodeRegisterBean extends Bean{
                 showDialog(MessageDialog.EDIT.getMessageHeader(), MessageDialog.EDIT.getMessage());
                 init();
             } else {
-                showDialog(MessageDialog.WARNING.getMessageHeader(), message);
+                showDialog(MessageDialog.WARNING.getMessageHeader(), getMessage());
             }
         } catch (Exception e) {
             log.error("{}",e);
@@ -211,17 +208,6 @@ public class BarcodeRegisterBean extends Bean{
         }
 
     }
-
-//    private void showDialogError(String message){
-//        showDialog(MessageDialog.ERROR.getMessageHeader(), message);
-//        init();
-//    }
-//
-//    private void showDialog(String messageHeader, String message){
-//        this.messageHeader = messageHeader;
-//        this.message = message;
-//        FacesUtil.showDialog(DIALOG_NAME);
-//    }
 
     public void onPrint(){
         barcodeRegisterService.onPrintBarcode(barcodeRegisterModel.getId());

@@ -14,7 +14,7 @@
         </div>
         <div id="header_userinfo" style="text-align: right">
             <div id="header_user">
-                Login as : <h:outputText value="#{loginBean.userDetail.firstName}"/>  <h:outputText value="#{loginBean.userDetail.lastName}"/>
+                Login as : <h:outputText value="#{loginBean.userDetail.fullName}"/>
                 <h:form>
                     <p:commandButton id="saveBtn"
                                      action="#{loginBean.logout}"

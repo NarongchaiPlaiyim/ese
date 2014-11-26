@@ -48,9 +48,11 @@ public class LoginBean extends Bean{
         if(!Utils.isZero(userName.length()) && !Utils.isZero(password.length())) {
             if(loginService.isUserExist(getUserName(), getPassword())){
                 StaffModel staffModel = loginService.getStaffModel();
-                userDetail = new UserDetail(userName,password, staffModel.getRole());
-                userDetail.setFirstName("Narongchai");
-                userDetail.setLastName("Plaiyim");
+                userDetail = new UserDetail(userName,
+                                            password,
+                                            staffModel.getRole(),
+                                            "",
+                                            "");
                 HttpServletRequest httpServletRequest = FacesUtil.getRequest();
                 HttpServletResponse httpServletResponse = FacesUtil.getResponse();
                 UsernamePasswordAuthenticationToken request = new UsernamePasswordAuthenticationToken(userDetail, this.password);
