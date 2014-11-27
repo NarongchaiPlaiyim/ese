@@ -8,6 +8,7 @@ import com.ese.model.view.BarcodeRegisterView;
 import com.ese.model.view.report.BarcodeRegisterModelReport;
 import com.ese.transform.BarcodeRegisterTransform;
 import com.ese.utils.Utils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +25,8 @@ public class BarcodeRegisterService extends Service{
     @Resource private BarcodeRegisterDAO barcodeRegisterDAO;
     @Resource private BarcodeRegisterTransform barcodeRegisterTransform;
     @Resource private ReportService reportService;
+    @Value("#{config['report.barcode']}")
+    private String pathBarcodeReport;
 
     public List<MSItemModel> findByCondition(final String type, final String text){
         log.debug("-- findByCondition({}, {})", type, text);
@@ -100,7 +103,7 @@ public class BarcodeRegisterService extends Service{
         log.debug("reportViews {}", reports.size());
         HashMap map = new HashMap<String, Object>();
         try {
-            reportService.exportPDF("D:/parttime/ESE's source/ese/web/site/report/BarcodeRegisterReport.jrxml", map, printBarcodeName, reports);
+            reportService.exportPDF(pathBarcodeReport, map, printBarcodeName, reports);
         } catch (Exception e) {
             log.debug("Exception Report : ", e);
         }

@@ -17,8 +17,7 @@ import java.util.List;
 @Component
 @Transactional
 public class LocationService extends Service{
-    @Resource
-    LocationDAO locationDAO;
+    @Resource private LocationDAO locationDAO;
 
     @Resource private LocationTransform locationTransform;
     @Resource private WarehouseDAO warehouseDAO;
@@ -33,17 +32,11 @@ public class LocationService extends Service{
         }
     }
 
-    public List<LocationView> getLocationAll(){
+    public List<MSLocationModel> getLocationAll(){
         log.debug("getLocationAll()");
-        List<LocationView> locationViewList = null;
+        List<MSLocationModel> msLocationModels = locationDAO.getLocationOrderByUpdateDate();
 
-        List<MSLocationModel> models = locationDAO.getLocationOrderByUpdateDate();
-
-        if (Utils.isSafetyList(models)){
-            locationViewList = locationTransform.transformToViewList(models);
-        }
-
-        return locationViewList;
+        return msLocationModels;
     }
 
     public List<MSWarehouseModel> getWarehouseAll(){
@@ -56,5 +49,41 @@ public class LocationService extends Service{
         }
 
         return msWarehouseModels;
+    }
+
+    public LocationView clickToView(MSLocationModel msLocationModel){
+        LocationView locationView = new LocationView();
+
+        if (!Utils.isNull(msLocationModel)){
+            locationView = locationTransform.transformToView(msLocationModel);
+        }
+
+        return locationView;
+    }
+
+    public void onSaveOrUpdateLocationToDB(LocationView locationView){
+        log.debug("onSaveToNew().");
+
+        if (!Utils.isNull(locationView)){
+            MSLocationModel model = null;
+            try {
+                if (Utils.isZero(locationView.getId())){
+                    locationDAO.persist(locationTransform.transformToModel(locationView));
+                } else if (!Utils.isZero(locationView.getId())){
+                    locationDAO.update(locationTransform.transformToModel(locationView));
+                }
+            } catch (Exception e) {
+                log.debug("Exception persist : ", e);
+            }
+        }
+    }
+
+    public void delete(MSLocationModel model){
+        log.debug("-- delete(id : {})", model.getId());
+        try {
+            locationDAO.deleteByUpdate(model);
+        } catch (Exception e) {
+            log.error("{}",e);
+        }
     }
 }

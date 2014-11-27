@@ -1,16 +1,21 @@
 package com.ese.transform;
 
+import com.ese.model.dao.WarehouseDAO;
 import com.ese.model.db.MSLocationModel;
 import com.ese.model.db.MSWarehouseModel;
 import com.ese.model.view.LocationView;
 import com.ese.utils.Utils;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Component
 public class LocationTransform extends Transform {
+
+    @Resource private WarehouseDAO warehouseDAO;
 
     public List<LocationView> transformToViewList(List<MSLocationModel> locationModels){
         log.debug("transformToViewList() {}", locationModels.size());
@@ -87,5 +92,48 @@ public class LocationTransform extends Transform {
         }
 
         return locationView;
+    }
+
+    public MSLocationModel transformToModel(LocationView locationView){
+        MSLocationModel msLocationModel = new MSLocationModel();
+        MSWarehouseModel warehouseModel = null;
+
+        msLocationModel.setId(locationView.getId());
+        msLocationModel.setLocationBarcode(locationView.getLocationBarcode());
+        msLocationModel.setLocationName(locationView.getLocationName());
+
+        try {
+            warehouseModel = warehouseDAO.findByID(locationView.getWarehouseModel().getId());
+            log.debug("warehouseModel : {}", warehouseModel);
+        } catch (Exception e) {
+            log.debug("Exception find warehouse error : ", e);
+        }
+
+        msLocationModel.setMsWarehouseModel(warehouseModel);
+        msLocationModel.setCapacity(locationView.getCapacity());
+        msLocationModel.setRemark(locationView.getRemark());
+        msLocationModel.setQty(locationView.getQty());
+        msLocationModel.setReservedQty(locationView.getReservedQty());
+        msLocationModel.setIsMix(locationView.getIsMix());
+
+        if (Utils.isZero(locationView.getId())){
+            msLocationModel.setCreateBy(1111);
+            msLocationModel.setCreateDate(Utils.currentDate());
+            msLocationModel.setUpdateBy(1111);
+            msLocationModel.setUpdateDate(Utils.currentDate());
+            msLocationModel.setIsValid(1);
+            msLocationModel.setVersion(1);
+            msLocationModel.setStatus(1);
+        } else {
+            msLocationModel.setCreateBy(locationView.getCreateBy());
+            msLocationModel.setCreateDate(locationView.getCreateDate());
+            msLocationModel.setUpdateBy(1111);
+            msLocationModel.setUpdateDate(Utils.currentDate());
+            msLocationModel.setIsValid(locationView.getIsvalid());
+            msLocationModel.setVersion(locationView.getVersion());
+            msLocationModel.setStatus(locationView.getStatus());
+        }
+
+        return msLocationModel;
     }
 }

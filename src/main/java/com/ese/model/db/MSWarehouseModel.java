@@ -18,7 +18,7 @@ import java.util.Date;
 public class MSWarehouseModel extends AbstractModel{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     @Column(name = "warehouse_code")
     private String warehouseCode;

@@ -8,9 +8,9 @@ import com.ese.model.dao.PalletDAO;
 import com.ese.model.view.LocationItemView;
 import com.ese.model.view.PalletManagementView;
 import com.ese.model.view.report.PalletManagemengModelReport;
-import com.ese.model.view.report.PalletManagementViewReport;
 import com.ese.transform.PalletManagementTransform;
 import com.ese.utils.Utils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +28,8 @@ public class PalletService extends Service{
     @Resource private LocationDAO locationDAO;
     @Resource private PalletManagementTransform palletManagementTransform;
     @Resource private ReportService reportService;
+    @Value("#{config['report.printtag']}")
+    private String pathPrintTagReport;
 
     public void test(){
         int i = 58;
@@ -88,7 +90,7 @@ public class PalletService extends Service{
         log.debug("reportViews {}", reportViews.size());
         HashMap map = new HashMap<String, Object>();
         try {
-            reportService.exportPDF("D:/parttime/ESE's source/ese/web/site/report/PalletManagement.jrxml", map, printTagReportname, reportViews);
+            reportService.exportPDF(pathPrintTagReport, map, printTagReportname, reportViews);
         } catch (Exception e) {
             log.debug("Exception Report : ", e);
         }

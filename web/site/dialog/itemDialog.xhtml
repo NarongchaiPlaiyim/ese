@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <h:outputStylesheet name="css/style.css" />
+    </h:head>
+    <p:panel id="locationPanel" styleClass="panel-dialog">
+       <h:form id="itemForm">
+           <table border="0">
+               <tr>
+                   <td>
+                       <table border="0">
+                           <tr>
+                               <td style="width: 70px">
+                                   <h:outputText value="Item Name :"/>
+                               </td>
+                               <td style="width: 100px">
+                                   <p:inputText/>
+                               </td>
+                           </tr>
+                           <tr>
+                               <td>
+                                   <h:outputText value="Item Code :"/>
+                               </td>
+                               <td>
+                                   <p:inputText/>
+                               </td>
+                           </tr>
+                           <tr>
+                               <td>
+                                   <h:outputText value="Description :"/>
+                               </td>
+                               <td>
+                                   <p:inputText/>
+                               </td>
+                           </tr>
+                       </table>
+                   </td>
+                   <td>
+                       <p:commandButton value="Search" style="width: 80px; height: 80px"/>
+                   </td>
+                   <td style="width: 100px"/>
+                   <td>
+                       <table border="0">
+                           <tr>
+                               <td>
+                                   <h:outputLabel value="Wherehouse Code :"/>
+                               </td>
+                               <td>
+                                   <p:inputText disabled="true" value="#{setup.locationView.warehouseModel.warehouseCode}"/>
+                               </td>
+                           </tr>
+                           <tr>
+                               <td>
+                                   <h:outputLabel value="Wherehouse Name :"/>
+                               </td>
+                               <td>
+                                   <p:inputText disabled="true" value="#{setup.locationView.warehouseModel.warehouseName}"/>
+                               </td>
+                           </tr>
+                           <tr>
+                               <td>
+                                   <h:outputLabel value="Location Code :"/>
+                               </td>
+                               <td>
+                                   <p:inputText disabled="true" value="#{setup.locationView.locationBarcode}"/>
+                               </td>
+                           </tr>
+                           <tr>
+                               <td>
+                                   <h:outputLabel value="Location Name :"/>
+                               </td>
+                               <td>
+                                   <p:inputText disabled="true" value="#{setup.locationView.locationName}"/>
+                               </td>
+                           </tr>
+                           <tr>
+                               <td class="right" colspan="2">
+                                   <p:commandButton value="Remove"/>
+                               </td>
+                           </tr>
+                       </table>
+                   </td>
+               </tr>
+               <tr>
+                   <td colspan="2">
+                       <p:dataTable id="searchTable" rowKey="rowIndex">
+                           <p:column selectionMode="multiple" style="height: 60px">
+                           </p:column>
+                           <p:column headerText="Item Name">
+                               <p:outputLabel value="aaaaa"/>
+                           </p:column>
+                           <p:column headerText="Item Code">
+                               <p:outputLabel value="bbbbb"/>
+                           </p:column>
+                           <p:column headerText="Descritions">
+                               <p:outputLabel value="cccc"/>
+                           </p:column>
+                       </p:dataTable>
+                   </td>
+                   <td>
+                       <p:commandButton value="Add to Location"/>
+                   </td>
+                   <td colspan="2">
+                       <p:dataTable id="locationTable" rowKey="rowIndex">
+                           <p:column selectionMode="multiple" style="height: 60px">
+                           </p:column>
+                           <p:column headerText="Item Name">
+                               <p:outputLabel value="aaaaa"/>
+                           </p:column>
+                           <p:column headerText="Item Code">
+                               <p:outputLabel value="bbbbb"/>
+                           </p:column>
+                           <p:column headerText="Descritions">
+                               <p:outputLabel value="cccc"/>
+                           </p:column>
+                       </p:dataTable>
+                   </td>
+               </tr>
+           </table>
+       </h:form>
+    </p:panel>
+</f:view>
+</html>

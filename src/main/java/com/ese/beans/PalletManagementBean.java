@@ -64,7 +64,7 @@ public class PalletManagementBean extends Bean implements Serializable {
         workingAreaModel = new MSWorkingAreaModel();
         msLocationModel = new MSLocationModel();
 
-        warehouseModelList = warehouseService.getWarehouseList();
+        warehouseModelList = warehouseService.getAll();
         workingAreaModelList = workingAreaService.getWorkingAreaList();
         msLocationModelList = locationService.getLocationList();
         statusOnShow = 0;

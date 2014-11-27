@@ -27,7 +27,8 @@
                                          selectionMode="single" rowIndexVar="rowIndex"
                                          selection="#{palletManagement.locationItemViews}"
                                          style="width: 100%; max-width: 100%; min-width: 100%">
-                                <p:ajax event="rowSelect" update=":findlocationForm:searchLocationTable, :findlocationForm:btnFindLocation" listener="#{palletManagement.onClickLocationTB}"/>
+                                <p:ajax event="rowSelect" update=":findlocationForm:searchLocationTable,
+                                :findlocationForm:btnFindLocation" listener="#{palletManagement.onClickLocationTB}"/>
                                 <!--<p:column headerText="Select" selectionMode="multiple" style="height: 60px">-->
                                 <!--</p:column>-->
                                 <p:column headerText="No" style="width: 20px" styleClass="center">

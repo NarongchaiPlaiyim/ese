@@ -63,4 +63,6 @@ public class MSLocationItemsDAO extends GenericDAO<MSLocationItemsModel, Integer
 
         return locationItemViewList;
     }
+
+
 }

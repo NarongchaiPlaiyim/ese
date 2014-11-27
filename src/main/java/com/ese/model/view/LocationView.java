@@ -29,6 +29,11 @@ public class LocationView {
     private int reservedQty;
     private int isMix;
 
+    public LocationView() {
+        warehouseModel = new MSWarehouseModel();
+        warehouseModel.setWarehouseCode("- Please Select -");
+    }
+
     public void setMix(int mix) {
         isMix = mix;
     }

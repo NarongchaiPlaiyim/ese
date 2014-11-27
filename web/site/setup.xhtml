@@ -23,7 +23,7 @@
                         <label class="subject">SetUp</label>
                         <h:form style="width: 100%;border-spacing: 0;">
                               <p:tabView>
-                                  <p:tab title="warehouse and Location">
+                                  <p:tab id="warehouseTab" title="warehouse and Location">
                                       <table border="0" style="width: 100%">
                                           <tr>
                                               <td>
@@ -34,12 +34,17 @@
                                                           </td>
                                                           <td>
                                                               <p:commandButton value="#{setup.nameBtn}" styleClass="medium" style="width: 80px"
-                                                                               update="@form"
-                                                                               disabled="#{setup.flagBtnNewWarehouse}"/>
+                                                                               disabled="#{setup.flagBtnNewWarehouse}"
+                                                                               update=":setupForm"
+                                                                               process="@form"
+                                                                               action="#{setup.btnWarehouseAndLocation('NewOrCancel')}"/>
                                                           </td>
                                                           <td>
                                                               <p:commandButton value="Save" styleClass="medium" style="width: 80px"
-                                                                               update="@form"/>
+                                                                               action="#{setup.btnWarehouseAndLocation('SaveOrUpdate')}"
+                                                                               process="@form"
+                                                                               update=":setupForm, :msgBoxSystemMessagePanel"
+                                                                               binding="#{addWarehouseAndLocation}"/>
                                                           </td>
                                                       </tr>
                                                   </table>
@@ -58,18 +63,24 @@
                                                               <h:outputText value="Warehouse*"/>
                                                           </td>
                                                           <td >
-                                                              <p:selectOneMenu id="warehouseMenu" value="#{setup.msWarehouseModel.id}" style="min-width: 200px; width: 200px; max-width: 200px;">
-                                                                  <f:selectItem itemLabel="#{setup.locationView.warehouseModel.warehouseCode}" itemValue="#{setup.locationView.warehouseModel.id}"/>
+                                                              <p:selectOneMenu id="warehouseMenu" value="#{setup.locationView.warehouseModel.id}"
+                                                                               style="min-width: 200px; width: 200px; max-width: 200px;"
+                                                                               required="#{not empty param[addWarehouseAndLocation.clientId]}">
+                                                                  <f:selectItem itemLabel="#{setup.locationView.warehouseModel.warehouseCode}"
+                                                                                itemValue=""/>
                                                                   <f:selectItems value="#{setup.msWarehouseModelList}"
                                                                                  var="warehouseItem"
                                                                                  itemLabel="#{warehouseItem.warehouseCode}"
                                                                                  itemValue="#{warehouseItem.id}"/>
+                                                                  <p:ajax event="change" process="@form" update=":setupForm"/>
                                                               </p:selectOneMenu>
                                                           </td>
                                                           <td >
                                                               <p:commandButton value="New/Edit"
                                                                                styleClass="medium"
                                                                                disabled="#{setup.flagBtnAddEdit}"
+                                                                               action="#{setup.warehouseDlg('ADD')}"
+                                                                               update=":warehouseDialogForm"
                                                                                oncomplete="PF('warehouseDlg').show()"/>
                                                           </td>
                                                           <td colspan="3">
@@ -92,7 +103,8 @@
                                                           </td>
                                                           <td colspan="2">
                                                               <p:inputText style="min-width: 200px; width: 200px; max-width: 200px;"
-                                                                           value="#{setup.locationView.locationBarcode}"/>
+                                                                           value="#{setup.locationView.locationBarcode}"
+                                                                           required="#{not empty param[addWarehouseAndLocation.clientId]}"/>
                                                           </td>
                                                           <td >
                                                               <h:outputText value="Remark"/>
@@ -110,7 +122,8 @@
                                                           <td colspan="5">
                                                               <p:inputText id = "locationName"
                                                                            style="min-width: 200px; width: 200px; max-width: 200px;"
-                                                                           value="#{setup.locationView.locationName}"/>
+                                                                           value="#{setup.locationView.locationName}"
+                                                                           required="#{not empty param[addWarehouseAndLocation.clientId]}"/>
                                                           </td>
                                                       </tr>
 
@@ -120,30 +133,34 @@
                                                           </td>
                                                           <td >
                                                               <p:spinner style="min-width: 200px; width: 200px; max-width: 200px;"
-                                                                         value="#{setup.locationView.capacity}"/>
+                                                                         onkeydown="return onKeyDownMoney(event);"
+                                                                         onkeypress="return onKeyPressMoney(event)"
+                                                                         value="#{setup.locationView.capacity}">
+                                                                  <p:ajax event="blur" update=":setupForm"/>
+                                                                  <f:convertNumber pattern="##0"/>
+                                                              </p:spinner>
                                                           </td>
                                                           <td class="center">
                                                               <p:commandButton value="Show/Add Item"
                                                                                disabled="#{setup.flagBtnAddShowItem}"
-                                                                               styleClass="medium">
-                                                                  <p:resetInput target=":warehouseDialogForm"/>
+                                                                               styleClass="medium"
+                                                                               update=":itemForm"
+                                                                               oncomplete="PF('itemDlg').show()">
                                                                </p:commandButton>
                                                           </td>
                                                       </tr>
                                                       <tr>
                                                           <td class="right" colspan="6">
-                                                              <p:commandButton id="btnDeleteTab" value="Delete"
-                                                                               styleClass="medium" style="width: 80px"
+                                                              <p:commandButton value="delete"
+                                                                               id="btnDelete"
                                                                                disabled="#{setup.flagBtnDelete}"
+                                                                               styleClass="medium" style="width: 80px"
+                                                                               icon="ui-icon-trash"
                                                                                onstart="PF('bui').show()"
-                                                                               action="#{index.onSubmit()}"
+                                                                               action="#{setup.btnWarehouseAndLocation('Delect')}"
                                                                                oncomplete="PF('bui').hide()"
-                                                                      />
+                                                                               update=":setupForm, :msgBoxSystemMessagePanel"/>
                                                           </td>
-
-                                                          <!--<p:commandButton id="pnlBtn" value="Block Panel" type="button" onclick="PF('bui').show()"/>-->
-                                                          <!--<p:commandButton id="pnlBtn2" value="Unblock Panel" type="button" onclick="PF('bui').hide()"/>-->
-
                                                       </tr>
                                                   </table>
                                               </td>
@@ -154,32 +171,32 @@
                                                                rowIndexVar="rowIndex"
                                                                var="location"
                                                                rowKey="#{location.id}"
-                                                               value="#{setup.locationViewList}"
+                                                               value="#{setup.msLocationModelList}"
                                                                rows="10"
                                                                paginator="true"
                                                                selectionMode="single"
-                                                               selection="#{setup.locationView}"
+                                                               selection="#{setup.msLocationModel}"
                                                                styleClass="full_table">
                                                       <!--rowsPerPageTemplate="10,20,40,60"-->
                                                       <p:ajax event="rowSelect"
-                                                              listener="#{setup.onClickToLocationTB()}"
+                                                              listener="#{setup.btnWarehouseAndLocation('ClickOnTable')}"
                                                               update=":setupForm"/>
-                                                      <p:column headerText="No" style="width: 20px">
+                                                      <p:column headerText="No" style="width: 20px" styleClass="center">
                                                           <h:outputLabel value="#{rowIndex+1}"/>
                                                       </p:column>
-                                                      <p:column headerText="Warehouse" style="width: 200px">
-                                                          <h:outputLabel value="#{location.warehouseModel.warehouseCode}"/>
+                                                      <p:column headerText="Warehouse" style="width: 200px" styleClass="center">
+                                                          <h:outputLabel value="#{location.msWarehouseModel.warehouseCode}"/>
                                                       </p:column>
-                                                      <p:column headerText="Location Code" style="width: 200px">
+                                                      <p:column headerText="Location Code" style="width: 200px" styleClass="center">
                                                           <h:outputLabel value="#{location.locationBarcode}"/>
                                                       </p:column>
-                                                      <p:column headerText="Location Name" style="width: 200px">
+                                                      <p:column headerText="Location Name" style="width: 200px" styleClass="center">
                                                           <h:outputLabel value="#{location.locationName}"/>
                                                       </p:column>
-                                                      <p:column headerText="Capacities (Pallet)" style="width: 200px">
+                                                      <p:column headerText="Capacities (Pallet)" style="width: 200px" styleClass="center">
                                                           <h:outputLabel value="#{location.capacity}"/>
                                                       </p:column>
-                                                      <p:column headerText="Remark">
+                                                      <p:column headerText="Remark" styleClass="center">
                                                           <h:outputLabel value="#{location.remark}"/>
                                                       </p:column>
                                                   </p:dataTable>
@@ -267,25 +284,25 @@
                                                       </tr>
                                                       <tr>
                                                           <td colspan="6">
-                                                              <!--<p:dataTable id="warehouseTable"-->
-                                                                           <!--var="view"-->
-                                                                           <!--rowKey="#{view}"-->
-                                                                           <!--value="#{setup.warehouseAndLocationViewList}"-->
-                                                                           <!--paginator="false"-->
-                                                                           <!--rowIndexVar="rowIndex">-->
-                                                                  <!--<p:column headerText="No" style="width: 20px">-->
-                                                                      <!--<h:outputLabel value="#{rowIndex+1}"/>-->
-                                                                  <!--</p:column>-->
-                                                                  <!--<p:column headerText="Type" style="width: 200px">-->
-                                                                      <!--<h:outputLabel value="aaaaa"/>-->
-                                                                  <!--</p:column>-->
-                                                                  <!--<p:column headerText="Code" style="width: 200px">-->
-                                                                      <!--<h:outputLabel value="bbbbb"/>-->
-                                                                  <!--</p:column>-->
-                                                                  <!--<p:column headerText="Note">-->
-                                                                      <!--<h:outputLabel value="cccc"/>-->
-                                                                  <!--</p:column>-->
-                                                              <!--</p:dataTable>-->
+                                                              <p:dataTable id="warehouseTable"
+                                                                           var="view"
+                                                                           rowKey="#{view}"
+                                                                           value="#{setup.warehouseAndLocationViewList}"
+                                                                           paginator="false"
+                                                                           rowIndexVar="rowIndex">
+                                                                  <p:column headerText="No" style="width: 20px">
+                                                                      <h:outputLabel value="#{rowIndex+1}"/>
+                                                                  </p:column>
+                                                                  <p:column headerText="Type" style="width: 200px">
+                                                                      <h:outputLabel value="aaaaa"/>
+                                                                  </p:column>
+                                                                  <p:column headerText="Code" style="width: 200px">
+                                                                      <h:outputLabel value="bbbbb"/>
+                                                                  </p:column>
+                                                                  <p:column headerText="Note">
+                                                                      <h:outputLabel value="cccc"/>
+                                                                  </p:column>
+                                                              </p:dataTable>
                                                           </td>
                                                       </tr>
                                                   </table>
@@ -322,9 +339,29 @@
 
         <p:dialog id="warehouseDialog" widgetVar="warehouseDlg" header="Add/Edit warehouse"
                   onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
-                  modal="true" width="700" height="400">
+                  modal="true" width="650" height="400">
             <ui:include src="../site/dialog/warehouseDialog.xhtml"/>
         </p:dialog>
+        <p:dialog id="itemDialog" widgetVar="itemDlg" header="Add Item to Location"
+                  onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
+                  modal="true" width="900" height="400">
+            <ui:include src="../site/dialog/itemDialog.xhtml"/>
+        </p:dialog>
+        <p:panel id="msgBoxSystemMessagePanel" styleClass="panel">
+            <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="350px" closable="false"
+                             header="#{setup.messageHeader}" message="#{setup.message}" >
+                <table border="0" style="width: 100%">
+                    <tr>
+                        <td colspan="100%" class="right">
+                            <p:commandButton value="OK"
+                                             process="@this"
+                                             update="setupForm"
+                                             oncomplete="PF('msgBoxSystemMessageDlg').hide()"/>
+                        </td>
+                    </tr>
+                </table>
+            </p:confirmDialog>
+        </p:panel>
     </h:body>
 </f:view>
 </html>

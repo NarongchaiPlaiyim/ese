@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class MSLocationModel extends AbstractModel{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     @Column(name = "location_barcode")
     private String locationBarcode;
