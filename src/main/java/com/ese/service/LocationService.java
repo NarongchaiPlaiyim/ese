@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -23,13 +24,14 @@ public class LocationService extends Service{
     @Resource private WarehouseDAO warehouseDAO;
 
     public List<MSLocationModel> getLocationList(){
-        log.debug("getLocationList(). ");
+        log.debug("getLocationList()");
+        List<MSLocationModel> msLocationModelList = Utils.getEmptyList();
         try{
-            return  locationDAO.findAll();
+            msLocationModelList = locationDAO.findAll();
         } catch (Exception e){
-            log.debug("Exception {}",e);
-            return new ArrayList<MSLocationModel>();
+            log.debug("Exception getLocationList.", e);
         }
+        return msLocationModelList;
     }
 
     public List<MSLocationModel> getLocationAll(){
@@ -41,7 +43,7 @@ public class LocationService extends Service{
 
     public List<MSWarehouseModel> getWarehouseAll(){
         log.debug("getWarehouseAll().");
-        List<MSWarehouseModel> msWarehouseModels = null;
+        List<MSWarehouseModel> msWarehouseModels = Utils.getEmptyList();
         try{
             msWarehouseModels = warehouseDAO.findAll();
         } catch (Exception e){

@@ -16,12 +16,17 @@ public class UserDetail implements Serializable {
     private String firstName;
     private String lastName;
     private boolean isRequestFlag;
+    private String fullName;
 
-    public UserDetail(String userName, String password, String role) {
+    public UserDetail(String userName, String password, String role, String firstName, String lastName) {
         this.userName = userName;
         this.password = password;
         this.role = role;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.fullName = firstName+" "+lastName;
     }
+
 
     @Override
     public String toString() {

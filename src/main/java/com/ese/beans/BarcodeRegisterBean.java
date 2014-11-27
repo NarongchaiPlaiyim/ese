@@ -5,6 +5,7 @@ package com.ese.beans;
 import com.ese.model.db.BarcodeRegisterModel;
 import com.ese.model.db.MSItemModel;
 import com.ese.model.view.BarcodeRegisterView;
+import com.ese.security.UserDetail;
 import com.ese.service.BarcodeRegisterService;
 import com.ese.utils.FacesUtil;
 import com.ese.utils.MessageDialog;
@@ -17,6 +18,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -27,9 +29,6 @@ import java.util.List;
 @ManagedBean(name = "barcodeRegisterBean")
 public class BarcodeRegisterBean extends Bean{
     @ManagedProperty("#{barcodeRegisterService}") private BarcodeRegisterService barcodeRegisterService;
-
-    private final String DIALOG_NAME = "msgBoxSystemMessageDlg";
-
     private BarcodeRegisterView barcodeRegisterView;
     private List<MSItemModel> msItemModelList;
     private List<BarcodeRegisterModel> barcodeRegisterModelList;
@@ -41,8 +40,6 @@ public class BarcodeRegisterBean extends Bean{
     private boolean flagBtnSave;
     private boolean flagBtnPrint;
     private boolean flagBtnEdit;
-    private String messageHeader;
-    private String message;
 
     private boolean flagItem;
     private boolean flagQty;
@@ -50,6 +47,7 @@ public class BarcodeRegisterBean extends Bean{
 
     @PostConstruct
     private void init(){
+        preLoad();
         barcodeRegisterView = new BarcodeRegisterView();
         msItemModelList = Collections.EMPTY_LIST;
         barcodeRegisterModelList = Collections.EMPTY_LIST;
@@ -97,20 +95,15 @@ public class BarcodeRegisterBean extends Bean{
     }
 
     private boolean mandate(){
-        System.out.println("mandate()");
-
         if(!mandateQty() && !mandateItem() && !mandateStartBarcode()){
             return true;
         } else {
-            message = "";
             if(mandateQty()){
-                this.message += "Qtr should be greater than 0.\n";
-            }
-            if(mandateItem()){
-                this.message += "Item should not be empty.\n";
-            }
-            if(mandateStartBarcode()){
-                this.message +=  "StartBarcode should be 9 characters.";
+                setMessage("Qtr should be greater than 0.");
+            } else if(mandateItem()){
+                setMessage("Item should not be empty.");
+            } else if(mandateStartBarcode()){
+                setMessage("StartBarcode should be 9 characters.");
             }
             return false;
         }
@@ -168,7 +161,7 @@ public class BarcodeRegisterBean extends Bean{
         log.debug("-- onDelete()");
         try {
             barcodeRegisterService.delete(barcodeRegisterModel);
-            showDialog(MessageDialog.DELETE.getMessageHeader(), MessageDialog.DELETE.getMessage());
+            showDialogDeleted();
             init();
         } catch (Exception e) {
             log.error("{}",e);
@@ -181,10 +174,10 @@ public class BarcodeRegisterBean extends Bean{
         try {
             if(mandate()){
                 barcodeRegisterService.save(barcodeRegisterView);
-                showDialog(MessageDialog.SAVE.getMessageHeader(), MessageDialog.SAVE.getMessage());
+                showDialogSaved();
                 init();
             } else {
-                showDialog(MessageDialog.WARNING.getMessageHeader(), message);
+                showDialogWarning(getMessage());
             }
         } catch (Exception e) {
             log.error("{}",e);
@@ -197,27 +190,16 @@ public class BarcodeRegisterBean extends Bean{
         try {
             if(mandate()){
                 barcodeRegisterService.edit(barcodeRegisterView);
-                showDialog(MessageDialog.EDIT.getMessageHeader(), MessageDialog.EDIT.getMessage());
+                showDialogEdited();
                 init();
             } else {
-                showDialog(MessageDialog.WARNING.getMessageHeader(), message);
+                showDialogWarning(getMessage());
             }
         } catch (Exception e) {
             log.error("{}",e);
             showDialogError(e.getMessage());
         }
 
-    }
-
-    private void showDialogError(String message){
-        showDialog(MessageDialog.ERROR.getMessageHeader(), message);
-        init();
-    }
-
-    private void showDialog(String messageHeader, String message){
-        this.messageHeader = messageHeader;
-        this.message = message;
-        FacesUtil.showDialog(DIALOG_NAME);
     }
 
     public void onPrint(){

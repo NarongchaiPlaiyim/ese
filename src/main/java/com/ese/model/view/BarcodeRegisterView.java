@@ -40,7 +40,7 @@ public class BarcodeRegisterView extends View{
         documentDate = Utils.currentDate();
         batchNo = Utils.getBatchNo();
         qty = 0;
-        startBarcode =  "000000000";
+        startBarcode =  "";
         finishBarcode = "000000000";
     }
 

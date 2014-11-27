@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public class LocationDAO extends GenericDAO<MSLocationModel, Integer>{
 
-    public List<MSLocationModel> getLocationOrderByUpdateDate(){
+    public List<MSLocationModel> getLocationOrderByUpdateDate() throws Exception{
         log.debug("getLocationOrderByUpdateDate().");
         try{
             Criteria criteria = getCriteria();
@@ -32,5 +32,10 @@ public class LocationDAO extends GenericDAO<MSLocationModel, Integer>{
         model.setIsValid(0); //0 is flag for delete
         model.setUpdateDate(Utils.currentDate());
         update(model);
+        Criteria criteria = getCriteria();
+        criteria.addOrder(Order.desc("updateDate"));
+        List<MSLocationModel> locationModels = Utils.safetyList(criteria.list());
+        log.debug("locationModels Size : {}", locationModels.size());
+        return locationModels;
     }
 }

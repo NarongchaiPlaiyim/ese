@@ -30,13 +30,13 @@ public class MSWarehouseModel extends AbstractModel{
     private String remark;
 
     @Column(name = "isvalid", nullable=false, columnDefinition="int default 0")
-    private Integer isValid;
+    private int isValid;
 
     @Column(name = "status")
     private String status;
 
     @Column(name = "version", columnDefinition="int default 0")
-    private Integer version;
+    private int version;
 
     @Override
     public String toString() {

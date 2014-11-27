@@ -1,12 +1,12 @@
 package com.ese.beans;
 
-import com.ese.model.db.MSLocationModel;
 import com.ese.model.db.MSWarehouseModel;
 import com.ese.model.view.LocationView;
 import com.ese.model.view.SetupView;
 import com.ese.model.view.WarehouseAndLocationView;
 import com.ese.model.view.WarehouseView;
 import com.ese.model.view.dilog.WarehouseDialogView;
+import com.ese.service.LocationService;
 import com.ese.service.SetupService;
 import com.ese.utils.FacesUtil;
 import com.ese.utils.MessageDialog;
@@ -17,8 +17,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -27,6 +25,7 @@ import java.util.List;
 @ManagedBean(name = "setup")
 public class SetupBean extends Bean{
     @ManagedProperty("#{setupService}") private SetupService setupService;
+    @ManagedProperty("#{locationService}") private LocationService locationService;
 
     private final String DIALOG_NAME = "msgBoxSystemMessageDlg";
     private String messageHeader;
@@ -56,6 +55,7 @@ public class SetupBean extends Bean{
 
     @PostConstruct
     private void init(){
+        preLoad();
         setupView = new SetupView();
         warehouseDialogView = new WarehouseDialogView();
         locationView = new LocationView();
@@ -63,19 +63,19 @@ public class SetupBean extends Bean{
         warehouseView = new WarehouseView();
         modeWarehouse = "Mode(New)";
         nameBtn = "Cancel";
-        btnOnload();
+        btnOnLoad();
         onLoadLocationTB();
-        warehouseOnload();
+        warehouseOnLoad();
     }
 
-    private void btnOnload(){
+    private void btnOnLoad(){
         flagBtnNewWarehouse = false;
         flagBtnAddShowItem = true;
         flagBtnAddEdit = false;
         flagBtnDelete = true;
     }
 
-    private void warehouseOnload(){
+    private void warehouseOnLoad(){
         msWarehouseModelList = locationService.getWarehouseAll();
     }
 

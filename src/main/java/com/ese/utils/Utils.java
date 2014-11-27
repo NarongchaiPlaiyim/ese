@@ -10,7 +10,9 @@ public enum Utils {
     ;
     public final static boolean TRUE = true;
 
-
+    public static List getEmptyList(){
+        return Collections.EMPTY_LIST;
+    }
 
     public static boolean isNull(final Object object){
         return object == null;

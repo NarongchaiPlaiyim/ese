@@ -7,64 +7,124 @@
         >
     <h:head>
         <title>Login Page </title>
-        <link rel="stylesheet" href="#{request.contextPath}/resources/css/style.default.css" type="text/style" />
-        <h:outputScript library="js" name="jquery-1.9.1.min.js"/>
-        <h:outputScript library="js" name="jquery-migrate-1.1.1.min.js"/>
-        <h:outputScript library="js" name="jquery-ui-1.9.2.min.js"/>
-        <h:outputScript library="js" name="modernizr.min.js"/>
         <h:outputScript library="js" name="custom.js"/>
-        <h:outputScript library="js" name="bootstrap.min.js"/>
-        <h:outputScript library="js" name="jquery.uniform.min.js"/>
-        <h:outputScript library="js" name="jquery.dataTables.min.js"/>
-        <h:outputScript library="js" name="responsive-tables.js"/>
     </h:head>
-    <h:body styleClass="loginpage">
-        <div class="logo" style="text-align: center">
-            <p:graphicImage library="images" name="/shared/loginlogo.jpg"/>
-        </div>
-        <div class="loginpanel">
-            <div class="loginpanelinner" style="text-align: center" >
-                <div class="logo" style="text-align: center">
-                    <h:form id="frmLogin">
-                        <table >
+    <h:body styleClass="body_login" >
+        <p:panel id="pnl_maincontainer" style="text-align: center;">
+            <h:form id="frmLogin">
+                <div id="main_container_login">
+                    <div id="content_container_login">
+                        <div id="login_box"></div>
+                        <table style="min-width: 700px; max-width: 700px; width: 700px; text-align: center;" border="0" >
                             <tr>
-                                <td style="height:53px;">
+                                <td colspan="100%">
+                                    <h:graphicImage library="images" name="shared/loginlogo.jpg" />
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table style="text-align: center;" >
+                            <tr>
+                                <td>
                                     <div class="inputwrapper">
                                         <p:inputText value="#{loginBean.userName}" placeholder="Enter your username." />
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="background: #0972dd;">
+                                <td>
                                     <div class="inputwrapper">
                                         <p:password value="#{loginBean.password}" placeholder="Enter your password." />
                                     </div>
                                 </td>
                             </tr>
+                            <tr>
+                                <td>
+                                    <div class="inputwrapper">
+                                        <p:commandButton id="test1" value="Login"
+                                                         update=":msgBoxSystemMessagePanel"
+                                                         onstart="PF('bui').show()"
+                                                         action="#{loginBean.login}"
+                                                         oncomplete="PF('bui').hide()"/>
+                                    </div>
+                                </td>
+                            </tr>
                         </table>
-                        <div class="inputwrapper">
-                            <p:commandButton id="test1" value="Login" update="@form"
-                                             onstart="PF('bui').show()"
-                                             action="#{loginBean.login}"
-                                             oncomplete="PF('bui').hide()" />
-                        </div>
+                    </div>
 
-                        <!--<p:commandButton id="test2" value="TEST" update="@form"-->
-                        <!--action="#{loginBean.test()}"/>-->
 
-                    </h:form>
+                <!--<p:commandButton id="test2" value="TEST" update="@form"-->
+                <!--action="#{loginBean.test()}"/>-->
                 </div>
-            </div>
-        </div>
+            </h:form>
+            <p:panel id="msgBoxSystemMessagePanel" >
+                <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="350px" closable="false"
+                                 header="#{loginBean.messageHeader}" message="#{loginBean.message}" >
+                    <table border="0" style="width: 100%">
+                        <tr>
+                            <td colspan="100%" class="right">
+                                <p:commandButton value="OK"
+                                                 process="@this"
+                                                 update=":frmLogin,
+                                         :msgBoxSystemMessagePanel"
+                                                 oncomplete="PF('msgBoxSystemMessageDlg').hide()"/>
+                            </td>
+                        </tr>
+                    </table>
+                </p:confirmDialog>
+            </p:panel>
+        </p:panel>
+
+        <!--<div class="logo" style="text-align: center">-->
+            <!--<p:graphicImage library="images" name="/shared/loginlogo.jpg"/>-->
+        <!--</div>-->
+        <!--<div class="loginpanel">-->
+            <!--<div class="loginpanelinner" style="text-align: center" >-->
+                <!--<div class="logo" style="text-align: center">-->
+                    <!--<h:form id="frmLogin">-->
+                        <!--<table >-->
+                            <!--<tr>-->
+                                <!--<td style="height:53px;">-->
+                                    <!--<div class="inputwrapper">-->
+                                        <!--<p:inputText value="#{loginBean.userName}" placeholder="Enter your username." />-->
+                                    <!--</div>-->
+                                <!--</td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                                <!--<td class="background: #0972dd;">-->
+                                    <!--<div class="inputwrapper">-->
+                                        <!--<p:password value="#{loginBean.password}" placeholder="Enter your password." />-->
+                                    <!--</div>-->
+                                <!--</td>-->
+                            <!--</tr>-->
+                        <!--</table>-->
+                        <!--<div class="inputwrapper">-->
+                            <!--<p:commandButton id="test1" value="Login"-->
+                                             <!--update=":msgBoxSystemMessagePanel"-->
+                                             <!--onstart="PF('bui').show()"-->
+                                             <!--action="#{loginBean.login}"-->
+                                             <!--oncomplete="PF('bui').hide()"-->
+
+                                    <!--/>-->
+                        <!--</div>-->
+
+                        <!--&lt;!&ndash;<p:commandButton id="test2" value="TEST" update="@form"&ndash;&gt;-->
+                        <!--&lt;!&ndash;action="#{loginBean.test()}"/>&ndash;&gt;-->
+
+                    <!--</h:form>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
         <div class="loginfooter">
             <p style="color: white">Powered by Extra Solution Engineering Co.,Ltd.</p>
         </div>
-        <p:blockUI block="frmLogin" widgetVar="bui">
-            <h:panelGrid columns="2">
-                <h:outputText value="Please wait..." />
-                <p:graphicImage value="/resources/images/shared/ajax-loader.gif"/>
-            </h:panelGrid>
-        </p:blockUI>
+
     </h:body>
+    <p:blockUI block="pnl_maincontainer" widgetVar="bui">
+        <h:panelGrid columns="2">
+            <h:outputText value="Please wait..." />
+            <p:graphicImage value="/resources/images/shared/ajax-loader.gif"/>
+        </h:panelGrid>
+    </p:blockUI>
 </f:view>
 </html>

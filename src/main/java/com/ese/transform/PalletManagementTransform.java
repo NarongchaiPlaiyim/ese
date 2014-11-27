@@ -3,7 +3,6 @@ package com.ese.transform;
 import com.ese.model.StatusValue;
 import com.ese.model.db.MSLocationModel;
 import com.ese.model.db.PalletModel;
-//import com.ese.model.view.PalletMeanagementView;
 import com.ese.model.view.PalletManagementView;
 import com.ese.model.view.report.PalletListReport;
 import com.ese.model.view.report.PalletManagemengModelReport;
@@ -127,36 +126,20 @@ public class PalletManagementTransform extends Transform {
         log.debug("tranformStatus().");
         StatusValue statusName = null;
         switch (status){
-            case 0 : statusName = StatusValue.Cancel;break;
-            case 1 : statusName = StatusValue.Create;break;
-            case 2 : statusName = StatusValue.Completed;break;
-            case 3 : statusName = StatusValue.Printed;break;
-            case 4 : statusName = StatusValue.Located;break;
-            case 5 : statusName = StatusValue.reserved;break;
-            case 6 : statusName = StatusValue.Closed;break;
+            case 0 : statusName = StatusValue.CANCEL;break;
+            case 1 : statusName = StatusValue.CREATE;break;
+            case 2 : statusName = StatusValue.COMPLETED;break;
+            case 3 : statusName = StatusValue.PRINTED;break;
+            case 4 : statusName = StatusValue.LOCATED;break;
+            case 5 : statusName = StatusValue.RESERVED;break;
+            case 6 : statusName = StatusValue.CLOSED;break;
         }
         return statusName;
     }
 
     public int transformStatusInt(StatusValue status){
         log.debug("transformStatusInt().");
-        int statusId;
-
-        if (("Cancel").equalsIgnoreCase(status.getName())){
-            return statusId = 0;
-        } else if (("Create").equalsIgnoreCase(status.getName())){
-            return statusId = 1;
-        } else if (("Completed").equalsIgnoreCase(status.getName())){
-            return statusId = 2;
-        } else if (("Printed").equalsIgnoreCase(status.getName())){
-            return statusId = 3;
-        } else if (("Located").equalsIgnoreCase(status.getName())){
-            return statusId = 4;
-        } else if (("reserved").equalsIgnoreCase(status.getName())){
-            return statusId = 5;
-        } else {
-            return statusId = 6;
-        }
+        return status.getId();
     }
 
     public PalletModel transformToMode(PalletManagementView palletManagementView, String redirect){
