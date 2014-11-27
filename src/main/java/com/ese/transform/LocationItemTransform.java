@@ -1,6 +1,8 @@
 package com.ese.transform;
 
+import com.ese.model.db.MSItemModel;
 import com.ese.model.db.MSLocationItemsModel;
+import com.ese.model.db.MSLocationModel;
 import com.ese.model.view.LocationItemView;
 import com.ese.utils.Utils;
 import org.springframework.stereotype.Component;
@@ -42,5 +44,23 @@ public class LocationItemTransform extends Transform{
         }
 
         return null;
+    }
+
+    public MSLocationItemsModel transformToModel(MSItemModel msItemModel, MSLocationModel msLocationModel){
+        log.debug("transformToModel().");
+        MSLocationItemsModel model = new MSLocationItemsModel();
+
+//        model.setId(msLocationItemsModel.getId());
+        model.setMsLocationModel(msLocationModel);
+        model.setMsItemModel(msItemModel);
+
+        model.setCreateBy(1111);
+        model.setCreateDate(Utils.currentDate());
+        model.setUpdateBy(1111);
+        model.setUpdateDate(Utils.currentDate());
+        model.setIsValid(1);
+        model.setVersion(1);
+
+        return model;
     }
 }

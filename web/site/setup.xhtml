@@ -146,6 +146,7 @@
                                                           <td class="center">
                                                               <p:commandButton value="Show/Add Item"
                                                                                disabled="#{setup.flagBtnAddShowItem}"
+                                                                               action="#{setup.actionTolocationDialog('AddItem')}"
                                                                                styleClass="medium"
                                                                                update=":itemForm"
                                                                                oncomplete="PF('itemDlg').show()">
@@ -347,7 +348,7 @@
         </p:dialog>
         <p:dialog id="itemDialog" widgetVar="itemDlg" header="Add Item to Location"
                   onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
-                  modal="true" width="900" height="400">
+                  modal="true" width="900" height="500">
             <ui:include src="../site/dialog/itemDialog.xhtml"/>
         </p:dialog>
         <p:panel id="msgBoxSystemMessagePanel" styleClass="panel">

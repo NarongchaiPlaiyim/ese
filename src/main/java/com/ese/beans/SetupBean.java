@@ -1,5 +1,7 @@
 package com.ese.beans;
 
+import com.ese.model.db.MSItemModel;
+import com.ese.model.db.MSLocationItemsModel;
 import com.ese.model.db.MSLocationModel;
 import com.ese.model.db.MSWarehouseModel;
 import com.ese.model.view.LocationView;
@@ -7,11 +9,10 @@ import com.ese.model.view.SetupView;
 import com.ese.model.view.WarehouseAndLocationView;
 import com.ese.model.view.WarehouseView;
 import com.ese.model.view.dilog.WarehouseDialogView;
-import com.ese.service.LocationService;
-import com.ese.service.SetupService;
-import com.ese.service.WarehouseService;
+import com.ese.service.*;
 import com.ese.utils.FacesUtil;
 import com.ese.utils.MessageDialog;
+import com.ese.utils.Utils;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,6 +20,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -29,6 +31,8 @@ public class SetupBean extends Bean{
     @ManagedProperty("#{setupService}") private SetupService setupService;
     @ManagedProperty("#{locationService}") private LocationService locationService;
     @ManagedProperty("#{warehouseService}") private WarehouseService warehouseService;
+    @ManagedProperty("#{locationItemService}") private LocationItemService locationItemService;
+    @ManagedProperty("#{itemService}") private ItemService itemService;
 
     private final String DIALOG_NAME = "msgBoxSystemMessageDlg";
     private String messageHeader;
@@ -51,6 +55,13 @@ public class SetupBean extends Bean{
     private List<MSLocationModel> msLocationModelList;
     private MSLocationModel msLocationModel;
     private WarehouseView warehouseView;
+    private List<MSLocationItemsModel> msLocationItemsModelList;
+    private MSLocationItemsModel msLocationItemsModel;
+    private String itemSearch;
+    private List<MSItemModel> msItemModelList;
+    private String selectType;
+    private List<MSItemModel> selectItem;
+    private List<MSLocationItemsModel> selectLocationItem;
 
     public SetupBean() {
 
@@ -64,6 +75,7 @@ public class SetupBean extends Bean{
         locationView = new LocationView();
         msWarehouseModel = new MSWarehouseModel();
         warehouseView = new WarehouseView();
+        msLocationItemsModel = new MSLocationItemsModel();
         modeWarehouse = "Mode(New)";
         nameBtn = "Cancel";
         btnOnLoad();
@@ -156,4 +168,63 @@ public class SetupBean extends Bean{
         showDialog(MessageDialog.ERROR.getMessageHeader(), message);
         init();
     }
+
+    public void actionTolocationDialog(String target){
+        log.debug("actionTolocationDialog().");
+
+        if (target.equalsIgnoreCase("AddItem")){
+            log.debug("locationItemDialog(). {}", msLocationModel.getId());
+
+            selectType = "3";
+            itemSearch = "";
+            msItemModelList = new ArrayList<MSItemModel>();
+            msLocationItemsModelList = locationItemService.findLocationItemByLocationId(msLocationModel.getId());
+        } else if (target.equalsIgnoreCase("SearchItem")){
+            log.debug("-- onSubmitSearch() {}, {}", selectType,itemSearch);
+
+            if(!Utils.isZero(itemSearch.length())){
+                msItemModelList = itemService.findByCondition(selectType, itemSearch);
+                log.debug("msItemModelList Size : {}", msItemModelList.size());
+            }
+        } else if (target.equalsIgnoreCase("AddToLocation")){
+            log.debug("addToLocationItem");
+            locationItemService.addToLocationItemModel(selectItem, msLocationModel);
+            showDialog(MessageDialog.SAVE.getMessageHeader(), MessageDialog.SAVE.getMessage());
+            init();
+        } else if (target.equalsIgnoreCase("Remove")){
+            log.debug("remove(). {}", selectLocationItem.size());
+            locationItemService.deleteLocationItemModel(selectLocationItem);
+            actionTolocationDialog("AddItem");
+        }
+    }
+
+//    public void locationItemDialog(){
+//        log.debug("locationItemDialog(). {}", msLocationModel.getId());
+//        selectType = "3";
+//        itemSearch = "";
+//        msItemModelList = new ArrayList<MSItemModel>();
+//        msLocationItemsModelList = locationItemService.findLocationItemByLocationId(msLocationModel.getId());
+//    }
+//
+//    public void onSubmitSearch(){
+//        log.debug("-- onSubmitSearch() {}, {}", selectType,itemSearch);
+//
+//        if(!Utils.isZero(itemSearch.length())){
+//            msItemModelList = itemService.findByCondition(selectType, itemSearch);
+//            log.debug("msItemModelList Size : {}", msItemModelList.size());
+//        }
+//    }
+//
+//    public void addToLocationItem(){
+//        log.debug("addToLocationItem");
+//        locationItemService.addToLocationItemModel(selectItem, msLocationModel);
+//        showDialog(MessageDialog.SAVE.getMessageHeader(), MessageDialog.SAVE.getMessage());
+//        init();
+//    }
+//
+//    public void remove(){
+//        log.debug("remove(). {}", selectLocationItem.size());
+//        locationItemService.deleteLocationItemModel(selectLocationItem);
+//        locationItemDialog();
+//    }
 }

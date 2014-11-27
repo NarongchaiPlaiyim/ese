@@ -64,5 +64,26 @@ public class MSLocationItemsDAO extends GenericDAO<MSLocationItemsModel, Integer
         return locationItemViewList;
     }
 
+    public List<MSLocationItemsModel> findByLocationId(int locationId){
+        log.debug("findByLocationId(). {}", locationId);
+        List<MSLocationItemsModel> msLocationItemsModels = new ArrayList<MSLocationItemsModel>();
+
+        try {
+            Criteria criteria = getCriteria();
+            criteria.add(Restrictions.eq("msLocationModel.id", locationId));
+            criteria.add(Restrictions.eq("isValid", 1));
+            msLocationItemsModels = criteria.list();
+        } catch (Exception e) {
+            log.debug("Exception Error findByLocationIf : ", e);
+        }
+
+        return msLocationItemsModels;
+    }
+
+    public void deleteByUpdate(final MSLocationItemsModel model) throws Exception {
+        model.setIsValid(0); //0 is flag for delete
+        model.setUpdateDate(Utils.currentDate());
+        update(model);
+    }
 
 }

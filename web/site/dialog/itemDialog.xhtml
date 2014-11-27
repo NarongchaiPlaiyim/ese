@@ -15,35 +15,35 @@
                    <td>
                        <table border="0">
                            <tr>
-                               <td style="width: 70px">
-                                   <h:outputText value="Item Name :"/>
-                               </td>
-                               <td style="width: 100px">
-                                   <p:inputText/>
-                               </td>
-                           </tr>
-                           <tr>
-                               <td>
-                                   <h:outputText value="Item Code :"/>
+                               <td style="width: 160px">
+                                   <p:selectOneMenu id="selectType" value="#{setup.selectType}"
+                                           style="min-width: 120px; width: 120px; max-width: 120px; margin-top: 4px">
+                                       <f:selectItem itemLabel="Item Description" itemValue="3"/>
+                                       <f:selectItem itemLabel="Item Name" itemValue="1"/>
+                                       <f:selectItem itemLabel="Item Code" itemValue="2"/>
+                                       <p:ajax event="change" update=":itemForm:selectType"/>
+                                   </p:selectOneMenu>
                                </td>
                                <td>
-                                   <p:inputText/>
-                               </td>
-                           </tr>
-                           <tr>
-                               <td>
-                                   <h:outputText value="Description :"/>
-                               </td>
-                               <td>
-                                   <p:inputText/>
+                                   <p:inputText id="itemSearch" style="min-width: 150px; width: 150px; max-width: 150px; height: 15px"
+                                                value="#{setup.itemSearch}">
+                                       <p:ajax event="blur" update=":itemForm:itemSearch"/>
+                                   </p:inputText>
                                </td>
                            </tr>
                        </table>
                    </td>
-                   <td>
-                       <p:commandButton value="Search" style="width: 80px; height: 80px"/>
+                   <td style="width: 80px">
+                       <p:commandButton value="Search"
+                                        styleClass="medium" style="width: 80px"
+                                        icon="ui-icon-search"
+                                        process="@this"
+                                        onstart="PF('bui').show()"
+                                        action="#{setup.actionTolocationDialog('SearchItem')}"
+                                        update=":itemForm:searchItemTable"
+                                        oncomplete="PF('bui').hide()"/>
                    </td>
-                   <td style="width: 100px"/>
+                   <td style="width: 50px"/>
                    <td>
                        <table border="0">
                            <tr>
@@ -80,7 +80,9 @@
                            </tr>
                            <tr>
                                <td class="right" colspan="2">
-                                   <p:commandButton value="Remove"/>
+                                   <p:commandButton value="Remove"
+                                                    update=":msgBoxSystemMessageDialog, :itemForm"
+                                                    action="#{setup.actionTolocationDialog('Remove')}"/>
                                </td>
                            </tr>
                        </table>
@@ -88,35 +90,49 @@
                </tr>
                <tr>
                    <td colspan="2">
-                       <p:dataTable id="searchTable" rowKey="rowIndex">
-                           <p:column selectionMode="multiple" style="height: 60px">
-                           </p:column>
+                       <p:dataTable id="searchItemTable"
+                                    rowKey="#{item.id}"
+                                    var="item"
+                                    rows="3"
+                                    paginator="true"
+                                    selection="#{setup.selectItem}"
+                                    value="#{setup.msItemModelList}"
+                                    rowKet="#{item.id}">
+                           <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                            <p:column headerText="Item Name">
-                               <p:outputLabel value="aaaaa"/>
+                               <p:outputLabel value="#{item.itemName}"/>
                            </p:column>
                            <p:column headerText="Item Code">
-                               <p:outputLabel value="bbbbb"/>
+                               <p:outputLabel value="#{item.itemId}"/>
                            </p:column>
                            <p:column headerText="Descritions">
-                               <p:outputLabel value="cccc"/>
+                               <p:outputLabel value="#{item.DSGThaiItemDescription}"/>
                            </p:column>
                        </p:dataTable>
                    </td>
                    <td>
-                       <p:commandButton value="Add to Location"/>
+                       <p:commandButton value="Add to Location"
+                                        update=":msgBoxSystemMessageDialog, :itemForm"
+                                        action="#{setup.actionTolocationDialog('AddToLocation')}"
+                                        oncomplete="PF('itemDlg').hide()"/>
                    </td>
                    <td colspan="2">
-                       <p:dataTable id="locationTable" rowKey="rowIndex">
-                           <p:column selectionMode="multiple" style="height: 60px">
-                           </p:column>
+                       <p:dataTable id="locationTable"
+                                    var="locationItem"
+                                    rows="3"
+                                    paginator="true"
+                                    selection="#{setup.selectLocationItem}"
+                                    value="#{setup.msLocationItemsModelList}"
+                                    rowKey="#{locationItem.id}">
+                           <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                            <p:column headerText="Item Name">
-                               <p:outputLabel value="aaaaa"/>
+                               <p:outputLabel value="#{locationItem.msItemModel.itemName}"/>
                            </p:column>
                            <p:column headerText="Item Code">
-                               <p:outputLabel value="bbbbb"/>
+                               <p:outputLabel value="#{locationItem.msItemModel.itemId}"/>
                            </p:column>
                            <p:column headerText="Descritions">
-                               <p:outputLabel value="cccc"/>
+                               <p:outputLabel value="#{locationItem.msItemModel.DSGThaiItemDescription}"/>
                            </p:column>
                        </p:dataTable>
                    </td>
