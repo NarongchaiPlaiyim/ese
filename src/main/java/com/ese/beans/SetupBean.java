@@ -10,8 +10,6 @@ import com.ese.model.view.dilog.WarehouseDialogView;
 import com.ese.service.LocationService;
 import com.ese.service.SetupService;
 import com.ese.service.WarehouseService;
-import com.ese.utils.FacesUtil;
-import com.ese.utils.MessageDialog;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,10 +27,6 @@ public class SetupBean extends Bean{
     @ManagedProperty("#{setupService}") private SetupService setupService;
     @ManagedProperty("#{locationService}") private LocationService locationService;
     @ManagedProperty("#{warehouseService}") private WarehouseService warehouseService;
-
-    private final String DIALOG_NAME = "msgBoxSystemMessageDlg";
-    private String messageHeader;
-    private String message;
 
     private SetupView setupView;
     private WarehouseAndLocationView warehouseAndLocationView;
@@ -91,7 +85,7 @@ public class SetupBean extends Bean{
             log.debug("onSaveOrUpdate() {}", locationView);
             try {
                 locationService.onSaveOrUpdateLocationToDB(locationView);
-                showDialog(MessageDialog.SAVE.getMessageHeader(), MessageDialog.SAVE.getMessage());
+                showDialogSaved();
                 init();
             } catch (Exception e) {
                 log.debug("Exception onSaveLocation : ", e);
@@ -101,7 +95,7 @@ public class SetupBean extends Bean{
             log.debug("-- onDelete()");
             try {
                 locationService.delete(msLocationModel);
-                showDialog(MessageDialog.DELETE.getMessageHeader(), MessageDialog.DELETE.getMessage());
+                showDialogDeleted();
                 init();
             } catch (Exception e) {
                 log.error("{}",e);
@@ -133,27 +127,16 @@ public class SetupBean extends Bean{
         } else if (target.equalsIgnoreCase("Save")){
             log.debug("OnSave Warehouse. {}", warehouseView);
             warehouseService.onSaveOrUpdateWarehouse(warehouseView);
-            showDialog(MessageDialog.SAVE.getMessageHeader(), MessageDialog.SAVE.getMessage());
+            showDialogSaved();
             init();
         } else if (target.equalsIgnoreCase("Delete")){
             log.debug("Delete warehouse.");
             warehouseService.delete(msWarehouseModel);
-            showDialog(MessageDialog.SAVE.getMessageHeader(), MessageDialog.SAVE.getMessage());
+            showDialogDeleted();
             init();
         } else if (target.equalsIgnoreCase("ClickOnTable")){
             log.debug("onclickWarehouseTBDlg(). {}",msWarehouseModel.toString());
             warehouseView = warehouseService.converToView(msWarehouseModel);
         }
-    }
-
-    protected void showDialog(String messageHeader, String message){
-        this.messageHeader = messageHeader;
-        this.message = message;
-        FacesUtil.showDialog(DIALOG_NAME);
-    }
-
-    protected void showDialogError(String message){
-        showDialog(MessageDialog.ERROR.getMessageHeader(), message);
-        init();
     }
 }

@@ -1,26 +1,16 @@
 package com.ese.beans;
 
-
-
 import com.ese.model.db.BarcodeRegisterModel;
 import com.ese.model.db.MSItemModel;
 import com.ese.model.view.BarcodeRegisterView;
-import com.ese.security.UserDetail;
 import com.ese.service.BarcodeRegisterService;
-import com.ese.utils.FacesUtil;
-import com.ese.utils.MessageDialog;
 import com.ese.utils.Utils;
 import lombok.Getter;
 import lombok.Setter;
-import org.primefaces.context.RequestContext;
-
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -49,8 +39,8 @@ public class BarcodeRegisterBean extends Bean{
     private void init(){
         preLoad();
         barcodeRegisterView = new BarcodeRegisterView();
-        msItemModelList = Collections.EMPTY_LIST;
-        barcodeRegisterModelList = Collections.EMPTY_LIST;
+        msItemModelList = Utils.getEmptyList();
+        barcodeRegisterModelList = Utils.getEmptyList();
         initBtn();
         initField();
         onLoadDataTable();
