@@ -19,7 +19,6 @@ import java.util.List;
 @Transactional
 public class LocationService extends Service{
     @Resource private LocationDAO locationDAO;
-
     @Resource private LocationTransform locationTransform;
     @Resource private WarehouseDAO warehouseDAO;
 
@@ -40,7 +39,7 @@ public class LocationService extends Service{
         try {
             msLocationModels = locationDAO.getLocationOrderByUpdateDate();
         } catch (Exception e) {
-            log.debug("Exxception error locationall : ", e);
+            log.debug("Exception error locational : ", e);
         }
 
         return msLocationModels;
