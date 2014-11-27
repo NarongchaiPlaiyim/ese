@@ -13,7 +13,9 @@ import lombok.Setter;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
+import org.springframework.security.web.authentication.session.CompositeSessionAuthenticationStrategy;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -31,6 +33,8 @@ import java.io.Serializable;
 @ManagedBean(name = "loginBean")
 public class LoginBean extends Bean{
     @ManagedProperty("#{loginService}") private LoginService loginService;
+    @ManagedProperty("#{sessionRegistry}") private SessionRegistry sessionRegistry;
+    @ManagedProperty("#{sas}") private CompositeSessionAuthenticationStrategy compositeSessionAuthenticationStrategy;
 
     private String userName = "";
     private String password = "";

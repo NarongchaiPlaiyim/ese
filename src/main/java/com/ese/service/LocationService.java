@@ -12,49 +12,49 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Component
 @Transactional
 public class LocationService extends Service{
-    @Resource
-    LocationDAO locationDAO;
-
+    @Resource private LocationDAO locationDAO;
     @Resource private LocationTransform locationTransform;
     @Resource private WarehouseDAO warehouseDAO;
 
     public List<MSLocationModel> getLocationList(){
-        log.debug("getLocationList(). ");
+        log.debug("getLocationList()");
+        List<MSLocationModel> msLocationModelList = Utils.getEmptyList();
         try{
-            return  locationDAO.findAll();
+            msLocationModelList = locationDAO.findAll();
         } catch (Exception e){
-            log.debug("Exception {}",e);
-            return new ArrayList<MSLocationModel>();
+            log.debug("Exception getLocationList.", e);
         }
+        return msLocationModelList;
     }
 
     public List<LocationView> getLocationAll(){
         log.debug("getLocationAll()");
-        List<LocationView> locationViewList = null;
-
-        List<MSLocationModel> models = locationDAO.getLocationOrderByUpdateDate();
-
-        if (Utils.isSafetyList(models)){
-            locationViewList = locationTransform.transformToViewList(models);
+        List<LocationView> locationViewList = Utils.getEmptyList();
+        try {
+            List<MSLocationModel> models = locationDAO.getLocationOrderByUpdateDate();
+            if (Utils.isSafetyList(models)){
+                locationViewList = locationTransform.transformToViewList(models);
+            }
+        } catch (Exception e) {
+            log.debug("Exception getLocationAll.", e);
         }
-
         return locationViewList;
     }
 
     public List<MSWarehouseModel> getWarehouseAll(){
         log.debug("getWarehouseAll().");
-        List<MSWarehouseModel> msWarehouseModels = null;
+        List<MSWarehouseModel> msWarehouseModels = Utils.getEmptyList();
         try{
             msWarehouseModels = warehouseDAO.findAll();
         } catch (Exception e){
             log.debug("Exception getWarehouse.", e);
         }
-
         return msWarehouseModels;
     }
 }

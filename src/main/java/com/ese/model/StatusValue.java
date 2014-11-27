@@ -5,27 +5,19 @@ import lombok.Setter;
 
 @Getter
 public enum StatusValue {
-    Cancel(0, "Cancel"),
-    Create(1, "Create"),
-    Completed(2, "Completed"),
-    Printed(3, "Printed"),
-    Located(4, "Located"),
-    reserved(5, "reserved"),
-    Closed(6, "Closed");
+    CANCEL(0, "Cancel"),
+    CREATE(1, "Create"),
+    COMPLETED(2, "Completed"),
+    PRINTED(3, "Printed"),
+    LOCATED(4, "Located"),
+    RESERVED(5, "reserved"),
+    CLOSED(6, "Closed");
 
-    int id;
-    String name;
+    private int id;
+    private String name;
 
-    StatusValue(int id, String name) {
+    private StatusValue(int id, String name) {
         this.id = id;
         this.name = name;
-    }
-
-    public int value(){
-        return this.id;
-    }
-
-    public String statusName(){
-        return this.name;
     }
 }

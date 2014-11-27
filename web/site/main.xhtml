@@ -8,8 +8,12 @@
         >
 
     <!-- Start Header Logo -->
-    <ui:include src="include/header.xhtml"/>
+    <!--<ui:include src="include/header.xhtml"/>-->
     <!-- End Header Logo -->
+    <!-- Left menu -->
+    <!--<ui:include src="include/navigation.xhtml"/>-->
+    <!-- Left menu -->
+    <!--<link rel="stylesheet" href="#{request.contextPath}/resources/css/style.default.css" type="text/style" />-->
 
     <h:body>
         <h:form id="test">
@@ -22,6 +26,19 @@
                              process="@form"
                              value="Submit" update=":test" />
         </h:form>
+        <p:dataTable id="barcodeRegisterTable"
+                     rows="10"
+                     paginator="true"
+                     var="string"
+                     value="#{index.stringList}"
+                     rowIndexVar="rowIndex">
+            <p:column headerText="No" style="min-width: 5px; width: 5px; max-width: 5px;">
+                <p:outputLabel value="#{rowIndex+1}" styleClass="center"/>
+            </p:column>
+            <p:column headerText="Item Code" style="min-width: 60px; width: 60px; max-width: 60px;" styleClass="center">
+                <p:outputLabel value="#{string}"/>
+            </p:column>
+        </p:dataTable>
     </h:body>
 
 </f:view>

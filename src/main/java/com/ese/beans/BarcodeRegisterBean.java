@@ -29,9 +29,6 @@ import java.util.List;
 @ManagedBean(name = "barcodeRegisterBean")
 public class BarcodeRegisterBean extends Bean{
     @ManagedProperty("#{barcodeRegisterService}") private BarcodeRegisterService barcodeRegisterService;
-
-    private final String DIALOG_NAME = "msgBoxSystemMessageDlg";
-
     private BarcodeRegisterView barcodeRegisterView;
     private List<MSItemModel> msItemModelList;
     private List<BarcodeRegisterModel> barcodeRegisterModelList;
@@ -103,16 +100,12 @@ public class BarcodeRegisterBean extends Bean{
         } else {
             if(mandateQty()){
                 setMessage("Qtr should be greater than 0.");
-                return false;
             } else if(mandateItem()){
                 setMessage("Item should not be empty.");
-                return false;
             } else if(mandateStartBarcode()){
                 setMessage("StartBarcode should be 9 characters.");
-                return false;
-            } else {
-                return false;
             }
+            return false;
         }
     }
 
@@ -168,7 +161,7 @@ public class BarcodeRegisterBean extends Bean{
         log.debug("-- onDelete()");
         try {
             barcodeRegisterService.delete(barcodeRegisterModel);
-            showDialog(MessageDialog.DELETE.getMessageHeader(), MessageDialog.DELETE.getMessage());
+            showDialogDeleted();
             init();
         } catch (Exception e) {
             log.error("{}",e);
@@ -181,10 +174,10 @@ public class BarcodeRegisterBean extends Bean{
         try {
             if(mandate()){
                 barcodeRegisterService.save(barcodeRegisterView);
-                showDialog(MessageDialog.SAVE.getMessageHeader(), MessageDialog.SAVE.getMessage());
+                showDialogSaved();
                 init();
             } else {
-                showDialog(MessageDialog.WARNING.getMessageHeader(), getMessage());
+                showDialogWarning(getMessage());
             }
         } catch (Exception e) {
             log.error("{}",e);
@@ -197,10 +190,10 @@ public class BarcodeRegisterBean extends Bean{
         try {
             if(mandate()){
                 barcodeRegisterService.edit(barcodeRegisterView);
-                showDialog(MessageDialog.EDIT.getMessageHeader(), MessageDialog.EDIT.getMessage());
+                showDialogEdited();
                 init();
             } else {
-                showDialog(MessageDialog.WARNING.getMessageHeader(), getMessage());
+                showDialogWarning(getMessage());
             }
         } catch (Exception e) {
             log.error("{}",e);
