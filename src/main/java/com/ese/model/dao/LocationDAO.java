@@ -32,10 +32,10 @@ public class LocationDAO extends GenericDAO<MSLocationModel, Integer>{
         model.setIsValid(0); //0 is flag for delete
         model.setUpdateDate(Utils.currentDate());
         update(model);
-        Criteria criteria = getCriteria();
-        criteria.addOrder(Order.desc("updateDate"));
-        List<MSLocationModel> locationModels = Utils.safetyList(criteria.list());
-        log.debug("locationModels Size : {}", locationModels.size());
-        return locationModels;
+//        Criteria criteria = getCriteria();
+//        criteria.addOrder(Order.desc("updateDate"));
+//        List<MSLocationModel> locationModels = Utils.safetyList(criteria.list());
+//        log.debug("locationModels Size : {}", locationModels.size());
+//        return locationModels;
     }
 }

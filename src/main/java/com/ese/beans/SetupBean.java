@@ -1,5 +1,6 @@
 package com.ese.beans;
 
+import com.ese.model.db.MSLocationModel;
 import com.ese.model.db.MSWarehouseModel;
 import com.ese.model.view.LocationView;
 import com.ese.model.view.SetupView;
@@ -8,6 +9,7 @@ import com.ese.model.view.WarehouseView;
 import com.ese.model.view.dilog.WarehouseDialogView;
 import com.ese.service.LocationService;
 import com.ese.service.SetupService;
+import com.ese.service.WarehouseService;
 import com.ese.utils.FacesUtil;
 import com.ese.utils.MessageDialog;
 import lombok.Getter;
@@ -26,6 +28,7 @@ import java.util.List;
 public class SetupBean extends Bean{
     @ManagedProperty("#{setupService}") private SetupService setupService;
     @ManagedProperty("#{locationService}") private LocationService locationService;
+    @ManagedProperty("#{warehouseService}") private WarehouseService warehouseService;
 
     private final String DIALOG_NAME = "msgBoxSystemMessageDlg";
     private String messageHeader;
@@ -107,7 +110,7 @@ public class SetupBean extends Bean{
         } else if (target.equalsIgnoreCase("NewOrCancel")){
             log.debug("NewOrCancel.");
             locationView = new LocationView();
-            btnOnload();
+            btnOnLoad();
         }  else if (target.equalsIgnoreCase("ClickOnTable")){
             log.debug("onClickToLocationTB(), {}", msLocationModel.toString());
             modeWarehouse = "Mode(Edit)";
@@ -143,13 +146,13 @@ public class SetupBean extends Bean{
         }
     }
 
-    private void showDialog(String messageHeader, String message){
+    protected void showDialog(String messageHeader, String message){
         this.messageHeader = messageHeader;
         this.message = message;
         FacesUtil.showDialog(DIALOG_NAME);
     }
 
-    private void showDialogError(String message){
+    protected void showDialogError(String message){
         showDialog(MessageDialog.ERROR.getMessageHeader(), message);
         init();
     }

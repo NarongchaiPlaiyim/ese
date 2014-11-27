@@ -36,7 +36,12 @@ public class LocationService extends Service{
 
     public List<MSLocationModel> getLocationAll(){
         log.debug("getLocationAll()");
-        List<MSLocationModel> msLocationModels = locationDAO.getLocationOrderByUpdateDate();
+        List<MSLocationModel> msLocationModels = null;
+        try {
+            msLocationModels = locationDAO.getLocationOrderByUpdateDate();
+        } catch (Exception e) {
+            log.debug("Exxception error locationall : ", e);
+        }
 
         return msLocationModels;
     }
