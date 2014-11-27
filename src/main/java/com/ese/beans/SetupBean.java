@@ -90,7 +90,7 @@ public class SetupBean extends Bean{
     }
 
     private void warehouseOnLoad(){
-        msWarehouseModelList = locationService.getWarehouseAll();
+        msWarehouseModelList = warehouseService.getWarehouseAll();
     }
 
     private void onLoadLocationTB(){
@@ -138,7 +138,7 @@ public class SetupBean extends Bean{
         if (target.equalsIgnoreCase("ADD")){
             log.debug("Open Warehouse Dialog.");
             warehouseView = new WarehouseView();
-            msWarehouseModelList = warehouseService.getAll();
+            msWarehouseModelList = warehouseService.getWarehouseAll();
         } else if (target.equalsIgnoreCase("New")){
             warehouseView = new WarehouseView();
         } else if (target.equalsIgnoreCase("Save")){

@@ -18,7 +18,7 @@ public class WarehouseService extends Service{
     @Resource private WarehouseDAO warehouseDAO;
     @Resource private WarehouseTransform warehouseTransform;
 
-    public List<MSWarehouseModel> getAll(){
+    public List<MSWarehouseModel> getWarehouseAll(){
         log.debug("getALl().");
         List<MSWarehouseModel> msWarehouseModels = null;
         try {
