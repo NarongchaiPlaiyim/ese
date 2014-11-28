@@ -11,6 +11,7 @@
     <h:head>
         <title>Barcode Register</title>
         <h:outputStylesheet name="css/style.css"/>
+        <!--<h:outputStylesheet name="css/style.green.css"/>-->
         <h:outputStylesheet name="css/menubar.css"/>
         <h:outputScript library="js" name="custom.js" />
     </h:head>
@@ -126,20 +127,19 @@
                                 <td>
                                     <h:outputLabel value="Start Barcode*"/>
                                 </td>
-                                <td > T
-                                    <p:inputText style="min-width: 70px; width: 70px; max-width: 70px;"
-                                                 id="startLabel"
-                                                 styleClass="left"
-                                                 maxlength="9"
+                                <td >
+                                    <p:inputMask id="startLabel"
+                                                 value="#{barcodeRegisterBean.barcodeRegisterView.startBarcode}"
                                                  onkeydown="return onKeyDownNumber(event);"
                                                  onkeypress="return onKeyPressNumber(event);"
-                                                 value="#{barcodeRegisterBean.barcodeRegisterView.startBarcode}">
-
-                                        <p:ajax event="keyup" listener="#{barcodeRegisterBean.calculator()}"
+                                                 mask="T-999-99-9999">
+                                        <p:ajax event="keyup"
+                                                listener="#{barcodeRegisterBean.calculator()}"
                                                 update=":setupForm:labelFinishBarcode" />
-                                        <p:ajax event="blur" listener="#{barcodeRegisterBean.calculator()}"
+                                        <p:ajax event="blur"
+                                                listener="#{barcodeRegisterBean.calculator()}"
                                                 update=":setupForm:labelFinishBarcode" />
-                                    </p:inputText>
+                                    </p:inputMask>
                                 </td>
                             </tr>
 
@@ -159,10 +159,11 @@
                                 <td>
                                     <h:outputLabel value="Finish Barcode*"/>
                                 </td>
-                                <td>  T
-                                    <h:outputLabel style="min-width: 70px; width: 70px; max-width: 70px;"
-                                                   id="labelFinishBarcode"
-                                                 value="#{barcodeRegisterBean.barcodeRegisterView.finishBarcode}"/>
+                                <td>
+                                    <p:inputMask id="labelFinishBarcode"
+                                                 value="#{barcodeRegisterBean.barcodeRegisterView.finishBarcode}"
+                                                 readonly="true"
+                                                 mask="T-999-99-9999"/>
                                 </td>
                             </tr>
                             <tr>

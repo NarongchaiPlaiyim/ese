@@ -44,6 +44,7 @@ public class BarcodeRegisterBean extends Bean{
         initBtn();
         initField();
         onLoadDataTable();
+        onClickButtonNew();
     }
 
     private void initField(){
@@ -76,7 +77,7 @@ public class BarcodeRegisterBean extends Bean{
     public void calculator(){
         log.debug("-- calculator()");
         final int qty = barcodeRegisterView.getQty();
-        final int start = Utils.parseInt(barcodeRegisterView.getStartBarcode(), 0);
+        final int start = Utils.parseInt(replaceFormat(barcodeRegisterView.getStartBarcode()), 0);
         final int finish = (qty + start) - 1;
         final String result = finish > 999999999 ? "999999999" : String.format("%09d", finish);
         barcodeRegisterView.setFinishBarcode(result);
@@ -106,7 +107,9 @@ public class BarcodeRegisterBean extends Bean{
 
     private boolean mandateStartBarcode(){
         final int FIX_LENGTH = 9;
-        flagStartBarcode = barcodeRegisterView.getStartBarcode().length() != FIX_LENGTH ? true : false ;
+        final String stringReplace = replaceFormat(barcodeRegisterView.getStartBarcode());
+        flagStartBarcode = stringReplace.length() != FIX_LENGTH ? true : false ;
+        barcodeRegisterView.setStartBarcode(stringReplace);
         return flagStartBarcode;
     }
 
@@ -194,5 +197,9 @@ public class BarcodeRegisterBean extends Bean{
 
     public void onPrint(){
         barcodeRegisterService.onPrintBarcode(barcodeRegisterModel.getId());
+    }
+
+    private String replaceFormat(String startBarcode){
+        return startBarcode.replace("T", "").replace("-", "").replace("_", "");
     }
 }
