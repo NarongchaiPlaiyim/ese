@@ -229,7 +229,7 @@
                                         :setupForm:btnPrint
                                         "
                                                 listener="#{barcodeRegisterBean.onClickTable()}"/>
-                                        <p:column headerText="No" style="min-width: 5px; width: 5px; max-width: 5px;">
+                                        <p:column headerText="No" style="min-width: 15px; width: 15px; max-width: 15px;">
                                             <p:outputLabel value="#{rowIndex+1}" styleClass="center"/>
                                         </p:column>
                                         <p:column headerText="Item Code" style="min-width: 60px; width: 60px; max-width: 60px;" styleClass="center">
@@ -249,16 +249,16 @@
                                         <p:column headerText="Bacth No" style="min-width: 50px; width: 50px; max-width: 50px;" styleClass="center">
                                             <p:outputLabel value="#{barcodeModel.batchNo}"/>
                                         </p:column>
-                                        <p:column headerText="Qty" style="min-width: 10px; width: 10px; max-width: 10px;" styleClass="center">
+                                        <p:column headerText="Qty" style="min-width: 15px; width: 15px; max-width: 15px;" styleClass="center">
                                             <p:outputLabel value="#{barcodeModel.qty}"/>
                                         </p:column>
                                         <p:column headerText="Start Barcode" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
                                             <p:outputLabel value="#{barcodeModel.startBarcodeText}"/>
                                         </p:column>
                                         <p:column headerText="Finish Barcode" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
-                                            <p:outputLabel value="#{barcodeModel.finishBarcodeText}"/>
+                                            <p:outputLabel value="#{barcodeModel.finishBarcodeText}" />
                                         </p:column>
-                                        <p:column headerText="Remark" style="min-width: 110px; width: 110px; max-width: 110px;" styleClass="center">
+                                        <p:column headerText="Remark" style="min-width: 110px; width: 110px; max-width: 110px;" styleClass="left">
                                             <p:outputLabel value="#{barcodeModel.remark}"/>
                                         </p:column>
                                         <p:column headerText="Status" style="min-width: 30px; width: 30px; max-width: 30px;" styleClass="center">

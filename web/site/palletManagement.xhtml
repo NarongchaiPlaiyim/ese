@@ -19,7 +19,7 @@
                 <h:form id="palletForm">
                     <div class="body_lpane" style="width: 200px">
                         <a class="step_border_select" href="barcodeRegister.xhtml">Barcode Register</a>
-                        <a class="step_border_select" href="palletManagement.xhtml">Pallet Manegement</a>
+                        <a class="step_border_selected" href="palletManagement.xhtml">Pallet Manegement</a>
                         <a class="step_border_select" href="setup.xhtml">Setup</a>
                     </div>
                     <div class="body_rpane" style="width: 80%">
@@ -41,7 +41,11 @@
                                                                  update=":palletForm, :palletForm:palletManagementTable, :msgBoxSystemMessagePanel"
                                                                  disabled="#{palletManagement.isCheckPrintTag()}"
                                                                  oncomplete="PF('msgBoxSystemMessageDlg2').show()"/>
-                                                <p:commandButton id="btnClosePallet" value="Close Pallet" action="#{palletManagement.OnClosePallet}" disabled="#{palletManagement.isCheckClosePallet()}"
+                                                <p:commandButton id="btnClosePallet" value="Close Pallet"
+                                                                 onstart="PF('bui').show()"
+                                                                 action="#{palletManagement.OnClosePallet}"
+                                                                 oncomplete="PF('bui').hide()"
+                                                                 disabled="#{palletManagement.isCheckClosePallet()}"
                                                                  update=":palletForm, :msgBoxSystemMessagePanel, :confirmClosePalletPanel"
                                                                  process="@form"/>
                                             </td>
@@ -182,9 +186,11 @@
                   modal="true" width="600" height="400">
             <ui:include src="../site/dialog/findLocationDialog.xhtml"/>
         </p:dialog>
-        <p:blockUI widgetVar="blockInbox" block=":palletForm">
-            LOADING<br/>
-            <h:graphicImage library="images" name="shared/ajax-loader.gif" />
+        <p:blockUI block="pnl_maincontainer" widgetVar="bui">
+            <h:panelGrid columns="2">
+                <h:outputText value="Please wait..." />
+                <p:graphicImage value="/resources/images/shared/ajax-loader.gif"/>
+            </h:panelGrid>
         </p:blockUI>
 
         <p:panel id="confirmClosePalletPanel" styleClass="panel">
@@ -208,6 +214,7 @@
 
         <p:panel id="msgBoxSystemMessagePanel" styleClass="panel">
             <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="350px"
+                             closable="false"
                              header="#{palletManagement.messageHeader}" message="#{palletManagement.message}" >
                <table border="0" style="width: 100%">
                    <tr>
