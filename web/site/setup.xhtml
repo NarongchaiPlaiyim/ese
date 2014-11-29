@@ -24,8 +24,8 @@
                     </div>
                     <div class="body_rpane" style="width: 80%">
                         <label class="subject">SetUp</label>
-                        <h:form style="width: 100%;border-spacing: 0;">
-                              <p:tabView>
+                        <h:form id="mainForm" style="width: 100%;border-spacing: 0;">
+                              <p:tabView id="setupTab" cache="false" dynamic="false">
                                   <p:tab id="warehouseTab" title="warehouse and Location">
                                       <table border="0" style="width: 100%">
                                           <tr>
@@ -36,17 +36,21 @@
                                                               <h:outputText id="modeWarehouse" value="#{setup.modeWarehouse}"/>
                                                           </td>
                                                           <td>
-                                                              <p:commandButton value="#{setup.nameBtn}" styleClass="medium" style="width: 80px"
+                                                              <p:commandButton id="btnNewLocation" value="#{setup.nameBtn}" styleClass="medium" style="width: 80px"
                                                                                disabled="#{setup.flagBtnNewWarehouse}"
-                                                                               update=":setupForm"
+                                                                               update=":setupForm:mainForm:setupTab"
                                                                                process="@form"
+                                                                               onstart="PF('bui').show()"
+                                                                               oncomplete="PF('bui').hide()"
                                                                                action="#{setup.btnWarehouseAndLocation('NewOrCancel')}"/>
                                                           </td>
                                                           <td>
-                                                              <p:commandButton value="Save" styleClass="medium" style="width: 80px"
+                                                              <p:commandButton id="btnSaveLocation" value="Save" styleClass="medium" style="width: 80px"
                                                                                action="#{setup.btnWarehouseAndLocation('SaveOrUpdate')}"
                                                                                process="@form"
-                                                                               update=":setupForm, :msgBoxSystemMessagePanel"
+                                                                               onstart="PF('bui').show()"
+                                                                               oncomplete="PF('bui').hide()"
+                                                                               update=":setupForm:mainForm:setupTab, :msgBoxSystemMessagePanel"
                                                                                binding="#{addWarehouseAndLocation}"/>
                                                           </td>
                                                       </tr>
@@ -75,11 +79,11 @@
                                                                                  var="warehouseItem"
                                                                                  itemLabel="#{warehouseItem.warehouseCode}"
                                                                                  itemValue="#{warehouseItem.id}"/>
-                                                                  <p:ajax event="change" process="@form" update=":setupForm"/>
+                                                                  <p:ajax event="change" process="@form" update=":setupForm:mainForm:setupTab"/>
                                                               </p:selectOneMenu>
                                                           </td>
                                                           <td >
-                                                              <p:commandButton value="New/Edit"
+                                                              <p:commandButton id="btnNewEditWarehouse" value="New/Edit"
                                                                                styleClass="medium"
                                                                                disabled="#{setup.flagBtnAddEdit}"
                                                                                action="#{setup.warehouseDlg('ADD')}"
@@ -105,7 +109,7 @@
                                                               <h:outputText value="Location Code*"/>
                                                           </td>
                                                           <td colspan="2">
-                                                              <p:inputText style="min-width: 200px; width: 200px; max-width: 200px;"
+                                                              <p:inputText id="locationBarcode" style="min-width: 200px; width: 200px; max-width: 200px;"
                                                                            value="#{setup.locationView.locationBarcode}"
                                                                            required="#{not empty param[addWarehouseAndLocation.clientId]}"/>
                                                           </td>
@@ -113,7 +117,7 @@
                                                               <h:outputText value="Remark"/>
                                                           </td>
                                                           <td colspan="2">
-                                                              <p:inputTextarea style="width: 200px; max-width: 200px;min-width: 200px; height: 50px;"
+                                                              <p:inputTextarea id="locationRemark" style="width: 200px; max-width: 200px;min-width: 200px; height: 50px;"
                                                                                value="#{setup.locationView.remark}"/>
                                                           </td>
                                                       </tr>
@@ -140,7 +144,7 @@
                                                                          onkeypress="return onKeyPressMoney(event)"
                                                                          min="0"
                                                                          value="#{setup.locationView.capacity}">
-                                                                  <p:ajax event="blur" update=":setupForm"/>
+                                                                  <!--<p:ajax event="blur" update=":setupForm:mainForm:setupTab"/>-->
                                                                   <f:convertNumber pattern="##0"/>
                                                               </p:spinner>
                                                           </td>
@@ -164,7 +168,7 @@
                                                                                onstart="PF('bui').show()"
                                                                                action="#{setup.btnWarehouseAndLocation('Delect')}"
                                                                                oncomplete="PF('bui').hide()"
-                                                                               update=":setupForm, :msgBoxSystemMessagePanel"/>
+                                                                               update=":setupForm:mainForm:setupTab, :msgBoxSystemMessagePanel"/>
                                                           </td>
                                                       </tr>
                                                   </table>
@@ -172,7 +176,7 @@
                                           </tr>
                                           <tr>
                                               <td colspan="4">
-                                                  <p:dataTable id="warehouseAndLocationTable"
+                                                      <p:dataTable id="warehouseAndLocationTable"
                                                                rowIndexVar="rowIndex"
                                                                var="location"
                                                                rowKey="#{location.id}"
@@ -185,7 +189,7 @@
                                                       <!--rowsPerPageTemplate="10,20,40,60"-->
                                                       <p:ajax event="rowSelect"
                                                               listener="#{setup.btnWarehouseAndLocation('ClickOnTable')}"
-                                                              update=":setupForm"/>
+                                                              update=":setupForm:mainForm:setupTab"/>
                                                       <p:column headerText="No" style="width: 20px" styleClass="center">
                                                           <h:outputLabel value="#{rowIndex+1}"/>
                                                       </p:column>
@@ -209,22 +213,31 @@
                                           </tr>
                                       </table>
                                   </p:tab>
-                                  <p:tab title="Stock In Out Note">
-                                      <table border="0" style="width: 100%">
+                                  <p:tab id="stockInoutTag" title="Stock In Out Note" closable="false">
+                                      <table id="stockInOutTB" border="0" style="width: 100%">
                                           <tr>
                                               <td>
                                                   <table border="0" class="top">
                                                       <tr>
                                                           <td style="width: 860px" class="right">
-                                                              <h:outputText value="Mode(New/Edit)"/>
+                                                              <h:outputText id="mode" value="#{setup.modeStock}"/>
                                                           </td>
                                                           <td>
-                                                              <p:commandButton value="New" styleClass="medium" style="width: 80px"
-                                                                               update="@form"/>
+                                                              <p:commandButton id="btnNew" value="#{setup.nameBtnStock}"
+                                                                               action="#{setup.actionInStockInOutNote('OnNewAndCancelStockInOutNote')}"
+                                                                               onstart="PF('bui').show()"
+                                                                               oncomplete="PF('bui').hide()"
+                                                                               styleClass="medium" style="width: 80px"
+                                                                               update=":setupForm:mainForm:setupTab"/>
                                                           </td>
                                                           <td>
-                                                              <p:commandButton value="Save" styleClass="medium" style="width: 80px"
-                                                                               update="@form"/>
+                                                              <p:commandButton id="btnSave" value="Save"
+                                                                               action="#{setup.actionInStockInOutNote('OnSaveOrUpdateStockInOutNote')}"
+                                                                               styleClass="medium" style="width: 80px"
+                                                                               onstart="PF('bui').show()"
+                                                                               oncomplete="PF('bui').hide()"
+                                                                               binding="#{addStockInOutNote}"
+                                                                               update=":setupForm:mainForm:setupTab, :msgBoxSystemMessagePanel"/>
                                                           </td>
                                                       </tr>
                                                   </table>
@@ -245,18 +258,19 @@
                                                                           <h:outputText value="Type"/>
                                                                       </td>
                                                                       <td >
-                                                                          <p:selectOneRadio styleClass="radio_table" style="background-origin: border-box"
-                                                                                            value="#{setup.setupView.type}">
-                                                                              <f:selectItem itemLabel="Receiving" itemValue="0"/>
-                                                                              <f:selectItem itemLabel="Issuing" itemValue="1"/>
+                                                                          <p:selectOneRadio id="typeRadio" styleClass="radio_table" style="background-origin: border-box"
+                                                                                            value="#{setup.stockInOutNoteView.type}"
+                                                                                            required="#{not empty param[addStockInOutNote.clientId]}">
+                                                                              <f:selectItem itemLabel="Receiving" itemValue="i"/>
+                                                                              <f:selectItem itemLabel="Issuing" itemValue="o"/>
                                                                           </p:selectOneRadio>
                                                                       </td>
                                                                       <td >
                                                                           <h:outputText value="Remark"/>
                                                                       </td>
                                                                       <td colspan="2">
-                                                                          <p:inputTextarea style="width: 200px; max-width: 200px;min-width: 200px; height: 50px;"
-                                                                                           value="#{setup.setupView.remark2}"/>
+                                                                          <p:inputTextarea id="remark" style="width: 200px; max-width: 200px;min-width: 200px; height: 50px;"
+                                                                                           value="#{setup.stockInOutNoteView.remark}"/>
                                                                       </td>
                                                                   </tr>
                                                                   <tr>
@@ -264,8 +278,9 @@
                                                                           <h:outputText value="Code"/>
                                                                       </td>
                                                                       <td colspan="2">
-                                                                          <p:inputText style="min-width: 200px; width: 200px; max-width: 200px;"
-                                                                                       value="#{setup.setupView.code}"/>
+                                                                          <p:inputText id="inoutCode" style="min-width: 200px; width: 200px; max-width: 200px;"
+                                                                                       value="#{setup.stockInOutNoteView.inoutCode}"
+                                                                                       required="#{not empty param[addStockInOutNote.clientId]}"/>
                                                                       </td>
                                                                   </tr>
                                                                   <tr>
@@ -273,8 +288,9 @@
                                                                           <h:outputText value="Note"/>
                                                                       </td>
                                                                       <td colspan="2">
-                                                                          <p:inputText style="min-width: 200px; width: 200px; max-width: 200px;"
-                                                                                       value="#{setup.setupView.note}" />
+                                                                          <p:inputText id="inoutNote" style="min-width: 200px; width: 200px; max-width: 200px;"
+                                                                                       value="#{setup.stockInOutNoteView.inoutNote}"
+                                                                                       required="#{not empty param[addStockInOutNote.clientId]}"/>
                                                                       </td>
                                                                   </tr>
                                                               </table>
@@ -283,29 +299,46 @@
                                                       </tr>
                                                       <tr>
                                                           <td class="right" colspan="6">
-                                                              <p:commandButton value="Delete" styleClass="medium" style="width: 80px"
-                                                                               update="@form"/>
+                                                              <p:commandButton id="btnDeleteStock" value="Delete"
+                                                                               styleClass="medium" style="width: 80px"
+                                                                               action="#{setup.actionInStockInOutNote('OnDeleteStockInOutNote')}"
+                                                                               onstart="PF('bui').show()"
+                                                                               oncomplete="PF('bui').hide()"
+                                                                               disabled="#{setup.flagBtnDeleteStock}"
+                                                                               update=":setupForm:mainForm:setupTab, :msgBoxSystemMessagePanel"/>
                                                           </td>
                                                       </tr>
                                                       <tr>
                                                           <td colspan="6">
-                                                              <p:dataTable id="warehouseTable"
-                                                                           var="view"
-                                                                           rowKey="#{view}"
-                                                                           value="#{setup.warehouseAndLocationViewList}"
+                                                              <p:dataTable id="stockInoutTable"
+                                                                           var="stockInOutNote"
+                                                                           rowKey="#{stockInOutNote.id}"
+                                                                           value="#{setup.stockInOutNoteModelList}"
                                                                            paginator="false"
-                                                                           rowIndexVar="rowIndex">
-                                                                  <p:column headerText="No" style="width: 20px">
-                                                                      <h:outputLabel value="#{rowIndex+1}"/>
+                                                                           selectionMode="single"
+                                                                           selection="#{setup.stockInOutNoteModel}"
+                                                                           rowIndexVar="rowIndex2">
+                                                                  <p:ajax event="rowSelect"
+                                                                          listener="#{setup.actionInStockInOutNote('OnClickStockInOutNoteTB')}"
+                                                                          update=":setupForm:mainForm:setupTab:typeRadio,
+                                                                          :setupForm:mainForm:setupTab:mode,
+                                                                          :setupForm:mainForm:setupTab:btnNew,
+                                                                          :setupForm:mainForm:setupTab:btnSave,
+                                                                          :setupForm:mainForm:setupTab:remark,
+                                                                          :setupForm:mainForm:setupTab:inoutCode,
+                                                                          :setupForm:mainForm:setupTab:inoutNote,
+                                                                          :setupForm:mainForm:setupTab:btnDeleteStock"/>
+                                                                  <p:column headerText="No" style="width: 20px" styleClass="center">
+                                                                      <h:outputLabel value="#{rowIndex2+1}"/>
                                                                   </p:column>
-                                                                  <p:column headerText="Type" style="width: 200px">
-                                                                      <h:outputLabel value="aaaaa"/>
+                                                                  <p:column headerText="Type" style="width: 200px" styleClass="center">
+                                                                      <h:outputLabel value="#{stockInOutNote.type}"/>
                                                                   </p:column>
-                                                                  <p:column headerText="Code" style="width: 200px">
-                                                                      <h:outputLabel value="bbbbb"/>
+                                                                  <p:column headerText="Code" style="width: 200px" styleClass="center">
+                                                                      <h:outputLabel value="#{stockInOutNote.inoutCode}"/>
                                                                   </p:column>
-                                                                  <p:column headerText="Note">
-                                                                      <h:outputLabel value="cccc"/>
+                                                                  <p:column headerText="Note" styleClass="center">
+                                                                      <h:outputLabel value="#{stockInOutNote.inoutNote}"/>
                                                                   </p:column>
                                                               </p:dataTable>
                                                           </td>

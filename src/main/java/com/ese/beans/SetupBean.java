@@ -1,13 +1,7 @@
 package com.ese.beans;
 
-import com.ese.model.db.MSItemModel;
-import com.ese.model.db.MSLocationItemsModel;
-import com.ese.model.db.MSLocationModel;
-import com.ese.model.db.MSWarehouseModel;
-import com.ese.model.view.LocationView;
-import com.ese.model.view.SetupView;
-import com.ese.model.view.WarehouseAndLocationView;
-import com.ese.model.view.WarehouseView;
+import com.ese.model.db.*;
+import com.ese.model.view.*;
 import com.ese.model.view.dilog.WarehouseDialogView;
 import com.ese.service.*;
 import com.ese.utils.FacesUtil;
@@ -36,6 +30,7 @@ public class SetupBean extends Bean{
     @ManagedProperty("#{warehouseService}") private WarehouseService warehouseService;
     @ManagedProperty("#{locationItemService}") private LocationItemService locationItemService;
     @ManagedProperty("#{itemService}") private ItemService itemService;
+    @ManagedProperty("#{stockInOutNoteService}") private StockInOutNoteService stockInOutNoteService;
 
     private SetupView setupView;
     private WarehouseAndLocationView warehouseAndLocationView;
@@ -45,6 +40,9 @@ public class SetupBean extends Bean{
     private boolean flagBtnAddShowItem;
     private boolean flagBtnAddEdit;
     private boolean flagBtnDelete;
+    private boolean flagBtnDeleteStock;
+    private String modeStock;
+    private String nameBtnStock;
     private String modeWarehouse;
     private String nameBtn;
     private List<LocationView> locationViewList;
@@ -61,13 +59,16 @@ public class SetupBean extends Bean{
     private String selectType;
     private List<MSItemModel> selectItem;
     private List<MSLocationItemsModel> selectLocationItem;
+    private List<MSStockInOutNoteModel> stockInOutNoteModelList;
+    private MSStockInOutNoteModel stockInOutNoteModel;
+    private StockInOutNoteView stockInOutNoteView;
 
     public SetupBean() {
 
     }
 
     @PostConstruct
-    private void init(){
+    private void onloadSetup(){
         preLoad();
         setupView = new SetupView();
         warehouseDialogView = new WarehouseDialogView();
@@ -75,11 +76,16 @@ public class SetupBean extends Bean{
         msWarehouseModel = new MSWarehouseModel();
         warehouseView = new WarehouseView();
         msLocationItemsModel = new MSLocationItemsModel();
+        stockInOutNoteModel = new MSStockInOutNoteModel();
+        stockInOutNoteView = new StockInOutNoteView();
         modeWarehouse = "Mode(New)";
         nameBtn = "Cancel";
+        modeStock = "Mode(New)";
+        nameBtnStock = "Cancel";
         btnOnLoad();
         onLoadLocationTB();
         warehouseOnLoad();
+        OnLoadStockInOutNote();
     }
 
     private void btnOnLoad(){
@@ -87,6 +93,7 @@ public class SetupBean extends Bean{
         flagBtnAddShowItem = true;
         flagBtnAddEdit = false;
         flagBtnDelete = true;
+        flagBtnDeleteStock = true;
     }
 
     private void warehouseOnLoad(){
@@ -97,13 +104,18 @@ public class SetupBean extends Bean{
         msLocationModelList = locationService.getLocationAll();
     }
 
+    public void OnLoadStockInOutNote(){
+        stockInOutNoteView = new StockInOutNoteView();
+        stockInOutNoteModelList = stockInOutNoteService.getStockInOutNoteAll();
+    }
+
     public void btnWarehouseAndLocation(String target){
         if (target.equalsIgnoreCase("SaveOrUpdate")){
             log.debug("onSaveOrUpdate() {}", locationView);
             try {
                 locationService.onSaveOrUpdateLocationToDB(locationView);
                 showDialogSaved();
-                init();
+                onloadSetup();
             } catch (Exception e) {
                 log.debug("Exception onSaveLocation : ", e);
                 showDialogError(e.getMessage());
@@ -113,7 +125,7 @@ public class SetupBean extends Bean{
             try {
                 locationService.delete(msLocationModel);
                 showDialogDeleted();
-                init();
+                onloadSetup();
             } catch (Exception e) {
                 log.error("{}",e);
                 showDialogError(e.getMessage());
@@ -128,7 +140,7 @@ public class SetupBean extends Bean{
             nameBtn = "New";
             flagBtnDelete = false;
             flagBtnAddShowItem = false;
-            locationView = locationService.clickToView(msLocationModel);
+            locationView = locationService.clickToWarehouseView(msLocationModel);
         }
     }
 
@@ -145,12 +157,12 @@ public class SetupBean extends Bean{
             log.debug("OnSave Warehouse. {}", warehouseView);
             warehouseService.onSaveOrUpdateWarehouse(warehouseView);
             showDialogSaved();
-            init();
+            onloadSetup();
         } else if (target.equalsIgnoreCase("Delete")){
             log.debug("Delete warehouse.");
             warehouseService.delete(msWarehouseModel);
             showDialog(MessageDialog.SAVE.getMessageHeader(), MessageDialog.SAVE.getMessage());
-            init();
+            onloadSetup();
         } else if (target.equalsIgnoreCase("ClickOnTable")){
             log.debug("onclickWarehouseTBDlg(). {}",msWarehouseModel.toString());
             warehouseView = warehouseService.converToView(msWarehouseModel);
@@ -178,7 +190,7 @@ public class SetupBean extends Bean{
             log.debug("addToLocationItem");
             locationItemService.addToLocationItemModel(selectItem, msLocationModel);
             showDialog(MessageDialog.SAVE.getMessageHeader(), MessageDialog.SAVE.getMessage());
-            init();
+            onloadSetup();
         } else if (target.equalsIgnoreCase("Remove")){
             log.debug("remove(). {}", selectLocationItem.size());
             locationItemService.deleteLocationItemModel(selectLocationItem);
@@ -186,33 +198,46 @@ public class SetupBean extends Bean{
         }
     }
 
-//    public void locationItemDialog(){
-//        log.debug("locationItemDialog(). {}", msLocationModel.getId());
-//        selectType = "3";
-//        itemSearch = "";
-//        msItemModelList = new ArrayList<MSItemModel>();
-//        msLocationItemsModelList = locationItemService.findLocationItemByLocationId(msLocationModel.getId());
+    public void actionInStockInOutNote(String target){
+        log.debug("actionInStockInOutNote()");
+
+        if (target.equalsIgnoreCase("OnClickStockInOutNoteTB")){
+            log.debug("onClickStockInOutNote(). {}", stockInOutNoteModel);
+            stockInOutNoteView = stockInOutNoteService.clickToStockInOutNoteView(stockInOutNoteModel);
+            flagBtnDeleteStock = false;
+            modeStock = "Mode(Edit)";
+            nameBtnStock = "New";
+        } else if (target.equalsIgnoreCase("OnDeleteStockInOutNote")){
+            log.debug("onDelectStock()");
+            stockInOutNoteService.deleteStockInOutNote(stockInOutNoteModel);
+            OnLoadStockInOutNote();
+            modeStock = "Mode(New)";
+            flagBtnDeleteStock = true;
+            showDialog(MessageDialog.SAVE.getMessageHeader(), MessageDialog.SAVE.getMessage());
+        } else if (target.equalsIgnoreCase("OnNewAndCancelStockInOutNote")){
+            log.debug("onNewAndCancelStock()");
+            stockInOutNoteView = new StockInOutNoteView();
+        } else if (target.equalsIgnoreCase("OnSaveOrUpdateStockInOutNote")){
+            log.debug("onSaveStockInOutNote().");
+            stockInOutNoteService.onSaveStockInOutNote(stockInOutNoteView);
+            OnLoadStockInOutNote();
+            showDialog(MessageDialog.SAVE.getMessageHeader(), MessageDialog.SAVE.getMessage());
+        }
+    }
+
+//    public void onClickStockInOutNote(){
+//
 //    }
 //
-//    public void onSubmitSearch(){
-//        log.debug("-- onSubmitSearch() {}, {}", selectType,itemSearch);
+//    public void onDelectStock(){
 //
-//        if(!Utils.isZero(itemSearch.length())){
-//            msItemModelList = itemService.findByCondition(selectType, itemSearch);
-//            log.debug("msItemModelList Size : {}", msItemModelList.size());
-//        }
 //    }
 //
-//    public void addToLocationItem(){
-//        log.debug("addToLocationItem");
-//        locationItemService.addToLocationItemModel(selectItem, msLocationModel);
-//        showDialog(MessageDialog.SAVE.getMessageHeader(), MessageDialog.SAVE.getMessage());
-//        init();
+//    public void onNewAndCancelStock(){
+//
 //    }
 //
-//    public void remove(){
-//        log.debug("remove(). {}", selectLocationItem.size());
-//        locationItemService.deleteLocationItemModel(selectLocationItem);
-//        locationItemDialog();
+//    public void onSaveStockInOutNote(){
+//
 //    }
 }
