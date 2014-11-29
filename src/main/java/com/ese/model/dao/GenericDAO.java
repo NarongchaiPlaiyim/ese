@@ -85,6 +85,7 @@ public abstract class GenericDAO<T, ID extends Serializable> implements Serializ
 
     public boolean isRecordExist(Criterion... criterions) throws Exception {
         List<T> list = findByCriteria(criterions);
+        System.out.println("list.size() : "+list.size());
         return list.size()>0;
     }
 

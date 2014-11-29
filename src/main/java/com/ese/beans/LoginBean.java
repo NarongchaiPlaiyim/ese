@@ -69,7 +69,7 @@ public class LoginBean extends Bean{
                 HttpSession httpSession = FacesUtil.getSession(false);
                 httpSession.setAttribute(AttributeName.USER_DETAIL.getName(), userDetail);
                 log.debug("-- userDetail[{}]", userDetail.toString());
-                return userDetail.getRole();
+                return "USER";//<-- for test  //userDetail.getRole();<-- for production.
             }
         }
         showDialog(MessageDialog.WARNING.getMessageHeader(), "Username or Password is incorrect.");
