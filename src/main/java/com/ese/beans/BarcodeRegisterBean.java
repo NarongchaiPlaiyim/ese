@@ -86,18 +86,26 @@ public class BarcodeRegisterBean extends Bean{
     }
 
     private boolean mandate(){
-        if(!mandateQty() && !mandateItem() && !mandateStartBarcode()){
-            return true;
-        } else {
+//        if(!mandateQty() && !mandateItem() && !mandateStartBarcode()){
+//            return true;
+//        } else {
             if(mandateQty()){
                 setMessage("Qtr should be greater than 0.");
+                return false;
             } else if(mandateItem()){
                 setMessage("Item should not be empty.");
+                return false;
             } else if(mandateStartBarcode()){
-                setMessage("StartBarcode should be 9 characters.");
+                setMessage("Start Barcode should be 9 characters.");
+                return false;
+            } else if (mandateDuplicateStartBarcode()) {
+                setMessage("Start Barcode or Finish Barcode is duplicate.");
+                return false;
+            } else {
+                return true;
             }
-            return false;
-        }
+
+//        }
     }
 
     private boolean mandateQty(){
@@ -111,6 +119,10 @@ public class BarcodeRegisterBean extends Bean{
         flagStartBarcode = stringReplace.length() != FIX_LENGTH ? true : false ;
         barcodeRegisterView.setStartBarcode(stringReplace);
         return flagStartBarcode;
+    }
+
+    private boolean mandateDuplicateStartBarcode(){
+        return barcodeRegisterService.isDuplicate(barcodeRegisterView.getStartBarcode(), barcodeRegisterView.getFinishBarcode());
     }
 
     private boolean mandateItem(){

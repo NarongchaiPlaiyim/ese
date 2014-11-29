@@ -122,6 +122,7 @@
                                 </td>
                                 <td colspan="2">
                                     <h:outputLabel style="min-width: 200px; width: 200px; max-width: 200px;"
+                                                   id = "documentNoLabel"
                                                  value="#{barcodeRegisterBean.barcodeRegisterView.documentNo}"/>
                                 </td>
                                 <td>
@@ -222,11 +223,13 @@
                                         :setupForm:remarkLabel,
                                         :setupForm:batchNoLabel,
                                         :setupForm:labelFinishBarcode,
+                                        :setupForm:documentNoLabel,
                                         :setupForm:docDateLabel,
                                         :setupForm:startLabel,
                                         :setupForm:otyLabel,
                                         :setupForm:btnEdit,
-                                        :setupForm:btnPrint
+                                        :setupForm:btnPrint,
+                                        :setupForm:btnSave
                                         "
                                                 listener="#{barcodeRegisterBean.onClickTable()}"/>
                                         <p:column headerText="No" style="min-width: 15px; width: 15px; max-width: 15px;">
