@@ -64,6 +64,7 @@ public class BarcodeRegisterBean extends Bean{
     private void onLoadDataTable(){
         barcodeRegisterModelList = barcodeRegisterService.getByIsValid();
         log.debug("-- onLoadDataTable() returned size = {}", barcodeRegisterModelList.size());
+        barcodeRegisterModel = new BarcodeRegisterModel();
     }
 
     public void onClickButtonNew(){
@@ -72,6 +73,8 @@ public class BarcodeRegisterBean extends Bean{
         flagBtnDelete = true;
         flagBtnSave = false;
         flagBtnEdit = true;
+        flagBtnPrint = true;
+        barcodeRegisterModel = new BarcodeRegisterModel();
     }
 
     public void calculator(){
@@ -96,7 +99,7 @@ public class BarcodeRegisterBean extends Bean{
                 setMessage("Item should not be empty.");
                 return false;
             } else if(mandateStartBarcode()){
-                setMessage("Start Barcode should be 9 characters.");
+                setMessage("Start Barcode should be 10 characters.");
                 return false;
             } else if (mandateDuplicateStartBarcode()) {
                 setMessage("Start Barcode or Finish Barcode is duplicate.");
@@ -138,9 +141,11 @@ public class BarcodeRegisterBean extends Bean{
 
     public void onSubmitSearch(){
         log.debug("-- onSubmitSearch()");
-        if(!Utils.isZero(productSearch.length())){
+//        if(!Utils.isZero(productSearch.length())){
             msItemModelList = barcodeRegisterService.findByCondition(selectType, productSearch);
-        }
+//        } else {
+//            msItemModelList = barcodeRegisterService.findAll();
+//        }
     }
 
     public void onClickTableDialog(){

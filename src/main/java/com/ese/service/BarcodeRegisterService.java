@@ -46,6 +46,15 @@ public class BarcodeRegisterService extends Service{
         }
     }
 
+    public List<MSItemModel> findAll(){
+        try {
+            return itemDAO.findAll();
+        } catch (Exception e) {
+            log.error("{}",e);
+            return Collections.EMPTY_LIST;
+        }
+    }
+
     public List<BarcodeRegisterModel> getByIsValid(){
         log.debug("-- getByIsValid()");
         try {
@@ -90,7 +99,8 @@ public class BarcodeRegisterService extends Service{
         log.debug("-- edit(BarcodeRegisterView.id[{}])", view.getId());
         try {
             view.setCost(barcodeRegisterDAO.getPrice(view.getMsItemModel().getItemId()));
-            barcodeRegisterDAO.update(barcodeRegisterTransform.transformToModel(view));
+            BarcodeRegisterModel model = barcodeRegisterTransform.transformToModel(view);
+            barcodeRegisterDAO.update(model);
         } catch (Exception e) {
             log.error("{}",e);
         }
@@ -113,7 +123,7 @@ public class BarcodeRegisterService extends Service{
         try {
             return barcodeRegisterDAO.checkBarcode(startBarcode, finishBarcode);
         } catch (Exception e) {
-            log.error("{}",e);
+            log.error("{}", e);
             return true;
         }
     }

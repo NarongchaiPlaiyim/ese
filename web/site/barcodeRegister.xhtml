@@ -20,12 +20,12 @@
             <div id="main_container" >
                 <h:form id="setupForm">
                     <div class="body_lpane" style="width: 200px">
-                        <a class="step_border_selected" href="barcodeRegister.xhtml">Barcode Register</a>
-                        <a class="step_border_select" href="palletManagement.xhtml">Pallet Manegement</a>
-                        <a class="step_border_select" href="setup.xhtml">Setup</a>
+                        <a class="step_border_selected" href="barcodeRegister.xhtml">1. Barcode Register</a>
+                        <a class="step_border_select" href="palletManagement.xhtml">2. Pallet Tag Printing</a>
+                        <a class="step_border_select" href="setup.xhtml">7. Setup</a>
                     </div>
                     <div class="body_rpane" style="width: 80%">
-                        <label class="subject">Barcode Register</label>
+                        <label class="subject">1. Barcode Register</label>
                         <table border="0" class="content_table_form">
                             <tr >
                                 <td style="min-width: 100px; width: 100px; max-width: 100px;" class="left" />
@@ -47,7 +47,7 @@
                                                      action="#{barcodeRegisterBean.onPrint}"
                                                      ajax="false"/>
 
-                                    <p:commandButton value="New" action="#{barcodeRegisterBean.onClickButtonNew()}" update="@form" />
+                                    <p:commandButton value="New" action="#{barcodeRegisterBean.onClickButtonNew()}" update="@form, :setupForm:barcodeRegisterTable" />
 
                                     <p:commandButton value="Save"
                                                      id="btnSave"
@@ -151,10 +151,9 @@
                                 <td colspan="2">
                                     <p:calendar value="#{barcodeRegisterBean.barcodeRegisterView.documentDate}"
                                                 id="docDateLabel"
-                                                readonly="true"
                                                 pattern="dd/MM/yyyy"
                                             showOn="button"      >
-                                        <f:convertDateTime pattern="dd/MM/yyyy" locale="en_EN"/>
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
                                     </p:calendar>
                                 </td>
                                 <td>
@@ -197,7 +196,8 @@
                                                      oncomplete="PF('bui').hide()"
                                                      update=":setupForm:barcodeRegisterTable,
                                                      :setupForm:btnDelete,
-                                                     :msgBoxSystemMessagePanel
+                                                     :msgBoxSystemMessagePanel,
+                                                     :setupForm:barcodeRegisterTable,
                                                      "
                                             />
                                 </td>

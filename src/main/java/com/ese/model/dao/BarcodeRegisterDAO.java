@@ -24,7 +24,7 @@ public class BarcodeRegisterDAO extends GenericDAO<BarcodeRegisterModel, Integer
     }
 
     public List<BarcodeRegisterModel> findByIsValid() throws Exception {
-        Criteria criteria = getCriteria().add(Restrictions.eq("isValid", 1)).addOrder(Order.asc("updateDate"));
+        Criteria criteria = getCriteria().add(Restrictions.eq("isValid", 1)).addOrder(Order.desc("updateDate"));
         return Utils.safetyList(criteria.list());
     }
 
