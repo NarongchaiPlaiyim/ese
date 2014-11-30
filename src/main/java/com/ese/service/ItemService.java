@@ -24,8 +24,10 @@ public class ItemService extends Service{
                 msItemModelList = itemDAO.findByLike("dSGThaiItemDescription", text);
             } else if("2".equalsIgnoreCase(type)){
                 msItemModelList = itemDAO.findByLike("itemId", text);
-            } else {
+            } else if ("1".equalsIgnoreCase(type)){
                 msItemModelList = itemDAO.findByLike("itemName", text);
+            } else {
+                msItemModelList = itemDAO.findAll();
             }
             return msItemModelList;
         } catch (Exception e) {

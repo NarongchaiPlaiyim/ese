@@ -5,6 +5,7 @@ import com.ese.model.view.report.PalletManagemengModelReport;
 import com.ese.utils.Utils;
 import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.type.IntegerType;
@@ -33,7 +34,7 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
     }
 
     public List<PalletModel> findChang(int statusId, int warehouse, int conveyorLine, int location, String keyItemDescription){
-        log.debug("findUnPrint().");
+        log.debug("findChang().");
         try {
             Criteria criteria = getSession().createCriteria(PalletModel.class, "p");
 
@@ -51,14 +52,20 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
 
             if (!Utils.isNull(keyItemDescription) && !"".equalsIgnoreCase(keyItemDescription)){
                 criteria.createAlias("p.msItemModel", "c");
-                criteria.add(Restrictions.like("c.dSGThaiItemDescription", "%"+keyItemDescription.trim()+"%"));
+                Criterion itemDes = Restrictions.like("c.dSGThaiItemDescription", "%" + keyItemDescription.trim() + "%");
+                criteria.createAlias("p.msLocationModel", "d");
+                Criterion locationBarcode = Restrictions.like("d.locationBarcode", "%"+keyItemDescription.trim()+"%");
+                criteria.add(Restrictions.or(itemDes,locationBarcode));
             }
 
-            if (statusId == 1){
-                criteria.add(Restrictions.lt("status", 3));
+            if (statusId == 0){
+                criteria.add(Restrictions.eq("status", 2));
             } else if (statusId == 2){
+                criteria.add(Restrictions.lt("status", 3));
+            } else if (statusId == 3){
                 criteria.add(Restrictions.eq("qty", 0));
             }
+
             criteria.addOrder(Order.desc("updateDate"));
             List<PalletModel> palletModelList = criteria.list();
             log.debug("findOnloadPallet Size : {}", palletModelList.size());

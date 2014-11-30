@@ -69,7 +69,6 @@ public class PalletManagementBean extends Bean implements Serializable {
         warehouseModelList = warehouseService.getWarehouseAll();
         workingAreaModelList = workingAreaService.getWorkingAreaList();
         msLocationModelList = locationService.getLocationList();
-        statusOnShow = 0;
         findKeyItemDescription = "";
         isCheckLocation = true;
         isCheckPrintTag = true;
@@ -88,6 +87,7 @@ public class PalletManagementBean extends Bean implements Serializable {
         int warehouseId = 0;
         int waokingAreaId = 0;
         int locationId = 0;
+        palletMeanegementView = new PalletManagementView();
 
         if (!Utils.isNull(warehouseMode.getId())){
             warehouseId = warehouseMode.getId();

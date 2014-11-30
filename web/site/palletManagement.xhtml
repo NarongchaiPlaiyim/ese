@@ -56,9 +56,9 @@
                             <tr>
                                 <td colspan="7">
                                     <p:selectOneRadio value="#{palletManagement.statusOnShow}" styleClass="radio_table" style="background-origin: border-box">
-                                        <f:selectItem itemLabel="Show All" itemValue="0"/>
-                                        <f:selectItem itemLabel="Show unprint only" itemValue="1"/>
-                                        <f:selectItem itemLabel="Show Empty Pallet" itemValue="2"/>
+                                        <f:selectItem itemLabel="Show All" itemValue="1"/>
+                                        <f:selectItem itemLabel="Show unprint only" itemValue="2"/>
+                                        <f:selectItem itemLabel="Show Empty Pallet" itemValue="3"/>
                                         <p:ajax listener="#{palletManagement.onFind}" update=":palletForm:palletManagementTable, :palletForm:findKey"/>
                                     </p:selectOneRadio>
                                 </td>
@@ -68,13 +68,17 @@
                                     <p:inputText id="findKey" value="#{palletManagement.findKeyItemDescription}" style="width: 120px">
                                         <p:ajax event="blur" update=":palletForm:findKey"/>
                                     </p:inputText>
-                                    <p:commandButton id="btnsearch" icon="ui-icon-search" action="#{palletManagement.onFind}" process="@form" update=":palletForm:palletManagementTable, :palletForm:findKey"/>
+                                    <p:commandButton id="btnsearch" icon="ui-icon-search" action="#{palletManagement.onFind}"
+                                                     onstart="PF('bui').show()"
+                                                     oncomplete="PF('bui').hide()"
+                                                     process="@form" update=":palletForm:palletManagementTable, :palletForm:findKey"/>
                                 </td>
                                 <td style="width: 40px">
                                     <h:outputLabel value="warehouse :"/>
                                 </td>
                                 <td style="width: 100px">
-                                    <p:selectOneMenu id="warehouseMenu" value="#{palletManagement.warehouseMode.id}" style="min-width: 150px; width: 150px; max-width: 150px; margin-top: 4px">
+                                    <p:selectOneMenu id="warehouseMenu" value="#{palletManagement.warehouseMode.id}"
+                                                     style="min-width: 150px; width: 150px; max-width: 150px; margin-top: 4px">
                                         <f:selectItem itemLabel="- Please Select -" itemValue=""/>
                                         <f:selectItems value="#{palletManagement.warehouseModelList}"
                                                        var="wareItem"
@@ -87,7 +91,8 @@
                                     <h:outputLabel value="Conveyor Line :"/>
                                 </td>
                                 <td style="width: 100px">
-                                    <p:selectOneMenu id="conveyorLineMenu" value="#{palletManagement.workingAreaModel.id}" style="min-width: 150px; width: 150px; max-width: 150px; margin-top: 4px">
+                                    <p:selectOneMenu id="conveyorLineMenu" value="#{palletManagement.workingAreaModel.id}"
+                                                     style="min-width: 150px; width: 150px; max-width: 150px; margin-top: 4px">
                                         <f:selectItem itemLabel="- Please Select -" itemValue=""/>
                                         <f:selectItems value="#{palletManagement.workingAreaModelList}"
                                                        var="conveyorLineItem"
@@ -100,7 +105,8 @@
                                     <h:outputLabel value="Location :"/>
                                 </td>
                                 <td style="width: 100px">
-                                    <p:selectOneMenu id="locationMenu" value="#{palletManagement.msLocationModel.id}" style="min-width: 150px; width: 150px; max-width: 150px; margin-top: 4px">
+                                    <p:selectOneMenu value="#{palletManagement.msLocationModel.id}"
+                                                     style="min-width: 150px; width: 150px; max-width: 150px; margin-top: 4px">
                                         <f:selectItem itemLabel="- Please Select -" itemValue=""/>
                                         <f:selectItems value="#{palletManagement.msLocationModelList}"
                                                        var="locationItem"

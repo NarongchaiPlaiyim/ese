@@ -7,6 +7,7 @@ import com.ese.utils.Utils;
 import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
 import org.hibernate.criterion.CriteriaSpecification;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -72,6 +73,7 @@ public class MSLocationItemsDAO extends GenericDAO<MSLocationItemsModel, Integer
             Criteria criteria = getCriteria();
             criteria.add(Restrictions.eq("msLocationModel.id", locationId));
             criteria.add(Restrictions.eq("isValid", 1));
+            criteria.addOrder(Order.desc("updateDate"));
             msLocationItemsModels = criteria.list();
         } catch (Exception e) {
             log.debug("Exception Error findByLocationIf : ", e);

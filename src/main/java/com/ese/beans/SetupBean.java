@@ -62,6 +62,8 @@ public class SetupBean extends Bean{
     private List<MSStockInOutNoteModel> stockInOutNoteModelList;
     private MSStockInOutNoteModel stockInOutNoteModel;
     private StockInOutNoteView stockInOutNoteView;
+    private String modeWarehouseDlg;
+    private String keySearch;
 
     public SetupBean() {
 
@@ -88,6 +90,10 @@ public class SetupBean extends Bean{
         OnLoadStockInOutNote();
     }
 
+//    public void test(){
+//        log.debug("#### {}",locationView.getWarehouseModel().getId());
+//    }
+
     private void btnOnLoad(){
         flagBtnNewWarehouse = false;
         flagBtnAddShowItem = true;
@@ -109,13 +115,38 @@ public class SetupBean extends Bean{
         stockInOutNoteModelList = stockInOutNoteService.getStockInOutNoteAll();
     }
 
+    private boolean checkLocationCode(int warehouseCode, String locationCode){
+        log.debug("----- {}, -----{}",warehouseCode,locationCode);
+
+        for (MSLocationModel model : msLocationModelList){
+            if (locationCode.equalsIgnoreCase(model.getLocationBarcode()) && warehouseCode == model.getMsWarehouseModel().getId()){
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public void btnWarehouseAndLocation(String target){
         if (target.equalsIgnoreCase("SaveOrUpdate")){
             log.debug("onSaveOrUpdate() {}", locationView);
+
             try {
-                locationService.onSaveOrUpdateLocationToDB(locationView);
-                showDialogSaved();
-                onloadSetup();
+
+                if (checkLocationCode(locationView.getWarehouseModel().getId(), locationView.getLocationBarcode())){
+                    locationService.onSaveOrUpdateLocationToDB(locationView);
+                    msLocationModel = new MSLocationModel();
+
+                    if (Utils.isZero(locationView.getId())){
+                        showDialogSaved();
+                    } else {
+                        showDialogUpdated();
+                    }
+                    onloadSetup();
+                } else {
+                    showDialog(MessageDialog.ERROR.getMessageHeader(), "Location Barcode is duplicate");
+                }
+
             } catch (Exception e) {
                 log.debug("Exception onSaveLocation : ", e);
                 showDialogError(e.getMessage());
@@ -132,6 +163,8 @@ public class SetupBean extends Bean{
             }
         } else if (target.equalsIgnoreCase("NewOrCancel")){
             log.debug("NewOrCancel.");
+            modeWarehouse = "Mode(New)";
+            msLocationModel = new MSLocationModel();
             locationView = new LocationView();
             btnOnLoad();
         }  else if (target.equalsIgnoreCase("ClickOnTable")){
@@ -141,7 +174,22 @@ public class SetupBean extends Bean{
             flagBtnDelete = false;
             flagBtnAddShowItem = false;
             locationView = locationService.clickToWarehouseView(msLocationModel);
+        } else if(target.equalsIgnoreCase("SearchLocation")){
+            log.debug("onSearch Location");
+            msLocationModelList = locationService.searchOrderByCodeOrName(keySearch);
         }
+    }
+
+    public boolean checkWarehouseCodeOnSave(String warehouseCode){
+        log.debug("checkWarehouseCodeOnSave. {}", warehouseCode);
+
+        for (MSWarehouseModel warehouseModel : msWarehouseModelList){
+            if (warehouseCode.equalsIgnoreCase(warehouseModel.getWarehouseCode())){
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public void warehouseDlg(String target){
@@ -150,24 +198,62 @@ public class SetupBean extends Bean{
         if (target.equalsIgnoreCase("ADD")){
             log.debug("Open Warehouse Dialog.");
             warehouseView = new WarehouseView();
+            modeWarehouseDlg = "Mode(New)";
+            msWarehouseModel = new MSWarehouseModel();
             msWarehouseModelList = warehouseService.getWarehouseAll();
         } else if (target.equalsIgnoreCase("New")){
             warehouseView = new WarehouseView();
+            modeWarehouseDlg = "Mode(New)";
+            msWarehouseModel = new MSWarehouseModel();
         } else if (target.equalsIgnoreCase("Save")){
             log.debug("OnSave Warehouse. {}", warehouseView);
-            warehouseService.onSaveOrUpdateWarehouse(warehouseView);
-            showDialogSaved();
-            onloadSetup();
+
+            if (checkWarehouseCodeOnSave(warehouseView.getWarehouseCode())){
+                warehouseService.onSaveOrUpdateWarehouse(warehouseView);
+                msWarehouseModel = new MSWarehouseModel();
+                if (Utils.isZero(warehouseView.getId())){
+                    showDialogSaved();
+                } else {
+                    showDialogUpdated();
+                }
+                warehouseView = new WarehouseView();
+                msWarehouseModelList = warehouseService.getWarehouseAll();
+            } else {
+                showDialog(MessageDialog.ERROR.getMessageHeader(), "Warehouse Code is duplicate");
+            }
+
+
         } else if (target.equalsIgnoreCase("Delete")){
             log.debug("Delete warehouse.");
             warehouseService.delete(msWarehouseModel);
-            showDialog(MessageDialog.SAVE.getMessageHeader(), MessageDialog.SAVE.getMessage());
+            showDialogSaved();
             onloadSetup();
         } else if (target.equalsIgnoreCase("ClickOnTable")){
+            modeWarehouseDlg = "Mode(Edit)";
             log.debug("onclickWarehouseTBDlg(). {}",msWarehouseModel.toString());
             warehouseView = warehouseService.converToView(msWarehouseModel);
         }
     }
+
+//    public List<MSItemModel> checkLocationItemToSave(List<MSItemModel> msItemModels){
+//        log.debug("checkLocationItemToSave Size : {}", msItemModels.size());
+//        log.debug(" msLocationItemsModelList Size : {}", msLocationItemsModelList.size());
+//        List<MSItemModel> itemModels = new ArrayList<MSItemModel>();
+//
+//        for (MSItemModel model : msItemModels){
+//            for (int i = 0 ; i < msLocationItemsModelList.size() ; i++){
+//                log.debug("--------- {}", model.getId());
+//                log.debug("@@@@@@@@@@@@@@@@@ {}", msLocationItemsModelList.get(i).getMsItemModel().getId());
+//                if (model.getId() == msLocationItemsModelList.get(i).getMsItemModel().getId()){
+//                    log.debug("########################");
+//                    msLocationItemsModelList.remove(i);
+//                }
+//            }
+//        }
+//
+//        log.debug("After Item Size : {}", msLocationItemsModelList.size());
+//        return msItemModels;
+//    }
 
     public void actionTolocationDialog(String target){
         log.debug("actionTolocationDialog().");
@@ -175,7 +261,6 @@ public class SetupBean extends Bean{
         if (target.equalsIgnoreCase("AddItem")){
             log.debug("locationItemDialog(). {}", msLocationModel.getId());
 
-            selectType = "3";
             itemSearch = "";
             msItemModelList = new ArrayList<MSItemModel>();
             msLocationItemsModelList = locationItemService.findLocationItemByLocationId(msLocationModel.getId());
@@ -185,12 +270,16 @@ public class SetupBean extends Bean{
             if(!Utils.isZero(itemSearch.length())){
                 msItemModelList = itemService.findByCondition(selectType, itemSearch);
                 log.debug("msItemModelList Size : {}", msItemModelList.size());
+            } else {
+                msItemModelList = itemService.findByCondition(selectType, itemSearch);
             }
         } else if (target.equalsIgnoreCase("AddToLocation")){
             log.debug("addToLocationItem");
             locationItemService.addToLocationItemModel(selectItem, msLocationModel);
-            showDialog(MessageDialog.SAVE.getMessageHeader(), MessageDialog.SAVE.getMessage());
-            onloadSetup();
+            msLocationItemsModelList = locationItemService.findLocationItemByLocationId(msLocationModel.getId());
+            selectItem = new ArrayList<MSItemModel>();
+            showDialogSaved();
+//            onloadSetup();
         } else if (target.equalsIgnoreCase("Remove")){
             log.debug("remove(). {}", selectLocationItem.size());
             locationItemService.deleteLocationItemModel(selectLocationItem);
@@ -211,33 +300,24 @@ public class SetupBean extends Bean{
             log.debug("onDelectStock()");
             stockInOutNoteService.deleteStockInOutNote(stockInOutNoteModel);
             OnLoadStockInOutNote();
+            stockInOutNoteModel = new MSStockInOutNoteModel();
             modeStock = "Mode(New)";
             flagBtnDeleteStock = true;
-            showDialog(MessageDialog.SAVE.getMessageHeader(), MessageDialog.SAVE.getMessage());
+            showDialogSaved();
         } else if (target.equalsIgnoreCase("OnNewAndCancelStockInOutNote")){
             log.debug("onNewAndCancelStock()");
+            stockInOutNoteModel = new MSStockInOutNoteModel();
             stockInOutNoteView = new StockInOutNoteView();
         } else if (target.equalsIgnoreCase("OnSaveOrUpdateStockInOutNote")){
             log.debug("onSaveStockInOutNote().");
             stockInOutNoteService.onSaveStockInOutNote(stockInOutNoteView);
+            if (Utils.isZero(stockInOutNoteView.getId())){
+                showDialogSaved();
+            } else {
+                showDialogUpdated();
+            }
             OnLoadStockInOutNote();
-            showDialog(MessageDialog.SAVE.getMessageHeader(), MessageDialog.SAVE.getMessage());
+            stockInOutNoteModel = new MSStockInOutNoteModel();
         }
     }
-
-//    public void onClickStockInOutNote(){
-//
-//    }
-//
-//    public void onDelectStock(){
-//
-//    }
-//
-//    public void onNewAndCancelStock(){
-//
-//    }
-//
-//    public void onSaveStockInOutNote(){
-//
-//    }
 }

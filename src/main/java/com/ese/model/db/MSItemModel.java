@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Getter
@@ -29,22 +30,22 @@ public class MSItemModel {
     private String itemGroupId;
 
     @Column(name = "ItemType")
-    private int itemType;
+    private Integer itemType;
 
     @Column(name = "PackagingGroupId")
     private String packagingGroupId;
 
     @Column(name = "NetWeight")
-    private float netWeight;
+    private BigDecimal netWeight;
 
     @Column(name = "DSG_MaxStock")
-    private float dSG_MaxStock;
+    private BigDecimal dSG_MaxStock;
 
     @Column(name = "DSG_MinStock")
-    private float dSG_MinStock;
+    private BigDecimal dSG_MinStock;
 
     @Column(name = "DSG_SafetyStock")
-    private float dSG_SafetyStock;
+    private BigDecimal dSG_SafetyStock;
 
     @Column(name = "DSG_InternalItemId")
     private String dSG_InternalItemId;
@@ -53,16 +54,16 @@ public class MSItemModel {
     private String dSGSize;
 
     @Column(name = "DSG_RimWidth")
-    private float dSG_RimWidth;
+    private BigDecimal dSG_RimWidth;
 
     @Column(name = "DSG_MaxLoad")
     private String dSG_MaxLoad;
 
     @Column(name = "DSG_MaxInflation")
-    private float dSG_MaxInflation;
+    private BigDecimal dSG_MaxInflation;
 
     @Column(name = "DSG_MaxSpeed")
-    private float dSG_MaxSpeed;
+    private BigDecimal dSG_MaxSpeed;
 
     @Column(name = "DSG_E_Mark")
     private String dSG_E_Mark;
@@ -77,16 +78,16 @@ public class MSItemModel {
     private String dSG_SpeedIndex;
 
     @Column(name = "DSG_RecommendedRim")
-    private float dSG_RecommendedRim;
+    private BigDecimal dSG_RecommendedRim;
 
     @Column(name = "DSG_TreadDept")
-    private float dSG_TreadDept;
+    private BigDecimal dSG_TreadDept;
 
     @Column(name = "DSG_AlternativeRim")
     private String dSG_AlternativeRim;
 
     @Column(name = "DSG_OfMold")
-    private float dSG_OfMold;
+    private BigDecimal dSG_OfMold;
 
     @Column(name = "DSG_Valve")
     private String dSG_Valve;
@@ -95,7 +96,7 @@ public class MSItemModel {
     private String dSG_ID;
 
     @Column(name = "DSG_QtyPerPallet")
-    private float dSG_QtyPerPallet;
+    private BigDecimal dSG_QtyPerPallet;
 
     @Column(name = "DSG_CurPerShif", nullable=false, columnDefinition="int default 0")
     private Integer dSG_CurPerShif;

@@ -16,18 +16,19 @@
                     <table border="0" class="top">
                         <tr>
                             <td style="width: 860px" class="right">
-                                <h:outputText value="Mode(New/Edit)"/>
+                                <h:outputText value="#{setup.modeWarehouseDlg}"/>
                             </td>
                             <td>
                                 <p:commandButton value="New" styleClass="medium" style="width: 80px"
-                                                 update="@form"
+                                                 update=":warehouseDialogForm, :warehouseDialogForm:warehouseTable"
                                                  action="#{setup.warehouseDlg('New')}"/>
                             </td>
                             <td>
                                 <p:commandButton value="Save" styleClass="medium" style="width: 80px"
-                                                 update=":msgBoxSystemMessageDialog, :warehouseDialogForm"
-                                                 oncomplete="PF('warehouseDlg').hide()"
-                                                 action="#{setup.warehouseDlg('Save')}"/>
+                                                 update=":msgBoxSystemMessageDialog, :warehouseDialogForm
+                                                         :warehouseDialogForm:warehouseTable"
+                                                 action="#{setup.warehouseDlg('Save')}"
+                                                 binding="#{warehouseDialog}"/>
                             </td>
                         </tr>
                     </table>
@@ -50,14 +51,16 @@
                             </td>
                             <td>
                                 <p:inputText style="min-width: 150px; width: 150px; max-width: 150px;"
-                                             value="#{setup.warehouseView.warehouseCode}" />
+                                             value="#{setup.warehouseView.warehouseCode}"
+                                             required="#{not empty param[warehouseDialog.clientId]}"/>
                             </td>
                             <td>
                                 <h:outputLabel value="Warehouse Name"/>
                             </td>
                             <td>
                                 <p:inputText style="min-width: 150px; width: 150px; max-width: 150px;"
-                                             value="#{setup.warehouseView.warehouseName}" />
+                                             value="#{setup.warehouseView.warehouseName}"
+                                             required="#{not empty param[warehouseDialog.clientId]}"/>
                             </td>
                         </tr>
                         <tr>
@@ -76,7 +79,6 @@
                 <td colspan="2" class="right">
                     <p:commandButton value="Delete" styleClass="medium" style="width: 80px"
                                      update=":msgBoxSystemMessageDialog, :warehouseDialogForm"
-                                     oncomplete="PF('warehouseDlg').hide()"
                                      action="#{setup.warehouseDlg('Delete')}"
                             />
                 </td>

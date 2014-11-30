@@ -50,7 +50,7 @@ public class LocationItemTransform extends Transform{
         log.debug("transformToModel().");
         MSLocationItemsModel model = new MSLocationItemsModel();
 
-//        model.setId(msLocationItemsModel.getId());
+        model.setId(model.getId());
         model.setMsLocationModel(msLocationModel);
         model.setMsItemModel(msItemModel);
 

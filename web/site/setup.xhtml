@@ -26,7 +26,7 @@
                         <label class="subject">SetUp</label>
                         <h:form id="mainForm" style="width: 100%;border-spacing: 0;">
                               <p:tabView id="setupTab" cache="false" dynamic="false">
-                                  <p:tab id="warehouseTab" title="warehouse and Location">
+                                  <p:tab id="warehouseTab" title="7.1 Warehouse and Location">
                                       <table border="0" style="width: 100%">
                                           <tr>
                                               <td>
@@ -38,7 +38,8 @@
                                                           <td>
                                                               <p:commandButton id="btnNewLocation" value="#{setup.nameBtn}" styleClass="medium" style="width: 80px"
                                                                                disabled="#{setup.flagBtnNewWarehouse}"
-                                                                               update=":setupForm:mainForm:setupTab"
+                                                                               update=":setupForm:mainForm:setupTab,
+                                                                                       :setupForm:mainForm:setupTab:warehouseAndLocationTable"
                                                                                process="@form"
                                                                                onstart="PF('bui').show()"
                                                                                oncomplete="PF('bui').hide()"
@@ -50,7 +51,8 @@
                                                                                process="@form"
                                                                                onstart="PF('bui').show()"
                                                                                oncomplete="PF('bui').hide()"
-                                                                               update=":setupForm:mainForm:setupTab, :msgBoxSystemMessagePanel"
+                                                                               update=":setupForm:mainForm:setupTab, :msgBoxSystemMessagePanel,
+                                                                                       :setupForm:mainForm:setupTab:warehouseAndLocationTable"
                                                                                binding="#{addWarehouseAndLocation}"/>
                                                           </td>
                                                       </tr>
@@ -139,7 +141,7 @@
                                                               <h:outputText value="Capacities (Pallets)"/>
                                                           </td>
                                                           <td >
-                                                              <p:spinner style="min-width: 200px; width: 200px; max-width: 200px;"
+                                                              <p:spinner id="capacity" style="min-width: 200px; width: 200px; max-width: 200px;"
                                                                          onkeydown="return onKeyDownMoney(event);"
                                                                          onkeypress="return onKeyPressMoney(event)"
                                                                          min="0"
@@ -149,7 +151,7 @@
                                                               </p:spinner>
                                                           </td>
                                                           <td class="center">
-                                                              <p:commandButton value="Show/Add Item"
+                                                              <p:commandButton id="btnShowAddItem" value="Show/Add Item"
                                                                                disabled="#{setup.flagBtnAddShowItem}"
                                                                                action="#{setup.actionTolocationDialog('AddItem')}"
                                                                                styleClass="medium"
@@ -159,6 +161,17 @@
                                                           </td>
                                                       </tr>
                                                       <tr>
+                                                          <td colspan="3">
+                                                              <p:inputText id="findKey" value="#{setup.keySearch}" style="width: 120px">
+                                                                  <p:ajax event="blur" update=":setupForm:mainForm:setupTab:findKey"/>
+                                                              </p:inputText>
+                                                              <p:commandButton id="btnsearch" icon="ui-icon-search"
+                                                                               onstart="PF('bui').show()"
+                                                                               oncomplete="PF('bui').hide()"
+                                                                               process="@form"
+                                                                               action="#{setup.btnWarehouseAndLocation('SearchLocation')}"
+                                                                               update=":setupForm:mainForm:setupTab:warehouseAndLocationTable"/>
+                                                          </td>
                                                           <td class="right" colspan="6">
                                                               <p:commandButton value="delete"
                                                                                id="btnDelete"
@@ -166,8 +179,8 @@
                                                                                styleClass="medium" style="width: 80px"
                                                                                icon="ui-icon-trash"
                                                                                onstart="PF('bui').show()"
-                                                                               action="#{setup.btnWarehouseAndLocation('Delect')}"
                                                                                oncomplete="PF('bui').hide()"
+                                                                               action="#{setup.btnWarehouseAndLocation('Delect')}"
                                                                                update=":setupForm:mainForm:setupTab, :msgBoxSystemMessagePanel"/>
                                                           </td>
                                                       </tr>
@@ -186,10 +199,20 @@
                                                                selectionMode="single"
                                                                selection="#{setup.msLocationModel}"
                                                                styleClass="full_table">
-                                                      <!--rowsPerPageTemplate="10,20,40,60"-->
                                                       <p:ajax event="rowSelect"
                                                               listener="#{setup.btnWarehouseAndLocation('ClickOnTable')}"
-                                                              update=":setupForm:mainForm:setupTab"/>
+                                                              update=":setupForm:mainForm:setupTab:modeWarehouse,
+                                                                      :setupForm:mainForm:setupTab:btnNewLocation,
+                                                                      :setupForm:mainForm:setupTab:btnSaveLocation,
+                                                                      :setupForm:mainForm:setupTab:warehouseMenu,
+                                                                      :setupForm:mainForm:setupTab:btnNewEditWarehouse,
+                                                                      :setupForm:mainForm:setupTab:mixChkBox,
+                                                                      :setupForm:mainForm:setupTab:locationBarcode,
+                                                                      :setupForm:mainForm:setupTab:locationRemark,
+                                                                      :setupForm:mainForm:setupTab:locationName,
+                                                                      :setupForm:mainForm:setupTab:capacity,
+                                                                      :setupForm:mainForm:setupTab:btnShowAddItem
+                                                                      :setupForm:mainForm:setupTab:btnDelete"/>
                                                       <p:column headerText="No" style="width: 20px" styleClass="center">
                                                           <h:outputLabel value="#{rowIndex+1}"/>
                                                       </p:column>
@@ -213,7 +236,7 @@
                                           </tr>
                                       </table>
                                   </p:tab>
-                                  <p:tab id="stockInoutTag" title="Stock In Out Note" closable="false">
+                                  <p:tab id="stockInoutTag" title="7.2 Stock In Out Note">
                                       <table id="stockInOutTB" border="0" style="width: 100%">
                                           <tr>
                                               <td>
@@ -228,7 +251,8 @@
                                                                                onstart="PF('bui').show()"
                                                                                oncomplete="PF('bui').hide()"
                                                                                styleClass="medium" style="width: 80px"
-                                                                               update=":setupForm:mainForm:setupTab"/>
+                                                                               update=":setupForm:mainForm:setupTab
+                                                                               :setupForm:mainForm:setupTab:stockInoutTable"/>
                                                           </td>
                                                           <td>
                                                               <p:commandButton id="btnSave" value="Save"
@@ -305,7 +329,7 @@
                                                                                onstart="PF('bui').show()"
                                                                                oncomplete="PF('bui').hide()"
                                                                                disabled="#{setup.flagBtnDeleteStock}"
-                                                                               update=":setupForm:mainForm:setupTab, :msgBoxSystemMessagePanel"/>
+                                                                               />
                                                           </td>
                                                       </tr>
                                                       <tr>

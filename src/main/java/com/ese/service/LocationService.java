@@ -76,7 +76,6 @@ public class LocationService extends Service{
         log.debug("onSaveToNew().");
 
         if (!Utils.isNull(locationView)){
-            MSLocationModel model = null;
             try {
                 if (Utils.isZero(locationView.getId())){
                     locationDAO.persist(locationTransform.transformToModel(locationView));
@@ -96,5 +95,12 @@ public class LocationService extends Service{
         } catch (Exception e) {
             log.error("{}",e);
         }
+    }
+
+    public List<MSLocationModel> searchOrderByCodeOrName(String key){
+        log.debug("searchOrderByCodeOrName(). {}", key);
+        List<MSLocationModel> msLocationModels = locationDAO.findOrderByLocationCodeOrLocationName(key);
+
+        return msLocationModels;
     }
 }
