@@ -12,7 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 @Transactional
@@ -62,6 +64,18 @@ public class LocationItemService extends Service{
                 try {
                     msLocationItemsDAO.persist(model);
                     msLocationItemsModels = msLocationItemsDAO.findByLocationId(msLocationModel.getId());
+                    Map<Integer, MSLocationItemsModel> hashMap = new HashMap();
+                    for(MSLocationItemsModel msLocationItemsModel : msLocationItemsModels){
+                        int key = msLocationItemsModel.getMsItemModel().getId();
+                        if (!hashMap.containsKey(key)){
+                            hashMap.put(key, msLocationItemsModel);
+                        } else {
+                            log.debug("Delete : {}", msLocationItemsModel.getId());
+                            msLocationItemsDAO.delete(msLocationItemsModel);
+                        }
+                    }
+                    log.debug("hashMap : {}", hashMap.toString());
+
                 } catch (Exception e) {
                     log.debug("Exception persist MSLocationItemModel : ", e);
                 }
