@@ -4,6 +4,7 @@ import com.ese.model.db.BarcodeRegisterModel;
 import com.ese.model.db.MSItemModel;
 import com.ese.model.view.BarcodeRegisterView;
 import com.ese.service.BarcodeRegisterService;
+import com.ese.utils.MessageDialog;
 import com.ese.utils.Utils;
 import lombok.Getter;
 import lombok.Setter;
@@ -163,6 +164,9 @@ public class BarcodeRegisterBean extends Bean{
         flagBtnSelect = true;
     }
 
+    public void preDelete(){
+        showDialog(MessageDialog.WARNING.getMessageHeader(), "The Barcode can not be use again. Please click Yes to confirm delete this Barcode.", "confirmClosePalletDlg");
+    }
     public void onDelete(){
         log.debug("-- onDelete()");
         try {

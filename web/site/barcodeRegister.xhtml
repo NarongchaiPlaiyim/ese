@@ -194,12 +194,13 @@
                                                      styleClass="medium" style="width: 80px"
                                                      icon="ui-icon-trash"
                                                      onstart="PF('bui').show()"
-                                                     action="#{barcodeRegisterBean.onDelete()}"
+                                                     action="#{barcodeRegisterBean.preDelete()}"
                                                      oncomplete="PF('bui').hide()"
                                                      update=":setupForm:barcodeRegisterTable,
                                                      :setupForm:btnDelete,
                                                      :msgBoxSystemMessagePanel,
                                                      :setupForm:barcodeRegisterTable,
+                                                     :confirmClosePalletPanel
                                                      "
                                             />
                                 </td>
@@ -283,6 +284,25 @@
                                              process="@this"
                                              update="setupForm"
                                              oncomplete="PF('msgBoxSystemMessageDlg').hide()"/>
+                        </td>
+                    </tr>
+                </table>
+            </p:confirmDialog>
+        </p:panel>
+        <p:panel id="confirmClosePalletPanel" styleClass="panel">
+            <p:confirmDialog id="confirmClosePalletDialog" widgetVar="confirmClosePalletDlg" width="350px"
+                             closable="false"
+                             header="#{barcodeRegisterBean.messageHeader}" message="#{barcodeRegisterBean.message}" >
+                <table border="0" style="width: 100%">
+                    <tr>
+                        <td colspan="100%" class="right">
+                            <p:commandButton value="Yes" action="#{barcodeRegisterBean.onDelete()}"
+                                             process="@this" update=":setupForm, :msgBoxSystemMessagePanel"
+                                             oncomplete="PF('confirmClosePalletDlg').hide()"/>
+                            <p:commandButton value="Cancel"
+                                             process="@this"
+                                             update=":setupForm"
+                                             oncomplete="PF('confirmClosePalletDlg').hide()"/>
                         </td>
                     </tr>
                 </table>
