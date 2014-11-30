@@ -235,32 +235,12 @@ public class SetupBean extends Bean{
         }
     }
 
-//    public List<MSItemModel> checkLocationItemToSave(List<MSItemModel> msItemModels){
-//        log.debug("checkLocationItemToSave Size : {}", msItemModels.size());
-//        log.debug(" msLocationItemsModelList Size : {}", msLocationItemsModelList.size());
-//        List<MSItemModel> itemModels = new ArrayList<MSItemModel>();
-//
-//        for (MSItemModel model : msItemModels){
-//            for (int i = 0 ; i < msLocationItemsModelList.size() ; i++){
-//                log.debug("--------- {}", model.getId());
-//                log.debug("@@@@@@@@@@@@@@@@@ {}", msLocationItemsModelList.get(i).getMsItemModel().getId());
-//                if (model.getId() == msLocationItemsModelList.get(i).getMsItemModel().getId()){
-//                    log.debug("########################");
-//                    msLocationItemsModelList.remove(i);
-//                }
-//            }
-//        }
-//
-//        log.debug("After Item Size : {}", msLocationItemsModelList.size());
-//        return msItemModels;
-//    }
-
     public void actionTolocationDialog(String target){
         log.debug("actionTolocationDialog().");
 
         if (target.equalsIgnoreCase("AddItem")){
             log.debug("locationItemDialog(). {}", msLocationModel.getId());
-
+            selectType = "";
             itemSearch = "";
             msItemModelList = new ArrayList<MSItemModel>();
             msLocationItemsModelList = locationItemService.findLocationItemByLocationId(msLocationModel.getId());
@@ -306,6 +286,8 @@ public class SetupBean extends Bean{
             showDialogSaved();
         } else if (target.equalsIgnoreCase("OnNewAndCancelStockInOutNote")){
             log.debug("onNewAndCancelStock()");
+            modeStock = "Mode(New)";
+            flagBtnDeleteStock = true;
             stockInOutNoteModel = new MSStockInOutNoteModel();
             stockInOutNoteView = new StockInOutNoteView();
         } else if (target.equalsIgnoreCase("OnSaveOrUpdateStockInOutNote")){
