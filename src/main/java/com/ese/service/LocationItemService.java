@@ -54,12 +54,14 @@ public class LocationItemService extends Service{
     public void addToLocationItemModel(List<MSItemModel> msItemModels, MSLocationModel msLocationModel){
         log.debug("addToLocationItemModel() {}, {}", msItemModels.size(),msLocationModel.toString());
         MSLocationItemsModel model = new MSLocationItemsModel();
+        List<MSLocationItemsModel> msLocationItemsModels = new ArrayList<MSLocationItemsModel>();
 
         if (Utils.isSafetyList(msItemModels)){
             for (MSItemModel msItemModel : msItemModels){
                 model = locationItemTransform.transformToModel(msItemModel, msLocationModel);
                 try {
                     msLocationItemsDAO.persist(model);
+                    msLocationItemsModels = msLocationItemsDAO.findByLocationId(msLocationModel.getId());
                 } catch (Exception e) {
                     log.debug("Exception persist MSLocationItemModel : ", e);
                 }
