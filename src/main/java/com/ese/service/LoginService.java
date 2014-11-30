@@ -69,7 +69,7 @@ public class LoginService extends Service{
 //            System.out.println(barcodeRegisterModelList.toString());
 //            System.out.println(barcodeRegisterModelList.size());
 //            System.out.println("Price is "+barcodeRegisterDAO.getPrice("I-0000100"));
-//            System.out.println(barcodeRegisterDAO.checkBarcode(startBarcode, finishBarcode));
+
 //            System.out.println(barcodeRegisterDAO.checkBarcode2(startBarcode, finishBarcode));
         } catch (Exception e) {
             System.err.println(e);

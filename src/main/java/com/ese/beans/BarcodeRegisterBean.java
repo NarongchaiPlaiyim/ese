@@ -93,26 +93,21 @@ public class BarcodeRegisterBean extends Bean{
     }
 
     private boolean mandate(){
-//        if(!mandateQty() && !mandateItem() && !mandateStartBarcode()){
-//            return true;
-//        } else {
-            if(mandateQty()){
-                setMessage("Qtr should be greater than 0.");
-                return false;
-            } else if(mandateItem()){
-                setMessage("Item should not be empty.");
-                return false;
-            } else if(mandateStartBarcode()){
-                setMessage("Start Barcode should be 10 characters.");
-                return false;
-            } else if (mandateDuplicateStartBarcode()) {
-                setMessage("Start Barcode or Finish Barcode is duplicate.");
-                return false;
-            } else {
-                return true;
-            }
-
-//        }
+        if(mandateQty()){
+            setMessage("Qtr should be greater than 0.");
+            return false;
+        } else if(mandateItem()){
+            setMessage("Item should not be empty.");
+            return false;
+        } else if(mandateStartBarcode()){
+            setMessage("Start Barcode should be 10 characters.");
+            return false;
+        } else if (mandateDuplicateStartBarcode()) {
+            setMessage("Start Barcode or Finish Barcode is duplicate.");
+            return false;
+        } else {
+            return true;
+        }
     }
 
     private boolean mandateQty(){

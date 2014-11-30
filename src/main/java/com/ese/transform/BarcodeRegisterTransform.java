@@ -45,7 +45,7 @@ public class BarcodeRegisterTransform {
         model.setRemark(view.getRemark());
         model.setCreateDate(view.getCreateDate());
         model.setCreateBy(view.getCreateBy());
-        model.setUpdateDate(view.getUpdateDate());
+        model.setUpdateDate(Utils.currentDate());
         model.setUpdateBy(view.getUpdateBy());
         model.setIsValid(view.getIsValid());
         model.setStatus(view.getStatus());
