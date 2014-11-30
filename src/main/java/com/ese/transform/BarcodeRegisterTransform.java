@@ -65,7 +65,6 @@ public class BarcodeRegisterTransform {
             model.setVersion(1);
             model.setStatus(1);
         }
-        System.out.println(model.getProductionDate());
         return model;
     }
 }

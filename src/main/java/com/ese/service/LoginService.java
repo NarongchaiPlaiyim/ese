@@ -57,9 +57,10 @@ public class LoginService extends Service{
     }
 
 
-    public void test(){
+    public void test(String startBarcode, String finishBarcode){
         try {
 
+            System.out.println("test");
 //            System.out.println(warehouseDAO.findByStatus2().toString()+"");
 //            System.out.println(locationItemsDAO.findLocationByItemId(58));
 //            System.out.println(locationDAO.getLocationModelList());
@@ -67,7 +68,9 @@ public class LoginService extends Service{
 //            List<BarcodeRegisterModel> barcodeRegisterModelList = barcodeRegisterDAO.findByIsValid();
 //            System.out.println(barcodeRegisterModelList.toString());
 //            System.out.println(barcodeRegisterModelList.size());
-            System.out.println("Price is "+barcodeRegisterDAO.getPrice("I-0000100"));
+//            System.out.println("Price is "+barcodeRegisterDAO.getPrice("I-0000100"));
+//            System.out.println(barcodeRegisterDAO.checkBarcode(startBarcode, finishBarcode));
+//            System.out.println(barcodeRegisterDAO.checkBarcode2(startBarcode, finishBarcode));
         } catch (Exception e) {
             System.err.println(e);
         }

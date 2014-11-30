@@ -39,6 +39,8 @@
 
                             <tr>
                                 <td colspan="5" class="right">
+                                    <h:outputText id="modeBarcode" value="#{barcodeRegisterBean.modeBarcode}"/>
+
                                     <p:commandButton id="btnPrint"
                                                      value="Print"
                                                      process="@form"
@@ -237,7 +239,7 @@
                                         <p:column headerText="Bacth No" style="min-width: 50px; width: 50px; max-width: 50px;" styleClass="center">
                                             <p:outputLabel value="#{barcodeModel.batchNo}"/>
                                         </p:column>
-                                        <p:column headerText="Qty" style="min-width: 10px; width: 10px; max-width: 10px;" styleClass="center">
+                                        <p:column headerText="Qty" style="min-width: 50px; width: 50px; max-width: 50px;" styleClass="center">
                                             <p:outputLabel value="#{barcodeModel.qty}"/>
                                         </p:column>
                                         <p:column headerText="Start Barcode" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">

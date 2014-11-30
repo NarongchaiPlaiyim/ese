@@ -61,10 +61,10 @@
     <logger name="com.ese" level="DEBUG"/>
     <logger name="org.springframework" level="INFO" />
     <logger name="org.hibernate" level="INFO"/>
-    <logger name="org.hibernate.type" level="ALL" additivity="false">
+    <logger name="org.hibernate.type" level="INFO" additivity="false">
         <appender-ref ref="STDOUT" />
     </logger>
-    <logger name="org.hibernate.SQL" level="DEBUG">
+    <logger name="org.hibernate.SQL" level="INFO">
         <appender-ref ref="FILE" />
     </logger>
 

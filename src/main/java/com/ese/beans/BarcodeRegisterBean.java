@@ -35,6 +35,8 @@ public class BarcodeRegisterBean extends Bean{
     private boolean flagQty;
     private boolean flagStartBarcode;
 
+    private String modeBarcode;
+
     @PostConstruct
     private void init(){
         preLoad();
@@ -45,6 +47,7 @@ public class BarcodeRegisterBean extends Bean{
         initField();
         onLoadDataTable();
         onClickButtonNew();
+
     }
 
     private void initField(){
@@ -75,6 +78,7 @@ public class BarcodeRegisterBean extends Bean{
         flagBtnEdit = true;
         flagBtnPrint = true;
         barcodeRegisterModel = new BarcodeRegisterModel();
+        modeBarcode = "Mode(New)     ";
     }
 
     public void calculator(){
@@ -125,7 +129,7 @@ public class BarcodeRegisterBean extends Bean{
     }
 
     private boolean mandateDuplicateStartBarcode(){
-        return barcodeRegisterService.isDuplicate(barcodeRegisterView.getStartBarcode(), barcodeRegisterView.getFinishBarcode());
+        return barcodeRegisterService.isDuplicate(barcodeRegisterView.getStartBarcode(), barcodeRegisterView.getFinishBarcode(), barcodeRegisterView.getId());
     }
 
     private boolean mandateItem(){
@@ -141,11 +145,7 @@ public class BarcodeRegisterBean extends Bean{
 
     public void onSubmitSearch(){
         log.debug("-- onSubmitSearch()");
-//        if(!Utils.isZero(productSearch.length())){
-            msItemModelList = barcodeRegisterService.findByCondition(selectType, productSearch);
-//        } else {
-//            msItemModelList = barcodeRegisterService.findAll();
-//        }
+        msItemModelList = barcodeRegisterService.findByCondition(selectType, productSearch);
     }
 
     public void onClickTableDialog(){
@@ -160,6 +160,7 @@ public class BarcodeRegisterBean extends Bean{
         flagBtnEdit = false;
         flagBtnPrint = false;
         barcodeRegisterView = barcodeRegisterService.convertToView(barcodeRegisterModel);
+        modeBarcode = "Mode(Edit)     ";
     }
 
     public void onClickSelectOnDialog(){

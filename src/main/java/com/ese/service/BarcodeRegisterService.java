@@ -119,9 +119,9 @@ public class BarcodeRegisterService extends Service{
         }
     }
 
-    public boolean isDuplicate(String startBarcode, String finishBarcode){
+    public boolean isDuplicate(String startBarcode, String finishBarcode, int id){
         try {
-            return barcodeRegisterDAO.checkBarcode(startBarcode, finishBarcode);
+            return barcodeRegisterDAO.checkBarcode(startBarcode, finishBarcode, id);
         } catch (Exception e) {
             log.error("{}", e);
             return true;
