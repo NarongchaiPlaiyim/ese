@@ -35,13 +35,13 @@ public class BarcodeRegisterModel extends AbstractModel {
     private String batchNo;
 
     @Column(name = "qty")
-    private String qty;
+    private int qty;
 
     @Column(name = "start_barcode")
-    private String startBarcode;
+    private int startBarcode;
 
     @Column(name = "finish_barcode")
-    private String finishBarcode;
+    private int finishBarcode;
 
     @Column(name = "start_barcode_text")
     private String startBarcodeText;

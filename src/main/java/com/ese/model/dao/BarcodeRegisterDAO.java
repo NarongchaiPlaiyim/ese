@@ -19,7 +19,7 @@ import java.util.List;
 @Repository
 public class BarcodeRegisterDAO extends GenericDAO<BarcodeRegisterModel, Integer> {
 
-    public boolean checkBarcode(String startBarcode, String finishBarcode, int id) throws Exception {
+    public boolean checkBarcode(int startBarcode, int finishBarcode, int id) throws Exception {
         Criteria criteria = getCriteria();
         criteria.add(Restrictions.or(
                 Restrictions.between("finishBarcode", startBarcode, finishBarcode),
