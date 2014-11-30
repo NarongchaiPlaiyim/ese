@@ -33,4 +33,35 @@ public class WarehouseDAO extends GenericDAO<MSWarehouseModel, Integer>{
             return new ArrayList<MSWarehouseModel>();
         }
     }
+
+    public MSWarehouseModel findCheckDelete(int warehouseId){
+        log.debug("findCheckDelete : {}", warehouseId);
+        MSWarehouseModel warehouseModel = null;
+
+        try {
+            Criteria criteria = getCriteria();
+            criteria.add(Restrictions.eq("id", warehouseId));
+            criteria.add(Restrictions.eq("isValid", 1));
+            warehouseModel = (MSWarehouseModel) criteria.uniqueResult();
+        } catch (Exception e) {
+            log.debug("Exception error findCheckDelete : ", e);
+        }
+
+        return warehouseModel;
+    }
+
+    public List<MSWarehouseModel> findByIsValidEnable(){
+        log.debug("findByIsValidEnable().");
+        List<MSWarehouseModel> warehouseModel = null;
+
+        try {
+            Criteria criteria = getCriteria();
+            criteria.add(Restrictions.eq("isValid", 1));
+            warehouseModel = criteria.list();
+        } catch (Exception e) {
+            log.debug("Exception error findCheckDelete : ", e);
+        }
+
+        return warehouseModel;
+    }
 }

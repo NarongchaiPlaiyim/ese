@@ -103,6 +103,13 @@ public class PalletService extends Service{
             PalletModel palletModel = palletDAO.findByID(palletManagementView.getId());
 
             palletDAO.updauePalletByChangeLocation(palletModel.getId(), model.getId());
+
+            if (palletModel.getStatus() == 3){
+                palletDAO.updateLocationByStatusPrinted(model.getId());
+            } else if (palletModel.getStatus() == 4){
+                palletDAO.updateLocationByStatusLocated(model.getId());
+            }
+
             palletDAO.updateLocationByChangeLocation(model.getId());
 
         } catch (Exception e) {

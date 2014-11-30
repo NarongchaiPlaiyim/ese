@@ -107,6 +107,38 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
         }
     }
 
+    public void updateLocationByStatusPrinted(int locationId){
+        log.debug("updateLocationByChangeLocation().");
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(" UPDATE ppwms03.dbo.location SET ppwms03.dbo.location.reserved_qty -= 1 ");
+        stringBuilder.append(" WHERE ppwms03.dbo.location.id = ").append("'").append(locationId).append("'");
+
+        log.debug("SQL Location : {}", stringBuilder.toString());
+
+        try {
+            SQLQuery q = getSession().createSQLQuery(stringBuilder.toString());
+            q.executeUpdate();
+        } catch (Exception e) {
+            log.debug("Exception : ", e);
+        }
+    }
+
+    public void updateLocationByStatusLocated(int locationId){
+        log.debug("updateLocationByChangeLocation().");
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(" UPDATE ppwms03.dbo.location SET ppwms03.dbo.location.qty -= 1 ");
+        stringBuilder.append(" WHERE ppwms03.dbo.location.id = ").append("'").append(locationId).append("'");
+
+        log.debug("SQL Location : {}", stringBuilder.toString());
+
+        try {
+            SQLQuery q = getSession().createSQLQuery(stringBuilder.toString());
+            q.executeUpdate();
+        } catch (Exception e) {
+            log.debug("Exception : ", e);
+        }
+    }
+
     public List<PalletManagemengModelReport> genSQLReportPallet(int palletId){
         log.debug("genSQLReportPallet(). {}", palletId);
         List<PalletManagemengModelReport> reportViews = new ArrayList<PalletManagemengModelReport>();

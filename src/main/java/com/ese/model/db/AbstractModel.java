@@ -17,14 +17,14 @@ import java.util.Date;
 @MappedSuperclass
 public class AbstractModel implements Serializable {
     @Column(name = "create_by")
-    private int createBy;
+    private Integer createBy;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_date")
     private Date createDate;
 
     @Column(name = "update_by")
-    private int updateBy;
+    private Integer updateBy;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "update_date")

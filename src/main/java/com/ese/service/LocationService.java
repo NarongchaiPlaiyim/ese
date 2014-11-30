@@ -66,10 +66,24 @@ public class LocationService extends Service{
         LocationView locationView = new LocationView();
 
         if (!Utils.isNull(msLocationModel)){
+//            if (Utils.isNull(checkWarehouse(msLocationModel.getId()))){
+//                List<MSWarehouseModel> warehouseModel = warehouseDAO.findByIsValidEnable();
+//
+//                if (Utils.isSafetyList(warehouseModel)){
+//                    msLocationModel.setMsWarehouseModel(warehouseModel.get(0));
+//                }
+//            }
+
             locationView = locationTransform.transformToView(msLocationModel);
         }
 
         return locationView;
+    }
+
+    public MSWarehouseModel checkWarehouse(int warehouseId){
+        log.debug("checkWarehouse : {}", warehouseId);
+
+        return warehouseDAO.findCheckDelete(warehouseId);
     }
 
     public void onSaveOrUpdateLocationToDB(LocationView locationView){
@@ -91,6 +105,13 @@ public class LocationService extends Service{
     public void delete(MSLocationModel model){
         log.debug("-- delete(id : {})", model.getId());
         try {
+            if (Utils.isNull(checkWarehouse(model.getMsWarehouseModel().getId()))){
+                List<MSWarehouseModel> warehouseModel = warehouseDAO.findByIsValidEnable();
+
+                if (Utils.isSafetyList(warehouseModel)){
+                    model.setMsWarehouseModel(warehouseModel.get(0));
+                }
+            }
             locationDAO.deleteByUpdate(model);
         } catch (Exception e) {
             log.error("{}",e);
@@ -99,7 +120,16 @@ public class LocationService extends Service{
 
     public List<MSLocationModel> searchOrderByCodeOrName(String key){
         log.debug("searchOrderByCodeOrName(). {}", key);
-        List<MSLocationModel> msLocationModels = locationDAO.findOrderByLocationCodeOrLocationName(key);
+        List<MSLocationModel> msLocationModels = null;
+        if (!Utils.isNull(key) && !Utils.isZero(key.length())){
+            msLocationModels = locationDAO.findOrderByLocationCodeOrLocationName(key);
+        } else {
+            try {
+                msLocationModels = locationDAO.getLocationOrderByUpdateDate();
+            } catch (Exception e) {
+                log.debug("Exception error searchOrderByCodeOrName : ", e);
+            }
+        }
 
         return msLocationModels;
     }
