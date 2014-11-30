@@ -9,22 +9,33 @@ import java.util.Date;
 
 public class main {
     public static void main(String[] args) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.getTime();
-        System.out.println(calendar.get(Calendar.YEAR) + "" + calendar.get(Calendar.WEEK_OF_YEAR));
-        System.out.println(calendar.getTime());
-        System.out.println("Current week of this year = " + calendar.get(Calendar.WEEK_OF_YEAR));
+        int ss = 55;
+        int ff = 57;
 
-        System.out.println("ssss \n ssss");
+        int s = 50;
+        int f = 60;
 
-        System.out.println(Utils.currentDate());
-//        System.out.println(Utils.getBatchNo());
+        for (int i = 0; i < 4; i++) {
+            System.out.println(i);
+            while (ss<=ff){
+                System.out.println(ss);
+                if(ss >= s && ss <= f){
+                    System.out.println(ss);
+                    return;
+                }
+                ss++;
+            }
+        }
 
-        DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
-        Date today = Calendar.getInstance().getTime();
-        String reportDate = df.format(today);
-        System.out.println("Report Date: " + reportDate);
 
+        System.out.println("DONE");
+
+
+//        for (int i = 0; i < 100; i++) {
+//            if(i >= s && i <= f){
+//                System.out.println(i);
+//            }
+//        }
 
     }
 

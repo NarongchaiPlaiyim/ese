@@ -39,6 +39,8 @@ public class LoginBean extends Bean{
     private String userName = "";
     private String password = "";
     private UserDetail userDetail;
+    private String s = "";
+    private String f = "";
 
     @PostConstruct
     private void init(){
@@ -84,7 +86,7 @@ public class LoginBean extends Bean{
 
     public void test(){
         System.out.println("test");
-//        loginService.test();
+        loginService.test(s, f);
     }
 
 

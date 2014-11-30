@@ -46,6 +46,15 @@ public class BarcodeRegisterService extends Service{
         }
     }
 
+    public List<MSItemModel> findAll(){
+        try {
+            return itemDAO.findAll();
+        } catch (Exception e) {
+            log.error("{}",e);
+            return Collections.EMPTY_LIST;
+        }
+    }
+
     public List<BarcodeRegisterModel> getByIsValid(){
         log.debug("-- getByIsValid()");
         try {
@@ -90,7 +99,8 @@ public class BarcodeRegisterService extends Service{
         log.debug("-- edit(BarcodeRegisterView.id[{}])", view.getId());
         try {
             view.setCost(barcodeRegisterDAO.getPrice(view.getMsItemModel().getItemId()));
-            barcodeRegisterDAO.update(barcodeRegisterTransform.transformToModel(view));
+            BarcodeRegisterModel model = barcodeRegisterTransform.transformToModel(view);
+            barcodeRegisterDAO.update(model);
         } catch (Exception e) {
             log.error("{}",e);
         }
@@ -109,11 +119,42 @@ public class BarcodeRegisterService extends Service{
         }
     }
 
-    public boolean isDuplicate(String startBarcode, String finishBarcode){
+    public boolean isDuplicate(String startBarcode, String finishBarcode, int id){
         try {
-            return barcodeRegisterDAO.checkBarcode(startBarcode, finishBarcode);
+            boolean result = false;
+            List<BarcodeRegisterModel> barcodeRegisterModelList = getByIsValid();//  barcodeRegisterDAO.findByNeId(id);
+            System.out.println(barcodeRegisterModelList.size());
+            int start = Utils.parseInt(startBarcode, 0);
+            int finish = Utils.parseInt(finishBarcode, 0);
+//            System.out.println("VIEW "+start + " : "+ finish);
+            for (BarcodeRegisterModel model : barcodeRegisterModelList){
+//                System.out.println("ID "+model.getId() + " : "+ id);
+                if(model.getId() != id){
+                    int startM = Utils.parseInt(model.getStartBarcode(), 0);
+                    int finishM = Utils.parseInt(model.getFinishBarcode(), 0);
+//                    System.out.println("MODEL "+startM + " : "+ finishM);
+
+                    while (start<=finish){
+//                        System.out.println("start : "+start);
+                        while (startM<=finishM){
+//                            System.out.println("startM : "+startM);
+                            if(start == startM){
+//                                System.out.println("Matched : "+start);
+                                return true;
+                            }
+                            startM++;
+                        }
+                        startM = Utils.parseInt(model.getStartBarcode(), 0);
+                        start++;
+                    }
+                    start = Utils.parseInt(startBarcode, 0);
+
+                }
+
+            }
+            return result;
         } catch (Exception e) {
-            log.error("{}",e);
+            log.error("{}", e);
             return true;
         }
     }

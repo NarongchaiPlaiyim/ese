@@ -18,13 +18,8 @@ import java.util.List;
 
 @Repository
 public class BarcodeRegisterDAO extends GenericDAO<BarcodeRegisterModel, Integer> {
-
-    public boolean checkBarcode(String startBarcode, String finishBarcode) throws Exception {
-        return isRecordExist(Restrictions.and(Restrictions.lt("finishBarcode", finishBarcode), Restrictions.ge("startBarcode", startBarcode)));
-    }
-
     public List<BarcodeRegisterModel> findByIsValid() throws Exception {
-        Criteria criteria = getCriteria().add(Restrictions.eq("isValid", 1)).addOrder(Order.asc("updateDate"));
+        Criteria criteria = getCriteria().add(Restrictions.eq("isValid", 1)).addOrder(Order.desc("updateDate"));
         return Utils.safetyList(criteria.list());
     }
 

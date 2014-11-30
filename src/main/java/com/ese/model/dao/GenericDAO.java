@@ -45,7 +45,7 @@ public abstract class GenericDAO<T, ID extends Serializable> implements Serializ
     }
 
     public T update(T entity) throws Exception {
-        getSession().update(entity);
+        getSession().saveOrUpdate(entity);
         return entity;
     }
 
@@ -59,6 +59,7 @@ public abstract class GenericDAO<T, ID extends Serializable> implements Serializ
 
     protected List<T> findByCriteria(Criterion... criterions) throws Exception {
         Criteria crit = getCriteria();
+//        crit.setMaxResults(1000);
         for (Criterion c : criterions) {
             crit.add(c);
         }
@@ -85,7 +86,6 @@ public abstract class GenericDAO<T, ID extends Serializable> implements Serializ
 
     public boolean isRecordExist(Criterion... criterions) throws Exception {
         List<T> list = findByCriteria(criterions);
-        System.out.println("list.size() : "+list.size());
         return list.size()>0;
     }
 

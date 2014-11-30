@@ -35,6 +35,8 @@ public class BarcodeRegisterBean extends Bean{
     private boolean flagQty;
     private boolean flagStartBarcode;
 
+    private String modeBarcode;
+
     @PostConstruct
     private void init(){
         preLoad();
@@ -45,6 +47,7 @@ public class BarcodeRegisterBean extends Bean{
         initField();
         onLoadDataTable();
         onClickButtonNew();
+
     }
 
     private void initField(){
@@ -64,6 +67,7 @@ public class BarcodeRegisterBean extends Bean{
     private void onLoadDataTable(){
         barcodeRegisterModelList = barcodeRegisterService.getByIsValid();
         log.debug("-- onLoadDataTable() returned size = {}", barcodeRegisterModelList.size());
+        barcodeRegisterModel = new BarcodeRegisterModel();
     }
 
     public void onClickButtonNew(){
@@ -72,6 +76,9 @@ public class BarcodeRegisterBean extends Bean{
         flagBtnDelete = true;
         flagBtnSave = false;
         flagBtnEdit = true;
+        flagBtnPrint = true;
+        barcodeRegisterModel = new BarcodeRegisterModel();
+        modeBarcode = "Mode(New)     ";
     }
 
     public void calculator(){
@@ -86,26 +93,21 @@ public class BarcodeRegisterBean extends Bean{
     }
 
     private boolean mandate(){
-//        if(!mandateQty() && !mandateItem() && !mandateStartBarcode()){
-//            return true;
-//        } else {
-            if(mandateQty()){
-                setMessage("Qtr should be greater than 0.");
-                return false;
-            } else if(mandateItem()){
-                setMessage("Item should not be empty.");
-                return false;
-            } else if(mandateStartBarcode()){
-                setMessage("Start Barcode should be 9 characters.");
-                return false;
-            } else if (mandateDuplicateStartBarcode()) {
-                setMessage("Start Barcode or Finish Barcode is duplicate.");
-                return false;
-            } else {
-                return true;
-            }
-
-//        }
+        if(mandateQty()){
+            setMessage("Qtr should be greater than 0.");
+            return false;
+        } else if(mandateItem()){
+            setMessage("Item should not be empty.");
+            return false;
+        } else if(mandateStartBarcode()){
+            setMessage("Start Barcode should be 10 characters.");
+            return false;
+        } else if (mandateDuplicateStartBarcode()) {
+            setMessage("Start Barcode or Finish Barcode is duplicate.");
+            return false;
+        } else {
+            return true;
+        }
     }
 
     private boolean mandateQty(){
@@ -122,7 +124,7 @@ public class BarcodeRegisterBean extends Bean{
     }
 
     private boolean mandateDuplicateStartBarcode(){
-        return barcodeRegisterService.isDuplicate(barcodeRegisterView.getStartBarcode(), barcodeRegisterView.getFinishBarcode());
+        return barcodeRegisterService.isDuplicate(barcodeRegisterView.getStartBarcode(), barcodeRegisterView.getFinishBarcode(), barcodeRegisterView.getId());
     }
 
     private boolean mandateItem(){
@@ -138,9 +140,7 @@ public class BarcodeRegisterBean extends Bean{
 
     public void onSubmitSearch(){
         log.debug("-- onSubmitSearch()");
-        if(!Utils.isZero(productSearch.length())){
-            msItemModelList = barcodeRegisterService.findByCondition(selectType, productSearch);
-        }
+        msItemModelList = barcodeRegisterService.findByCondition(selectType, productSearch);
     }
 
     public void onClickTableDialog(){
@@ -155,6 +155,7 @@ public class BarcodeRegisterBean extends Bean{
         flagBtnEdit = false;
         flagBtnPrint = false;
         barcodeRegisterView = barcodeRegisterService.convertToView(barcodeRegisterModel);
+        modeBarcode = "Mode(Edit)     ";
     }
 
     public void onClickSelectOnDialog(){

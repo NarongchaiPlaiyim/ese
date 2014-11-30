@@ -20,12 +20,12 @@
             <div id="main_container" >
                 <h:form id="setupForm">
                     <div class="body_lpane" style="width: 200px">
-                        <a class="step_border_selected" href="barcodeRegister.xhtml">Barcode Register</a>
-                        <a class="step_border_select" href="palletManagement.xhtml">Pallet Manegement</a>
-                        <a class="step_border_select" href="setup.xhtml">Setup</a>
+                        <a class="step_border_selected" href="barcodeRegister.xhtml">1. Barcode Register</a>
+                        <a class="step_border_select" href="palletManagement.xhtml">2. Pallet Tag Printing</a>
+                        <a class="step_border_select" href="setup.xhtml">7. Setup</a>
                     </div>
                     <div class="body_rpane" style="width: 80%">
-                        <label class="subject">Barcode Register</label>
+                        <label class="subject">1. Barcode Register</label>
                         <table border="0" class="content_table_form">
                             <tr >
                                 <td style="min-width: 100px; width: 100px; max-width: 100px;" class="left" />
@@ -39,6 +39,8 @@
 
                             <tr>
                                 <td colspan="5" class="right">
+                                    <h:outputText id="modeBarcode" value="#{barcodeRegisterBean.modeBarcode}"/>
+
                                     <p:commandButton id="btnPrint"
                                                      value="Print"
                                                      process="@form"
@@ -47,7 +49,7 @@
                                                      action="#{barcodeRegisterBean.onPrint}"
                                                      ajax="false"/>
 
-                                    <p:commandButton value="New" action="#{barcodeRegisterBean.onClickButtonNew()}" update="@form" />
+                                    <p:commandButton value="New" action="#{barcodeRegisterBean.onClickButtonNew()}" update="@form, :setupForm:barcodeRegisterTable" />
 
                                     <p:commandButton value="Save"
                                                      id="btnSave"
@@ -151,10 +153,9 @@
                                 <td colspan="2">
                                     <p:calendar value="#{barcodeRegisterBean.barcodeRegisterView.documentDate}"
                                                 id="docDateLabel"
-                                                readonly="true"
                                                 pattern="dd/MM/yyyy"
                                             showOn="button"      >
-                                        <f:convertDateTime pattern="dd/MM/yyyy" locale="en_EN"/>
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
                                     </p:calendar>
                                 </td>
                                 <td>
@@ -197,7 +198,8 @@
                                                      oncomplete="PF('bui').hide()"
                                                      update=":setupForm:barcodeRegisterTable,
                                                      :setupForm:btnDelete,
-                                                     :msgBoxSystemMessagePanel
+                                                     :msgBoxSystemMessagePanel,
+                                                     :setupForm:barcodeRegisterTable,
                                                      "
                                             />
                                 </td>
@@ -218,7 +220,7 @@
                                                  rowIndexVar="rowIndex">
                                         <p:ajax event="rowSelect" update=":setupForm" listener="#{barcodeRegisterBean.onClickTable()}"/>
                                         <p:column headerText="No" style="min-width: 5px; width: 5px; max-width: 5px;">
-                                            <p:outputLabel value="#{rowIndex+1}" styleClass="center"/>
+                                            <p:outputLabel value="#{rowIndex+1}" styleClass="center" />
                                         </p:column>
                                         <p:column headerText="Item Code" style="min-width: 60px; width: 60px; max-width: 60px;" styleClass="center">
                                             <p:outputLabel value="#{barcodeModel.msItemModel.itemId}"/>
@@ -237,7 +239,7 @@
                                         <p:column headerText="Bacth No" style="min-width: 50px; width: 50px; max-width: 50px;" styleClass="center">
                                             <p:outputLabel value="#{barcodeModel.batchNo}"/>
                                         </p:column>
-                                        <p:column headerText="Qty" style="min-width: 10px; width: 10px; max-width: 10px;" styleClass="center">
+                                        <p:column headerText="Qty" style="min-width: 50px; width: 50px; max-width: 50px;" styleClass="center">
                                             <p:outputLabel value="#{barcodeModel.qty}"/>
                                         </p:column>
                                         <p:column headerText="Start Barcode" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
