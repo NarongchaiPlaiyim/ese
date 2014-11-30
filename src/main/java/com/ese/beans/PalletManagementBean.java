@@ -131,6 +131,7 @@ public class PalletManagementBean extends Bean implements Serializable {
         setMessage(MessageDialog.UPDATE.getMessage());
         setMessageHeader(MessageDialog.UPDATE.getMessageHeader());
         onCreation();
+        statusOnShow = 0;
     }
 
     public void callReport() {
@@ -148,6 +149,7 @@ public class PalletManagementBean extends Bean implements Serializable {
             log.debug("Qty > 0");
             showDialogError("Qty > 0");
         }
+        statusOnShow = 0;
     }
 
     public void changStatusOnClosePallet(String redirect){

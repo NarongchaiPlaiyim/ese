@@ -91,8 +91,8 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
         }
     }
 
-    public void updateLocationByChangeLocation(int locationId){
-        log.debug("updateLocationByChangeLocation().");
+    public void updateLocationByOld(int locationId){
+        log.debug("updateLocationByOld().");
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(" UPDATE ppwms03.dbo.location SET ppwms03.dbo.location.reserved_qty += 1 ");
         stringBuilder.append(" WHERE ppwms03.dbo.location.id = ").append("'").append(locationId).append("'");
@@ -107,8 +107,24 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
         }
     }
 
+    public void updateLocationByNew(int locationId){
+        log.debug("updateLocationByNew().");
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(" UPDATE ppwms03.dbo.location SET ppwms03.dbo.location.reserved_qty -= 1 ");
+        stringBuilder.append(" WHERE ppwms03.dbo.location.id = ").append("'").append(locationId).append("'");
+
+        log.debug("SQL Location : {}", stringBuilder.toString());
+
+        try {
+            SQLQuery q = getSession().createSQLQuery(stringBuilder.toString());
+            q.executeUpdate();
+        } catch (Exception e) {
+            log.debug("Exception : ", e);
+        }
+    }
+
     public void updateLocationByStatusPrinted(int locationId){
-        log.debug("updateLocationByChangeLocation().");
+        log.debug("updateLocationByStatusPrinted().");
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(" UPDATE ppwms03.dbo.location SET ppwms03.dbo.location.reserved_qty -= 1 ");
         stringBuilder.append(" WHERE ppwms03.dbo.location.id = ").append("'").append(locationId).append("'");
@@ -124,7 +140,7 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
     }
 
     public void updateLocationByStatusLocated(int locationId){
-        log.debug("updateLocationByChangeLocation().");
+        log.debug("updateLocationByStatusLocated().");
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(" UPDATE ppwms03.dbo.location SET ppwms03.dbo.location.qty -= 1 ");
         stringBuilder.append(" WHERE ppwms03.dbo.location.id = ").append("'").append(locationId).append("'");

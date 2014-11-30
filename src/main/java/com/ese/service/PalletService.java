@@ -86,7 +86,6 @@ public class PalletService extends Service{
     public void onPrintTag(int palletId){
         String printTagReportname = Utils.convertToStringDDMMYYYY(new Date()) + "_PrintTag";
         List<PalletManagemengModelReport> reportViews = palletDAO.genSQLReportPallet(palletId);
-//        List<PalletManagementViewReport> palletManagementViewReports = palletManagementTransform.transformSQL(reportViews);
         log.debug("reportViews {}", reportViews.size());
         HashMap map = new HashMap<String, Object>();
         try {
@@ -105,12 +104,14 @@ public class PalletService extends Service{
             palletDAO.updauePalletByChangeLocation(palletModel.getId(), model.getId());
 
             if (palletModel.getStatus() == 3){
-                palletDAO.updateLocationByStatusPrinted(model.getId());
-            } else if (palletModel.getStatus() == 4){
+                palletDAO.updateLocationByStatusPrinted(palletModel.getMsLocationModel().getId());
+            } else {
                 palletDAO.updateLocationByStatusLocated(model.getId());
             }
 
-            palletDAO.updateLocationByChangeLocation(model.getId());
+            //บวกของใหม่  ลบของเก่า
+            palletDAO.updateLocationByOld(model.getId());
+//            palletDAO.updateLocationByNew(palletModel.getMsLocationModel().getId());
 
         } catch (Exception e) {
             log.debug("Exception : {}", e);

@@ -115,11 +115,11 @@ public class SetupBean extends Bean{
         stockInOutNoteModelList = stockInOutNoteService.getStockInOutNoteAll();
     }
 
-    private boolean checkLocationCode(int warehouseCode, String locationCode){
-        log.debug("----- {}, -----{}",warehouseCode,locationCode);
+    private boolean checkLocationCode(LocationView locationView){
+        log.debug("checkLocationCode {}",locationView);
 
         for (MSLocationModel model : msLocationModelList){
-            if (locationCode.equalsIgnoreCase(model.getLocationBarcode()) && warehouseCode == model.getMsWarehouseModel().getId()){
+            if (locationView.getLocationBarcode().equalsIgnoreCase(model.getLocationBarcode()) && locationView.getWarehouseModel().getId() == model.getMsWarehouseModel().getId()){
                 return false;
             }
         }
@@ -133,7 +133,7 @@ public class SetupBean extends Bean{
 
             try {
 
-                if (checkLocationCode(locationView.getWarehouseModel().getId(), locationView.getLocationBarcode())){
+                if (checkLocationCode(locationView)){
                     locationService.onSaveOrUpdateLocationToDB(locationView);
                     msLocationModel = new MSLocationModel();
 
