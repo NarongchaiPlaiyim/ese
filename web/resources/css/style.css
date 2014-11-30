@@ -16,8 +16,11 @@ html {
 .body_lpane {
     display: inline;
     float: left;
-    padding: 10px 0px 0px 0px;
-    width: 150px;
+    width: 160px;
+    min-width: 160px;
+    max-width: 160px;
+    background-color: #D1D1D1;
+    height: 100%;
 }
 
 .body_rpane {
