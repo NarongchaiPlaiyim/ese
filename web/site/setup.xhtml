@@ -21,6 +21,7 @@
                         <a class="step_border_select" href="barcodeRegister.xhtml">1. Barcode Register</a>
                         <a class="step_border_select" href="palletManagement.xhtml">2. Pallet Tag Printing</a>
                         <a class="step_border_selected" href="setup.xhtml">7. Setup</a>
+                        <a class="step_border_select" href="userManagement.xhtml">8. User Management</a>
                         <!--<p:menu style="min-width: 150px; width: 150px; max-width: 150px; height: 150%;">-->
                             <!--<p:menuitem value="1. Barcode Register" url="barcodeRegister.xhtml" icon="ui-icon-calculator"  />-->
                             <!--<p:menuitem value="2. Pallet Tag Printing" url="palletManagement.xhtml" icon="ui-icon-plus"/>-->
@@ -93,7 +94,7 @@
                                                           <td >
                                                               <p:commandButton id="btnNewEditWarehouse" value="New/Edit"
                                                                                icon="ui-icon-folder-open"
-                                                                               styleClass="medium" style="width: 80px"
+                                                                               styleClass="medium" style="width: 80px; min-width: 80px; max-width: 80px"
                                                                                disabled="#{setup.flagBtnAddEdit}"
                                                                                action="#{setup.warehouseDlg('ADD')}"
                                                                                update=":warehouseDialogForm"
@@ -160,7 +161,7 @@
                                                           <td class="center">
                                                               <p:commandButton id="btnShowAddItem" value="Show/Add"
                                                                                icon="ui-icon-folder-open"
-                                                                               styleClass="medium" style="width: 80px"
+                                                                               styleClass="medium" style="width: 80px; min-width: 80px; max-width: 80px"
                                                                                disabled="#{setup.flagBtnAddShowItem}"
                                                                                action="#{setup.actionTolocationDialog('AddItem')}"
                                                                                update=":itemForm"
@@ -221,23 +222,23 @@
                                                                       :setupForm:mainForm:setupTab:capacity,
                                                                       :setupForm:mainForm:setupTab:btnShowAddItem
                                                                       :setupForm:mainForm:setupTab:btnDelete"/>
-                                                      <p:column headerText="No" style="width: 20px" styleClass="center">
-                                                          <h:outputLabel value="#{rowIndex+1}"/>
+                                                      <p:column headerText="No" style="width: 20px; min-width: 20px; max-width: 20px" styleClass="center">
+                                                          <h:outputText value="#{rowIndex+1}"/>
                                                       </p:column>
-                                                      <p:column headerText="Warehouse" style="width: 200px" styleClass="center">
-                                                          <h:outputLabel value="#{location.msWarehouseModel.warehouseCode}"/>
+                                                      <p:column headerText="Warehouse" style="width: 60px; min-width: 60px; max-width: 60px" styleClass="center">
+                                                          <h:outputText value="#{location.msWarehouseModel.warehouseCode}"/>
                                                       </p:column>
-                                                      <p:column headerText="Location Code" style="width: 200px" styleClass="center">
-                                                          <h:outputLabel value="#{location.locationBarcode}"/>
+                                                      <p:column headerText="Location Code" style="width: 60px; min-width: 60px; max-width: 60px" styleClass="center">
+                                                          <h:outputText value="#{location.locationBarcode}"/>
                                                       </p:column>
-                                                      <p:column headerText="Location Name" style="width: 200px" styleClass="center">
-                                                          <h:outputLabel value="#{location.locationName}"/>
+                                                      <p:column headerText="Location Name" style="width: 60px; min-width: 60px; max-width: 60px" styleClass="center">
+                                                          <h:outputText value="#{location.locationName}"/>
                                                       </p:column>
-                                                      <p:column headerText="Capacities (Pallet)" style="width: 200px" styleClass="center">
-                                                          <h:outputLabel value="#{location.capacity}"/>
+                                                      <p:column headerText="Capacities (Pallet)" style="width: 60px; min-width: 60px; max-width: 60px" styleClass="center">
+                                                          <h:outputText value="#{location.capacity}"/>
                                                       </p:column>
-                                                      <p:column headerText="Remark" styleClass="center">
-                                                          <h:outputLabel value="#{location.remark}"/>
+                                                      <p:column headerText="Remark" styleClass="center" style="width: 200px; min-width: 200px; max-width: 200px">
+                                                          <h:outputText value="#{location.remark}" style="word-wrap:break-word;"/>
                                                       </p:column>
                                                   </p:dataTable>
                                               </td>
@@ -363,16 +364,16 @@
                                                                           :setupForm:mainForm:setupTab:inoutNote,
                                                                           :setupForm:mainForm:setupTab:btnDeleteStock"/>
                                                                   <p:column headerText="No" style="width: 20px" styleClass="center">
-                                                                      <h:outputLabel value="#{rowIndex2+1}"/>
+                                                                      <h:outputText value="#{rowIndex2+1}"/>
                                                                   </p:column>
                                                                   <p:column headerText="Type" style="width: 200px" styleClass="center">
-                                                                      <h:outputLabel value="#{stockInOutNote.type}"/>
+                                                                      <h:outputText value="#{stockInOutNote.type}"/>
                                                                   </p:column>
                                                                   <p:column headerText="Code" style="width: 200px" styleClass="center">
-                                                                      <h:outputLabel value="#{stockInOutNote.inoutCode}"/>
+                                                                      <h:outputText value="#{stockInOutNote.inoutCode}"/>
                                                                   </p:column>
                                                                   <p:column headerText="Note" styleClass="center">
-                                                                      <h:outputLabel value="#{stockInOutNote.inoutNote}"/>
+                                                                      <h:outputText value="#{stockInOutNote.inoutNote}"/>
                                                                   </p:column>
                                                               </p:dataTable>
                                                           </td>

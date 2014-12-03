@@ -21,6 +21,7 @@
                         <a class="step_border_select" href="barcodeRegister.xhtml">1. Barcode Register</a>
                         <a class="step_border_selected" href="palletManagement.xhtml">2. Pallet Tag Printing</a>
                         <a class="step_border_select" href="setup.xhtml">7. Setup</a>
+                        <a class="step_border_select" href="userManagement.xhtml">8. User Management</a>
                         <!--<p:menu style="min-width: 150px; width: 150px; max-width: 150px; height: 150%;">-->
                             <!--<p:menuitem value="1. Barcode Register" url="barcodeRegister.xhtml" icon="ui-icon-calculator"  />-->
                             <!--<p:menuitem value="2. Pallet Tag Printing" url="palletManagement.xhtml" icon="ui-icon-plus"/>-->
@@ -132,39 +133,39 @@
                                         <p:ajax event="rowSelect" update=":palletForm:palletManagementTable, :palletForm:btnFindlocation, :palletForm:btnPrintTag ,:palletForm:btnClosePallet"
                                                 listener="#{palletManagement.onClickPalletTB}"/>
                                         <p:column headerText="No" style="width: 20px" styleClass="center">
-                                            <h:outputLabel value="#{rowIndex+1}"/>
+                                            <h:outputText value="#{rowIndex+1}"/>
                                         </p:column>
                                         <p:column headerText="Convenyor Line " style="width: 70px; max-width: 70px; min-width: 70px" styleClass="center">
-                                            <h:outputLabel value="#{palletView.convetorLine.name}" />
+                                            <h:outputText value="#{palletView.convetorLine.name}" />
                                         </p:column>
                                         <p:column headerText="Warehouse" style="width: 70px; max-width: 70px; min-width: 70px" styleClass="center">
-                                            <h:outputLabel value="#{palletView.warehouseModel.warehouseCode}"/>
+                                            <h:outputText value="#{palletView.warehouseModel.warehouseCode}"/>
                                         </p:column>
                                         <p:column headerText="Item" style="width: 80px; max-width: 80px; min-width: 80px" styleClass="center">
-                                            <h:outputLabel value="#{palletView.itemModel.itemName}"/>
+                                            <h:outputText value="#{palletView.itemModel.itemName}"/>
                                         </p:column>
                                         <p:column headerText="Description" style="width: 115px; max-width: 115px; min-width: 115px" styleClass="center">
-                                            <h:outputLabel value="#{palletView.itemModel.DSGThaiItemDescription}"/>
+                                            <h:outputText value="#{palletView.itemModel.DSGThaiItemDescription}"/>
                                         </p:column>
                                         <p:column headerText="Pallet TAG ID" style="width: 150px" styleClass="center">
-                                            <h:outputLabel value="#{palletView.palletBarcode}"/>
+                                            <h:outputText value="#{palletView.palletBarcode}"/>
                                         </p:column>
                                         <p:column headerText="Datetime" style="width: 100px" styleClass="center">
-                                            <h:outputLabel value="#{palletView.createDate}">
+                                            <h:outputText value="#{palletView.createDate}">
                                                 <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" locale="en-EN"/>
-                                            </h:outputLabel>
+                                            </h:outputText>
                                         </p:column>
                                         <p:column headerText="Location" style="width: 80px" styleClass="center">
-                                            <h:outputLabel value="#{palletView.locationModel.locationBarcode}"/>
+                                            <h:outputText value="#{palletView.locationModel.locationBarcode}"/>
                                         </p:column>
                                         <p:column headerText="Capacity" style="width: 60px; max-width: 60px; min-width: 60px" styleClass="center">
-                                            <h:outputLabel value="#{palletView.capacity}"/>
+                                            <h:outputText value="#{palletView.capacity}"/>
                                         </p:column>
                                         <p:column headerText="Qty" style="width: 50px" styleClass="center">
-                                            <h:outputLabel value="#{palletView.qty}"/>
+                                            <h:outputText value="#{palletView.qty}"/>
                                         </p:column>
                                         <p:column headerText="Status" style="width: 120px" styleClass="center">
-                                            <h:outputLabel value="#{palletView.status.name}"/>
+                                            <h:outputText value="#{palletView.status.name}"/>
                                         </p:column>
                                     </p:dataTable>
                                 </td>
