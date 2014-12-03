@@ -94,14 +94,18 @@
                            <tr>
                                <td class="center">
                                    <p:commandButton value="Add"
+                                                    styleClass="medium" style="width: 80px"
+                                                    icon="ui-icon-seek-next"
                                                     update=":msgBoxSystemMessageDialog, :itemForm, :itemForm:searchItemTable"
                                                     action="#{setup.actionTolocationDialog('AddToLocation')}"
-                                                    style="width: 65px; min-width: 65px; max-width: 65px"/>
+                                                    />
                                </td>
                            </tr>
                            <tr>
                                <td>
                                    <p:commandButton value="Remove"
+                                                    styleClass="medium" style="width: 80px"
+                                                    icon="ui-icon-seek-prev"
                                                     update=":msgBoxSystemMessageDialog, :itemForm:locationTable"
                                                     action="#{setup.actionTolocationDialog('Remove')}"/>
                                </td>

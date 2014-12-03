@@ -54,6 +54,7 @@
                                                               <p:commandButton id="btnSaveLocation" value="Save" styleClass="medium" style="width: 80px"
                                                                                action="#{setup.btnWarehouseAndLocation('SaveOrUpdate')}"
                                                                                process="@form"
+                                                                               icon="ui-icon-check"
                                                                                onstart="PF('bui').show()"
                                                                                oncomplete="PF('bui').hide()"
                                                                                update=":setupForm:mainForm:setupTab, :msgBoxSystemMessagePanel,
@@ -91,7 +92,8 @@
                                                           </td>
                                                           <td >
                                                               <p:commandButton id="btnNewEditWarehouse" value="New/Edit"
-                                                                               styleClass="medium"
+                                                                               icon="ui-icon-folder-open"
+                                                                               styleClass="medium" style="width: 80px"
                                                                                disabled="#{setup.flagBtnAddEdit}"
                                                                                action="#{setup.warehouseDlg('ADD')}"
                                                                                update=":warehouseDialogForm"
@@ -156,10 +158,11 @@
                                                               </p:spinner>
                                                           </td>
                                                           <td class="center">
-                                                              <p:commandButton id="btnShowAddItem" value="Show/Add Item"
+                                                              <p:commandButton id="btnShowAddItem" value="Show/Add"
+                                                                               icon="ui-icon-folder-open"
+                                                                               styleClass="medium" style="width: 80px"
                                                                                disabled="#{setup.flagBtnAddShowItem}"
                                                                                action="#{setup.actionTolocationDialog('AddItem')}"
-                                                                               styleClass="medium"
                                                                                update=":itemForm"
                                                                                oncomplete="PF('itemDlg').show()">
                                                                </p:commandButton>
@@ -178,7 +181,7 @@
                                                                                update=":setupForm:mainForm:setupTab:warehouseAndLocationTable"/>
                                                           </td>
                                                           <td class="right" colspan="6">
-                                                              <p:commandButton value="delete"
+                                                              <p:commandButton value="Delete"
                                                                                id="btnDelete"
                                                                                disabled="#{setup.flagBtnDelete}"
                                                                                styleClass="medium" style="width: 80px"
@@ -266,6 +269,7 @@
                                                                                onstart="PF('bui').show()"
                                                                                oncomplete="PF('bui').hide()"
                                                                                binding="#{addStockInOutNote}"
+                                                                               icon="ui-icon-check"
                                                                                update=":setupForm:mainForm:setupTab, :msgBoxSystemMessagePanel"/>
                                                           </td>
                                                       </tr>
@@ -329,6 +333,7 @@
                                                       <tr>
                                                           <td class="right" colspan="6">
                                                               <p:commandButton id="btnDeleteStock" value="Delete"
+                                                                               icon="ui-icon-trash"
                                                                                styleClass="medium" style="width: 80px"
                                                                                action="#{setup.actionInStockInOutNote('OnDeleteStockInOutNote')}"
                                                                                onstart="PF('bui').show()"
@@ -420,7 +425,9 @@
                 <table border="0" style="width: 100%">
                     <tr>
                         <td colspan="100%" class="right">
-                            <p:commandButton value="OK"
+                            <p:commandButton value="Ok"
+                                             styleClass="medium" style="width: 80px"
+                                             icon="ui-icon-check"
                                              process="@this"
                                              update="setupForm"
                                              oncomplete="PF('msgBoxSystemMessageDlg').hide()"/>

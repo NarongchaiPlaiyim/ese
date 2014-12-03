@@ -14,7 +14,10 @@
                 <table border="0">
                     <tr>
                         <td class="right">
-                            <p:commandButton id="btnFindLocation" value="Select Location" update=":findlocationForm:btnFindLocation, :msgBoxSystemMessageDialog, :palletForm"
+                            <p:commandButton id="btnFindLocation" value="Select"
+                                             icon="ui-icon-folder-open"
+                                             styleClass="medium" style="width: 80px"
+                                             update=":findlocationForm:btnFindLocation, :msgBoxSystemMessageDialog, :palletForm"
                                              action="#{palletManagement.OnChangeLocationToPallet}" process="@form"
                                              oncomplete="PF('findLocationDlg').hide()" disabled="#{palletManagement.isCheckLocationDialog()}"/>
                         </td>

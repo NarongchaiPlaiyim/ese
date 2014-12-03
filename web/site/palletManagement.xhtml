@@ -178,7 +178,8 @@
                             <table border="0" style="width: 100%">
                                 <tr>
                                     <td colspan="100%" class="right">
-                                        <p:commandButton value="OK"
+                                        <p:commandButton value="Ok"
+                                                         styleClass="medium" style="width: 80px"
                                                          process="@form"
                                                          update="palletForm"
                                                          action="#{palletManagement.callReport()}"
@@ -210,10 +211,15 @@
                 <table border="0" style="width: 100%">
                     <tr>
                         <td colspan="100%" class="right">
-                            <p:commandButton value="Yes" action="#{palletManagement.changStatusOnClosePallet('ClosePallet')}"
+                            <p:commandButton  action="#{palletManagement.changStatusOnClosePallet('ClosePallet')}"
+                                             value="Ok"
+                                             styleClass="medium" style="width: 80px"
+                                             icon="ui-icon-check"
                                              process="@this" update="palletForm, :msgBoxSystemMessagePanel"
                                              oncomplete="PF('confirmClosePalletDlg').hide()"/>
                             <p:commandButton value="Cancel"
+                                             styleClass="medium" style="width: 80px"
+                                             icon="ui-icon-cancel"
                                              process="@this"
                                              update="palletForm"
                                              oncomplete="PF('confirmClosePalletDlg').hide()"/>
@@ -230,7 +236,9 @@
                <table border="0" style="width: 100%">
                    <tr>
                        <td colspan="100%" class="right">
-                           <p:commandButton value="OK"
+                           <p:commandButton value="Ok"
+                                            styleClass="medium" style="width: 80px"
+                                            icon="ui-icon-check"
                                             process="@this"
                                             update="palletForm"
                                             oncomplete="PF('msgBoxSystemMessageDlg').hide()"/>
