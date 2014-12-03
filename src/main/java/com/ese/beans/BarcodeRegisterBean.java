@@ -137,6 +137,7 @@ public class BarcodeRegisterBean extends Bean{
         log.debug("-- onInitSearch()");
         selectType = "3";
         productSearch = "";
+        msItemModelList = Utils.getEmptyList();
     }
 
     public void onSubmitSearch(){

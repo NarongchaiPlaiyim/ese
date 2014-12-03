@@ -52,11 +52,30 @@ input[type="text"]:disabled {
     padding: 2px;
     border: 1px solid #cfcfcf;
 }
+/*input[readonly="readonly"], input[readonly] {*/
+    /*margin-right: 4px;*/
+    /*padding: 2px;*/
+    /*border: 1px solid #cfcfcf;*/
+    /*background: #e8e8ff;*/
+    /*cursor: default;*/
+/*}*/
+.fixMinMax100{
+    min-width: 100px; width: 100px; max-width: 100px;
+}
+
+.fixMinMax200{
+    min-width: 200px; width: 200px; max-width: 200px;
+}
+
+.readonly{
+
+}
+
 input[readonly="readonly"], input[readonly] {
     margin-right: 4px;
     padding: 2px;
-    border: 1px solid #cfcfcf;
-    background: #e8e8ff;
+    /*border: 1px solid #cfcfcf;*/
+    background: #ffffff;
     cursor: default;
 }
 textarea {

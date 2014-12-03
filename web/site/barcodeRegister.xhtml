@@ -10,9 +10,9 @@
     <!-- End Header Logo -->
     <h:head>
         <title>Barcode Register</title>
-        <h:outputStylesheet name="css/style.css"/>
+        <!--<h:outputStylesheet name="css/style.css"/>-->
         <!--<h:outputStylesheet name="css/style.green.css"/>-->
-        <h:outputStylesheet name="css/menubar.css"/>
+        <!--<h:outputStylesheet name="css/menubar.css"/>-->
         <h:outputScript library="js" name="custom.js" />
     </h:head>
     <h:body>
@@ -33,11 +33,11 @@
                         <label class="subject">1. Barcode Register</label>
                         <table border="0" class="content_table_form">
                             <tr >
-                                <td style="min-width: 100px; width: 100px; max-width: 100px;" class="left" />
-                                <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
-                                <td style="min-width: 100px; width: 100px; max-width: 100px;" class="center" />
-                                <td style="min-width: 100px; width: 100px; max-width: 100px;" class="left" />
-                                <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
+                                <td class="fixMinMax100 left" />
+                                <td class="fixMinMax200 left" />
+                                <td class="fixMinMax100 center" />
+                                <td class="fixMinMax100 left" />
+                                <td class="fixMinMax200 left" />
                                 <td/>
                             </tr>
 
@@ -50,11 +50,17 @@
                                                      value="Print"
                                                      process="@form"
                                                      update=":setupForm"
+                                                     icon="ui-icon-script"
+                                                     styleClass="medium" style="width: 80px"
                                                      disabled="#{barcodeRegisterBean.flagBtnPrint}"
                                                      action="#{barcodeRegisterBean.onPrint}"
                                                      ajax="false"/>
 
-                                    <p:commandButton value="New" action="#{barcodeRegisterBean.onClickButtonNew()}" update="@form, :setupForm:barcodeRegisterTable" />
+                                    <p:commandButton value="New"
+                                                     styleClass="medium" style="width: 80px"
+                                                     icon="ui-icon-plusthick"
+                                                     action="#{barcodeRegisterBean.onClickButtonNew()}"
+                                                     update="@form, :setupForm:barcodeRegisterTable" />
 
                                     <p:commandButton value="Save"
                                                      id="btnSave"
@@ -95,11 +101,13 @@
                                 <td>
                                     <p:outputLabel
                                             id="itemLabel"
-                                            style="min-width: 200px; width: 200px; max-width: 200px;"
+                                            styleClass="fixMinMax200"
                                                  value="#{barcodeRegisterBean.barcodeRegisterView.msItemModel.DSGThaiItemDescription}"/>
                                 </td>
                                 <td>
-                                    <p:commandButton value="Select" styleClass="medium" style="width: 80px"
+                                    <p:commandButton value="Select"
+                                                     icon="ui-icon-folder-open"
+                                                     styleClass="medium" style="width: 80px"
                                                      action="#{barcodeRegisterBean.onInitSearch()}"
                                                      update=":frmFindProduct"
                                                      oncomplete="PF('findProductDlg').show()"/>
@@ -178,7 +186,7 @@
                                     <h:outputLabel value="Batch No*"/>
                                 </td>
                                 <td colspan="2">
-                                    <p:inputText style="min-width: 200px; width: 200px; max-width: 200px;"
+                                    <p:inputText styleClass="fixMinMax200"
                                                  id="batchNoLabel"
                                                  value="#{barcodeRegisterBean.barcodeRegisterView.batchNo}"/>
                                 </td>
@@ -193,7 +201,7 @@
                             </tr>
                             <tr>
                                 <td class="right" colspan="5">
-                                    <p:commandButton value="delete"
+                                    <p:commandButton value="Delete"
                                                      id="btnDelete"
                                                      disabled="#{barcodeRegisterBean.flagBtnDelete}"
                                                      styleClass="medium" style="width: 80px"
@@ -288,6 +296,8 @@
                             <p:commandButton value="OK"
                                              process="@this"
                                              update="setupForm"
+                                             icon="ui-icon-check"
+                                             styleClass="medium" style="width: 80px"
                                              oncomplete="PF('msgBoxSystemMessageDlg').hide()"/>
                         </td>
                     </tr>
@@ -301,12 +311,16 @@
                 <table border="0" style="width: 100%">
                     <tr>
                         <td colspan="100%" class="right">
-                            <p:commandButton value="Yes" action="#{barcodeRegisterBean.onDelete()}"
+                            <p:commandButton value="Ok" action="#{barcodeRegisterBean.onDelete()}"
                                              process="@this" update=":setupForm, :msgBoxSystemMessagePanel"
+                                             styleClass="medium" style="width: 80px"
+                                             icon="ui-icon-check"
                                              oncomplete="PF('confirmClosePalletDlg').hide()"/>
                             <p:commandButton value="Cancel"
                                              process="@this"
                                              update=":setupForm"
+                                             styleClass="medium" style="width: 80px"
+                                             icon="ui-icon-cancel"
                                              oncomplete="PF('confirmClosePalletDlg').hide()"/>
                         </td>
                     </tr>

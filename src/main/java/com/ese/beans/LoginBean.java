@@ -41,6 +41,7 @@ public class LoginBean extends Bean{
     private UserDetail userDetail;
     private String s = "";
     private String f = "";
+    private String url = "http://primefaces-extensions.github.io";
 
     @PostConstruct
     private void init(){
@@ -86,8 +87,17 @@ public class LoginBean extends Bean{
 
     public void test(){
         System.out.println("test");
-        loginService.test(s, f);
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+//        loginService.test(s, f);
     }
 
+    public void updateURL(){
+        System.out.println("updateURL");
+        url = "http://www.primefaces.org/showcase-ext/views/layout.jsf";
+    }
 
 }

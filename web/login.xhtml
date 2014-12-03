@@ -47,6 +47,13 @@
                                                          action="#{loginBean.login}"
                                                          oncomplete="PF('bui').hide()"/>
                                     </div>
+                                    <div class="inputwrapper">
+                                        <p:commandButton id="test2" value="Login" rendered="#{false}"
+                                                         update=":msgBoxSystemMessagePanel"
+                                                         onstart="PF('bui').show()"
+                                                         action="#{loginBean.login}"
+                                                         oncomplete="PF('bui').hide()"/>
+                                    </div>
                                 </td>
                             </tr>
                         </table>

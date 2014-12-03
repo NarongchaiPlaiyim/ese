@@ -1,44 +1,58 @@
 <!DOCTYPE html>
 <html>
+
 <f:view xmlns="http://www.w3.org/1999/xhtml"
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions"
         xmlns:ui="http://java.sun.com/jsf/facelets"
         >
 
-    <!-- Start Header Logo -->
-    <!--<ui:include src="include/header.xhtml"/>-->
-    <!-- End Header Logo -->
-    <!-- Left menu -->
-    <!--<ui:include src="include/navigation.xhtml"/>-->
-    <!-- Left menu -->
-    <!--<link rel="stylesheet" href="#{request.contextPath}/resources/css/style.default.css" type="text/style" />-->
-
+    <h:head>
+        <title>TEST</title>
+        <style type="text/css" >
+            /*.ui-widget-header{*/
+                /*background-color: #000000;*/
+            /*}*/
+            /*.ui-widget-content {*/
+                /*background: #ffffff;*/
+                /*color: #4f4f4f;*/
+            /*}*/
+            /*.ui-widget-content, .ui-widget-content {*/
+                /*border: 1px solid #a8a8a8;*/
+                /*background: #ffffff;*/
+                /*color: #4f4f4f;*/
+            /*}*/
+        </style>
+    </h:head>
     <h:body>
-        <h:form id="test">
-            <p:inputText id="user" required="#{empty param[saveBtn.clientId]}" />
+        <h:form id="frmMain">
+            <pe:layout>
+                <pe:layoutPane position="north" size="85" resizable="false" >
+                    North
+                </pe:layoutPane>
+                <pe:layoutPane rendered="#{false}" id="layoutCenter" position="center" resizable="false" >
 
 
-            <p:commandButton id="saveBtn"
-                             action="#{loginBean.test()}"
-                             binding="#{saveBtn}"
-                             process="@form"
-                             value="Submit" update=":test" />
+                    <iframe id="iframeCenter" src="#{loginBean.url}" width="100%"
+                            height="100%" >
+                    </iframe>
+                </pe:layoutPane>
+                <pe:layoutPane  position="west" size="250" resizeWhileDragging="false"
+                               maxSize="500" minSize="100" resizable="false" closable="true">
+                    <!--<h:form>-->
+                        <p:menu>
+                            <p:menuitem value="Save"
+                                        icon="ui-icon-disk"
+                                        action="#{loginBean.updateURL()}"
+                                    update=":frmMain:layoutCenter"/>
+                            <p:menuitem value="Update" icon="ui-icon-arrowrefresh-1-w"/>
+                        </p:menu>
+                    <!--</h:form>-->
+                </pe:layoutPane>
+            </pe:layout>
         </h:form>
-        <p:dataTable id="barcodeRegisterTable"
-                     rows="10"
-                     paginator="true"
-                     var="string"
-                     value="#{index.stringList}"
-                     rowIndexVar="rowIndex">
-            <p:column headerText="No" style="min-width: 5px; width: 5px; max-width: 5px;">
-                <p:outputLabel value="#{rowIndex+1}" styleClass="center"/>
-            </p:column>
-            <p:column headerText="Item Code" style="min-width: 60px; width: 60px; max-width: 60px;" styleClass="center">
-                <p:outputLabel value="#{string}"/>
-            </p:column>
-        </p:dataTable>
     </h:body>
 
 </f:view>
