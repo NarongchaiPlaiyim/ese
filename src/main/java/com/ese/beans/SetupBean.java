@@ -117,14 +117,7 @@ public class SetupBean extends Bean{
 
     private boolean checkLocationCode(LocationView locationView){
         log.debug("checkLocationCode {}",locationView);
-
-        for (MSLocationModel model : msLocationModelList){
-            if (locationView.getLocationBarcode().equalsIgnoreCase(model.getLocationBarcode()) && locationView.getWarehouseModel().getId() == model.getMsWarehouseModel().getId()){
-                return false;
-            }
-        }
-
-        return true;
+        return locationService.isDuplicate(locationView.getWarehouseModel().getId(), locationView.getLocationBarcode(), locationView.getId());
     }
 
     public void btnWarehouseAndLocation(String target){
@@ -180,16 +173,10 @@ public class SetupBean extends Bean{
         }
     }
 
-    public boolean checkWarehouseCodeOnSave(String warehouseCode){
+    public boolean checkWarehouseCodeOnSave(String warehouseCode, int id){
         log.debug("checkWarehouseCodeOnSave. {}", warehouseCode);
 
-        for (MSWarehouseModel warehouseModel : msWarehouseModelList){
-            if (warehouseCode.equalsIgnoreCase(warehouseModel.getWarehouseCode())){
-                return false;
-            }
-        }
-
-        return true;
+        return warehouseService.isDuplicate(warehouseCode, id);
     }
 
     public void warehouseDlg(String target){
@@ -208,7 +195,7 @@ public class SetupBean extends Bean{
         } else if (target.equalsIgnoreCase("Save")){
             log.debug("OnSave Warehouse. {}", warehouseView);
 
-            if (checkWarehouseCodeOnSave(warehouseView.getWarehouseCode())){
+            if (checkWarehouseCodeOnSave(warehouseView.getWarehouseCode(), warehouseView.getId())){
                 warehouseService.onSaveOrUpdateWarehouse(warehouseView);
                 msWarehouseModel = new MSWarehouseModel();
                 if (Utils.isZero(warehouseView.getId())){

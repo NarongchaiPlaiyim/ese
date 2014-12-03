@@ -50,30 +50,10 @@ public class LocationService extends Service{
         return msLocationModels;
     }
 
-    public List<MSWarehouseModel> getWarehouseAll(){
-        log.debug("getWarehouseAll().");
-        List<MSWarehouseModel> msWarehouseModels = Utils.getEmptyList();
-        try{
-            msWarehouseModels = warehouseDAO.findAll();
-        } catch (Exception e){
-            log.debug("Exception getWarehouse.", e);
-        }
-
-        return msWarehouseModels;
-    }
-
     public LocationView clickToWarehouseView(MSLocationModel msLocationModel){
         LocationView locationView = new LocationView();
 
         if (!Utils.isNull(msLocationModel)){
-//            if (Utils.isNull(checkWarehouse(msLocationModel.getId()))){
-//                List<MSWarehouseModel> warehouseModel = warehouseDAO.findByIsValidEnable();
-//
-//                if (Utils.isSafetyList(warehouseModel)){
-//                    msLocationModel.setMsWarehouseModel(warehouseModel.get(0));
-//                }
-//            }
-
             locationView = locationTransform.transformToView(msLocationModel);
         }
 
@@ -132,5 +112,17 @@ public class LocationService extends Service{
         }
 
         return msLocationModels;
+    }
+
+    public boolean isDuplicate(int warehouseId, String locationCode, int id){
+
+        List<MSLocationModel> msLocationModels = locationDAO.findByWarehouseIdAndLocationCode(warehouseId, locationCode);
+
+        if (!Utils.isSafetyList(msLocationModels) || msLocationModels.size() == 1 && !Utils.isZero(id)){
+            return true;
+        }  else {
+            return false;
+        }
+
     }
 }

@@ -62,5 +62,13 @@ public class WarehouseService extends Service{
         }
     }
 
+    public boolean isDuplicate(String warehouseCode, int id){
+        List<MSWarehouseModel> msWarehouseModels = warehouseDAO.findByWarehouseCode(warehouseCode);
 
+        if (!Utils.isSafetyList(msWarehouseModels) || msWarehouseModels.size() == 1 && !Utils.isZero(id)){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
