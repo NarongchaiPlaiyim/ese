@@ -590,6 +590,19 @@ td .option {
 .title {
     font-weight: bold;
 }
+.titlemenu {
+    background: #949494;
+    font-weight: bold;
+    border: #040404;
+    height: 25px;
+}
+
+.titlemenuButtom {
+    border: 1px;
+    background: #949494;
+    font-weight: bold;
+    text-align: right;
+}
 
 .indent {
     padding-left: 20px;

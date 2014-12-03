@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <h:outputStylesheet name="css/style.css" />
+    </h:head>
+    <p:panel id="adddUserPanel" styleClass="panel-dialog">
+        <h:form id="addUserForm">
+            <table border="0">
+                <tr>
+                    <td>
+                        <table border="0">
+                            <tr>
+                                <td style="width: 80px; min-width: 80px; max-width: 80px">
+                                    <h:outputLabel value="Department"/>
+                                </td>
+                                <td style="min-width: 210px; width: 210px; max-width: 210px;">
+                                    <p:selectOneMenu id="departMenu"
+                                                     style="min-width: 200px; width: 200px; max-width: 200px;">
+                                        <f:selectItem itemLabel="- Please Select -" itemValue=""/>
+                                    </p:selectOneMenu>
+                                </td>
+                                <td style="width: 75px; min-width: 75px; max-width: 75px">
+                                    <h:outputLabel value="Login name"/>
+                                </td>
+                                <td>
+                                    <p:inputText/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h:outputLabel value="Faction"/>
+                                </td>
+                                <td style="min-width: 210px; width: 210px; max-width: 210px;">
+                                    <p:selectOneMenu id="factionMenu"
+                                                     style="min-width: 200px; width: 200px; max-width: 200px;">
+                                        <f:selectItem itemLabel="- Please Select -" itemValue=""/>
+                                    </p:selectOneMenu>
+                                </td>
+                                <td>
+                                    <h:outputLabel value="Password"/>
+                                </td>
+                                <td>
+                                    <p:inputText/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h:outputLabel value="Name"/>
+                                </td>
+                                <td>
+                                    <p:inputText/>
+                                </td>
+                                <td>
+                                    <h:outputLabel value="Re-Password"/>
+                                </td>
+                                <td>
+                                    <p:inputText/>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="center">
+                        <p:commandButton value="Save"
+                                         id="btnSave"
+                                         styleClass="medium" style="width: 80px"
+                                         icon="ui-icon-check"
+                                         onstart="PF('bui').show()"
+                                         oncomplete="PF('bui').hide()"/>
+                        <p:commandButton value="Cancel"
+                                         id="btnCancel"
+                                         styleClass="medium" style="width: 80px"
+                                         oncomplete="PF('addUserDlg').hide()"/>
+                    </td>
+                </tr>
+            </table>
+        </h:form>
+    </p:panel>
+</f:view>
+</html>

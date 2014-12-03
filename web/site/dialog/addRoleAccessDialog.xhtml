@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <h:outputStylesheet name="css/style.css" />
+    </h:head>
+    <p:panel id="userRoleAccessPanel" styleClass="panel-dialog">
+        <h:form id="userRoleAccessForm">
+            <table border="0">
+                <tr>
+                    <td colspan="2" class="right">
+                        <p:commandButton id="btnSetRole"
+                                         value="Set to Role"
+                                         styleClass="medium" style="width: 110px"
+                                         icon="ui-icon-plusthick"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <h:outputLabel value="Role Name  "/>
+                        <p:inputText/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="left" style="min-width: 160px; width: 160px; max-width: 160px;">
+                        <p:selectOneMenu id="roleMenu"
+                                         style="min-width: 150px; width: 150px; max-width: 150px;">
+                            <f:selectItem itemLabel="- Please Select -" itemValue=""/>
+                        </p:selectOneMenu>
+                    </td>
+                    <td>
+                        <p:inputText/>
+                        <p:commandButton id="btnSearchRoleAccess" icon="ui-icon-search"
+                                         onstart="PF('bui').show()"
+                                         oncomplete="PF('bui').hide()"
+                                         process="@form"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <p:dataTable id="roleAccessTableDlg" rowIndexVar="rowIndex"
+                                     styleClass="full_table"
+                                     rows="5" paginator="true"
+                                     selectionMode="single"
+                                     style="width: 100%; max-width: 100%; min-width: 100%">
+                            <p:ajax event="rowSelect"/>
+                            <p:column selectionMode="multiple" style="width:16px;text-align:center; height: 20px"/>
+                            <p:column headerText="Code" style="width: 100px; max-width: 100px; min-width: 100px" styleClass="center">
+                                <h:outputText value="" />
+                            </p:column>
+                            <p:column headerText="Menu Object and Action" style="width: 300px; max-width: 300px; min-width: 300px" styleClass="center">
+                                <h:outputText value="" />
+                            </p:column>
+                        </p:dataTable>
+                    </td>
+                </tr>
+            </table>
+        </h:form>
+    </p:panel>
+</f:view>
+</html>

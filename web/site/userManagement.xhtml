@@ -9,19 +9,19 @@
     <ui:include src="include/header.xhtml"/>
     <!-- End Header Logo -->
     <h:head>
-        <title>Setup</title>
+        <title>User Management</title>
         <h:outputStylesheet name="css/style.css"/>
         <h:outputScript library="js" name="custom.js" />
     </h:head>
     <h:body>
         <p:panel id="pnl_maincontainer">
             <div id="main_container" >
-                <h:form id="setupForm">
+                <h:form id="userManagementForm">
                     <div class="body_lpane">
-                        <a class="step_border_select" href="barcodeRegister.xhtml">1. Barcode Register</a>
-                        <a class="step_border_select" href="palletManagement.xhtml">2. Pallet Tag Printing</a>
-                        <a class="step_border_selected" href="setup.xhtml">7. Setup</a>
-                        <a class="step_border_select" href="userManagement.xhtml">8. User Management</a>
+                        <a class="step_border_select" href="barcodeRegister.xhtml" style="border: 1px solid #acacac; border-spacing: 0;">1. Barcode Register</a>
+                        <a class="step_border_select" href="palletManagement.xhtml" style="border: 1px solid #acacac; border-spacing: 0;">2. Pallet Tag Printing</a>
+                        <a class="step_border_select" href="setup.xhtml" style="border: 1px solid #acacac; border-spacing: 0;">7. Setup</a>
+                        <a class="step_border_selected" href="userManagement.xhtml" style="border: 1px solid #acacac; border-spacing: 0;">8. User Management</a>
                         <!--<p:menu style="min-width: 150px; width: 150px; max-width: 150px; height: 150%;">-->
                         <!--<p:menuitem value="1. Barcode Register" url="barcodeRegister.xhtml" icon="ui-icon-calculator"  />-->
                         <!--<p:menuitem value="2. Pallet Tag Printing" url="palletManagement.xhtml" icon="ui-icon-plus"/>-->
@@ -31,12 +31,283 @@
                     <div class="body_rpane" style="width: 80%">
                         <label class="subject">8. User Management</label>
                         <h:form id="mainForm" style="width: 100%;border-spacing: 0;">
-
+                            <p:tabView id="manegementTab" cache="false" dynamic="false">
+                                <p:tab id="userManageSub" title="8.1 User Management">
+                                    <table border="0" style="width: 100%">
+                                        <tr>
+                                            <td>
+                                                <table border="0" class="right" style="width: 100%">
+                                                    <tr>
+                                                        <td>
+                                                            <p:commandButton id="btnAddUser" value="Add User"
+                                                                             styleClass="medium" style="width: 100px; min-width: 100px; max-width: 100px"
+                                                                             process="@form"
+                                                                             icon="ui-icon-plusthick"
+                                                                             oncomplete="PF('addUserDlg').show()"/>
+                                                            <p:commandButton id="btnEdit" value="Edit"
+                                                                             styleClass="medium" style="width: 80px; min-width: 80px; max-width: 80px"
+                                                                             process="@form"
+                                                                             icon="ui-icon-wrench"
+                                                                             onstart="PF('bui').show()"
+                                                                             oncomplete="PF('bui').hide()"/>
+                                                            <p:commandButton id="btnDelete" value="Delete"
+                                                                             styleClass="medium" style="width: 80px; min-width: 80px; max-width: 80px"
+                                                                             process="@form"
+                                                                             icon="ui-icon-trash"
+                                                                             onstart="PF('bui').show()"
+                                                                             oncomplete="PF('bui').hide()"/>
+                                                            <p:commandButton id="btnUserAccess" value="User Access"
+                                                                             styleClass="medium" style="width: 100px; min-width: 100px; max-width: 100px"
+                                                                             process="@form"
+                                                                             oncomplete="PF('userAccessDlg').show()"/>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <table border="0">
+                                                    <tr>
+                                                        <td style="min-width: 210px; width: 210px; max-width: 210px;">
+                                                            <p:selectOneMenu id="searchMenu"
+                                                                             style="min-width: 200px; width: 200px; max-width: 200px;">
+                                                                <f:selectItem itemLabel="- Please Select -" itemValue=""/>
+                                                            </p:selectOneMenu>
+                                                        </td>
+                                                        <td style="width: 110px">
+                                                            <p:inputText id="searchText" style="width: 120px">
+                                                            </p:inputText>
+                                                        </td>
+                                                        <td style="width: 40px; min-width: 40px; max-width: 40px">
+                                                            <p:commandButton id="btnsearch" icon="ui-icon-search"
+                                                                             onstart="PF('bui').show()"
+                                                                             oncomplete="PF('bui').hide()"
+                                                                             process="@form"/>
+                                                        </td>
+                                                        <td>
+                                                            <h:outputLabel value="Department"/>
+                                                        </td>
+                                                        <td style="min-width: 210px; width: 210px; max-width: 210px;">
+                                                            <p:selectOneMenu id="departmentMenu"
+                                                                             style="min-width: 200px; width: 200px; max-width: 200px;">
+                                                                <f:selectItem itemLabel="- Please Select -" itemValue=""/>
+                                                            </p:selectOneMenu>
+                                                        </td>
+                                                        <td>
+                                                            <h:outputLabel value="Faction"/>
+                                                        </td>
+                                                        <td>
+                                                            <p:selectOneMenu id="factionMenu"
+                                                                             style="min-width: 200px; width: 200px; max-width: 200px;">
+                                                                <f:selectItem itemLabel="- Please Select -" itemValue=""/>
+                                                            </p:selectOneMenu>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p:dataTable id="userTable" rowIndexVar="rowIndex"
+                                                             styleClass="full_table"
+                                                             rows="8" paginator="true"
+                                                             selectionMode="single"
+                                                             style="width: 100%; max-width: 100%; min-width: 100%">
+                                                    <p:ajax event="rowSelect"/>
+                                                    <p:column headerText="No" style="width: 20px" styleClass="center">
+                                                        <h:outputText value="#{rowIndex+1}"/>
+                                                    </p:column>
+                                                    <p:column headerText="Department " style="width: 70px; max-width: 70px; min-width: 70px" styleClass="center">
+                                                        <h:outputText value="" />
+                                                    </p:column>
+                                                    <p:column headerText="Faction" style="width: 70px; max-width: 70px; min-width: 70px" styleClass="center">
+                                                        <h:outputText value=""/>
+                                                    </p:column>
+                                                    <p:column headerText="Name" style="width: 80px; max-width: 80px; min-width: 80px" styleClass="center">
+                                                        <h:outputText value=""/>
+                                                    </p:column>
+                                                    <p:column headerText="Position" style="width: 115px; max-width: 115px; min-width: 115px" styleClass="center">
+                                                        <h:outputText value=""/>
+                                                    </p:column>
+                                                    <p:column headerText="Login Name" style="width: 150px" styleClass="center">
+                                                        <h:outputText value=""/>
+                                                    </p:column>
+                                                    <p:column headerText="Role" style="width: 100px" styleClass="center">
+                                                        <h:outputText value=""/>
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </p:tab>
+                                <p:tab id="roleAccessSub" title="8.2 Role Access">
+                                    <table border="0" style="width: 100%">
+                                        <tr>
+                                            <td class="top">
+                                                <table border="0" style="width: 50%; border: 1px solid #acacac; border-spacing: 0; margin-top: 10px;">
+                                                    <tr>
+                                                        <td class="titlemenu" colspan="2">
+                                                            <h:outputLabel value="Role"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="right" colspan="2">
+                                                            <p:commandButton value="New"
+                                                                             id="btnNewRole"
+                                                                             styleClass="medium" style="width: 80px"
+                                                                             icon="ui-icon-plusthick" />
+                                                            <p:commandButton value="Save"
+                                                                             id="btnSaveRole"
+                                                                             styleClass="medium" style="width: 80px"
+                                                                             icon="ui-icon-check"
+                                                                             onstart="PF('bui').show()"
+                                                                             oncomplete="PF('bui').hide()"/>
+                                                            <p:commandButton value="Delete"
+                                                                             id="btnDeleteRole"
+                                                                             styleClass="medium" style="width: 80px"
+                                                                             icon="ui-icon-trash"
+                                                                             onstart="PF('bui').show()"
+                                                                             oncomplete="PF('bui').hide()" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 65px; min-width: 65px; max-width: 65px">
+                                                            <h:outputLabel value="Role Name"/>
+                                                        </td>
+                                                        <td>
+                                                            <p:inputText/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td/>
+                                                        <td>
+                                                            <p:inputText/>
+                                                            <p:commandButton id="btnSearchRole" icon="ui-icon-search"
+                                                                             onstart="PF('bui').show()"
+                                                                             oncomplete="PF('bui').hide()"
+                                                                             process="@form"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2" class="top">
+                                                            <p:dataTable id="roleTable" rowIndexVar="rowIndex"
+                                                                         styleClass="full_table"
+                                                                         rows="5" paginator="true"
+                                                                         selectionMode="single"
+                                                                         style="width: 100%; max-width: 100%; min-width: 100%">
+                                                                <p:ajax event="rowSelect"/>
+                                                                <p:column headerText="No" style="width: 20px; min-width: 20px; max-width: 20px" styleClass="center">
+                                                                    <h:outputText value="#{rowIndex+1}"/>
+                                                                </p:column>
+                                                                <p:column headerText="Role Name" style="width: 450px; max-width: 450px; min-width: 450px" styleClass="center">
+                                                                    <h:outputText value="" />
+                                                                </p:column>
+                                                            </p:dataTable>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td/>
+                                            <td class="top">
+                                                <table border="0" style="width: 50%; border: 1px solid #acacac; border-spacing: 0; margin-top: 10px;">
+                                                    <tr>
+                                                        <td class="titlemenu" colspan="2">
+                                                            <h:outputLabel value="Role Access"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="right" colspan="2">
+                                                            <p:commandButton value="Add"
+                                                                             id="btnAddRoleAccess"
+                                                                             styleClass="medium" style="width: 80px"
+                                                                             icon="ui-icon-plusthick"
+                                                                             oncomplete="PF('userRoleAccessDlg').show()"/>
+                                                            <p:commandButton value="Delete"
+                                                                             id="btnDeleteRoleAccess"
+                                                                             styleClass="medium" style="width: 80px"
+                                                                             icon="ui-icon-trash"
+                                                                             onstart="PF('bui').show()"
+                                                                             oncomplete="PF('bui').hide()" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="right" >
+                                                            <p:selectOneMenu id="roleMenu"
+                                                                             style="min-width: 150px; width: 150px; max-width: 150px;
+                                                                             margin-right: 15px">
+                                                                <f:selectItem itemLabel="- Please Select -" itemValue=""/>
+                                                            </p:selectOneMenu>
+                                                        </td>
+                                                        <td>
+                                                            <p:inputText/>
+                                                            <p:commandButton id="btnSearchRoleAccess" icon="ui-icon-search"
+                                                                             onstart="PF('bui').show()"
+                                                                             oncomplete="PF('bui').hide()"
+                                                                             process="@form"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2" class="top">
+                                                            <p:dataTable id="roleAccessTable" rowIndexVar="rowIndex"
+                                                                         styleClass="full_table"
+                                                                         rows="5" paginator="true"
+                                                                         selectionMode="single"
+                                                                         style="width: 100%; max-width: 100%; min-width: 100%">
+                                                                <p:ajax event="rowSelect"/>
+                                                                <p:column selectionMode="multiple" style="width:16px;text-align:center; height: 20px"/>
+                                                                <p:column headerText="Code" style="width: 100px; max-width: 100px; min-width: 100px" styleClass="center">
+                                                                    <h:outputText value="" />
+                                                                </p:column>
+                                                                <p:column headerText="Menu Object and Action" style="width: 300px; max-width: 300px; min-width: 300px" styleClass="center">
+                                                                    <h:outputText value="" />
+                                                                </p:column>
+                                                            </p:dataTable>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </p:tab>
+                            </p:tabView>
                         </h:form>
                     </div>
                 </h:form>
             </div>
         </p:panel>
+
+        <p:blockUI block="pnl_maincontainer" widgetVar="bui">
+            <h:panelGrid columns="2">
+                <h:outputText value="Please wait..." />
+                <p:graphicImage value="/resources/images/shared/ajax-loader.gif"/>
+            </h:panelGrid>
+        </p:blockUI>
+
+        <p:dialog id="addUserDialog" widgetVar="addUserDlg" header="Add/Edit User"
+                  onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
+                  modal="true" width="600" height="150">
+            <ui:include src="../site/dialog/addUserDialog.xhtml"/>
+        </p:dialog>
+
+        <p:dialog id="userAccessDialog" widgetVar="userAccessDlg" header="User Access"
+                  onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
+                  modal="true" width="1024" height="400">
+            <ui:include src="../site/dialog/userAccessDialog.xhtml"/>
+        </p:dialog>
+
+        <p:dialog id="userRoleDialog" widgetVar="userRoleDlg" header="Add User Role"
+                  onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
+                  modal="true" width="450">
+            <ui:include src="../site/dialog/addUserRoleDialog.xhtml"/>
+        </p:dialog>
+
+        <p:dialog id="userRoleAccessDialog" widgetVar="userRoleAccessDlg" header="Menu and Action List"
+                  onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
+                  modal="true" width="530">
+            <ui:include src="../site/dialog/addRoleAccessDialog.xhtml"/>
+        </p:dialog>
+
     </h:body>
 </f:view>
 </html>

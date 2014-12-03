@@ -18,10 +18,10 @@
             <div id="main_container" >
                 <h:form id="setupForm">
                     <div class="body_lpane">
-                        <a class="step_border_select" href="barcodeRegister.xhtml">1. Barcode Register</a>
-                        <a class="step_border_select" href="palletManagement.xhtml">2. Pallet Tag Printing</a>
-                        <a class="step_border_selected" href="setup.xhtml">7. Setup</a>
-                        <a class="step_border_select" href="userManagement.xhtml">8. User Management</a>
+                        <a class="step_border_select" href="barcodeRegister.xhtml" style="border: 1px solid #acacac; border-spacing: 0;">1. Barcode Register</a>
+                        <a class="step_border_select" href="palletManagement.xhtml" style="border: 1px solid #acacac; border-spacing: 0;">2. Pallet Tag Printing</a>
+                        <a class="step_border_selected" href="setup.xhtml" style="border: 1px solid #acacac; border-spacing: 0;">7. Setup</a>
+                        <a class="step_border_select" href="userManagement.xhtml" style="border: 1px solid #acacac; border-spacing: 0;">8. User Management</a>
                         <!--<p:menu style="min-width: 150px; width: 150px; max-width: 150px; height: 150%;">-->
                             <!--<p:menuitem value="1. Barcode Register" url="barcodeRegister.xhtml" icon="ui-icon-calculator"  />-->
                             <!--<p:menuitem value="2. Pallet Tag Printing" url="palletManagement.xhtml" icon="ui-icon-plus"/>-->
@@ -42,7 +42,8 @@
                                                               <h:outputText id="modeWarehouse" value="#{setup.modeWarehouse}"/>
                                                           </td>
                                                           <td>
-                                                              <p:commandButton id="btnNewLocation" value="#{setup.nameBtn}" styleClass="medium" style="width: 80px"
+                                                              <p:commandButton id="btnNewLocation" value="#{setup.nameBtn}"
+                                                                               styleClass="medium" style="width: 80px; min-width: 80px; max-width: 80px"
                                                                                disabled="#{setup.flagBtnNewWarehouse}"
                                                                                update=":setupForm:mainForm:setupTab,
                                                                                        :setupForm:mainForm:setupTab:warehouseAndLocationTable"
