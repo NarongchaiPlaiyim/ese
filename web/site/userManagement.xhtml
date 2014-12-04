@@ -33,12 +33,13 @@
                         <h:form id="mainForm" style="width: 100%;border-spacing: 0;">
                             <p:tabView id="manegementTab" cache="false" dynamic="false">
                                 <p:tab id="userManageSub" title="8.1 User Management">
-                                    <table border="0" style="width: 100%">
+                                    <table border="1" style="width: 100%">
                                         <tr>
                                             <td>
-                                                <table border="0" class="right" style="width: 100%">
+                                                <table border="1" class="right" style="width: 100%">
                                                     <tr>
                                                         <td>
+                                                            <h:outputLabel value="Mode:Search  "/>
                                                             <p:commandButton id="btnAddUser" value="Add User"
                                                                              styleClass="medium" style="width: 100px; min-width: 100px; max-width: 100px"
                                                                              process="@form"
@@ -60,6 +61,14 @@
                                                                              styleClass="medium" style="width: 100px; min-width: 100px; max-width: 100px"
                                                                              process="@form"
                                                                              oncomplete="PF('userAccessDlg').show()"/>
+                                                            <p:commandButton id="btnPrint"
+                                                                             value="Print"
+                                                                             process="@form"
+                                                                             onstart="PF('bui').block()"
+                                                                             oncomplete="PF('bui').unblock()"
+                                                                             ajax="false"
+                                                                             icon="ui-icon-script"
+                                                                             styleClass="medium" style="width: 100px"/>
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -69,22 +78,6 @@
                                             <td>
                                                 <table border="0">
                                                     <tr>
-                                                        <td style="min-width: 210px; width: 210px; max-width: 210px;">
-                                                            <p:selectOneMenu id="searchMenu"
-                                                                             style="min-width: 200px; width: 200px; max-width: 200px;">
-                                                                <f:selectItem itemLabel="- Please Select -" itemValue=""/>
-                                                            </p:selectOneMenu>
-                                                        </td>
-                                                        <td style="width: 110px">
-                                                            <p:inputText id="searchText" style="width: 120px">
-                                                            </p:inputText>
-                                                        </td>
-                                                        <td style="width: 40px; min-width: 40px; max-width: 40px">
-                                                            <p:commandButton id="btnsearch" icon="ui-icon-search"
-                                                                             onstart="PF('bui').show()"
-                                                                             oncomplete="PF('bui').hide()"
-                                                                             process="@form"/>
-                                                        </td>
                                                         <td>
                                                             <h:outputLabel value="Department"/>
                                                         </td>
@@ -102,6 +95,16 @@
                                                                              style="min-width: 200px; width: 200px; max-width: 200px;">
                                                                 <f:selectItem itemLabel="- Please Select -" itemValue=""/>
                                                             </p:selectOneMenu>
+                                                        </td>
+                                                        <td style="width: 110px">
+                                                            <p:inputText id="searchText" style="width: 120px">
+                                                            </p:inputText>
+                                                        </td>
+                                                        <td style="width: 40px; min-width: 40px; max-width: 40px">
+                                                            <p:commandButton id="btnsearch" icon="ui-icon-search"
+                                                                             onstart="PF('bui').show()"
+                                                                             oncomplete="PF('bui').hide()"
+                                                                             process="@form"/>
                                                         </td>
                                                     </tr>
                                                 </table>
