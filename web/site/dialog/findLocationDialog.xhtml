@@ -35,19 +35,19 @@
                                 <!--<p:column headerText="Select" selectionMode="multiple" style="height: 60px">-->
                                 <!--</p:column>-->
                                 <p:column headerText="No" style="width: 20px" styleClass="center">
-                                    <h:outputLabel value="#{rowIndex+1}"/>
+                                    <h:outputText value="#{rowIndex+1}"/>
                                 </p:column>
                                 <p:column headerText="warehouse" style="width: 200px">
-                                    <p:outputLabel value="#{location.warehouse}"/>
+                                    <h:outputText value="#{location.warehouse}"/>
                                 </p:column>
                                 <p:column headerText="Location" style="width: 200px">
-                                    <p:outputLabel value="#{location.location}"/>
+                                    <h:outputText value="#{location.location}"/>
                                 </p:column>
                                 <p:column headerText="Capacity" style="width: 100px">
-                                    <p:outputLabel value="#{location.capacity}"/>
+                                    <h:outputText value="#{location.capacity}"/>
                                 </p:column>
                                 <p:column headerText="Avaliable" style="width: 100px">
-                                    <p:outputLabel value="#{location.avaliable}"/>
+                                    <h:outputText value="#{location.avaliable}"/>
                                 </p:column>
                             </p:dataTable>
                         </td>
