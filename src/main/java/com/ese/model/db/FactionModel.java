@@ -11,28 +11,16 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "staff")
+@Table(name = "faction")
 @Proxy(lazy=false)
-public class StaffModel extends AbstractModel{
+public class FactionModel extends AbstractModel{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "password")
-    private String password;
-
-    @Column(name = "username")
-    private String username;
-
-    @Column(name = "version")
-    private Integer version;
-
-    @Column(name = "role")
-    private String role;
-
     @OneToOne
-    @JoinColumn(name="faction_id", nullable=false, columnDefinition="int default 0")
-    private FactionModel factionModel;
+    @JoinColumn(name="department_id", nullable=false, columnDefinition="int default 0")
+    private MSDepartmentModel msDepartmentModel;
 
     @Column(name="name")
     private String name;
@@ -40,21 +28,13 @@ public class StaffModel extends AbstractModel{
     @Column(name="isvalid")
     private int isValid;
 
-    @Column(name="position")
-    private String position;
-
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("id", id)
-                .append("password", password)
-                .append("username", username)
-                .append("version", version)
-                .append("role", role)
-                .append("factionModel", factionModel)
+                .append("msDepartmentModel", msDepartmentModel)
                 .append("name", name)
                 .append("isValid", isValid)
-                .append("position", position)
                 .toString();
     }
 }
