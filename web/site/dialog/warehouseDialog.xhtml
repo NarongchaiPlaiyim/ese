@@ -97,16 +97,16 @@
                                 listener="#{setup.warehouseDlg('ClickOnTable')}"
                                 update=":warehouseDialogForm, :warehouseDialogForm:warehouseTable"/>
                         <p:column headerText="No" style="width: 20px" styleClass="center">
-                            <p:outputLabel value="#{rowIndex+1}"/>
+                            <h:outputText value="#{rowIndex+1}"/>
                         </p:column>
                         <p:column headerText="warehouse ID" styleClass="center">
-                            <p:outputLabel value="#{warehouse.warehouseCode}"/>
+                            <h:outputText value="#{warehouse.warehouseCode}"/>
                         </p:column>
                         <p:column headerText="warehouse Name" styleClass="center">
-                            <p:outputLabel value="#{warehouse.warehouseName}"/>
+                            <h:outputText value="#{warehouse.warehouseName}"/>
                         </p:column>
                         <p:column headerText="Remark" styleClass="center">
-                            <p:outputLabel value="#{warehouse.remark}"/>
+                            <h:outputText value="#{warehouse.remark}"/>
                         </p:column>
                     </p:dataTable>
                 </td>
