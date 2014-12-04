@@ -134,6 +134,7 @@
                                                      oncomplete="PF('findProductDlg').show()"
                                             />
                                     <!--update=":frmFindProduct"-->
+                                    <!--findProductPanel-->
                                 </td>
                                 <td>
                                     <h:outputLabel value="Qty*"/>
@@ -301,11 +302,7 @@
 
         </p:layout>
 
-        <p:dialog id="findProductDialog" widgetVar="findProductDlg" header="Find Product"
-                  onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
-                  modal="true" width="650" height="400">
-            <ui:include src="../site/dialog/findProductDialog.xhtml"/>
-        </p:dialog>
+
 
         <pe:blockUI widgetVar="bui">
             <div style="text-align: center;">
@@ -315,6 +312,14 @@
                 </h:panelGrid>
             </div>
         </pe:blockUI>
+
+        <p:panel id="findProductPanel" styleClass="panel">
+            <p:dialog id="findProductDialog" widgetVar="findProductDlg" header="Find Product"
+                      onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
+                      modal="true" width="600" height="400">
+                <ui:include src="../site/dialog/findProductDialog.xhtml"/>
+            </p:dialog>
+        </p:panel>
 
         <p:panel id="msgBoxSystemMessagePanel" styleClass="panel">
             <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="350px" closable="false"
