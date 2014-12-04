@@ -11,7 +11,7 @@
     <!-- End Header Logo -->
     <h:head>
         <title>Barcode Register</title>
-        <h:outputStylesheet name="css/style.css"/>
+        <!--<h:outputStylesheet name="css/style.css"/>-->
         <!--<h:outputStylesheet name="css/style.green.css"/>-->
         <!--<h:outputStylesheet name="css/menubar.css"/>-->
         <h:outputScript library="js" name="custom.js" />
@@ -23,7 +23,7 @@
             </p:layoutUnit>
             <p:layoutUnit id="layoutLeft" position="west" size="250" header="Menu" collapsible="true">
                 <h:form>
-                    <p:menu>
+                    <p:menu style="border: 0">
                         <p:menuitem value="1. Barcode Register" icon="ui-icon-disk" outcome="barcodeRegister.xhtml" />
                         <p:separator />
                         <p:menuitem value="2. Pallet Tag Printing" icon="ui-icon-cart" outcome="palletManagement.xhtml" />
@@ -35,9 +35,9 @@
                 </h:form>
             </p:layoutUnit>
 
-            <p:layoutUnit id="layoutCenter" position="center" header="1. Barcode Register">
+            <p:layoutUnit id="layoutCenter" position="center" header="1. Barcode Register" style="border: 0">
                 <h:form id="setupForm">
-                    <p:panel>
+                    <p:panel style="border: 0">
                         <div style="text-align: right;">
                             <h:outputText id="modeBarcode"
                                           styleClass="medium"
@@ -105,7 +105,7 @@
                         </div>
                     </p:panel>
 
-                    <p:panel>
+                    <p:panel style="border: 0">
                         <table border="0" class="content_table_form">
                             <tr >
                                 <td style="min-width: 150px; width: 150px; max-width: 150px;" class="left" />
@@ -232,7 +232,7 @@
                     </p:panel>
 
 
-            <p:panel>
+            <p:panel style="border: 0">
                 <table border="0" class="content_table_form">
                     <tr >
                         <td class="fixMinMax100 left" />
