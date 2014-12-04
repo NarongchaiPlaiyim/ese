@@ -18,7 +18,7 @@
     </h:head>
     <h:body>
         <p:layout fullPage="true" id="layoutPanel">
-            <p:layoutUnit id="layoutTop" position="north" size="150" header="top" collapsible="true" />
+            <p:layoutUnit id="layoutTop" position="north" size="150"  />
             <p:layoutUnit id="layoutLeft" position="west" size="250" header="Menu" collapsible="true">
                 <h:form>
                     <p:menu>
@@ -126,13 +126,14 @@
                                             value="#{barcodeRegisterBean.barcodeRegisterView.msItemModel.DSGThaiItemDescription}"/>
                                 </td>
                                 <td>
-                                    <!--<p:commandButton value="Select"-->
-                                                     <!--icon="ui-icon-folder-open"-->
-                                                     <!--styleClass="medium" style="width: 100px"-->
-                                                     <!--action="#{barcodeRegisterBean.onInitSearch()}"-->
-                                                     <!--update=":frmFindProduct"-->
-                                                     <!--oncomplete="PF('findProductDlg').show()"-->
-                                            <!--/>-->
+                                    <p:commandButton value="Select"
+                                                     icon="ui-icon-folder-open"
+                                                     styleClass="medium" style="width: 100px"
+                                                     action="#{barcodeRegisterBean.onInitSearch()}"
+
+                                                     oncomplete="PF('findProductDlg').show()"
+                                            />
+                                    <!--update=":frmFindProduct"-->
                                 </td>
                                 <td>
                                     <h:outputLabel value="Qty*"/>
@@ -295,17 +296,17 @@
             </p:panel>
 
             </h:form>
-
-
-                <p:dialog id="findProductDialog" widgetVar="findProductDlg" header="Find Product"
-                          onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
-                          modal="true" width="650" height="400">
-                    <ui:include src="../site/dialog/findProductDialog.xhtml"/>
-                </p:dialog>
             </p:layoutUnit>
 
 
         </p:layout>
+
+        <p:dialog id="findProductDialog" widgetVar="findProductDlg" header="Find Product"
+                  onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
+                  modal="true" width="650" height="400">
+            <ui:include src="../site/dialog/findProductDialog.xhtml"/>
+        </p:dialog>
+
         <pe:blockUI widgetVar="bui">
             <div style="text-align: center;">
                 <h:panelGrid columns="2" styleClass="center">
@@ -325,7 +326,7 @@
                                              process="@this"
                                              update="setupForm"
                                              icon="ui-icon-check"
-                                             styleClass="medium" style="width: 80px"
+                                             styleClass="medium" style="width: 100px"
                                              oncomplete="PF('msgBoxSystemMessageDlg').hide()"/>
                         </td>
                     </tr>
@@ -341,13 +342,13 @@
                         <td colspan="100%" class="right">
                             <p:commandButton value="Ok" action="#{barcodeRegisterBean.onDelete()}"
                                              process="@this" update=":setupForm, :msgBoxSystemMessagePanel"
-                                             styleClass="medium" style="width: 80px"
+                                             styleClass="medium" style="width: 100px"
                                              icon="ui-icon-check"
                                              oncomplete="PF('confirmClosePalletDlg').hide()"/>
                             <p:commandButton value="Cancel"
                                              process="@this"
                                              update=":setupForm"
-                                             styleClass="medium" style="width: 80px"
+                                             styleClass="medium" style="width: 100px"
                                              icon="ui-icon-cancel"
                                              oncomplete="PF('confirmClosePalletDlg').hide()"/>
                         </td>
