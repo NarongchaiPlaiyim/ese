@@ -64,16 +64,16 @@
                             <p:ajax event="rowSelect" update=":frmFindProduct:productTable, :frmFindProduct:btnSelectDialog"
                                     listener="#{barcodeRegisterBean.onClickTableDialog()}"/>
                             <p:column headerText="No" style="min-width: 10px; width: 10px; max-width: 10px;" styleClass="right">
-                                <p:outputLabel value="#{rowIndex+1}"/>
+                                <h:outputText value="#{rowIndex+1}"/>
                             </p:column>
                             <p:column headerText="Product Name" style="min-width: 150px; width: 150px; max-width: 150px;">
-                                <p:outputLabel value="#{itemModel.itemName}"/>
+                                <h:outputText value="#{itemModel.itemName}"/>
                             </p:column>
                             <p:column headerText="Product Code" style="min-width: 100px; width: 100px; max-width: 100px;" styleClass="center">
-                                <p:outputLabel value="#{itemModel.itemId}"/>
+                                <h:outputText value="#{itemModel.itemId}"/>
                             </p:column>
                             <p:column headerText="Product Description" style="min-width: 250px; width: 250px; max-width: 250px;">
-                                <p:outputLabel value="#{itemModel.DSGThaiItemDescription}"/>
+                                <h:outputText value="#{itemModel.DSGThaiItemDescription}"/>
                             </p:column>
                         </p:dataTable>
                     </td>
