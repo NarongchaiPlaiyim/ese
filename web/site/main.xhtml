@@ -28,30 +28,78 @@
     </h:head>
     <h:body>
         <h:form id="frmMain">
-            <pe:layout>
-                <pe:layoutPane position="north" size="85" resizable="false" >
-                    North
-                </pe:layoutPane>
-                <pe:layoutPane rendered="#{false}" id="layoutCenter" position="center" resizable="false" >
 
+            <p:layout fullPage="true" id="layoutPanel">
+                <p:layoutUnit id="layoutTop" position="north" header="top" collapsible="true" />
 
-                    <iframe id="iframeCenter" src="#{loginBean.url}" width="100%"
-                            height="100%" >
-                    </iframe>
-                </pe:layoutPane>
-                <pe:layoutPane  position="west" size="250" resizeWhileDragging="false"
-                               maxSize="500" minSize="100" resizable="false" closable="true">
-                    <!--<h:form>-->
+                <p:layoutUnit id="layoutCenter" position="center" header="center" collapsible="true" >
+                    <h:form id="frmMain">
+                        <p:commandButton value="delete"
+                                         id="btnDelete"
+                                         styleClass="medium" style="width: 80px"
+                                         icon="ui-icon-trash"
+                                         onstart="PF('bui').block()"
+                                         action="#{loginBean.test()}"
+                                         oncomplete="PF('bui').unblock()"
+                                />
+                    </h:form>
+                </p:layoutUnit>
+
+                <p:layoutUnit id="layoutCenter2" position="center" header="center" collapsible="true" >
+                    <h:form id="frmMain2">
+                        <p:commandButton value="delete"
+                                         id="btnDelete2"
+                                         styleClass="medium" style="width: 80px"
+                                         icon="ui-icon-trash"
+                                         onstart="PF('bui').block()"
+                                         action="#{loginBean.test()}"
+                                         oncomplete="PF('bui').unblock()"
+                                />
+                    </h:form>
+                </p:layoutUnit>
+
+                <p:layoutUnit id="layoutLeft" position="west" size="200" header="Menu" collapsible="true">
+                    <h:form>
                         <p:menu>
-                            <p:menuitem value="Save"
-                                        icon="ui-icon-disk"
-                                        action="#{loginBean.updateURL()}"
-                                    update=":frmMain:layoutCenter"/>
+                            <p:menuitem value="Save"  icon="ui-icon-disk" outcome="barcodeRegister.xhtml" />
                             <p:menuitem value="Update" icon="ui-icon-arrowrefresh-1-w"/>
                         </p:menu>
-                    <!--</h:form>-->
-                </pe:layoutPane>
-            </pe:layout>
+                    </h:form>
+                </p:layoutUnit>
+            </p:layout>
+            <pe:blockUI widgetVar="bui">
+                <div style="text-align: center;">
+                    <h:panelGrid columns="2" styleClass="center">
+                        <h:outputText value="Please wait..." />
+                        <p:graphicImage value="/resources/images/shared/ajax-loader.gif"/>
+                    </h:panelGrid>
+                </div>
+            </pe:blockUI>
+
+            <!--<pe:layout>-->
+                <!--<pe:layoutPane position="north" size="85" resizable="false" >-->
+                    <!--North-->
+                <!--</pe:layoutPane>-->
+                <!--<pe:layoutPane rendered="#{false}" id="layoutCenter" position="center" resizable="false" >-->
+
+
+                    <!--<iframe id="iframeCenter" src="#{loginBean.url}" width="100%"-->
+                            <!--height="100%" >-->
+                    <!--</iframe>-->
+                <!--</pe:layoutPane>-->
+                <!--<pe:layoutPane  position="west" size="250" resizeWhileDragging="false"-->
+                               <!--maxSize="500" minSize="100" resizable="false" closable="true">-->
+                    <!--&lt;!&ndash;<h:form>&ndash;&gt;-->
+                        <!--<p:menu>-->
+                            <!--<p:menuitem value="Save"-->
+                                        <!--icon="ui-icon-disk"-->
+                                        <!--action="#{loginBean.updateURL()}"-->
+                                    <!--update=":frmMain:layoutCenter"/>-->
+                            <!--<p:menuitem value="Update" icon="ui-icon-arrowrefresh-1-w"/>-->
+                        <!--</p:menu>-->
+                    <!--&lt;!&ndash;</h:form>&ndash;&gt;-->
+                <!--</pe:layoutPane>-->
+            <!--</pe:layout>-->
         </h:form>
     </h:body>
 
