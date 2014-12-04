@@ -11,7 +11,7 @@
     <!-- End Header Logo -->
     <h:head>
         <title>Barcode Register</title>
-        <!--<h:outputStylesheet name="css/style.css"/>-->
+        <h:outputStylesheet name="css/style.css"/>
         <!--<h:outputStylesheet name="css/style.green.css"/>-->
         <!--<h:outputStylesheet name="css/menubar.css"/>-->
         <h:outputScript library="js" name="custom.js" />
@@ -233,66 +233,66 @@
 
 
             <p:panel>
-            <table border="0" class="content_table_form">
-                <tr >
-                    <td class="fixMinMax100 left" />
-                    <td class="fixMinMax200 left" />
-                    <td class="fixMinMax100 center" />
-                    <td class="fixMinMax100 left" />
-                    <td class="fixMinMax200 left" />
-                    <td/>
+                <table border="0" class="content_table_form">
+                    <tr >
+                        <td class="fixMinMax100 left" />
+                        <td class="fixMinMax200 left" />
+                        <td class="fixMinMax100 center" />
+                        <td class="fixMinMax100 left" />
+                        <td class="fixMinMax200 left" />
+                        <td/>
+                    </tr>
+                <tr>
+                <td colspan="6">
+                    <p:dataTable id="barcodeRegisterTable"
+                                 rows="8"
+                                 paginator="true"
+                                 var="barcodeModel"
+                                 value="#{barcodeRegisterBean.barcodeRegisterModelList}"
+                                 selectionMode="single"
+                                 selection="#{barcodeRegisterBean.barcodeRegisterModel}"
+                                 rowKey="#{barcodeModel.id}"
+                                 rowIndexVar="rowIndex">
+                        <p:ajax event="rowSelect" update=":setupForm" listener="#{barcodeRegisterBean.onClickTable()}"/>
+                        <p:column headerText="No" style="min-width: 5px; width: 5px; max-width: 5px;">
+                            <h:outputText value="#{rowIndex+1}" styleClass="center" />
+                        </p:column>
+                        <p:column headerText="Item Code" style="min-width: 60px; width: 60px; max-width: 60px;" styleClass="center">
+                            <h:outputText value="#{barcodeModel.msItemModel.itemId}"/>
+                        </p:column>
+                        <p:column headerText="Item Description" style="min-width: 250px; width: 250px; max-width: 250px;" styleClass="left">
+                            <h:outputText value="#{barcodeModel.msItemModel.DSGThaiItemDescription}"/>
+                        </p:column>
+                        <p:column headerText="Document No." style="min-width: 110px; width: 110px; max-width: 110px;" styleClass="center">
+                            <h:outputText value="#{barcodeModel.docNo}"/>
+                        </p:column>
+                        <p:column headerText="Document Date" style="min-width: 70px; width: 70px; max-width: 70px;" styleClass="center">
+                            <h:outputText value="#{barcodeModel.productionDate}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Bacth No" style="min-width: 50px; width: 50px; max-width: 50px;" styleClass="center">
+                            <h:outputText value="#{barcodeModel.batchNo}"/>
+                        </p:column>
+                        <p:column headerText="Qty" style="min-width: 50px; width: 50px; max-width: 50px;" styleClass="center">
+                            <h:outputText value="#{barcodeModel.qty}"/>
+                        </p:column>
+                        <p:column headerText="Start Barcode" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
+                            <h:outputText value="#{barcodeModel.startBarcodeText}"/>
+                        </p:column>
+                        <p:column headerText="Finish Barcode" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
+                            <h:outputText value="#{barcodeModel.finishBarcodeText}"/>
+                        </p:column>
+                        <p:column headerText="Remark" style="min-width: 110px; width: 110px; max-width: 110px;" styleClass="center">
+                            <h:outputText value="#{barcodeModel.remark}" style="word-wrap:break-word;"/>
+                        </p:column>
+                        <p:column headerText="Status" style="min-width: 30px; width: 30px; max-width: 30px;" styleClass="center">
+                            <h:outputText value="#{barcodeModel.status}"/>
+                        </p:column>
+                    </p:dataTable>
+                </td>
                 </tr>
-            <tr>
-            <td colspan="6">
-            <p:dataTable id="barcodeRegisterTable"
-            rows="8"
-            paginator="true"
-            var="barcodeModel"
-            value="#{barcodeRegisterBean.barcodeRegisterModelList}"
-            selectionMode="single"
-            selection="#{barcodeRegisterBean.barcodeRegisterModel}"
-            rowKey="#{barcodeModel.id}"
-            rowIndexVar="rowIndex">
-            <p:ajax event="rowSelect" update=":setupForm" listener="#{barcodeRegisterBean.onClickTable()}"/>
-            <p:column headerText="No" style="min-width: 5px; width: 5px; max-width: 5px;">
-            <h:outputText value="#{rowIndex+1}" styleClass="center" />
-            </p:column>
-            <p:column headerText="Item Code" style="min-width: 60px; width: 60px; max-width: 60px;" styleClass="center">
-            <h:outputText value="#{barcodeModel.msItemModel.itemId}"/>
-            </p:column>
-            <p:column headerText="Item Description" style="min-width: 250px; width: 250px; max-width: 250px;" styleClass="left">
-            <h:outputText value="#{barcodeModel.msItemModel.DSGThaiItemDescription}"/>
-            </p:column>
-            <p:column headerText="Document No." style="min-width: 110px; width: 110px; max-width: 110px;" styleClass="center">
-            <h:outputText value="#{barcodeModel.docNo}"/>
-            </p:column>
-            <p:column headerText="Document Date" style="min-width: 70px; width: 70px; max-width: 70px;" styleClass="center">
-            <h:outputText value="#{barcodeModel.productionDate}">
-            <f:convertDateTime pattern="dd/MM/yyyy" />
-            </h:outputText>
-            </p:column>
-            <p:column headerText="Bacth No" style="min-width: 50px; width: 50px; max-width: 50px;" styleClass="center">
-            <h:outputText value="#{barcodeModel.batchNo}"/>
-            </p:column>
-            <p:column headerText="Qty" style="min-width: 50px; width: 50px; max-width: 50px;" styleClass="center">
-            <h:outputText value="#{barcodeModel.qty}"/>
-            </p:column>
-            <p:column headerText="Start Barcode" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
-            <h:outputText value="#{barcodeModel.startBarcodeText}"/>
-            </p:column>
-            <p:column headerText="Finish Barcode" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
-            <h:outputText value="#{barcodeModel.finishBarcodeText}"/>
-            </p:column>
-            <p:column headerText="Remark" style="min-width: 110px; width: 110px; max-width: 110px;" styleClass="center">
-            <h:outputText value="#{barcodeModel.remark}" style="word-wrap:break-word;"/>
-            </p:column>
-            <p:column headerText="Status" style="min-width: 30px; width: 30px; max-width: 30px;" styleClass="center">
-            <h:outputText value="#{barcodeModel.status}"/>
-            </p:column>
-            </p:dataTable>
-            </td>
-            </tr>
-            </table>
+                </table>
             </p:panel>
 
             </h:form>
