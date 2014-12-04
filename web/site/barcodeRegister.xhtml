@@ -18,17 +18,19 @@
     </h:head>
     <h:body>
         <p:layout fullPage="true" id="layoutPanel">
-            <p:layoutUnit id="layoutTop" position="north" size="150"  />
+            <p:layoutUnit id="layoutTop" position="north" size="150">
+                <ui:include src="../site/main.xhtml"/>
+            </p:layoutUnit>
             <p:layoutUnit id="layoutLeft" position="west" size="250" header="Menu" collapsible="true">
                 <h:form>
                     <p:menu>
                         <p:menuitem value="1. Barcode Register" icon="ui-icon-disk" outcome="barcodeRegister.xhtml" />
                         <p:separator />
-                        <p:menuitem value="2. Pallet Tag Printing" icon="ui-icon-disk" outcome="palletManagement.xhtml" />
+                        <p:menuitem value="2. Pallet Tag Printing" icon="ui-icon-cart" outcome="palletManagement.xhtml" />
                         <p:separator />
-                        <p:menuitem value="7. Setup" icon="ui-icon-disk" outcome="setup.xhtml" />
+                        <p:menuitem value="7. Setup" icon="ui-icon-gear" outcome="setup.xhtml" />
                         <p:separator />
-                        <p:menuitem value="8. User Management" icon="ui-icon-disk" outcome="userManagement.xhtml" />
+                        <p:menuitem value="8. User Management" icon="ui-icon-person" outcome="userManagement.xhtml" />
                     </p:menu>
                 </h:form>
             </p:layoutUnit>
@@ -50,7 +52,7 @@
                                              action="#{barcodeRegisterBean.onPrint}"
                                              oncomplete="PF('bui').unblock()"
                                              ajax="false"
-                                             icon="ui-icon-script"
+                                             icon="ui-icon-print"
                                              styleClass="medium" style="width: 100px"/>
 
                             <p:commandButton value="New"
@@ -313,7 +315,7 @@
         <p:panel id="findProductPanel" styleClass="panel">
             <p:dialog id="findProductDialog" widgetVar="findProductDlg" header="Find Product"
                       onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
-                      modal="true" width="600" height="400">
+                      modal="true" width="900" height="450">
                 <ui:include src="../site/dialog/findProductDialog.xhtml"/>
             </p:dialog>
         </p:panel>
