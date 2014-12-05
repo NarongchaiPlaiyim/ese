@@ -9,6 +9,7 @@ import com.ese.model.db.MSDepartmentModel;
 import com.ese.model.db.MSTitleModel;
 import com.ese.model.db.StaffModel;
 import com.ese.model.view.UserView;
+import com.ese.security.encryption.EncryptionService;
 import com.ese.transform.UserManagementTranstorm;
 import com.ese.utils.Utils;
 import org.springframework.stereotype.Component;
@@ -64,12 +65,12 @@ public class UserManagementService extends Service{
         return userManagementTranstorm.transformToView(staffModel);
     }
 
-    //TODO
     public void onSaveUserAccess(UserView userView){
         StaffModel staffModel = userManagementTranstorm.transformToModel(userView);
 
         if (!Utils.isZero(userView.getId())){
             try {
+                staffModel.setPassword(EncryptionService.encryption(staffModel.getPassword()));
                 staffDAO.update(staffModel);
             } catch (Exception e) {
                 log.debug("Exception error update : ", e);
