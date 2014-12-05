@@ -4,141 +4,70 @@
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions"
         >
     <h:head>
         <title>Login Page </title>
         <h:outputScript library="js" name="custom.js"/>
     </h:head>
-    <h:body styleClass="body_login" >
-        <p:panel id="pnl_maincontainer" style="text-align: center;">
-            <h:form id="frmLogin">
-                <div id="main_container_login">
-                    <div id="content_container_login">
-                        <div id="login_box"></div>
-                        <table style="min-width: 700px; max-width: 700px; width: 700px; text-align: center;" border="0" >
-                            <tr>
-                                <td colspan="100%">
-                                    <h:graphicImage library="images" name="shared/loginlogo.jpg" />
-                                </td>
-                            </tr>
-                        </table>
-
-                        <table style="text-align: center;" >
-                            <tr>
-                                <td>
-                                    <div class="inputwrapper">
-                                        <p:inputText value="#{loginBean.userName}" placeholder="Enter your username." />
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="inputwrapper">
-                                        <p:password value="#{loginBean.password}" placeholder="Enter your password." />
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="inputwrapper">
-                                        <p:commandButton id="test1" value="Login"
-                                                         update=":msgBoxSystemMessagePanel"
-                                                         onstart="PF('bui').show()"
-                                                         action="#{loginBean.login}"
-                                                         oncomplete="PF('bui').hide()"/>
-                                    </div>
-                                    <div class="inputwrapper">
-                                        <p:commandButton id="test2" value="Login" rendered="#{false}"
-                                                         update=":msgBoxSystemMessagePanel"
-                                                         onstart="PF('bui').show()"
-                                                         action="#{loginBean.login}"
-                                                         oncomplete="PF('bui').hide()"/>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-
-                    <!--<div class="inputwrapper">-->
-                        <!--<p:inputText value="#{loginBean.s}" placeholder="Enter your username." />-->
-                    <!--</div>-->
-                    <!--<div class="inputwrapper">-->
-                        <!--<p:inputText value="#{loginBean.f}" placeholder="Enter your username." />-->
-                    <!--</div>-->
-                <!--<p:commandButton id="test2" value="TEST" update="@form"-->
-                <!--action="#{loginBean.test()}"/>-->
-
-                </div>
-            </h:form>
-            <p:panel id="msgBoxSystemMessagePanel" >
-                <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="350px" closable="false"
-                                 header="#{loginBean.messageHeader}" message="#{loginBean.message}" >
-                    <table border="0" style="width: 100%">
-                        <tr>
-                            <td colspan="100%" class="right">
-                                <p:commandButton value="OK"
-                                                 process="@this"
-                                                 update=":frmLogin"
-                                                 icon="ui-icon-check"
-                                                 styleClass="medium" style="width: 80px"
-                                                 oncomplete="PF('msgBoxSystemMessageDlg').hide()"/>
-                            </td>
-                        </tr>
-                    </table>
-                </p:confirmDialog>
-            </p:panel>
-        </p:panel>
-
-        <!--<div class="logo" style="text-align: center">-->
-            <!--<p:graphicImage library="images" name="/shared/loginlogo.jpg"/>-->
-        <!--</div>-->
-        <!--<div class="loginpanel">-->
-            <!--<div class="loginpanelinner" style="text-align: center" >-->
-                <!--<div class="logo" style="text-align: center">-->
-                    <!--<h:form id="frmLogin">-->
-                        <!--<table >-->
-                            <!--<tr>-->
-                                <!--<td style="height:53px;">-->
-                                    <!--<div class="inputwrapper">-->
-                                        <!--<p:inputText value="#{loginBean.userName}" placeholder="Enter your username." />-->
-                                    <!--</div>-->
-                                <!--</td>-->
-                            <!--</tr>-->
-                            <!--<tr>-->
-                                <!--<td class="background: #0972dd;">-->
-                                    <!--<div class="inputwrapper">-->
-                                        <!--<p:password value="#{loginBean.password}" placeholder="Enter your password." />-->
-                                    <!--</div>-->
-                                <!--</td>-->
-                            <!--</tr>-->
-                        <!--</table>-->
-                        <!--<div class="inputwrapper">-->
-                            <!--<p:commandButton id="test1" value="Login"-->
-                                             <!--update=":msgBoxSystemMessagePanel"-->
-                                             <!--onstart="PF('bui').show()"-->
-                                             <!--action="#{loginBean.login}"-->
-                                             <!--oncomplete="PF('bui').hide()"-->
-
-                                    <!--/>-->
-                        <!--</div>-->
-
-                        <!--&lt;!&ndash;<p:commandButton id="test2" value="TEST" update="@form"&ndash;&gt;-->
-                        <!--&lt;!&ndash;action="#{loginBean.test()}"/>&ndash;&gt;-->
-
-                    <!--</h:form>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-        <div class="loginfooter">
-            <p style="color: white">Powered by Extra Solution Engineering Co.,Ltd.</p>
-        </div>
-
+    <style type="text/css" >
+        .loginfooter {
+            font-size: 11px; color: rgba(255,255,255,0.5); position: absolute; position: fixed; bottom: 0; left: 0;
+            width: 100%; text-align: center; font-family: arial, sans-serif !important; padding: 5px 0; }
+    </style>
+    <h:body>
+        <h:form id="frmLogin">
+            <div style="text-align: center">
+                <p:panel style="border: 0">
+                <p:graphicImage library="images" name="/shared/DN1.png"/>
+                </p:panel>
+            </div>
+            <div style="text-align: center">
+                <p:panel style="border: 0">
+                    <p:inputText value="#{loginBean.userName}" placeholder="Enter your username." />
+                </p:panel>
+            </div>
+            <div style="text-align: center">
+                <p:panel style="border: 0">
+                    <p:password value="#{loginBean.password}" placeholder="Enter your password." />
+                </p:panel>
+            </div>
+            <div style="text-align: center">
+                <p:panel style="border: 0">
+                    <p:commandButton id="test1" value="Login"
+                                     style="width: 240px"
+                        update=":msgBoxSystemMessagePanel"
+                        onstart="PF('bui').block()"
+                        action="#{loginBean.login}"
+                        oncomplete="PF('bui').unblock()" />
+                </p:panel>
+            </div>
+        </h:form>
     </h:body>
-    <p:blockUI block="pnl_maincontainer" widgetVar="bui">
-        <h:panelGrid columns="2">
-            <h:outputText value="Please wait..." />
-            <p:graphicImage value="/resources/images/shared/ajax-loader.gif"/>
-        </h:panelGrid>
-    </p:blockUI>
+    <div class="loginfooter">
+        <p style="color: #2F91BD">Powered by Extra Solution Engineering Co.,Ltd.</p>
+    </div>
+    <p:panel id="msgBoxSystemMessagePanel" style="border: 0">
+        <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="500px" closable="false"
+                         style="border: 0;"
+                         header="#{loginBean.messageHeader}" message="#{loginBean.message}" >
+            <div style="text-align: right">
+                <p:commandButton value="OK"
+                                 process="@this"
+                                 update=":frmLogin"
+                                 icon="ui-icon-check"
+                                 styleClass="medium" style="width: 100px"
+                                 oncomplete="PF('msgBoxSystemMessageDlg').hide()"/>
+            </div>
+        </p:confirmDialog>
+    </p:panel>
+    <pe:blockUI widgetVar="bui">
+        <div style="text-align: center;">
+            <h:panelGrid columns="2" styleClass="center">
+                <h:outputText value="Please wait..." />
+                <p:graphicImage value="/resources/images/shared/ajax-loader.gif"/>
+            </h:panelGrid>
+        </div>
+    </pe:blockUI>
 </f:view>
 </html>
