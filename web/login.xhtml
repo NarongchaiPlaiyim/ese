@@ -48,7 +48,7 @@
         <p style="color: #2F91BD">Powered by Extra Solution Engineering Co.,Ltd.</p>
     </div>
     <p:panel id="msgBoxSystemMessagePanel" style="border: 0">
-        <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="500px" closable="false"
+        <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="#{configurationSize.dialogMessageSize}" closable="false"
                          style="border: 0;"
                          header="#{loginBean.messageHeader}" message="#{loginBean.message}" >
             <div style="text-align: right">

@@ -6,9 +6,6 @@
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <h:outputScript library="js" name="custom.js" />
-    </h:head>
         <h:form id="frmFindProduct">
             <table  border="0">
                 <tr>
@@ -23,7 +20,7 @@
                     </td>
                     <td>
                         <p:inputText
-                                style="min-width: 200px; width: 200px; max-width: 200px;"
+                                style="#{configurationSize.fixSize200}"
                                 value="#{barcodeRegisterBean.productSearch}"
                                 />
                         <p:commandButton value="Search"

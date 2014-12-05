@@ -14,4 +14,5 @@ public class ConfigurationSize {
     @Value("#{config['fix.size.100']}") private String fixSize100;
     @Value("#{config['fix.size.150']}") private String fixSize150;
     @Value("#{config['fix.size.200']}") private String fixSize200;
+    @Value("#{config['dialog.message.size']}") private String dialogMessageSize;
 }
