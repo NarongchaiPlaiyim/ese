@@ -18,13 +18,20 @@
                                 <td style="width: 80px; min-width: 80px; max-width: 80px">
                                     <h:outputLabel value="Department"/>
                                 </td>
-                                <td style="min-width: 210px; width: 210px; max-width: 210px;">
+                                <td style="min-width: 230px; width: 230px; max-width: 230px;">
                                     <p:selectOneMenu id="departMenu"
                                                      style="min-width: 200px; width: 200px; max-width: 200px;">
+                                        <!--value="#{userManagement.departDialog}"-->
                                         <f:selectItem itemLabel="- Please Select -" itemValue=""/>
+                                        <!--<f:selectItems value="#{userManagement.departmentDialogList}"-->
+                                                       <!--var="departmentDialogItem"-->
+                                                       <!--itemLabel="#{departmentDialogItem.name}"-->
+                                                       <!--itemValue="#{departmentDialogItem.id}"/>-->
+                                        <!--<p:ajax event="change" process="@form" listener="#{userManagement.onChangeSearchMenu('department')}"-->
+                                                <!--update=":addUserForm:factionMenu"/>-->
                                     </p:selectOneMenu>
                                 </td>
-                                <td style="width: 75px; min-width: 75px; max-width: 75px">
+                                <td style="width: 80px; min-width: 80px; max-width: 80px">
                                     <h:outputLabel value="Login name"/>
                                 </td>
                                 <td>
@@ -52,11 +59,31 @@
                                 <td>
                                     <h:outputLabel value="Name"/>
                                 </td>
-                                <td>
-                                    <p:inputText/>
+                                <td class="left">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <p:selectOneMenu id="titleMenu"
+                                                                 style="min-width: 60px; width: 60px; max-width: 60px;">
+                                                    <f:selectItem itemLabel="Title" itemValue=""/>
+                                                </p:selectOneMenu>
+                                            </td>
+                                            <td>
+                                                <p:inputText style="width: 125px; min-width: 125px; max-width: 125px"/>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </td>
                                 <td>
                                     <h:outputLabel value="Re-Password"/>
+                                </td>
+                                <td>
+                                    <p:inputText/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h:outputLabel value="Position"/>
                                 </td>
                                 <td>
                                     <p:inputText/>

@@ -1,56 +1,34 @@
-package com.ese.model.db;
+package com.ese.model.view;
 
+import com.ese.model.db.FactionModel;
+import com.ese.model.db.MSDepartmentModel;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.hibernate.annotations.Proxy;
-
-import javax.persistence.*;
 
 @Getter
 @Setter
-@Entity
-@Table(name = "staff")
-@Proxy(lazy=false)
-public class StaffModel extends AbstractModel{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class UserView {
 
-    @Column(name = "password")
     private String password;
-
-    @Column(name = "username")
     private String username;
-
-    @Column(name = "version")
     private Integer version;
-
-    @Column(name = "role")
     private String role;
-
-    @OneToOne
-    @JoinColumn(name="faction_id", nullable=false, columnDefinition="int default 0")
+    private MSDepartmentModel msDepartmentModel;
     private FactionModel factionModel;
-
-    @Column(name="name")
     private String name;
-
-    @Column(name="isvalid")
     private int isValid;
-
-    @Column(name="position")
     private String position;
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("id", id)
                 .append("password", password)
                 .append("username", username)
                 .append("version", version)
                 .append("role", role)
+                .append("msDepartmentModel", msDepartmentModel)
                 .append("factionModel", factionModel)
                 .append("name", name)
                 .append("isValid", isValid)
