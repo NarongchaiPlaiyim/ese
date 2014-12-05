@@ -1,5 +1,6 @@
 package com.ese.beans;
 
+import com.ese.security.encryption.EncryptionService;
 import com.ese.utils.Utils;
 
 import java.text.DateFormat;
@@ -8,36 +9,10 @@ import java.util.*;
 
 public class main {
     public static void main(String[] args) {
-        int ss = 55;
-        int ff = 57;
-
-        int s = 50;
-        int f = 60;
-
-        List<Integer> list = new ArrayList();
-        for (int i = 1; i < 10; i++) {
-            list.add(i);
-        }
-
-        list.add(3);
-        list.add(6);
-        list.add(9);
-
-        System.out.println(list.toString());
-        Map<String, String> newMap = new HashMap();
-
-        for (Integer i : list){
-            if (!newMap.containsKey(i+"")){
-                newMap.put(i+"", i+"");
-                //add to map
-            } else {
-                System.out.println(i);
-                //delete
-            }
-
-        }
-
-        System.out.println(newMap.toString());
+        System.out.println(EncryptionService.encryption("a"));
+        //0cc175b9c0f1b6a831c399e269772661
+        //0cc175b9c0f1b6a831c399e269772661
+        //0000000co5qrjg7hmqk33gsps9kne9j1
     }
 
 

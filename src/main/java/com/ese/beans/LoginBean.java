@@ -2,6 +2,7 @@ package com.ese.beans;
 
 import com.ese.model.db.StaffModel;
 import com.ese.security.SimpleAuthenticationManager;
+import com.ese.security.encryption.EncryptionService;
 import com.ese.service.LoginService;
 import com.ese.utils.AttributeName;
 import com.ese.utils.FacesUtil;
@@ -46,31 +47,40 @@ public class LoginBean extends Bean{
     @PostConstruct
     private void init(){
         if(!Utils.isNull(SecurityContextHolder.getContext().getAuthentication())){
+            System.out.println("old user");
             userDetail = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//            System.out.println(userDetail.hashCode());
+        } else {
+            System.out.println("new user");
         }
     }
 
     public String login(){
         log.info("-- SessionRegistry principle size: {}", sessionRegistry.getAllPrincipals().size());
         if(!Utils.isZero(userName.length()) && !Utils.isZero(password.length())) {
-            if(loginService.isUserExist(getUserName(), getPassword())){
+            setPassword(EncryptionService.encryption(password));
+//            System.out.println("password : "+password);
+            if(true){//loginService.isUserExist(getUserName(), getPassword())){
                 StaffModel staffModel = loginService.getStaffModel();
                 userDetail = new UserDetail(userName,
                                             password,
-                                            staffModel.getRole(),
+                                            "USER",  //staffModel.getRole(),
                                             "",
                                             "");
                 HttpServletRequest httpServletRequest = FacesUtil.getRequest();
                 HttpServletResponse httpServletResponse = FacesUtil.getResponse();
-                UsernamePasswordAuthenticationToken request = new UsernamePasswordAuthenticationToken(userDetail, this.password);
+                UsernamePasswordAuthenticationToken request = new UsernamePasswordAuthenticationToken(getUserDetail(), getPassword());
                 request.setDetails(new WebAuthenticationDetails(httpServletRequest));
                 SimpleAuthenticationManager simpleAuthenticationManager = new SimpleAuthenticationManager();
                 Authentication result = simpleAuthenticationManager.authenticate(request);
                 log.debug("-- authentication result: {}", result.toString());
+//                System.out.println("Result : " + result.hashCode());
+//                System.out.println("Result : "+result.toString());
                 SecurityContextHolder.getContext().setAuthentication(result);
                 compositeSessionAuthenticationStrategy.onAuthentication(request, httpServletRequest, httpServletResponse);
                 HttpSession httpSession = FacesUtil.getSession(false);
-                httpSession.setAttribute(AttributeName.USER_DETAIL.getName(), userDetail);
+                httpSession.setAttribute(AttributeName.USER_DETAIL.getName(), getUserDetail());
+                System.out.println(userDetail.hashCode());
                 log.debug("-- userDetail[{}]", userDetail.toString());
                 return "USER";//<-- for test  //userDetail.getRole();<-- for production.
             }

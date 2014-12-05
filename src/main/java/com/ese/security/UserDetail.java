@@ -1,11 +1,13 @@
 package com.ese.security;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
 
+@EqualsAndHashCode
 @Getter
 @Setter
 public class UserDetail implements Serializable {
