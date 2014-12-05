@@ -16,15 +16,24 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "system_role")
 @Proxy(lazy=false)
-public class SystemRoleModel {
+public class SystemRoleModel extends AbstractModel{
     @Id
     private int id;
 
     @Column(name = "code")
     private String code;
 
+    @Column(name="name")
+    private String name;
+
+    @Column(name="description")
+    private String desxription;
+
     @Column(name = "version")
     private Integer version;
+
+    @Column(name="isvalid")
+    private int isValid;
 
     @Override
     public String toString() {

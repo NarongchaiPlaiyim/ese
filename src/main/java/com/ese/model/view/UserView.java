@@ -2,15 +2,19 @@ package com.ese.model.view;
 
 import com.ese.model.db.FactionModel;
 import com.ese.model.db.MSDepartmentModel;
+import com.ese.model.db.MSTitleModel;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import java.util.Date;
+
 @Getter
 @Setter
 public class UserView {
 
+    private int id;
     private String password;
     private String username;
     private Integer version;
@@ -20,10 +24,22 @@ public class UserView {
     private String name;
     private int isValid;
     private String position;
+    private MSTitleModel msTitleModel;
+    private Integer createBy;
+    private Date createDate;
+    private Integer updateBy;
+    private Date updateDate;
+
+    public UserView() {
+        msDepartmentModel = new MSDepartmentModel();
+        factionModel = new FactionModel();
+        msTitleModel = new MSTitleModel();
+    }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("id", id)
                 .append("password", password)
                 .append("username", username)
                 .append("version", version)
@@ -33,6 +49,11 @@ public class UserView {
                 .append("name", name)
                 .append("isValid", isValid)
                 .append("position", position)
+                .append("msTitleModel", msTitleModel)
+                .append("createBy", createBy)
+                .append("createDate", createDate)
+                .append("updateBy", updateBy)
+                .append("updateDate", updateDate)
                 .toString();
     }
 }

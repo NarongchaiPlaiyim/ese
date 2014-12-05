@@ -28,6 +28,10 @@ public class FactionModel extends AbstractModel{
     @Column(name="isvalid")
     private int isValid;
 
+    public FactionModel() {
+        msDepartmentModel = new MSDepartmentModel();
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
