@@ -75,7 +75,7 @@ public class LoginBean extends Bean{
                 return "USER";//<-- for test  //userDetail.getRole();<-- for production.
             }
         }
-        showDialog(MessageDialog.WARNING.getMessageHeader(), "Username or Password is incorrect.");
+        showDialog(MessageDialog.WARNING.getMessageHeader(), "Invalid username or password.");
         return "loggedOut";
     }
 

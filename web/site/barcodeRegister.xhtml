@@ -19,9 +19,9 @@
     <h:body>
         <p:layout fullPage="true" id="layoutPanel">
             <p:layoutUnit id="layoutTop" position="north" size="150">
-                <ui:include src="../site/main.xhtml"/>
+                <ui:include src="include/header.xhtml"/>
             </p:layoutUnit>
-            <p:layoutUnit id="layoutLeft" position="west" size="250" header="Menu" collapsible="true">
+            <p:layoutUnit id="layoutLeft" position="west" size="250" header="Menu" collapsible="true" style="border: 0">
                 <h:form>
                     <p:menu style="border: 0">
                         <p:menuitem value="1. Barcode Register" icon="ui-icon-disk" outcome="barcodeRegister.xhtml" />
@@ -35,7 +35,7 @@
                 </h:form>
             </p:layoutUnit>
 
-            <p:layoutUnit id="layoutCenter" position="center" header="1. Barcode Register" style="border: 0">
+            <p:layoutUnit id="layoutCenter" position="center" header="1. Barcode Register" >
                 <h:form id="setupForm">
                     <p:panel style="border: 0">
                         <div style="text-align: right;">
