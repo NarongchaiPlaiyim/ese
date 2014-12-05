@@ -19,23 +19,27 @@
                                     <h:outputLabel value="Department"/>
                                 </td>
                                 <td style="min-width: 230px; width: 230px; max-width: 230px;">
-                                    <p:selectOneMenu id="departMenu"
+                                    <p:selectOneMenu id="departMenu" value="#{userManagement.userView.factionModel.msDepartmentModel.id}"
+                                                     required="#{not empty param[addUserAccess.clientId]}"
                                                      style="min-width: 200px; width: 200px; max-width: 200px;">
-                                        <!--value="#{userManagement.departDialog}"-->
                                         <f:selectItem itemLabel="- Please Select -" itemValue=""/>
-                                        <!--<f:selectItems value="#{userManagement.departmentDialogList}"-->
-                                                       <!--var="departmentDialogItem"-->
-                                                       <!--itemLabel="#{departmentDialogItem.name}"-->
-                                                       <!--itemValue="#{departmentDialogItem.id}"/>-->
-                                        <!--<p:ajax event="change" process="@form" listener="#{userManagement.onChangeSearchMenu('department')}"-->
-                                                <!--update=":addUserForm:factionMenu"/>-->
+                                        <f:selectItems value="#{userManagement.departmentDialogList}"
+                                                       var="departmentDialogItem"
+                                                       itemLabel="#{departmentDialogItem.name}"
+                                                       itemValue="#{departmentDialogItem.id}"/>
+                                        <p:ajax event="change" process="@form" listener="#{userManagement.onChangeDepartment()}"
+                                                update=":addUserForm:factionMenu"/>
                                     </p:selectOneMenu>
                                 </td>
                                 <td style="width: 80px; min-width: 80px; max-width: 80px">
                                     <h:outputLabel value="Login name"/>
                                 </td>
                                 <td>
-                                    <p:inputText/>
+                                    <p:inputText id="loginName" value="#{userManagement.userView.username}"
+                                                 required="#{not empty param[addUserAccess.clientId]}"
+                                                 maxlength="8">
+                                        <f:validateLength minimum="5" pattern="A-Za-z0-9"/>
+                                    </p:inputText>
                                 </td>
                             </tr>
                             <tr>
@@ -43,16 +47,29 @@
                                     <h:outputLabel value="Faction"/>
                                 </td>
                                 <td style="min-width: 210px; width: 210px; max-width: 210px;">
-                                    <p:selectOneMenu id="factionMenu"
+                                    <p:selectOneMenu id="factionMenu" value="#{userManagement.userView.factionModel.id}"
+                                                     required="#{not empty param[addUserAccess.clientId]}"
                                                      style="min-width: 200px; width: 200px; max-width: 200px;">
                                         <f:selectItem itemLabel="- Please Select -" itemValue=""/>
+                                        <f:selectItems value="#{userManagement.factionDialogList}"
+                                                       var="factionDialogItem"
+                                                       itemLabel="#{factionDialogItem.name}"
+                                                       itemValue="#{factionDialogItem.id}"/>
                                     </p:selectOneMenu>
                                 </td>
                                 <td>
-                                    <h:outputLabel value="Password"/>
+                                    <h:outputLabel for="pwd1" value="Password"/>
                                 </td>
                                 <td>
-                                    <p:inputText/>
+                                    <p:password id="pwd1"
+                                                value="#{userManagement.userView.password}"
+                                                match="pwd2"
+                                                required="#{not empty param[addUserAccess.clientId]}"
+                                                redisplay = "true"
+                                                maxlength="8"
+                                                label="Password">
+                                        <f:validateLength minimum="5" maxlength="8"/>
+                                    </p:password>
                                 </td>
                             </tr>
                             <tr>
@@ -63,22 +80,35 @@
                                     <table>
                                         <tr>
                                             <td>
-                                                <p:selectOneMenu id="titleMenu"
+                                                <p:selectOneMenu id="titleMenu"  value="#{userManagement.userView.msTitleModel.id}"
+                                                                 required="#{not empty param[addUserAccess.clientId]}"
                                                                  style="min-width: 60px; width: 60px; max-width: 60px;">
                                                     <f:selectItem itemLabel="Title" itemValue=""/>
+                                                    <f:selectItems value="#{userManagement.msTitleModelList}"
+                                                                   var="titleItem"
+                                                                   itemLabel="#{titleItem.name}"
+                                                                   itemValue="#{titleItem.id}"/>
                                                 </p:selectOneMenu>
                                             </td>
                                             <td>
-                                                <p:inputText style="width: 125px; min-width: 125px; max-width: 125px"/>
+                                                <p:inputText value="#{userManagement.userView.name}"
+                                                             style="width: 125px; min-width: 125px; max-width: 125px"
+                                                             required="#{not empty param[addUserAccess.clientId]}"/>
                                             </td>
                                         </tr>
                                     </table>
                                 </td>
                                 <td>
-                                    <h:outputLabel value="Re-Password"/>
+                                    <h:outputLabel for="pwd2" value="Re-Password"/>
                                 </td>
                                 <td>
-                                    <p:inputText/>
+                                    <p:password id="pwd2" value="#{userManagement.userView.password}"
+                                                label="Re-Password"
+                                                redisplay = "true"
+                                                maxlength="8"
+                                                required="#{not empty param[addUserAccess.clientId]}">
+                                        <f:validateLength minimum="5"/>
+                                    </p:password>
                                 </td>
                             </tr>
                             <tr>
@@ -86,7 +116,7 @@
                                     <h:outputLabel value="Position"/>
                                 </td>
                                 <td>
-                                    <p:inputText/>
+                                    <p:inputText value="#{userManagement.userView.position}" required="#{not empty param[addUserAccess.clientId]}"/>
                                 </td>
                             </tr>
                         </table>
@@ -98,11 +128,15 @@
                                          id="btnSave"
                                          styleClass="medium" style="width: 80px"
                                          icon="ui-icon-check"
-                                         onstart="PF('bui').show()"
-                                         oncomplete="PF('bui').hide()"/>
+                                         binding="#{addUserAccess}"
+                                         update=":addUserForm, :msgBoxSystemMessagePanel"
+                                         action="#{userManagement.onClickSaveUserAccessDialog()}"/>
                         <p:commandButton value="Cancel"
                                          id="btnCancel"
                                          styleClass="medium" style="width: 80px"
+                                         action="#{userManagement.onCancel}"
+                                         process="@form"
+                                         update=":userManagementForm"
                                          oncomplete="PF('addUserDlg').hide()"/>
                     </td>
                 </tr>

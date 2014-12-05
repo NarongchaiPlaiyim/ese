@@ -24,6 +24,10 @@ public class StaffModel extends AbstractModel{
     @Column(name = "username")
     private String username;
 
+    @OneToOne
+    @JoinColumn(name="title_id", nullable=false, columnDefinition="int default 0")
+    private MSTitleModel msTitleModel;
+
     @Column(name = "version")
     private Integer version;
 

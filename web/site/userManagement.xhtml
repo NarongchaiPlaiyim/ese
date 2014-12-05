@@ -43,15 +43,22 @@
                                                             <p:commandButton id="btnAddUser" value="Add User"
                                                                              styleClass="medium" style="width: 100px; min-width: 100px; max-width: 100px"
                                                                              process="@form"
+                                                                             action="#{userManagement.onClickNewUser('New')}"
+                                                                             update=":addUserForm,
+                                                                                     :addUserForm:pwd1,
+                                                                                     :addUserForm:pwd2"
                                                                              icon="ui-icon-plusthick"
                                                                              oncomplete="PF('addUserDlg').show()"/>
                                                             <p:commandButton id="btnEdit" value="Edit"
                                                                              styleClass="medium" style="width: 80px; min-width: 80px; max-width: 80px"
                                                                              process="@form"
                                                                              disabled="#{userManagement.flagBtnEdit}"
+                                                                             action="#{userManagement.onClickNewUser('Edit')}"
+                                                                             update=":addUserForm,
+                                                                                     :addUserForm:pwd1,
+                                                                                     :addUserForm:pwd2"
                                                                              icon="ui-icon-wrench"
-                                                                             onstart="PF('bui').show()"
-                                                                             oncomplete="PF('bui').hide()"/>
+                                                                             oncomplete="PF('addUserDlg').show()"/>
                                                             <p:commandButton id="btnDelete" value="Delete"
                                                                              styleClass="medium" style="width: 80px; min-width: 80px; max-width: 80px"
                                                                              process="@form"
@@ -156,7 +163,7 @@
                                                         <h:outputText value="#{user.factionModel.name}"/>
                                                     </p:column>
                                                     <p:column headerText="Name" style="width: 80px; max-width: 80px; min-width: 80px" styleClass="center">
-                                                        <h:outputText value="#{user.name}"/>
+                                                        <h:outputText value="#{user.msTitleModel.name} #{user.name}"/>
                                                     </p:column>
                                                     <p:column headerText="Position" style="width: 115px; max-width: 115px; min-width: 115px" styleClass="center">
                                                         <h:outputText value="#{user.position}"/>
