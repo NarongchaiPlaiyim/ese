@@ -54,9 +54,7 @@
                                                                              process="@form"
                                                                              disabled="#{userManagement.flagBtnEdit}"
                                                                              action="#{userManagement.onClickNewUser('Edit')}"
-                                                                             update=":addUserForm,
-                                                                                     :addUserForm:pwd1,
-                                                                                     :addUserForm:pwd2"
+                                                                             update=":addUserForm"
                                                                              icon="ui-icon-wrench"
                                                                              oncomplete="PF('addUserDlg').show()"/>
                                                             <p:commandButton id="btnDelete" value="Delete"
@@ -73,6 +71,8 @@
                                                                              styleClass="medium" style="width: 100px; min-width: 100px; max-width: 100px"
                                                                              process="@form"
                                                                              disabled="#{userManagement.flagUserAccess}"
+                                                                             action="#{userManagement.onClickUserAccessDialog}"
+                                                                             update=":userAccessForm"
                                                                              oncomplete="PF('userAccessDlg').show()"/>
                                                             <p:commandButton id="btnPrint"
                                                                              value="Print"

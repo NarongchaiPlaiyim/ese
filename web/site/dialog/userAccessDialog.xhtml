@@ -21,9 +21,15 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p:selectOneMenu id="choiceMenu"
+                                    <p:selectOneMenu id="choiceMenu" value="#{userManagement.menuObjectModel.id}"
                                                      style="min-width: 200px; width: 200px; max-width: 200px;">
                                         <f:selectItem itemLabel="- Please Select -" itemValue=""/>
+                                        <f:selectItems value="#{userManagement.menuObjectModelList}"
+                                                       var="menuObjectItem"
+                                                       itemLabel="#{menuObjectItem.name}"
+                                                       itemValue="#{menuObjectItem.id}"/>
+                                        <p:ajax event="change" process="@form" listener="#{userManagement.onChangeMenuObject()}"
+                                                update=":userAccessForm:userAccessTable"/>
                                     </p:selectOneMenu>
                                 </td>
                                 <td>
@@ -38,20 +44,20 @@
                             </tr>
                             <tr>
                                 <td colspan="3">
-                                    <p:dataTable id="userAccessTable" rowIndexVar="rowIndex"
-                                                 styleClass="full_table"
-                                                 rows="5" paginator="true"
-                                                 selectionMode="single"
+                                    <p:dataTable id="userAccessTable"
+                                                 var="menuObject"
+                                                 rows="5"
+                                                 paginator="true"
+                                                 selection="#{userManagement.selectList}"
+                                                 value="#{userManagement.menuObjectModelTableList}"
+                                                 rowKey="#{menuObject.id}"
                                                  style="width: 100%; max-width: 100%; min-width: 100%">
-                                        <p:ajax event="rowSelect"/>
-                                        <h:outputText headerText="No" style="width: 20px; min-width: 20px; max-width: 20px" styleClass="center">
-                                            <h:outputText value="#{rowIndex+1}"/>
-                                        </h:outputText>
+                                        <p:column selectionMode="multiple" style="width:16px;text-align:center; height: 20px"/>
                                         <p:column headerText="Code " style="width: 100px; max-width: 100px; min-width: 100px" styleClass="center">
-                                            <h:outputText value="" />
+                                            <h:outputText value="#{menuObject.code}" />
                                         </p:column>
                                         <p:column headerText="Menu Object and Action" style="width: 250px; max-width: 250px; min-width: 250px" styleClass="center">
-                                            <h:outputText value=""/>
+                                            <h:outputText value="#{menuObject.name}"/>
                                         </p:column>
                                     </p:dataTable>
                                 </td>
@@ -165,15 +171,13 @@
                             </tr>
                             <tr>
                                 <td colspan="3">
-                                    <p:dataTable id="userAuthorizeTable" rowIndexVar="rowIndex"
+                                    <p:dataTable id="userAuthorizeTable"
                                                  styleClass="full_table"
                                                  rows="5" paginator="true"
                                                  selectionMode="single"
                                                  style="width: 100%; max-width: 100%; min-width: 100%">
                                         <p:ajax event="rowSelect"/>
-                                        <p:column headerText="No" style="width: 20px; min-width: 20px; max-width: 20px" styleClass="center">
-                                            <h:outputText value="#{rowIndex+1}"/>
-                                        </p:column>
+                                        <p:column selectionMode="multiple" style="width:16px;text-align:center; height: 20px"/>
                                         <p:column headerText="Code " style="width: 100px; max-width: 100px; min-width: 100px" styleClass="center">
                                             <h:outputText value="" />
                                         </p:column>

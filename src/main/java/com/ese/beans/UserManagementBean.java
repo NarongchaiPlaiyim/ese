@@ -1,9 +1,6 @@
 package com.ese.beans;
 
-import com.ese.model.db.FactionModel;
-import com.ese.model.db.MSDepartmentModel;
-import com.ese.model.db.MSTitleModel;
-import com.ese.model.db.StaffModel;
+import com.ese.model.db.*;
 import com.ese.model.view.UserView;
 import com.ese.service.UserManagementService;
 import com.ese.utils.MessageDialog;
@@ -35,6 +32,14 @@ public class UserManagementBean extends Bean{
     private List<MSTitleModel> msTitleModelList;
     private MSTitleModel msTitleModel;
 
+    //Item
+    private List<MenuObjectModel> menuObjectModelList;
+    private MenuObjectModel menuObjectModel;
+
+    //Table
+    private List<MenuObjectModel> menuObjectModelTableList;
+    private List<MenuObjectModel> selectList;
+
     //Add User Dialog
     private List<MSDepartmentModel> departmentDialogList;
 //    private MSDepartmentModel departDialog;
@@ -62,6 +67,7 @@ public class UserManagementBean extends Bean{
         msDepartmentModel = new MSDepartmentModel();
         staffModel = new StaffModel();
         factionModel = new FactionModel();
+        menuObjectModel = new MenuObjectModel();
 //        msTitleModel = new MSTitleModel();
     }
 
@@ -157,5 +163,15 @@ public class UserManagementBean extends Bean{
         actionButton();
         departmentOnload();
         userOnload();
+    }
+
+    public void onClickUserAccessDialog(){
+        menuObjectModelList = userManagementService.getMenuObjectByObjCategory();
+        menuObjectModelTableList = userManagementService.getMenuObjectAll();
+    }
+
+    public void onChangeMenuObject(){
+        log.debug("######## {}", menuObjectModel.getId());
+        menuObjectModelTableList = userManagementService.getMenuObjectId(menuObjectModel.getId());
     }
 }

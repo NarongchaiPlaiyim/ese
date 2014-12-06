@@ -1,13 +1,7 @@
 package com.ese.service;
 
-import com.ese.model.dao.FactionDAO;
-import com.ese.model.dao.MSDepartmentDAO;
-import com.ese.model.dao.MSTitleDAO;
-import com.ese.model.dao.StaffDAO;
-import com.ese.model.db.FactionModel;
-import com.ese.model.db.MSDepartmentModel;
-import com.ese.model.db.MSTitleModel;
-import com.ese.model.db.StaffModel;
+import com.ese.model.dao.*;
+import com.ese.model.db.*;
 import com.ese.model.view.UserView;
 import com.ese.transform.UserManagementTranstorm;
 import com.ese.utils.Utils;
@@ -26,6 +20,7 @@ public class UserManagementService extends Service{
     @Resource FactionDAO factionDAO;
     @Resource MSTitleDAO msTitleDAO;
     @Resource UserManagementTranstorm userManagementTranstorm;
+    @Resource MenuObjectDAO menuObjectDAO;
 
     public List<MSDepartmentModel> getDepartAll(){
         return msDepartmentDAO.findDepartmentByIsValid();
@@ -85,5 +80,22 @@ public class UserManagementService extends Service{
 
     public MSTitleModel getTitleById(int titleId){
         return msTitleDAO.findById(titleId);
+    }
+
+    public List<MenuObjectModel> getMenuObjectByObjCategory(){
+        return menuObjectDAO.findByObjCategory();
+    }
+
+    public List<MenuObjectModel> getMenuObjectAll(){
+        try {
+            return menuObjectDAO.findAll();
+        } catch (Exception e) {
+            log.debug("Exception error getMenuObjectAll : ", e);
+            return null;
+        }
+    }
+
+    public List<MenuObjectModel> getMenuObjectId(int menuObjectId){
+        return menuObjectDAO.findByObjectId(menuObjectId);
     }
 }
