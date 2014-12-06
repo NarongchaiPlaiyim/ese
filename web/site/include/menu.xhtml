@@ -6,13 +6,13 @@
         xmlns:p="http://primefaces.org/ui">
     <h:form>
         <p:menu style="border: 0">
-            <p:menuitem value="1. Barcode Register" icon="ui-icon-disk" outcome="barcodeRegister.xhtml" />
+            <p:menuitem value="1. Barcode Register" icon="ui-icon-disk" outcome="#{msg.get('menu.barcode')}" />
             <p:separator />
-            <p:menuitem value="2. Pallet Tag Printing" icon="ui-icon-cart" outcome="palletManagement.xhtml" />
+            <p:menuitem value="2. Pallet Tag Printing" icon="ui-icon-cart" outcome="#{msg.get('menu.pallet')}" />
             <p:separator />
-            <p:menuitem value="7. Setup" icon="ui-icon-gear" outcome="setup.xhtml" />
+            <p:menuitem value="7. Setup" icon="ui-icon-gear" outcome="#{msg.get('menu.setup')}" />
             <p:separator />
-            <p:menuitem value="8. User Management" icon="ui-icon-person" outcome="userManagement.xhtml" />
+            <p:menuitem value="8. User Management" icon="ui-icon-person" outcome="#{msg.get('menu.user')}" />
         </p:menu>
     </h:form>
 </f:view>

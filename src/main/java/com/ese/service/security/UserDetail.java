@@ -1,4 +1,4 @@
-package com.ese.security;
+package com.ese.service.security;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

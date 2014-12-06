@@ -9,7 +9,7 @@ import com.ese.model.db.MSDepartmentModel;
 import com.ese.model.db.MSTitleModel;
 import com.ese.model.db.StaffModel;
 import com.ese.model.view.UserView;
-import com.ese.security.encryption.EncryptionService;
+import com.ese.service.security.encryption.EncryptionService;
 import com.ese.transform.UserManagementTranstorm;
 import com.ese.utils.Utils;
 import org.springframework.stereotype.Component;

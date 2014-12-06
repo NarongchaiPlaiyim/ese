@@ -12,7 +12,7 @@
                     <td style="width: 200px">
                         <p:selectOneMenu
                                 value="#{barcodeRegisterBean.selectType}"
-                                style="min-width: 200px; width: 200px; max-width: 200px; margin-top: 4px">
+                                style="#{msg.get('fix.size.200')} margin-top: 4px">
                             <f:selectItem itemLabel="Product Description" itemValue="3"/>
                             <f:selectItem itemLabel="Product Name" itemValue="1"/>
                             <f:selectItem itemLabel="Product Code" itemValue="2"/>
@@ -20,11 +20,11 @@
                     </td>
                     <td>
                         <p:inputText
-                                style="#{configurationSize.fixSize200}"
+                                style="#{msg.get('fix.size.200')}  margin-top: 4px"
                                 value="#{barcodeRegisterBean.productSearch}"
                                 />
-                        <p:commandButton value="Search"
-                                         styleClass="medium" style="#{configurationSize.btnSize}"
+                        <p:commandButton value="#{msg.get('btn.name.search')}"
+                                         styleClass="medium" style="#{msg.get('btn.size')}"
                                          icon="ui-icon-search"
                                          onstart="PF('bui').block()"
                                          action="#{barcodeRegisterBean.onSubmitSearch()}"
@@ -35,7 +35,7 @@
                     <td class="right">
                         <p:commandButton
                                 id="btnSelectDialog"
-                                value="Select"
+                                value="#{msg.get('btn.name.select')}"
                                 icon="ui-icon-folder-open"
                                 disabled="#{barcodeRegisterBean.flagBtnSelect}"
                                 styleClass="medium" style="#{configurationSize.btnSize}"
@@ -58,8 +58,8 @@
                                      rowIndexVar="rowIndex">
                             <p:ajax event="rowSelect" update=":frmFindProduct:productTable, :frmFindProduct:btnSelectDialog"
                                     listener="#{barcodeRegisterBean.onClickTableDialog()}"/>
-                            <p:column headerText="No" style="min-width: 10px; width: 10px; max-width: 10px;" styleClass="right">
-                                <h:outputText value="#{rowIndex+1}"/>
+                            <p:column headerText="No" style="min-width: 10px; width: 10px; max-width: 10px;">
+                                <h:outputText value="#{rowIndex+1}" style="text-align: right;"/>
                             </p:column>
                             <p:column headerText="Product Name" style="min-width: 150px; width: 150px; max-width: 150px;">
                                 <h:outputText value="#{itemModel.itemName}"/>

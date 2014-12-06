@@ -85,7 +85,7 @@
         <property name="invalidSessionStrategy" ref="jsfRedirectStrategy"/>
     </bean>
 
-    <bean id="jsfRedirectStrategy" class="com.ese.security.JSFRedirectionStrategy">
+    <bean id="jsfRedirectStrategy" class="com.ese.service.security.JSFRedirectionStrategy">
         <property name="invalidSessionUrl" value="/login.xhtml"/>
     </bean>
 

@@ -1,6 +1,6 @@
 package com.ese.beans;
 
-import com.ese.security.UserDetail;
+import com.ese.service.security.UserDetail;
 import com.ese.service.*;
 import com.ese.utils.*;
 import lombok.Getter;

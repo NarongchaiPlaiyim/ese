@@ -22,21 +22,23 @@
                 Role : <br/><br/>
                 <p:commandButton id="btnChangePassword"
                                  action="#{loginBean.logout}"
-                                 styleClass="medium" style="width: 150px"
-                                 value="Edit"/>
+                                 styleClass="medium" style="#{msg.get('fix.size.150')}"
+                                 value="#{msg.get('btn.name.edit')}"/>
                 <p:commandButton id="btnLogin"
                                  action="#{loginBean.logout}"
-                                 styleClass="medium" style="width: 150px"
-                                 value="Logout"/>
+                                 styleClass="medium" style="#{msg.get('fix.size.150')}"
+                                 value="#{msg.get('btn.name.logout')}"/>
             </div>
         </div>
     </div>
     <pe:blockUI widgetVar="bui">
         <div style="text-align: center;">
-            <h:panelGrid columns="2" styleClass="center">
-                <h:outputText value="Please wait..." />
-                <p:graphicImage value="/resources/images/shared/ajax-loader.gif"/>
-            </h:panelGrid>
+            <!--<h:panelGrid columns="2" styleClass="center">-->
+                <!--<h:outputText value="Please wait..." />-->
+                <!--<p:graphicImage value="/resources/images/shared/ajax-loader.gif"/>-->
+            <p:graphicImage value="/resources/images/shared/292.GIF"/>
+            <p:graphicImage value="/resources/images/shared/16.GIF"/>
+            <!--</h:panelGrid>-->
         </div>
     </pe:blockUI>
 </f:view>

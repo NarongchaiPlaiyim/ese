@@ -1,11 +1,6 @@
 package com.ese.beans;
 
-import com.ese.security.encryption.EncryptionService;
-import com.ese.utils.Utils;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import com.ese.service.security.encryption.EncryptionService;
 
 public class main {
     public static void main(String[] args) {
