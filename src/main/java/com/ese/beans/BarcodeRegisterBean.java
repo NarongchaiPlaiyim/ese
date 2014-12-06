@@ -166,7 +166,7 @@ public class BarcodeRegisterBean extends Bean{
     }
 
     public void preDelete(){
-        showDialog(MessageDialog.WARNING.getMessageHeader(), "The Barcode can not be use again. Please click Yes to confirm delete this Barcode.", "confirmClosePalletDlg");
+        showDialog(MessageDialog.WARNING.getMessageHeader(), "Are you want to delete this item?", "confirmClosePalletDlg");
     }
     public void onDelete(){
         log.debug("-- onDelete()");

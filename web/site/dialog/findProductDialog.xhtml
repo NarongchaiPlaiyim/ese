@@ -6,18 +6,13 @@
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <!--<h:outputStylesheet name="css/style.css" />-->
-        <h:outputScript library="js" name="custom.js" />
-    </h:head>
-    <p:panel id="productPanel" styleClass="panel-dialog">
         <h:form id="frmFindProduct">
             <table  border="0">
                 <tr>
                     <td style="width: 200px">
                         <p:selectOneMenu
                                 value="#{barcodeRegisterBean.selectType}"
-                                style="min-width: 200px; width: 200px; max-width: 200px; margin-top: 4px">
+                                style="#{msg.get('fix.size.200')} margin-top: 4px">
                             <f:selectItem itemLabel="Product Description" itemValue="3"/>
                             <f:selectItem itemLabel="Product Name" itemValue="1"/>
                             <f:selectItem itemLabel="Product Code" itemValue="2"/>
@@ -25,11 +20,11 @@
                     </td>
                     <td>
                         <p:inputText
-                                style="min-width: 200px; width: 200px; max-width: 200px;"
+                                style="#{msg.get('fix.size.200')}  margin-top: 4px"
                                 value="#{barcodeRegisterBean.productSearch}"
                                 />
-                        <p:commandButton value="Search"
-                                         styleClass="medium" style="width: 100px"
+                        <p:commandButton value="#{msg.get('btn.name.search')}"
+                                         styleClass="medium" style="#{msg.get('btn.size')}"
                                          icon="ui-icon-search"
                                          onstart="PF('bui').block()"
                                          action="#{barcodeRegisterBean.onSubmitSearch()}"
@@ -40,10 +35,10 @@
                     <td class="right">
                         <p:commandButton
                                 id="btnSelectDialog"
-                                value="Select"
+                                value="#{msg.get('btn.name.select')}"
                                 icon="ui-icon-folder-open"
                                 disabled="#{barcodeRegisterBean.flagBtnSelect}"
-                                styleClass="medium" style="width: 100px"
+                                styleClass="medium" style="#{configurationSize.btnSize}"
                                 action="#{barcodeRegisterBean.onClickSelectOnDialog()}"
                                 oncomplete="PF('findProductDlg').hide()"
                                 update=":setupForm:itemLabel"
@@ -63,23 +58,22 @@
                                      rowIndexVar="rowIndex">
                             <p:ajax event="rowSelect" update=":frmFindProduct:productTable, :frmFindProduct:btnSelectDialog"
                                     listener="#{barcodeRegisterBean.onClickTableDialog()}"/>
-                            <p:column headerText="No" style="min-width: 10px; width: 10px; max-width: 10px;" styleClass="right">
-                                <p:outputLabel value="#{rowIndex+1}"/>
+                            <p:column headerText="No" style="min-width: 10px; width: 10px; max-width: 10px;">
+                                <h:outputText value="#{rowIndex+1}" style="text-align: right;"/>
                             </p:column>
                             <p:column headerText="Product Name" style="min-width: 150px; width: 150px; max-width: 150px;">
-                                <p:outputLabel value="#{itemModel.itemName}"/>
+                                <h:outputText value="#{itemModel.itemName}"/>
                             </p:column>
                             <p:column headerText="Product Code" style="min-width: 100px; width: 100px; max-width: 100px;" styleClass="center">
-                                <p:outputLabel value="#{itemModel.itemId}"/>
+                                <h:outputText value="#{itemModel.itemId}"/>
                             </p:column>
                             <p:column headerText="Product Description" style="min-width: 250px; width: 250px; max-width: 250px;">
-                                <p:outputLabel value="#{itemModel.DSGThaiItemDescription}"/>
+                                <h:outputText value="#{itemModel.DSGThaiItemDescription}"/>
                             </p:column>
                         </p:dataTable>
                     </td>
                 </tr>
             </table>
         </h:form>
-    </p:panel>
 </f:view>
 </html>

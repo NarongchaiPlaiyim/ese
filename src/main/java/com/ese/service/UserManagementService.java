@@ -3,6 +3,7 @@ package com.ese.service;
 import com.ese.model.dao.*;
 import com.ese.model.db.*;
 import com.ese.model.view.UserView;
+import com.ese.service.security.encryption.EncryptionService;
 import com.ese.transform.UserManagementTranstorm;
 import com.ese.utils.Utils;
 import org.springframework.stereotype.Component;
@@ -59,12 +60,12 @@ public class UserManagementService extends Service{
         return userManagementTranstorm.transformToView(staffModel);
     }
 
-    //TODO
     public void onSaveUserAccess(UserView userView){
         StaffModel staffModel = userManagementTranstorm.transformToModel(userView);
 
         if (!Utils.isZero(userView.getId())){
             try {
+                staffModel.setPassword(EncryptionService.encryption(staffModel.getPassword()));
                 staffDAO.update(staffModel);
             } catch (Exception e) {
                 log.debug("Exception error update : ", e);

@@ -1,67 +1,45 @@
-<ui:composition
-        xmlns="http://www.w3.org/1999/xhtml"
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
         xmlns:h="http://java.sun.com/jsf/html"
-        xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://java.sun.com/jsf/html"
-        xmlns:c="http://java.sun.com/jsp/jstl/core">
-    <script type="text/javascript">
-        $(document).ready(function() {
-            wireUpEvents();
-        });
-    </script>
-
-
-
-    <!--<div class="header">-->
-        <!--&lt;!&ndash;<div class="logo">&ndash;&gt;-->
-            <!--&lt;!&ndash;<h:graphicImage library="images" name="/shared/ESELogo608.png" alt="" title="DEESTONE Application" />&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--<div class="headerinner">-->
-            <!--<ul class="headmenu">-->
-                <!--<li class="right">-->
-                    <!--<div class="userloggedinfo">-->
-                        <!--<img src="/shared/DN3.png" alt="" />-->
-                        <!--<div class="userinfo">-->
-                            <!--<h5>Juan Dela Cruz <small>- juan@themepixels.com</small></h5>-->
-                            <!--<ul>-->
-                                <!--<li><a href="editprofile.html">Edit Profile</a></li>-->
-                                <!--<li><a href="">Account Settings</a></li>-->
-                                <!--<li><a href="index.html">Sign Out</a></li>-->
-                            <!--</ul>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</li>-->
-            <!--</ul>&lt;!&ndash;headmenu&ndash;&gt;-->
-        <!--</div>-->
-    <!--</div>-->
-
-
-
-
-
-
-
-
-    <div id="header_logo">
-        <div id="header_logo_image" style="text-align: right" >
-            <h:graphicImage library="images" name="/shared/DN3.png" alt="" title="DEESTONE Application" />
-        </div>
-        <div id="header_userinfo" style="text-align: right">
-            <div id="header_user">
-                Login as : <h:outputText value="#{loginBean.userDetail.fullName}"/>
-                <h:form>
-                    <p:commandButton id="saveBtn"
-                                     action="#{loginBean.logout}"
-                                     value="Logout"/>
-                    <!--<p:commandLink value="logout" title="Click to logout" action="#{loginBean.logout}"/>-->
-                </h:form>
+        xmlns:pe="http://primefaces.org/ui/extensions"
+        xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <h:outputScript library="js" name="custom.js" />
+    </h:head>
+    <div class="ui-grid ui-grid-responsive">
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-1" />
+            <div class="ui-grid-col-2" />
+            <div class="ui-grid-col-4" >
+                <h:graphicImage library="images" name="/shared/DN2.png"/>
             </div>
-            <!--<div id="header_menu">-->
-                <!--<c:if test="#{index.checkInboxVisible}"><a href="inbox.jsf" class="header_menu">inbox</a> |</c:if>-->
-                <!--<a href="generic_search.jsf" class="header_menu">search</a> |-->
-                <!--<a href="#" class="header_menu">download</a> |-->
-                <!--<p:commandLink value="logout" title="Click to logout" action="#{loginBean.signOut}"/>-->
-            <!--</div>-->
+            <div class="ui-grid-col-2" />
+            <div class="ui-grid-col-1" />
+            <div class="ui-grid-col-2">
+                Name : <br/><br/>
+                Role : <br/><br/>
+                <p:commandButton id="btnChangePassword"
+                                 action="#{loginBean.logout}"
+                                 styleClass="medium" style="#{msg.get('fix.size.150')}"
+                                 value="#{msg.get('btn.name.edit')}"/>
+                <p:commandButton id="btnLogin"
+                                 action="#{loginBean.logout}"
+                                 styleClass="medium" style="#{msg.get('fix.size.150')}"
+                                 value="#{msg.get('btn.name.logout')}"/>
+            </div>
         </div>
     </div>
-    <div class="clear"></div>
-</ui:composition>
+    <pe:blockUI widgetVar="bui">
+        <div style="text-align: center;">
+            <!--<h:panelGrid columns="2" styleClass="center">-->
+                <!--<h:outputText value="Please wait..." />-->
+                <!--<p:graphicImage value="/resources/images/shared/ajax-loader.gif"/>-->
+            <p:graphicImage value="/resources/images/shared/292.GIF"/>
+            <p:graphicImage value="/resources/images/shared/16.GIF"/>
+            <!--</h:panelGrid>-->
+        </div>
+    </pe:blockUI>
+</f:view>
+</html>
