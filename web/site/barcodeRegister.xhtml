@@ -7,18 +7,18 @@
 
         xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Barcode Register</title>
+        <title>#{msg.get('menu.barcode.title')}</title>
     </h:head>
     <h:body>
         <p:layout fullPage="true" id="layoutPanel">
             <p:layoutUnit id="layoutTop" position="north" size="180" header="Profile" collapsible="true" style="border: 0">
-                <ui:include src="include/header.xhtml"/>
+                <ui:include src="#{msg.get('include.header')}"/>
             </p:layoutUnit>
             <p:layoutUnit id="layoutLeft" position="west" size="250" header="Menu" collapsible="true" style="border: 0">
-                <ui:include src="include/menu.xhtml"/>
+                <ui:include src="#{msg.get('include.menu')}"/>
             </p:layoutUnit>
 
-            <p:layoutUnit id="layoutCenter" position="center" header="1. Barcode Register" >
+            <p:layoutUnit id="layoutCenter" position="center" header="#{msg.get('menu.barcode.title')}" >
                 <h:form id="setupForm">
                     <p:panel style="border: 0">
                         <div style="text-align: right;">
