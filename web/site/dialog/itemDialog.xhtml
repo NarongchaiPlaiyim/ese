@@ -40,7 +40,7 @@
                                         styleClass="medium" style="#{msg.get('btn.size')}"
                        process="@this"
                        onstart="PF('bui').show()"
-                       action="#{setup.actionTolocationDialog('SearchItem')}"
+                       action="#{setup.onSearchItemWarehouse}"
                        update=":itemForm:searchItemTable"
                        oncomplete="PF('bui').hide()"/>
                    </td>
@@ -99,7 +99,7 @@
                                                     styleClass="medium" style="#{msg.get('btn.size')}"
                                                     icon="ui-icon-seek-next"
                                                     update=":msgBoxSystemMessageDialog, :itemForm, :itemForm:searchItemTable"
-                                                    action="#{setup.actionTolocationDialog('AddToLocation')}"
+                                                    action="#{setup.onAddToLocation}"
                                                     />
                                </td>
                            </tr>
@@ -109,7 +109,7 @@
                                                     styleClass="medium" style="#{msg.get('btn.size')}"
                                                     icon="ui-icon-seek-prev"
                                                     update=":msgBoxSystemMessageDialog, :itemForm:locationTable"
-                                                    action="#{setup.actionTolocationDialog('Remove')}"/>
+                                                    action="#{setup.onRemove}"/>
                                </td>
                            </tr>
                        </table>

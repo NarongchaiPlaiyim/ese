@@ -93,7 +93,9 @@
                                             <td>
                                                 <p:inputText value="#{userManagement.userView.name}"
                                                              style="width: 125px; min-width: 125px; max-width: 125px"
-                                                             required="#{not empty param[addUserAccess.clientId]}"/>
+                                                             required="#{not empty param[addUserAccess.clientId]}">
+                                                    <f:validateLength minimum="5"/>
+                                                 </p:inputText>
                                             </td>
                                         </tr>
                                     </table>
@@ -137,7 +139,7 @@
                                          action="#{userManagement.onCancel}"
                                          process="@form"
                                          update=":userManagementForm"
-                                         oncomplete="PF('addUserDlg').hide()"/>
+                                         onclick="PF('addUserDlg').block()"/>
                     </td>
                 </tr>
             </table>

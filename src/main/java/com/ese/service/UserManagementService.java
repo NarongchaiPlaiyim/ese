@@ -96,7 +96,7 @@ public class UserManagementService extends Service{
         }
     }
 
-    public List<MenuObjectModel> getMenuObjectId(int menuObjectId){
-        return menuObjectDAO.findByObjectId(menuObjectId);
+    public List<MenuObjectModel> getMenuObjectId(int menuObjectId, String keySearch){
+        return menuObjectDAO.findByObjectId(menuObjectId, keySearch);
     }
 }

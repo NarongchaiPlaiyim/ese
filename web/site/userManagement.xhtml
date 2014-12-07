@@ -63,16 +63,17 @@
                                                                              disabled="#{userManagement.flagBtnDelete}"
                                                                              action="#{userManagement.preDelete}"
                                                                              icon="ui-icon-trash"
-                                                                             onstart="PF('bui').show()"
-                                                                             oncomplete="PF('bui').hide()"
+                                                                             onstart="PF('bui').block()"
+                                                                             oncomplete="PF('bui').unblock()"
                                                                              update=":msgBoxSystemMessagePanel,
                                                                                      :confirmUserAccessPanel"/>
                                                             <p:commandButton id="btnUserAccess" value="User Access"
-                                                                             styleClass="medium" style="width: 100px; min-width: 100px; max-width: 100px"
+                                                                             styleClass="medium" style="width: 110px; min-width: 110px; max-width: 110px"
                                                                              process="@form"
                                                                              disabled="#{userManagement.flagUserAccess}"
                                                                              action="#{userManagement.onClickUserAccessDialog}"
                                                                              update=":userAccessForm"
+                                                                             icon="ui-icon-plusthick"
                                                                              oncomplete="PF('userAccessDlg').show()"/>
                                                             <p:commandButton id="btnPrint"
                                                                              value="Print"
@@ -124,14 +125,14 @@
                                                             </p:selectOneMenu>
                                                         </td>
                                                         <td style="width: 110px">
-                                                            <p:inputText id="searchText" value="#{userManagement.keySearchUserAccess}" style="width: 120px">
+                                                            <p:inputText id="searchText" value="#{userManagement.keySearchUser}" style="width: 120px">
                                                                 <p:ajax event="blur" update=":userManagementForm:mainForm:manegementTab:searchText"/>
                                                             </p:inputText>
                                                         </td>
                                                         <td style="width: 40px; min-width: 40px; max-width: 40px">
                                                             <p:commandButton id="btnsearch" icon="ui-icon-search"
-                                                                             onstart="PF('bui').show()"
-                                                                             oncomplete="PF('bui').hide()"
+                                                                             onstart="PF('bui').block()"
+                                                                             oncomplete="PF('bui').unblock()"
                                                                              process="@form"
                                                                              actionListener="#{userManagement.onChangeSearchMenu}"
                                                                              update=":userManagementForm:mainForm:manegementTab:userTable"/>
@@ -151,7 +152,7 @@
                                                              selection="#{userManagement.staffModel}"
                                                              selectionMode="single"
                                                              style="width: 100%; max-width: 100%; min-width: 100%">
-                                                    <p:ajax event="rowSelect" listener="#{userManagement.onClickUserAccess}"
+                                                    <p:ajax event="rowSelect" listener="#{userManagement.onClickUserAccess()}"
                                                             update=":userManagementForm:mainForm:manegementTab"/>
                                                     <p:column headerText="No" style="width: 20px" styleClass="center">
                                                         <h:outputText value="#{rowIndex+1}"/>
@@ -199,18 +200,18 @@
                                                                              id="btnSaveRole"
                                                                              styleClass="medium" style="width: 80px"
                                                                              icon="ui-icon-check"
-                                                                             onstart="PF('bui').show()"
-                                                                             oncomplete="PF('bui').hide()"/>
+                                                                             onstart="PF('bui').block()"
+                                                                             oncomplete="PF('bui').unblock()"/>
                                                             <p:commandButton value="Delete"
                                                                              id="btnDeleteRole"
                                                                              styleClass="medium" style="width: 80px"
                                                                              icon="ui-icon-trash"
-                                                                             onstart="PF('bui').show()"
-                                                                             oncomplete="PF('bui').hide()" />
+                                                                             onstart="PF('bui').block()"
+                                                                             oncomplete="PF('bui').unblock()" />
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td style="width: 65px; min-width: 65px; max-width: 65px">
+                                                        <td style="width: 80px; min-width: 80px; max-width: 80px">
                                                             <h:outputLabel value="Role Name"/>
                                                         </td>
                                                         <td>
@@ -222,8 +223,8 @@
                                                         <td>
                                                             <p:inputText/>
                                                             <p:commandButton id="btnSearchRole" icon="ui-icon-search"
-                                                                             onstart="PF('bui').show()"
-                                                                             oncomplete="PF('bui').hide()"
+                                                                             onstart="PF('bui').block()"
+                                                                             oncomplete="PF('bui').unblock()"
                                                                              process="@form"/>
                                                         </td>
                                                     </tr>
@@ -265,8 +266,8 @@
                                                                              id="btnDeleteRoleAccess"
                                                                              styleClass="medium" style="width: 80px"
                                                                              icon="ui-icon-trash"
-                                                                             onstart="PF('bui').show()"
-                                                                             oncomplete="PF('bui').hide()" />
+                                                                             onstart="PF('bui').block()"
+                                                                             oncomplete="PF('bui').unblock()" />
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -280,8 +281,8 @@
                                                         <td>
                                                             <p:inputText/>
                                                             <p:commandButton id="btnSearchRoleAccess" icon="ui-icon-search"
-                                                                             onstart="PF('bui').show()"
-                                                                             oncomplete="PF('bui').hide()"
+                                                                             onstart="PF('bui').block()"
+                                                                             oncomplete="PF('bui').unblock()"
                                                                              process="@form"/>
                                                         </td>
                                                     </tr>
@@ -323,25 +324,25 @@
         </p:blockUI>
 
         <p:dialog id="addUserDialog" widgetVar="addUserDlg" header="Add/Edit User"
-                  onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
+                  onShow="unblockWindowsScrollBar()" onHide="blockWindowsScrollBar()" resizable="false"
                   modal="true" width="630" height="175">
             <ui:include src="../site/dialog/addUserDialog.xhtml"/>
         </p:dialog>
 
         <p:dialog id="userAccessDialog" widgetVar="userAccessDlg" header="User Access"
-                  onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
+                  onShow="unblockWindowsScrollBar()" onHide="blockWindowsScrollBar()" resizable="false"
                   modal="true" width="1024" height="400">
             <ui:include src="../site/dialog/userAccessDialog.xhtml"/>
         </p:dialog>
 
         <p:dialog id="userRoleDialog" widgetVar="userRoleDlg" header="Add User Role"
-                  onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
+                  onShow="unblockWindowsScrollBar()" onHide="blockWindowsScrollBar()" resizable="false"
                   modal="true" width="450">
             <ui:include src="../site/dialog/addUserRoleDialog.xhtml"/>
         </p:dialog>
 
         <p:dialog id="userRoleAccessDialog" widgetVar="userRoleAccessDlg" header="Menu and Action List"
-                  onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
+                  onShow="unblockWindowsScrollBar()" onHide="blockWindowsScrollBar()" resizable="false"
                   modal="true" width="530">
             <ui:include src="../site/dialog/addRoleAccessDialog.xhtml"/>
         </p:dialog>

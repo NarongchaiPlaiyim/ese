@@ -120,57 +120,66 @@ public class SetupBean extends Bean{
         return locationService.isDuplicate(locationView.getWarehouseModel().getId(), locationView.getLocationBarcode(), locationView.getId());
     }
 
-    public void btnWarehouseAndLocation(String target){
-        if (target.equalsIgnoreCase("SaveOrUpdate")){
-            log.debug("onSaveOrUpdate() {}", locationView);
+    public void onClickNewOrCancelWarehouse(){
+        log.debug("NewOrCancel.");
+        modeWarehouse = "Mode(New)";
+        msLocationModel = new MSLocationModel();
+        locationView = new LocationView();
+        btnOnLoad();
+    }
 
-            try {
+    public void onSaveWarehouse(){
+        log.debug("onSaveOrUpdate() {}", locationView);
 
-                if (checkLocationCode(locationView)){
-                    locationService.onSaveOrUpdateLocationToDB(locationView);
-                    msLocationModel = new MSLocationModel();
+        try {
+            if (checkLocationCode(locationView)){
+                locationService.onSaveOrUpdateLocationToDB(locationView);
+                msLocationModel = new MSLocationModel();
 
-                    if (Utils.isZero(locationView.getId())){
-                        showDialogSaved();
-                    } else {
-                        showDialogUpdated();
-                    }
-                    onloadSetup();
+                if (Utils.isZero(locationView.getId())){
+                    showDialogSaved();
                 } else {
-                    showDialog(MessageDialog.ERROR.getMessageHeader(), "Location Barcode is duplicate");
+                    showDialogUpdated();
                 }
-
-            } catch (Exception e) {
-                log.debug("Exception onSaveLocation : ", e);
-                showDialogError(e.getMessage());
-            }
-        } else if (target.equalsIgnoreCase("Delect")){
-            log.debug("-- onDelete()");
-            try {
-                locationService.delete(msLocationModel);
-                showDialogDeleted();
                 onloadSetup();
-            } catch (Exception e) {
-                log.error("{}",e);
-                showDialogError(e.getMessage());
+            } else {
+                showDialog(MessageDialog.ERROR.getMessageHeader(), "Location Barcode is duplicate");
             }
-        } else if (target.equalsIgnoreCase("NewOrCancel")){
-            log.debug("NewOrCancel.");
-            modeWarehouse = "Mode(New)";
-            msLocationModel = new MSLocationModel();
-            locationView = new LocationView();
-            btnOnLoad();
-        }  else if (target.equalsIgnoreCase("ClickOnTable")){
-            log.debug("onClickToLocationTB(), {}", msLocationModel.toString());
-            modeWarehouse = "Mode(Edit)";
-            nameBtn = "New";
-            flagBtnDelete = false;
-            flagBtnAddShowItem = false;
-            locationView = locationService.clickToWarehouseView(msLocationModel);
-        } else if(target.equalsIgnoreCase("SearchLocation")){
-            log.debug("onSearch Location");
-            msLocationModelList = locationService.searchOrderByCodeOrName(keySearch);
+
+        } catch (Exception e) {
+            log.debug("Exception onSaveLocation : ", e);
+            showDialogError(e.getMessage());
         }
+    }
+
+    public void onSearchWarehouseAndLocation(){
+        log.debug("onSearch Location");
+        msLocationModelList = locationService.searchOrderByCodeOrName(keySearch);
+    }
+
+    public void preDelete(){
+        showDialog(MessageDialog.WARNING.getMessageHeader(), "Please click Yes to confirm delete this UserAccess.", "confirmWarehouseAndLocationDlg");
+    }
+
+    public void onDeleteWarehouseAndLocation(){
+        log.debug("-- onDelete()");
+        try {
+            locationService.delete(msLocationModel);
+            showDialogDeleted();
+            onloadSetup();
+        } catch (Exception e) {
+            log.error("{}",e);
+            showDialogError(e.getMessage());
+        }
+    }
+
+    public void onClickTableWarehouseAndLocation(){
+        log.debug("onClickToLocationTB(), {}", msLocationModel.toString());
+        modeWarehouse = "Mode(Edit)";
+        nameBtn = "New";
+        flagBtnDelete = false;
+        flagBtnAddShowItem = false;
+        locationView = locationService.clickToWarehouseView(msLocationModel);
     }
 
     public boolean checkWarehouseCodeOnSave(String warehouseCode, int id){
@@ -179,114 +188,127 @@ public class SetupBean extends Bean{
         return warehouseService.isDuplicate(warehouseCode, id);
     }
 
-    public void warehouseDlg(String target){
-        log.debug("onLoadWarehouseDlg().");
-
-        if (target.equalsIgnoreCase("ADD")){
-            log.debug("Open Warehouse Dialog.");
-            warehouseView = new WarehouseView();
-            modeWarehouseDlg = "Mode(New)";
-            msWarehouseModel = new MSWarehouseModel();
-            msWarehouseModelList = warehouseService.getWarehouseAll();
-        } else if (target.equalsIgnoreCase("New")){
-            warehouseView = new WarehouseView();
-            modeWarehouseDlg = "Mode(New)";
-            msWarehouseModel = new MSWarehouseModel();
-        } else if (target.equalsIgnoreCase("Save")){
-            log.debug("OnSave Warehouse. {}", warehouseView);
-
-            if (checkWarehouseCodeOnSave(warehouseView.getWarehouseCode(), warehouseView.getId())){
-                warehouseService.onSaveOrUpdateWarehouse(warehouseView);
-                msWarehouseModel = new MSWarehouseModel();
-                if (Utils.isZero(warehouseView.getId())){
-                    showDialogSaved();
-                } else {
-                    showDialogUpdated();
-                }
-                warehouseView = new WarehouseView();
-                msWarehouseModelList = warehouseService.getWarehouseAll();
-            } else {
-                showDialog(MessageDialog.ERROR.getMessageHeader(), "Warehouse Code is duplicate");
-            }
-
-
-        } else if (target.equalsIgnoreCase("Delete")){
-            log.debug("Delete warehouse.");
-            warehouseService.delete(msWarehouseModel);
-            showDialogSaved();
-            onloadSetup();
-        } else if (target.equalsIgnoreCase("ClickOnTable")){
-            modeWarehouseDlg = "Mode(Edit)";
-            log.debug("onclickWarehouseTBDlg(). {}",msWarehouseModel.toString());
-            warehouseView = warehouseService.converToView(msWarehouseModel);
-        }
+    public void onEditDialogWarehouse(){
+        log.debug("Open Warehouse Dialog.");
+        warehouseView = new WarehouseView();
+        modeWarehouseDlg = "Mode(New)";
+        msWarehouseModel = new MSWarehouseModel();
+        msWarehouseModelList = warehouseService.getWarehouseAll();
     }
 
-    public void actionTolocationDialog(String target){
-        log.debug("actionTolocationDialog().");
-
-        if (target.equalsIgnoreCase("AddItem")){
-            log.debug("locationItemDialog(). {}", msLocationModel.getId());
-            selectType = "";
-            itemSearch = "";
-            msItemModelList = new ArrayList<MSItemModel>();
-            msLocationItemsModelList = locationItemService.findLocationItemByLocationId(msLocationModel.getId());
-        } else if (target.equalsIgnoreCase("SearchItem")){
-            log.debug("-- onSubmitSearch() {}, {}", selectType,itemSearch);
-
-            if(!Utils.isZero(itemSearch.length())){
-                msItemModelList = itemService.findByCondition(selectType, itemSearch);
-                log.debug("msItemModelList Size : {}", msItemModelList.size());
-            } else {
-                msItemModelList = itemService.findByCondition(selectType, itemSearch);
-            }
-        } else if (target.equalsIgnoreCase("AddToLocation")){
-            log.debug("addToLocationItem");
-            locationItemService.addToLocationItemModel(selectItem, msLocationModel);
-            msLocationItemsModelList = locationItemService.findLocationItemByLocationId(msLocationModel.getId());
-            selectItem = new ArrayList<MSItemModel>();
-            showDialogSaved();
-//            onloadSetup();
-        } else if (target.equalsIgnoreCase("Remove")){
-            log.debug("remove(). {}", selectLocationItem.size());
-            locationItemService.deleteLocationItemModel(selectLocationItem);
-            actionTolocationDialog("AddItem");
-        }
+    public void onNewWarehouseDialog(){
+        warehouseView = new WarehouseView();
+        modeWarehouseDlg = "Mode(New)";
+        msWarehouseModel = new MSWarehouseModel();
     }
 
-    public void actionInStockInOutNote(String target){
-        log.debug("actionInStockInOutNote()");
+    public void onSaveWarehouseDialog(){
+        log.debug("OnSave Warehouse. {}", warehouseView);
 
-        if (target.equalsIgnoreCase("OnClickStockInOutNoteTB")){
-            log.debug("onClickStockInOutNote(). {}", stockInOutNoteModel);
-            stockInOutNoteView = stockInOutNoteService.clickToStockInOutNoteView(stockInOutNoteModel);
-            flagBtnDeleteStock = false;
-            modeStock = "Mode(Edit)";
-            nameBtnStock = "New";
-        } else if (target.equalsIgnoreCase("OnDeleteStockInOutNote")){
-            log.debug("onDelectStock()");
-            stockInOutNoteService.deleteStockInOutNote(stockInOutNoteModel);
-            OnLoadStockInOutNote();
-            stockInOutNoteModel = new MSStockInOutNoteModel();
-            modeStock = "Mode(New)";
-            flagBtnDeleteStock = true;
-            showDialogSaved();
-        } else if (target.equalsIgnoreCase("OnNewAndCancelStockInOutNote")){
-            log.debug("onNewAndCancelStock()");
-            modeStock = "Mode(New)";
-            flagBtnDeleteStock = true;
-            stockInOutNoteModel = new MSStockInOutNoteModel();
-            stockInOutNoteView = new StockInOutNoteView();
-        } else if (target.equalsIgnoreCase("OnSaveOrUpdateStockInOutNote")){
-            log.debug("onSaveStockInOutNote().");
-            stockInOutNoteService.onSaveStockInOutNote(stockInOutNoteView);
-            if (Utils.isZero(stockInOutNoteView.getId())){
+        if (checkWarehouseCodeOnSave(warehouseView.getWarehouseCode(), warehouseView.getId())){
+            warehouseService.onSaveOrUpdateWarehouse(warehouseView);
+            msWarehouseModel = new MSWarehouseModel();
+            if (Utils.isZero(warehouseView.getId())){
                 showDialogSaved();
             } else {
                 showDialogUpdated();
             }
-            OnLoadStockInOutNote();
-            stockInOutNoteModel = new MSStockInOutNoteModel();
+            warehouseView = new WarehouseView();
+            msWarehouseModelList = warehouseService.getWarehouseAll();
+        } else {
+        showDialog(MessageDialog.ERROR.getMessageHeader(), "Warehouse Code is duplicate");
         }
+    }
+
+    public void preDeleteWarehouseDialog(){
+        showDialog(MessageDialog.WARNING.getMessageHeader(), "Please click Yes to confirm delete this UserAccess.", "confirmWarehouseDialogDlg");
+    }
+
+    public void onDeleteWarehouseDialog(){
+        log.debug("Delete warehouse.");
+        warehouseService.delete(msWarehouseModel);
+        showDialogSaved();
+        onloadSetup();
+    }
+
+    public void onClickTableWarehouseDialog(){
+        modeWarehouseDlg = "Mode(Edit)";
+        log.debug("onclickWarehouseTBDlg(). {}",msWarehouseModel.toString());
+        warehouseView = warehouseService.converToView(msWarehouseModel);
+    }
+
+    public void onClickAddItemWarehouse(){
+        log.debug("locationItemDialog(). {}", msLocationModel.getId());
+        selectType = "";
+        itemSearch = "";
+        msItemModelList = new ArrayList<MSItemModel>();
+        msLocationItemsModelList = locationItemService.findLocationItemByLocationId(msLocationModel.getId());
+    }
+
+    public void onSearchItemWarehouse(){
+        log.debug("-- onSubmitSearch() {}, {}", selectType,itemSearch);
+
+        if(!Utils.isZero(itemSearch.length())){
+            msItemModelList = itemService.findByCondition(selectType, itemSearch);
+            log.debug("msItemModelList Size : {}", msItemModelList.size());
+        } else {
+            msItemModelList = itemService.findByCondition(selectType, itemSearch);
+        }
+    }
+
+    public void onAddToLocation(){
+        log.debug("addToLocationItem");
+        locationItemService.addToLocationItemModel(selectItem, msLocationModel);
+        msLocationItemsModelList = locationItemService.findLocationItemByLocationId(msLocationModel.getId());
+        selectItem = new ArrayList<MSItemModel>();
+        showDialogSaved();
+    }
+
+    public void onRemove(){
+        log.debug("remove(). {}", selectLocationItem.size());
+        locationItemService.deleteLocationItemModel(selectLocationItem);
+        onAddToLocation();
+    }
+
+    public void OnNewStockInOutNote(){
+        log.debug("onNewAndCancelStock()");
+        modeStock = "Mode(New)";
+        flagBtnDeleteStock = true;
+        stockInOutNoteModel = new MSStockInOutNoteModel();
+        stockInOutNoteView = new StockInOutNoteView();
+    }
+
+    public void onSaveStockInOutNote(){
+        log.debug("onSaveStockInOutNote().");
+        stockInOutNoteService.onSaveStockInOutNote(stockInOutNoteView);
+        if (Utils.isZero(stockInOutNoteView.getId())){
+            showDialogSaved();
+        } else {
+            showDialogUpdated();
+        }
+        OnLoadStockInOutNote();
+        stockInOutNoteModel = new MSStockInOutNoteModel();
+    }
+
+    public void onDeleteStockInOutNote(){
+        log.debug("onDelectStock()");
+        stockInOutNoteService.deleteStockInOutNote(stockInOutNoteModel);
+        OnLoadStockInOutNote();
+        stockInOutNoteModel = new MSStockInOutNoteModel();
+        modeStock = "Mode(New)";
+        flagBtnDeleteStock = true;
+        showDialogSaved();
+    }
+
+    public void onClickTableStockInOutNote(){
+        log.debug("onClickStockInOutNote(). {}", stockInOutNoteModel);
+        stockInOutNoteView = stockInOutNoteService.clickToStockInOutNoteView(stockInOutNoteModel);
+        flagBtnDeleteStock = false;
+        modeStock = "Mode(Edit)";
+        nameBtnStock = "New";
+    }
+
+    public void preDeleteItem(){
+        showDialog(MessageDialog.WARNING.getMessageHeader(), "Please click Yes to confirm delete this UserAccess.", "confirmStockInOutNoteDlg");
     }
 }

@@ -33,12 +33,16 @@
                                     </p:selectOneMenu>
                                 </td>
                                 <td>
-                                    <p:inputText/>
+                                    <p:inputText value="#{userManagement.keySearchUserAccessDialog}">
+                                        <p:ajax event="blur" update=":userAccessForm"/>
+                                    </p:inputText>
                                 </td>
                                 <td style="width: 40px; min-width: 40px; max-width: 40px">
                                     <p:commandButton id="btnSearch" icon="ui-icon-search"
-                                                     onstart="PF('bui').show()"
-                                                     oncomplete="PF('bui').hide()"
+                                                     onstart="PF('bui').block()"
+                                                     oncomplete="PF('bui').unblock()"
+                                                     actionListener="#{userManagement.onChangeMenuObject()}"
+                                                     update=":userAccessForm:userAccessTable"
                                                      process="@form"/>
                                 </td>
                             </tr>
@@ -162,10 +166,10 @@
                                     </p:selectOneMenu>
                                 </td>
                                 <td>
-                                    <p:inputText/>
+                                    <p:inputText style="width: 130px; max-width: 130px; min-width: 130px"/>
                                     <p:commandButton id="btnAuthorize" icon="ui-icon-search"
-                                                     onstart="PF('bui').show()"
-                                                     oncomplete="PF('bui').hide()"
+                                                     onstart="PF('bui').block()"
+                                                     oncomplete="PF('bui').unblock()"
                                                      process="@form"/>
                                 </td>
                             </tr>

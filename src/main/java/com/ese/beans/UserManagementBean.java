@@ -50,8 +50,11 @@ public class UserManagementBean extends Bean{
     private boolean flagBtnDelete;
     private boolean flagPrint;
     private boolean flagUserAccess;
-    private String keySearchUserAccess;
+    private String keySearchUser;
     private String modeBtnAddUser;
+
+    //Dialog User Access
+    private String keySearchUserAccessDialog;
 
 
     @PostConstruct
@@ -77,8 +80,9 @@ public class UserManagementBean extends Bean{
         flagBtnDelete = true;
         flagPrint = true;
         flagUserAccess = true;
-        keySearchUserAccess = "";
+        keySearchUser = "";
         modeBtnAddUser = "";
+        keySearchUserAccessDialog = "";
     }
 
     private void departmentOnload(){
@@ -104,7 +108,7 @@ public class UserManagementBean extends Bean{
             factionModelList = userManagementService.getFactionByDepartment(msDepartmentModel.getId());
         }
 
-        staffModelList = userManagementService.getUserBySearch(msDepartmentModel.getId(), factionModel.getId(), keySearchUserAccess);
+        staffModelList = userManagementService.getUserBySearch(msDepartmentModel.getId(), factionModel.getId(), keySearchUser);
         actionButton();
     }
 
@@ -124,6 +128,7 @@ public class UserManagementBean extends Bean{
 
     public void onDeleteUserAccess(){
         userManagementService.delete(staffModel);
+        showDialogDeleted();
         userOnload();
     }
 
@@ -132,10 +137,8 @@ public class UserManagementBean extends Bean{
         departmentDialogList = userManagementService.getDepartAll();
 
         if (value.equalsIgnoreCase("New")){
-            log.debug("11111111111111");
             userView = new UserView();
         } else if (value.equalsIgnoreCase("Edit")){
-            log.debug("2222222222222");
             userView = userManagementService.setModelToViewUserAccess(staffModel);
             factionDialogList = userManagementService.getFactionByDepartment(userView.getFactionModel().getMsDepartmentModel().getId());
             userView.setMsTitleModel(userManagementService.getTitleById(staffModel.getMsTitleModel().getId()));
@@ -145,6 +148,7 @@ public class UserManagementBean extends Bean{
     }
 
     public void onChangeDepartment(){
+        System.out.println("testtttttt"+ userView.getFactionModel().getMsDepartmentModel().getId());
         factionDialogList = userManagementService.getFactionByDepartment(userView.getFactionModel().getMsDepartmentModel().getId());
     }
 
@@ -172,6 +176,6 @@ public class UserManagementBean extends Bean{
 
     public void onChangeMenuObject(){
         log.debug("######## {}", menuObjectModel.getId());
-        menuObjectModelTableList = userManagementService.getMenuObjectId(menuObjectModel.getId());
+        menuObjectModelTableList = userManagementService.getMenuObjectId(menuObjectModel.getId(), keySearchUserAccessDialog);
     }
 }

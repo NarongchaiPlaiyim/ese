@@ -43,17 +43,18 @@
                                                          process="@form"
                                                          onstart="PF('bui').show()"
                                                          oncomplete="PF('bui').hide()"
-                                                         action="#{setup.btnWarehouseAndLocation('NewOrCancel')}"/>
+                                                         action="#{setup.onClickNewOrCancelWarehouse}"/>
                                     </td>
                                     <td>
                                         <p:commandButton id="btnSaveLocation" value="Save" styleClass="medium" style="#{msg.get('btn.size')}"
-                                                         action="#{setup.btnWarehouseAndLocation('SaveOrUpdate')}"
+                                                         action="#{setup.onSaveWarehouse}"
                                                          process="@form"
                                                          icon="ui-icon-check"
-                                                         onstart="PF('bui').show()"
-                                                         oncomplete="PF('bui').hide()"
-                                                         update=":setupForm:mainForm:setupTab, :msgBoxSystemMessagePanel,
-                                                                                           :setupForm:mainForm:setupTab:warehouseAndLocationTable"
+                                                         onstart="PF('bui').block()"
+                                                         oncomplete="PF('bui').unblock()"
+                                                         update=":setupForm:mainForm:setupTab:warehouseTab, :msgBoxSystemMessagePanel,
+                                                                 :setupForm:mainForm:setupTab:warehouseAndLocationTable,
+                                                                 :setupForm:mainForm:setupTab"
                                                          binding="#{addWarehouseAndLocation}"/>
                                     </td>
                                 </tr>
@@ -90,7 +91,7 @@
                                                          icon="ui-icon-folder-open"
                                                          styleClass="medium" style="#{msg.get('btn.size')}"
                                                          disabled="#{setup.flagBtnAddEdit}"
-                                                         action="#{setup.warehouseDlg('ADD')}"
+                                                         action="#{setup.onEditDialogWarehouse}"
                                                          update=":warehouseDialogForm"
                                                          oncomplete="PF('warehouseDlg').show()"/>
                                     </td>
@@ -157,7 +158,7 @@
                                                          icon="ui-icon-folder-open"
                                                          styleClass="medium" style="#{msg.get('btn.size')}"
                                                          disabled="#{setup.flagBtnAddShowItem}"
-                                                         action="#{setup.actionTolocationDialog('AddItem')}"
+                                                         action="#{setup.onClickAddItemWarehouse}"
                                                          update=":itemForm"
                                                          oncomplete="PF('itemDlg').show()">
                                         </p:commandButton>
@@ -174,19 +175,19 @@
                                                          onstart="PF('bui').show()"
                                                          oncomplete="PF('bui').hide()"
                                                          process="@form"
-                                                         action="#{setup.btnWarehouseAndLocation('SearchLocation')}"
+                                                         action="#{setup.onSearchWarehouseAndLocation}"
                                                          update=":setupForm:mainForm:setupTab:warehouseAndLocationTable"/>
                                     </td>
                                     <td class="right" colspan="6">
-                                        <p:commandButton value="Delete"
-                                                         id="btnDelete"
+                                        <p:commandButton id="btnDelete" value="Delete"
+                                                         styleClass="medium" style="width: 80px; min-width: 80px; max-width: 80px"
+                                                         process="@form"
                                                          disabled="#{setup.flagBtnDelete}"
-                                                         styleClass="medium" style="#{msg.get('btn.size')}"
+                                                         action="#{setup.preDelete}"
                                                          icon="ui-icon-trash"
-                                                         onstart="PF('bui').show()"
-                                                         oncomplete="PF('bui').hide()"
-                                                         action="#{setup.btnWarehouseAndLocation('Delect')}"
-                                                         update=":setupForm:mainForm:setupTab, :msgBoxSystemMessagePanel"/>
+                                                         onstart="PF('bui').block()"
+                                                         oncomplete="PF('bui').unblock()"
+                                                         update=":confirmWarehouseAndLocationPanel, :msgBoxSystemMessagePanel"/>
                                     </td>
                                 </tr>
                             </table>
@@ -205,7 +206,7 @@
                                          selection="#{setup.msLocationModel}"
                                          styleClass="full_table">
                                 <p:ajax event="rowSelect"
-                                        listener="#{setup.btnWarehouseAndLocation('ClickOnTable')}"
+                                        listener="#{setup.onClickTableWarehouseAndLocation}"
                                         update=":setupForm:mainForm:setupTab:modeWarehouse,
                                                                           :setupForm:mainForm:setupTab:btnNewLocation,
                                                                           :setupForm:mainForm:setupTab:btnSaveLocation,
@@ -242,7 +243,7 @@
                     </table>
                     </p:tab>
                     <p:tab id="stockInoutTag" title="7.2 Stock In Out Note">
-                        <table id="stockInOutTB" border="0" style="width: 100%">
+                        <table border="0" style="width: 100%">
                             <tr>
                                 <td>
                                     <table border="0" class="top">
@@ -252,7 +253,7 @@
                                             </td>
                                             <td>
                                                 <p:commandButton id="btnNew" value="#{setup.nameBtnStock}"
-                                                                 action="#{setup.actionInStockInOutNote('OnNewAndCancelStockInOutNote')}"
+                                                                 action="#{setup.OnNewStockInOutNote}"
                                                                  onstart="PF('bui').show()"
                                                                  oncomplete="PF('bui').hide()"
                                                                  styleClass="medium" style="width: 80px"
@@ -261,7 +262,7 @@
                                             </td>
                                             <td>
                                                 <p:commandButton id="btnSave" value="Save"
-                                                                 action="#{setup.actionInStockInOutNote('OnSaveOrUpdateStockInOutNote')}"
+                                                                 action="#{setup.onSaveStockInOutNote}"
                                                                  styleClass="medium" style="width: 80px"
                                                                  onstart="PF('bui').show()"
                                                                  oncomplete="PF('bui').hide()"
@@ -290,7 +291,7 @@
                                                         <td >
                                                             <p:selectOneRadio id="typeRadio" styleClass="radio_table" style="background-origin: border-box"
                                                                               value="#{setup.stockInOutNoteView.type}"
-                                                                              required="#{not empty param[addStockInOutNote.clientId]}">
+                                                                              required="true">
                                                                 <f:selectItem itemLabel="Receiving" itemValue="i"/>
                                                                 <f:selectItem itemLabel="Issuing" itemValue="o"/>
                                                             </p:selectOneRadio>
@@ -310,7 +311,7 @@
                                                         <td colspan="2">
                                                             <p:inputText id="inoutCode" style="min-width: 200px; width: 200px; max-width: 200px;"
                                                                          value="#{setup.stockInOutNoteView.inoutCode}"
-                                                                         required="#{not empty param[addStockInOutNote.clientId]}"/>
+                                                                         required="true"/>
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -320,7 +321,7 @@
                                                         <td colspan="2">
                                                             <p:inputText id="inoutNote" style="min-width: 200px; width: 200px; max-width: 200px;"
                                                                          value="#{setup.stockInOutNoteView.inoutNote}"
-                                                                         required="#{not empty param[addStockInOutNote.clientId]}"/>
+                                                                         required="true"/>
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -332,9 +333,10 @@
                                                 <p:commandButton id="btnDeleteStock" value="Delete"
                                                                  icon="ui-icon-trash"
                                                                  styleClass="medium" style="width: 80px"
-                                                                 action="#{setup.actionInStockInOutNote('OnDeleteStockInOutNote')}"
+                                                                 action="#{setup.preDeleteItem()}"
                                                                  onstart="PF('bui').show()"
                                                                  oncomplete="PF('bui').hide()"
+                                                                 update=":confirmStockInOutNotePanel"
                                                                  disabled="#{setup.flagBtnDeleteStock}"
                                                         />
                                             </td>
@@ -350,7 +352,7 @@
                                                              selection="#{setup.stockInOutNoteModel}"
                                                              rowIndexVar="rowIndex2">
                                                     <p:ajax event="rowSelect"
-                                                            listener="#{setup.actionInStockInOutNote('OnClickStockInOutNoteTB')}"
+                                                            listener="#{setup.onClickTableStockInOutNote}"
                                                             update=":setupForm:mainForm:setupTab:typeRadio,
                                                                               :setupForm:mainForm:setupTab:mode,
                                                                               :setupForm:mainForm:setupTab:btnNew,
@@ -415,6 +417,78 @@
                                      update="setupForm"
                                      oncomplete="PF('msgBoxSystemMessageDlg').hide()"/>
                 </div>
+            </p:confirmDialog>
+        </p:panel>
+
+        <p:panel id="confirmWarehouseAndLocationPanel" styleClass="panel">
+            <p:confirmDialog id="confirmWarehouseAndLocationDialog" widgetVar="confirmWarehouseAndLocationDlg" width="350px"
+                             closable="false"
+                             header="#{setup.messageHeader}" message="#{setup.message}" >
+                <table border="0" style="width: 100%">
+                    <tr>
+                        <td colspan="100%" class="right">
+                            <p:commandButton value="Ok" action="#{setup.onDeleteWarehouseAndLocation()}"
+                                             process="@this" update=":setupForm:mainForm:setupTab, :msgBoxSystemMessagePanel"
+                                             styleClass="medium" style="width: 100px"
+                                             icon="ui-icon-check"
+                                             oncomplete="PF('confirmWarehouseAndLocationDlg').hide()"/>
+                            <p:commandButton value="Cancel"
+                                             process="@this"
+                                             update=":setupForm:mainForm:setupTab"
+                                             styleClass="medium" style="width: 100px"
+                                             icon="ui-icon-cancel"
+                                             oncomplete="PF('confirmWarehouseAndLocationDlg').hide()"/>
+                        </td>
+                    </tr>
+                </table>
+            </p:confirmDialog>
+        </p:panel>
+
+        <p:panel id="confirmStockInOutNotePanel" styleClass="panel">
+            <p:confirmDialog id="confirmStockInOutNoteDialog" widgetVar="confirmStockInOutNoteDlg" width="350px"
+                             closable="false"
+                             header="#{setup.messageHeader}" message="#{setup.message}" >
+                <table border="0" style="width: 100%">
+                    <tr>
+                        <td colspan="100%" class="right">
+                            <p:commandButton value="Ok" action="#{setup.onDeleteStockInOutNote()}"
+                                             process="@this" update=":setupForm:mainForm:setupTab, :msgBoxSystemMessagePanel"
+                                             styleClass="medium" style="width: 100px"
+                                             icon="ui-icon-check"
+                                             oncomplete="PF('confirmStockInOutNoteDlg').hide()"/>
+                            <p:commandButton value="Cancel"
+                                             process="@this"
+                                             update=":setupForm:mainForm:setupTab"
+                                             styleClass="medium" style="width: 100px"
+                                             icon="ui-icon-cancel"
+                                             oncomplete="PF('confirmStockInOutNoteDlg').hide()"/>
+                        </td>
+                    </tr>
+                </table>
+            </p:confirmDialog>
+        </p:panel>
+
+        <p:panel id="confirmWarehouseDialogPanel" styleClass="panel">
+            <p:confirmDialog id="confirmWarehouseDialogDialog" widgetVar="confirmWarehouseDialogDlg" width="350px"
+                             closable="false"
+                             header="#{setup.messageHeader}" message="#{setup.message}" >
+                <table border="0" style="width: 100%">
+                    <tr>
+                        <td colspan="100%" class="right">
+                            <p:commandButton value="Ok" action="#{setup.onDeleteWarehouseDialog()}"
+                                             process="@this" update=":warehouseDialogForm, :msgBoxSystemMessagePanel"
+                                             styleClass="medium" style="width: 100px"
+                                             icon="ui-icon-check"
+                                             oncomplete="PF('confirmWarehouseDialogDlg').hide()"/>
+                            <p:commandButton value="Cancel"
+                                             process="@this"
+                                             update=":warehouseDialogForm"
+                                             styleClass="medium" style="width: 100px"
+                                             icon="ui-icon-cancel"
+                                             oncomplete="PF('confirmWarehouseDialogDlg').hide()"/>
+                        </td>
+                    </tr>
+                </table>
             </p:confirmDialog>
         </p:panel>
     </h:body>

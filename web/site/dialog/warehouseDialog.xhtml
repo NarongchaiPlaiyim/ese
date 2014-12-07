@@ -21,13 +21,13 @@
                             <td>
                                 <p:commandButton value="New" styleClass="medium" style="width: 80px"
                                                  update=":warehouseDialogForm, :warehouseDialogForm:warehouseTable"
-                                                 action="#{setup.warehouseDlg('New')}"/>
+                                                 action="#{setup.onNewWarehouseDialog}"/>
                             </td>
                             <td>
                                 <p:commandButton value="Save" styleClass="medium" style="width: 80px"
                                                  update=":msgBoxSystemMessageDialog, :warehouseDialogForm
                                                          :warehouseDialogForm:warehouseTable"
-                                                 action="#{setup.warehouseDlg('Save')}"
+                                                 action="#{setup.onSaveWarehouseDialog}"
                                                  binding="#{warehouseDialog}"/>
                             </td>
                         </tr>
@@ -78,8 +78,8 @@
             <tr>
                 <td colspan="2" class="right">
                     <p:commandButton value="Delete" styleClass="medium" style="width: 80px"
-                                     update=":msgBoxSystemMessageDialog, :warehouseDialogForm"
-                                     action="#{setup.warehouseDlg('Delete')}"
+                                     update=":msgBoxSystemMessageDialog, :warehouseDialogForm, :confirmWarehouseDialogPanel"
+                                     action="#{setup.preDeleteWarehouseDialog}"
                             />
                 </td>
             </tr>
@@ -94,7 +94,7 @@
                                  selection="#{setup.msWarehouseModel}"
                                  rowIndexVar="rowIndex">
                         <p:ajax event="rowSelect"
-                                listener="#{setup.warehouseDlg('ClickOnTable')}"
+                                listener="#{setup.onClickTableWarehouseDialog}"
                                 update=":warehouseDialogForm, :warehouseDialogForm:warehouseTable"/>
                         <p:column headerText="No" style="width: 20px" styleClass="center">
                             <h:outputText value="#{rowIndex+1}"/>
