@@ -11,10 +11,10 @@
     </h:head>
     <h:body>
         <p:layout fullPage="true" id="layoutPanel">
-            <p:layoutUnit id="layoutTop" position="north" size="180" header="Profile" collapsible="true" style="border: 0">
+            <p:layoutUnit id="layoutTop" position="north" size="180" header="#{msg.get('header.north')}" collapsible="true" style="border: 0">
                 <ui:include src="#{msg.get('include.header')}"/>
             </p:layoutUnit>
-            <p:layoutUnit id="layoutLeft" position="west" size="250" header="Menu" collapsible="true" style="border: 0">
+            <p:layoutUnit id="layoutLeft" position="west" size="250" header="#{msg.get('header.west')}" collapsible="true" style="border: 0">
                 <ui:include src="#{msg.get('include.menu')}"/>
             </p:layoutUnit>
 
@@ -87,7 +87,6 @@
                                              oncomplete="PF('bui').unblock()"/>
                         </div>
                     </p:panel>
-
 
                     <table border="0" class="content_table_form">
                         <tr >
@@ -288,7 +287,7 @@
             <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="#{configurationSize.dialogMessageSize}" closable="false"
                              header="#{barcodeRegisterBean.messageHeader}" message="#{barcodeRegisterBean.message}" >
                 <div style="text-align: right">
-                    <p:commandButton value="OK"
+                    <p:commandButton value="#{msg.get('btn.name.ok')}"
                                      process="@this"
                                      update="setupForm"
                                      icon="ui-icon-check"
@@ -302,12 +301,12 @@
                              closable="false"
                              header="#{barcodeRegisterBean.messageHeader}" message="#{barcodeRegisterBean.message}" >
                 <div style="text-align: right">
-                    <p:commandButton value="Ok" action="#{barcodeRegisterBean.onDelete()}"
+                    <p:commandButton value="#{msg.get('btn.name.ok')}" action="#{barcodeRegisterBean.onDelete()}"
                                      process="@this" update=":setupForm, :msgBoxSystemMessagePanel"
                                      styleClass="medium" style="#{msg.get('btn.size')}"
                                      icon="ui-icon-check"
                                      oncomplete="PF('confirmClosePalletDlg').hide()"/>
-                    <p:commandButton value="Cancel"
+                    <p:commandButton value="#{msg.get('btn.name.cancel')}"
                                      process="@this"
                                      update=":setupForm"
                                      styleClass="medium" style="#{msg.get('btn.size')}"

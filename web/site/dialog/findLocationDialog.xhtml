@@ -5,53 +5,51 @@
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:p="http://primefaces.org/ui">
-    <p:panel id="findlocationPanel" styleClass="panel-dialog">
-        <div>
-            <h:form id="findlocationForm">
-                <table border="0">
-                    <tr>
-                        <td class="right">
-                            <p:commandButton id="btnFindLocation" value="Select"
-                                             icon="ui-icon-folder-open"
-                                             styleClass="medium" style="width: 80px"
-                                             update=":findlocationForm:btnFindLocation, :msgBoxSystemMessageDialog, :palletForm"
-                                             action="#{palletManagement.OnChangeLocationToPallet}" process="@form"
-                                             oncomplete="PF('findLocationDlg').hide()" disabled="#{palletManagement.isCheckLocationDialog()}"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p:dataTable id="searchLocationTable" rowKey="#{location.id}"
-                                         value="#{palletManagement.locationItemViewList}"
-                                         var="location" styleClass="full_table"
-                                         selectionMode="single" rowIndexVar="rowIndex"
-                                         selection="#{palletManagement.locationItemViews}"
-                                         style="width: 100%; max-width: 100%; min-width: 100%">
-                                <p:ajax event="rowSelect" update=":findlocationForm:searchLocationTable,
-                                :findlocationForm:btnFindLocation" listener="#{palletManagement.onClickLocationTB}"/>
-                                <!--<p:column headerText="Select" selectionMode="multiple" style="height: 60px">-->
-                                <!--</p:column>-->
-                                <p:column headerText="No" style="width: 20px" styleClass="center">
-                                    <h:outputText value="#{rowIndex+1}"/>
-                                </p:column>
-                                <p:column headerText="warehouse" style="width: 200px">
-                                    <h:outputText value="#{location.warehouse}"/>
-                                </p:column>
-                                <p:column headerText="Location" style="width: 200px">
-                                    <h:outputText value="#{location.location}"/>
-                                </p:column>
-                                <p:column headerText="Capacity" style="width: 100px">
-                                    <h:outputText value="#{location.capacity}"/>
-                                </p:column>
-                                <p:column headerText="Avaliable" style="width: 100px">
-                                    <h:outputText value="#{location.avaliable}"/>
-                                </p:column>
-                            </p:dataTable>
-                        </td>
-                    </tr>
-                </table>
-            </h:form>
-        </div>
-    </p:panel>
+    <div>
+        <h:form id="findlocationForm">
+            <div style="text-align: right">
+                <p:commandButton id="btnFindLocation" value="#{msg.get('btn.name.select')}"
+                                 icon="ui-icon-folder-open"
+                                 styleClass="medium" style="#{msg.get('btn.size')}"
+                                 update=":findlocationForm:btnFindLocation, :msgBoxSystemMessageDialog, :palletForm"
+                                 action="#{palletManagement.OnChangeLocationToPallet}" process="@form"
+                                 oncomplete="PF('findLocationDlg').hide()" disabled="#{palletManagement.isCheckLocationDialog()}"/>
+            </div>
+            <table border="0">
+                <tr>
+                    <td>
+                        <p:dataTable id="searchLocationTable" rowKey="#{location.id}"
+                                     value="#{palletManagement.locationItemViewList}"
+                                     var="location" styleClass="full_table"
+                                     rows="7"
+                                     paginator="true"
+                                     selectionMode="single" rowIndexVar="rowIndex"
+                                     selection="#{palletManagement.locationItemViews}"
+                                     style="width: 100%; max-width: 100%; min-width: 100%">
+                            <p:ajax event="rowSelect" update=":findlocationForm:searchLocationTable,
+                            :findlocationForm:btnFindLocation" listener="#{palletManagement.onClickLocationTB}"/>
+                            <!--<p:column headerText="Select" selectionMode="multiple" style="height: 60px">-->
+                            <!--</p:column>-->
+                            <p:column headerText="No" style="width: 20px" styleClass="center">
+                                <h:outputText value="#{rowIndex+1}"/>
+                            </p:column>
+                            <p:column headerText="warehouse" style="width: 200px">
+                                <h:outputText value="#{location.warehouse}"/>
+                            </p:column>
+                            <p:column headerText="Location" style="width: 200px">
+                                <h:outputText value="#{location.location}"/>
+                            </p:column>
+                            <p:column headerText="Capacity" style="width: 100px">
+                                <h:outputText value="#{location.capacity}"/>
+                            </p:column>
+                            <p:column headerText="Avaliable" style="width: 100px">
+                                <h:outputText value="#{location.avaliable}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </td>
+                </tr>
+            </table>
+        </h:form>
+    </div>
 </f:view>
 </html>

@@ -10,10 +10,10 @@
     </h:head>
     <h:body>
         <p:layout fullPage="true" id="layoutPanel">
-            <p:layoutUnit id="layoutTop" position="north" size="180" header="Profile" collapsible="true" style="border: 0">
+            <p:layoutUnit id="layoutTop" position="north" size="180" header="#{msg.get('header.north')}"  collapsible="true" style="border: 0">
                 <ui:include src="#{msg.get('include.header')}"/>
             </p:layoutUnit>
-            <p:layoutUnit id="layoutLeft" position="west" size="250" header="Menu" collapsible="true" style="border: 0">
+            <p:layoutUnit id="layoutLeft" position="west" size="250" header="#{msg.get('header.west')}"  collapsible="true" style="border: 0">
                 <ui:include src="#{msg.get('include.menu')}"/>
             </p:layoutUnit>
 
@@ -40,35 +40,34 @@
                                              update=":palletForm, :msgBoxSystemMessagePanel, :confirmClosePalletPanel"
                                              process="@form"/>
                         </div>
+                        <div class="left">
+                            <p:selectOneRadio value="#{palletManagement.statusOnShow}" styleClass="radio_table" style="background-origin: border-box">
+                                <f:selectItem itemLabel="Show All" itemValue="1"/>
+                                <f:selectItem itemLabel="Show unprint only" itemValue="2"/>
+                                <f:selectItem itemLabel="Show Empty Pallet" itemValue="3"/>
+                                <p:ajax listener="#{palletManagement.onFind}" update=":palletForm:palletManagementTable, :palletForm:findKey"/>
+                            </p:selectOneRadio>
+                        </div>
                     </p:panel>
                     <table id="testTb" border="0" class="content_table_form">
-
-                        <tr>
-                            <td colspan="7">
-                                <p:selectOneRadio value="#{palletManagement.statusOnShow}" styleClass="radio_table" style="background-origin: border-box">
-                                    <f:selectItem itemLabel="Show All" itemValue="1"/>
-                                    <f:selectItem itemLabel="Show unprint only" itemValue="2"/>
-                                    <f:selectItem itemLabel="Show Empty Pallet" itemValue="3"/>
-                                    <p:ajax listener="#{palletManagement.onFind}" update=":palletForm:palletManagementTable, :palletForm:findKey"/>
-                                </p:selectOneRadio>
-                            </td>
-                        </tr>
                         <tr>
                             <td style="width: 110px">
-                                <p:inputText id="findKey" value="#{palletManagement.findKeyItemDescription}" style="width: 120px">
+                                <p:inputText id="findKey" value="#{palletManagement.findKeyItemDescription}" style="#{msg.get('fix.size.200')}  margin-top: 4px">
                                     <p:ajax event="blur" update=":palletForm:findKey"/>
                                 </p:inputText>
                                 <p:commandButton id="btnsearch" icon="ui-icon-search" action="#{palletManagement.onFind}"
+                                                 value="#{msg.get('btn.name.search')}"
+                                                 styleClass="medium" style="#{msg.get('btn.size')}"
                                                  onstart="PF('bui').show()"
                                                  oncomplete="PF('bui').hide()"
                                                  process="@form" update=":palletForm:palletManagementTable, :palletForm:findKey"/>
                             </td>
                             <td style="width: 40px">
-                                <h:outputLabel value="warehouse :"/>
+                                <h:outputLabel value="Warehouse :"/>
                             </td>
                             <td style="width: 100px">
                                 <p:selectOneMenu id="warehouseMenu" value="#{palletManagement.warehouseMode.id}"
-                                                 style="min-width: 150px; width: 150px; max-width: 150px; margin-top: 4px">
+                                                 style="#{msg.get('fix.size.200')} margin-top: 4px">
                                     <f:selectItem itemLabel="- Please Select -" itemValue=""/>
                                     <f:selectItems value="#{palletManagement.warehouseModelList}"
                                                    var="wareItem"
@@ -82,7 +81,7 @@
                             </td>
                             <td style="width: 100px">
                                 <p:selectOneMenu id="conveyorLineMenu" value="#{palletManagement.workingAreaModel.id}"
-                                                 style="min-width: 150px; width: 150px; max-width: 150px; margin-top: 4px">
+                                                 style="#{msg.get('fix.size.200')} margin-top: 4px">
                                     <f:selectItem itemLabel="- Please Select -" itemValue=""/>
                                     <f:selectItems value="#{palletManagement.workingAreaModelList}"
                                                    var="conveyorLineItem"
@@ -96,7 +95,7 @@
                             </td>
                             <td style="width: 100px">
                                 <p:selectOneMenu value="#{palletManagement.msLocationModel.id}"
-                                                 style="min-width: 150px; width: 150px; max-width: 150px; margin-top: 4px">
+                                                 style="#{msg.get('fix.size.200')} margin-top: 4px">
                                     <f:selectItem itemLabel="- Please Select -" itemValue=""/>
                                     <f:selectItems value="#{palletManagement.msLocationModelList}"
                                                    var="locationItem"
@@ -155,56 +154,51 @@
                             </td>
                         </tr>
                     </table>
-
-                    <p:panel id="pnlDlg" style="border: 0">
-                        <p:confirmDialog id="msgBoxSystemMessageDialog2" widgetVar="msgBoxSystemMessageDlg2" width="350px"
-                                         header="#{palletManagement.messageHeader}" message="#{palletManagement.message}" >
-                            <table border="0" style="width: 100%">
-                                <tr>
-                                    <td colspan="100%" class="right">
-                                        <p:commandButton value="Ok"
-                                                         styleClass="medium" style="width: 80px"
-                                                         process="@form"
-                                                         update="palletForm"
-                                                         action="#{palletManagement.callReport()}"
-                                                         ajax="false"
-                                                         onclick="PF('msgBoxSystemMessageDlg2').hide()"/>
-                                    </td>
-                                </tr>
-                            </table>
-                        </p:confirmDialog>
-                    </p:panel>
                 </h:form>
             </p:layoutUnit>
         </p:layout>
 
         <p:dialog id="findLocationDialog" widgetVar="findLocationDlg" header="Find Location for Item "
                   onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
-                  modal="true" width="600" height="400">
+                  modal="true" width="1000" height="450">
             <ui:include src="../site/dialog/findLocationDialog.xhtml"/>
         </p:dialog>
+
+        <p:panel id="pnlDlg" style="border: 0">
+            <p:confirmDialog id="msgBoxSystemMessageDialog2" widgetVar="msgBoxSystemMessageDlg2" width="350px"
+                             closable="false"
+                             header="#{palletManagement.messageHeader}" message="#{palletManagement.message}" >
+                <div style="text-align: right">
+                    <h:form>
+                        <p:commandButton value="#{msg.get('btn.name.ok')}"
+                                         styleClass="medium" style="#{msg.get('btn.size')}"
+                                         process="@form"
+                                         update="palletForm"
+                                         action="#{palletManagement.callReport()}"
+                                         ajax="false"
+                                         onclick="PF('msgBoxSystemMessageDlg2').hide()"/>
+                    </h:form>
+                </div>
+            </p:confirmDialog>
+        </p:panel>
 
         <p:panel id="confirmClosePalletPanel" style="border: 0">
             <p:confirmDialog id="confirmClosePalletDialog" widgetVar="confirmClosePalletDlg" width="350px"
                              header="#{palletManagement.messageHeader}" message="#{palletManagement.message}" >
-                <table border="0" style="width: 100%">
-                    <tr>
-                        <td colspan="100%" class="right">
-                            <p:commandButton  action="#{palletManagement.changStatusOnClosePallet('ClosePallet')}"
-                                             value="Ok"
-                                             styleClass="medium" style="width: 80px"
-                                             icon="ui-icon-check"
-                                             process="@this" update="palletForm, :msgBoxSystemMessagePanel"
-                                             oncomplete="PF('confirmClosePalletDlg').hide()"/>
-                            <p:commandButton value="Cancel"
-                                             styleClass="medium" style="width: 80px"
-                                             icon="ui-icon-cancel"
-                                             process="@this"
-                                             update="palletForm"
-                                             oncomplete="PF('confirmClosePalletDlg').hide()"/>
-                        </td>
-                    </tr>
-                </table>
+                <div style="text-align: right">
+                    <p:commandButton  action="#{palletManagement.changStatusOnClosePallet('ClosePallet')}"
+                                     value="#{msg.get('btn.name.ok')}"
+                                     styleClass="medium" style="#{msg.get('btn.size')}"
+                                     icon="ui-icon-check"
+                                     process="@this" update="palletForm, :msgBoxSystemMessagePanel"
+                                     oncomplete="PF('confirmClosePalletDlg').hide()"/>
+                    <p:commandButton value="#{msg.get('btn.name.cancel')}"
+                                     styleClass="medium" style="#{msg.get('btn.size')}"
+                                     icon="ui-icon-cancel"
+                                     process="@this"
+                                     update="palletForm"
+                                     oncomplete="PF('confirmClosePalletDlg').hide()"/>
+                </div>
             </p:confirmDialog>
         </p:panel>
 
@@ -212,18 +206,14 @@
             <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="350px"
                              closable="false"
                              header="#{palletManagement.messageHeader}" message="#{palletManagement.message}" >
-               <table border="0" style="width: 100%">
-                   <tr>
-                       <td colspan="100%" class="right">
-                           <p:commandButton value="Ok"
-                                            styleClass="medium" style="width: 80px"
-                                            icon="ui-icon-check"
-                                            process="@this"
-                                            update="palletForm"
-                                            oncomplete="PF('msgBoxSystemMessageDlg').hide()"/>
-                       </td>
-                   </tr>
-               </table>
+                <div style="text-align: right">
+                    <p:commandButton value="#{msg.get('btn.name.ok')}"
+                                    styleClass="medium" style="#{msg.get('btn.size')}"
+                                    icon="ui-icon-check"
+                                    process="@this"
+                                    update="palletForm"
+                                    oncomplete="PF('msgBoxSystemMessageDlg').hide()"/>
+                </div>
             </p:confirmDialog>
         </p:panel>
     </h:body>
