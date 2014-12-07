@@ -31,9 +31,6 @@ public class StaffModel extends AbstractModel{
     @Column(name = "version")
     private Integer version;
 
-    @Column(name = "role")
-    private String role;
-
     @OneToOne
     @JoinColumn(name="faction_id", nullable=false, columnDefinition="int default 0")
     private FactionModel factionModel;
@@ -54,7 +51,6 @@ public class StaffModel extends AbstractModel{
                 .append("password", password)
                 .append("username", username)
                 .append("version", version)
-                .append("role", role)
                 .append("factionModel", factionModel)
                 .append("name", name)
                 .append("isValid", isValid)

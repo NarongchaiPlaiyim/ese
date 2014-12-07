@@ -50,7 +50,7 @@ public class StaffDAO extends GenericDAO<StaffModel, Integer>{
             criteria.createAlias("s.factionModel", "f");
             criteria.createAlias("f.msDepartmentModel", "d");
 
-            if (!Utils.isZero(factionId)){
+            if (!Utils.isZero(factionId) && !Utils.isZero(departmentId)){
                 criteria.add(Restrictions.eq("factionModel.id", factionId));
             }
 

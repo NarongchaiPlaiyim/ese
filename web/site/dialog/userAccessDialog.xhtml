@@ -73,9 +73,14 @@
                                                      styleClass="medium" style="width: 80px"
                                                      action="#{userManagement.onAddToUserAuthorize}"
                                                      process="@form"
+                                                     update=":msgBoxSystemMessagePanel, :userAccessForm:userAuthorizeTable"
                                                      icon="ui-icon-seek-next"/>
                                     <p:commandButton value="Remove"
                                                      styleClass="medium" style="width: 80px"
+                                                     process="@form"
+                                                     action="#{userManagement.onRemoveUserAuthorize}"
+                                                     update=":msgBoxSystemMessagePanel, :confirmRemoveUserAuthorizePanel,
+                                                             :userAccessForm:userAuthorizeTable"
                                                      icon="ui-icon-seek-prev"/>
                                 </td>
                             </tr>
@@ -93,7 +98,9 @@
                                     <p:commandButton id="btnAddUserRole"
                                                      value="Add User Role"
                                                      process="@this"
-                                                     oncomplete="PF('userRoleDlg').show(); return false;"
+                                                     action="#{userManagement.onLoadRoleDialog}"
+                                                     update=":userRoleForm"
+                                                     oncomplete="PF('userRoleDlg').show();"
                                                      styleClass="medium" style="width: 110px"
                                                      icon="ui-icon-plusthick"/>
                                 </td>
@@ -108,20 +115,26 @@
                                 <td rowspan="4" class="top">
                                     <p:dataTable id="roleTabble" rowIndexVar="rowIndex"
                                                  styleClass="full_table"
-                                                 rows="3"
-                                                 selectionMode="single"
+                                                 rowKey="#{staffRole.id}"
+                                                 paginator="true"
+                                                 value="#{userManagement.staffRolesModelList}"
+                                                 selection="#{userManagement.staffRolesModel}"
+                                                 var="staffRole"
                                                  style="width: 100%; max-width: 100%; min-width: 100%">
                                         <p:ajax event="rowSelect"/>
                                         <p:column headerText="No" style="width: 20px; min-width: 20px; max-width: 20px" styleClass="center">
                                             <h:outputText value="#{rowIndex+1}"/>
                                         </p:column>
                                         <p:column headerText="Role " style="width: 80px; max-width: 80px; min-width: 80px" styleClass="center">
-                                            <h:outputText value="" />
+                                            <h:outputText value="#{staffRole.roles.code}" />
                                         </p:column>
                                         <p:column headerText="" style="width: 10px; max-width: 10px; min-width: 10px" styleClass="center">
                                             <p:commandButton icon="ui-icon-trash"
+                                                             action="#{userManagement.onPopupRole()}"
+                                                             process="@this"
+                                                             update=":userAccessForm:roleTabble, :confirmRemoveRolePanel"
                                                              title="Remove">
-
+                                                <f:setPropertyActionListener value="#{staffRole.id}" target="#{userManagement.roleId}"/>
                                              </p:commandButton>
                                         </p:column>
                                     </p:dataTable>
@@ -158,17 +171,27 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="2">
-                                    <p:selectOneMenu id="codeMenu"
+                                <td>
+                                    <p:selectOneMenu id="codeMenu" value="#{userManagement.objectUserAuthorize.id}"
                                                      style="min-width: 130px; width: 130px; max-width: 130px;">
                                         <f:selectItem itemLabel="- Please Select -" itemValue=""/>
+                                        <f:selectItems value="#{userManagement.objectUserAuthorizeList}"
+                                                       var="objectUserAuthorizeItem"
+                                                       itemLabel="#{objectUserAuthorizeItem.name}"
+                                                       itemValue="#{objectUserAuthorizeItem.id}"/>
+                                        <p:ajax event="change" process="@form" listener="#{userManagement.onFilterUserAuthorize()}"
+                                                update=":userAccessForm:userAuthorizeTable"/>
                                     </p:selectOneMenu>
                                 </td>
                                 <td>
-                                    <p:inputText style="width: 130px; max-width: 130px; min-width: 130px"/>
+                                    <p:inputText value="#{userManagement.keySearchUserAuthorize}"/>
+                                </td>
+                                <td style="width: 40px; min-width: 40px; max-width: 40px">
                                     <p:commandButton id="btnAuthorize" icon="ui-icon-search"
                                                      onstart="PF('bui').block()"
                                                      oncomplete="PF('bui').unblock()"
+                                                     action="#{userManagement.onFilterUserAuthorize()}"
+                                                     update=":userAccessForm:userAuthorizeTable"
                                                      process="@form"/>
                                 </td>
                             </tr>
@@ -176,16 +199,19 @@
                                 <td colspan="3">
                                     <p:dataTable id="userAuthorizeTable"
                                                  styleClass="full_table"
-                                                 rows="5" paginator="true"
-                                                 selectionMode="single"
+                                                 rows="5"
+                                                 paginator="true"
+                                                 value="#{userManagement.userAccessModelList}"
+                                                 selection="#{userManagement.selectUserAuthorize}"
+                                                 var="userAccessList"
+                                                 rowKey="#{userAccessList.id}"
                                                  style="width: 100%; max-width: 100%; min-width: 100%">
-                                        <p:ajax event="rowSelect"/>
                                         <p:column selectionMode="multiple" style="width:16px;text-align:center; height: 20px"/>
                                         <p:column headerText="Code " style="width: 100px; max-width: 100px; min-width: 100px" styleClass="center">
-                                            <h:outputText value="" />
+                                            <h:outputText value="#{userAccessList.menuObjectModel.code}" />
                                         </p:column>
                                         <p:column headerText="Menu Object and Action" style="width: 250px; max-width: 250px; min-width: 250px" styleClass="center">
-                                            <h:outputText value=""/>
+                                            <h:outputText value="#{userAccessList.menuObjectModel.name}"/>
                                         </p:column>
                                     </p:dataTable>
                                 </td>

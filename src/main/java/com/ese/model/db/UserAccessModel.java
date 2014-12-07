@@ -11,20 +11,20 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "staff_roles")
+@Table(name = "user_access")
 @Proxy(lazy=false)
-public class StaffRolesModel extends AbstractModel{
+public class UserAccessModel extends AbstractModel{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @OneToOne
-    @JoinColumn(name="staff", nullable=false, columnDefinition="int default 0")
-    private StaffModel staff;
+    @JoinColumn(name="staff_id", nullable=false, columnDefinition="int default 0")
+    private StaffModel staffModel;
 
     @OneToOne
-    @JoinColumn(name="roles", nullable=false, columnDefinition="int default 0")
-    private SystemRoleModel roles;
+    @JoinColumn(name="menu_object_id", nullable=false, columnDefinition="int default 0")
+    private MenuObjectModel menuObjectModel;
 
     @Column(name="isvalid")
     private int isValid;
@@ -33,8 +33,9 @@ public class StaffRolesModel extends AbstractModel{
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("id", id)
-                .append("staff", staff)
-                .append("roles", roles)
+                .append("staffModel", staffModel)
+                .append("menuObjectModel", menuObjectModel)
+                .append("isValid", isValid)
                 .toString();
     }
 }

@@ -20,15 +20,20 @@
                         <p:commandButton id="btnAddUser"
                                          value="Add to User"
                                          styleClass="medium" style="width: 110px"
+                                         process="@form"
+                                         update=":msgBoxSystemMessagePanel, :userAccessForm:roleTabble"
+                                         action="#{userManagement.onAddToUserByDialogRole}"
                                          icon="ui-icon-plusthick"/>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <p:inputText/>
+                        <p:inputText id="keySearch" value="#{userManagement.keySearchRole}"/>
                         <p:commandButton id="btnSearchRole" icon="ui-icon-search"
-                                         onstart="PF('bui').show()"
-                                         oncomplete="PF('bui').hide()"
+                                         onstart="PF('bui').block()"
+                                         oncomplete="PF('bui').unblock()"
+                                         action="#{userManagement.onFilterRole()}"
+                                         update=":userRoleForm:roleTable"
                                          process="@form"/>
                     </td>
                 </tr>
@@ -36,16 +41,20 @@
                     <td>
                         <p:dataTable id="roleTable" rowIndexVar="rowIndex"
                                      styleClass="full_table"
-                                     rows="5" paginator="true"
-                                     selectionMode="single"
+                                     rows="5"
+                                     paginator="true"
+                                     rowKey="#{systemRole.id}"
+                                     value="#{userManagement.systemRoleModelDialogList}"
+                                     selection="#{userManagement.selectRole}"
+                                     var="systemRole"
                                      style="width: 100%; max-width: 100%; min-width: 100%">
                             <p:ajax event="rowSelect"/>
                             <p:column selectionMode="multiple" style="width:16px;text-align:center; height: 20px"/>
                             <p:column headerText="Role " style="width: 250px; max-width: 250px; min-width: 250px" styleClass="center">
-                                <h:outputText value="" />
+                                <h:outputText value="#{systemRole.code}" />
                             </p:column>
                             <p:column headerText="" style="width: 80px; max-width: 80px; min-width: 80px" styleClass="center">
-                                <h:outputText value=""/>
+                                <h:outputText value="#{systemRole.name}"/>
                             </p:column>
                         </p:dataTable>
                     </td>

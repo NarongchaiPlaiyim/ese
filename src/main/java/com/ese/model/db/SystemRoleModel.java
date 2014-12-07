@@ -40,7 +40,10 @@ public class SystemRoleModel extends AbstractModel{
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("id", id)
                 .append("code", code)
+                .append("name", name)
+                .append("desxription", desxription)
                 .append("version", version)
+                .append("isValid", isValid)
                 .toString();
     }
 }

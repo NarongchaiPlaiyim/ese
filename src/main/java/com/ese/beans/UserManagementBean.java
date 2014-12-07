@@ -12,6 +12,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -31,6 +32,10 @@ public class UserManagementBean extends Bean{
     private UserView userView;
     private List<MSTitleModel> msTitleModelList;
     private MSTitleModel msTitleModel;
+    private List<StaffRolesModel> staffRolesModelList;
+    private StaffRolesModel staffRolesModel;
+    private List<UserAccessModel> userAccessModelList;
+    private List<UserAccessModel> selectUserAuthorize;
 
     //Item
     private List<MenuObjectModel> menuObjectModelList;
@@ -56,6 +61,17 @@ public class UserManagementBean extends Bean{
     //Dialog User Access
     private String keySearchUserAccessDialog;
     private UserView userAuthorizeView;
+    private List<MenuObjectModel> userAuthorize;
+    private String keySearchUserAuthorize;
+    private List<MenuObjectModel> objectUserAuthorizeList;
+    private MenuObjectModel objectUserAuthorize;
+    private int roleId;
+
+    //Dialog Add User Role
+    private List<SystemRoleModel> systemRoleModelDialogList;
+    private List<SystemRoleModel> selectRole;
+    private String keySearchRole;
+
 
 
     @PostConstruct
@@ -72,6 +88,8 @@ public class UserManagementBean extends Bean{
         staffModel = new StaffModel();
         factionModel = new FactionModel();
         menuObjectModel = new MenuObjectModel();
+        staffRolesModel = new StaffRolesModel();
+        objectUserAuthorize = new MenuObjectModel();
 //        msTitleModel = new MSTitleModel();
     }
 
@@ -84,23 +102,21 @@ public class UserManagementBean extends Bean{
         keySearchUser = "";
         modeBtnAddUser = "";
         keySearchUserAccessDialog = "";
+        keySearchUserAuthorize = "";
+        keySearchRole = "";
     }
 
     private void departmentOnload(){
         msDepartmentModelList = userManagementService.getDepartAll();
     }
 
-//    private void factionOnload(){
-//        factionModelList = userManagementService.getFactionAll();
-//    }
 
     private void userOnload(){
         staffModelList = userManagementService.getUserAll();
     }
 
     public void test(){
-//        log.debug("########## {}, {}, {}", msDepartmentModel.getId(), factionModel.getId(), keySearchUserAccess);
-        log.debug("######## {}", userView.toString());
+        log.debug("######## {}", roleId);
     }
 
     public void onChangeSearchMenu(String target){
@@ -173,7 +189,9 @@ public class UserManagementBean extends Bean{
         menuObjectModelList = userManagementService.getMenuObjectByObjCategory();
         menuObjectModelTableList = userManagementService.getMenuObjectAll();
         userAuthorizeView = userManagementService.setModelToViewUserAccess(staffModel);
-
+        staffRolesModelList = userManagementService.getStaffRoleByUserId(staffModel.getId());
+        userAccessModelList = userManagementService.getMenuObjectByUserId(staffModel.getId());
+        objectUserAuthorizeList = userManagementService.getMenuObjectByObjCategory();;
     }
 
     public void onChangeMenuObject(){
@@ -184,8 +202,64 @@ public class UserManagementBean extends Bean{
         log.debug("selectList Size : {}", selectList.size());
 
         if (!Utils.isSafetyList(selectList)){
-            showDialog(MessageDialog.WARNING.getMessageHeader(), "Please select Menu Object and Action.", "confirmUserAccessDlg");
+            showDialog(MessageDialog.WARNING.getMessageHeader(), "Please select Menu Object and Action.", "msgBoxSystemMessageDlg");
         } else {
+            userManagementService.onSaveUserAccess(selectList, staffModel);
+            showDialogSaved();
+        }
+
+        userAccessModelList = userManagementService.getMenuObjectByUserId(staffModel.getId());
+    }
+
+    public void onRemoveUserAuthorize(){
+        StringBuilder selectValue = new StringBuilder();
+        for (UserAccessModel model : selectUserAuthorize){
+            selectValue = selectValue.append(model.getMenuObjectModel().getCode()).append(" ");
+        }
+        showDialog(MessageDialog.WARNING.getMessageHeader(), "Click Yes to delete " + selectValue.toString(), "confirmRemoveUserAuthorizeDlg");
+    }
+
+    public void onDeleteUserAuthorize(){
+        log.debug("selectUserAuthorize Size : {}", selectUserAuthorize.size());
+
+        for (UserAccessModel userAccessModel : selectUserAuthorize){
+            userManagementService.deleteUserAuthorize(userAccessModel);
+        }
+
+        userAccessModelList = userManagementService.getMenuObjectByUserId(staffModel.getId());
+    }
+
+    public void onFilterUserAuthorize(){
+        userAccessModelList = userManagementService.getUserAuthorizeByMenuObjOrKey(objectUserAuthorize.getId(), keySearchUserAuthorize);
+    }
+
+    public void onPopupRole(){
+        showDialog(MessageDialog.WARNING.getMessageHeader(), "Click Yes to confirm delete?", "confirmRemoveRoleDlg");
+    }
+
+    public void onRemoveRole(){
+        userManagementService.deleteRole(roleId);
+        staffRolesModelList = userManagementService.getStaffRoleByUserId(staffModel.getId());
+    }
+
+    public void onLoadRoleDialog(){
+        systemRoleModelDialogList = userManagementService.getLoadUserRole();
+        selectRole = new ArrayList<SystemRoleModel>();
+    }
+
+    public void onFilterRole(){
+        log.debug("keySearchRole {}", keySearchRole);
+        systemRoleModelDialogList = userManagementService.getRoleByKey(keySearchRole);
+    }
+
+    public void onAddToUserByDialogRole(){
+
+        if (!Utils.isSafetyList(selectRole)){
+            showDialog(MessageDialog.WARNING.getMessageHeader(), "Please select role.", "msgBoxSystemMessageDlg");
+        } else {
+            userManagementService.onSaveRole(selectRole, staffModel);
+            showDialogSaved();
+            staffRolesModelList = userManagementService.getStaffRoleByUserId(staffModel.getId());
         }
     }
 }

@@ -154,9 +154,6 @@
                             <p:column headerText="Login Name" style="width: 150px" styleClass="center">
                                 <h:outputText value="#{user.username}"/>
                             </p:column>
-                            <p:column headerText="Role" style="width: 100px" styleClass="center">
-                                <h:outputText value="#{user.role}"/>
-                            </p:column>
                         </p:dataTable>
                     </td>
                 </tr>
@@ -315,7 +312,7 @@
 
 <p:dialog id="userAccessDialog" widgetVar="userAccessDlg" header="User Access"
           onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
-          modal="true" width="1024" height="450">
+          modal="true" width="1600" height="450">
     <ui:include src="../site/dialog/userAccessDialog.xhtml"/>
 </p:dialog>
 
@@ -361,6 +358,46 @@
                              styleClass="medium" style="#{msg.get('btn.size')}"
                              icon="ui-icon-cancel"
                              oncomplete="PF('confirmUserAccessDlg').hide()"/>
+        </div>
+    </p:confirmDialog>
+</p:panel>
+
+<p:panel id="confirmRemoveUserAuthorizePanel" style="border: 0">
+    <p:confirmDialog id="confirmRemoveUserAuthorizeDialog" widgetVar="confirmRemoveUserAuthorizeDlg" width="#{msg.get('dialog.message.size')}"
+                     closable="false"
+                     header="#{userManagement.messageHeader}" message="#{userManagement.message}">
+        <div style="text-align: right">
+            <p:commandButton value="#{msg.get('btn.name.ok')}" action="#{userManagement.onDeleteUserAuthorize()}"
+                             process="@this" update=":userAccessForm:userAuthorizeTable, :msgBoxSystemMessagePanel"
+                             styleClass="medium" style="#{msg.get('btn.size')}"
+                             icon="ui-icon-check"
+                             oncomplete="PF('confirmRemoveUserAuthorizeDlg').hide()"/>
+            <p:commandButton value="#{msg.get('btn.name.cancel')}"
+                             process="@this"
+                             update=":userAccessForm:userAuthorizeTable"
+                             styleClass="medium" style="#{msg.get('btn.size')}"
+                             icon="ui-icon-cancel"
+                             oncomplete="PF('confirmRemoveUserAuthorizeDlg').hide()"/>
+        </div>
+    </p:confirmDialog>
+</p:panel>
+
+<p:panel id="confirmRemoveRolePanel" style="border: 0">
+    <p:confirmDialog id="confirmRemoveRoleDialog" widgetVar="confirmRemoveRoleDlg" width="#{msg.get('dialog.message.size')}"
+                     closable="false"
+                     header="#{userManagement.messageHeader}" message="#{userManagement.message}">
+        <div style="text-align: right">
+            <p:commandButton value="#{msg.get('btn.name.ok')}" action="#{userManagement.onRemoveRole()}"
+                             process="@this" update=":userAccessForm:roleTabble, :msgBoxSystemMessagePanel"
+                             styleClass="medium" style="#{msg.get('btn.size')}"
+                             icon="ui-icon-check"
+                             oncomplete="PF('confirmRemoveRoleDlg').hide()"/>
+            <p:commandButton value="#{msg.get('btn.name.cancel')}"
+                             process="@this"
+                             update=":userAccessForm:roleTabble"
+                             styleClass="medium" style="#{msg.get('btn.size')}"
+                             icon="ui-icon-cancel"
+                             oncomplete="PF('confirmRemoveRoleDlg').hide()"/>
         </div>
     </p:confirmDialog>
 </p:panel>
