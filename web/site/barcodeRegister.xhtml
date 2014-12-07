@@ -26,7 +26,7 @@
                                           value="#{barcodeRegisterBean.modeBarcode}"/>
 
                             <p:commandButton id="#{msg.get('btn.name.print')}"
-                                             value="Print"
+                                             value="#{msg.get('btn.name.print')}"
                                              process="@form"
                                              update=":setupForm"
                                              disabled="#{barcodeRegisterBean.flagBtnPrint}"
