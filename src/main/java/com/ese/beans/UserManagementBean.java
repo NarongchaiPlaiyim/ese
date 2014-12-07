@@ -75,7 +75,7 @@ public class UserManagementBean extends Bean{
 
 
     @PostConstruct
-    private void onLoand(){
+    private void onLoad(){
         newObjectOnload();
         actionButton();
         departmentOnload();
@@ -170,7 +170,7 @@ public class UserManagementBean extends Bean{
 
     public void onClickSaveUserAccessDialog(){
         userManagementService.onSaveUserAccess(userView);
-        onLoand();
+        onLoad();
         if (Utils.isZero(userView.getId())){
             showDialogSaved();
         } else {

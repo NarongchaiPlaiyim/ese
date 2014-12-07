@@ -25,4 +25,19 @@ public class RoleAccessDAO extends GenericDAO<RoleAccessModel, Integer>{
 
         return roleAccessModels;
     }
+
+    public List<RoleAccessModel> findByMenuObjectId(int menuObjId){
+        List<RoleAccessModel> roleAccessModels = new ArrayList<RoleAccessModel>();
+        try {
+            Criteria criteria = getCriteria();
+            criteria.add(Restrictions.eq("menuObjectModel.id", menuObjId));
+            criteria.add(Restrictions.eq("isValid", 1));
+            roleAccessModels = criteria.list();
+
+        } catch (Exception e) {
+            log.debug("Exception error findBySystemRoleId : ", e);
+        }
+
+        return roleAccessModels;
+    }
 }

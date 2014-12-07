@@ -4,6 +4,7 @@ import com.ese.model.db.SystemRoleModel;
 import com.ese.utils.Utils;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -18,6 +19,7 @@ public class SystemRoleDAO extends GenericDAO<SystemRoleModel, Integer> {
         try {
             Criteria criteria = getCriteria();
             criteria.add(Restrictions.eq("isValid", 1));
+            criteria.addOrder(Order.desc("updateDate"));
             systemRoleModels = criteria.list();
         } catch (Exception e) {
             log.debug("Exception error findByIsValid : ", e);

@@ -1,37 +1,26 @@
-package com.ese.model.db;
+package com.ese.model.view;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.hibernate.annotations.Proxy;
 
-import javax.persistence.*;
+import java.util.Date;
 
-@Getter
 @Setter
-@Entity
-@Table(name = "system_role")
-@Proxy(lazy=false)
-public class SystemRoleModel extends AbstractModel{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Getter
+public class SystemRoleView {
+
     private int id;
-
-    @Column(name = "code")
     private String code;
-
-    @Column(name="name")
     private String name;
-
-    @Column(name="description")
     private String description;
-
-    @Column(name = "version")
     private Integer version;
-
-    @Column(name="isvalid")
     private int isValid;
+    private Integer createBy;
+    private Date createDate;
+    private Integer updateBy;
+    private Date updateDate;
 
     @Override
     public String toString() {
@@ -42,6 +31,10 @@ public class SystemRoleModel extends AbstractModel{
                 .append("description", description)
                 .append("version", version)
                 .append("isValid", isValid)
+                .append("createBy", createBy)
+                .append("createDate", createDate)
+                .append("updateBy", updateBy)
+                .append("updateDate", updateDate)
                 .toString();
     }
 }
