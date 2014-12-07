@@ -123,6 +123,7 @@ public class SetupBean extends Bean{
     public void onClickNewOrCancelWarehouse(){
         log.debug("NewOrCancel.");
         modeWarehouse = "Mode(New)";
+        nameBtn = "Cancel";
         msLocationModel = new MSLocationModel();
         locationView = new LocationView();
         btnOnLoad();
