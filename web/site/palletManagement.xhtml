@@ -165,7 +165,7 @@
         </p:dialog>
 
         <p:panel id="pnlDlg" style="border: 0">
-            <p:confirmDialog id="msgBoxSystemMessageDialog2" widgetVar="msgBoxSystemMessageDlg2" width="350px"
+            <p:confirmDialog id="msgBoxSystemMessageDialog2" widgetVar="msgBoxSystemMessageDlg2" width="#{msg.get('dialog.message.size')}"
                              closable="false"
                              header="#{palletManagement.messageHeader}" message="#{palletManagement.message}" >
                 <div style="text-align: right">
@@ -183,7 +183,7 @@
         </p:panel>
 
         <p:panel id="confirmClosePalletPanel" style="border: 0">
-            <p:confirmDialog id="confirmClosePalletDialog" widgetVar="confirmClosePalletDlg" width="350px"
+            <p:confirmDialog id="confirmClosePalletDialog" widgetVar="confirmClosePalletDlg" width="#{msg.get('dialog.message.size')}"
                              header="#{palletManagement.messageHeader}" message="#{palletManagement.message}" >
                 <div style="text-align: right">
                     <p:commandButton  action="#{palletManagement.changStatusOnClosePallet('ClosePallet')}"
@@ -203,7 +203,7 @@
         </p:panel>
 
         <p:panel id="msgBoxSystemMessagePanel" style="border: 0">
-            <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="350px"
+            <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="#{msg.get('dialog.message.size')}"
                              closable="false"
                              header="#{palletManagement.messageHeader}" message="#{palletManagement.message}" >
                 <div style="text-align: right">
