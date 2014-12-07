@@ -6,7 +6,7 @@
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <h:outputStylesheet name="css/style.css" />
+        <!--<h:outputStylesheet name="css/style.css" />-->
     </h:head>
     <p:panel id="locationPanel" styleClass="panel-dialog">
        <h:form id="itemForm">
@@ -36,6 +36,8 @@
                    </td>
                    <td style="width: 80px">
                        <p:commandButton icon="ui-icon-search"
+                                        value="#{msg.get('btn.name.search')}"
+                                        styleClass="medium" style="#{msg.get('btn.size')}"
                        process="@this"
                        onstart="PF('bui').show()"
                        action="#{setup.actionTolocationDialog('SearchItem')}"
@@ -93,8 +95,8 @@
                        <table border="0">
                            <tr>
                                <td class="center">
-                                   <p:commandButton value="Add"
-                                                    styleClass="medium" style="width: 80px"
+                                   <p:commandButton value="#{msg.get('btn.name.add')}"
+                                                    styleClass="medium" style="#{msg.get('btn.size')}"
                                                     icon="ui-icon-seek-next"
                                                     update=":msgBoxSystemMessageDialog, :itemForm, :itemForm:searchItemTable"
                                                     action="#{setup.actionTolocationDialog('AddToLocation')}"
@@ -103,8 +105,8 @@
                            </tr>
                            <tr>
                                <td>
-                                   <p:commandButton value="Remove"
-                                                    styleClass="medium" style="width: 80px"
+                                   <p:commandButton value="#{msg.get('btn.name.remove')}"
+                                                    styleClass="medium" style="#{msg.get('btn.size')}"
                                                     icon="ui-icon-seek-prev"
                                                     update=":msgBoxSystemMessageDialog, :itemForm:locationTable"
                                                     action="#{setup.actionTolocationDialog('Remove')}"/>
