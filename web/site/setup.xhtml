@@ -5,14 +5,9 @@
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:p="http://primefaces.org/ui">
-    <!-- Start Header Logo -->
-    <!--<ui:include src="include/header.xhtml"/>-->
-    <!-- End Header Logo -->
-    <h:head>
-        <title>Setup</title>
-        <!--<h:outputStylesheet name="css/style.css"/>-->
-        <h:outputScript library="js" name="custom.js" />
-    </h:head>
+<h:head>
+    <title>#{msg.get('menu.setup.title')}</title>
+</h:head>
     <h:body>
         <p:layout fullPage="true" id="layoutPanel">
             <p:layoutUnit id="layoutTop" position="north" size="180" header="#{msg.get('header.north')}" collapsible="true" style="border: 0">
@@ -24,41 +19,48 @@
             <p:layoutUnit id="layoutCenter" position="center" header="#{msg.get('menu.setup.title')}" >
                 <h:form id="setupForm">
                     <h:form id="mainForm" style="width: 100%;border-spacing: 0;">
-                    <p:tabView id="setupTab" cache="false" dynamic="false">
+                    <p:tabView id="setupTab" cache="false" dynamic="false" style="border: 0">
                     <p:tab id="warehouseTab" title="7.1 Warehouse and Location">
+                        <p:panel style="border: 0">
+                            <div style="text-align: right;">
+                                <h:outputText id="modeWarehouse" value="#{setup.modeWarehouse}"/>
+
+                                <p:commandButton id="btnNewLocation" value="#{setup.nameBtn}"
+                                                 styleClass="medium" style="#{msg.get('btn.size')}"
+                                                 disabled="#{setup.flagBtnNewWarehouse}"
+                                                 update=":setupForm:mainForm:setupTab,
+                                                                 :setupForm:mainForm:setupTab:warehouseAndLocationTable"
+                                                 process="@form"
+                                                 onstart="PF('bui').show()"
+                                                 oncomplete="PF('bui').hide()"
+                                                 action="#{setup.onClickNewOrCancelWarehouse}"/>
+
+                                <p:commandButton id="btnSaveLocation" value="Save" styleClass="medium" style="#{msg.get('btn.size')}"
+                                                 action="#{setup.onSaveWarehouse}"
+                                                 process="@form"
+                                                 icon="ui-icon-check"
+                                                 onstart="PF('bui').block()"
+                                                 oncomplete="PF('bui').unblock()"
+                                                 update=":setupForm:mainForm:setupTab:warehouseTab, :msgBoxSystemMessagePanel,
+                                                                 :setupForm:mainForm:setupTab:warehouseAndLocationTable,
+                                                                 :setupForm:mainForm:setupTab"
+                                                 binding="#{addWarehouseAndLocation}"/>
+
+                                <p:commandButton id="btnDelete" value="#{msg.get('btn.name.delete')}"
+                                                 styleClass="medium" style="#{msg.get('btn.size')}"
+                                                 process="@form"
+                                                 disabled="#{setup.flagBtnDelete}"
+                                                 action="#{setup.preDelete}"
+                                                 icon="ui-icon-trash"
+                                                 onstart="PF('bui').block()"
+                                                 oncomplete="PF('bui').unblock()"
+                                                 update=":confirmWarehouseAndLocationPanel, :msgBoxSystemMessagePanel"/>
+
+                            </div>
+                        </p:panel>
                     <table border="0" style="width: 100%">
                     <tr>
                         <td>
-                            <table border="0" class="top">
-                                <tr>
-                                    <td style="width: 860px" class="right">
-                                        <h:outputText id="modeWarehouse" value="#{setup.modeWarehouse}"/>
-                                    </td>
-                                    <td>
-                                        <p:commandButton id="btnNewLocation" value="#{setup.nameBtn}"
-                                                         styleClass="medium" style="#{msg.get('btn.size')}"
-                                                         disabled="#{setup.flagBtnNewWarehouse}"
-                                                         update=":setupForm:mainForm:setupTab,
-                                                                 :setupForm:mainForm:setupTab:warehouseAndLocationTable"
-                                                         process="@form"
-                                                         onstart="PF('bui').show()"
-                                                         oncomplete="PF('bui').hide()"
-                                                         action="#{setup.onClickNewOrCancelWarehouse}"/>
-                                    </td>
-                                    <td>
-                                        <p:commandButton id="btnSaveLocation" value="Save" styleClass="medium" style="#{msg.get('btn.size')}"
-                                                         action="#{setup.onSaveWarehouse}"
-                                                         process="@form"
-                                                         icon="ui-icon-check"
-                                                         onstart="PF('bui').block()"
-                                                         oncomplete="PF('bui').unblock()"
-                                                         update=":setupForm:mainForm:setupTab:warehouseTab, :msgBoxSystemMessagePanel,
-                                                                 :setupForm:mainForm:setupTab:warehouseAndLocationTable,
-                                                                 :setupForm:mainForm:setupTab"
-                                                         binding="#{addWarehouseAndLocation}"/>
-                                    </td>
-                                </tr>
-                            </table>
                             <table border="0" style="width: 100%">
                                 <tr >
                                     <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
@@ -89,7 +91,7 @@
                                     <td >
                                         <p:commandButton id="btnNewEditWarehouse" value="#{msg.get('btn.name.new.edit')}"
                                                          icon="ui-icon-folder-open"
-                                                         styleClass="medium" style="#{msg.get('btn.size')}"
+                                                         styleClass="medium" style="min-width: 160px; width: 160px; max-width: 160px;"
                                                          disabled="#{setup.flagBtnAddEdit}"
                                                          action="#{setup.onEditDialogWarehouse}"
                                                          update=":warehouseDialogForm"
@@ -122,7 +124,7 @@
                                         <h:outputText value="Remark"/>
                                     </td>
                                     <td colspan="2">
-                                        <p:inputTextarea id="locationRemark" style="width: 200px; max-width: 200px;min-width: 200px; height: 50px;"
+                                        <p:inputTextarea id="locationRemark" style="width: 250px; max-width: 250px;min-width: 250px; height: 50px;"
                                                          value="#{setup.locationView.remark}"/>
                                     </td>
                                 </tr>
@@ -155,7 +157,7 @@
                                     <td class="center">
                                         <p:commandButton id="btnShowAddItem" value="#{msg.get('btn.name.show.add')}"
                                                          icon="ui-icon-folder-open"
-                                                         styleClass="medium" style="#{msg.get('btn.size')}"
+                                                         styleClass="medium" style="min-width: 160px; width: 160px; max-width: 160px;"
                                                          disabled="#{setup.flagBtnAddShowItem}"
                                                          action="#{setup.onClickAddItemWarehouse}"
                                                          update=":itemForm"
@@ -176,17 +178,6 @@
                                                          process="@form"
                                                          action="#{setup.onSearchWarehouseAndLocation}"
                                                          update=":setupForm:mainForm:setupTab:warehouseAndLocationTable"/>
-                                    </td>
-                                    <td class="right" colspan="6">
-                                        <p:commandButton id="btnDelete" value="Delete"
-                                                         styleClass="medium" style="width: 80px; min-width: 80px; max-width: 80px"
-                                                         process="@form"
-                                                         disabled="#{setup.flagBtnDelete}"
-                                                         action="#{setup.preDelete}"
-                                                         icon="ui-icon-trash"
-                                                         onstart="PF('bui').block()"
-                                                         oncomplete="PF('bui').unblock()"
-                                                         update=":confirmWarehouseAndLocationPanel, :msgBoxSystemMessagePanel"/>
                                     </td>
                                 </tr>
                             </table>
@@ -242,37 +233,44 @@
                     </table>
                     </p:tab>
                     <p:tab id="stockInoutTag" title="7.2 Stock In Out Note">
+                        <p:panel style="border: 0">
+                            <div style="text-align: right;">
+                                <h:outputText id="mode" value="#{setup.modeStock}"/>
+
+                                <p:commandButton id="btnNew" value="#{setup.nameBtnStock}"
+                                                 action="#{setup.OnNewStockInOutNote}"
+                                                 onstart="PF('bui').show()"
+                                                 oncomplete="PF('bui').hide()"
+                                                 styleClass="medium" style="#{msg.get('btn.size')}"
+                                                 update=":setupForm:mainForm:setupTab
+                                                                                   :setupForm:mainForm:setupTab:stockInoutTable"/>
+
+                                <p:commandButton id="btnSave" value="#{msg.get('btn.name.save')} "
+                                                 action="#{setup.onSaveStockInOutNote}"
+                                                 styleClass="medium" style="#{msg.get('btn.size')}"
+                                                 onstart="PF('bui').block()"
+                                                 oncomplete="PF('bui').unblock()"
+                                                 process="@form"
+                                                 binding="#{addStockInOutNote}"
+                                                 icon="ui-icon-check"
+                                                 update=":msgBoxSystemMessagePanel,
+                                                                         :setupForm:mainForm:setupTab"/>
+
+                                <p:commandButton id="btnDeleteStock" value="#{msg.get('btn.name.delete')}"
+                                                 icon="ui-icon-trash"
+                                                 styleClass="medium" style="#{msg.get('btn.size')}"
+                                                 action="#{setup.preDeleteItem()}"
+                                                 onstart="PF('bui').show()"
+                                                 oncomplete="PF('bui').hide()"
+                                                 update=":confirmStockInOutNotePanel"
+                                                 disabled="#{setup.flagBtnDeleteStock}" />
+
+                            </div>
+                        </p:panel>
                         <table border="0" style="width: 100%">
                             <tr>
                                 <td>
-                                    <table border="0" class="top">
-                                        <tr>
-                                            <td style="width: 860px" class="right">
-                                                <h:outputText id="mode" value="#{setup.modeStock}"/>
-                                            </td>
-                                            <td>
-                                                <p:commandButton id="btnNew" value="#{setup.nameBtnStock}"
-                                                                 action="#{setup.OnNewStockInOutNote}"
-                                                                 onstart="PF('bui').show()"
-                                                                 oncomplete="PF('bui').hide()"
-                                                                 styleClass="medium" style="#{msg.get('btn.size')}"
-                                                                 update=":setupForm:mainForm:setupTab
-                                                                                   :setupForm:mainForm:setupTab:stockInoutTable"/>
-                                            </td>
-                                            <td>
-                                                <p:commandButton id="btnSave" value="Save"
-                                                                 action="#{setup.onSaveStockInOutNote}"
-                                                                 styleClass="medium" style="#{msg.get('btn.size')}"
-                                                                 onstart="PF('bui').block()"
-                                                                 oncomplete="PF('bui').unblock()"
-                                                                 process="@form"
-                                                                 binding="#{addStockInOutNote}"
-                                                                 icon="ui-icon-check"
-                                                                 update=":msgBoxSystemMessagePanel,
-                                                                         :setupForm:mainForm:setupTab"/>
-                                            </td>
-                                        </tr>
-                                    </table>
+
                                     <table border="0" style="width: 100%">
                                         <tr>
                                             <td style="width: 30px" class="top" colspan="4">
@@ -328,18 +326,6 @@
                                                 </table>
                                             </td>
 
-                                        </tr>
-                                        <tr>
-                                            <td class="right" colspan="6">
-                                                <p:commandButton id="btnDeleteStock" value="Delete"
-                                                                 icon="ui-icon-trash"
-                                                                 styleClass="medium" style="width: 80px"
-                                                                 action="#{setup.preDeleteItem()}"
-                                                                 onstart="PF('bui').show()"
-                                                                 oncomplete="PF('bui').hide()"
-                                                                 update=":confirmStockInOutNotePanel"
-                                                                 disabled="#{setup.flagBtnDeleteStock}" />
-                                            </td>
                                         </tr>
                                         <tr>
                                             <td colspan="6">
@@ -407,7 +393,7 @@
             <ui:include src="../site/dialog/itemDialog.xhtml"/>
         </p:dialog>
         <p:panel id="msgBoxSystemMessagePanel" style="border: 0">
-            <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="350px" closable="false"
+            <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="#{msg.get('dialog.message.size')}" closable="false"
                              header="#{setup.messageHeader}" message="#{setup.message}" >
                 <div style="text-align: right">
                     <p:commandButton value="#{msg.get('btn.name.ok')}"
@@ -420,75 +406,63 @@
             </p:confirmDialog>
         </p:panel>
 
-        <p:panel id="confirmWarehouseAndLocationPanel" styleClass="panel">
-            <p:confirmDialog id="confirmWarehouseAndLocationDialog" widgetVar="confirmWarehouseAndLocationDlg" width="350px"
+        <p:panel id="confirmWarehouseAndLocationPanel" style="border: 0">
+            <p:confirmDialog id="confirmWarehouseAndLocationDialog" widgetVar="confirmWarehouseAndLocationDlg" width="#{msg.get('dialog.message.size')}"
                              closable="false"
                              header="#{setup.messageHeader}" message="#{setup.message}" >
-                <table border="0" style="width: 100%">
-                    <tr>
-                        <td colspan="100%" class="right">
-                            <p:commandButton value="Ok" action="#{setup.onDeleteWarehouseAndLocation()}"
-                                             process="@this" update=":setupForm:mainForm:setupTab, :msgBoxSystemMessagePanel"
-                                             styleClass="medium" style="width: 100px"
-                                             icon="ui-icon-check"
-                                             oncomplete="PF('confirmWarehouseAndLocationDlg').hide()"/>
-                            <p:commandButton value="Cancel"
-                                             process="@this"
-                                             update=":setupForm:mainForm:setupTab"
-                                             styleClass="medium" style="width: 100px"
-                                             icon="ui-icon-cancel"
-                                             oncomplete="PF('confirmWarehouseAndLocationDlg').hide()"/>
-                        </td>
-                    </tr>
-                </table>
+                <div style="text-align: right">
+                    <p:commandButton value="#{msg.get('btn.name.ok')}" action="#{setup.onDeleteWarehouseAndLocation()}"
+                                     process="@this" update=":setupForm:mainForm:setupTab, :msgBoxSystemMessagePanel"
+                                     styleClass="medium" style="#{msg.get('btn.size')}"
+                                     icon="ui-icon-check"
+                                     oncomplete="PF('confirmWarehouseAndLocationDlg').hide()"/>
+                    <p:commandButton value="#{msg.get('btn.name.cancel')}"
+                                     process="@this"
+                                     update=":setupForm:mainForm:setupTab"
+                                     styleClass="medium" style="#{msg.get('btn.size')}"
+                                     icon="ui-icon-cancel"
+                                     oncomplete="PF('confirmWarehouseAndLocationDlg').hide()"/>
+                </div>
             </p:confirmDialog>
         </p:panel>
 
-        <p:panel id="confirmStockInOutNotePanel" styleClass="panel">
-            <p:confirmDialog id="confirmStockInOutNoteDialog" widgetVar="confirmStockInOutNoteDlg" width="350px"
+        <p:panel id="confirmStockInOutNotePanel" style="border: 0">
+            <p:confirmDialog id="confirmStockInOutNoteDialog" widgetVar="confirmStockInOutNoteDlg" width="#{msg.get('dialog.message.size')}"
                              closable="false"
                              header="#{setup.messageHeader}" message="#{setup.message}" >
-                <table border="0" style="width: 100%">
-                    <tr>
-                        <td colspan="100%" class="right">
-                            <p:commandButton value="Ok" action="#{setup.onDeleteStockInOutNote()}"
-                                             process="@this" update=":setupForm:mainForm:setupTab, :msgBoxSystemMessagePanel"
-                                             styleClass="medium" style="width: 100px"
-                                             icon="ui-icon-check"
-                                             oncomplete="PF('confirmStockInOutNoteDlg').hide()"/>
-                            <p:commandButton value="Cancel"
-                                             process="@this"
-                                             update=":setupForm:mainForm:setupTab"
-                                             styleClass="medium" style="width: 100px"
-                                             icon="ui-icon-cancel"
-                                             oncomplete="PF('confirmStockInOutNoteDlg').hide()"/>
-                        </td>
-                    </tr>
-                </table>
+                <div style="text-align: right">
+                    <p:commandButton value="#{msg.get('btn.name.ok')}" action="#{setup.onDeleteStockInOutNote()}"
+                                     process="@this" update=":setupForm:mainForm:setupTab, :msgBoxSystemMessagePanel"
+                                     styleClass="medium" style="#{msg.get('btn.size')}"
+                                     icon="ui-icon-check"
+                                     oncomplete="PF('confirmStockInOutNoteDlg').hide()"/>
+                    <p:commandButton value="#{msg.get('btn.name.cancel')}"
+                                     process="@this"
+                                     update=":setupForm:mainForm:setupTab"
+                                     styleClass="medium" style="#{msg.get('btn.size')}"
+                                     icon="ui-icon-cancel"
+                                     oncomplete="PF('confirmStockInOutNoteDlg').hide()"/>
+                </div>
             </p:confirmDialog>
         </p:panel>
 
-        <p:panel id="confirmWarehouseDialogPanel" styleClass="panel">
-            <p:confirmDialog id="confirmWarehouseDialogDialog" widgetVar="confirmWarehouseDialogDlg" width="350px"
+        <p:panel id="confirmWarehouseDialogPanel" style="border: 0">
+            <p:confirmDialog id="confirmWarehouseDialogDialog" widgetVar="confirmWarehouseDialogDlg" width="#{msg.get('dialog.message.size')}"
                              closable="false"
                              header="#{setup.messageHeader}" message="#{setup.message}" >
-                <table border="0" style="width: 100%">
-                    <tr>
-                        <td colspan="100%" class="right">
-                            <p:commandButton value="Ok" action="#{setup.onDeleteWarehouseDialog()}"
-                                             process="@this" update=":warehouseDialogForm, :msgBoxSystemMessagePanel"
-                                             styleClass="medium" style="width: 100px"
-                                             icon="ui-icon-check"
-                                             oncomplete="PF('confirmWarehouseDialogDlg').hide()"/>
-                            <p:commandButton value="Cancel"
-                                             process="@this"
-                                             update=":warehouseDialogForm"
-                                             styleClass="medium" style="width: 100px"
-                                             icon="ui-icon-cancel"
-                                             oncomplete="PF('confirmWarehouseDialogDlg').hide()"/>
-                        </td>
-                    </tr>
-                </table>
+                <div style="text-align: right">
+                    <p:commandButton value="#{msg.get('btn.name.ok')}" action="#{setup.onDeleteWarehouseDialog()}"
+                                     process="@this" update=":warehouseDialogForm, :msgBoxSystemMessagePanel"
+                                     styleClass="medium" style="#{msg.get('btn.size')}"
+                                     icon="ui-icon-check"
+                                     oncomplete="PF('confirmWarehouseDialogDlg').hide()"/>
+                    <p:commandButton value="#{msg.get('btn.name.cancel')}"
+                                     process="@this"
+                                     update=":warehouseDialogForm"
+                                     styleClass="medium" style="#{msg.get('btn.size')}"
+                                     icon="ui-icon-cancel"
+                                     oncomplete="PF('confirmWarehouseDialogDlg').hide()"/>
+                </div>
             </p:confirmDialog>
         </p:panel>
     </h:body>
