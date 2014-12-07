@@ -280,6 +280,8 @@ public class SetupBean extends Bean{
 
     public void onSaveStockInOutNote(){
         log.debug("onSaveStockInOutNote().");
+
+
         stockInOutNoteService.onSaveStockInOutNote(stockInOutNoteView);
         if (Utils.isZero(stockInOutNoteView.getId())){
             showDialogSaved();

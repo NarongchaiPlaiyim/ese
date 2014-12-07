@@ -128,10 +128,12 @@
                     <td class="center">
                         <p:commandButton value="Save"
                                          id="btnSave"
-                                         styleClass="medium" style="width: 80px"
+                                         styleClass="medium"
+                                         style="#{msg.get('btn.size')}"
                                          icon="ui-icon-check"
                                          binding="#{addUserAccess}"
-                                         update=":addUserForm, :msgBoxSystemMessagePanel"
+                                         process="@form"
+                                         update="addUserForm, :msgBoxSystemMessagePanel"
                                          action="#{userManagement.onClickSaveUserAccessDialog()}"/>
                         <p:commandButton value="Cancel"
                                          id="btnCancel"
@@ -139,7 +141,7 @@
                                          action="#{userManagement.onCancel}"
                                          process="@form"
                                          update=":userManagementForm"
-                                         onclick="PF('addUserDlg').block()"/>
+                                         oncomplete="PF('addUserDlg').hide()"/>
                     </td>
                 </tr>
             </table>

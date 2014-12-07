@@ -5,32 +5,24 @@
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:p="http://primefaces.org/ui">
-    <!-- Start Header Logo -->
-    <ui:include src="include/header.xhtml"/>
-    <!-- End Header Logo -->
-    <h:head>
-        <title>User Management</title>
-        <h:outputStylesheet name="css/style.css"/>
-        <h:outputScript library="js" name="custom.js" />
-    </h:head>
-    <h:body>
-        <p:panel id="pnl_maincontainer">
-            <div id="main_container" >
-                <h:form id="userManagementForm">
-                    <div class="body_lpane">
-                        <a class="step_border_select" href="barcodeRegister.xhtml" style="border: 1px solid #acacac; border-spacing: 0;">1. Barcode Register</a>
-                        <a class="step_border_select" href="palletManagement.xhtml" style="border: 1px solid #acacac; border-spacing: 0;">2. Pallet Tag Printing</a>
-                        <a class="step_border_select" href="setup.xhtml" style="border: 1px solid #acacac; border-spacing: 0;">7. Setup</a>
-                        <a class="step_border_selected" href="userManagement.xhtml" style="border: 1px solid #acacac; border-spacing: 0;">8. User Management</a>
-                        <!--<p:menu style="min-width: 150px; width: 150px; max-width: 150px; height: 150%;">-->
-                        <!--<p:menuitem value="1. Barcode Register" url="barcodeRegister.xhtml" icon="ui-icon-calculator"  />-->
-                        <!--<p:menuitem value="2. Pallet Tag Printing" url="palletManagement.xhtml" icon="ui-icon-plus"/>-->
-                        <!--<p:menuitem value="7. Setup" url="setup.xhtml" icon="ui-icon-wrench"/>-->
-                        <!--</p:menu>-->
-                    </div>
-                    <div class="body_rpane" style="width: 80%">
-                        <label class="subject">8. User Management</label>
-                        <h:form id="mainForm" style="width: 100%;border-spacing: 0;">
+<!-- Start Header Logo -->
+<!--<ui:include src="include/header.xhtml"/>-->
+<!-- End Header Logo -->
+<h:head>
+    <title>Setup</title>
+    <!--<h:outputStylesheet name="css/style.css"/>-->
+    <h:outputScript library="js" name="custom.js" />
+</h:head>
+<h:body>
+<p:layout fullPage="true" id="layoutPanel">
+<p:layoutUnit id="layoutTop" position="north" size="180" header="#{msg.get('header.north')}" collapsible="true" style="border: 0">
+    <ui:include src="#{msg.get('include.header')}"/>
+</p:layoutUnit>
+<p:layoutUnit id="layoutLeft" position="west" size="250" header="#{msg.get('header.west')}" collapsible="true" style="border: 0">
+    <ui:include src="#{msg.get('include.menu')}"/>
+</p:layoutUnit>
+<p:layoutUnit id="layoutCenter" position="center" header="#{msg.get('menu.user.title')}" >
+                        <h:form id="userManagementForm" style="width: 100%;border-spacing: 0;">
                             <p:tabView id="manegementTab" cache="false" dynamic="false">
                                 <p:tab id="userManageSub" title="8.1 User Management">
                                     <table border="0" style="width: 100%">
@@ -49,7 +41,7 @@
                                                                                      :addUserForm:pwd2"
                                                                              icon="ui-icon-plusthick"
                                                                              oncomplete="PF('addUserDlg').show()"/>
-                                                            <p:commandButton id="btnEdit" value="Edit"
+                                                            <p:commandButton id="btnEdit" value="#{msg.get('btn.name.new.edit')}"
                                                                              styleClass="medium" style="width: 80px; min-width: 80px; max-width: 80px"
                                                                              process="@form"
                                                                              disabled="#{userManagement.flagBtnEdit}"
@@ -105,8 +97,8 @@
                                                                                itemLabel="#{departmentItem.name}"
                                                                                itemValue="#{departmentItem.id}"/>
                                                                     <p:ajax event="change" process="@form" listener="#{userManagement.onChangeSearchMenu('department')}"
-                                                                            update=":userManagementForm:mainForm:manegementTab:userTable,
-                                                                                    :userManagementForm:mainForm:manegementTab:factionMenu"/>
+                                                                            update=":userManagementForm:manegementTab:userTable,
+                                                                                    :userManagementForm:manegementTab:factionMenu"/>
                                                             </p:selectOneMenu>
                                                         </td>
                                                         <td>
@@ -121,12 +113,12 @@
                                                                                itemLabel="#{factionItem.name}"
                                                                                itemValue="#{factionItem.id}"/>
                                                             <p:ajax event="change" process="@form" listener="#{userManagement.onChangeSearchMenu}"
-                                                                    update=":userManagementForm:mainForm:manegementTab:userTable"/>
+                                                                    update=":userManagementForm:manegementTab:userTable"/>
                                                             </p:selectOneMenu>
                                                         </td>
                                                         <td style="width: 110px">
                                                             <p:inputText id="searchText" value="#{userManagement.keySearchUser}" style="width: 120px">
-                                                                <p:ajax event="blur" update=":userManagementForm:mainForm:manegementTab:searchText"/>
+                                                                <p:ajax event="blur" update=":userManagementForm:manegementTab:searchText"/>
                                                             </p:inputText>
                                                         </td>
                                                         <td style="width: 40px; min-width: 40px; max-width: 40px">
@@ -135,7 +127,7 @@
                                                                              oncomplete="PF('bui').unblock()"
                                                                              process="@form"
                                                                              actionListener="#{userManagement.onChangeSearchMenu}"
-                                                                             update=":userManagementForm:mainForm:manegementTab:userTable"/>
+                                                                             update=":userManagementForm:manegementTab:userTable"/>
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -153,7 +145,7 @@
                                                              selectionMode="single"
                                                              style="width: 100%; max-width: 100%; min-width: 100%">
                                                     <p:ajax event="rowSelect" listener="#{userManagement.onClickUserAccess()}"
-                                                            update=":userManagementForm:mainForm:manegementTab"/>
+                                                            update=":userManagementForm:manegementTab"/>
                                                     <p:column headerText="No" style="width: 20px" styleClass="center">
                                                         <h:outputText value="#{rowIndex+1}"/>
                                                     </p:column>
@@ -311,17 +303,8 @@
                                 </p:tab>
                             </p:tabView>
                         </h:form>
-                    </div>
-                </h:form>
-            </div>
-        </p:panel>
-
-        <p:blockUI block="pnl_maincontainer" widgetVar="bui">
-            <h:panelGrid columns="2">
-                <h:outputText value="Please wait..." />
-                <p:graphicImage value="/resources/images/shared/ajax-loader.gif"/>
-            </h:panelGrid>
-        </p:blockUI>
+</p:layoutUnit>
+</p:layout>
 
         <p:dialog id="addUserDialog" widgetVar="addUserDlg" header="Add/Edit User"
                   onShow="unblockWindowsScrollBar()" onHide="blockWindowsScrollBar()" resizable="false"
@@ -355,7 +338,7 @@
                         <td colspan="100%" class="right">
                             <p:commandButton value="OK"
                                              process="@this"
-                                             update=":userManagementForm:mainForm:manegementTab"
+                                             update=":userManagementForm:manegementTab"
                                              icon="ui-icon-check"
                                              styleClass="medium" style="width: 100px"
                                              oncomplete="PF('msgBoxSystemMessageDlg').hide()"/>
@@ -373,13 +356,13 @@
                     <tr>
                         <td colspan="100%" class="right">
                             <p:commandButton value="Ok" action="#{userManagement.onDeleteUserAccess()}"
-                                             process="@this" update=":userManagementForm:mainForm:manegementTab, :msgBoxSystemMessagePanel"
+                                             process="@this" update=":userManagementForm:manegementTab, :msgBoxSystemMessagePanel"
                                              styleClass="medium" style="width: 100px"
                                              icon="ui-icon-check"
                                              oncomplete="PF('confirmUserAccessDlg').hide()"/>
                             <p:commandButton value="Cancel"
                                              process="@this"
-                                             update=":userManagementForm:mainForm:manegementTab"
+                                             update=":userManagementForm:manegementTab"
                                              styleClass="medium" style="width: 100px"
                                              icon="ui-icon-cancel"
                                              oncomplete="PF('confirmUserAccessDlg').hide()"/>

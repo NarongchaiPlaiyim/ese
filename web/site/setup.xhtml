@@ -39,7 +39,7 @@
                                                          styleClass="medium" style="#{msg.get('btn.size')}"
                                                          disabled="#{setup.flagBtnNewWarehouse}"
                                                          update=":setupForm:mainForm:setupTab,
-                                                                                           :setupForm:mainForm:setupTab:warehouseAndLocationTable"
+                                                                 :setupForm:mainForm:setupTab:warehouseAndLocationTable"
                                                          process="@form"
                                                          onstart="PF('bui').show()"
                                                          oncomplete="PF('bui').hide()"
@@ -256,19 +256,21 @@
                                                                  action="#{setup.OnNewStockInOutNote}"
                                                                  onstart="PF('bui').show()"
                                                                  oncomplete="PF('bui').hide()"
-                                                                 styleClass="medium" style="width: 80px"
+                                                                 styleClass="medium" style="#{msg.get('btn.size')}"
                                                                  update=":setupForm:mainForm:setupTab
                                                                                    :setupForm:mainForm:setupTab:stockInoutTable"/>
                                             </td>
                                             <td>
                                                 <p:commandButton id="btnSave" value="Save"
                                                                  action="#{setup.onSaveStockInOutNote}"
-                                                                 styleClass="medium" style="width: 80px"
-                                                                 onstart="PF('bui').show()"
-                                                                 oncomplete="PF('bui').hide()"
+                                                                 styleClass="medium" style="#{msg.get('btn.size')}"
+                                                                 onstart="PF('bui').block()"
+                                                                 oncomplete="PF('bui').unblock()"
+                                                                 process="@form"
                                                                  binding="#{addStockInOutNote}"
                                                                  icon="ui-icon-check"
-                                                                 update=":setupForm:mainForm:setupTab, :msgBoxSystemMessagePanel"/>
+                                                                 update=":msgBoxSystemMessagePanel,
+                                                                         :setupForm:mainForm:setupTab"/>
                                             </td>
                                         </tr>
                                     </table>
@@ -291,7 +293,7 @@
                                                         <td >
                                                             <p:selectOneRadio id="typeRadio" styleClass="radio_table" style="background-origin: border-box"
                                                                               value="#{setup.stockInOutNoteView.type}"
-                                                                              required="true">
+                                                                              required="#{not empty param[addStockInOutNote.clientId]}">
                                                                 <f:selectItem itemLabel="Receiving" itemValue="i"/>
                                                                 <f:selectItem itemLabel="Issuing" itemValue="o"/>
                                                             </p:selectOneRadio>
@@ -311,7 +313,7 @@
                                                         <td colspan="2">
                                                             <p:inputText id="inoutCode" style="min-width: 200px; width: 200px; max-width: 200px;"
                                                                          value="#{setup.stockInOutNoteView.inoutCode}"
-                                                                         required="true"/>
+                                                                         required="#{not empty param[addStockInOutNote.clientId]}"/>
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -321,7 +323,7 @@
                                                         <td colspan="2">
                                                             <p:inputText id="inoutNote" style="min-width: 200px; width: 200px; max-width: 200px;"
                                                                          value="#{setup.stockInOutNoteView.inoutNote}"
-                                                                         required="true"/>
+                                                                         required="#{not empty param[addStockInOutNote.clientId]}"/>
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -337,8 +339,7 @@
                                                                  onstart="PF('bui').show()"
                                                                  oncomplete="PF('bui').hide()"
                                                                  update=":confirmStockInOutNotePanel"
-                                                                 disabled="#{setup.flagBtnDeleteStock}"
-                                                        />
+                                                                 disabled="#{setup.flagBtnDeleteStock}" />
                                             </td>
                                         </tr>
                                         <tr>
