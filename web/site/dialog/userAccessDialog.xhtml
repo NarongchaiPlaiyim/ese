@@ -72,6 +72,8 @@
                                 <td style="width: 80px; min-width: 80px; margin-top: 80px;" class="center">
                                     <p:commandButton value="Add"
                                                      styleClass="medium" style="width: 80px"
+                                                     action="#{userManagement.onAddToUserAuthorize}"
+                                                     process="@form"
                                                      icon="ui-icon-seek-next"/>
                                     <p:commandButton value="Remove"
                                                      styleClass="medium" style="width: 80px"
@@ -102,7 +104,7 @@
                                     <h:outputLabel value="Department"/>
                                 </td>
                                 <td>
-                                    <p:inputText/>
+                                    <p:inputText value="#{userManagement.userAuthorizeView.msDepartmentModel.name}" disabled="true"/>
                                 </td>
                                 <td rowspan="4" class="top">
                                     <p:dataTable id="roleTabble" rowIndexVar="rowIndex"
@@ -131,7 +133,7 @@
                                     <h:outputLabel value="Faction"/>
                                 </td>
                                 <td>
-                                    <p:inputText/>
+                                    <p:inputText value="#{userManagement.userAuthorizeView.factionModel.name}" disabled="true"/>
                                 </td>
                             </tr>
                             <tr>
@@ -139,7 +141,7 @@
                                     <h:outputLabel value="Name"/>
                                 </td>
                                 <td>
-                                    <p:inputText/>
+                                    <p:inputText value="#{userManagement.userAuthorizeView.name}" disabled="true"/>
                                 </td>
                             </tr>
                             <tr>
@@ -147,7 +149,7 @@
                                     <h:outputLabel value="Login Name"/>
                                 </td>
                                 <td>
-                                    <p:inputText/>
+                                    <p:inputText value="#{userManagement.userAuthorizeView.username}" disabled="true"/>
                                 </td>
                             </tr>
                             <tr style="height: 10px"/>

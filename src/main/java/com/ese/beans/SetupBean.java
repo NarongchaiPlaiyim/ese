@@ -159,7 +159,7 @@ public class SetupBean extends Bean{
     }
 
     public void preDelete(){
-        showDialog(MessageDialog.WARNING.getMessageHeader(), "Please click Yes to confirm delete this UserAccess.", "confirmWarehouseAndLocationDlg");
+        showDialog(MessageDialog.WARNING.getMessageHeader(), "Are you want to delete this item?", "confirmWarehouseAndLocationDlg");
     }
 
     public void onDeleteWarehouseAndLocation(){
@@ -222,7 +222,7 @@ public class SetupBean extends Bean{
     }
 
     public void preDeleteWarehouseDialog(){
-        showDialog(MessageDialog.WARNING.getMessageHeader(), "Please click Yes to confirm delete this UserAccess.", "confirmWarehouseDialogDlg");
+        showDialog(MessageDialog.WARNING.getMessageHeader(), "Are you want to delete this item?", "confirmWarehouseDialogDlg");
     }
 
     public void onDeleteWarehouseDialog(){
@@ -312,6 +312,6 @@ public class SetupBean extends Bean{
     }
 
     public void preDeleteItem(){
-        showDialog(MessageDialog.WARNING.getMessageHeader(), "Please click Yes to confirm delete this UserAccess.", "confirmStockInOutNoteDlg");
+        showDialog(MessageDialog.WARNING.getMessageHeader(), "Are you want to delete this item?", "confirmStockInOutNoteDlg");
     }
 }

@@ -44,9 +44,7 @@
                                              styleClass="medium" style="width: 100px; min-width: 100px; max-width: 100px"
                                              process="@form"
                                              action="#{userManagement.onClickNewUser('New')}"
-                                             update=":addUserForm,
-                                                                                     :addUserForm:pwd1,
-                                                                                     :addUserForm:pwd2"
+                                             update=":addUserForm"
                                              icon="ui-icon-plusthick"
                                              oncomplete="PF('addUserDlg').show()"/>
                             <p:commandButton id="btnEdit" value="Edit"

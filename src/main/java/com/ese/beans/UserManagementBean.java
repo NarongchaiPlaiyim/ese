@@ -55,6 +55,7 @@ public class UserManagementBean extends Bean{
 
     //Dialog User Access
     private String keySearchUserAccessDialog;
+    private UserView userAuthorizeView;
 
 
     @PostConstruct
@@ -148,7 +149,6 @@ public class UserManagementBean extends Bean{
     }
 
     public void onChangeDepartment(){
-        System.out.println("testtttttt"+ userView.getFactionModel().getMsDepartmentModel().getId());
         factionDialogList = userManagementService.getFactionByDepartment(userView.getFactionModel().getMsDepartmentModel().getId());
     }
 
@@ -172,10 +172,20 @@ public class UserManagementBean extends Bean{
     public void onClickUserAccessDialog(){
         menuObjectModelList = userManagementService.getMenuObjectByObjCategory();
         menuObjectModelTableList = userManagementService.getMenuObjectAll();
+        userAuthorizeView = userManagementService.setModelToViewUserAccess(staffModel);
+
     }
 
     public void onChangeMenuObject(){
-        log.debug("######## {}", menuObjectModel.getId());
         menuObjectModelTableList = userManagementService.getMenuObjectId(menuObjectModel.getId(), keySearchUserAccessDialog);
+    }
+
+    public void onAddToUserAuthorize(){
+        log.debug("selectList Size : {}", selectList.size());
+
+        if (!Utils.isSafetyList(selectList)){
+            showDialog(MessageDialog.WARNING.getMessageHeader(), "Please select Menu Object and Action.", "confirmUserAccessDlg");
+        } else {
+        }
     }
 }
