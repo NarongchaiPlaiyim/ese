@@ -4,7 +4,6 @@
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:ui="http://java.sun.com/jsf/facelets"
-
         xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>#{msg.get('menu.barcode.title')}</title>
@@ -284,7 +283,7 @@
         </p:panel>
 
         <p:panel id="msgBoxSystemMessagePanel" style="border: 0">
-            <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="#{configurationSize.dialogMessageSize}" closable="false"
+            <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="#{msg.get('dialog.message.size')}" closable="false"
                              header="#{barcodeRegisterBean.messageHeader}" message="#{barcodeRegisterBean.message}" >
                 <div style="text-align: right">
                     <p:commandButton value="#{msg.get('btn.name.ok')}"
