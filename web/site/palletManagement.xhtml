@@ -33,9 +33,9 @@
                                              disabled="#{palletManagement.isCheckPrintTag()}"
                                              oncomplete="PF('msgBoxSystemMessageDlg2').show()"/>
                             <p:commandButton id="btnClosePallet" value="Close Pallet"
-                                             onstart="PF('bui').show()"
+                                             onstart="PF('bui').block()"
                                              action="#{palletManagement.OnClosePallet}"
-                                             oncomplete="PF('bui').hide()"
+                                             oncomplete="PF('bui').unblock()"
                                              disabled="#{palletManagement.isCheckClosePallet()}"
                                              update=":palletForm, :msgBoxSystemMessagePanel, :confirmClosePalletPanel"
                                              process="@form"/>
@@ -58,8 +58,8 @@
                                 <p:commandButton id="btnsearch" icon="ui-icon-search" action="#{palletManagement.onFind}"
                                                  value="#{msg.get('btn.name.search')}"
                                                  styleClass="medium" style="#{msg.get('btn.size')}"
-                                                 onstart="PF('bui').show()"
-                                                 oncomplete="PF('bui').hide()"
+                                                 onstart="PF('bui').block()"
+                                                 oncomplete="PF('bui').unblock()"
                                                  process="@form" update=":palletForm:palletManagementTable, :palletForm:findKey"/>
                             </td>
                             <td style="width: 40px">

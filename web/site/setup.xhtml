@@ -31,8 +31,8 @@
                                                  update=":setupForm:mainForm:setupTab,
                                                                  :setupForm:mainForm:setupTab:warehouseAndLocationTable"
                                                  process="@form"
-                                                 onstart="PF('bui').show()"
-                                                 oncomplete="PF('bui').hide()"
+                                                 onstart="PF('bui').block()"
+                                                 oncomplete="PF('bui').unblock()"
                                                  action="#{setup.onClickNewOrCancelWarehouse}"/>
 
                                 <p:commandButton id="btnSaveLocation" value="Save" styleClass="medium" style="#{msg.get('btn.size')}"
@@ -156,14 +156,16 @@
                                         </p:spinner>
                                     </td>
                                     <td class="center">
-                                        <p:commandButton id="btnShowAddItem" value="#{msg.get('btn.name.show.add')}"
-                                                         icon="ui-icon-folder-open"
-                                                         styleClass="medium" style="min-width: 160px; width: 160px; max-width: 160px;"
-                                                         disabled="#{setup.flagBtnAddShowItem}"
-                                                         action="#{setup.onClickAddItemWarehouse}"
-                                                         update=":itemForm"
-                                                         oncomplete="PF('itemDlg').show()">
-                                        </p:commandButton>
+                                        <div class="center">
+                                            <p:commandButton id="btnShowAddItem" value="#{msg.get('btn.name.show.add')}"
+                                                             icon="ui-icon-folder-open"
+                                                             styleClass="medium" style="min-width: 160px; width: 160px; max-width: 160px;"
+                                                             disabled="#{setup.flagBtnAddShowItem}"
+                                                             action="#{setup.onClickAddItemWarehouse}"
+                                                             update=":itemForm"
+                                                             oncomplete="PF('itemDlg').show()">
+                                            </p:commandButton>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -174,8 +176,8 @@
                                         <p:commandButton id="btnsearch" icon="ui-icon-search"
                                                          value="#{msg.get('btn.name.search')}"
                                                          styleClass="medium" style="#{msg.get('btn.size')}"
-                                                         onstart="PF('bui').show()"
-                                                         oncomplete="PF('bui').hide()"
+                                                         onstart="PF('bui').block()"
+                                                         oncomplete="PF('bui').unblock()"
                                                          process="@form"
                                                          action="#{setup.onSearchWarehouseAndLocation}"
                                                          update=":setupForm:mainForm:setupTab:warehouseAndLocationTable"/>
@@ -240,8 +242,8 @@
 
                                 <p:commandButton id="btnNew" value="#{setup.nameBtnStock}"
                                                  action="#{setup.OnNewStockInOutNote}"
-                                                 onstart="PF('bui').show()"
-                                                 oncomplete="PF('bui').hide()"
+                                                 onstart="PF('bui').block()"
+                                                 oncomplete="PF('bui').unblock()"
                                                  styleClass="medium" style="#{msg.get('btn.size')}"
                                                  update=":setupForm:mainForm:setupTab
                                                                                    :setupForm:mainForm:setupTab:stockInoutTable"/>
@@ -261,8 +263,8 @@
                                                  icon="ui-icon-trash"
                                                  styleClass="medium" style="#{msg.get('btn.size')}"
                                                  action="#{setup.preDeleteItem()}"
-                                                 onstart="PF('bui').show()"
-                                                 oncomplete="PF('bui').hide()"
+                                                 onstart="PF('bui').block()"
+                                                 oncomplete="PF('bui').unblock()"
                                                  update=":confirmStockInOutNotePanel"
                                                  disabled="#{setup.flagBtnDeleteStock}" />
 
@@ -334,7 +336,8 @@
                                                              var="stockInOutNote"
                                                              rowKey="#{stockInOutNote.id}"
                                                              value="#{setup.stockInOutNoteModelList}"
-                                                             paginator="false"
+                                                             rows="10"
+                                                             paginator="true"
                                                              selectionMode="single"
                                                              selection="#{setup.stockInOutNoteModel}"
                                                              rowIndexVar="rowIndex2">
@@ -383,14 +386,14 @@
             <!--<ui:param name="update" value=":setupForm:warehouseAndLocationTable"/>-->
         </ui:include>
 
-        <p:dialog id="warehouseDialog" widgetVar="warehouseDlg" header="Add/Edit warehouse"
+        <p:dialog id="warehouseDialog" widgetVar="warehouseDlg" header="Add/Edit Warehouse"
                   onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
                   modal="true" width="1000" height="450">
             <ui:include src="../site/dialog/warehouseDialog.xhtml"/>
         </p:dialog>
         <p:dialog id="itemDialog" widgetVar="itemDlg" header="Add Item to Location"
                   onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
-                  modal="true" width="1000" height="450">
+                  modal="true" width="1300" height="450">
             <ui:include src="../site/dialog/itemDialog.xhtml"/>
         </p:dialog>
         <p:panel id="msgBoxSystemMessagePanel" style="border: 0">

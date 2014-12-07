@@ -6,34 +6,33 @@
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <!--<h:outputStylesheet name="css/style.css" />-->
     </h:head>
     <h:form id="warehouseDialogForm">
-    <p:panel id="warehousePanel" styleClass="panel-dialog">
-        <table border="0" class="content_table_form">
-            <tr>
-                <td colspan="2">
-                    <table border="0" class="top">
-                        <tr>
-                            <td style="width: 860px" class="right">
-                                <h:outputText value="#{setup.modeWarehouseDlg}"/>
-                            </td>
-                            <td>
-                                <p:commandButton value="New" styleClass="medium" style="width: 80px"
-                                                 update=":warehouseDialogForm, :warehouseDialogForm:warehouseTable"
-                                                 action="#{setup.onNewWarehouseDialog}"/>
-                            </td>
-                            <td>
-                                <p:commandButton value="Save" styleClass="medium" style="width: 80px"
-                                                 update=":msgBoxSystemMessageDialog, :warehouseDialogForm
+
+        <p:panel style="border: 0">
+            <div style="text-align: right;">
+                <h:outputText value="#{setup.modeWarehouseDlg}"/>
+
+                <p:commandButton value="#{msg.get('btn.name.new')}"
+                                 styleClass="medium" style="#{msg.get('btn.size')}"
+                                 update=":warehouseDialogForm, :warehouseDialogForm:warehouseTable"
+                                 action="#{setup.onNewWarehouseDialog}"/>
+
+                <p:commandButton value="#{msg.get('btn.name.save')}"
+                                 styleClass="medium" style="#{msg.get('btn.size')}"
+                                 update=":msgBoxSystemMessageDialog, :warehouseDialogForm
                                                          :warehouseDialogForm:warehouseTable"
-                                                 action="#{setup.onSaveWarehouseDialog}"
-                                                 binding="#{warehouseDialog}"/>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
+                                 action="#{setup.onSaveWarehouseDialog}"
+                                 binding="#{warehouseDialog}"/>
+
+                <p:commandButton value="#{msg.get('btn.name.delete')}"
+                                 styleClass="medium" style="#{msg.get('btn.size')}"
+                                 update=":msgBoxSystemMessageDialog, :warehouseDialogForm, :confirmWarehouseDialogPanel"
+                                 action="#{setup.preDeleteWarehouseDialog}"
+                        />
+            </div>
+        </p:panel>
+        <table border="0" class="content_table_form">
             <tr>
                 <td>
                     <table border="0">
@@ -76,20 +75,13 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="2" class="right">
-                    <p:commandButton value="Delete" styleClass="medium" style="width: 80px"
-                                     update=":msgBoxSystemMessageDialog, :warehouseDialogForm, :confirmWarehouseDialogPanel"
-                                     action="#{setup.preDeleteWarehouseDialog}"
-                            />
-                </td>
-            </tr>
-            <tr>
                 <td colspan="2">
                     <p:dataTable id="warehouseTable"
                                  var="warehouse"
                                  rowKey="#{warehouse.id}"
                                  value="#{setup.msWarehouseModelList}"
-                                 paginator="false"
+                                 rows="7"
+                                 paginator="true"
                                  selectionMode="single"
                                  selection="#{setup.msWarehouseModel}"
                                  rowIndexVar="rowIndex">
@@ -112,7 +104,6 @@
                 </td>
             </tr>
         </table>
-    </p:panel>
     </h:form>
 </f:view>
 </html>
