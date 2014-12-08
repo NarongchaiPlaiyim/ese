@@ -39,9 +39,6 @@ public class LoginBean extends Bean{
     private String userName = "";
     private String password = "";
     private UserDetail userDetail;
-    private String s = "";
-    private String f = "";
-    private String url = "http://primefaces-extensions.github.io";
 
     @PostConstruct
     private void init(){
@@ -64,8 +61,8 @@ public class LoginBean extends Bean{
                 userDetail = new UserDetail(userName,
                                             password,
                                             "USER",  //staffModel.getRole(),
-                                            "",
-                                            "");
+                                            "Mr. ASUS",
+                                            "DELL");
                 HttpServletRequest httpServletRequest = FacesUtil.getRequest();
                 HttpServletResponse httpServletResponse = FacesUtil.getResponse();
                 UsernamePasswordAuthenticationToken request = new UsernamePasswordAuthenticationToken(getUserDetail(), getPassword());
@@ -88,12 +85,6 @@ public class LoginBean extends Bean{
         return "loggedOut";
     }
 
-    public String logout(){
-        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        SecurityContextHolder.clearContext();
-        return "loggedOut";
-    }
-
     public void test(){
         System.out.println("test");
         try {
@@ -101,12 +92,6 @@ public class LoginBean extends Bean{
         } catch (InterruptedException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-//        loginService.test(s, f);
-    }
-
-    public void updateURL(){
-        System.out.println("updateURL");
-        url = "http://www.primefaces.org/showcase-ext/views/layout.jsf";
     }
 
 }

@@ -4,7 +4,7 @@ import com.ese.model.db.MenuObjectModel;
 import com.ese.model.db.RoleAccessModel;
 import com.ese.model.db.SystemRoleModel;
 import com.ese.model.view.SystemRoleView;
-import com.ese.service.RoleAccessServise;
+import com.ese.service.RoleAccessService;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,8 +18,8 @@ import java.util.List;
 @Setter
 @ManagedBean(name = "roleAccess")
 @ViewScoped
-public class RoleAccressBean extends Bean{
-    @ManagedProperty("#{roleAccessServise}") private RoleAccessServise roleAccessServise;
+public class RoleAccessBean extends Bean{
+    @ManagedProperty("#{roleAccessService}") private RoleAccessService roleAccessService;
 
     private String modeRole;
     private String modeRoleAccess;
@@ -69,8 +69,8 @@ public class RoleAccressBean extends Bean{
     }
 
     private void roleTBOnload(){
-        systemRoleModelList = roleAccessServise.getSystemRoleByIsValid();
-        menuObjectModelList = roleAccessServise.getMenuObjectByObjCategory();
+        systemRoleModelList = roleAccessService.getSystemRoleByIsValid();
+        menuObjectModelList = roleAccessService.getMenuObjectByObjCategory();
     }
 
     public void onClickRoleTB(){
@@ -84,13 +84,13 @@ public class RoleAccressBean extends Bean{
         flagItemRoleAccess = false;
         flagSearchRoleAccess = false;
         flagBtnSearchRoleAccess = false;
-        systemRoleView = roleAccessServise.getModelToView(systemRoleModel);
-        roleAccessModelList = roleAccessServise.getRoleAccessBySystemRoleId(systemRoleModel.getId());
+        systemRoleView = roleAccessService.getModelToView(systemRoleModel);
+        roleAccessModelList = roleAccessService.getRoleAccessBySystemRoleId(systemRoleModel.getId());
         log.debug("roleAccessModelList Size : ", roleAccessModelList.size());
     }
 
     public void onFilterRoleTB(){
-        systemRoleModelList = roleAccessServise.getSystemRoleByKey(keySearchRole);
+        systemRoleModelList = roleAccessService.getSystemRoleByKey(keySearchRole);
     }
 
     public void clearTextBox(){
@@ -110,19 +110,19 @@ public class RoleAccressBean extends Bean{
     }
 
     public void onSaveRole(){
-        roleAccessServise.saveSystemRole(systemRoleView);
+        roleAccessService.saveSystemRole(systemRoleView);
         showDialogSaved();
         onLoad();
     }
 
     public void onDeleteRole(){
-        roleAccessServise.deleteRole(systemRoleModel);
+        roleAccessService.deleteRole(systemRoleModel);
         showDialogDeleted();
         onLoad();
     }
 
     public void onFilterRoleAccess(){
         log.debug("Object ID : {}", menuObjectModel.getId());
-        roleAccessModelList = roleAccessServise.getRoleAccessByMenuObjectId(menuObjectModel.getId());
+        roleAccessModelList = roleAccessService.getRoleAccessByMenuObjectId(menuObjectModel.getId());
     }
 }

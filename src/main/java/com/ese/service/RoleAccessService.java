@@ -17,7 +17,7 @@ import java.util.List;
 
 @Component
 @Transactional
-public class RoleAccessServise extends Service{
+public class RoleAccessService extends Service{
     @Resource SystemRoleDAO systemRoleDAO;
     @Resource RoleAccessDAO roleAccessDAO;
     @Resource SystemRoleTransform systemRoleTransform;

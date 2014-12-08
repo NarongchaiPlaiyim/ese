@@ -72,10 +72,15 @@ public class UserManagementBean extends Bean{
     private List<SystemRoleModel> selectRole;
     private String keySearchRole;
 
-
-
     @PostConstruct
-    private void onLoad(){
+    public void onCreation(){
+        log.debug("onCreation().");
+        if(preLoad()){
+            init();
+        }
+    }
+
+    private void init(){
         newObjectOnload();
         actionButton();
         departmentOnload();
@@ -170,7 +175,7 @@ public class UserManagementBean extends Bean{
 
     public void onClickSaveUserAccessDialog(){
         userManagementService.onSaveUserAccess(userView);
-        onLoad();
+        init();
         if (Utils.isZero(userView.getId())){
             showDialogSaved();
         } else {

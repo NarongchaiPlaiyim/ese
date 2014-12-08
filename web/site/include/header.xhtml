@@ -18,20 +18,20 @@
             <div class="ui-grid-col-2" />
             <div class="ui-grid-col-1" />
             <div class="ui-grid-col-2">
-                Name : <br/><br/>
+                Name : #{headerBean.fullName}<br/><br/>
                 Role : <br/><br/>
                 <p:commandButton id="btnChangePassword"
-                                 action="#{loginBean.logout}"
+                                 action="#{headerBean.logout}"
                                  styleClass="medium" style="#{msg.get('fix.size.150')}"
                                  value="#{msg.get('btn.name.edit')}"/>
-                <p:commandButton id="btnLogin"
-                                 action="#{loginBean.logout}"
+                <p:commandButton id="btnLogout"
+                                 action="#{headerBean.logout}"
                                  styleClass="medium" style="#{msg.get('fix.size.150')}"
                                  value="#{msg.get('btn.name.logout')}"/>
             </div>
         </div>
     </div>
-    <pe:blockUI widgetVar="bui">
+    <pe:blockUI widgetVar="bui" centerX="">
         <div style="text-align: center;">
             <!--<h:panelGrid columns="2" styleClass="center">-->
                 <!--<h:outputText value="Please wait..." />-->

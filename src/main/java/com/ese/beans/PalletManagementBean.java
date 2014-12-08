@@ -55,8 +55,9 @@ public class PalletManagementBean extends Bean implements Serializable {
     @PostConstruct
     public void onCreation(){
         log.debug("onCreation().");
-        preLoad();
-        init();
+        if(preLoad()){
+            init();
+        }
     }
 
     private void init(){

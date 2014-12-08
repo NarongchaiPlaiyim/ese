@@ -62,15 +62,19 @@ public abstract class Bean implements Serializable {
         FacesUtil.showDialog(dialogName);
     }
 
-    protected void preLoad(){
+    protected boolean preLoad(){
+        boolean result = true;
         try{
             UserDetail userDetail = (UserDetail) FacesUtil.getSession(false).getAttribute(AttributeName.USER_DETAIL.getName());
             if(Utils.isNull(userDetail)){
                 FacesUtil.redirect(NamesUtil.LOGIN_PAGE.getName());
+                result = false;
             }
             setUserDetail(userDetail);
+            return result;
         } catch (Exception e) {
             FacesUtil.redirect(NamesUtil.LOGIN_PAGE.getName());
+            return false;
         }
     }
 }

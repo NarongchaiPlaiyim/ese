@@ -29,7 +29,7 @@
     <navigation-rule>
         <display-name>LoggedOut</display-name>
         <navigation-case>
-            <from-action>#{loginBean.logout}</from-action>
+            <from-action>#{headerBean.logout}</from-action>
             <from-outcome>loggedOut</from-outcome>
             <to-view-id>/login.xhtml</to-view-id>
             <redirect/>

@@ -39,8 +39,14 @@ public class BarcodeRegisterBean extends Bean{
     private String modeBarcode;
 
     @PostConstruct
+    public void onCreation(){
+        log.debug("onCreation().");
+        if(preLoad()){
+            init();
+        }
+    }
+
     private void init(){
-        preLoad();
         barcodeRegisterView = new BarcodeRegisterView();
         msItemModelList = Utils.getEmptyList();
         barcodeRegisterModelList = Utils.getEmptyList();

@@ -70,8 +70,14 @@ public class SetupBean extends Bean{
     }
 
     @PostConstruct
-    private void onloadSetup(){
-        preLoad();
+    public void onCreation(){
+        log.debug("onCreation().");
+        if(preLoad()){
+            init();
+        }
+    }
+
+    private void init(){
         setupView = new SetupView();
         warehouseDialogView = new WarehouseDialogView();
         locationView = new LocationView();
@@ -142,7 +148,7 @@ public class SetupBean extends Bean{
                 } else {
                     showDialogUpdated();
                 }
-                onloadSetup();
+                init();
             } else {
                 showDialog(MessageDialog.ERROR.getMessageHeader(), "Location Barcode is duplicate");
             }
@@ -167,7 +173,7 @@ public class SetupBean extends Bean{
         try {
             locationService.delete(msLocationModel);
             showDialogDeleted();
-            onloadSetup();
+            init();
         } catch (Exception e) {
             log.error("{}",e);
             showDialogError(e.getMessage());
@@ -229,7 +235,7 @@ public class SetupBean extends Bean{
         log.debug("Delete warehouse.");
         warehouseService.delete(msWarehouseModel);
         showDialogSaved();
-        onloadSetup();
+        init();
     }
 
     public void onClickTableWarehouseDialog(){
