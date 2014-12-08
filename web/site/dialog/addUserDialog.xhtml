@@ -32,9 +32,8 @@
                 <td>
                     <p:inputText id="loginName" value="#{userManagement.userView.username}"
                                  required="#{not empty param[addUserAccess.clientId]}"
-                                 style="#{msg.get('fix.size.200')}"
-                                 maxlength="8">
-                        <f:validateLength minimum="5" pattern="A-Za-z0-9"/>
+                                 style="#{msg.get('fix.size.200')}">
+                        <f:validateLength minimum="5" maximum="8" pattern="A-Za-z0-9"/>
                     </p:inputText>
                 </td>
             </tr>
@@ -63,9 +62,8 @@
                                 required="#{not empty param[addUserAccess.clientId]}"
                                 redisplay = "true"
                                 style="#{msg.get('fix.size.200')}"
-                                maxlength="8"
                                 label="Password">
-                        <f:validateLength minimum="5" maxlength="8"/>
+                        <f:validateLength minimum="5" maximum="8"/>
                     </p:password>
                 </td>
             </tr>
@@ -93,9 +91,8 @@
                                 label="Re-Password"
                                 redisplay = "true"
                                 style="#{msg.get('fix.size.200')}"
-                                maxlength="8"
                                 required="#{not empty param[addUserAccess.clientId]}">
-                        <f:validateLength minimum="5"/>
+                        <f:validateLength minimum="5" maximum="8"/>
                     </p:password>
                 </td>
             </tr>
