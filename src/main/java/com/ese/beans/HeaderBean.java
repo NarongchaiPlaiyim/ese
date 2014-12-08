@@ -33,11 +33,14 @@ public class HeaderBean extends Bean {
 
     @PostConstruct
     private void onCreation(){
-        init();
+        log.debug("onCreation().");
+        if(preLoad()){
+            init();
+        }
     }
 
     private void init(){
-        userDetail = (UserDetail) FacesUtil.getSession(false).getAttribute(AttributeName.USER_DETAIL.getName());
+        userDetail = getUser();
         makeData();
         if(!Utils.isNull(userDetail)){
             fullName = ""+userDetail.getFullName();
