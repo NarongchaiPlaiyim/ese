@@ -123,6 +123,7 @@ public class RoleAccessBean extends Bean{
         keySearchRole = "";
         systemRoleModel = new SystemRoleModel();
         systemRoleView = new SystemRoleView();
+        roleAccessModelList = new ArrayList<RoleAccessModel>();
     }
 
     public void preDeleteRole(){
@@ -133,6 +134,8 @@ public class RoleAccessBean extends Bean{
         roleAccessService.saveSystemRole(systemRoleView);
         showDialogSaved();
         onLoad();
+        modeRole = "Mode:New";
+        modeRoleAccess = "Mode:Search";
         roleAccessModelList = new ArrayList<RoleAccessModel>();
     }
 
