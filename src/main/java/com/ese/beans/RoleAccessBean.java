@@ -122,7 +122,7 @@ public class RoleAccessBean extends Bean{
     }
 
     public void onFilterRoleAccess(){
-        log.debug("Object ID : {}", menuObjectModel.getId());
-        roleAccessModelList = roleAccessService.getRoleAccessByMenuObjectId(menuObjectModel.getId());
+        log.debug("Object ID : {}, SystemRoleId : {}", menuObjectModel.getId(), systemRoleModel.getId());
+        roleAccessModelList = roleAccessService.getRoleAccessByMenuObjectIdAndSystemRoleId(menuObjectModel.getId(), systemRoleModel.getId());
     }
 }

@@ -71,7 +71,7 @@ public class RoleAccessService extends Service{
         return menuObjectDAO.findByObjCategory();
     }
 
-    public List<RoleAccessModel> getRoleAccessByMenuObjectId(int menuObjId){
-        return roleAccessDAO.findByMenuObjectId(menuObjId);
+    public List<RoleAccessModel> getRoleAccessByMenuObjectIdAndSystemRoleId(int menuObjId, int systemRoleId){
+        return roleAccessDAO.findByMenuObjectIdAndSystemRoleId(menuObjId, systemRoleId);
     }
 }

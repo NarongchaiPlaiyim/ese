@@ -441,7 +441,7 @@
 
 <p:panel id="msgBoxSystemMessagePanel" style="border: 0">
     <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="#{msg.get('dialog.message.size')}" closable="false"
-                     header="#{roleAccess.messageHeader}" message="#{roleAccess.message}" >
+                     header="#{roleAccess.messageHeader} #{userManagement.messageHeader}" message="#{roleAccess.message} #{userManagement.message}" >
         <div style="text-align: right">
             <p:commandButton value="#{msg.get('btn.name.ok')}"
                              process="@this"
