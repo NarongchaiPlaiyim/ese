@@ -89,6 +89,16 @@ public class UserManagementService extends Service{
         }
     }
 
+    //Created by Chai
+    public void onChangePassword(final StaffModel staffModel){
+        try {
+            staffModel.setPassword(EncryptionService.encryption(staffModel.getPassword()));
+            staffDAO.update(staffModel);
+        } catch (Exception e) {
+            log.debug("Exception error update : ", e);
+        }
+    }
+
     public MSTitleModel getTitleById(int titleId){
         return msTitleDAO.findById(titleId);
     }
