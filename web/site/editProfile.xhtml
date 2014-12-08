@@ -118,7 +118,6 @@
                                                      type="reset"
                                                      icon="ui-icon-refresh"
                                                      styleClass="medium" style="#{msg.get('btn.size')}"
-                                                     process="@form"
                                                      update=":addUserHeaderForm"/>
                                 </div>
                             </td>
@@ -134,7 +133,7 @@
                                  header="#{headerBean.messageHeader}" message="#{headerBean.message}" >
                     <div style="text-align: right">
                         <p:commandButton value="#{msg.get('btn.name.ok')}"
-                                         process="@form"
+
                                          update=":addUserHeaderForm"
                                          icon="ui-icon-check"
                                          styleClass="medium" style="#{msg.get('btn.size')}"
