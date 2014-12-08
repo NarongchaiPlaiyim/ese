@@ -5,6 +5,8 @@ import com.ese.model.db.RoleAccessModel;
 import com.ese.model.db.SystemRoleModel;
 import com.ese.model.view.SystemRoleView;
 import com.ese.service.RoleAccessService;
+import com.ese.utils.MessageDialog;
+import com.ese.utils.Utils;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +14,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -32,6 +35,7 @@ public class RoleAccessBean extends Bean{
     private boolean flagItemRoleAccess;
     private boolean flagSearchRoleAccess;
     private boolean flagBtnSearchRoleAccess;
+    private String keySearchRoleAccess;
 
     private List<SystemRoleModel> systemRoleModelList;
     private SystemRoleModel systemRoleModel;
@@ -40,6 +44,16 @@ public class RoleAccessBean extends Bean{
     private SystemRoleView systemRoleView;
     private List<MenuObjectModel> menuObjectModelList;
     private MenuObjectModel menuObjectModel;
+
+    //Add Role Access Dialog
+    //TB
+    private List<MenuObjectModel> menuRoleAccessDlgList;
+    private List<MenuObjectModel> selectMenuRoleAccessDlg;
+    private String keySearchMenuObj;
+
+    //Item
+    private List<MenuObjectModel> menuRoleAccessItemList;
+    private MenuObjectModel menuRoleAccessItem;
 
     @PostConstruct
     private void onLoad(){
@@ -60,6 +74,8 @@ public class RoleAccessBean extends Bean{
         flagSearchRoleAccess = true;
         flagBtnSearchRoleAccess = true;
         keySearchRole = "";
+        keySearchRoleAccess = "";
+        keySearchMenuObj = "";
     }
 
     private void newObjectOnload(){
@@ -109,10 +125,15 @@ public class RoleAccessBean extends Bean{
         systemRoleView = new SystemRoleView();
     }
 
+    public void preDeleteRole(){
+        showDialog(MessageDialog.WARNING.getMessageHeader(), "Click Yes confirm delete.", "confirmDeleteRoleDlg");
+    }
+
     public void onSaveRole(){
         roleAccessService.saveSystemRole(systemRoleView);
         showDialogSaved();
         onLoad();
+        roleAccessModelList = new ArrayList<RoleAccessModel>();
     }
 
     public void onDeleteRole(){
@@ -122,7 +143,39 @@ public class RoleAccessBean extends Bean{
     }
 
     public void onFilterRoleAccess(){
-        log.debug("Object ID : {}, SystemRoleId : {}", menuObjectModel.getId(), systemRoleModel.getId());
-        roleAccessModelList = roleAccessService.getRoleAccessByMenuObjectIdAndSystemRoleId(menuObjectModel.getId(), systemRoleModel.getId());
+        log.debug("Object ID : {}, SystemRoleId : {}, keySearchRoleAccess : {}", menuObjectModel.getId(), systemRoleModel.getId(), keySearchRoleAccess);
+        roleAccessModelList = roleAccessService.getRoleAccessByMenuObjectIdAndSystemRoleId(menuObjectModel.getId(), systemRoleModel.getId(), keySearchRoleAccess);
+    }
+
+    public void preDeleteRoelAccess(){
+        showDialog(MessageDialog.WARNING.getMessageHeader(), "Click Yes confirm delete.", "confirmDeleteRoleAccessDlg");
+    }
+
+    public void onDeleteRoleAccess(){
+        log.debug("selectRoleAccess Size : {}", selectRoleAccess.size());
+        roleAccessService.deleteRoleAccess(selectRoleAccess);
+        roleAccessModelList = roleAccessService.getRoleAccessBySystemRoleId(systemRoleModel.getId());
+    }
+
+    public void onLoadMenuObjDialog(){
+        selectMenuRoleAccessDlg = new ArrayList<MenuObjectModel>();
+        menuRoleAccessItem = new MenuObjectModel();
+        menuRoleAccessDlgList = roleAccessService.getMenuObjAll();
+        menuRoleAccessItemList = roleAccessService.getMenuObjectByObjCategory();
+    }
+
+    public void onFilterMenuObjDlg(){
+        menuRoleAccessDlgList = roleAccessService.getMenuObjByIdAndKey(menuRoleAccessItem.getId(), keySearchMenuObj);
+    }
+
+    public void onSaveMenuObjToRoleAccess(){
+        if (Utils.isZero(selectMenuRoleAccessDlg.size())){
+            showDialog(MessageDialog.WARNING.getMessageHeader(), "Please select Menu Object and Action.", "msgBoxSystemMessageDlg");
+        } else {
+            roleAccessService.saveMenuObjectInRoleAccess(selectMenuRoleAccessDlg, systemRoleModel);
+            showDialogSaved();
+            onLoadMenuObjDialog();
+            roleAccessModelList = roleAccessService.getRoleAccessBySystemRoleId(systemRoleModel.getId());
+        }
     }
 }
