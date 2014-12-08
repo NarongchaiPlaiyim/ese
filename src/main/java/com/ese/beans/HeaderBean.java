@@ -6,7 +6,6 @@ import com.ese.model.db.MSTitleModel;
 import com.ese.model.db.StaffModel;
 import com.ese.service.UserManagementService;
 import com.ese.service.security.UserDetail;
-import com.ese.utils.AttributeName;
 import com.ese.utils.FacesUtil;
 import com.ese.utils.NamesUtil;
 import com.ese.utils.Utils;
