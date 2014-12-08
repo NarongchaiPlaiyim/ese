@@ -111,7 +111,7 @@
                                                      icon="ui-icon-check"
                                                      binding="#{addUserAccess}"
                                                      process="@form"
-                                                     update="addUserHeaderForm, :msgBoxSystemMessagePanel"
+                                                     update=":addUserHeaderForm, :msgBoxSystemMessagePanel"
                                                      action="#{headerBean.onClickSave}"/>
                                     <p:commandButton value="Refresh"
                                                      id="btnCancelHeader"
@@ -133,7 +133,6 @@
                                  header="#{headerBean.messageHeader}" message="#{headerBean.message}" >
                     <div style="text-align: right">
                         <p:commandButton value="#{msg.get('btn.name.ok')}"
-
                                          update=":addUserHeaderForm"
                                          icon="ui-icon-check"
                                          styleClass="medium" style="#{msg.get('btn.size')}"

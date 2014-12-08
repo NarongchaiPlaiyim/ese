@@ -59,6 +59,7 @@ public class HeaderBean extends Bean {
         factionModel.setMsDepartmentModel(msDepartmentModel);
         staffModel.setPosition("TESTPosition");
         staffModel.setFactionModel(factionModel);
+        password = "";
     }
 
     public void onClickSave(){
