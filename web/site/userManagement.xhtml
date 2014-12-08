@@ -160,10 +160,10 @@
 
         </p:tab>
         <p:tab id="roleAccessSub" title="8.2 Role Access">
-            <table border="1" style="width: 100%">
+            <table border="0" style="width: 100%">
                 <tr>
                     <td class="top">
-                        <table border="1" style="width: 50%; border: 1px solid #acacac; border-spacing: 0; margin-top: 10px;">
+                        <table border="0" style="width: 50%; border: 1px solid #acacac; border-spacing: 0; margin-top: 10px;">
                             <tr>
                                 <td class="titlemenu">
                                     <h:outputLabel value="Role"/>
@@ -217,32 +217,18 @@
                                                              :userManagementForm:mainForm:manegementTab:btnSearchRoleAccess"
                                                      disabled="#{roleAccess.flagBtnSaveRole}"
                                                      onstart="PF('bui').block()"
-                                                     oncomplete="PF('bui').unblock()"/>
+                                                     oncomplete="PF('bui').unblock()"
+                                                     binding="#{saveRole}"/>
                                     <p:commandButton value="#{msg.get('btn.name.delete')}"
                                                      id="btnDeleteRole"
                                                      styleClass="medium" style="#{msg.get('btn.size')}"
                                                      icon="ui-icon-trash"
                                                      disabled="#{roleAccess.flagBtnDeleteRole}"
                                                      process="@form"
-                                                     action="#{roleAccess.onDeleteRole}"
+                                                     action="#{roleAccess.preDeleteRole()}"
                                                      onstart="PF('bui').block()"
                                                      oncomplete="PF('bui').unblock()"
-                                                     update=":msgBoxSystemMessagePanel,
-                                                             :userManagementForm:mainForm:manegementTab:modeRole,
-                                                             :userManagementForm:mainForm:manegementTab:btnSaveRole,
-                                                             :userManagementForm:mainForm:manegementTab:btnDeleteRole,
-                                                             :userManagementForm:mainForm:manegementTab:btnPrintRole,
-                                                             :userManagementForm:mainForm:manegementTab:roleCode,
-                                                             :userManagementForm:mainForm:manegementTab:roleName,
-                                                             :userManagementForm:mainForm:manegementTab:roleDes,
-                                                             :userManagementForm:mainForm:manegementTab:roleAccessTable,
-                                                             :userManagementForm:mainForm:manegementTab:btnSearchRole,
-                                                             :userManagementForm:mainForm:manegementTab:btnAddRoleAccess,
-                                                             :userManagementForm:mainForm:manegementTab:btnDeleteRoleAccess,
-                                                             :userManagementForm:mainForm:manegementTab:roleMenu,
-                                                             :userManagementForm:mainForm:manegementTab:searchRoleAccess,
-                                                             :userManagementForm:mainForm:manegementTab:roleAccessTable,
-                                                             :userManagementForm:mainForm:manegementTab:btnSearchRoleAccess"/>
+                                                     update=":msgBoxSystemMessagePanel, :confirmDeleteRolePanel"/>
                                     <p:commandButton id="btnPrintRole"
                                                      value="#{msg.get('btn.name.print')}"
                                                      process="@form"
@@ -264,7 +250,8 @@
                                     <h:outputLabel value="Role Code"/>
                                 </td>
                                 <td colspan="2">
-                                    <p:inputText id="roleCode" value="#{roleAccess.systemRoleView.code}"/>
+                                    <p:inputText id="roleCode" value="#{roleAccess.systemRoleView.code}"
+                                                 required="#{not empty param[saveRole.clientId]}"/>
                                 </td>
                             </tr>
                             <tr>
@@ -272,7 +259,8 @@
                                     <h:outputLabel value="Role Name"/>
                                 </td>
                                 <td>
-                                    <p:inputText id="roleName" value="#{roleAccess.systemRoleView.name}"/>
+                                    <p:inputText id="roleName" value="#{roleAccess.systemRoleView.name}"
+                                                 required="#{not empty param[saveRole.clientId]}"/>
                                 </td>
                                 <td>
                                     <h:outputLabel value="Description"/>
@@ -334,7 +322,7 @@
                     </td>
                     <td/>
                     <td class="top">
-                        <table border="1" style="width: 50%; border: 1px solid #acacac; border-spacing: 0; margin-top: 10px;">
+                        <table border="0" style="width: 50%; border: 1px solid #acacac; border-spacing: 0; margin-top: 10px;">
                             <tr>
                                 <td class="titlemenu">
                                     <h:outputLabel value="Role Access"/>
@@ -347,12 +335,16 @@
                                                      id="btnAddRoleAccess"
                                                      styleClass="medium" style="#{msg.get('btn.size')}"
                                                      icon="ui-icon-plusthick"
+                                                     action="#{roleAccess.onLoadMenuObjDialog()}"
+                                                     update=":userRoleAccessForm"
                                                      disabled="#{roleAccess.flagBtnAddRoleAccess}"
                                                      oncomplete="PF('userRoleAccessDlg').show()"/>
                                     <p:commandButton value="#{msg.get('btn.name.delete')}"
                                                      id="btnDeleteRoleAccess"
                                                      styleClass="medium" style="#{msg.get('btn.size')}"
                                                      icon="ui-icon-trash"
+                                                     update=":confirmDeleteRoleAccessPanel, :msgBoxSystemMessagePanel"
+                                                     action="#{roleAccess.preDeleteRoelAccess()}"
                                                      disabled="#{roleAccess.flagBtnDeleteRoleAccess}"
                                                      onstart="PF('bui').block()"
                                                      oncomplete="PF('bui').unblock()" />
@@ -373,13 +365,15 @@
                                     </p:selectOneMenu>
                                 </td>
                                 <td colspan="2">
-                                    <p:inputText id="searchRoleAccess" disabled="#{roleAccess.flagSearchRoleAccess}"/>
+                                    <p:inputText id="searchRoleAccess" disabled="#{roleAccess.flagSearchRoleAccess}" value="#{roleAccess.keySearchRoleAccess}"/>
                                     <p:commandButton id="btnSearchRoleAccess" icon="ui-icon-search"
                                                      value="#{msg.get('btn.name.search')}"
                                                      styleClass="medium" style="#{msg.get('btn.size')}"
                                                      onstart="PF('bui').block()"
+                                                     action="#{roleAccess.onFilterRoleAccess}"
                                                      disabled="#{roleAccess.flagBtnSearchRoleAccess}"
                                                      oncomplete="PF('bui').unblock()"
+                                                     update=":userManagementForm:mainForm:manegementTab:roleAccessTable"
                                                      process="@form"/>
                                 </td>
                             </tr>
@@ -509,6 +503,63 @@
                              styleClass="medium" style="#{msg.get('btn.size')}"
                              icon="ui-icon-cancel"
                              oncomplete="PF('confirmRemoveRoleDlg').hide()"/>
+        </div>
+    </p:confirmDialog>
+</p:panel>
+
+<p:panel id="confirmDeleteRolePanel" style="border: 0">
+    <p:confirmDialog id="confirmDeleteRoleDialog" widgetVar="confirmDeleteRoleDlg" width="#{msg.get('dialog.message.size')}"
+                     closable="false"
+                     header="#{roleAccess.messageHeader}" message="#{roleAccess.message}">
+        <div style="text-align: right">
+            <p:commandButton value="#{msg.get('btn.name.ok')}" action="#{roleAccess.onDeleteRole()}"
+                             process="@this"
+                             update=":userManagementForm:mainForm:manegementTab:roleAccessTable,
+                                     :msgBoxSystemMessagePanel,
+                                     :userManagementForm:mainForm:manegementTab:modeRole,
+                                     :userManagementForm:mainForm:manegementTab:btnSaveRole,
+                                     :userManagementForm:mainForm:manegementTab:btnDeleteRole,
+                                     :userManagementForm:mainForm:manegementTab:btnPrintRole,
+                                     :userManagementForm:mainForm:manegementTab:roleCode,
+                                     :userManagementForm:mainForm:manegementTab:roleName,
+                                     :userManagementForm:mainForm:manegementTab:roleDes,
+                                     :userManagementForm:mainForm:manegementTab:btnSearchRole,
+                                     :userManagementForm:mainForm:manegementTab:btnAddRoleAccess,
+                                     :userManagementForm:mainForm:manegementTab:btnDeleteRoleAccess,
+                                     :userManagementForm:mainForm:manegementTab:roleMenu,
+                                     :userManagementForm:mainForm:manegementTab:searchRoleAccess,
+                                     :userManagementForm:mainForm:manegementTab:btnSearchRoleAccess"
+                             styleClass="medium" style="#{msg.get('btn.size')}"
+                             icon="ui-icon-check"
+                             oncomplete="PF('confirmDeleteRoleDlg').hide()"/>
+            <p:commandButton value="#{msg.get('btn.name.cancel')}"
+                             process="@this"
+                             update=":userManagementForm:mainForm:manegementTab:roleAccessTable"
+                             styleClass="medium" style="#{msg.get('btn.size')}"
+                             icon="ui-icon-cancel"
+                             oncomplete="PF('confirmDeleteRoleDlg').hide()"/>
+        </div>
+    </p:confirmDialog>
+</p:panel>
+
+<p:panel id="confirmDeleteRoleAccessPanel" style="border: 0">
+    <p:confirmDialog id="confirmDeleteRoleAccessDialog" widgetVar="confirmDeleteRoleAccessDlg" width="#{msg.get('dialog.message.size')}"
+                     closable="false"
+                     header="#{roleAccess.messageHeader}" message="#{roleAccess.message}">
+        <div style="text-align: right">
+            <p:commandButton value="#{msg.get('btn.name.ok')}" action="#{roleAccess.onDeleteRoleAccess()}"
+                             process="@this"
+                             update=":userManagementForm:mainForm:manegementTab:roleAccessTable,
+                                     :msgBoxSystemMessagePanel"
+                             styleClass="medium" style="#{msg.get('btn.size')}"
+                             icon="ui-icon-check"
+                             oncomplete="PF('confirmDeleteRoleAccessDlg').hide()"/>
+            <p:commandButton value="#{msg.get('btn.name.cancel')}"
+                             process="@this"
+                             update=":userManagementForm:mainForm:manegementTab:roleAccessTable"
+                             styleClass="medium" style="#{msg.get('btn.size')}"
+                             icon="ui-icon-cancel"
+                             oncomplete="PF('confirmDeleteRoleAccessDlg').hide()"/>
         </div>
     </p:confirmDialog>
 </p:panel>
