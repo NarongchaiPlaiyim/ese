@@ -3,6 +3,7 @@ package com.ese.beans;
 import com.ese.service.security.UserDetail;
 import com.ese.utils.AttributeName;
 import com.ese.utils.FacesUtil;
+import com.ese.utils.NamesUtil;
 import com.ese.utils.Utils;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,6 +34,9 @@ public class HeaderBean extends Bean{
         }
     }
 
+    public void onClickEdit(){
+        FacesUtil.redirect(NamesUtil.EDIT_PROFILE_PAGE.getName());
+    }
 
     public String logout(){
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();

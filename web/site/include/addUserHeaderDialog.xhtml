@@ -1,20 +1,19 @@
-<!DOCTYPE html>
-<html>
-<f:view xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:h="http://java.sun.com/jsf/html"
-        xmlns:ui="http://java.sun.com/jsf/facelets"
-        xmlns:p="http://primefaces.org/ui">
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
     </h:head>
-    <h:form id="addUserForm">
+    <h:form id="addUserHeaderForm">
         <table border="0">
             <tr>
                 <td style="#{msg.get('fix.size.200')} ">
                     <h:outputLabel value="Department"/>
                 </td>
                 <td style="min-width: 230px; width: 230px; max-width: 230px;">
-                    <p:selectOneMenu id="departMenu" value="#{userManagement.userView.factionModel.msDepartmentModel.id}"
+                    <p:selectOneMenu id="departMenuHeader" value="#{userManagement.userView.factionModel.msDepartmentModel.id}"
                                      required="#{not empty param[addUserAccess.clientId]}"
                                      style="#{msg.get('fix.size.200')} margin-top: 4px">
                         <f:selectItem itemLabel="- Please Select -" itemValue=""/>
@@ -30,7 +29,7 @@
                     <h:outputLabel value="Login name"/>
                 </td>
                 <td>
-                    <p:inputText id="loginName" value="#{userManagement.userView.username}"
+                    <p:inputText id="loginNameHeader" value="#{userManagement.userView.username}"
                                  required="#{not empty param[addUserAccess.clientId]}"
                                  style="#{msg.get('fix.size.200')}"
                                  maxlength="8">
@@ -43,7 +42,7 @@
                     <h:outputLabel value="Faction"/>
                 </td>
                 <td style="min-width: 210px; width: 210px; max-width: 210px;">
-                    <p:selectOneMenu id="factionMenu" value="#{userManagement.userView.factionModel.id}"
+                    <p:selectOneMenu id="factionMenuHeader" value="#{userManagement.userView.factionModel.id}"
                                      required="#{not empty param[addUserAccess.clientId]}"
                                      style="#{msg.get('fix.size.200')} margin-top: 4px">
                         <f:selectItem itemLabel="- Please Select -" itemValue=""/>
@@ -54,10 +53,10 @@
                     </p:selectOneMenu>
                 </td>
                 <td style="#{msg.get('fix.size.200')} ">
-                    <h:outputLabel for="pwd1" value="Password"/>
+                    <h:outputLabel for="pwd1Header" value="Password"/>
                 </td>
                 <td>
-                    <p:password id="pwd1"
+                    <p:password id="pwd1Header"
                                 value="#{userManagement.userView.password}"
                                 match="pwd2"
                                 required="#{not empty param[addUserAccess.clientId]}"
@@ -75,10 +74,10 @@
                     <h:outputLabel value="Title Name"/>
                 </td>
                 <td>
-                    <p:selectOneMenu id="titleMenu"  value="#{userManagement.userView.msTitleModel.id}"
+                    <p:selectOneMenu id="titleMenuHeader"  value="#{userManagement.userView.msTitleModel.id}"
                                      required="#{not empty param[addUserAccess.clientId]}"
                                      style="#{msg.get('fix.size.200')} margin-top: 4px">
-                        <f:selectItem itemLabel="- Please Select -" itemValue=""/>
+                        <f:selectItem itemLabel="Title" itemValue=""/>
                         <f:selectItems value="#{userManagement.msTitleModelList}"
                                        var="titleItem"
                                        itemLabel="#{titleItem.name}"
@@ -86,10 +85,10 @@
                     </p:selectOneMenu>
                 </td>
                 <td style="#{msg.get('fix.size.200')} ">
-                    <h:outputLabel for="pwd2" value="Re-Password"/>
+                    <h:outputLabel for="pwd2Header" value="Re-Password"/>
                 </td>
                 <td>
-                    <p:password id="pwd2" value="#{userManagement.userView.password}"
+                    <p:password id="pwd2Header" value="#{userManagement.userView.password}"
                                 label="Re-Password"
                                 redisplay = "true"
                                 style="#{msg.get('fix.size.200')}"
@@ -126,7 +125,7 @@
                 <td colspan="6">
                     <div style="text-align: right;">
                         <p:commandButton value="#{msg.get('btn.name.save')}"
-                                         id="btnSave"
+                                         id="btnSaveHeader"
                                          styleClass="medium" style="#{msg.get('btn.size')}"
                                          icon="ui-icon-check"
                                          binding="#{addUserAccess}"
@@ -134,7 +133,7 @@
                                          update="addUserForm, :msgBoxSystemMessagePanel"
                                          action="#{userManagement.onClickSaveUserAccessDialog()}"/>
                         <p:commandButton value="#{msg.get('btn.name.cancel')}"
-                                         id="btnCancel"
+                                         id="btnCancelHeader"
                                          icon="ui-icon-cancel"
                                          styleClass="medium" style="#{msg.get('btn.size')}"
                                          action="#{userManagement.onCancel}"
@@ -147,5 +146,4 @@
         </table>
 
     </h:form>
-</f:view>
-</html>
+</ui:composition>
