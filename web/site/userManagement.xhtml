@@ -25,13 +25,17 @@
             <p:panel style="border: 0">
                 <div style="text-align: right;">
                     <h:outputLabel id="modeUserAccess" value="#{userManagement.modeUserManage}"/>
-                    <p:commandButton id="btnAddUser" value="Add User"
-                                     styleClass="medium" style="#{msg.get('btn.size')}"
+
+                    <p:commandButton id="btnPrint"
+                                     value="#{msg.get('btn.name.print')}"
                                      process="@form"
-                                     action="#{userManagement.onClickNewUser('New')}"
-                                     update=":addUserForm"
-                                     icon="ui-icon-plusthick"
-                                     oncomplete="PF('addUserDlg').show()"/>
+                                     disabled="#{userManagement.flagPrint}"
+                                     onstart="PF('bui').block()"
+                                     oncomplete="PF('bui').unblock()"
+                                     ajax="false"
+                                     icon="ui-icon-print"
+                                     styleClass="medium" style="#{msg.get('btn.size')}"/>
+
                     <p:commandButton id="btnEdit" value="#{msg.get('btn.name.edit')}"
                                      styleClass="medium" style="#{msg.get('btn.size')}"
                                      process="@form"
@@ -50,117 +54,110 @@
                                      oncomplete="PF('bui').unblock()"
                                      update=":msgBoxSystemMessagePanel,
                                              :confirmUserAccessPanel"/>
+
+                    <p:commandButton id="btnAddUser" value="Add User"
+                                     styleClass="medium" style="min-width: 160px; width: 160px; max-width: 160px;"
+                                     process="@form"
+                                     action="#{userManagement.onClickNewUser('New')}"
+                                     update=":addUserForm"
+                                     icon="ui-icon-plusthick"
+                                     oncomplete="PF('addUserDlg').show()"/>
+
                     <p:commandButton id="btnUserAccess" value="User Access"
-                                     styleClass="medium" style="#{msg.get('btn.size')}"
+                                     icon="ui-icon-script"
+                                     styleClass="medium" style="min-width: 170px; width: 170px; max-width: 170px;"
                                      process="@form"
                                      disabled="#{userManagement.flagUserAccess}"
                                      action="#{userManagement.onClickUserAccessDialog}"
                                      update=":userAccessForm"
                                      oncomplete="PF('userAccessDlg').show()"/>
-                    <p:commandButton id="btnPrint"
-                                     value="#{msg.get('btn.name.print')}"
-                                     process="@form"
-                                     disabled="#{userManagement.flagPrint}"
-                                     onstart="PF('bui').block()"
-                                     oncomplete="PF('bui').unblock()"
-                                     ajax="false"
-                                     icon="ui-icon-script"
-                                     styleClass="medium" style="#{msg.get('btn.size')}"/>
+
                 </div>
             </p:panel>
-            <table border="1" style="width: 100%">
+            <table border="0">
                 <tr>
                     <td>
-                        <table border="1">
-                            <tr>
-                                <td>
-                                    <h:outputLabel value="Department"/>
-                                </td>
-                                <td style="min-width: 210px; width: 210px; max-width: 210px;">
-                                    <p:selectOneMenu id="departmentMenu"  value="#{userManagement.msDepartmentModel.id}"
-                                                     style="min-width: 200px; width: 200px; max-width: 200px;">
-                                        <f:selectItem itemLabel="All" itemValue=""/>
-                                        <f:selectItems value="#{userManagement.msDepartmentModelList}"
-                                                       var="departmentItem"
-                                                       itemLabel="#{departmentItem.name}"
-                                                       itemValue="#{departmentItem.id}"/>
-                                        <p:ajax event="change" process="@form" listener="#{userManagement.onChangeSearchMenu('department')}"
-                                                update=":userManagementForm:mainForm:manegementTab:userTable,
-                                                                                    :userManagementForm:mainForm:manegementTab:factionMenu"/>
-                                    </p:selectOneMenu>
-                                </td>
-                                <td>
-                                    <h:outputLabel value="Faction"/>
-                                </td>
-                                <td>
-                                    <p:selectOneMenu id="factionMenu" value="#{userManagement.factionModel.id}"
-                                                     style="min-width: 200px; width: 200px; max-width: 200px;">
-                                        <f:selectItem itemLabel="- Please Select -" itemValue=""/>
-                                        <f:selectItems value="#{userManagement.factionModelList}"
-                                                       var="factionItem"
-                                                       itemLabel="#{factionItem.name}"
-                                                       itemValue="#{factionItem.id}"/>
-                                        <p:ajax event="change" process="@form" listener="#{userManagement.onChangeSearchMenu}"
-                                                update=":userManagementForm:mainForm:manegementTab:userTable"/>
-                                    </p:selectOneMenu>
-                                </td>
-                                <td style="width: 110px">
-                                    <p:inputText id="searchText" value="#{userManagement.keySearchUser}" style="width: 120px">
-                                        <p:ajax event="blur" update=":userManagementForm:mainForm:manegementTab:searchText"/>
-                                    </p:inputText>
-                                </td>
-                                <td style="width: 40px; min-width: 40px; max-width: 40px">
-                                    <p:commandButton id="btnsearch" icon="ui-icon-search"
-                                                     onstart="PF('bui').block()"
-                                                     oncomplete="PF('bui').unblock()"
-                                                     process="@form"
-                                                     value="#{msg.get('btn.name.search')}"
-                                                     styleClass="medium" style="#{msg.get('btn.size')}"
-                                                     actionListener="#{userManagement.onChangeSearchMenu}"
-                                                     update=":userManagementForm:mainForm:manegementTab:userTable"/>
-                                </td>
-                            </tr>
-                        </table>
+                        <h:outputLabel value="Department"/>
                     </td>
-                </tr>
-                <tr>
+                    <td style="min-width: 210px; width: 210px; max-width: 210px;">
+                        <p:selectOneMenu id="departmentMenu"  value="#{userManagement.msDepartmentModel.id}"
+                                         style="#{msg.get('fix.size.200')} margin-top: 4px">
+                            <f:selectItem itemLabel="All" itemValue=""/>
+                            <f:selectItems value="#{userManagement.msDepartmentModelList}"
+                                           var="departmentItem"
+                                           itemLabel="#{departmentItem.name}"
+                                           itemValue="#{departmentItem.id}"/>
+                            <p:ajax event="change" process="@form" listener="#{userManagement.onChangeSearchMenu('department')}"
+                                    update=":userManagementForm:mainForm:manegementTab:userTable,
+                                                                        :userManagementForm:mainForm:manegementTab:factionMenu"/>
+                        </p:selectOneMenu>
+                    </td>
                     <td>
-                        <p:dataTable id="userTable" rowIndexVar="rowIndex"
-                                     styleClass="full_table"
-                                     rows="8" paginator="true"
-                                     rowKey="#{user.id}"
-                                     value="#{userManagement.staffModelList}"
-                                     var="user"
-                                     selection="#{userManagement.staffModel}"
-                                     selectionMode="single"
-                                     style="width: 100%; max-width: 100%; min-width: 100%">
-                            <p:ajax event="rowSelect" listener="#{userManagement.onClickUserAccess}"
-                                    update=":userManagementForm:mainForm:manegementTab:btnEdit,
-                                            :userManagementForm:mainForm:manegementTab:btnDelete,
-                                            :userManagementForm:mainForm:manegementTab:btnUserAccess,
-                                            :userManagementForm:mainForm:manegementTab:btnPrint"/>
-                            <p:column headerText="No" style="width: 20px" styleClass="center">
-                                <h:outputText value="#{rowIndex+1}"/>
-                            </p:column>
-                            <p:column headerText="Department " style="width: 70px; max-width: 70px; min-width: 70px" styleClass="center">
-                                <h:outputText value="#{user.factionModel.msDepartmentModel.name}" />
-                            </p:column>
-                            <p:column headerText="Faction" style="width: 70px; max-width: 70px; min-width: 70px" styleClass="center">
-                                <h:outputText value="#{user.factionModel.name}"/>
-                            </p:column>
-                            <p:column headerText="Name" style="width: 80px; max-width: 80px; min-width: 80px" styleClass="center">
-                                <h:outputText value="#{user.msTitleModel.name} #{user.name}"/>
-                            </p:column>
-                            <p:column headerText="Position" style="width: 115px; max-width: 115px; min-width: 115px" styleClass="center">
-                                <h:outputText value="#{user.position}"/>
-                            </p:column>
-                            <p:column headerText="Login Name" style="width: 150px" styleClass="center">
-                                <h:outputText value="#{user.username}"/>
-                            </p:column>
-                        </p:dataTable>
+                        <h:outputLabel value="Faction"/>
+                    </td>
+                    <td>
+                        <p:selectOneMenu id="factionMenu" value="#{userManagement.factionModel.id}"
+                                         style="#{msg.get('fix.size.200')} margin-top: 4px">
+                            <f:selectItem itemLabel="- Please Select -" itemValue=""/>
+                            <f:selectItems value="#{userManagement.factionModelList}"
+                                           var="factionItem"
+                                           itemLabel="#{factionItem.name}"
+                                           itemValue="#{factionItem.id}"/>
+                            <p:ajax event="change" process="@form" listener="#{userManagement.onChangeSearchMenu}"
+                                    update=":userManagementForm:mainForm:manegementTab:userTable"/>
+                        </p:selectOneMenu>
+                    </td>
+                    <td style="width: 110px">
+                        <p:inputText id="searchText" value="#{userManagement.keySearchUser}" style="#{msg.get('fix.size.200')}  margin-top: 4px">
+                            <p:ajax event="blur" update=":userManagementForm:mainForm:manegementTab:searchText"/>
+                        </p:inputText>
+                    </td>
+                    <td style="width: 40px; min-width: 40px; max-width: 40px">
+                        <p:commandButton id="btnsearch" icon="ui-icon-search"
+                                         onstart="PF('bui').block()"
+                                         oncomplete="PF('bui').unblock()"
+                                         process="@form"
+                                         value="#{msg.get('btn.name.search')}"
+                                         styleClass="medium" style="#{msg.get('btn.size')}"
+                                         actionListener="#{userManagement.onChangeSearchMenu}"
+                                         update=":userManagementForm:mainForm:manegementTab:userTable"/>
                     </td>
                 </tr>
             </table>
+            <p:dataTable id="userTable" rowIndexVar="rowIndex"
+                         styleClass="full_table"
+                         rows="8" paginator="true"
+                         rowKey="#{user.id}"
+                         value="#{userManagement.staffModelList}"
+                         var="user"
+                         selection="#{userManagement.staffModel}"
+                         selectionMode="single"
+                         style="width: 100%; max-width: 100%; min-width: 100%">
+                <p:ajax event="rowSelect" listener="#{userManagement.onClickUserAccess}"
+                        update=":userManagementForm:mainForm:manegementTab:btnEdit,
+                                            :userManagementForm:mainForm:manegementTab:btnDelete,
+                                            :userManagementForm:mainForm:manegementTab:btnUserAccess,
+                                            :userManagementForm:mainForm:manegementTab:btnPrint"/>
+                <p:column headerText="No" style="width: 20px" styleClass="center">
+                    <h:outputText value="#{rowIndex+1}"/>
+                </p:column>
+                <p:column headerText="Department " style="width: 70px; max-width: 70px; min-width: 70px" styleClass="center">
+                    <h:outputText value="#{user.factionModel.msDepartmentModel.name}" />
+                </p:column>
+                <p:column headerText="Faction" style="width: 70px; max-width: 70px; min-width: 70px" styleClass="center">
+                    <h:outputText value="#{user.factionModel.name}"/>
+                </p:column>
+                <p:column headerText="Name" style="width: 80px; max-width: 80px; min-width: 80px" styleClass="center">
+                    <h:outputText value="#{user.msTitleModel.name} #{user.name}"/>
+                </p:column>
+                <p:column headerText="Position" style="width: 115px; max-width: 115px; min-width: 115px" styleClass="center">
+                    <h:outputText value="#{user.position}"/>
+                </p:column>
+                <p:column headerText="Login Name" style="width: 150px" styleClass="center">
+                    <h:outputText value="#{user.username}"/>
+                </p:column>
+            </p:dataTable>
+
         </p:tab>
         <p:tab id="roleAccessSub" title="8.2 Role Access">
             <table border="1" style="width: 100%">
@@ -420,7 +417,7 @@
 
 <p:dialog id="addUserDialog" widgetVar="addUserDlg" header="Add/Edit User"
           onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
-          modal="true" width="1000" height="450">
+          modal="true" width="910" height="215">
     <ui:include src="../site/dialog/addUserDialog.xhtml"/>
 </p:dialog>
 
