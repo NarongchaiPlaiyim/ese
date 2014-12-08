@@ -77,4 +77,12 @@ public abstract class Bean implements Serializable {
             return false;
         }
     }
+
+    protected UserDetail getUser(){
+        if(!Utils.isNull(this.userDetail)){
+            return userDetail;
+        } else {
+            return (UserDetail)FacesUtil.getSession(false).getAttribute(AttributeName.USER_DETAIL.getName());
+        }
+    }
 }
