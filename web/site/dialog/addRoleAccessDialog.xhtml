@@ -7,31 +7,33 @@
         xmlns:p="http://primefaces.org/ui">
     <h:head>
     </h:head>
-    <p:panel id="userRoleAccessPanel" styleClass="panel-dialog">
         <h:form id="userRoleAccessForm">
+            <p:panel style="border: 0">
+                <div style="text-align: right;">
+                    <p:commandButton id="btnSetRole"
+                                     value="Set to Role"
+                                     action="#{roleAccess.onSaveMenuObjToRoleAccess}"
+                                     process="@form"
+                                     update=":msgBoxSystemMessagePanel,
+                                                 :userManagementForm:mainForm:manegementTab:roleAccessTable"
+                                     styleClass="medium" style="#{msg.get('fix.size.200')}"
+                                     icon="ui-icon-plusthick"/>
+                </div>
+            </p:panel>
+
             <table border="0">
                 <tr>
-                    <td colspan="2" class="right">
-                        <p:commandButton id="btnSetRole"
-                                         value="Set to Role"
-                                         action="#{roleAccess.onSaveMenuObjToRoleAccess}"
-                                         process="@form"
-                                         update=":msgBoxSystemMessagePanel,
-                                                 :userManagementForm:mainForm:manegementTab:roleAccessTable"
-                                         styleClass="medium" style="width: 110px"
-                                         icon="ui-icon-plusthick"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
+                    <td style="min-width: 150px; max-width: 150px;">
                         <h:outputLabel value="Role Name  "/>
-                        <p:inputText disabled="true" value="#{roleAccess.systemRoleModel.name}"/>
+                    </td>
+                    <td>
+                        <h:outputLabel value="#{roleAccess.systemRoleModel.name}"/>
                     </td>
                 </tr>
                 <tr>
-                    <td class="left" style="min-width: 160px; width: 160px; max-width: 160px;">
+                    <td class="left" style="min-width: 230px; width: 230px; max-width: 230px;">
                         <p:selectOneMenu id="roleMenu" value="#{roleAccess.menuRoleAccessItem.id}"
-                                         style="min-width: 150px; width: 150px; max-width: 150px;">
+                                         style="min-width: 200px; width: 200px; max-width: 200px;">
                             <f:selectItem itemLabel="- Please Select -" itemValue=""/>
                             <f:selectItems value="#{roleAccess.menuRoleAccessItemList}"
                                            var="menuObjItem"
@@ -42,8 +44,12 @@
                         </p:selectOneMenu>
                     </td>
                     <td>
-                        <p:inputText value="#{roleAccess.keySearchMenuObj}"/>
+                        <p:inputText
+                                style="#{msg.get('fix.size.200')}"
+                                value="#{roleAccess.keySearchMenuObj}"/>
                         <p:commandButton id="btnSearchRoleAccess" icon="ui-icon-search"
+                                         value="#{msg.get('btn.name.search')}"
+                                         styleClass="medium" style="#{msg.get('btn.size')}"
                                          onstart="PF('bui').block()"
                                          action="#{roleAccess.onFilterMenuObjDlg}"
                                          update=":userRoleAccessForm:roleAccessTableDlg"
@@ -51,29 +57,24 @@
                                          process="@form"/>
                     </td>
                 </tr>
-                <tr>
-                    <td colspan="2">
-                        <p:dataTable id="roleAccessTableDlg" rowIndexVar="rowIndex"
-                                     styleClass="full_table"
-                                     rows="5" paginator="true"
-                                     value="#{roleAccess.menuRoleAccessDlgList}"
-                                     selection="#{roleAccess.selectMenuRoleAccessDlg}"
-                                     var="menuRoleAccess"
-                                     rowKey="#{menuRoleAccess.id}"
-                                     style="width: 100%; max-width: 100%; min-width: 100%">
-                            <p:ajax event="rowSelect"/>
-                            <p:column selectionMode="multiple" style="width:16px;text-align:center; height: 20px"/>
-                            <p:column headerText="Code" style="width: 100px; max-width: 100px; min-width: 100px" styleClass="center">
-                                <h:outputText value="#{menuRoleAccess.code}" />
-                            </p:column>
-                            <p:column headerText="Menu Object and Action" style="width: 300px; max-width: 300px; min-width: 300px" styleClass="center">
-                                <h:outputText value="#{menuRoleAccess.name}"/>
-                            </p:column>
-                        </p:dataTable>
-                    </td>
-                </tr>
             </table>
+            <p:dataTable id="roleAccessTableDlg" rowIndexVar="rowIndex"
+                         styleClass="full_table"
+                         rows="5" paginator="true"
+                         value="#{roleAccess.menuRoleAccessDlgList}"
+                         selection="#{roleAccess.selectMenuRoleAccessDlg}"
+                         var="menuRoleAccess"
+                         rowKey="#{menuRoleAccess.id}"
+                         style="width: 100%; max-width: 100%; min-width: 100%">
+                <p:ajax event="rowSelect"/>
+                <p:column selectionMode="multiple" style="width:16px;text-align:center; height: 20px"/>
+                <p:column headerText="Code" style="width: 100px; max-width: 100px; min-width: 100px" styleClass="center">
+                    <h:outputText value="#{menuRoleAccess.code}" />
+                </p:column>
+                <p:column headerText="Menu Object and Action" style="width: 300px; max-width: 300px; min-width: 300px" styleClass="center">
+                    <h:outputText value="#{menuRoleAccess.name}"/>
+                </p:column>
+            </p:dataTable>
         </h:form>
-    </p:panel>
 </f:view>
 </html>
