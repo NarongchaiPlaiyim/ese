@@ -7,220 +7,223 @@
         xmlns:p="http://primefaces.org/ui">
     <h:head>
     </h:head>
-    <p:panel id="userAccessPanel" styleClass="panel-dialog">
-        <h:form id="userAccessForm">
-            <table border="0">
-                <tr>
-                    <td class="top">
-                        <table border="0" class="top" style="border: 1px solid #acacac; border-spacing: 0; margin-top: 10px;">
-                            <tr>
-                                <td class="titlemenu" colspan="3">
-                                    <h:outputLabel value="Menu and Action List"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <p:selectOneMenu id="choiceMenu" value="#{userManagement.menuObjectModel.id}"
-                                                     style="min-width: 200px; width: 200px; max-width: 200px;">
-                                        <f:selectItem itemLabel="- Please Select -" itemValue=""/>
-                                        <f:selectItems value="#{userManagement.menuObjectModelList}"
-                                                       var="menuObjectItem"
-                                                       itemLabel="#{menuObjectItem.name}"
-                                                       itemValue="#{menuObjectItem.id}"/>
-                                        <p:ajax event="change" process="@form" listener="#{userManagement.onChangeMenuObject()}"
-                                                update=":userAccessForm:userAccessTable"/>
-                                    </p:selectOneMenu>
-                                </td>
-                                <td>
-                                    <p:inputText value="#{userManagement.keySearchUserAccessDialog}"/>
-                                </td>
-                                <td style="width: 40px; min-width: 40px; max-width: 40px">
-                                    <p:commandButton id="btnSearch" icon="ui-icon-search"
-                                                     onstart="PF('bui').block()"
-                                                     oncomplete="PF('bui').unblock()"
-                                                     action="#{userManagement.onChangeMenuObject()}"
-                                                     update=":userAccessForm:userAccessTable"
-                                                     process="@form"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">
-                                    <p:dataTable id="userAccessTable"
-                                                 var="menuObject"
-                                                 rows="5"
-                                                 paginator="true"
-                                                 selection="#{userManagement.selectList}"
-                                                 value="#{userManagement.menuObjectModelTableList}"
-                                                 rowKey="#{menuObject.id}"
-                                                 style="width: 100%; max-width: 100%; min-width: 100%">
-                                        <p:column selectionMode="multiple" style="width:16px;text-align:center; height: 20px"/>
-                                        <p:column headerText="Code " style="width: 100px; max-width: 100px; min-width: 100px" styleClass="center">
-                                            <h:outputText value="#{menuObject.code}" />
-                                        </p:column>
-                                        <p:column headerText="Menu Object and Action" style="width: 250px; max-width: 250px; min-width: 250px" styleClass="center">
-                                            <h:outputText value="#{menuObject.name}"/>
-                                        </p:column>
-                                    </p:dataTable>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                    <td>
-                        <table border="0">
-                            <tr>
-                                <td style="width: 80px; min-width: 80px; margin-top: 80px;" class="center">
-                                    <p:commandButton value="Add"
-                                                     styleClass="medium" style="width: 80px"
-                                                     action="#{userManagement.onAddToUserAuthorize}"
-                                                     process="@form"
-                                                     update=":msgBoxSystemMessagePanel, :userAccessForm:userAuthorizeTable"
-                                                     icon="ui-icon-seek-next"/>
-                                    <p:commandButton value="Remove"
-                                                     styleClass="medium" style="width: 80px"
-                                                     process="@form"
-                                                     action="#{userManagement.onRemoveUserAuthorize}"
-                                                     update=":msgBoxSystemMessagePanel, :confirmRemoveUserAuthorizePanel,
-                                                             :userAccessForm:userAuthorizeTable"
-                                                     icon="ui-icon-seek-prev"/>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                    <td>
-                        <table border="0" style="border: 1px solid #acacac; border-spacing: 0; margin-top: 10px;">
-                            <tr>
-                                <td colspan="3"  class="titlemenu">
-                                    <h:outputLabel value="User Authorize"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="right" colspan="3">
-                                    <p:commandButton id="btnAddUserRole"
-                                                     value="Add User Role"
-                                                     process="@this"
-                                                     action="#{userManagement.onLoadRoleDialog}"
-                                                     update=":userRoleForm"
-                                                     oncomplete="PF('userRoleDlg').show();"
-                                                     styleClass="medium" style="width: 110px"
-                                                     icon="ui-icon-plusthick"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="width: 80px; min-width: 80px; max-width: 80px">
-                                    <h:outputLabel value="Department"/>
-                                </td>
-                                <td>
-                                    <p:inputText value="#{userManagement.userAuthorizeView.msDepartmentModel.name}" disabled="true"/>
-                                </td>
-                                <td rowspan="4" class="top">
-                                    <p:dataTable id="roleTabble" rowIndexVar="rowIndex"
-                                                 styleClass="full_table"
-                                                 rowKey="#{staffRole.id}"
-                                                 paginator="true"
-                                                 value="#{userManagement.staffRolesModelList}"
-                                                 selection="#{userManagement.staffRolesModel}"
-                                                 var="staffRole"
-                                                 style="width: 100%; max-width: 100%; min-width: 100%">
-                                        <p:ajax event="rowSelect"/>
-                                        <p:column headerText="No" style="width: 20px; min-width: 20px; max-width: 20px" styleClass="center">
-                                            <h:outputText value="#{rowIndex+1}"/>
-                                        </p:column>
-                                        <p:column headerText="Role " style="width: 80px; max-width: 80px; min-width: 80px" styleClass="center">
-                                            <h:outputText value="#{staffRole.roles.code}" />
-                                        </p:column>
-                                        <p:column headerText="" style="width: 10px; max-width: 10px; min-width: 10px" styleClass="center">
-                                            <p:commandButton icon="ui-icon-trash"
-                                                             action="#{userManagement.onPopupRole()}"
-                                                             process="@this"
-                                                             update=":userAccessForm:roleTabble, :confirmRemoveRolePanel"
-                                                             title="Remove">
-                                                <f:setPropertyActionListener value="#{staffRole.id}" target="#{userManagement.roleId}"/>
-                                             </p:commandButton>
-                                        </p:column>
-                                    </p:dataTable>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h:outputLabel value="Faction"/>
-                                </td>
-                                <td>
-                                    <p:inputText value="#{userManagement.userAuthorizeView.factionModel.name}" disabled="true"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h:outputLabel value="Name"/>
-                                </td>
-                                <td>
-                                    <p:inputText value="#{userManagement.userAuthorizeView.name}" disabled="true"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h:outputLabel value="Login Name"/>
-                                </td>
-                                <td>
-                                    <p:inputText value="#{userManagement.userAuthorizeView.username}" disabled="true"/>
-                                </td>
-                            </tr>
-                            <tr style="height: 10px"/>
-                            <tr>
-                                <td colspan="3" class="titlemenu">
-                                    <h:outputLabel value="User Authorize List"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <p:selectOneMenu id="codeMenu" value="#{userManagement.objectUserAuthorize.id}"
-                                                     style="min-width: 130px; width: 130px; max-width: 130px;">
-                                        <f:selectItem itemLabel="- Please Select -" itemValue=""/>
-                                        <f:selectItems value="#{userManagement.objectUserAuthorizeList}"
-                                                       var="objectUserAuthorizeItem"
-                                                       itemLabel="#{objectUserAuthorizeItem.name}"
-                                                       itemValue="#{objectUserAuthorizeItem.id}"/>
-                                        <p:ajax event="change" process="@form" listener="#{userManagement.onFilterUserAuthorize()}"
-                                                update=":userAccessForm:userAuthorizeTable"/>
-                                    </p:selectOneMenu>
-                                </td>
-                                <td>
-                                    <p:inputText value="#{userManagement.keySearchUserAuthorize}"/>
-                                </td>
-                                <td style="width: 40px; min-width: 40px; max-width: 40px">
-                                    <p:commandButton id="btnAuthorize" icon="ui-icon-search"
-                                                     onstart="PF('bui').block()"
-                                                     oncomplete="PF('bui').unblock()"
-                                                     action="#{userManagement.onFilterUserAuthorize()}"
-                                                     update=":userAccessForm:userAuthorizeTable"
-                                                     process="@form"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">
-                                    <p:dataTable id="userAuthorizeTable"
-                                                 styleClass="full_table"
-                                                 rows="5"
-                                                 paginator="true"
-                                                 value="#{userManagement.userAccessModelList}"
-                                                 selection="#{userManagement.selectUserAuthorize}"
-                                                 var="userAccessList"
-                                                 rowKey="#{userAccessList.id}"
-                                                 style="width: 100%; max-width: 100%; min-width: 100%">
-                                        <p:column selectionMode="multiple" style="width:16px;text-align:center; height: 20px"/>
-                                        <p:column headerText="Code " style="width: 100px; max-width: 100px; min-width: 100px" styleClass="center">
-                                            <h:outputText value="#{userAccessList.menuObjectModel.code}" />
-                                        </p:column>
-                                        <p:column headerText="Menu Object and Action" style="width: 250px; max-width: 250px; min-width: 250px" styleClass="center">
-                                            <h:outputText value="#{userAccessList.menuObjectModel.name}"/>
-                                        </p:column>
-                                    </p:dataTable>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        </h:form>
-    </p:panel>
+    <h:form id="userAccessForm">
+        <table border="0">
+            <tr>
+                <td class="top">
+                    <table border="0" class="top" style="border: 1px solid #acacac; border-spacing: 0; margin-top: 10px;">
+                        <tr>
+                            <td class="titlemenu" colspan="3">
+                                <h:outputLabel value="Menu and Action List"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p:selectOneMenu id="choiceMenu" value="#{userManagement.menuObjectModel.id}"
+                                                 style="min-width: 200px; width: 200px; max-width: 200px;">
+                                    <f:selectItem itemLabel="- Please Select -" itemValue=""/>
+                                    <f:selectItems value="#{userManagement.menuObjectModelList}"
+                                                   var="menuObjectItem"
+                                                   itemLabel="#{menuObjectItem.name}"
+                                                   itemValue="#{menuObjectItem.id}"/>
+                                    <p:ajax event="change" process="@form" listener="#{userManagement.onChangeMenuObject()}"
+                                            update=":userAccessForm:userAccessTable"/>
+                                </p:selectOneMenu>
+                            </td>
+                            <td>
+                                <p:inputText value="#{userManagement.keySearchUserAccessDialog}"/>
+                            </td>
+                            <td style="width: 40px; min-width: 40px; max-width: 40px">
+                                <p:commandButton id="btnSearch" icon="ui-icon-search"
+                                                 onstart="PF('bui').block()"
+                                                 oncomplete="PF('bui').unblock()"
+                                                 action="#{userManagement.onChangeMenuObject()}"
+                                                 update=":userAccessForm:userAccessTable"
+                                                 process="@form"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <p:dataTable id="userAccessTable"
+                                             var="menuObject"
+                                             rows="5"
+                                             paginator="true"
+                                             selection="#{userManagement.selectList}"
+                                             value="#{userManagement.menuObjectModelTableList}"
+                                             rowKey="#{menuObject.id}"
+                                             style="width: 100%; max-width: 100%; min-width: 100%">
+                                    <p:column selectionMode="multiple" style="width:16px;text-align:center; height: 20px"/>
+                                    <p:column headerText="Code " style="width: 100px; max-width: 100px; min-width: 100px" styleClass="center">
+                                        <h:outputText value="#{menuObject.code}" />
+                                    </p:column>
+                                    <p:column headerText="Menu Object and Action" style="width: 250px; max-width: 250px; min-width: 250px" styleClass="center">
+                                        <h:outputText value="#{menuObject.name}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table border="0">
+                        <tr>
+                            <td class="center">
+                                <p:commandButton value="#{msg.get('btn.name.add')}"
+                                                 styleClass="medium" style="#{msg.get('btn.size')}"
+                                                 icon="ui-icon-seek-next"
+                                                 process="@form"
+                                                 update=":msgBoxSystemMessagePanel, :userAccessForm:userAuthorizeTable"
+                                                 action="#{userManagement.onAddToUserAuthorize}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p:commandButton value="#{msg.get('btn.name.remove')}"
+                                                 styleClass="medium" style="#{msg.get('btn.size')}"
+                                                 icon="ui-icon-seek-prev"
+                                                 process="@form"
+                                                 update=":msgBoxSystemMessagePanel, :confirmRemoveUserAuthorizePanel,
+                                                         :userAccessForm:userAuthorizeTable"
+                                                 action="#{userManagement.onRemoveUserAuthorize}"/>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table border="0" style="border: 1px solid #acacac; border-spacing: 0; margin-top: 10px;">
+                        <tr>
+                            <td colspan="3"  class="titlemenu">
+                                <h:outputLabel value="User Authorize"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="right" colspan="3">
+                                <p:commandButton id="btnAddUserRole"
+                                                 value="Add User Role"
+                                                 process="@this"
+                                                 action="#{userManagement.onLoadRoleDialog}"
+                                                 update=":userRoleForm"
+                                                 oncomplete="PF('userRoleDlg').show();"
+                                                 styleClass="medium" style="#{msg.get('fix.size.200')}"
+                                                 icon="ui-icon-plusthick"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 80px; min-width: 80px; max-width: 80px">
+                                <h:outputLabel value="Department"/>
+                            </td>
+                            <td>
+                                <p:inputText value="#{userManagement.userAuthorizeView.msDepartmentModel.name}" disabled="true"/>
+                            </td>
+                            <td rowspan="4" class="top">
+                                <p:dataTable id="roleTabble" rowIndexVar="rowIndex"
+                                             styleClass="full_table"
+                                             rowKey="#{staffRole.id}"
+                                             paginator="true"
+                                             value="#{userManagement.staffRolesModelList}"
+                                             selection="#{userManagement.staffRolesModel}"
+                                             var="staffRole"
+                                             style="width: 100%; max-width: 100%; min-width: 100%">
+                                    <p:ajax event="rowSelect"/>
+                                    <p:column headerText="No" style="width: 20px; min-width: 20px; max-width: 20px" styleClass="center">
+                                        <h:outputText value="#{rowIndex+1}"/>
+                                    </p:column>
+                                    <p:column headerText="Role " style="width: 80px; max-width: 80px; min-width: 80px" styleClass="center">
+                                        <h:outputText value="#{staffRole.roles.code}" />
+                                    </p:column>
+                                    <p:column headerText="" style="width: 10px; max-width: 10px; min-width: 10px" styleClass="center">
+                                        <p:commandButton icon="ui-icon-trash"
+                                                         action="#{userManagement.onPopupRole()}"
+                                                         process="@this"
+                                                         update=":userAccessForm:roleTabble, :confirmRemoveRolePanel"
+                                                         title="Remove">
+                                            <f:setPropertyActionListener value="#{staffRole.id}" target="#{userManagement.roleId}"/>
+                                         </p:commandButton>
+                                    </p:column>
+                                </p:dataTable>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h:outputLabel value="Faction"/>
+                            </td>
+                            <td>
+                                <p:inputText value="#{userManagement.userAuthorizeView.factionModel.name}" disabled="true"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h:outputLabel value="Name"/>
+                            </td>
+                            <td>
+                                <p:inputText value="#{userManagement.userAuthorizeView.name}" disabled="true"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h:outputLabel value="Login Name"/>
+                            </td>
+                            <td>
+                                <p:inputText value="#{userManagement.userAuthorizeView.username}" disabled="true"/>
+                            </td>
+                        </tr>
+                        <tr style="height: 10px"/>
+                        <tr>
+                            <td colspan="3" class="titlemenu">
+                                <h:outputLabel value="User Authorize List"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p:selectOneMenu id="codeMenu" value="#{userManagement.objectUserAuthorize.id}"
+                                                 style="min-width: 130px; width: 130px; max-width: 130px;">
+                                    <f:selectItem itemLabel="- Please Select -" itemValue=""/>
+                                    <f:selectItems value="#{userManagement.objectUserAuthorizeList}"
+                                                   var="objectUserAuthorizeItem"
+                                                   itemLabel="#{objectUserAuthorizeItem.name}"
+                                                   itemValue="#{objectUserAuthorizeItem.id}"/>
+                                    <p:ajax event="change" process="@form" listener="#{userManagement.onFilterUserAuthorize()}"
+                                            update=":userAccessForm:userAuthorizeTable"/>
+                                </p:selectOneMenu>
+                            </td>
+                            <td>
+                                <p:inputText value="#{userManagement.keySearchUserAuthorize}"/>
+                            </td>
+                            <td style="width: 40px; min-width: 40px; max-width: 40px">
+                                <p:commandButton id="btnAuthorize" icon="ui-icon-search"
+                                                 onstart="PF('bui').block()"
+                                                 oncomplete="PF('bui').unblock()"
+                                                 action="#{userManagement.onFilterUserAuthorize()}"
+                                                 update=":userAccessForm:userAuthorizeTable"
+                                                 process="@form"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <p:dataTable id="userAuthorizeTable"
+                                             styleClass="full_table"
+                                             rows="5"
+                                             paginator="true"
+                                             value="#{userManagement.userAccessModelList}"
+                                             selection="#{userManagement.selectUserAuthorize}"
+                                             var="userAccessList"
+                                             rowKey="#{userAccessList.id}"
+                                             style="width: 100%; max-width: 100%; min-width: 100%">
+                                    <p:column selectionMode="multiple" style="width:16px;text-align:center; height: 20px"/>
+                                    <p:column headerText="Code " style="width: 100px; max-width: 100px; min-width: 100px" styleClass="center">
+                                        <h:outputText value="#{userAccessList.menuObjectModel.code}" />
+                                    </p:column>
+                                    <p:column headerText="Menu Object and Action" style="width: 250px; max-width: 250px; min-width: 250px" styleClass="center">
+                                        <h:outputText value="#{userAccessList.menuObjectModel.name}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </h:form>
+    <!--</p:panel>-->
 </f:view>
 </html>
