@@ -35,18 +35,13 @@
     </div>
 
     <pe:blockUI widgetVar="bui" centerX="true" centerY="true">
-        <div style="text-align: center;">
-            <h:panelGrid columns="2" styleClass="center">
+        <p:panel style="border: 0">
+            <div style="text-align: center;">
                 <h:outputText value="Please wait..." />
-                <p:graphicImage value="/resources/images/shared/ajax-loader.gif"/>
+            </div>
+            <div style="text-align: right;">
                 <p:graphicImage value="/resources/images/shared/292.GIF"/>
-                <p:graphicImage value="/resources/images/shared/16.GIF"/>
-                <p:graphicImage value="/resources/images/shared/13.GIF"/>
-                <p:graphicImage value="/resources/images/shared/294.GIF"/>
-                <p:graphicImage value="/resources/images/shared/ajax_loader_blue_48.gif"/>
-                <p:graphicImage value="/resources/images/shared/ajax_loader_blue_64.gif"/>
-                <p:graphicImage value="/resources/images/shared/ajax_progress2.gif"/>
-            </h:panelGrid>
-        </div>
+            </div>
+        </p:panel>
     </pe:blockUI>
 </ui:composition>

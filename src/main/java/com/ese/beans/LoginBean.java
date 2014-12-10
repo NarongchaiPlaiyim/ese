@@ -55,15 +55,15 @@ public class LoginBean extends Bean{
         log.info("-- SessionRegistry principle size: {}", sessionRegistry.getAllPrincipals().size());
         if(!Utils.isZero(userName.length()) && !Utils.isZero(password.length())) {
             setPassword(EncryptionService.encryption(password));
-//            System.out.println("password : "+password);
-            if(true){//loginService.isUserExist(getUserName(), getPassword())){
+            System.out.println("password : "+getPassword());
+            if(loginService.isUserExist(getUserName(), getPassword())){
                 StaffModel staffModel = loginService.getStaffModel();
-                userDetail = new UserDetail(userName,
-                                            password,
-                                            "USER",  //staffModel.getRole(),
-                                            "Mr. ASUS",
-                                            "DELL");
-                userDetail.setId(9999L);
+                userDetail = new UserDetail(staffModel.getUsername(),
+                                            staffModel.getPassword(),
+                                            "USER",
+                                            "Test",
+                                            "TEst");
+                userDetail.setId(Utils.parseLong(staffModel.getId(), 0L));
                 HttpServletRequest httpServletRequest = FacesUtil.getRequest();
                 HttpServletResponse httpServletResponse = FacesUtil.getResponse();
                 UsernamePasswordAuthenticationToken request = new UsernamePasswordAuthenticationToken(getUserDetail(), getPassword());
@@ -71,15 +71,13 @@ public class LoginBean extends Bean{
                 SimpleAuthenticationManager simpleAuthenticationManager = new SimpleAuthenticationManager();
                 Authentication result = simpleAuthenticationManager.authenticate(request);
                 log.debug("-- authentication result: {}", result.toString());
-//                System.out.println("Result : " + result.hashCode());
-//                System.out.println("Result : "+result.toString());
                 SecurityContextHolder.getContext().setAuthentication(result);
                 compositeSessionAuthenticationStrategy.onAuthentication(request, httpServletRequest, httpServletResponse);
                 HttpSession httpSession = FacesUtil.getSession(false);
                 httpSession.setAttribute(AttributeName.USER_DETAIL.getName(), getUserDetail());
                 System.out.println(userDetail.hashCode());
                 log.debug("-- userDetail[{}]", userDetail.toString());
-                return "USER";//<-- for test  //userDetail.getRole();<-- for production.
+                return "PASS";
             }
         }
         showDialog(MessageDialog.WARNING.getMessageHeader(), "Invalid username or password.");
