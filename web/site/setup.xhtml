@@ -169,9 +169,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="3">
-                                        <p:inputText id="findKey" value="#{setup.keySearch}" style="#{msg.get('fix.size.200')}  margin-top: 4px">
-                                            <p:ajax event="blur" update=":setupForm:mainForm:setupTab:findKey"/>
-                                        </p:inputText>
+                                        <p:inputText id="findKey" value="#{setup.keySearch}" style="#{msg.get('fix.size.200')}  margin-top: 4px"/>
                                         <p:commandButton id="btnsearch" icon="ui-icon-search"
                                                          value="#{msg.get('btn.name.search')}"
                                                          styleClass="medium" style="#{msg.get('btn.size')}"
@@ -395,17 +393,20 @@
             <ui:include src="../site/dialog/itemDialog.xhtml"/>
         </p:dialog>
         <p:panel id="msgBoxSystemMessagePanel" style="border: 0">
-            <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="#{msg.get('dialog.message.size')}" closable="false"
-                             header="#{setup.messageHeader}" message="#{setup.message}" >
-                <div style="text-align: right">
-                    <p:commandButton value="#{msg.get('btn.name.ok')}"
-                                     styleClass="medium" style="#{msg.get('btn.size')}"
-                                     icon="ui-icon-check"
-                                     process="@this"
-                                     update="setupForm"
-                                     oncomplete="PF('msgBoxSystemMessageDlg').hide()"/>
-                </div>
-            </p:confirmDialog>
+            <!--<p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="#{msg.get('dialog.message.size')}" closable="false"-->
+                             <!--header="#{setup.messageHeader}" message="#{setup.message}" >-->
+                <!--<div style="text-align: right">-->
+                    <!--<p:commandButton value="#{msg.get('btn.name.ok')}"-->
+                                     <!--styleClass="medium" style="#{msg.get('btn.size')}"-->
+                                     <!--icon="ui-icon-check"-->
+                                     <!--process="@this"-->
+                                     <!--update="setupForm"-->
+                                     <!--oncomplete="PF('msgBoxSystemMessageDlg').hide()"/>-->
+                <!--</div>-->
+            <!--</p:confirmDialog>-->
+            <p:dialog header="#{setup.messageHeader}" widgetVar="msgBoxSystemMessageDlg" minHeight="40">
+                <h:outputText value="#{setup.message}" />
+            </p:dialog>
         </p:panel>
 
         <p:panel id="confirmWarehouseAndLocationPanel" style="border: 0">

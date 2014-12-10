@@ -21,6 +21,9 @@
                 <h:form id="palletForm">
                     <p:panel style="border: 0">
                         <div style="text-align: right;">
+                            <p:commandButton id="btnRefresh" value="Refresh" action="#{palletManagement.init()}"
+                                             process="@this"
+                                             update=":palletForm"/>
                             <p:commandButton id="btnFindlocation" value="Find Location" action="#{palletManagement.onFindLocation}"
                                              disabled="#{palletManagement.isCheckLocation()}"
                                              oncomplete="PF('findLocationDlg').show()"
@@ -109,6 +112,7 @@
                             <td colspan="7">
                                 <p:dataTable id="palletManagementTable" rowIndexVar="rowIndex"
                                              value="#{palletManagement.palletManegamentViewList}"
+                                             rows="8" paginator="true"
                                              var="palletView" styleClass="full_table"
                                              selectionMode="single" rowKey="#{palletView.id}"
                                              selection="#{palletManagement.palletMeanegementView}"

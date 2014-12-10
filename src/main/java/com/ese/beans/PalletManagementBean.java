@@ -60,7 +60,7 @@ public class PalletManagementBean extends Bean implements Serializable {
         }
     }
 
-    private void init(){
+    public void init(){
         log.debug("init().");
         palletMeanegementView = new PalletManagementView();
         warehouseMode = new MSWarehouseModel();
@@ -74,6 +74,7 @@ public class PalletManagementBean extends Bean implements Serializable {
         isCheckLocation = true;
         isCheckPrintTag = true;
         isCheckClosePallet = true;
+        statusOnShow = 0;
         onLoadPallet();
     }
 
@@ -142,7 +143,7 @@ public class PalletManagementBean extends Bean implements Serializable {
     public void OnClosePallet(){
         log.debug("OnClosePallet().");
         if (palletMeanegementView.getQty() == 0 && !"Closed".equalsIgnoreCase(palletMeanegementView.getStatus().getName())){
-            showDialog(MessageDialog.WARNING.getMessageHeader(), "The Pallet ID can not be use again. Please click Yes to confirm close this pallet.", "confirmClosePalletDlg");
+            showDialog(MessageDialog.SAVE.getMessageHeader(), "The Pallet will not be used agin.", "confirmClosePalletDlg");
         } else if ("Closed".equalsIgnoreCase(palletMeanegementView.getStatus().getName())){
             log.debug("Already Closed Pallet");
             showDialogWarning("Already Closed Pallet");

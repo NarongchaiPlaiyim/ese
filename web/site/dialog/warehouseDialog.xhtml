@@ -20,14 +20,14 @@
 
                 <p:commandButton value="#{msg.get('btn.name.save')}"
                                  styleClass="medium" style="#{msg.get('btn.size')}"
-                                 update=":msgBoxSystemMessageDialog, :warehouseDialogForm
+                                 update=":msgBoxSystemMessagePanel, :warehouseDialogForm
                                                          :warehouseDialogForm:warehouseTable"
                                  action="#{setup.onSaveWarehouseDialog}"
                                  binding="#{warehouseDialog}"/>
 
                 <p:commandButton value="#{msg.get('btn.name.delete')}"
                                  styleClass="medium" style="#{msg.get('btn.size')}"
-                                 update=":msgBoxSystemMessageDialog, :warehouseDialogForm, :confirmWarehouseDialogPanel"
+                                 update=":msgBoxSystemMessagePanel, :warehouseDialogForm, :confirmWarehouseDialogPanel"
                                  action="#{setup.preDeleteWarehouseDialog}"
                         />
             </div>

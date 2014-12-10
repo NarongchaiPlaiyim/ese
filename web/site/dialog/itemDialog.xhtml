@@ -96,7 +96,7 @@
                                    <p:commandButton value="#{msg.get('btn.name.add')}"
                                                     styleClass="medium" style="#{msg.get('btn.size')}"
                                                     icon="ui-icon-seek-next"
-                                                    update=":msgBoxSystemMessageDialog, :itemForm, :itemForm:searchItemTable"
+                                                    update=":msgBoxSystemMessagePanel, :itemForm, :itemForm:searchItemTable"
                                                     action="#{setup.onAddToLocation}"
                                                     />
                                </td>
@@ -106,7 +106,7 @@
                                    <p:commandButton value="#{msg.get('btn.name.remove')}"
                                                     styleClass="medium" style="#{msg.get('btn.size')}"
                                                     icon="ui-icon-seek-prev"
-                                                    update=":msgBoxSystemMessageDialog, :itemForm:locationTable"
+                                                    update=":msgBoxSystemMessagePanel, :itemForm:locationTable"
                                                     action="#{setup.onRemove}"/>
                                </td>
                            </tr>
