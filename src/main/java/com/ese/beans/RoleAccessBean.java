@@ -124,6 +124,7 @@ public class RoleAccessBean extends Bean{
         systemRoleModel = new SystemRoleModel();
         systemRoleView = new SystemRoleView();
         roleAccessModelList = new ArrayList<RoleAccessModel>();
+
     }
 
     public void preDeleteRole(){

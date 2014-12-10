@@ -66,6 +66,7 @@ public class UserManagementBean extends Bean{
     private List<MenuObjectModel> objectUserAuthorizeList;
     private MenuObjectModel objectUserAuthorize;
     private int roleId;
+    private boolean flagBtnAddUserAccess;
 
     //Dialog Add User Role
     private List<SystemRoleModel> systemRoleModelDialogList;
@@ -152,6 +153,7 @@ public class UserManagementBean extends Bean{
         userManagementService.delete(staffModel);
         showDialogDeleted();
         userOnload();
+        actionButton();
     }
 
     public void onClickNewUser(String value){

@@ -57,7 +57,11 @@
                                      onstart="PF('bui').block()"
                                      oncomplete="PF('bui').unblock()"
                                      update=":msgBoxSystemMessagePanel,
-                                             :confirmUserAccessPanel"/>
+                                             :confirmUserAccessPanel,
+                                             :userManagementForm:mainForm:manegementTab:btnPrint,
+                                             :userManagementForm:mainForm:manegementTab:btnEdit,
+                                             :userManagementForm:mainForm:manegementTab:btnDelete,
+                                             :userManagementForm:mainForm:manegementTab:btnUserAccess"/>
 
                     <p:commandButton id="btnAddUser" value="Add User"
                                      styleClass="medium" style="min-width: 160px; width: 160px; max-width: 160px;"
@@ -93,7 +97,7 @@
                                            itemValue="#{departmentItem.id}"/>
                             <p:ajax event="change" process="@form" listener="#{userManagement.onChangeSearchMenu('department')}"
                                     update=":userManagementForm:mainForm:manegementTab:userTable,
-                                                                        :userManagementForm:mainForm:manegementTab:factionMenu"/>
+                                            :userManagementForm:mainForm:manegementTab:factionMenu"/>
                         </p:selectOneMenu>
                     </td>
                     <td>
@@ -198,7 +202,8 @@
                                                          :userManagementForm:mainForm:manegementTab:roleMenu,
                                                          :userManagementForm:mainForm:manegementTab:searchRoleAccess,
                                                          :userManagementForm:mainForm:manegementTab:roleAccessTable,
-                                                         :userManagementForm:mainForm:manegementTab:btnSearchRoleAccess"
+                                                         :userManagementForm:mainForm:manegementTab:btnSearchRoleAccess
+                                                         :userManagementForm:mainForm:manegementTab:roleTable"
                                                  styleClass="medium" style="#{msg.get('btn.size')}"
                                                  icon="ui-icon-plusthick" />
                                 <p:commandButton value="#{msg.get('btn.name.save')}"
@@ -289,25 +294,31 @@
                                          style="width: 100%; max-width: 100%; min-width: 100%">
                                 <p:ajax event="rowSelect" listener="#{roleAccess.onClickRoleTB}"
                                         update=":userManagementForm:mainForm:manegementTab:modeRole,
-                                                        :userManagementForm:mainForm:manegementTab:btnSaveRole,
-                                                        :userManagementForm:mainForm:manegementTab:btnDeleteRole,
-                                                        :userManagementForm:mainForm:manegementTab:btnPrintRole,
-                                                        :userManagementForm:mainForm:manegementTab:roleCode,
-                                                        :userManagementForm:mainForm:manegementTab:roleName,
-                                                        :userManagementForm:mainForm:manegementTab:roleDes,
-                                                        :userManagementForm:mainForm:manegementTab:roleAccessTable,
-                                                        :userManagementForm:mainForm:manegementTab:btnSearchRole,
-                                                        :userManagementForm:mainForm:manegementTab:btnAddRoleAccess,
-                                                        :userManagementForm:mainForm:manegementTab:btnDeleteRoleAccess,
-                                                        :userManagementForm:mainForm:manegementTab:roleMenu,
-                                                        :userManagementForm:mainForm:manegementTab:searchRoleAccess,
-                                                        :userManagementForm:mainForm:manegementTab:roleAccessTable,
-                                                        :userManagementForm:mainForm:manegementTab:btnSearchRoleAccess"/>
+                                                :userManagementForm:mainForm:manegementTab:btnSaveRole,
+                                                :userManagementForm:mainForm:manegementTab:btnDeleteRole,
+                                                :userManagementForm:mainForm:manegementTab:btnPrintRole,
+                                                :userManagementForm:mainForm:manegementTab:roleCode,
+                                                :userManagementForm:mainForm:manegementTab:roleName,
+                                                :userManagementForm:mainForm:manegementTab:roleDes,
+                                                :userManagementForm:mainForm:manegementTab:roleAccessTable,
+                                                :userManagementForm:mainForm:manegementTab:btnSearchRole,
+                                                :userManagementForm:mainForm:manegementTab:btnAddRoleAccess,
+                                                :userManagementForm:mainForm:manegementTab:btnDeleteRoleAccess,
+                                                :userManagementForm:mainForm:manegementTab:roleMenu,
+                                                :userManagementForm:mainForm:manegementTab:searchRoleAccess,
+                                                :userManagementForm:mainForm:manegementTab:roleAccessTable,
+                                                :userManagementForm:mainForm:manegementTab:btnSearchRoleAccess"/>
                                 <p:column headerText="No" style="width: 20px; min-width: 20px; max-width: 20px" styleClass="center">
                                     <h:outputText value="#{rowIndex+1}"/>
                                 </p:column>
-                                <p:column headerText="Role Name" style="width: 450px; max-width: 450px; min-width: 450px" styleClass="center">
-                                    <h:outputText value="#{role.code} #{role.name} #{role.description}"/>
+                                <p:column headerText="Role Code" style="width: 100px; max-width: 100px; min-width: 100px" styleClass="center">
+                                    <h:outputText value="#{role.name}"/>
+                                </p:column>
+                                <p:column headerText="Role Name" style="width: 100px; max-width: 100px; min-width: 100px" styleClass="center">
+                                    <h:outputText value="#{role.name}"/>
+                                </p:column>
+                                <p:column headerText="Description" style="width: 250px; max-width: 250px; min-width: 250px" styleClass="center">
+                                    <h:outputText value="#{role.description}"/>
                                 </p:column>
                             </p:dataTable>
                         </p:panel>
@@ -392,7 +403,7 @@
                                          style="width: 100%; max-width: 100%; min-width: 100%">
                                 <p:ajax event="rowSelect"/>
                                 <p:column selectionMode="multiple" style="width:16px;text-align:center; height: 20px"/>
-                                <p:column headerText="Code" style="width: 100px; max-width: 100px; min-width: 100px" styleClass="center">
+                                <p:column headerText="Action Number" style="width: 100px; max-width: 100px; min-width: 100px" styleClass="center">
                                     <h:outputText value="#{roleAccessList.menuObjectModel.code}" />
                                 </p:column>
                                 <p:column headerText="Menu Object and Action" style="width: 300px; max-width: 300px; min-width: 300px" styleClass="center">
