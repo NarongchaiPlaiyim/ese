@@ -105,9 +105,9 @@
                                                style="min-width: 150px; max-width: 150px;"/>
                             </td>
                             <td style="min-width: 500px; max-width: 500px;">
-                                <p:outputLabel
+                                <p:inputTextarea style="width: 450px; max-width: 450px;min-width: 450px; height: 50px;"
                                         id="itemLabel"
-                                        style="min-width: 500; max-width: 500;"
+                                        readonly="#{true}"
                                         value="#{barcodeRegisterBean.barcodeRegisterView.msItemModel.DSGThaiItemDescription}"/>
                             </td>
                             <td>
@@ -143,8 +143,9 @@
                                                style="min-width: 200px; max-width: 200px;"/>
                             </td>
                             <td colspan="2" style="min-width: 200px; max-width: 200px;">
-                                <h:outputLabel style="min-width: 200px; width: 200px; max-width: 200px;"
+                                <p:inputText style="min-width: 200px; width: 200px; max-width: 200px;"
                                                id = "documentNoLabel"
+                                               readonly="#{true}"
                                                value="#{barcodeRegisterBean.barcodeRegisterView.documentNo}"/>
                             </td>
                             <td>
@@ -155,7 +156,7 @@
                                              value="#{barcodeRegisterBean.barcodeRegisterView.startBarcode}"
                                              onkeydown="return onKeyDownNumber(event);"
                                              onkeypress="return onKeyPressNumber(event);"
-                                             mask="T-999-99-9999">
+                                             mask="T-999-999-999">
                                     <p:ajax event="keyup"
                                             listener="#{barcodeRegisterBean.calculator()}"
                                             update=":setupForm:labelFinishBarcode" />
