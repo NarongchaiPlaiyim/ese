@@ -132,6 +132,7 @@ public class UserManagementBean extends Bean{
 
         staffModelList = userManagementService.getUserBySearch(msDepartmentModel.getId(), factionModel.getId(), keySearchUser);
         actionButton();
+        staffRolesModel = new StaffRolesModel();
     }
 
     public void onClickUserAccess(){
@@ -152,6 +153,7 @@ public class UserManagementBean extends Bean{
         userManagementService.delete(staffModel);
         showDialogDeleted();
         userOnload();
+        actionButton();
     }
 
     public void onClickNewUser(String value){
@@ -196,7 +198,8 @@ public class UserManagementBean extends Bean{
         userAuthorizeView = userManagementService.setModelToViewUserAccess(staffModel);
         staffRolesModelList = userManagementService.getStaffRoleByUserId(staffModel.getId());
         userAccessModelList = userManagementService.getMenuObjectByUserId(staffModel.getId());
-        objectUserAuthorizeList = userManagementService.getMenuObjectByObjCategory();;
+        objectUserAuthorizeList = userManagementService.getMenuObjectByObjCategory();
+        selectList = new ArrayList<MenuObjectModel>();
     }
 
     public void onChangeMenuObject(){
@@ -211,6 +214,7 @@ public class UserManagementBean extends Bean{
         } else {
             userManagementService.onSaveUserAccess(selectList, staffModel);
             showDialogSaved();
+            selectList = new ArrayList<MenuObjectModel>();
         }
 
         userAccessModelList = userManagementService.getMenuObjectByUserId(staffModel.getId());
@@ -265,6 +269,7 @@ public class UserManagementBean extends Bean{
             userManagementService.onSaveRole(selectRole, staffModel);
             showDialogSaved();
             staffRolesModelList = userManagementService.getStaffRoleByUserId(staffModel.getId());
+            userAccessModelList = userManagementService.getMenuObjectByUserId(staffModel.getId());
         }
     }
 }

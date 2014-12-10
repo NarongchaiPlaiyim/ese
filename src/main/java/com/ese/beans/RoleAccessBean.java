@@ -107,6 +107,8 @@ public class RoleAccessBean extends Bean{
 
     public void onFilterRoleTB(){
         systemRoleModelList = roleAccessService.getSystemRoleByKey(keySearchRole);
+        clearTextBox();
+
     }
 
     public void clearTextBox(){
@@ -151,7 +153,11 @@ public class RoleAccessBean extends Bean{
     }
 
     public void preDeleteRoelAccess(){
-        showDialog(MessageDialog.WARNING.getMessageHeader(), "Click Yes confirm delete.", "confirmDeleteRoleAccessDlg");
+        if (!Utils.isSafetyList(selectRoleAccess)){
+            showDialog(MessageDialog.WARNING.getMessageHeader(), "Please select Menu Object and Action.", "msgBoxSystemMessageDlg");
+        } else {
+            showDialog(MessageDialog.WARNING.getMessageHeader(), "Click Yes confirm delete.", "confirmDeleteRoleAccessDlg");
+        }
     }
 
     public void onDeleteRoleAccess(){
