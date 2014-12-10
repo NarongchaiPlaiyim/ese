@@ -42,6 +42,7 @@
                         oncomplete="PF('bui').unblock()" />
 
                     <p:commandButton id="test12" value="Ajex loader"
+                                     rendered="#{true}"
                                      style="width: 240px"
                                      update=":msgBoxSystemMessagePanel"
                                      onstart="PF('bui').block()"
@@ -69,19 +70,22 @@
         </p:confirmDialog>
     </p:panel>
     <pe:blockUI widgetVar="bui" centerX="true" centerY="true">
-        <div style="text-align: center;">
-            <h:panelGrid columns="2" styleClass="center">
-                <h:outputText value="Please wait..." />
-                <p:graphicImage value="/resources/images/shared/ajax-loader.gif"/>
-                <p:graphicImage value="/resources/images/shared/292.GIF"/>
-                <p:graphicImage value="/resources/images/shared/16.GIF"/>
-                <p:graphicImage value="/resources/images/shared/13.GIF"/>
-                <p:graphicImage value="/resources/images/shared/294.GIF"/>
-                <p:graphicImage value="/resources/images/shared/ajax_loader_blue_48.gif"/>
-                <p:graphicImage value="/resources/images/shared/ajax_loader_blue_64.gif"/>
-                <p:graphicImage value="/resources/images/shared/ajax_progress2.gif"/>
-            </h:panelGrid>
-        </div>
+            <p:panel style="border: 0">
+                <div style="text-align: center;">
+                    <h:outputText value="Please wait..." />
+                </div>
+                <div style="text-align: right;">
+                    <p:graphicImage value="/resources/images/shared/292.GIF"/>
+                </div>
+            </p:panel>
+
+        <!-- DEsign by copy by -->
+        <!--<div style="text-align: right">-->
+            <!--<h:panelGrid columns="2" styleClass="center">-->
+                <!--<h:outputText value="Please wait..." />-->
+                <!--<p:graphicImage value="/resources/images/shared/292.GIF"/>-->
+            <!--</h:panelGrid>-->
+        <!--</div>-->
     </pe:blockUI>
 </f:view>
 </html>
