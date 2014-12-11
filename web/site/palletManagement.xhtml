@@ -24,7 +24,6 @@
                             <p:commandButton id="btnRefresh" value="Refresh" action="#{palletManagement.init()}"
                                              process="@this"
                                              update=":palletForm"/>
-                            <p:commandButton id="btnFindlocation" value="Find Location" action="#{palletManagement.onFindLocation}"
                             <p:commandButton id="btnFindlocation"
                                              value="Find Location"
                                              rendered="#{loginBean.isRendered(msg.get('authorize.menu.pallet.find'))}"
