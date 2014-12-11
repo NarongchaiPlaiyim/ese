@@ -45,7 +45,6 @@ public class BarcodeRegisterBean extends Bean{
     public void onCreation(){
         log.debug("onCreation().");
         if(preLoad() && isAuthorize("0100")){
-            log.debug("Pass isAuthorize");
             init();
         }
     }
