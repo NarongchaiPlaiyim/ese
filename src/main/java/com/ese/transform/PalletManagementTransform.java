@@ -73,12 +73,7 @@ public class PalletManagementTransform extends Transform {
             palletMeanegementView.setCreateBy(palletModel.getCreateBy());
         }
 
-
-//        if(Utils.isNull(palletModel.getCreateDate())){
-//            palletMeanegementView.setCreateDate(palletModel.getCreateDate());
-//        } else {
-            palletMeanegementView.setCreateDate(palletModel.getCreateDate());
-//        }
+        palletMeanegementView.setCreateDate(palletModel.getCreateDate());
 
 
         if(Utils.isNull(palletModel.getUpdateBy())){
@@ -87,12 +82,7 @@ public class PalletManagementTransform extends Transform {
             palletMeanegementView.setUpdateBy(palletModel.getUpdateBy());
         }
 
-
-//        if(Utils.isNull(palletModel.getUpdateDate())){
-//            palletMeanegementView.setUpdateDate(palletModel.getUpdateDate());
-//        } else {
-            palletMeanegementView.setUpdateDate(palletModel.getUpdateDate());
-//        }
+        palletMeanegementView.setUpdateDate(palletModel.getUpdateDate());
 
 
         if(Utils.isNull(palletModel.getIsValid())){
@@ -118,6 +108,7 @@ public class PalletManagementTransform extends Transform {
 
         palletMeanegementView.setConvetorLine(palletModel.getMsWorkingAreaModel());
         palletMeanegementView.setShift(palletModel.getMsShiftModel());
+        palletMeanegementView.setIsCombine(palletModel.getIsCombine());
 
         return palletMeanegementView;
     }

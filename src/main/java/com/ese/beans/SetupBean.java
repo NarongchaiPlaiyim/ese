@@ -88,7 +88,7 @@ public class SetupBean extends Bean{
         stockInOutNoteModel = new MSStockInOutNoteModel();
         stockInOutNoteView = new StockInOutNoteView();
         modeWarehouse = "Mode(New)";
-        nameBtn = "Cancel";
+        nameBtn = "New";
         modeStock = "Mode(New)";
         nameBtnStock = "Cancel";
         btnOnLoad();
@@ -130,7 +130,7 @@ public class SetupBean extends Bean{
     public void onClickNewOrCancelWarehouse(){
         log.debug("NewOrCancel.");
         modeWarehouse = "Mode(New)";
-        nameBtn = "Cancel";
+        nameBtn = "New";
         msLocationModel = new MSLocationModel();
         locationView = new LocationView();
         btnOnLoad();

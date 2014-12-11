@@ -63,6 +63,9 @@ public class PalletModel extends AbstractModel{
     @JoinColumn(name = "location_id")
     private MSLocationModel msLocationModel;
 
+    @Column(name="combine")
+    private int isCombine;
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
@@ -80,6 +83,7 @@ public class PalletModel extends AbstractModel{
                 .append("msWarehouseModel", msWarehouseModel)
                 .append("msItemModel", msItemModel)
                 .append("msLocationModel", msLocationModel)
+                .append("isCombine", isCombine)
                 .toString();
     }
 }

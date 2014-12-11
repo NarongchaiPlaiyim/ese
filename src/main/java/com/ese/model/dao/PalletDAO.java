@@ -66,6 +66,8 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
                 criteria.add(Restrictions.eq("qty", 0));
             }
 
+            criteria.add(Restrictions.ne("status", 6));
+            criteria.add(Restrictions.eq("isValid", 1));
             criteria.addOrder(Order.desc("updateDate"));
             List<PalletModel> palletModelList = criteria.list();
             log.debug("findOnloadPallet Size : {}", palletModelList.size());
