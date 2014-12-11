@@ -13,9 +13,9 @@
                         <p:selectOneMenu
                                 value="#{barcodeRegisterBean.selectType}"
                                 style="#{msg.get('fix.size.200')} margin-top: 4px">
-                            <f:selectItem itemLabel="Product Description" itemValue="3"/>
-                            <f:selectItem itemLabel="Product Name" itemValue="1"/>
-                            <f:selectItem itemLabel="Product Code" itemValue="2"/>
+                            <f:selectItem itemLabel="Item Description" itemValue="3"/>
+                            <f:selectItem itemLabel="Item Name" itemValue="1"/>
+                            <f:selectItem itemLabel="Item Code" itemValue="2"/>
                         </p:selectOneMenu>
                     </td>
                     <td>
@@ -61,13 +61,13 @@
                             <p:column headerText="No" style="min-width: 10px; width: 10px; max-width: 10px;">
                                 <h:outputText value="#{rowIndex+1}" style="text-align: right;"/>
                             </p:column>
-                            <p:column headerText="Product Name" style="min-width: 150px; width: 150px; max-width: 150px;">
-                                <h:outputText value="#{itemModel.itemName}"/>
-                            </p:column>
-                            <p:column headerText="Product Code" style="min-width: 100px; width: 100px; max-width: 100px;" styleClass="center">
+                            <p:column headerText="Item Code" style="min-width: 100px; width: 100px; max-width: 100px;" styleClass="center">
                                 <h:outputText value="#{itemModel.itemId}"/>
                             </p:column>
-                            <p:column headerText="Product Description" style="min-width: 250px; width: 250px; max-width: 250px;">
+                            <p:column headerText="Item Name" style="min-width: 150px; width: 150px; max-width: 150px;">
+                                <h:outputText value="#{itemModel.itemName}"/>
+                            </p:column>
+                            <p:column headerText="Item Description" style="min-width: 250px; width: 250px; max-width: 250px;">
                                 <h:outputText value="#{itemModel.DSGThaiItemDescription}"/>
                             </p:column>
                         </p:dataTable>

@@ -5,6 +5,7 @@ import com.ese.utils.Utils;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.type.StringType;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,6 +24,18 @@ public class MenuObjectDAO extends GenericDAO<MenuObjectModel, Integer>{
         }
 
         return menuObjectModels;
+    }
+
+    public List<String> findByStaffId(int staffId) throws Exception {
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder.append("");
+        sqlBuilder.append("SELECT ppwms03.dbo.menu_object.code AS CODE");
+        sqlBuilder.append(" FROM ppwms03.dbo.menu_object");
+        sqlBuilder.append(" WHERE ppwms03.dbo.menu_object.id IN (");
+        sqlBuilder.append(" SELECT ppwms03.dbo.user_access.menu_object_id");
+        sqlBuilder.append(" FROM ppwms03.dbo.user_access");
+        sqlBuilder.append(" WHERE ppwms03.dbo.user_access.staff_id = "+staffId+")");
+        return Utils.safetyList(getSession().createSQLQuery(sqlBuilder.toString()).addScalar("CODE", StringType.INSTANCE).list());
     }
 
     public List<MenuObjectModel> findByObjectId(int menuObjectId, String keySearch){

@@ -26,6 +26,9 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -39,15 +42,16 @@ public class LoginBean extends Bean{
     private String userName = "";
     private String password = "";
     private UserDetail userDetail;
+    private Map<String,String> map;
 
     @PostConstruct
     private void init(){
         if(!Utils.isNull(SecurityContextHolder.getContext().getAuthentication())){
-            System.out.println("old user");
             userDetail = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//            System.out.println(userDetail.hashCode());
+            map = (Map<String, String>) FacesUtil.getSession(false).getAttribute(AttributeName.AUTHORIZE.getName());
         } else {
-            System.out.println("new user");
+            log.debug("[NEW] CODE MAP");
+            map = new HashMap<String, String>();
         }
     }
 
@@ -55,7 +59,6 @@ public class LoginBean extends Bean{
         log.info("-- SessionRegistry principle size: {}", sessionRegistry.getAllPrincipals().size());
         if(!Utils.isZero(userName.length()) && !Utils.isZero(password.length())) {
             setPassword(EncryptionService.encryption(password));
-            System.out.println("password : "+getPassword());
             if(loginService.isUserExist(getUserName(), getPassword())){
                 StaffModel staffModel = loginService.getStaffModel();
                 userDetail = new UserDetail(staffModel.getUsername(),
@@ -75,7 +78,7 @@ public class LoginBean extends Bean{
                 compositeSessionAuthenticationStrategy.onAuthentication(request, httpServletRequest, httpServletResponse);
                 HttpSession httpSession = FacesUtil.getSession(false);
                 httpSession.setAttribute(AttributeName.USER_DETAIL.getName(), getUserDetail());
-                System.out.println(userDetail.hashCode());
+                httpSession.setAttribute(AttributeName.AUTHORIZE.getName(), loginService.getAuthorize());
                 log.debug("-- userDetail[{}]", userDetail.toString());
                 return "PASS";
             }
@@ -84,13 +87,23 @@ public class LoginBean extends Bean{
         return "loggedOut";
     }
 
+    public boolean isRendered(String key){
+        try {
+            return map.containsKey(key);
+        } catch (Exception e) {
+            log.error("Exception : {}", e);
+            return false;
+        }
+    }
+
     public void test(){
         System.out.println("test");
-        try {
-            Thread.sleep(20000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
+        System.out.println(loginService.getAuthorize().toString());
+//        try {
+////            loginService.getStaffModel()
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+//        }
     }
 
 }

@@ -6,9 +6,13 @@ import com.ese.utils.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.slf4j.Logger;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.faces.bean.ManagedProperty;
+import javax.faces.context.FacesContext;
 import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -71,6 +75,23 @@ public abstract class Bean implements Serializable {
                 result = false;
             }
             setUserDetail(userDetail);
+            return result;
+        } catch (Exception e) {
+            FacesUtil.redirect(NamesUtil.LOGIN_PAGE.getName());
+            return false;
+        }
+    }
+
+    protected boolean isAuthorize(String key){
+        log.debug("isAuthorize KEY : {}", key);
+        boolean result = true;
+        try {
+            Map<String,String> map = (Map<String, String>) FacesUtil.getSession(false).getAttribute(AttributeName.AUTHORIZE.getName());
+            if(!map.containsKey(key)){
+                FacesUtil.redirect(NamesUtil.MAIN_PAGE.getName());
+                result = false;
+            }
+            log.debug("Result : {}", result);
             return result;
         } catch (Exception e) {
             FacesUtil.redirect(NamesUtil.LOGIN_PAGE.getName());

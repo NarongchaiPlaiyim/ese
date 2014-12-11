@@ -5,6 +5,7 @@ import lombok.Getter;
 @Getter
 public enum NamesUtil {
     LOGIN_PAGE("/login.xhtml"),
+    MAIN_PAGE("/site/main.xhtml"),
     EDIT_PROFILE_PAGE("/site/editProfile.xhtml"),
     DIALOG_NAME("msgBoxSystemMessageDlg")
     ;

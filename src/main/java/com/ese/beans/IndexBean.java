@@ -13,27 +13,18 @@ import java.util.List;
 @ManagedBean(name = "index")
 @ViewScoped
 public class IndexBean extends Bean{
-    private List<String> stringList;
+    private String messageIndex;
 
     @PostConstruct
-    private void init(){
-        stringList = new ArrayList<String>();
-        for (int i = 0; i < 10; i++) {
-            stringList.add(""+i);
+    public void onCreation(){
+        log.debug("onCreation().");
+        if(preLoad()){
+            init();
         }
-
     }
 
-    public void onSubmit(){
-//        log.debug("log");
-        log.debug("log");
-        moLogger.debug("moLogger");
-        mtLogger.debug("mtLogger");
-        try {
-            Thread.sleep(5000);
-        } catch (Exception e) {
-            System.err.println("Service : "+e);
-        }
+    private void init(){
+        messageIndex = "HELLO!!!!!!!!!";
     }
 
 }

@@ -6,13 +6,20 @@
         xmlns:p="http://primefaces.org/ui">
     <h:form>
         <p:menu style="border: 0">
-            <p:menuitem value="#{msg.get('menu.barcode.title')}" icon="ui-icon-disk" outcome="#{msg.get('menu.barcode.url')}" />
-            <p:separator />
-            <p:menuitem value="#{msg.get('menu.pallet.title')}" icon="ui-icon-cart" outcome="#{msg.get('menu.pallet.url')}" />
-            <p:separator />
-            <p:menuitem value="#{msg.get('menu.setup.title')}" icon="ui-icon-gear" outcome="#{msg.get('menu.setup.url')}" />
-            <p:separator />
-            <p:menuitem value="#{msg.get('menu.user.title')}" icon="ui-icon-person" outcome="#{msg.get('menu.user.url')}" />
+            <p:menuitem value="#{msg.get('menu.barcode.title')}" icon="ui-icon-disk" outcome="#{msg.get('menu.barcode.url')}"
+                        rendered="#{loginBean.isRendered(msg.get('authorize.menu.barcode'))}"/>
+            <p:separator
+                        rendered="#{loginBean.isRendered(msg.get('authorize.menu.barcode'))}"/>
+            <p:menuitem value="#{msg.get('menu.pallet.title')}" icon="ui-icon-cart" outcome="#{msg.get('menu.pallet.url')}"
+                        rendered="#{loginBean.isRendered(msg.get('authorize.menu.pallet'))}"/>
+            <p:separator
+                        rendered="#{loginBean.isRendered(msg.get('authorize.menu.pallet'))}"/>
+            <p:menuitem value="#{msg.get('menu.setup.title')}" icon="ui-icon-gear" outcome="#{msg.get('menu.setup.url')}"
+                        rendered="#{loginBean.isRendered(msg.get('authorize.menu.setup'))}"/>
+            <p:separator
+                        rendered="#{loginBean.isRendered(msg.get('authorize.menu.setup'))}"/>
+            <p:menuitem value="#{msg.get('menu.user.title')}" icon="ui-icon-person" outcome="#{msg.get('menu.user.url')}"
+                        rendered="#{loginBean.isRendered(msg.get('authorize.menu.user'))}"/>
         </p:menu>
     </h:form>
 </f:view>

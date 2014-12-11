@@ -12,6 +12,7 @@ import com.ese.service.SetupService;
 import com.ese.service.WarehouseService;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -71,8 +72,8 @@ public class SetupBean extends Bean{
 
     @PostConstruct
     public void onCreation(){
-        log.debug("onCreation().");
-        if(preLoad()){
+        log.debug("onCreation(). {}", setupService.getKey());
+        if(preLoad() && isAuthorize("0700")){
             init();
         }
     }

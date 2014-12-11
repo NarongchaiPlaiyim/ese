@@ -21,18 +21,24 @@
                 <h:form id="palletForm">
                     <p:panel style="border: 0">
                         <div style="text-align: right;">
-                            <p:commandButton id="btnFindlocation" value="Find Location" action="#{palletManagement.onFindLocation}"
+                            <p:commandButton id="btnFindlocation"
+                                             value="Find Location"
+                                             rendered="#{loginBean.isRendered(msg.get('authorize.menu.pallet.find'))}"
+                                             action="#{palletManagement.onFindLocation}"
                                              disabled="#{palletManagement.isCheckLocation()}"
                                              oncomplete="PF('findLocationDlg').show()"
                                              update=":findlocationForm"/>
                             <p:commandButton id="btnPrintTag"
                                              value="Print Tag"
+                                             rendered="#{loginBean.isRendered(msg.get('authorize.menu.pallet.print'))}"
                                              process="@form"
                                              actionListener="#{palletManagement.onPrintTag('PrintTag')}"
                                              update=":palletForm, :palletForm:palletManagementTable, :pnlDlg"
                                              disabled="#{palletManagement.isCheckPrintTag()}"
                                              oncomplete="PF('msgBoxSystemMessageDlg2').show()"/>
-                            <p:commandButton id="btnClosePallet" value="Close Pallet"
+                            <p:commandButton id="btnClosePallet"
+                                             value="Close Pallet"
+                                             rendered="#{loginBean.isRendered(msg.get('authorize.menu.pallet.close'))}"
                                              onstart="PF('bui').block()"
                                              action="#{palletManagement.OnClosePallet}"
                                              oncomplete="PF('bui').unblock()"

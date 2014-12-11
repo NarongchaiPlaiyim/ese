@@ -8,6 +8,7 @@ import com.ese.model.view.BarcodeRegisterView;
 import com.ese.model.view.report.BarcodeRegisterModelReport;
 import com.ese.transform.BarcodeRegisterTransform;
 import com.ese.utils.Utils;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,8 +26,8 @@ public class BarcodeRegisterService extends Service{
     @Resource private BarcodeRegisterDAO barcodeRegisterDAO;
     @Resource private BarcodeRegisterTransform barcodeRegisterTransform;
     @Resource private ReportService reportService;
-    @Value("#{config['report.barcode']}")
-    private String pathBarcodeReport;
+    @Value("#{config['report.barcode']}")private String pathBarcodeReport;
+    @Getter @Value("#{config['authorize.menu.barcode']}") private String key;
 
     public List<MSItemModel> findByCondition(final String type, final String text){
         log.debug("-- findByCondition({}, {})", type, text);

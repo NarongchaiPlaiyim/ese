@@ -25,13 +25,16 @@
         <h:form id="userManagementForm">
         <h:form id="mainForm" style="width: 100%;border-spacing: 0;">
         <p:tabView id="manegementTab" cache="false" dynamic="false" style="border: 0">
-        <p:tab id="userManageSub" title="8.1 User Management">
+        <p:tab id="userManageSub" title="8.1 User Management"
+               rendered="#{loginBean.isRendered(msg.get('authorize.menu.user.tab.1'))}"
+                >
             <p:panel style="border: 0">
                 <div style="text-align: right;">
                     <h:outputLabel id="modeUserAccess" value="#{userManagement.modeUserManage}"/>
 
                     <p:commandButton id="btnPrint"
                                      value="#{msg.get('btn.name.print')}"
+                                     rendered="#{loginBean.isRendered(msg.get('authorize.menu.user.tab.1.report'))}"
                                      process="@form"
                                      disabled="#{userManagement.flagPrint}"
                                      onstart="PF('bui').block()"
@@ -40,7 +43,9 @@
                                      icon="ui-icon-print"
                                      styleClass="medium" style="#{msg.get('btn.size')}"/>
 
-                    <p:commandButton id="btnEdit" value="#{msg.get('btn.name.edit')}"
+                    <p:commandButton id="btnEdit"
+                                     value="#{msg.get('btn.name.edit')}"
+                                     rendered="#{loginBean.isRendered(msg.get('authorize.menu.user.tab.1.edit'))}"
                                      styleClass="medium" style="#{msg.get('btn.size')}"
                                      process="@form"
                                      disabled="#{userManagement.flagBtnEdit}"
@@ -48,7 +53,9 @@
                                      update=":addUserForm"
                                      icon="ui-icon-wrench"
                                      oncomplete="PF('addUserDlg').show()"/>
-                    <p:commandButton id="btnDelete" value="#{msg.get('btn.name.delete')}"
+                    <p:commandButton id="btnDelete"
+                                     value="#{msg.get('btn.name.delete')}"
+                                     rendered="#{loginBean.isRendered(msg.get('authorize.menu.user.tab.1.delete'))}"
                                      styleClass="medium" style="#{msg.get('btn.size')}"
                                      process="@form"
                                      disabled="#{userManagement.flagBtnDelete}"
@@ -63,7 +70,9 @@
                                              :userManagementForm:mainForm:manegementTab:btnDelete,
                                              :userManagementForm:mainForm:manegementTab:btnUserAccess"/>
 
-                    <p:commandButton id="btnAddUser" value="Add User"
+                    <p:commandButton id="btnAddUser"
+                                     value="Add User"
+                                     rendered="#{loginBean.isRendered(msg.get('authorize.menu.user.tab.1.add'))}"
                                      styleClass="medium" style="min-width: 160px; width: 160px; max-width: 160px;"
                                      process="@form"
                                      action="#{userManagement.onClickNewUser('New')}"
@@ -71,7 +80,9 @@
                                      icon="ui-icon-plusthick"
                                      oncomplete="PF('addUserDlg').show()"/>
 
-                    <p:commandButton id="btnUserAccess" value="User Access"
+                    <p:commandButton id="btnUserAccess"
+                                     value="User Access"
+                                     rendered="#{loginBean.isRendered(msg.get('authorize.menu.user.tab.1.access'))}"
                                      icon="ui-icon-script"
                                      styleClass="medium" style="min-width: 170px; width: 170px; max-width: 170px;"
                                      process="@form"
@@ -171,7 +182,9 @@
             </p:dataTable>
 
         </p:tab>
-        <p:tab id="roleAccessSub" title="8.2 Role Access">
+        <p:tab id="roleAccessSub" title="8.2 Role Access"
+               rendered="#{loginBean.isRendered(msg.get('authorize.menu.user.tab.2'))}"
+                >
             <div class="ui-grid ui-grid-responsive">
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-6">
@@ -181,6 +194,7 @@
                                 (<h:outputLabel id="modeRole" value="#{roleAccess.modeRole}"/>)
                                 <p:commandButton id="btnPrintRole"
                                                  value="#{msg.get('btn.name.print')}"
+                                                 rendered="#{loginBean.isRendered(msg.get('authorize.menu.user.tab.2'))}"
                                                  process="@form"
                                                  disabled="#{roleAccess.flagBtnPrint}"
                                                  onstart="PF('bui').block()"
@@ -189,6 +203,7 @@
                                                  icon="ui-icon-print"
                                                  styleClass="medium" style="#{msg.get('btn.size')}"/>
                                 <p:commandButton value="#{msg.get('btn.name.new')}"
+                                                 rendered="#{loginBean.isRendered(msg.get('authorize.menu.user.tab.2.new'))}"
                                                  id="btnNewRole"
                                                  action="#{roleAccess.clearTextBox}"
                                                  process="@form"
@@ -210,6 +225,7 @@
                                                  styleClass="medium" style="#{msg.get('btn.size')}"
                                                  icon="ui-icon-plusthick" />
                                 <p:commandButton value="#{msg.get('btn.name.save')}"
+                                                 rendered="#{loginBean.isRendered(msg.get('authorize.menu.user.tab.2.edit'))}"
                                                  id="btnSaveRole"
                                                  styleClass="medium" style="#{msg.get('btn.size')}"
                                                  icon="ui-icon-check"
@@ -235,6 +251,7 @@
                                                  oncomplete="PF('bui').unblock()"
                                                  binding="#{saveRole}"/>
                                 <p:commandButton value="#{msg.get('btn.name.delete')}"
+                                                 rendered="#{loginBean.isRendered(msg.get('authorize.menu.user.tab.2.delete'))}"
                                                  id="btnDeleteRole"
                                                  styleClass="medium" style="#{msg.get('btn.size')}"
                                                  icon="ui-icon-trash"
@@ -347,6 +364,7 @@
                                 <h:outputLabel value="Role Access"/>
                                 (<h:outputLabel value="#{roleAccess.modeRoleAccess}"/>)
                                 <p:commandButton value="#{msg.get('btn.name.add')}"
+                                                 rendered="#{loginBean.isRendered(msg.get('authorize.menu.user.tab.2.role.add'))}"
                                                  id="btnAddRoleAccess"
                                                  styleClass="medium" style="#{msg.get('btn.size')}"
                                                  icon="ui-icon-plusthick"
@@ -355,6 +373,7 @@
                                                  disabled="#{roleAccess.flagBtnAddRoleAccess}"
                                                  oncomplete="PF('userRoleAccessDlg').show()"/>
                                 <p:commandButton value="#{msg.get('btn.name.delete')}"
+                                                 rendered="#{loginBean.isRendered(msg.get('authorize.menu.user.tab.2.role.delete'))}"
                                                  id="btnDeleteRoleAccess"
                                                  styleClass="medium" style="#{msg.get('btn.size')}"
                                                  icon="ui-icon-trash"

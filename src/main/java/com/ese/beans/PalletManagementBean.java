@@ -12,6 +12,7 @@ import com.ese.utils.Utils;
 import lombok.Getter;
 import lombok.Setter;
 import org.primefaces.context.RequestContext;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -30,6 +31,7 @@ public class PalletManagementBean extends Bean implements Serializable {
     @ManagedProperty("#{workingAreaService}") private WorkingAreaService workingAreaService;
     @ManagedProperty("#{locationService}") private LocationService locationService;
     @ManagedProperty("#{locationItemService}") private LocationItemService locationItemService;
+    @Value("#{config['authorize.menu.pallet']}") private String key;
 
     private List<MSWarehouseModel> warehouseModelList;
     private MSWarehouseModel warehouseMode;
@@ -55,7 +57,7 @@ public class PalletManagementBean extends Bean implements Serializable {
     @PostConstruct
     public void onCreation(){
         log.debug("onCreation().");
-        if(preLoad()){
+        if(preLoad() && isAuthorize("0200")){
             init();
         }
     }

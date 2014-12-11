@@ -20,12 +20,16 @@
                 <h:form id="setupForm">
                     <h:form id="mainForm" style="width: 100%;border-spacing: 0;">
                     <p:tabView id="setupTab" cache="false" dynamic="false" style="border: 0">
-                    <p:tab id="warehouseTab" title="7.1 Warehouse and Location" >
+                    <p:tab id="warehouseTab" title="7.1 Warehouse and Location"
+                           rendered="#{loginBean.isRendered(msg.get('authorize.menu.setup.tab.1'))}"
+                            >
                         <p:panel style="border: 0">
                             <div style="text-align: right;">
                                 <h:outputText id="modeWarehouse" value="#{setup.modeWarehouse}"/>
 
-                                <p:commandButton id="btnNewLocation" value="#{setup.nameBtn}"
+                                <p:commandButton id="btnNewLocation"
+                                                 value="#{setup.nameBtn}"
+                                                 rendered="#{loginBean.isRendered(msg.get('authorize.menu.setup.tab.1.new'))}"
                                                  styleClass="medium" style="#{msg.get('btn.size')}"
                                                  disabled="#{setup.flagBtnNewWarehouse}"
                                                  update=":setupForm:mainForm:setupTab,
@@ -35,7 +39,10 @@
                                                  oncomplete="PF('bui').unblock()"
                                                  action="#{setup.onClickNewOrCancelWarehouse}"/>
 
-                                <p:commandButton id="btnSaveLocation" value="Save" styleClass="medium" style="#{msg.get('btn.size')}"
+                                <p:commandButton id="btnSaveLocation"
+                                                 value="Save"
+                                                 rendered="#{loginBean.isRendered(msg.get('authorize.menu.setup.tab.1.edit'))}"
+                                                 styleClass="medium" style="#{msg.get('btn.size')}"
                                                  action="#{setup.onSaveWarehouse}"
                                                  process="@form"
                                                  icon="ui-icon-check"
@@ -46,7 +53,9 @@
                                                                  :setupForm:mainForm:setupTab"
                                                  binding="#{addWarehouseAndLocation}"/>
 
-                                <p:commandButton id="btnDelete" value="#{msg.get('btn.name.delete')}"
+                                <p:commandButton id="btnDelete"
+                                                 value="#{msg.get('btn.name.delete')}"
+                                                 rendered="#{loginBean.isRendered(msg.get('authorize.menu.setup.tab.1.delete'))}"
                                                  styleClass="medium" style="#{msg.get('btn.size')}"
                                                  process="@form"
                                                  disabled="#{setup.flagBtnDelete}"
@@ -89,7 +98,9 @@
                                         </p:selectOneMenu>
                                     </td>
                                     <td >
-                                        <p:commandButton id="btnNewEditWarehouse" value="#{msg.get('btn.name.new.edit')}"
+                                        <p:commandButton id="btnNewEditWarehouse"
+                                                         value="#{msg.get('btn.name.new.edit')}"
+                                                         rendered="#{loginBean.isRendered(msg.get('authorize.menu.setup.tab.1.add.edit'))}"
                                                          icon="ui-icon-folder-open"
                                                          styleClass="medium" style="min-width: 160px; width: 160px; max-width: 160px;"
                                                          disabled="#{setup.flagBtnAddEdit}"
@@ -157,6 +168,7 @@
                                     <td class="center">
                                         <div class="center">
                                             <p:commandButton id="btnShowAddItem" value="#{msg.get('btn.name.show.add')}"
+                                                             rendered="#{loginBean.isRendered(msg.get('authorize.menu.setup.tab.1.show.add'))}"
                                                              icon="ui-icon-folder-open"
                                                              styleClass="medium" style="min-width: 160px; width: 160px; max-width: 160px;"
                                                              disabled="#{setup.flagBtnAddShowItem}"
@@ -234,12 +246,16 @@
                     </tr>
                     </table>
                     </p:tab>
-                    <p:tab id="stockInoutTag" title="7.2 Stock In Out Note">
+                    <p:tab id="stockInoutTag" title="7.2 Stock In Out Note"
+                           rendered="#{loginBean.isRendered(msg.get('authorize.menu.setup.tab.2'))}"
+                            >
                         <p:panel style="border: 0">
                             <div style="text-align: right;">
                                 <h:outputText id="mode" value="#{setup.modeStock}"/>
 
-                                <p:commandButton id="btnNew" value="#{setup.nameBtnStock}"
+                                <p:commandButton id="btnNew"
+                                                 value="#{setup.nameBtnStock}"
+                                                 rendered="#{loginBean.isRendered(msg.get('authorize.menu.setup.tab.2.new'))}"
                                                  action="#{setup.OnNewStockInOutNote}"
                                                  onstart="PF('bui').block()"
                                                  oncomplete="PF('bui').unblock()"
@@ -247,7 +263,9 @@
                                                  update=":setupForm:mainForm:setupTab
                                                                                    :setupForm:mainForm:setupTab:stockInoutTable"/>
 
-                                <p:commandButton id="btnSave" value="#{msg.get('btn.name.save')} "
+                                <p:commandButton id="btnSave"
+                                                 value="#{msg.get('btn.name.save')}"
+                                                 rendered="#{loginBean.isRendered(msg.get('authorize.menu.setup.tab.2.edit'))}"
                                                  action="#{setup.onSaveStockInOutNote}"
                                                  styleClass="medium" style="#{msg.get('btn.size')}"
                                                  onstart="PF('bui').block()"
@@ -258,7 +276,9 @@
                                                  update=":msgBoxSystemMessagePanel,
                                                                          :setupForm:mainForm:setupTab"/>
 
-                                <p:commandButton id="btnDeleteStock" value="#{msg.get('btn.name.delete')}"
+                                <p:commandButton id="btnDeleteStock"
+                                                 value="#{msg.get('btn.name.delete')}"
+                                                 rendered="#{loginBean.isRendered(msg.get('authorize.menu.setup.tab.2.delete'))}"
                                                  icon="ui-icon-trash"
                                                  styleClass="medium" style="#{msg.get('btn.size')}"
                                                  action="#{setup.preDeleteItem()}"
