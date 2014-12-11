@@ -83,7 +83,6 @@ public abstract class Bean implements Serializable {
     }
 
     protected boolean isAuthorize(String key){
-        log.debug("isAuthorize KEY : {}", key);
         boolean result = true;
         try {
             Map<String,String> map = (Map<String, String>) FacesUtil.getSession(false).getAttribute(AttributeName.AUTHORIZE.getName());
@@ -91,7 +90,6 @@ public abstract class Bean implements Serializable {
                 FacesUtil.redirect(NamesUtil.MAIN_PAGE.getName());
                 result = false;
             }
-            log.debug("Result : {}", result);
             return result;
         } catch (Exception e) {
             FacesUtil.redirect(NamesUtil.LOGIN_PAGE.getName());

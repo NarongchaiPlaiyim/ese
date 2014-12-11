@@ -8,7 +8,6 @@ import com.ese.model.view.BarcodeRegisterView;
 import com.ese.model.view.report.BarcodeRegisterModelReport;
 import com.ese.transform.BarcodeRegisterTransform;
 import com.ese.utils.Utils;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +26,6 @@ public class BarcodeRegisterService extends Service{
     @Resource private BarcodeRegisterTransform barcodeRegisterTransform;
     @Resource private ReportService reportService;
     @Value("#{config['report.barcode']}")private String pathBarcodeReport;
-    @Getter @Value("#{config['authorize.menu.barcode']}") private String key;
 
     public List<MSItemModel> findByCondition(final String type, final String text){
         log.debug("-- findByCondition({}, {})", type, text);
@@ -123,24 +121,17 @@ public class BarcodeRegisterService extends Service{
     public boolean isDuplicate(String startBarcode, String finishBarcode, int id){
         try {
             boolean result = false;
-            List<BarcodeRegisterModel> barcodeRegisterModelList = getByIsValid();//  barcodeRegisterDAO.findByNeId(id);
+            List<BarcodeRegisterModel> barcodeRegisterModelList = getByIsValid();
             System.out.println(barcodeRegisterModelList.size());
             int start = Utils.parseInt(startBarcode, 0);
             int finish = Utils.parseInt(finishBarcode, 0);
-//            System.out.println("VIEW "+start + " : "+ finish);
             for (BarcodeRegisterModel model : barcodeRegisterModelList){
-//                System.out.println("ID "+model.getId() + " : "+ id);
                 if(model.getId() != id){
                     int startM = Utils.parseInt(model.getStartBarcode(), 0);
                     int finishM = Utils.parseInt(model.getFinishBarcode(), 0);
-//                    System.out.println("MODEL "+startM + " : "+ finishM);
-
                     while (start<=finish){
-//                        System.out.println("start : "+start);
                         while (startM<=finishM){
-//                            System.out.println("startM : "+startM);
                             if(start == startM){
-//                                System.out.println("Matched : "+start);
                                 return true;
                             }
                             startM++;
@@ -149,9 +140,7 @@ public class BarcodeRegisterService extends Service{
                         start++;
                     }
                     start = Utils.parseInt(startBarcode, 0);
-
                 }
-
             }
             return result;
         } catch (Exception e) {

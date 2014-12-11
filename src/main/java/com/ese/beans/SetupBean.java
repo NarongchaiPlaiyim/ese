@@ -72,7 +72,7 @@ public class SetupBean extends Bean{
 
     @PostConstruct
     public void onCreation(){
-        log.debug("onCreation(). {}", setupService.getKey());
+        log.debug("onCreation()");
         if(preLoad() && isAuthorize("0700")){
             init();
         }
