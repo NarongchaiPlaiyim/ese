@@ -216,7 +216,13 @@
                         </tr>
 
                     </table>
-
+                    <p:selectOneMenu
+                            value="#{barcodeRegisterBean.selectType}"
+                            style="#{msg.get('fix.size.200')} margin-top: 4px">
+                        <f:selectItem itemLabel="Item Description" itemValue="3"/>
+                        <f:selectItem itemLabel="Barcode" itemValue="1"/>
+                        <f:selectItem itemLabel="Batch No" itemValue="2"/>
+                    </p:selectOneMenu>
                     <table border="0" class="content_table_form">
                         <tr >
                             <td class="fixMinMax100 left" />
