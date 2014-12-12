@@ -29,6 +29,15 @@ public class BarcodeRegisterDAO extends GenericDAO<BarcodeRegisterModel, Integer
         return Utils.safetyList(criteria.list());
     }
 
+    public List<BarcodeRegisterModel> findByBetween(String startBarcode) throws Exception {
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder.append("SELECT * FROM ppwms03.dbo.barcode_register");
+        sqlBuilder.append(" WHERE ppwms03.dbo.barcode_register.finish_barcode");
+        sqlBuilder.append(" BETWEEN "+startBarcode+" AND 999999999");
+        SQLQuery query = getSession().createSQLQuery(sqlBuilder.toString()).addEntity(BarcodeRegisterModel.class);
+        return Utils.safetyList(query.list());
+    }
+
     public List<BarcodeRegisterModel> findByLike(String text) throws Exception {
         StringBuilder sqlBuilder = new StringBuilder();
         sqlBuilder.append("SELECT * FROM ppwms03.dbo.barcode_register");

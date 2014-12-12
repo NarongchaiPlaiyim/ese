@@ -31,17 +31,16 @@ public class BarcodeRegisterService extends Service{
     public List<BarcodeRegisterModel> findBarcodeByCondition(final String type, final String text){
         log.debug("-- findBarcodeByCondition({}, {})", type, text);
         try {
-            List<BarcodeRegisterModel> barcodeRegisterModelList = Utils.getEmptyList();
+            List<BarcodeRegisterModel> barcodeRegisterModelList;
                 if("2".equalsIgnoreCase(type)){
                     barcodeRegisterModelList = barcodeRegisterDAO.findByLike("batchNo", text);
                 } else if("3".equalsIgnoreCase(type)){
                     barcodeRegisterModelList = barcodeRegisterDAO.findByLike(text);
                 } else {
-
+                    barcodeRegisterModelList = barcodeRegisterDAO.findByBetween(text);
                 }
             return barcodeRegisterModelList;
         } catch (Exception e) {
-            log.error("{}",e);
             return Utils.getEmptyList();
         }
     }
