@@ -27,6 +27,25 @@ public class BarcodeRegisterService extends Service{
     @Resource private ReportService reportService;
     @Value("#{config['report.barcode']}")private String pathBarcodeReport;
 
+
+    public List<BarcodeRegisterModel> findBarcodeByCondition(final String type, final String text){
+        log.debug("-- findBarcodeByCondition({}, {})", type, text);
+        try {
+            List<BarcodeRegisterModel> barcodeRegisterModelList = Utils.getEmptyList();
+                if("2".equalsIgnoreCase(type)){
+                    barcodeRegisterModelList = barcodeRegisterDAO.findByLike("batchNo", text);
+                } else if("3".equalsIgnoreCase(type)){
+                    barcodeRegisterModelList = barcodeRegisterDAO.findByLike(text);
+                } else {
+
+                }
+            return barcodeRegisterModelList;
+        } catch (Exception e) {
+            log.error("{}",e);
+            return Utils.getEmptyList();
+        }
+    }
+
     public List<MSItemModel> findByCondition(final String type, final String text){
         log.debug("-- findByCondition({}, {})", type, text);
         try {
@@ -41,7 +60,7 @@ public class BarcodeRegisterService extends Service{
             return msItemModelList;
         } catch (Exception e) {
             log.error("{}",e);
-            return Collections.EMPTY_LIST;
+            return Utils.getEmptyList();
         }
     }
 
@@ -50,7 +69,7 @@ public class BarcodeRegisterService extends Service{
             return itemDAO.findAll();
         } catch (Exception e) {
             log.error("{}",e);
-            return Collections.EMPTY_LIST;
+            return Utils.getEmptyList();
         }
     }
 
@@ -60,7 +79,7 @@ public class BarcodeRegisterService extends Service{
             return barcodeRegisterDAO.findByIsValid();
         } catch (Exception e) {
             log.error("{}",e);
-            return Collections.EMPTY_LIST;
+            return Utils.getEmptyList();
         }
     }
 

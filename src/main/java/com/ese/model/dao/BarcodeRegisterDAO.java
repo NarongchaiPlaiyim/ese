@@ -23,6 +23,22 @@ public class BarcodeRegisterDAO extends GenericDAO<BarcodeRegisterModel, Integer
         return Utils.safetyList(criteria.list());
     }
 
+    public List<BarcodeRegisterModel> findByLike(String filed, String text) throws Exception {
+        Criteria criteria = getCriteria().add(Restrictions.eq("isValid", 1)).addOrder(Order.desc("updateDate"));
+        criteria.add(Restrictions.like(filed, "%"+text+"%"));
+        return Utils.safetyList(criteria.list());
+    }
+
+    public List<BarcodeRegisterModel> findByLike(String text) throws Exception {
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder.append("SELECT * FROM ppwms03.dbo.barcode_register");
+        sqlBuilder.append(" WHERE ppwms03.dbo.barcode_register.item_id");
+        sqlBuilder.append(" IN(SELECT ppwms03.dbo.item_master.id FROM ppwms03.dbo.item_master WHERE");
+        sqlBuilder.append(" ppwms03.dbo.item_master.DSGThaiItemDescription LIKE '%"+text+"%')");
+        SQLQuery query = getSession().createSQLQuery(sqlBuilder.toString()).addEntity(BarcodeRegisterModel.class);
+        return Utils.safetyList(query.list());
+    }
+
     public void deleteByUpdate(final BarcodeRegisterModel model) throws Exception {
         model.setIsValid(0); //0 is flag for delete
         model.setUpdateDate(Utils.currentDate());

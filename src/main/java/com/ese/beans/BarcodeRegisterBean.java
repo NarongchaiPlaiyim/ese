@@ -29,6 +29,8 @@ public class BarcodeRegisterBean extends Bean{
     private BarcodeRegisterModel barcodeRegisterModel;
     private String selectType;
     private String productSearch;
+    private String barcodeSearch;
+    private String barcodeSelectType;
     private boolean flagBtnSelect;
     private boolean flagBtnDelete;
     private boolean flagBtnSave;
@@ -75,9 +77,13 @@ public class BarcodeRegisterBean extends Bean{
     }
 
     private void onLoadDataTable(){
-        barcodeRegisterModelList = barcodeRegisterService.getByIsValid();
+        onLoadDataBarcode();
         log.debug("-- onLoadDataTable() returned size = {}", barcodeRegisterModelList.size());
         barcodeRegisterModel = new BarcodeRegisterModel();
+    }
+
+    private void onLoadDataBarcode(){
+        barcodeRegisterModelList = barcodeRegisterService.getByIsValid();
     }
 
     public void onClickButtonNew(){
@@ -147,6 +153,16 @@ public class BarcodeRegisterBean extends Bean{
         selectType = "3";
         productSearch = "";
         msItemModelList = Utils.getEmptyList();
+    }
+
+    public void onSubmitSearchBarcode(){
+        log.debug("-- onSubmitSearch()");
+        if(!Utils.isZero(barcodeSearch.length())){
+            barcodeRegisterModelList = barcodeRegisterService.findBarcodeByCondition(barcodeSelectType, barcodeSearch);
+        } else {
+            onLoadDataBarcode();
+        }
+
     }
 
     public void onSubmitSearch(){

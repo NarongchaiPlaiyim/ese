@@ -216,13 +216,34 @@
                         </tr>
 
                     </table>
-                    <p:selectOneMenu
-                            value="#{barcodeRegisterBean.selectType}"
-                            style="#{msg.get('fix.size.200')} margin-top: 4px">
-                        <f:selectItem itemLabel="Item Description" itemValue="3"/>
-                        <f:selectItem itemLabel="Barcode" itemValue="1"/>
-                        <f:selectItem itemLabel="Batch No" itemValue="2"/>
-                    </p:selectOneMenu>
+                    <table  border="0">
+                        <tr>
+                            <td style="width: 200px">
+                                <p:selectOneMenu
+                                        value="#{barcodeRegisterBean.barcodeSelectType}"
+                                        style="#{msg.get('fix.size.200')} margin-top: 4px">
+                                    <f:selectItem itemLabel="Item Description" itemValue="3"/>
+                                    <f:selectItem itemLabel="Batch No" itemValue="2"/>
+                                    <f:selectItem itemLabel="Barcode" itemValue="1"/>
+                                </p:selectOneMenu>
+                            </td>
+                            <td>
+                                <p:inputText
+                                        style="#{msg.get('fix.size.200')}  margin-top: 4px"
+                                        value="#{barcodeRegisterBean.barcodeSearch}"
+                                        />
+                                <p:commandButton value="#{msg.get('btn.name.search')}"
+                                                 id="btnSearchMainPage"
+                                                 styleClass="medium" style="#{msg.get('btn.size')}"
+                                                 icon="ui-icon-search"
+                                                 onstart="PF('bui').block()"
+                                                 action="#{barcodeRegisterBean.onSubmitSearchBarcode()}"
+                                                 update=":setupForm:barcodeRegisterTable"
+                                                 oncomplete="PF('bui').unblock()"
+                                        />
+                            </td>
+                        </tr>
+                    </table>
                     <table border="0" class="content_table_form">
                         <tr >
                             <td class="fixMinMax100 left" />
