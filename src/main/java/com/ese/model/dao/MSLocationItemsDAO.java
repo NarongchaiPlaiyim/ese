@@ -60,8 +60,6 @@ public class MSLocationItemsDAO extends GenericDAO<MSLocationItemsModel, Integer
             locationItemView.setAvaliable(Utils.parseInt(entity[4], 0));
             locationItemViewList.add(locationItemView);
         }
-
-
         return locationItemViewList;
     }
 
@@ -74,7 +72,7 @@ public class MSLocationItemsDAO extends GenericDAO<MSLocationItemsModel, Integer
             criteria.add(Restrictions.eq("msLocationModel.id", locationId));
             criteria.add(Restrictions.eq("isValid", 1));
             criteria.addOrder(Order.desc("updateDate"));
-            msLocationItemsModels = criteria.list();
+            msLocationItemsModels = Utils.safetyList(criteria.list());
         } catch (Exception e) {
             log.debug("Exception Error findByLocationIf : ", e);
         }

@@ -18,7 +18,7 @@ public class MenuObjectDAO extends GenericDAO<MenuObjectModel, Integer>{
         try {
             Criteria criteria = getCriteria();
             criteria.add(Restrictions.eq("objCategory", 1));
-            menuObjectModels = criteria.list();
+            menuObjectModels = Utils.safetyList(criteria.list());
         } catch (Exception e) {
             log.debug("Exception error findByObjCategory : ", e);
         }
@@ -28,7 +28,6 @@ public class MenuObjectDAO extends GenericDAO<MenuObjectModel, Integer>{
 
     public List<String> findByStaffId(int staffId) throws Exception {
         StringBuilder sqlBuilder = new StringBuilder();
-        sqlBuilder.append("");
         sqlBuilder.append("SELECT ppwms03.dbo.menu_object.code AS CODE");
         sqlBuilder.append(" FROM ppwms03.dbo.menu_object");
         sqlBuilder.append(" WHERE ppwms03.dbo.menu_object.id IN (");

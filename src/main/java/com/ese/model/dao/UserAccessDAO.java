@@ -14,12 +14,12 @@ import java.util.List;
 public class UserAccessDAO extends GenericDAO<UserAccessModel, Integer>{
 
     public List<UserAccessModel> findByUserId(int userId){
-        List<UserAccessModel> userAccessModels = new ArrayList<UserAccessModel>();
+        List<UserAccessModel> userAccessModels = Utils.getEmptyList();
         try {
             Criteria criteria = getCriteria();
             criteria.add(Restrictions.eq("staffModel.id", userId));
             criteria.add(Restrictions.eq("isValid", 1));
-            userAccessModels = criteria.list();
+            userAccessModels = Utils.safetyList(criteria.list());
         } catch (Exception e) {
             log.debug("Exception error findByUserId : ", e);
         }
@@ -27,7 +27,7 @@ public class UserAccessDAO extends GenericDAO<UserAccessModel, Integer>{
     }
 
     public List<UserAccessModel> findByMenuObjOrKey(int objId, String key){
-        List<UserAccessModel> userAccessModels = new ArrayList<UserAccessModel>();
+        List<UserAccessModel> userAccessModels = Utils.getEmptyList();
         try {
             Criteria criteria = getSession().createCriteria(UserAccessModel.class, "ua");
             criteria.createAlias("ua.menuObjectModel", "mo");
@@ -42,7 +42,7 @@ public class UserAccessDAO extends GenericDAO<UserAccessModel, Integer>{
                 criteria.add(Restrictions.or(objectCode,objecyName));
             }
             criteria.add(Restrictions.eq("isValid", 1));
-            userAccessModels = criteria.list();
+            userAccessModels = Utils.safetyList(criteria.list());
         } catch (Exception e) {
             log.debug("Exception error findByUserId : ", e);
         }
