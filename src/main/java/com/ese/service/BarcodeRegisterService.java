@@ -30,25 +30,25 @@ public class BarcodeRegisterService extends Service{
 
     public List<BarcodeRegisterModel> findBarcodeByCondition(final String type, final String text){
         log.debug("-- findBarcodeByCondition({}, {})", type, text);
+        List<BarcodeRegisterModel> barcodeRegisterModelList = Utils.getEmptyList();
         try {
-            List<BarcodeRegisterModel> barcodeRegisterModelList;
-                if("2".equalsIgnoreCase(type)){
-                    barcodeRegisterModelList = barcodeRegisterDAO.findByLike("batchNo", text);
-                } else if("3".equalsIgnoreCase(type)){
-                    barcodeRegisterModelList = barcodeRegisterDAO.findByLike(text);
-                } else {
-                    barcodeRegisterModelList = barcodeRegisterDAO.findByBetween(text);
-                }
-            return barcodeRegisterModelList;
+            if("2".equalsIgnoreCase(type)){
+                barcodeRegisterModelList = barcodeRegisterDAO.findByLike("batchNo", text);
+            } else if("3".equalsIgnoreCase(type)){
+                barcodeRegisterModelList = barcodeRegisterDAO.findByLike(text);
+            } else {
+                barcodeRegisterModelList = barcodeRegisterDAO.findByBetween(text);
+            }
         } catch (Exception e) {
-            return Utils.getEmptyList();
+            log.error("{}",e);
         }
+        return barcodeRegisterModelList;
     }
 
     public List<MSItemModel> findByCondition(final String type, final String text){
         log.debug("-- findByCondition({}, {})", type, text);
+        List<MSItemModel> msItemModelList = Utils.getEmptyList();
         try {
-            List<MSItemModel> msItemModelList;
             if("3".equalsIgnoreCase(type)){
                 msItemModelList = itemDAO.findByLike("dSGThaiItemDescription", text);
             } else if("2".equalsIgnoreCase(type)){
@@ -56,11 +56,10 @@ public class BarcodeRegisterService extends Service{
             } else {
                 msItemModelList = itemDAO.findByLike("itemName", text);
             }
-            return msItemModelList;
         } catch (Exception e) {
             log.error("{}",e);
-            return Utils.getEmptyList();
         }
+        return msItemModelList;
     }
 
     public List<MSItemModel> findAll(){
@@ -84,7 +83,6 @@ public class BarcodeRegisterService extends Service{
 
     public void delete(BarcodeRegisterModel model){
         log.debug("-- delete(id : {})", model.getId());
-        System.out.println(model.getId());
         try {
             barcodeRegisterDAO.deleteByUpdate(model);
         } catch (Exception e) {

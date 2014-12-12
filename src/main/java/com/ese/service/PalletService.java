@@ -42,7 +42,7 @@ public class PalletService extends Service{
 
     public List<PalletManagementView> findPalletJoinLocation(){
         log.debug("findPalletJoinLocation().");
-        List<PalletManagementView> palletMeanegementViewList = new ArrayList<PalletManagementView>();
+        List<PalletManagementView> palletMeanegementViewList = Utils.getEmptyList();
 
         List<PalletModel> palletModels = palletDAO.findPalletTable();
 
@@ -56,7 +56,7 @@ public class PalletService extends Service{
 
     public List<PalletManagementView> findByChang(int status, int warehouse, int conveyorLine, int location, String keyItemDescription){
         log.debug("findByChang().");
-        List<PalletManagementView> palletMeanegementViewList = new ArrayList<PalletManagementView>();
+        List<PalletManagementView> palletMeanegementViewList = Utils.getEmptyList();
 
         List<PalletModel> palletModels = palletDAO.findChang(status, warehouse, conveyorLine, location, keyItemDescription);
 

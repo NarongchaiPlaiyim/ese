@@ -20,7 +20,7 @@ public class WarehouseService extends Service{
 
     public List<MSWarehouseModel> getWarehouseAll(){
         log.debug("getALl().");
-        List<MSWarehouseModel> msWarehouseModels = null;
+        List<MSWarehouseModel> msWarehouseModels = Utils.getEmptyList();
         try {
             msWarehouseModels = warehouseDAO.getLocationOrderByUpdateDate();
         } catch (Exception e){
@@ -64,11 +64,6 @@ public class WarehouseService extends Service{
 
     public boolean isDuplicate(String warehouseCode, int id){
         List<MSWarehouseModel> msWarehouseModels = warehouseDAO.findByWarehouseCode(warehouseCode);
-
-        if (!Utils.isSafetyList(msWarehouseModels) || msWarehouseModels.size() == 1 && !Utils.isZero(id)){
-            return true;
-        } else {
-            return false;
-        }
+        return  !Utils.isSafetyList(msWarehouseModels) || msWarehouseModels.size() == 1 && !Utils.isZero(id)?true:false;
     }
 }

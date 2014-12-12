@@ -2,6 +2,7 @@ package com.ese.service;
 
 import com.ese.model.db.ConveyorLineModel;
 import com.ese.model.dao.ConveyorLineDAO;
+import com.ese.utils.Utils;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +22,7 @@ public class ConveyorLineService extends Service{
             return conveyorLineDAO.findAll();
         } catch (Exception e){
             log.debug("Exception : {}", e);
-            return new ArrayList<ConveyorLineModel>();
+            return Utils.getEmptyList();
         }
     }
 

@@ -14,7 +14,6 @@ import java.util.List;
 @Component
 @Transactional
 public class StockInOutNoteService extends Service{
-
     @Resource private StockInOutNoteDAO stockInOutNoteDAO;
     @Resource private StockInOutNoteTransform stockInOutNoteTransform;
 

@@ -62,7 +62,7 @@ public class UserManagementService extends Service{
             return msTitleDAO.findAll();
         } catch (Exception e) {
             log.debug("Exception error getTitleAll : ", e);
-            return new ArrayList<MSTitleModel>();
+            return Utils.getEmptyList();
         }
     }
 
