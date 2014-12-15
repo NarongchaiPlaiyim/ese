@@ -31,8 +31,8 @@ public class BarcodeRegisterDAO extends GenericDAO<BarcodeRegisterModel, Integer
 
     public List<BarcodeRegisterModel> findByBetween(String startBarcode) throws Exception {
         StringBuilder sqlBuilder = new StringBuilder();
-        sqlBuilder.append("SELECT * FROM ppwms03.dbo.barcode_register");
-        sqlBuilder.append(" WHERE ppwms03.dbo.barcode_register.finish_barcode");
+        sqlBuilder.append("SELECT * FROM ").append(getPrefix()).append(".barcode_register");
+        sqlBuilder.append(" WHERE ").append(getPrefix()).append(".barcode_register.finish_barcode");
         sqlBuilder.append(" BETWEEN "+startBarcode+" AND 999999999");
         SQLQuery query = getSession().createSQLQuery(sqlBuilder.toString()).addEntity(BarcodeRegisterModel.class);
         return Utils.safetyList(query.list());
@@ -40,10 +40,10 @@ public class BarcodeRegisterDAO extends GenericDAO<BarcodeRegisterModel, Integer
 
     public List<BarcodeRegisterModel> findByLike(String text) throws Exception {
         StringBuilder sqlBuilder = new StringBuilder();
-        sqlBuilder.append("SELECT * FROM ppwms03.dbo.barcode_register");
-        sqlBuilder.append(" WHERE ppwms03.dbo.barcode_register.item_id");
-        sqlBuilder.append(" IN(SELECT ppwms03.dbo.item_master.id FROM ppwms03.dbo.item_master WHERE");
-        sqlBuilder.append(" ppwms03.dbo.item_master.DSGThaiItemDescription LIKE '%"+text+"%')");
+        sqlBuilder.append("SELECT * FROM ").append(getPrefix()).append(".barcode_register");
+        sqlBuilder.append(" WHERE ").append(getPrefix()).append(".barcode_register.item_id");
+        sqlBuilder.append(" IN(SELECT ").append(getPrefix()).append(".item_master.id FROM ").append(getPrefix()).append(".item_master WHERE");
+        sqlBuilder.append(" ").append(getPrefix()).append(".item_master.DSGThaiItemDescription LIKE '%"+text+"%')");
         SQLQuery query = getSession().createSQLQuery(sqlBuilder.toString()).addEntity(BarcodeRegisterModel.class);
         return Utils.safetyList(query.list());
     }
@@ -63,18 +63,18 @@ public class BarcodeRegisterDAO extends GenericDAO<BarcodeRegisterModel, Integer
         log.debug("genSQLReportBarcode(). {}", barcodeId);
         List<BarcodeRegisterModelReport> reportViews = new ArrayList<BarcodeRegisterModelReport>();
         StringBuilder sqlBuilder = new StringBuilder();
-        sqlBuilder.append("SELECT DISTINCT ppwms03.dbo.item_master.DSGThaiItemDescription AS ITEMDESCRIPTION,");
-        sqlBuilder.append(" ppwms03.dbo.barcode_register.docno AS DOCNO,");
-        sqlBuilder.append(" ppwms03.dbo.barcode_register.production_date AS PRODUCT_DATE,");
-        sqlBuilder.append(" ppwms03.dbo.barcode_register.batchno AS BATCHNO,");
-        sqlBuilder.append(" ppwms03.dbo.barcode_register.start_barcode_text AS START_BARCODE,");
-        sqlBuilder.append(" ppwms03.dbo.barcode_register.finish_barcode_text AS FINISH_BARCODE,");
-        sqlBuilder.append(" ppwms03.dbo.barcode_register.qty AS QTY,");
-        sqlBuilder.append(" ppwms03.dbo.barcode_register.remark AS REMARK");
-        sqlBuilder.append(" FROM ppwms03.dbo.barcode_register");
-        sqlBuilder.append(" LEFT JOIN ppwms03.dbo.item_master");
-        sqlBuilder.append(" ON ppwms03.dbo.barcode_register.item_id = ppwms03.dbo.item_master.id");
-        sqlBuilder.append(" WHERE ppwms03.dbo.barcode_register.id = " + barcodeId);
+        sqlBuilder.append("SELECT DISTINCT ").append(getPrefix()).append(".item_master.DSGThaiItemDescription AS ITEMDESCRIPTION,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".barcode_register.docno AS DOCNO,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".barcode_register.production_date AS PRODUCT_DATE,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".barcode_register.batchno AS BATCHNO,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".barcode_register.start_barcode_text AS START_BARCODE,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".barcode_register.finish_barcode_text AS FINISH_BARCODE,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".barcode_register.qty AS QTY,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".barcode_register.remark AS REMARK");
+        sqlBuilder.append(" FROM ").append(getPrefix()).append(".barcode_register");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".item_master");
+        sqlBuilder.append(" ON ").append(getPrefix()).append(".barcode_register.item_id = ").append(getPrefix()).append(".item_master.id");
+        sqlBuilder.append(" WHERE ").append(getPrefix()).append(".barcode_register.id = " + barcodeId);
 
         log.debug(sqlBuilder.toString());
 

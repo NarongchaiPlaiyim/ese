@@ -38,15 +38,15 @@ public class MSLocationItemsDAO extends GenericDAO<MSLocationItemsModel, Integer
 
 
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(" SELECT ppwms03.dbo.location.id, ppwms03.dbo.warehouse.warehouse_code, ppwms03.dbo.location.location_barcode, ppwms03.dbo.location.capacity, (ppwms03.dbo.location.capacity - ppwms03.dbo.location.qty - ppwms03.dbo.location.reserved_qty) as avaliable");
-        stringBuilder.append(" FROM ppwms03.dbo.location_items");
-        stringBuilder.append(" LEFT JOIN ppwms03.dbo.location on ppwms03.dbo.location_items.location_id = location.id");
-        stringBuilder.append(" LEFT JOIN ppwms03.dbo.warehouse on ppwms03.dbo.location.warehouse_id = warehouse.id");
-        stringBuilder.append(" WHERE ppwms03.dbo.location_items.item_id = " + itemId);
-        stringBuilder.append(" AND ppwms03.dbo.location.status < 2");
-        stringBuilder.append(" AND ppwms03.dbo.location.qty - ppwms03.dbo.location.reserved_qty < ppwms03.dbo.location.capacity");
-        stringBuilder.append(" AND ppwms03.dbo.location.capacity - ppwms03.dbo.location.qty - ppwms03.dbo.location.reserved_qty > 0");
-        stringBuilder.append(" ORDER BY (ppwms03.dbo.location.capacity - ppwms03.dbo.location.qty - ppwms03.dbo.location.reserved_qty), ppwms03.dbo.location.ismix");
+        stringBuilder.append(" SELECT ").append(getPrefix()).append(".location.id, ").append(getPrefix()).append(".warehouse.warehouse_code, ").append(getPrefix()).append(".location.location_barcode, ").append(getPrefix()).append(".location.capacity, (").append(getPrefix()).append(".location.capacity - ").append(getPrefix()).append(".location.qty - ").append(getPrefix()).append(".location.reserved_qty) as avaliable");
+        stringBuilder.append(" FROM ").append(getPrefix()).append(".location_items");
+        stringBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".location on ").append(getPrefix()).append(".location_items.location_id = location.id");
+        stringBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".warehouse on ").append(getPrefix()).append(".location.warehouse_id = warehouse.id");
+        stringBuilder.append(" WHERE ").append(getPrefix()).append(".location_items.item_id = " + itemId);
+        stringBuilder.append(" AND ").append(getPrefix()).append(".location.status < 2");
+        stringBuilder.append(" AND ").append(getPrefix()).append(".location.qty - ").append(getPrefix()).append(".location.reserved_qty < ").append(getPrefix()).append(".location.capacity");
+        stringBuilder.append(" AND ").append(getPrefix()).append(".location.capacity - ").append(getPrefix()).append(".location.qty - ").append(getPrefix()).append(".location.reserved_qty > 0");
+        stringBuilder.append(" ORDER BY (").append(getPrefix()).append(".location.capacity - ").append(getPrefix()).append(".location.qty - ").append(getPrefix()).append(".location.reserved_qty), ").append(getPrefix()).append(".location.ismix");
 
         SQLQuery q = getSession().createSQLQuery(stringBuilder.toString());
         List<Object[]> objects = q.list();

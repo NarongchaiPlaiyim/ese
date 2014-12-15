@@ -83,8 +83,8 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
     public void updauePalletByChangeLocation(int palletId, int locationId){
         log.debug("updauePalletByChangeLocation().");
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(" UPDATE ppwms03.dbo.pallet SET ppwms03.dbo.pallet.location_id = ").append("'").append(locationId).append("'");
-        stringBuilder.append(" WHERE ppwms03.dbo.pallet.id = ").append("'").append(palletId).append("'");
+        stringBuilder.append(" UPDATE ").append(getPrefix()).append(".pallet SET ").append(getPrefix()).append(".pallet.location_id = ").append("'").append(locationId).append("'");
+        stringBuilder.append(" WHERE ").append(getPrefix()).append(".pallet.id = ").append("'").append(palletId).append("'");
 
         log.debug("SQL Pallet : {}",stringBuilder.toString());
         try {
@@ -98,8 +98,8 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
     public void updateLocationByOld(int locationId){
         log.debug("updateLocationByOld().");
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(" UPDATE ppwms03.dbo.location SET ppwms03.dbo.location.reserved_qty += 1 ");
-        stringBuilder.append(" WHERE ppwms03.dbo.location.id = ").append("'").append(locationId).append("'");
+        stringBuilder.append(" UPDATE ").append(getPrefix()).append(".location SET ").append(getPrefix()).append(".location.reserved_qty += 1 ");
+        stringBuilder.append(" WHERE ").append(getPrefix()).append(".location.id = ").append("'").append(locationId).append("'");
 
         log.debug("SQL Location : {}", stringBuilder.toString());
 
@@ -114,8 +114,8 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
     public void updateLocationByNew(int locationId){
         log.debug("updateLocationByNew().");
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(" UPDATE ppwms03.dbo.location SET ppwms03.dbo.location.reserved_qty -= 1 ");
-        stringBuilder.append(" WHERE ppwms03.dbo.location.id = ").append("'").append(locationId).append("'");
+        stringBuilder.append(" UPDATE ").append(getPrefix()).append(".location SET ").append(getPrefix()).append(".location.reserved_qty -= 1 ");
+        stringBuilder.append(" WHERE ").append(getPrefix()).append(".location.id = ").append("'").append(locationId).append("'");
 
         log.debug("SQL Location : {}", stringBuilder.toString());
 
@@ -130,8 +130,8 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
     public void updateLocationByStatusPrinted(int locationId){
         log.debug("updateLocationByStatusPrinted().");
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(" UPDATE ppwms03.dbo.location SET ppwms03.dbo.location.reserved_qty -= 1 ");
-        stringBuilder.append(" WHERE ppwms03.dbo.location.id = ").append("'").append(locationId).append("'");
+        stringBuilder.append(" UPDATE ").append(getPrefix()).append(".location SET ").append(getPrefix()).append(".location.reserved_qty -= 1 ");
+        stringBuilder.append(" WHERE ").append(getPrefix()).append(".location.id = ").append("'").append(locationId).append("'");
 
         log.debug("SQL Location : {}", stringBuilder.toString());
 
@@ -146,8 +146,8 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
     public void updateLocationByStatusLocated(int locationId){
         log.debug("updateLocationByStatusLocated().");
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(" UPDATE ppwms03.dbo.location SET ppwms03.dbo.location.qty -= 1 ");
-        stringBuilder.append(" WHERE ppwms03.dbo.location.id = ").append("'").append(locationId).append("'");
+        stringBuilder.append(" UPDATE ").append(getPrefix()).append(".location SET ").append(getPrefix()).append(".location.qty -= 1 ");
+        stringBuilder.append(" WHERE ").append(getPrefix()).append(".location.id = ").append("'").append(locationId).append("'");
 
         log.debug("SQL Location : {}", stringBuilder.toString());
 
@@ -165,31 +165,31 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
         StringBuilder sqlBuilder = new StringBuilder();
 
         sqlBuilder.append(" SELECT DISTINCT");
-        sqlBuilder.append(" ppwms03.dbo.item_master.DSGThaiItemDescription AS DESCRIPTION,");
-        sqlBuilder.append(" ppwms03.dbo.warehouse.warehouse_code AS WAREHOUSE_CODE,");
-        sqlBuilder.append(" ppwms03.dbo.pallet.pallet_barcode AS PALLET_BARCODE,");
-        sqlBuilder.append(" ppwms03.dbo.location.location_barcode AS LOCATION_BARCODE,");
-        sqlBuilder.append(" ppwms03.dbo.pallet.create_date AS CREATE_DATE,");
-        sqlBuilder.append(" ppwms03.dbo.inv_onhand.grade AS GRADE,");
-        sqlBuilder.append(" ppwms03.dbo.inv_onhand.batchno AS BATHCH_NO,");
-        sqlBuilder.append(" ppwms03.dbo.working_area.name AS WORKING_NAME,");
-        sqlBuilder.append(" Count(ppwms03.dbo.inv_onhand.id) AS COUNT_ID");
-        sqlBuilder.append(" FROM ppwms03.dbo.pallet");
-        sqlBuilder.append(" LEFT JOIN ppwms03.dbo.item_master");
-        sqlBuilder.append(" ON  ppwms03.dbo.pallet.item_id = ppwms03.dbo.item_master.id");
-        sqlBuilder.append(" LEFT JOIN ppwms03.dbo.warehouse");
-        sqlBuilder.append(" ON ppwms03.dbo.pallet.warehouse_id = ppwms03.dbo.warehouse.id");
-        sqlBuilder.append(" LEFT JOIN ppwms03.dbo.working_area");
-        sqlBuilder.append(" ON ppwms03.dbo.pallet.conveyor_line = ppwms03.dbo.working_area.id");
-        sqlBuilder.append(" LEFT JOIN ppwms03.dbo.location");
-        sqlBuilder.append(" ON ppwms03.dbo.pallet.location_id = ppwms03.dbo.location.id");
-        sqlBuilder.append(" LEFT JOIN ppwms03.dbo.inv_onhand");
-        sqlBuilder.append(" ON ppwms03.dbo.pallet.id = ppwms03.dbo.inv_onhand.pallet_id");
-        sqlBuilder.append(" WHERE ppwms03.dbo.pallet.ID = " + palletId );
-        sqlBuilder.append(" GROUP BY ppwms03.dbo.item_master.DSGThaiItemDescription,");
-        sqlBuilder.append(" ppwms03.dbo.warehouse.warehouse_code,ppwms03.dbo.pallet.pallet_barcode,");
-        sqlBuilder.append(" ppwms03.dbo.location.location_barcode,ppwms03.dbo.pallet.create_date,ppwms03.dbo.inv_onhand.grade,");
-        sqlBuilder.append(" ppwms03.dbo.working_area.name,ppwms03.dbo.inv_onhand.batchno");
+        sqlBuilder.append(" ").append(getPrefix()).append(".item_master.DSGThaiItemDescription AS DESCRIPTION,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".warehouse.warehouse_code AS WAREHOUSE_CODE,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".pallet.pallet_barcode AS PALLET_BARCODE,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".location.location_barcode AS LOCATION_BARCODE,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".pallet.create_date AS CREATE_DATE,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".inv_onhand.grade AS GRADE,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".inv_onhand.batchno AS BATHCH_NO,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".working_area.name AS WORKING_NAME,");
+        sqlBuilder.append(" Count(").append(getPrefix()).append(".inv_onhand.id) AS COUNT_ID");
+        sqlBuilder.append(" FROM ").append(getPrefix()).append(".pallet");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".item_master");
+        sqlBuilder.append(" ON  ").append(getPrefix()).append(".pallet.item_id = ").append(getPrefix()).append(".item_master.id");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".warehouse");
+        sqlBuilder.append(" ON ").append(getPrefix()).append(".pallet.warehouse_id = ").append(getPrefix()).append(".warehouse.id");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".working_area");
+        sqlBuilder.append(" ON ").append(getPrefix()).append(".pallet.conveyor_line = ").append(getPrefix()).append(".working_area.id");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".location");
+        sqlBuilder.append(" ON ").append(getPrefix()).append(".pallet.location_id = ").append(getPrefix()).append(".location.id");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".inv_onhand");
+        sqlBuilder.append(" ON ").append(getPrefix()).append(".pallet.id = ").append(getPrefix()).append(".inv_onhand.pallet_id");
+        sqlBuilder.append(" WHERE ").append(getPrefix()).append(".pallet.ID = " + palletId );
+        sqlBuilder.append(" GROUP BY ").append(getPrefix()).append(".item_master.DSGThaiItemDescription,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".warehouse.warehouse_code,").append(getPrefix()).append(".pallet.pallet_barcode,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".location.location_barcode,").append(getPrefix()).append(".pallet.create_date,").append(getPrefix()).append(".inv_onhand.grade,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".working_area.name,").append(getPrefix()).append(".inv_onhand.batchno");
 
         log.debug(sqlBuilder.toString());
 
