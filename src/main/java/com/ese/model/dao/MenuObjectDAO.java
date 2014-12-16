@@ -18,7 +18,7 @@ public class MenuObjectDAO extends GenericDAO<MenuObjectModel, Integer>{
         try {
             Criteria criteria = getCriteria();
             criteria.add(Restrictions.eq("objCategory", 1));
-            menuObjectModels = criteria.list();
+            menuObjectModels = Utils.safetyList(criteria.list());
         } catch (Exception e) {
             log.debug("Exception error findByObjCategory : ", e);
         }
@@ -28,13 +28,12 @@ public class MenuObjectDAO extends GenericDAO<MenuObjectModel, Integer>{
 
     public List<String> findByStaffId(int staffId) throws Exception {
         StringBuilder sqlBuilder = new StringBuilder();
-        sqlBuilder.append("");
-        sqlBuilder.append("SELECT ppwms03.dbo.menu_object.code AS CODE");
-        sqlBuilder.append(" FROM ppwms03.dbo.menu_object");
-        sqlBuilder.append(" WHERE ppwms03.dbo.menu_object.id IN (");
-        sqlBuilder.append(" SELECT ppwms03.dbo.user_access.menu_object_id");
-        sqlBuilder.append(" FROM ppwms03.dbo.user_access");
-        sqlBuilder.append(" WHERE ppwms03.dbo.user_access.staff_id = "+staffId+")");
+        sqlBuilder.append("SELECT ").append(getPrefix()).append(".menu_object.code AS CODE");
+        sqlBuilder.append(" FROM ").append(getPrefix()).append(".menu_object");
+        sqlBuilder.append(" WHERE ").append(getPrefix()).append(".menu_object.id IN (");
+        sqlBuilder.append(" SELECT ").append(getPrefix()).append(".user_access.menu_object_id");
+        sqlBuilder.append(" FROM ").append(getPrefix()).append(".user_access");
+        sqlBuilder.append(" WHERE ").append(getPrefix()).append(".user_access.staff_id = "+staffId+")");
         return Utils.safetyList(getSession().createSQLQuery(sqlBuilder.toString()).addScalar("CODE", StringType.INSTANCE).list());
     }
 

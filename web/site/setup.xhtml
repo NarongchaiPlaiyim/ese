@@ -424,7 +424,7 @@
                                      <!--oncomplete="PF('msgBoxSystemMessageDlg').hide()"/>-->
                 <!--</div>-->
             <!--</p:confirmDialog>-->
-            <p:dialog header="#{setup.messageHeader}" widgetVar="msgBoxSystemMessageDlg" minHeight="40">
+            <p:dialog header="#{setup.messageHeader}" widgetVar="msgBoxSystemMessageDlg" width="#{msg.get('dialog.message.size')}" closable="false" resizable="false">
                 <h:outputText value="#{setup.message}" />
             </p:dialog>
         </p:panel>

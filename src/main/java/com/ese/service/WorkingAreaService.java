@@ -2,6 +2,7 @@ package com.ese.service;
 
 import com.ese.model.db.MSWorkingAreaModel;
 import com.ese.model.dao.WorkingAreaDAO;
+import com.ese.utils.Utils;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,9 +13,7 @@ import java.util.List;
 @Component
 @Transactional
 public class WorkingAreaService extends Service{
-
-    @Resource
-    WorkingAreaDAO workingAreaDAO;
+    @Resource private WorkingAreaDAO workingAreaDAO;
 
     public List<MSWorkingAreaModel> getWorkingAreaList(){
         log.debug("getWorkingAreaList().");
@@ -22,7 +21,7 @@ public class WorkingAreaService extends Service{
             return workingAreaDAO.findAll();
         } catch (Exception e){
             log.debug("Exception : {}", e);
-            return new ArrayList<MSWorkingAreaModel>();
+            return Utils.getEmptyList();
         }
     }
 }

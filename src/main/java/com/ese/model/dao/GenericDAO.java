@@ -1,12 +1,14 @@
 package com.ese.model.dao;
 
 import com.ese.utils.Utils;
+import lombok.Getter;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -19,10 +21,15 @@ public abstract class GenericDAO<T, ID extends Serializable> implements Serializ
     @Resource protected Logger log;
     @Resource protected Logger moLogger;
     @Resource protected Logger mtLogger;
+    @Value("#{config['schema']}")private String schema;
+    @Value("#{config['catalog']}")private String catalog;
+    @Getter protected String prefix;
+    
     private Class<T> entityClass;
 
     @PostConstruct
     private void init() {
+        prefix = catalog+"."+schema;
         this.entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 

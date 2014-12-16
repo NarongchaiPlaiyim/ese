@@ -40,7 +40,7 @@ public class LocationService extends Service{
 
     public List<MSLocationModel> getLocationAll(){
         log.debug("getLocationAll()");
-        List<MSLocationModel> msLocationModels = null;
+        List<MSLocationModel> msLocationModels = Utils.getEmptyList();
         try {
             msLocationModels = locationDAO.getLocationOrderByUpdateDate();
         } catch (Exception e) {
@@ -100,7 +100,7 @@ public class LocationService extends Service{
 
     public List<MSLocationModel> searchOrderByCodeOrName(String key){
         log.debug("searchOrderByCodeOrName(). {}", key);
-        List<MSLocationModel> msLocationModels = null;
+        List<MSLocationModel> msLocationModels = Utils.getEmptyList();
         if (!Utils.isNull(key) && !Utils.isZero(key.length())){
             msLocationModels = locationDAO.findOrderByLocationCodeOrLocationName(key);
         } else {
@@ -115,14 +115,7 @@ public class LocationService extends Service{
     }
 
     public boolean isDuplicate(int warehouseId, String locationCode, int id){
-
         List<MSLocationModel> msLocationModels = locationDAO.findByWarehouseIdAndLocationCode(warehouseId, locationCode);
-
-        if (!Utils.isSafetyList(msLocationModels) || msLocationModels.size() == 1 && !Utils.isZero(id)){
-            return true;
-        }  else {
-            return false;
-        }
-
+        return !Utils.isSafetyList(msLocationModels) || msLocationModels.size() == 1 && !Utils.isZero(id)?true:false;
     }
 }

@@ -14,12 +14,12 @@ import java.util.List;
 public class RoleAccessDAO extends GenericDAO<RoleAccessModel, Integer>{
 
     public List<RoleAccessModel> findBySystemRoleId(int systemRoleId){
-        List<RoleAccessModel> roleAccessModels = new ArrayList<RoleAccessModel>();
+        List<RoleAccessModel> roleAccessModels = Utils.getEmptyList();
         try {
             Criteria criteria = getCriteria();
             criteria.add(Restrictions.eq("systemRoleModel.id", systemRoleId));
             criteria.add(Restrictions.eq("isValid", 1));
-            roleAccessModels = criteria.list();
+            roleAccessModels = Utils.safetyList(criteria.list());
 
         } catch (Exception e) {
             log.debug("Exception error findBySystemRoleId : ", e);
@@ -29,7 +29,7 @@ public class RoleAccessDAO extends GenericDAO<RoleAccessModel, Integer>{
     }
 
     public List<RoleAccessModel> findByMenuObjectIdAndSystemRoleId(int menuObjId, int systemRoleId, String key){
-        List<RoleAccessModel> roleAccessModels = new ArrayList<RoleAccessModel>();
+        List<RoleAccessModel> roleAccessModels = Utils.getEmptyList();
         try {
             Criteria criteria = getSession().createCriteria(RoleAccessModel.class, "ra");
             criteria.createAlias("ra.menuObjectModel", "mo");
@@ -50,7 +50,7 @@ public class RoleAccessDAO extends GenericDAO<RoleAccessModel, Integer>{
             }
 
             criteria.add(Restrictions.eq("isValid", 1));
-            roleAccessModels = criteria.list();
+            roleAccessModels = Utils.safetyList(criteria.list());
 
         } catch (Exception e) {
             log.debug("Exception error findBySystemRoleId : ", e);

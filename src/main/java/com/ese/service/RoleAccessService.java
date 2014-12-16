@@ -96,7 +96,7 @@ public class RoleAccessService extends Service{
             return menuObjectDAO.findAll();
         } catch (Exception e) {
             log.debug("Exception error getMenuAll : ", e);
-            return new ArrayList<MenuObjectModel>();
+            return Utils.getEmptyList();
         }
     }
 

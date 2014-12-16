@@ -28,7 +28,7 @@ public class LocationItemService extends Service{
             return msLocationItemsDAO.findAll();
         } catch (Exception e){
             log.debug("Exception : {}", e);
-            return new ArrayList<MSLocationItemsModel>();
+            return Utils.getEmptyList();
         }
     }
 
@@ -37,13 +37,13 @@ public class LocationItemService extends Service{
             return msLocationItemsDAO.findLocationByItemId(itemId);
         } catch (Exception e) {
             log.debug("Exception : {}", e);
-            return new ArrayList<LocationItemView>();
+            return Utils.getEmptyList();
         }
     }
 
     public List<MSLocationItemsModel> findLocationItemByLocationId(int locationId){
         log.debug("findLocationItem(). {}", locationId);
-        List<MSLocationItemsModel> msLocationItemsModels = new ArrayList<MSLocationItemsModel>();
+        List<MSLocationItemsModel> msLocationItemsModels = Utils.getEmptyList();
 
         if (!Utils.isZero(locationId)){
             msLocationItemsModels = msLocationItemsDAO.findByLocationId(locationId);

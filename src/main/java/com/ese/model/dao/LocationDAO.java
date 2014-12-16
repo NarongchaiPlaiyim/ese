@@ -16,16 +16,17 @@ public class LocationDAO extends GenericDAO<MSLocationModel, Integer>{
 
     public List<MSLocationModel> getLocationOrderByUpdateDate() throws Exception{
         log.debug("getLocationOrderByUpdateDate().");
+        List<MSLocationModel> locationModelList = Utils.getEmptyList();
         try{
             Criteria criteria = getCriteria();
             criteria.add(Restrictions.eq("isValid", 1));
             criteria.addOrder(Order.desc("updateDate"));
-            List<MSLocationModel> locationModels = criteria.list();
-            log.debug("locationModels Size : {}", locationModels.size());
-            return locationModels;
+            locationModelList = Utils.safetyList(criteria.list());
+            log.debug("locationModels Size : {}", locationModelList.size());
+            return locationModelList;
         } catch (Exception e){
             log.debug("Exception : {}", e);
-            return new ArrayList<MSLocationModel>();
+            return locationModelList;
         }
     }
 
@@ -37,16 +38,15 @@ public class LocationDAO extends GenericDAO<MSLocationModel, Integer>{
 
     public List<MSLocationModel> findOrderByLocationCodeOrLocationName(String key){
         log.debug("findOrderByLocationCodeOrLocationName(). {}", key);
-        List<MSLocationModel> msLocationModels = new ArrayList<MSLocationModel>();
+        List<MSLocationModel> msLocationModels = Utils.getEmptyList();
 
         try{
             Criteria criteria = getCriteria();
-
             Criterion locationCode = Restrictions.like("locationBarcode", "%" + key.trim() + "%");
             Criterion locationName = Restrictions.like("locationName", "%"+key.trim()+"%");
             criteria.add(Restrictions.or(locationCode,locationName));
             criteria.addOrder(Order.desc("updateDate"));
-            msLocationModels = criteria.list();
+            msLocationModels = Utils.safetyList(criteria.list());
         } catch (Exception e){
             log.debug("Exception error findOrderByLocationCodeOrLocationName : ", e);
         }
@@ -63,7 +63,7 @@ public class LocationDAO extends GenericDAO<MSLocationModel, Integer>{
             criteria.add(Restrictions.eq("msWarehouseModel.id",warehouseId));
             criteria.add(Restrictions.eq("locationBarcode",locationCode));
             criteria.add(Restrictions.eq("isValid", 1));
-            msLocationModels = criteria.list();
+            msLocationModels = Utils.safetyList(criteria.list());
         } catch (Exception e){
             log.debug("Exception error findOrderByLocationCodeOrLocationName : ", e);
         }

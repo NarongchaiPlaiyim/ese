@@ -1,5 +1,6 @@
 package com.ese.model.dao;
 import com.ese.model.db.StaffRolesModel;
+import com.ese.utils.Utils;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -12,13 +13,13 @@ import java.util.List;
 public class StaffRolesDAO extends GenericDAO<StaffRolesModel, Integer> {
 
     public List<StaffRolesModel> findByUserId(int userId){
-        List<StaffRolesModel> systemRoleModels = new ArrayList<StaffRolesModel>();
+        List<StaffRolesModel> systemRoleModels = Utils.getEmptyList();
         try {
             Criteria criteria = getSession().createCriteria(StaffRolesModel.class, "sr");
             criteria.createAlias("sr.roles", "r");
             criteria.add(Restrictions.eq("staff.id", userId));
             criteria.add(Restrictions.eq("r.isValid", 1));
-            systemRoleModels = criteria.list();
+            systemRoleModels = Utils.safetyList(criteria.list());
         } catch (Exception e) {
             log.debug("Exception error findByUserId : ", e);
         }

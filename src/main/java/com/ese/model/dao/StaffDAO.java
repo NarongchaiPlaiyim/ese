@@ -26,14 +26,14 @@ public class StaffDAO extends GenericDAO<StaffModel, Integer>{
     }
 
     public List<StaffModel> findUserByIsValid(){
-        List<StaffModel> staffModels = null;
+        List<StaffModel> staffModels = Utils.getEmptyList();
         try {
             Criteria criteria = getSession().createCriteria(StaffModel.class, "s");
             criteria.add(Restrictions.eq("isValid", 1));
             criteria.createAlias("s.factionModel", "f");
             criteria.createAlias("f.msDepartmentModel", "d");
             criteria.addOrder(Order.asc("d.id"));
-            staffModels = criteria.list();
+            staffModels = Utils.safetyList(criteria.list());
         } catch (Exception e) {
             log.debug("Exception error findUserByIsValid : ", e);
         }
@@ -43,7 +43,7 @@ public class StaffDAO extends GenericDAO<StaffModel, Integer>{
 
     public List<StaffModel> findUserBySearch(int departmentId, int factionId, String keySearch){
         log.debug("departmentId : {}, factionId : {}, keySearch : {}", departmentId, factionId, keySearch);
-        List<StaffModel> staffModels = null;
+        List<StaffModel> staffModels = Utils.getEmptyList();
         try {
             Criteria criteria = getSession().createCriteria(StaffModel.class, "s");
             criteria.add(Restrictions.eq("isValid", 1));
@@ -65,7 +65,7 @@ public class StaffDAO extends GenericDAO<StaffModel, Integer>{
             }
 
             criteria.addOrder(Order.asc("d.id"));
-            staffModels = criteria.list();
+            staffModels = Utils.safetyList(criteria.list());
         } catch (Exception e) {
             log.debug("Exception error findUserByIsValid : ", e);
         }

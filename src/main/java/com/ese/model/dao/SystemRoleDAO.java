@@ -15,12 +15,12 @@ import java.util.List;
 public class SystemRoleDAO extends GenericDAO<SystemRoleModel, Integer> {
 
     public List<SystemRoleModel> findByIsValid(){
-        List<SystemRoleModel> systemRoleModels = new ArrayList<SystemRoleModel>();
+        List<SystemRoleModel> systemRoleModels = Utils.getEmptyList();
         try {
             Criteria criteria = getCriteria();
             criteria.add(Restrictions.eq("isValid", 1));
             criteria.addOrder(Order.desc("updateDate"));
-            systemRoleModels = criteria.list();
+            systemRoleModels = Utils.safetyList(criteria.list());
         } catch (Exception e) {
             log.debug("Exception error findByIsValid : ", e);
         }
@@ -29,7 +29,7 @@ public class SystemRoleDAO extends GenericDAO<SystemRoleModel, Integer> {
     }
 
     public List<SystemRoleModel> findByKey(String key){
-        List<SystemRoleModel> systemRoleModels = new ArrayList<SystemRoleModel>();
+        List<SystemRoleModel> systemRoleModels = Utils.getEmptyList();
         try {
             Criteria criteria = getCriteria();
             criteria.add(Restrictions.eq("isValid", 1));
@@ -40,7 +40,7 @@ public class SystemRoleDAO extends GenericDAO<SystemRoleModel, Integer> {
                 criteria.add(Restrictions.or(code,name));
             }
 
-            systemRoleModels = criteria.list();
+            systemRoleModels = Utils.safetyList(criteria.list());
         } catch (Exception e) {
             log.debug("Exception error findByIsValid : ", e);
         }

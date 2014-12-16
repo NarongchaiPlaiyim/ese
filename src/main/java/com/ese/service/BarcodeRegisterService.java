@@ -27,10 +27,28 @@ public class BarcodeRegisterService extends Service{
     @Resource private ReportService reportService;
     @Value("#{config['report.barcode']}")private String pathBarcodeReport;
 
+
+    public List<BarcodeRegisterModel> findBarcodeByCondition(final String type, final String text){
+        log.debug("-- findBarcodeByCondition({}, {})", type, text);
+        List<BarcodeRegisterModel> barcodeRegisterModelList = Utils.getEmptyList();
+        try {
+            if("2".equalsIgnoreCase(type)){
+                barcodeRegisterModelList = barcodeRegisterDAO.findByLike("batchNo", text);
+            } else if("3".equalsIgnoreCase(type)){
+                barcodeRegisterModelList = barcodeRegisterDAO.findByLike(text);
+            } else {
+                barcodeRegisterModelList = barcodeRegisterDAO.findByBetween(text);
+            }
+        } catch (Exception e) {
+            log.error("{}",e);
+        }
+        return barcodeRegisterModelList;
+    }
+
     public List<MSItemModel> findByCondition(final String type, final String text){
         log.debug("-- findByCondition({}, {})", type, text);
+        List<MSItemModel> msItemModelList = Utils.getEmptyList();
         try {
-            List<MSItemModel> msItemModelList;
             if("3".equalsIgnoreCase(type)){
                 msItemModelList = itemDAO.findByLike("dSGThaiItemDescription", text);
             } else if("2".equalsIgnoreCase(type)){
@@ -38,11 +56,10 @@ public class BarcodeRegisterService extends Service{
             } else {
                 msItemModelList = itemDAO.findByLike("itemName", text);
             }
-            return msItemModelList;
         } catch (Exception e) {
             log.error("{}",e);
-            return Collections.EMPTY_LIST;
         }
+        return msItemModelList;
     }
 
     public List<MSItemModel> findAll(){
@@ -50,7 +67,7 @@ public class BarcodeRegisterService extends Service{
             return itemDAO.findAll();
         } catch (Exception e) {
             log.error("{}",e);
-            return Collections.EMPTY_LIST;
+            return Utils.getEmptyList();
         }
     }
 
@@ -60,13 +77,12 @@ public class BarcodeRegisterService extends Service{
             return barcodeRegisterDAO.findByIsValid();
         } catch (Exception e) {
             log.error("{}",e);
-            return Collections.EMPTY_LIST;
+            return Utils.getEmptyList();
         }
     }
 
     public void delete(BarcodeRegisterModel model){
         log.debug("-- delete(id : {})", model.getId());
-        System.out.println(model.getId());
         try {
             barcodeRegisterDAO.deleteByUpdate(model);
         } catch (Exception e) {

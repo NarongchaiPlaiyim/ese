@@ -21,17 +21,17 @@ public class WarehouseDAO extends GenericDAO<MSWarehouseModel, Integer>{
 
     public List<MSWarehouseModel> getLocationOrderByUpdateDate(){
         log.debug("getLocationOrderByUpdateDate().");
+        List<MSWarehouseModel> locationModels = Utils.getEmptyList();
         try{
             Criteria criteria = getCriteria();
             criteria.add(Restrictions.eq("isValid", 1));
             criteria.addOrder(Order.desc("updateDate"));
-            List<MSWarehouseModel> locationModels = criteria.list();
+            locationModels = Utils.safetyList(criteria.list());
             log.debug("locationModels Size : {}", locationModels.size());
-            return locationModels;
         } catch (Exception e){
             log.debug("Exception : {}", e);
-            return new ArrayList<MSWarehouseModel>();
         }
+        return locationModels;
     }
 
     public MSWarehouseModel findCheckDelete(int warehouseId){
@@ -52,12 +52,12 @@ public class WarehouseDAO extends GenericDAO<MSWarehouseModel, Integer>{
 
     public List<MSWarehouseModel> findByIsValidEnable(){
         log.debug("findByIsValidEnable().");
-        List<MSWarehouseModel> warehouseModel = null;
+        List<MSWarehouseModel> warehouseModel = Utils.getEmptyList();
 
         try {
             Criteria criteria = getCriteria();
             criteria.add(Restrictions.eq("isValid", 1));
-            warehouseModel = criteria.list();
+            warehouseModel = Utils.safetyList(criteria.list());
         } catch (Exception e) {
             log.debug("Exception error findCheckDelete : ", e);
         }
@@ -66,16 +66,16 @@ public class WarehouseDAO extends GenericDAO<MSWarehouseModel, Integer>{
     }
 
     public List<MSWarehouseModel> findByWarehouseCode(String warehouseCode){
+        List<MSWarehouseModel> locationModels = Utils.getEmptyList();
         try{
             Criteria criteria = getCriteria();
             criteria.add(Restrictions.eq("warehouseCode", warehouseCode));
             criteria.add(Restrictions.eq("isValid", 1));
-            List<MSWarehouseModel> locationModels = criteria.list();
+            locationModels = Utils.safetyList(criteria.list());
             log.debug("locationModels Size : {}", locationModels.size());
-            return locationModels;
         } catch (Exception e){
             log.debug("Exception : {}", e);
-            return new ArrayList<MSWarehouseModel>();
         }
+        return locationModels;
     }
 }
