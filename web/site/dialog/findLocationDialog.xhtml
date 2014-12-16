@@ -11,7 +11,7 @@
                 <p:commandButton id="btnFindLocation" value="#{msg.get('btn.name.select')}"
                                  icon="ui-icon-folder-open"
                                  styleClass="medium" style="#{msg.get('btn.size')}"
-                                 update=":findlocationForm:btnFindLocation, :msgBoxSystemMessageDialog, :palletForm"
+                                 update=":findlocationForm:btnFindLocation, :msgBoxSystemMessagePanel, :palletForm"
                                  action="#{palletManagement.OnChangeLocationToPallet}" process="@form"
                                  oncomplete="PF('findLocationDlg').hide()" disabled="#{palletManagement.isCheckLocationDialog()}"/>
             </div>

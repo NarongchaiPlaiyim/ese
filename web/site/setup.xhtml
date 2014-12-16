@@ -413,20 +413,20 @@
             <ui:include src="../site/dialog/itemDialog.xhtml"/>
         </p:dialog>
         <p:panel id="msgBoxSystemMessagePanel" style="border: 0">
-            <!--<p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="#{msg.get('dialog.message.size')}" closable="false"-->
-                             <!--header="#{setup.messageHeader}" message="#{setup.message}" >-->
-                <!--<div style="text-align: right">-->
-                    <!--<p:commandButton value="#{msg.get('btn.name.ok')}"-->
-                                     <!--styleClass="medium" style="#{msg.get('btn.size')}"-->
-                                     <!--icon="ui-icon-check"-->
-                                     <!--process="@this"-->
-                                     <!--update="setupForm"-->
-                                     <!--oncomplete="PF('msgBoxSystemMessageDlg').hide()"/>-->
-                <!--</div>-->
-            <!--</p:confirmDialog>-->
-            <p:dialog header="#{setup.messageHeader}" widgetVar="msgBoxSystemMessageDlg" width="#{msg.get('dialog.message.size')}" closable="false" resizable="false">
-                <h:outputText value="#{setup.message}" />
-            </p:dialog>
+            <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="#{msg.get('dialog.message.size')}" closable="false"
+                             header="#{setup.messageHeader}" message="#{setup.message}" >
+                <div style="text-align: right">
+                    <p:commandButton value="#{msg.get('btn.name.ok')}"
+                                     styleClass="medium" style="#{msg.get('btn.size')}"
+                                     icon="ui-icon-check"
+                                     process="@this"
+                                     update="setupForm"
+                                     oncomplete="PF('msgBoxSystemMessageDlg').hide()"/>
+                </div>
+            </p:confirmDialog>
+            <!--<p:dialog header="#{setup.messageHeader}" widgetVar="msgBoxSystemMessageDlg" width="#{msg.get('dialog.message.size')}" closable="false" resizable="false">-->
+                <!--<h:outputText value="#{setup.message}" />-->
+            <!--</p:dialog>-->
         </p:panel>
 
         <p:panel id="confirmWarehouseAndLocationPanel" style="border: 0">
