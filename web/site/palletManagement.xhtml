@@ -156,6 +156,9 @@
                                     <p:column headerText="Qty" style="width: 50px" styleClass="center">
                                         <h:outputText value="#{palletView.qty}"/>
                                     </p:column>
+                                    <p:column headerText="Combine" style="width: 50px; background-color: #{palletView.isCombine};">
+                                        <h:outputText value=""/>
+                                    </p:column>
                                     <p:column headerText="Status" style="width: 120px" styleClass="center">
                                         <h:outputText value="#{palletView.status.name}"/>
                                     </p:column>
