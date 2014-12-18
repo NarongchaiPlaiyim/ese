@@ -32,7 +32,7 @@ public class PalletManagementView {
     private BigDecimal capacity;
     private MSWorkingAreaModel convetorLine;
     private MSShiftModel shift;
-    private String isCombine;
+    private int isCombine;
 
     @Override
     public String toString() {

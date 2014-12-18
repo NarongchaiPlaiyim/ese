@@ -106,12 +106,13 @@ public class PalletManagementTransform extends Transform {
 
         palletMeanegementView.setConvetorLine(palletModel.getMsWorkingAreaModel());
         palletMeanegementView.setShift(palletModel.getMsShiftModel());
+        palletMeanegementView.setIsCombine(palletModel.getIsCombine());
 
-        if (Utils.isZero(palletModel.getIsCombine())){
-            palletMeanegementView.setIsCombine("red");
-        } else {
-            palletMeanegementView.setIsCombine("green");
-        }
+//        if (Utils.isZero(palletModel.getIsCombine())){
+//            palletMeanegementView.setIsCombine("red");
+//        } else {
+//            palletMeanegementView.setIsCombine("green");
+//        }
 
         return palletMeanegementView;
     }
@@ -170,12 +171,13 @@ public class PalletManagementTransform extends Transform {
         palletModel.setCapacity(palletManagementView.getCapacity());
         palletModel.setMsWorkingAreaModel(palletManagementView.getConvetorLine());
         palletModel.setMsShiftModel(palletManagementView.getShift());
+        palletModel.setIsCombine(palletManagementView.getIsCombine());
 
-        if ("red".equalsIgnoreCase(palletManagementView.getIsCombine())){
-            palletModel.setIsCombine(0);
-        } else {
-            palletModel.setIsCombine(1);
-        }
+//        if ("red".equalsIgnoreCase(palletManagementView.getIsCombine())){
+//            palletModel.setIsCombine(0);
+//        } else {
+//            palletModel.setIsCombine(1);
+//        }
 
         return palletModel;
     }

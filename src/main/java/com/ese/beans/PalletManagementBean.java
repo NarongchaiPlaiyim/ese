@@ -52,6 +52,8 @@ public class PalletManagementBean extends Bean implements Serializable {
     private boolean isCheckClosePallet;
     private boolean isCheckLocationDialog;
 
+    private boolean isCombine;
+
     private int pmvId;
 
     @PostConstruct
@@ -91,6 +93,7 @@ public class PalletManagementBean extends Bean implements Serializable {
         int warehouseId = 0;
         int waokingAreaId = 0;
         int locationId = 0;
+        int combine = 0;
         palletMeanegementView = new PalletManagementView();
 
         if (!Utils.isNull(warehouseMode.getId())){
@@ -105,7 +108,13 @@ public class PalletManagementBean extends Bean implements Serializable {
             locationId = msLocationModel.getId();
         }
 
-        palletManegamentViewList = palletService.findByChang(statusOnShow, warehouseId, waokingAreaId, locationId, findKeyItemDescription);
+        log.debug("isCombine : {}", isCombine);
+
+        if (isCombine == true){
+            combine = 1;
+        }
+
+        palletManegamentViewList = palletService.findByChang(statusOnShow, warehouseId, waokingAreaId, locationId, findKeyItemDescription, combine);
     }
 
     public void onClickPalletTB(){

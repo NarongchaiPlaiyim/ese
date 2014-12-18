@@ -34,7 +34,7 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
         }
     }
 
-    public List<PalletModel> findChang(int statusId, int warehouse, int conveyorLine, int location, String keyItemDescription){
+    public List<PalletModel> findChang(int statusId, int warehouse, int conveyorLine, int location, String keyItemDescription, int combine){
         log.debug("findChang().");
         List<PalletModel> palletModelList = Utils.getEmptyList();
         try {
@@ -51,6 +51,8 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
             if (!Utils.isZero(location)){
                 criteria.add(Restrictions.eq("msLocationModel.id", location));
             }
+
+            criteria.add(Restrictions.eq("isCombine", combine));
 
             if (!Utils.isNull(keyItemDescription) && !"".equalsIgnoreCase(keyItemDescription)){
                 criteria.createAlias("p.msItemModel", "c");

@@ -54,11 +54,11 @@ public class PalletService extends Service{
         return palletMeanegementViewList;
     }
 
-    public List<PalletManagementView> findByChang(int status, int warehouse, int conveyorLine, int location, String keyItemDescription){
+    public List<PalletManagementView> findByChang(int status, int warehouse, int conveyorLine, int location, String keyItemDescription, int combine){
         log.debug("findByChang().");
         List<PalletManagementView> palletMeanegementViewList = Utils.getEmptyList();
 
-        List<PalletModel> palletModels = palletDAO.findChang(status, warehouse, conveyorLine, location, keyItemDescription);
+        List<PalletModel> palletModels = palletDAO.findChang(status, warehouse, conveyorLine, location, keyItemDescription, combine);
 
         if (Utils.isSafetyList(palletModels)){
             log.debug("palletModels size. {}", palletModels.size());

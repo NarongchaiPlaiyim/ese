@@ -60,7 +60,7 @@
                     </p:panel>
                     <table id="testTb" border="0" class="content_table_form">
                         <tr>
-                            <td style="width: 110px">
+                            <td style="width: 350px">
                                 <p:inputText id="findKey" value="#{palletManagement.findKeyItemDescription}" style="#{msg.get('fix.size.200')}  margin-top: 4px">
                                     <p:ajax event="blur" update=":palletForm:findKey"/>
                                 </p:inputText>
@@ -71,7 +71,7 @@
                                                  oncomplete="PF('bui').unblock()"
                                                  process="@form" update=":palletForm:palletManagementTable, :palletForm:findKey"/>
                             </td>
-                            <td style="width: 40px">
+                            <td style="width: 120px">
                                 <h:outputLabel value="Warehouse :"/>
                             </td>
                             <td style="width: 100px">
@@ -85,7 +85,7 @@
                                     <p:ajax listener="#{palletManagement.onFind}" update=":palletForm:palletManagementTable, :palletForm:findKey"/>
                                 </p:selectOneMenu>
                             </td>
-                            <td style="width: 50px">
+                            <td style="width: 150px">
                                 <h:outputLabel value="Conveyor Line :"/>
                             </td>
                             <td style="width: 100px">
@@ -99,7 +99,7 @@
                                     <p:ajax listener="#{palletManagement.onFind}" update=":palletForm:palletManagementTable, :palletForm:findKey"/>
                                 </p:selectOneMenu>
                             </td>
-                            <td style="width: 30px">
+                            <td style="width: 100px">
                                 <h:outputLabel value="Location :"/>
                             </td>
                             <td style="width: 100px">
@@ -113,13 +113,29 @@
                                     <p:ajax listener="#{palletManagement.onFind}" update=":palletForm:palletManagementTable, :palletForm:findKey"/>
                                 </p:selectOneMenu>
                             </td>
+                            <td>
+                                <table border="0" style="width: 100px; max-width: 100px; min-width: 100px">
+                                    <tr>
+                                        <td style="width: 20px">
+                                            <h:selectBooleanCheckbox id="combineBox"
+                                                                     value="#{palletManagement.combine}">
+                                                <p:ajax event="change" update=":palletForm:palletManagementTable, :palletForm:findKey" listener="#{palletManagement.onFind}"/>
+                                            </h:selectBooleanCheckbox>
+                                        </td>
+                                        <td class="left">
+                                            <h:outputLabel value="Is Mix"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
                         </tr>
                         <tr>
-                            <td colspan="7">
+                            <td colspan="8">
                                 <p:dataTable id="palletManagementTable" rowIndexVar="rowIndex"
                                              value="#{palletManagement.palletManegamentViewList}"
                                              var="palletView" styleClass="full_table"
-                                             scrollable="true" resizableColumns="false"  scrollHeight="25%"
+                                             scrollable="true" scrollHeight="450"
+                                             resizableColumns="true"
                                              selectionMode="single" rowKey="#{palletView.id}"
                                              selection="#{palletManagement.palletMeanegementView}"
                                              style="width: 100%; max-width: 100%; min-width: 100%">
@@ -157,7 +173,7 @@
                                     <p:column headerText="Qty" style="width: 50px" styleClass="center">
                                         <h:outputText value="#{palletView.qty}"/>
                                     </p:column>
-                                    <p:column headerText="Combine" style="width: 50px; background-color: #{palletView.isCombine};">
+                                    <p:column headerText="Combine" style="width: 50px; background-color: #{palletView.isCombine == 1 ? 'green' : 'red'};">
                                         <h:outputText value=""/>
                                     </p:column>
                                     <p:column headerText="Status" style="width: 120px" styleClass="center">
