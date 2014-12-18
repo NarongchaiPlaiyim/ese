@@ -27,7 +27,7 @@
                                 <h:outputLabel value="Department"/>
                             </td>
                             <td style="#{msg.get('fix.size.200')}">
-                                <p:inputText disabled="#{true}" value="#{headerBean.staffModel.factionModel.msDepartmentModel.name}" style="#{msg.get('fix.size.200')}"/>
+                                <p:inputText disabled="#{true}" value="#{headerBean.userView.factionModel.msDepartmentModel.name}" style="#{msg.get('fix.size.200')}"/>
                             </td>
                         </tr>
                         <tr>
@@ -35,7 +35,7 @@
                                 <h:outputLabel value="Faction"/>
                             </td>
                             <td style="#{msg.get('fix.size.200')}">
-                                <p:inputText disabled="#{true}" value="#{headerBean.staffModel.factionModel.name}" style="#{msg.get('fix.size.200')}"/>
+                                <p:inputText disabled="#{true}" value="#{headerBean.userView.factionModel.name}" style="#{msg.get('fix.size.200')}"/>
                             </td>
                         </tr>
                         <tr>
@@ -43,7 +43,7 @@
                                 <h:outputLabel value="Position"/>
                             </td>
                             <td>
-                                <p:inputText disabled="#{true}" value="#{headerBean.staffModel.position}" style="#{msg.get('fix.size.200')}"/>
+                                <p:inputText disabled="#{true}" value="#{headerBean.userView.position}" style="#{msg.get('fix.size.200')}"/>
                             </td>
                         </tr>
                         <tr>
@@ -51,7 +51,7 @@
                                 <h:outputLabel value="Title Name"/>
                             </td>
                             <td style="#{msg.get('fix.size.200')}">
-                                <p:inputText disabled="#{true}" value="#{headerBean.staffModel.msTitleModel.name}" style="#{msg.get('fix.size.200')}"/>
+                                <p:inputText disabled="#{true}" value="#{headerBean.userView.msTitleModel.name}" style="#{msg.get('fix.size.200')}"/>
                             </td>
                         </tr>
                         <tr>
@@ -59,7 +59,7 @@
                                 <h:outputLabel value="Name"/>
                             </td>
                             <td class="left">
-                                <p:inputText disabled="#{true}" value="#{headerBean.staffModel.name}" style="#{msg.get('fix.size.200')}"/>
+                                <p:inputText disabled="#{true}" value="#{headerBean.userView.name}" style="#{msg.get('fix.size.200')}"/>
                             </td>
 
                         </tr>
@@ -68,7 +68,7 @@
                                 <h:outputLabel value="Login name"/>
                             </td>
                             <td>
-                                <p:inputText disabled="#{true}" value="#{headerBean.staffModel.username}" style="#{msg.get('fix.size.200')}"/>
+                                <p:inputText disabled="#{true}" value="#{headerBean.userView.username}" style="#{msg.get('fix.size.200')}"/>
                             </td>
                         </tr>
                         <tr>
@@ -77,7 +77,7 @@
                             </td>
                             <td>
                                 <p:password id="pwd1Header"
-                                            value="#{headerBean.password}"
+                                            value="#{headerBean.userView.password}"
                                             match="pwd2Header"
                                             required="#{not empty param[addUserAccess.clientId]}"
                                             redisplay = "true"
@@ -92,7 +92,7 @@
                                 <h:outputLabel for="pwd2Header" value="Re-Password"/>
                             </td>
                             <td>
-                                <p:password id="pwd2Header" value="#{headerBean.password}"
+                                <p:password id="pwd2Header" value="#{headerBean.userView.password}"
                                             label="Re-Password"
                                             redisplay = "true"
                                             style="#{msg.get('fix.size.200')}"

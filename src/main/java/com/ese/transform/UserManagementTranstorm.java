@@ -46,6 +46,7 @@ public class UserManagementTranstorm extends Transform{
 //        userView.setPassword(staffModel.getPassword());
         userView.setVersion(staffModel.getVersion());
         userView.setMsDepartmentModel(staffModel.getFactionModel().getMsDepartmentModel());
+        userView.setMsTitleModel(staffModel.getMsTitleModel());
         userView.setFactionModel(staffModel.getFactionModel());
         userView.setUsername(staffModel.getUsername());
         userView.setName(staffModel.getName());

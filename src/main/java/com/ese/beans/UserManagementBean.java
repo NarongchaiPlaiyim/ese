@@ -127,9 +127,9 @@ public class UserManagementBean extends Bean{
         staffModelList = userManagementService.getUserAll();
     }
 
-    public void test(){
-        log.debug("######## {}", roleId);
-    }
+//    public void test(){
+//        log.debug("######## {}", roleId);
+//    }
 
     public void onChangeSearchMenu(String target){
         log.debug("Target : {}", target);
@@ -184,7 +184,7 @@ public class UserManagementBean extends Bean{
             flagPosition = true;
             userView = userManagementService.setModelToViewUserAccess(staffModel);
             factionDialogList = userManagementService.getFactionByDepartment(userView.getFactionModel().getMsDepartmentModel().getId());
-            userView.setMsTitleModel(userManagementService.getTitleById(staffModel.getMsTitleModel().getId()));
+//            userView.setMsTitleModel(userManagementService.getTitleById(staffModel.getMsTitleModel().getId()));
         }
 
     }
@@ -201,7 +201,7 @@ public class UserManagementBean extends Bean{
             showDialogSaved();
             init();
         } else if (value.equalsIgnoreCase("Edit")){
-            userManagementService.onSaveUserAccess(userView);
+            userManagementService.onUpdataeUserAccess(userView);
             init();
             showDialogUpdated();
         } else {

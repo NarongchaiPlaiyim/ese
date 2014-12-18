@@ -50,6 +50,7 @@ public class StaffModel extends AbstractModel{
                 .append("id", id)
                 .append("password", password)
                 .append("username", username)
+                .append("msTitleModel", msTitleModel)
                 .append("version", version)
                 .append("factionModel", factionModel)
                 .append("name", name)

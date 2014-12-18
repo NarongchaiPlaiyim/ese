@@ -31,7 +31,7 @@ public class LoginService extends Service{
         log.debug("-- isUserExist({}, {})", userName, password);
         boolean result = Utils.TRUE;
         try {
-            staffModel = staffDAO.findByUserName(userName, password);
+            staffModel = staffDAO.findByUserNameAndPassword(userName, password);
             if(Utils.isNull(staffModel)){
                 result = !result;
             }

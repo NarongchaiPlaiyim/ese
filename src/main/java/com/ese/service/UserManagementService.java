@@ -83,18 +83,20 @@ public class UserManagementService extends Service{
     public void onSaveUserAccess(UserView userView){
         StaffModel staffModel = userManagementTranstorm.transformToModel(userView);
 
-        if (!Utils.isZero(userView.getId())){
-            try {
-                staffDAO.update(staffModel);
-            } catch (Exception e) {
-                log.debug("Exception error update : ", e);
-            }
-        } else {
-            try {
-                staffDAO.persist(staffModel);
-            } catch (Exception e) {
-                log.debug("Exception error persist : ", e);
-            }
+        try {
+            staffDAO.persist(staffModel);
+        } catch (Exception e) {
+            log.debug("Exception error persist : ", e);
+        }
+    }
+
+    public void onUpdataeUserAccess(UserView userView){
+        StaffModel staffModel = userManagementTranstorm.transformToModel(userView);
+
+        try {
+            staffDAO.update(staffModel);
+        } catch (Exception e) {
+            log.debug("Exception error update : ", e);
         }
     }
 
@@ -249,6 +251,18 @@ public class UserManagementService extends Service{
                 }
             }
 
+        }
+    }
+
+    public UserView getUserName(String userName){
+        try {
+            StaffModel staffModel = staffDAO.findByUserName(userName);
+            UserView userView = userManagementTranstorm.transformToView(staffModel);
+//            userView.setMsTitleModel(getTitleById(staffModel.getMsTitleModel().getId()));
+            return userView;
+        } catch (Exception e) {
+            log.debug("Exception error getUserName : {}", e);
+            return new UserView();
         }
     }
 }

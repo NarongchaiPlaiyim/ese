@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public class StaffDAO extends GenericDAO<StaffModel, Integer>{
 
-    public StaffModel findByUserName(String userName, String password) throws Exception {
+    public StaffModel findByUserNameAndPassword(String userName, String password) throws Exception {
         return (StaffModel) getCriteria().add(Restrictions.and(
                 Restrictions.eq("username", userName),
                 Restrictions.eq("password", password)
@@ -84,5 +84,11 @@ public class StaffDAO extends GenericDAO<StaffModel, Integer>{
         model.setIsValid(0);
         model.setUpdateDate(Utils.currentDate());
         update(model);
+    }
+
+    public StaffModel findByUserName(String userName) throws Exception {
+        return (StaffModel) getCriteria().add(Restrictions.and(
+                Restrictions.eq("username", userName)
+        )).uniqueResult();
     }
 }
