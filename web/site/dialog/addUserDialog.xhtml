@@ -16,6 +16,7 @@
                 <td style="min-width: 230px; width: 230px; max-width: 230px;">
                     <p:selectOneMenu id="departMenu" value="#{userManagement.userView.factionModel.msDepartmentModel.id}"
                                      required="#{not empty param[addUserAccess.clientId]}"
+                                     disabled="#{userManagement.flagDepartment}"
                                      style="#{msg.get('fix.size.200')} margin-top: 4px">
                         <f:selectItem itemLabel="- Please Select -" itemValue=""/>
                         <f:selectItems value="#{userManagement.departmentDialogList}"
@@ -32,6 +33,7 @@
                 <td>
                     <p:inputText id="loginName" value="#{userManagement.userView.username}"
                                  required="#{not empty param[addUserAccess.clientId]}"
+                                 disabled="#{userManagement.flagLoginName}"
                                  style="#{msg.get('fix.size.200')}">
                         <f:validateLength minimum="5" maximum="8" pattern="A-Za-z0-9"/>
                     </p:inputText>
@@ -44,6 +46,7 @@
                 <td style="min-width: 210px; width: 210px; max-width: 210px;">
                     <p:selectOneMenu id="factionMenu" value="#{userManagement.userView.factionModel.id}"
                                      required="#{not empty param[addUserAccess.clientId]}"
+                                     disabled="#{userManagement.flagFaction}"
                                      style="#{msg.get('fix.size.200')} margin-top: 4px">
                         <f:selectItem itemLabel="- Please Select -" itemValue=""/>
                         <f:selectItems value="#{userManagement.factionDialogList}"
@@ -75,6 +78,7 @@
                 <td>
                     <p:selectOneMenu id="titleMenu"  value="#{userManagement.userView.msTitleModel.id}"
                                      required="#{not empty param[addUserAccess.clientId]}"
+                                     disabled="#{userManagement.flagTitle}"
                                      style="#{msg.get('fix.size.200')} margin-top: 4px">
                         <f:selectItem itemLabel="- Please Select -" itemValue=""/>
                         <f:selectItems value="#{userManagement.msTitleModelList}"
@@ -103,6 +107,7 @@
                 <td class="left">
                     <p:inputText value="#{userManagement.userView.name}"
                                  style="#{msg.get('fix.size.200')}"
+                                 disabled="#{userManagement.flagUserName}"
                                  required="#{not empty param[addUserAccess.clientId]}">
                         <f:validateLength minimum="5"/>
                     </p:inputText>
@@ -113,6 +118,7 @@
                 <td>
                     <p:inputText value="#{userManagement.userView.position}"
                                  style="#{msg.get('fix.size.200')}"
+                                 disabled="#{userManagement.flagPosition}"
                                  required="#{not empty param[addUserAccess.clientId]}"/>
                 </td>
             </tr>

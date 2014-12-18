@@ -74,7 +74,6 @@ public class UserManagementService extends Service{
 
     public boolean isExisted(String userName){
         try {
-            System.out.println(staffDAO.isUsernameExist(userName));
             return staffDAO.isUsernameExist(userName);
         } catch (Exception e) {
             System.err.println(e);

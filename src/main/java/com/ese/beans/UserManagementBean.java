@@ -49,9 +49,14 @@ public class UserManagementBean extends Bean{
 
     //Add User Dialog
     private List<MSDepartmentModel> departmentDialogList;
-//    private MSDepartmentModel departDialog;
     private List<FactionModel> factionDialogList;
-//    private FactionModel factionDialog;
+    private boolean flagDepartment;
+    private boolean flagLoginName;
+    private boolean flagFaction;
+    private boolean flagTitle;
+    private boolean flagUserName;
+    private boolean flagPosition;
+    private String value;
 
     private boolean flagBtnEdit;
     private boolean flagBtnDelete;
@@ -158,17 +163,28 @@ public class UserManagementBean extends Bean{
         actionButton();
     }
 
-    public void onClickNewUser(String value){
+    public void onClickNewUser(){
         msTitleModelList = userManagementService.getTitleAll();
         departmentDialogList = userManagementService.getDepartAll();
 
         if (value.equalsIgnoreCase("New")){
+            flagDepartment = false;
+            flagLoginName = false;
+            flagFaction = false;
+            flagTitle = false;
+            flagUserName = false;
+            flagPosition = false;
             userView = new UserView();
         } else if (value.equalsIgnoreCase("Edit")){
+            flagDepartment = true;
+            flagLoginName = true;
+            flagFaction = true;
+            flagTitle = true;
+            flagUserName = true;
+            flagPosition = true;
             userView = userManagementService.setModelToViewUserAccess(staffModel);
             factionDialogList = userManagementService.getFactionByDepartment(userView.getFactionModel().getMsDepartmentModel().getId());
             userView.setMsTitleModel(userManagementService.getTitleById(staffModel.getMsTitleModel().getId()));
-            log.debug("#### {}", userView.toString());
         }
 
     }
@@ -179,18 +195,18 @@ public class UserManagementBean extends Bean{
 
     public void onClickSaveUserAccessDialog(){
         System.out.println(userView.getUsername());
-        if(!userManagementService.isExisted(userView.getUsername())){
+
+        if (value.equalsIgnoreCase("New") && !userManagementService.isExisted(userView.getUsername())){
+            userManagementService.onSaveUserAccess(userView);
+            showDialogSaved();
+            init();
+        } else if (value.equalsIgnoreCase("Edit")){
             userManagementService.onSaveUserAccess(userView);
             init();
-            if (Utils.isZero(userView.getId())){
-                showDialogSaved();
-            } else {
-                showDialogUpdated();
-            }
+            showDialogUpdated();
         } else {
             showDialogWarning("Already existed login name");
         }
-
     }
 
     public void onCancel(){

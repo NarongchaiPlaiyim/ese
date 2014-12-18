@@ -49,10 +49,12 @@
                                      styleClass="medium" style="#{msg.get('btn.size')}"
                                      process="@form"
                                      disabled="#{userManagement.flagBtnEdit}"
-                                     action="#{userManagement.onClickNewUser('Edit')}"
+                                     action="#{userManagement.onClickNewUser()}"
                                      update=":addUserForm"
                                      icon="ui-icon-wrench"
-                                     oncomplete="PF('addUserDlg').show()"/>
+                                     oncomplete="PF('addUserDlg').show()">
+                        <f:setPropertyActionListener value="Edit" target="#{userManagement.value}"/>
+                    </p:commandButton>
                     <p:commandButton id="btnDelete"
                                      value="#{msg.get('btn.name.delete')}"
                                      rendered="#{loginBean.isRendered(msg.get('authorize.menu.user.tab.1.delete'))}"
@@ -75,10 +77,12 @@
                                      rendered="#{loginBean.isRendered(msg.get('authorize.menu.user.tab.1.add'))}"
                                      styleClass="medium" style="min-width: 160px; width: 160px; max-width: 160px;"
                                      process="@form"
-                                     action="#{userManagement.onClickNewUser('New')}"
+                                     action="#{userManagement.onClickNewUser()}"
                                      update=":addUserForm"
                                      icon="ui-icon-plusthick"
-                                     oncomplete="PF('addUserDlg').show()"/>
+                                     oncomplete="PF('addUserDlg').show()">
+                        <f:setPropertyActionListener value="New" target="#{userManagement.value}"/>
+                    </p:commandButton>
 
                     <p:commandButton id="btnUserAccess"
                                      value="User Access"
@@ -460,7 +464,7 @@
 
 <p:dialog id="addUserDialog" widgetVar="addUserDlg" header="Add/Edit User"
                      onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
-                     modal="true" width="910" height="215">
+                     modal="true" width="930">
     <ui:include src="../site/dialog/addUserDialog.xhtml"/>
 </p:dialog>
 
