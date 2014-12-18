@@ -119,6 +119,7 @@
                                 <p:dataTable id="palletManagementTable" rowIndexVar="rowIndex"
                                              value="#{palletManagement.palletManegamentViewList}"
                                              var="palletView" styleClass="full_table"
+                                             scrollable="true" resizableColumns="false"  scrollHeight="25%"
                                              selectionMode="single" rowKey="#{palletView.id}"
                                              selection="#{palletManagement.palletMeanegementView}"
                                              style="width: 100%; max-width: 100%; min-width: 100%">
