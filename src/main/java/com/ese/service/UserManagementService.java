@@ -75,7 +75,6 @@ public class UserManagementService extends Service{
 
         if (!Utils.isZero(userView.getId())){
             try {
-                staffModel.setPassword(EncryptionService.encryption(staffModel.getPassword()));
                 staffDAO.update(staffModel);
             } catch (Exception e) {
                 log.debug("Exception error update : ", e);

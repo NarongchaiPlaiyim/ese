@@ -2,6 +2,7 @@ package com.ese.transform;
 
 import com.ese.model.db.StaffModel;
 import com.ese.model.view.UserView;
+import com.ese.service.security.encryption.EncryptionService;
 import com.ese.utils.Utils;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +13,10 @@ public class UserManagementTranstorm extends Transform{
         StaffModel staffModel = new StaffModel();
 
         staffModel.setId(userView.getId());
-        staffModel.setPassword(userView.getPassword());
+//        staffModel.setPassword(userView.getPassword());
+
+        staffModel.setPassword(EncryptionService.encryption(userView.getPassword()));
+
         staffModel.setUsername(userView.getUsername());
         staffModel.setMsTitleModel(userView.getMsTitleModel());
         staffModel.setFactionModel(userView.getFactionModel());
