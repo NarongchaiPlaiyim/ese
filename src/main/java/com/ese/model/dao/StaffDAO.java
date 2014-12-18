@@ -20,6 +20,13 @@ public class StaffDAO extends GenericDAO<StaffModel, Integer>{
         )).uniqueResult();
     }
 
+    public boolean isUsernameExist(String userName) throws Exception {
+        return  !Utils.isNull(getCriteria().add(Restrictions.and(
+                Restrictions.eq("username", userName),
+                Restrictions.eq("isValid", 1)
+        )).uniqueResult());
+    }
+
     public List<StaffModel> test() throws Exception {
 //        SELECT * FROM dbo.staff
         return findBySQL("SELECT * FROM dbo.staff", "3", 5, 6);

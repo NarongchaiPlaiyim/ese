@@ -178,13 +178,19 @@ public class UserManagementBean extends Bean{
     }
 
     public void onClickSaveUserAccessDialog(){
-        userManagementService.onSaveUserAccess(userView);
-        init();
-        if (Utils.isZero(userView.getId())){
-            showDialogSaved();
+        System.out.println(userView.getUsername());
+        if(!userManagementService.isExisted(userView.getUsername())){
+            userManagementService.onSaveUserAccess(userView);
+            init();
+            if (Utils.isZero(userView.getId())){
+                showDialogSaved();
+            } else {
+                showDialogUpdated();
+            }
         } else {
-            showDialogUpdated();
+            showDialogWarning("Already existed login name");
         }
+
     }
 
     public void onCancel(){

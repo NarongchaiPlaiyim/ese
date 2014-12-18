@@ -8,6 +8,8 @@ import com.ese.transform.StaffRoleTransform;
 import com.ese.transform.UserAccessTransform;
 import com.ese.transform.UserManagementTranstorm;
 import com.ese.utils.Utils;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -70,6 +72,15 @@ public class UserManagementService extends Service{
         return userManagementTranstorm.transformToView(staffModel);
     }
 
+    public boolean isExisted(String userName){
+        try {
+            System.out.println(staffDAO.isUsernameExist(userName));
+            return staffDAO.isUsernameExist(userName);
+        } catch (Exception e) {
+            System.err.println(e);
+            return true;
+        }
+    }
     public void onSaveUserAccess(UserView userView){
         StaffModel staffModel = userManagementTranstorm.transformToModel(userView);
 
