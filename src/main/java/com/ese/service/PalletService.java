@@ -30,6 +30,10 @@ public class PalletService extends Service{
     @Resource private ReportService reportService;
     @Value("#{config['report.printtag']}")
     private String pathPrintTagReport;
+    @Value("#{config['report.printtagv2']}")
+    private String pathPrintTagV2Report;
+    @Value("#{config['report.subreport']}")
+    private String pathSubReport;
 
     public void test(){
         int i = 58;
@@ -85,11 +89,29 @@ public class PalletService extends Service{
 
     public void onPrintTag(int palletId){
         String printTagReportname = Utils.convertToStringDDMMYYYY(new Date()) + "_PrintTag";
-        List<PalletManagemengModelReport> reportViews = palletDAO.genSQLReportPallet(palletId);
-        log.debug("reportViews {}", reportViews.size());
+        String partReport = "";
+        PalletModel palletModel = null;
+        List<PalletManagemengModelReport> reportViews = null;
         HashMap map = new HashMap<String, Object>();
+
         try {
-            reportService.exportPDF(pathPrintTagReport, map, printTagReportname, reportViews);
+            palletModel = palletDAO.findByID(palletId);
+        } catch (Exception e) {
+            log.debug("Exception error onPrintTag : ", e);
+        }
+
+        if (Utils.isZero(palletModel.getIsCombine())){
+            reportViews = palletDAO.genSQLReportPallet(palletId);
+            partReport = pathPrintTagReport;
+        } else if (!Utils.isZero(palletModel.getIsCombine())){
+            partReport = pathPrintTagV2Report;
+            map.put("path", pathSubReport);
+            map.put("MainPallet", palletDAO.findByIdToReport(palletModel.getId()));
+            map.put("SubPallet", palletDAO.genSQLReportPalletV2(palletModel.getId()));
+        }
+
+        try {
+            reportService.exportPDF(partReport, map, printTagReportname, reportViews);
         } catch (Exception e) {
             log.debug("Exception Report : ", e);
         }

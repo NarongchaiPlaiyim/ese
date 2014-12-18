@@ -2,6 +2,7 @@ package com.ese.model.dao;
 
 import com.ese.model.db.PalletModel;
 import com.ese.model.view.report.PalletManagemengModelReport;
+import com.ese.model.view.report.PalletSubReport;
 import com.ese.utils.Utils;
 import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
@@ -219,6 +220,78 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
                 report.setBathcgNo(Utils.parseString(entity[6], ""));
                 report.setWorkingName(Utils.parseString(entity[7], ""));
                 report.setCountId(Utils.parseInt(entity[8], 0));
+                reportViews.add(report);
+            }
+        } catch (Exception e) {
+            log.debug("Exception SQL : {}", e);
+        }
+
+        return reportViews;
+    }
+
+    public PalletModel findByIdToReport(int palletId){
+        log.debug("findOnloadPallet().");
+        PalletModel palletModel = new PalletModel();
+        try {
+            Criteria criteria = getCriteria();
+            criteria.add(Restrictions.eq("id", palletId));
+            palletModel = (PalletModel) criteria.uniqueResult();
+            return palletModel;
+        } catch (Exception e){
+            log.debug("Exception : {}", e);
+            return palletModel;
+        }
+    }
+
+    public List<PalletSubReport> genSQLReportPalletV2(int palletId){
+        log.debug("genSQLReportPallet(). {}", palletId);
+        List<PalletSubReport> reportViews = new ArrayList<PalletSubReport>();
+        StringBuilder sqlBuilder = new StringBuilder();
+
+        sqlBuilder.append("SELECT ");
+        sqlBuilder.append(" Count(").append(getPrefix()).append(".inv_onhand.id) AS QTY,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".item_master.ItemId AS ITEM_ID,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".item_master.DSGThaiItemDescription AS ITEM_DESCRIPTION,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".shift.name AS SHIFT_NAME,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".working_area.name AS WORKING_AREA_NAME,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".inv_onhand.batchno AS BATCHNO");
+        sqlBuilder.append(" FROM ").append(getPrefix()).append(".inv_onhand");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".item_master");
+        sqlBuilder.append(" ON  ").append(getPrefix()).append(".inv_onhand.item_id = ").append(getPrefix()).append(".item_master.id");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".pallet");
+        sqlBuilder.append(" ON  ").append(getPrefix()).append(".inv_onhand.pallet_id = ").append(getPrefix()).append(".pallet.id");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".shift");
+        sqlBuilder.append(" ON  ").append(getPrefix()).append(".pallet.shift_id = ").append(getPrefix()).append(".shift.id");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".working_area");
+        sqlBuilder.append(" ON  ").append(getPrefix()).append(".inv_onhand.working_area_id = ").append(getPrefix()).append(".working_area.id");
+        sqlBuilder.append(" WHERE ").append(getPrefix()).append(".inv_onhand.pallet_id = " + palletId );
+        sqlBuilder.append(" GROUP BY ").append(getPrefix()).append(".item_master.ItemId,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".item_master.DSGThaiItemDescription,").append(getPrefix()).append(".shift.name,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".working_area.name,").append(getPrefix()).append(".inv_onhand.batchno");
+
+        log.debug(sqlBuilder.toString());
+
+        try {
+            SQLQuery query = getSession().createSQLQuery(sqlBuilder.toString())
+                    .addScalar("QTY", IntegerType.INSTANCE)
+                    .addScalar("ITEM_ID", StringType.INSTANCE)
+                    .addScalar("ITEM_DESCRIPTION", StringType.INSTANCE)
+                    .addScalar("SHIFT_NAME", StringType.INSTANCE)
+                    .addScalar("WORKING_AREA_NAME", StringType.INSTANCE)
+                    .addScalar("BATCHNO", StringType.INSTANCE);
+            List<Object[]> objects = query.list();
+
+            int i = 1;
+
+            for (Object[] entity : objects) {
+                PalletSubReport report = new PalletSubReport();
+                report.setNo(i++);
+                report.setQty(Utils.parseInt(entity[0], 0));
+                report.setItemCode(Utils.parseString(entity[1], ""));
+                report.setItemDescription(Utils.parseString(entity[2], ""));
+                report.setShiftName(Utils.parseString(entity[3], ""));
+                report.setWorkingAreaName(Utils.parseString(entity[4], ""));
+                report.setBatchNo(Utils.parseString(entity[5], ""));
                 reportViews.add(report);
             }
         } catch (Exception e) {
