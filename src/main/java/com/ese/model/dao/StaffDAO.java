@@ -16,8 +16,8 @@ public class StaffDAO extends GenericDAO<StaffModel, Integer>{
     public StaffModel findByUserNameAndPassword(String userName, String password) throws Exception {
         return (StaffModel) getCriteria().add(Restrictions.and(
                 Restrictions.eq("username", userName),
-                Restrictions.eq("password", password)
-        )).uniqueResult();
+                Restrictions.eq("password", password))
+        ).add(Restrictions.eq("isValid", 1)).uniqueResult();
     }
 
     public boolean isUsernameExist(String userName) throws Exception {
