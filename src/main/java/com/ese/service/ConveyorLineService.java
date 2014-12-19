@@ -13,7 +13,7 @@ import java.util.List;
 @Component
 @Transactional
 public class ConveyorLineService extends Service{
-
+    private static final long serialVersionUID = 4112578406329874840L;
     @Resource private ConveyorLineDAO conveyorLineDAO;
 
     public List<ConveyorLineModel> getConveyorLineList(){

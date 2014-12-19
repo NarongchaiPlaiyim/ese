@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 @ApplicationScoped
 @ManagedBean(name = "msg")
 public class MessageBean extends MessageProvider {
+    private static final long serialVersionUID = 4112578684029874840L;
     private ResourceBundle resourceBundle;
     @PostConstruct
     public void onCreation() {

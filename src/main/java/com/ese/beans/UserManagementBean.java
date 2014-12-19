@@ -21,6 +21,7 @@ import java.util.List;
 @ManagedBean(name = "userManagement")
 @ViewScoped
 public class UserManagementBean extends Bean{
+    private static final long serialVersionUID = 4312578634029874840L;
     @ManagedProperty("#{userManagementService}") private UserManagementService userManagementService;
     @Value("#{config['authorize.menu.user']}") private String key;
 

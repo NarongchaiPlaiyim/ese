@@ -15,7 +15,7 @@ import java.util.Date;
 @Getter
 @Setter
 @MappedSuperclass
-public class AbstractModel implements Serializable {
+public class AbstractModel/* implements Serializable */{
     @Column(name = "create_by")
     private Integer createBy;
 

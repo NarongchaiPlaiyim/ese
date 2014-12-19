@@ -22,6 +22,7 @@ import java.util.List;
 @ManagedBean(name = "roleAccess")
 @ViewScoped
 public class RoleAccessBean extends Bean{
+    private static final long serialVersionUID = 4412578634029874840L;
     @ManagedProperty("#{roleAccessService}") private RoleAccessService roleAccessService;
 
     private String modeRole;

@@ -22,6 +22,7 @@ import java.util.Map;
 @Component
 @Transactional
 public class RoleAccessService extends Service{
+    private static final long serialVersionUID = 4112578634029874480L;
     @Resource SystemRoleDAO systemRoleDAO;
     @Resource RoleAccessDAO roleAccessDAO;
     @Resource SystemRoleTransform systemRoleTransform;

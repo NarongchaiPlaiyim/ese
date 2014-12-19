@@ -19,6 +19,7 @@ import java.util.Map;
 @Component
 @Transactional
 public class ReportService extends Service{
+    private static final long serialVersionUID = 4112578632409874840L;
 
     public void exportPDF(String fileName, Map<String,Object> parameters,String pdfName, Collection reportList) throws Exception {
 

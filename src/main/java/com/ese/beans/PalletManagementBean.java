@@ -25,7 +25,8 @@ import java.util.List;
 @Setter
 @ManagedBean(name = "palletManagement")
 @ViewScoped
-public class PalletManagementBean extends Bean implements Serializable {
+public class PalletManagementBean extends Bean {
+    private static final long serialVersionUID = 4182578634029874840L;
     @ManagedProperty("#{palletService}") private PalletService palletService;
     @ManagedProperty("#{warehouseService}") private WarehouseService warehouseService;
     @ManagedProperty("#{workingAreaService}") private WorkingAreaService workingAreaService;

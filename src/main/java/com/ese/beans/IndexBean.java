@@ -13,6 +13,7 @@ import java.util.List;
 @ManagedBean(name = "index")
 @ViewScoped
 public class IndexBean extends Bean{
+    private static final long serialVersionUID = 4112578634029874840L;
     private String messageIndex;
 
     @PostConstruct

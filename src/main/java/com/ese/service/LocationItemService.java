@@ -19,6 +19,7 @@ import java.util.Map;
 @Component
 @Transactional
 public class LocationItemService extends Service{
+    private static final long serialVersionUID = 4112578634029870000L;
     @Resource private MSLocationItemsDAO msLocationItemsDAO;
     @Resource private LocationItemTransform locationItemTransform;
 

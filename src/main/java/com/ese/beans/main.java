@@ -5,7 +5,7 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.*;
 
-public class main {
+public class Main {
     public static void main(String[] args) {
         System.out.println(EncryptionService.encryption("admin"));
         //21232f297a57a5a743894a0e4a801fc3

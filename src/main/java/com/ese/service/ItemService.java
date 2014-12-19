@@ -14,7 +14,7 @@ import java.util.List;
 @Component
 @Transactional
 public class ItemService extends Service{
-
+    private static final long serialVersionUID = 4112578634029878888L;
     @Resource private ItemDAO itemDAO;
 
     public List<MSItemModel> findByCondition(final String type, final String text){

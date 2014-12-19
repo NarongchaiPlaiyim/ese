@@ -21,6 +21,7 @@ import java.util.List;
 @Component
 @Transactional
 public class BarcodeRegisterService extends Service{
+    private static final long serialVersionUID = 4112577774029874840L;
     @Resource private ItemDAO itemDAO;
     @Resource private BarcodeRegisterDAO barcodeRegisterDAO;
     @Resource private BarcodeRegisterTransform barcodeRegisterTransform;

@@ -22,6 +22,7 @@ import java.util.Map;
 @Component
 @Transactional
 public class UserManagementService extends Service{
+    private static final long serialVersionUID = 4112578634029894840L;
     @Resource MSDepartmentDAO msDepartmentDAO;
     @Resource StaffDAO staffDAO;
     @Resource FactionDAO factionDAO;

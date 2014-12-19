@@ -22,6 +22,7 @@ import java.util.List;
 @Component
 @Transactional
 public class LocationService extends Service{
+    private static final long serialVersionUID = 4112578634029784840L;
     @Resource private LocationDAO locationDAO;
     @Resource private LocationTransform locationTransform;
     @Resource private WarehouseDAO warehouseDAO;

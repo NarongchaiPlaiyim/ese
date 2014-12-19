@@ -67,7 +67,7 @@ public enum Utils {
     }
 
     public static boolean isTrue(int value) {
-        return value == 1 ? true : false ;
+        return value == 1;
     }
 
     public static int isTrue(boolean value) {

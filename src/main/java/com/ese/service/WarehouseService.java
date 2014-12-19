@@ -15,6 +15,7 @@ import java.util.List;
 @Component
 @Transactional
 public class WarehouseService extends Service{
+    private static final long serialVersionUID = 4112578634029874740L;
     @Resource private WarehouseDAO warehouseDAO;
     @Resource private WarehouseTransform warehouseTransform;
 

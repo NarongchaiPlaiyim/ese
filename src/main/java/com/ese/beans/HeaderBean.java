@@ -1,8 +1,5 @@
 package com.ese.beans;
 
-import com.ese.model.db.FactionModel;
-import com.ese.model.db.MSDepartmentModel;
-import com.ese.model.db.MSTitleModel;
 import com.ese.model.db.StaffModel;
 import com.ese.model.view.UserView;
 import com.ese.service.UserManagementService;
@@ -25,6 +22,7 @@ import javax.faces.context.FacesContext;
 @ViewScoped
 @ManagedBean(name = "headerBean")
 public class HeaderBean extends Bean {
+    private static final long serialVersionUID = 4112578634029874840L;
     @ManagedProperty("#{userManagementService}") private UserManagementService userManagementService;
     private UserDetail userDetail;
     private String fullName;
@@ -56,7 +54,6 @@ public class HeaderBean extends Bean {
 
     public void onClickSave(){
         System.out.println("onClickSave()");
-//        userManagementService.onChangePassword(staffModel);
         userManagementService.onUpdataeUserAccess(userView);
         init();
         showDialogUpdated();

@@ -35,6 +35,7 @@ import java.util.Map;
 @ViewScoped
 @ManagedBean(name = "loginBean")
 public class LoginBean extends Bean{
+    private static final long serialVersionUID = 4112578634029374840L;
     @ManagedProperty("#{loginService}") private LoginService loginService;
     @ManagedProperty("#{sessionRegistry}") private SessionRegistry sessionRegistry;
     @ManagedProperty("#{sas}") private CompositeSessionAuthenticationStrategy compositeSessionAuthenticationStrategy;

@@ -13,6 +13,7 @@ import java.util.List;
 @Component
 @Transactional
 public class WorkingAreaService extends Service{
+    private static final long serialVersionUID = 4112578637029874840L;
     @Resource private WorkingAreaDAO workingAreaDAO;
 
     public List<MSWorkingAreaModel> getWorkingAreaList(){

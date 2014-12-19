@@ -26,6 +26,7 @@ import java.util.List;
 @ViewScoped
 @ManagedBean(name = "setup")
 public class SetupBean extends Bean{
+    private static final long serialVersionUID = 4212578634029874840L;
     @ManagedProperty("#{setupService}") private SetupService setupService;
     @ManagedProperty("#{locationService}") private LocationService locationService;
     @ManagedProperty("#{warehouseService}") private WarehouseService warehouseService;

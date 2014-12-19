@@ -14,6 +14,7 @@ import java.util.List;
 @Component
 @Transactional
 public class StockInOutNoteService extends Service{
+    private static final long serialVersionUID = 4112578634029876540L;
     @Resource private StockInOutNoteDAO stockInOutNoteDAO;
     @Resource private StockInOutNoteTransform stockInOutNoteTransform;
 

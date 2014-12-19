@@ -23,6 +23,7 @@ import java.util.List;
 @Component
 @Transactional
 public class PalletService extends Service{
+    private static final long serialVersionUID = 4112578634920874840L;
     @Resource private PalletDAO palletDAO;
     @Resource private MSLocationItemsDAO msLocationItemsDAO;
     @Resource private LocationDAO locationDAO;
@@ -96,18 +97,17 @@ public class PalletService extends Service{
 
         try {
             palletModel = palletDAO.findByID(palletId);
+            if (!Utils.isNull(palletModel) &&Utils.isZero(palletModel.getIsCombine())){
+                reportViews = palletDAO.genSQLReportPallet(palletId);
+                partReport = pathPrintTagReport;
+            } else if (!Utils.isNull(palletModel) && !Utils.isZero(palletModel.getIsCombine())){
+                partReport = pathPrintTagV2Report;
+                map.put("path", pathSubReport);
+                map.put("MainPallet", palletDAO.findByIdToReport(palletModel.getId()));
+                map.put("SubPallet", palletDAO.genSQLReportPalletV2(palletModel.getId()));
+            }
         } catch (Exception e) {
             log.debug("Exception error onPrintTag : ", e);
-        }
-
-        if (Utils.isZero(palletModel.getIsCombine())){
-            reportViews = palletDAO.genSQLReportPallet(palletId);
-            partReport = pathPrintTagReport;
-        } else if (!Utils.isZero(palletModel.getIsCombine())){
-            partReport = pathPrintTagV2Report;
-            map.put("path", pathSubReport);
-            map.put("MainPallet", palletDAO.findByIdToReport(palletModel.getId()));
-            map.put("SubPallet", palletDAO.genSQLReportPalletV2(palletModel.getId()));
         }
 
         try {

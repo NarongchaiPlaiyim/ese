@@ -21,6 +21,7 @@ import java.util.List;
 @ViewScoped
 @ManagedBean(name = "barcodeRegisterBean")
 public class BarcodeRegisterBean extends Bean{
+    private static final long serialVersionUID = 4112578634029874840L;
     @ManagedProperty("#{barcodeRegisterService}") private BarcodeRegisterService barcodeRegisterService;
 
     private BarcodeRegisterView barcodeRegisterView;

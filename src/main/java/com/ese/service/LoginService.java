@@ -18,11 +18,8 @@ import java.util.Map;
 @Component
 @Transactional
 public class LoginService extends Service{
+    private static final long serialVersionUID = 4112578634088874840L;
     @Resource private StaffDAO staffDAO;
-    @Resource private LocationDAO locationDAO;
-    @Resource private WarehouseDAO warehouseDAO;
-    @Resource private MSLocationItemsDAO locationItemsDAO;
-    @Resource private BarcodeRegisterDAO barcodeRegisterDAO;
     @Resource private MenuObjectDAO menuObjectDAO;
 
     @Getter StaffModel staffModel;

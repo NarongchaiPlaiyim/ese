@@ -14,7 +14,7 @@ import java.util.List;
 @Component
 @Transactional
 public class IndexService implements Serializable{
-
+    private static final long serialVersionUID = 4112578634009874840L;
     @Autowired private Logger moLogger;
     @Autowired protected Logger log;
     @Autowired protected Logger mtLogger;
