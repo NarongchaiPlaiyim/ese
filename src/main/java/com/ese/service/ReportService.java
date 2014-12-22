@@ -1,17 +1,23 @@
 package com.ese.service;
 
 import com.ese.utils.Utils;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.pdf.Barcode128;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfWriter;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.InputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.Collection;
 import java.util.Map;
@@ -52,5 +58,31 @@ public class ReportService extends Service{
             outputStream.close();
         }
 
+    }
+
+    public void test(String fileName, String pdfName){
+        final String PATH = "D:/parttime/ESE's source/ese/web/site/report/" ;
+        String fillFileName =PATH + "BarcodePrinting.jasper" ;
+
+        try
+        {
+            // compile the .jrxml file to create .jasper file
+            JasperCompileManager.compileReportToFile(fileName,fillFileName);
+
+//            File reportFile = new File();
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(fillFileName,null,new JREmptyDataSource());
+
+            // export the report in pdf format
+            JRPdfExporter exporter = new JRPdfExporter();
+            File destFile = new File("D:/test/" + pdfName );
+            exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+            exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, destFile.toString());
+            exporter.exportReport();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }

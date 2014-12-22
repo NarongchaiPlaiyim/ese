@@ -123,7 +123,7 @@ public class BarcodeRegisterService extends Service{
     }
 
     public void onPrintBarcode(int barcodeId){
-        String printBarcodeName = Utils.convertToStringDDMMYYYY(new Date()) + "_BarcodeRegister";
+        String printBarcodeName = Utils.genDateReportStringDDMMYYYY(new Date()) + "_BarcodeRegister";
         List<BarcodeRegisterModelReport> reports = barcodeRegisterDAO.genSQLReportBarcode(barcodeId);
 
         log.debug("reportViews {}", reports.size());

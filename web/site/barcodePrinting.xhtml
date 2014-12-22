@@ -75,6 +75,7 @@
                                                  onstart="PF('bui').block()"
                                                  action="#{barcodePrintingBean.onClickOk}"
                                                  oncomplete="PF('bui').unblock()"
+                                                 ajax="false"
                                                  update=":msgBoxSystemMessagePanel"
                                                  icon="ui-icon-check"/>
                             </td>
@@ -85,14 +86,15 @@
         </p:layout>
 
         <p:panel id="msgBoxSystemMessagePanel" style="border: 0">
-            <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="#{msg.get('dialog.message.size')}" closable="false"
+            <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="#{msg.get('dialog.message.size')}"
+                             closable="false"
                              header="#{barcodePrintingBean.messageHeader}" message="#{barcodePrintingBean.message}" >
                 <div style="text-align: right">
                     <p:commandButton value="#{msg.get('btn.name.ok')}"
-                                     process="@this"
-                                     update="barcodePrintingForm"
-                                     icon="ui-icon-check"
                                      styleClass="medium" style="#{msg.get('btn.size')}"
+                                     icon="ui-icon-check"
+                                     process="@this"
+                                     update=":barcodePrintingForm"
                                      oncomplete="PF('msgBoxSystemMessageDlg').hide()"/>
                 </div>
             </p:confirmDialog>

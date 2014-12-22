@@ -40,7 +40,7 @@ public class BarcodePrintingBean extends Bean {
     public void onClickOk(){
         if(!Utils.isZero(getQty())){
             //before print we have to check seq. of start barcode for other user may click ok by the same start barcode.
-
+            barcodePrintingService.onPrintBarcode();
         } else {
             showDialogWarning("QTY must more than 0.");
         }

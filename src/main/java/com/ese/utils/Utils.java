@@ -170,4 +170,14 @@ public enum Utils {
             return dateString;
         }
     }
+
+    public static String genDateReportStringDDMMYYYY(Date date){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-HH-mm-ss", Locale.ENGLISH);
+        if (Utils.isNull(date)){
+            return "";
+        } else {
+            String dateString = simpleDateFormat.format(date);
+            return dateString;
+        }
+    }
 }

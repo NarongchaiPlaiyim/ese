@@ -89,7 +89,7 @@ public class PalletService extends Service{
     }
 
     public void onPrintTag(int palletId){
-        String printTagReportname = Utils.convertToStringDDMMYYYY(new Date()) + "_PrintTag";
+        String printTagReportname = Utils.genDateReportStringDDMMYYYY(new Date()) + "_PrintTag";
         String partReport = "";
         PalletModel palletModel = null;
         List<PalletManagemengModelReport> reportViews = null;
