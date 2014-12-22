@@ -49,7 +49,7 @@ public class BarcodePrintingBean extends Bean {
     public void calculator(){
         final int start = Utils.parseInt(replaceFormat(getStartBarcode()), 0);
         final int finish = (getQty() + start) - 1;
-        final String result = finish > 999999999 ? "999999999" : String.format("%08d", finish);
+        final String result = finish > 99999999 ? "99999999" : String.format("%08d", finish);
         setFinishBarcode("TW"+ result);
     }
 
