@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>#{msg.get('menu.picking.title.sub')}</title>
+    </h:head>
+    <h:body>
+        <p:layout fullPage="true" id="layoutPanel">
+            <p:layoutUnit id="layoutTop" position="north" size="180" header="#{msg.get('header.north')}" collapsible="true" style="border: 0">
+                <ui:insert name="header">
+                    <ui:include src="#{msg.get('include.header')}"/>
+                </ui:insert>
+            </p:layoutUnit>
+            <p:layoutUnit id="layoutLeft" position="west" size="250" header="#{msg.get('header.west')}" collapsible="true" style="border: 0">
+                <ui:include src="#{msg.get('include.menu')}"/>
+            </p:layoutUnit>
+
+            <p:layoutUnit id="layoutCenter" position="center" header="#{msg.get('menu.picking.title.sub')}" >
+                <h:form id="barcodePrintingForm">
+                    <table border="0" class="content_table_form">
+                        <tr >
+                            <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
+                            <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
+                        </tr>
+                        <tr>
+                            <td>
+                                <h:outputLabel value="Start Barcode"
+                                               style="min-width: 150px; max-width: 150px;"/>
+                            </td>
+                            <td>
+                                <p:inputText styleClass="fixMinMax200"
+                                             value="#{barcodePrintingBean.startBarcode}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h:outputLabel value="QTY"
+                                               style="min-width: 150px; max-width: 150px;"/>
+                            </td>
+                            <td>
+                                <p:inputText styleClass="fixMinMax200"
+                                             value="#{barcodePrintingBean.qty}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h:outputLabel value="Finish Barcode"
+                                               style="min-width: 150px; max-width: 150px;"/>
+                            </td>
+                            <td>
+                                <p:inputText styleClass="fixMinMax200"
+                                             value="#{barcodePrintingBean.finishBarcode}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td/>
+                            <td>
+                                <p:commandButton value="#{msg.get('btn.name.ok')}"
+                                                 style="min-width: 200px; max-width: 200px;"
+                                                 onstart="PF('bui').block()"
+                                                 action="#{barcodePrintingBean.onClickOk}"
+                                                 oncomplete="PF('bui').unblock()"
+                                                 icon="ui-icon-check"/>
+                            </td>
+                        </tr>
+                    </table>
+                </h:form>
+            </p:layoutUnit>
+        </p:layout>
+    </h:body>
+</f:view>
+</html>
