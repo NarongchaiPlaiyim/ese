@@ -19,7 +19,6 @@ public class BarcodePrintingService extends Service{
     private static final long serialVersionUID = 4112577394029874840L;
     @Resource private BarcodePrintingDAO barcodePrintingDAO;
     @Resource private ReportService reportService;
-    @Value("#{config['report.barcodeprinting']}")private String pathBarcodePrintingReport;
 
     public String getLastSeq(){
         return "";
