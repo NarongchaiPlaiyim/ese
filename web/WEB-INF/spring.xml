@@ -19,6 +19,7 @@
         ">
 
     <util:properties id="config" location="classpath:config.properties"/>
+    <util:properties id="message" location="classpath:message.properties"/>
 
     <context:annotation-config />
     <context:component-scan base-package="com.ese.beans"/>
