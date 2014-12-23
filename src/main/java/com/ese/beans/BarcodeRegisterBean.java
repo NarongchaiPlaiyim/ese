@@ -23,6 +23,7 @@ import java.util.List;
 public class BarcodeRegisterBean extends Bean{
     private static final long serialVersionUID = 4112578634029874840L;
     @ManagedProperty("#{barcodeRegisterService}") private BarcodeRegisterService barcodeRegisterService;
+    @ManagedProperty("#{message['authorize.menu.barcode']}") private String key;
 
     private BarcodeRegisterView barcodeRegisterView;
     private List<MSItemModel> msItemModelList;
@@ -47,7 +48,7 @@ public class BarcodeRegisterBean extends Bean{
     @PostConstruct
     public void onCreation(){
         log.debug("onCreation().");
-        if(preLoad() && isAuthorize("0100")){
+        if(preLoad() && isAuthorize(key)){
             init();
         }
     }
