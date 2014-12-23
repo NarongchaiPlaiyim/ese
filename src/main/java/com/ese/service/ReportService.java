@@ -64,9 +64,9 @@ public class ReportService extends Service{
         final float INCH = 63.5f;//1"
         final float HEIGHT = INCH;
         final float WIDTH = INCH*4;
-
-        ExternalContext externalContext = FacesUtil.getExternalContext();
-        externalContext.addResponseHeader("Content-disposition", "attachment; filename="+pathPDF+".pdf");
+        log.debug("path : {}", pathPDF);
+//        ExternalContext externalContext = FacesUtil.getExternalContext();
+//        externalContext.addResponseHeader("Content-disposition", "attachment; filename="+pathPDF+".pdf");
 
         // step 1
         Document document = null;
@@ -77,9 +77,9 @@ public class ReportService extends Service{
             // step 1
             document = new Document(new Rectangle(WIDTH, HEIGHT));
             document.setMargins(MARGIN, MARGIN, MARGIN, MARGIN);
-            outputStream =  externalContext.getResponseOutputStream();
+//            outputStream =  externalContext.getResponseOutputStream();
             // step 2
-            writer = PdfWriter.getInstance(document, outputStream);
+            writer = PdfWriter.getInstance(document, new FileOutputStream(pathPDF));
             // step 3
             document.open();
             // step 4
