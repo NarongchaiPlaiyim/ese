@@ -1,5 +1,6 @@
 package com.ese.service;
 
+import com.ese.utils.FacesUtil;
 import com.ese.utils.Utils;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Image;
@@ -58,49 +59,63 @@ public class ReportService extends Service{
 
     }
 
-    public void genBarcode128(String pathPDF, String startBarcode, int qty) throws IOException, DocumentException{
+    public void genBarcode128(String pathPDF, String startBarcode, int qty){
         final float MARGIN = 12f;//50mm
         final float INCH = 63.5f;//1"
         final float HEIGHT = INCH;
         final float WIDTH = INCH*4;
 
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        ExternalContext externalContext = FacesUtil.getExternalContext();
         externalContext.addResponseHeader("Content-disposition", "attachment; filename="+pathPDF+".pdf");
-        OutputStream outputStream =  externalContext.getResponseOutputStream();
 
         // step 1
-        Document document = new Document(new Rectangle(WIDTH, HEIGHT));
-        document.setMargins(MARGIN, MARGIN, MARGIN, MARGIN);
+        Document document = null;
+        PdfWriter writer = null;
+        OutputStream outputStream = null;
+        PdfContentByte cb = null;
+        try {
+            // step 1
+            document = new Document(new Rectangle(WIDTH, HEIGHT));
+            document.setMargins(MARGIN, MARGIN, MARGIN, MARGIN);
+            outputStream =  externalContext.getResponseOutputStream();
+            // step 2
+            writer = PdfWriter.getInstance(document, outputStream);
+            // step 3
+            document.open();
+            // step 4
+            cb = writer.getDirectContent();
+            // CODE 128
+            Barcode128 code128 = new Barcode128();
+            code128.setCodeType(Barcode.CODE128);
+            code128.setTextAlignment(Element.ALIGN_CENTER);
 
-        // step 2
-        PdfWriter writer = PdfWriter.getInstance(document, outputStream);
-        // step 3
-        document.open();
-        // step 4
-        PdfContentByte cb = writer.getDirectContent();
+            for (int i = 0; i < qty; i++) {
+                int barcode = Utils.parseInt(replaceFormat(startBarcode),0)+i;
+                final String result = barcode > 99999999 ? "99999999" : String.format("%08d", barcode);
+                StringBuilder barcodeString = new StringBuilder();
+                barcodeString.append("TW").append(result);
 
-        // CODE 128
-        Barcode128 code128 = new Barcode128();
-        code128.setCodeType(Barcode.CODE128);
-        code128.setTextAlignment(Element.ALIGN_CENTER);
-
-        for (int i = 0; i < qty; i++) {
-            int barcode = Utils.parseInt(replaceFormat(startBarcode),0)+i;
-            final String result = barcode > 99999999 ? "99999999" : String.format("%08d", barcode);
-            StringBuilder barcodeString = new StringBuilder();
-            barcodeString.append("TW").append(result);
-
-            code128.setCode(barcodeString.toString());
-            Image image = code128.createImageWithBarcode(cb, null, null);
-            float documentWidth = document.getPageSize().getWidth() - document.leftMargin() - document.rightMargin();
-            float documentHeight = document.getPageSize().getHeight() - document.topMargin() - document.bottomMargin();
-            image.scaleAbsolute(documentWidth, documentHeight);
-            document.add(image);
-            document.newPage();
+                code128.setCode(barcodeString.toString());
+                Image image = code128.createImageWithBarcode(cb, null, null);
+                float documentWidth = document.getPageSize().getWidth() - document.leftMargin() - document.rightMargin();
+                float documentHeight = document.getPageSize().getHeight() - document.topMargin() - document.bottomMargin();
+                image.scaleAbsolute(documentWidth, documentHeight);
+                document.add(image);
+                document.newPage();
+            }
+        } catch (Exception e){
+            System.err.println(e);
+        } finally {
+            if(!Utils.isNull(document)){
+                document.close();
+            }
+            if(!Utils.isNull(writer)){
+                writer.close();
+            }
+            if(!Utils.isNull(cb)){
+                cb.closePath();
+            }
         }
-
-        // step 5
-        document.close();
     }
 
     private String replaceFormat(String startBarcode){

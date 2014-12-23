@@ -36,13 +36,21 @@ public class BarcodePrintingBean extends Bean {
         String formatBarcode = "TW"+String.format("%08d", Utils.parseInt(getLastBarcode(), 0));
         setStartBarcode(formatBarcode);
         setFinishBarcode(formatBarcode);
+        setQty(0);
     }
 
     public void onClickOk(){
         if(!Utils.isZero(getQty())){
-            if(!getLastBarcode().equalsIgnoreCase(barcodePrintingService.getLastSeq())){
+            if(getLastBarcode().equalsIgnoreCase(barcodePrintingService.getLastSeq())){
                 barcodePrintingService.save(getQty(), replaceFormat(getStartBarcode()), replaceFormat(getFinishBarcode()));
-                barcodePrintingService.onPrintBarcode(getStartBarcode(), getQty());
+                showDialogSaved();
+                try {
+                    barcodePrintingService.onPrintBarcode(getStartBarcode(), getQty());
+                } catch (Exception e) {
+
+                }
+
+                onCreation();
             } else {
                 showDialogWarning("Plz try again.");
                 init();
