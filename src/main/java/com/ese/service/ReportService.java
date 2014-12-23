@@ -14,11 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.Collection;
 import java.util.Map;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import com.itextpdf.text.*;
 
@@ -60,19 +58,22 @@ public class ReportService extends Service{
 
     }
 
-    public void genBarcode128(String pathPDF, String startBarcode, int qty) throws FileNotFoundException, DocumentException{
+    public void genBarcode128(String pathPDF, String startBarcode, int qty) throws IOException, DocumentException{
         final float MARGIN = 12f;//50mm
         final float INCH = 63.5f;//1"
         final float HEIGHT = INCH;
         final float WIDTH = INCH*4;
-        log.debug("-------- {}, ++++++++++ {}", startBarcode, qty);
+
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        externalContext.addResponseHeader("Content-disposition", "attachment; filename="+pathPDF+".pdf");
+        OutputStream outputStream =  externalContext.getResponseOutputStream();
 
         // step 1
         Document document = new Document(new Rectangle(WIDTH, HEIGHT));
         document.setMargins(MARGIN, MARGIN, MARGIN, MARGIN);
 
         // step 2
-        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("D:/test/"+pathPDF));
+        PdfWriter writer = PdfWriter.getInstance(document, outputStream);
         // step 3
         document.open();
         // step 4

@@ -26,10 +26,7 @@ public class BarcodePrintingService extends Service{
     }
 
     public void onPrintBarcode(String startBarcode, int qty){
-        String printBarcodeName = Utils.genDateReportStringDDMMYYYY(new Date()) + "_BarcodePrinting.pdf";
-
-        List<BarcodeRegisterModelReport> reports = new ArrayList<BarcodeRegisterModelReport>();
-        HashMap map = new HashMap<String, Object>();
+        String printBarcodeName = Utils.genDateReportStringDDMMYYYY(new Date()) + "_BarcodePrinting";
 
         try {
             reportService.genBarcode128(printBarcodeName, startBarcode, qty);
