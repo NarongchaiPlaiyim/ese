@@ -20,7 +20,6 @@ public class BarcodePrintingService extends Service{
     private static final long serialVersionUID = 4112577394029874840L;
     @Resource private BarcodePrintingDAO barcodePrintingDAO;
     @Resource private ReportService reportService;
-    @Value("#{config['report.barcodeprinting']}")private String pathBarcodePrintingReport;
 
     public String getLastSeq(){
         String result = "";
@@ -67,14 +66,11 @@ public class BarcodePrintingService extends Service{
         }
     }
 
-    public void onPrintBarcode(){
-        String printBarcodeName = Utils.genDateReportStringDDMMYYYY(new Date()) + "_BarcodePrinting.pdf";
-
-        List<BarcodeRegisterModelReport> reports = new ArrayList<BarcodeRegisterModelReport>();
-        HashMap map = new HashMap<String, Object>();
+    public void onPrintBarcode(String startBarcode, int qty){
+        String printBarcodeName = Utils.genDateReportStringDDMMYYYY(new Date()) + "_BarcodePrinting";
 
         try {
-            reportService.test(pathBarcodePrintingReport,printBarcodeName);
+            reportService.genBarcode128(printBarcodeName, startBarcode, qty);
         } catch (Exception e) {
             log.debug("Exception Report : ", e);
         }

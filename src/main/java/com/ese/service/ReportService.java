@@ -2,25 +2,23 @@ package com.ese.service;
 
 import com.ese.utils.Utils;
 import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Image;
-import com.itextpdf.text.PageSize;
+import com.itextpdf.text.pdf.Barcode;
 import com.itextpdf.text.pdf.Barcode128;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.export.JRPdfExporter;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.Collection;
 import java.util.Map;
+import java.io.FileOutputStream;
+import com.itextpdf.text.*;
 
 @Component
 @Transactional
@@ -60,29 +58,52 @@ public class ReportService extends Service{
 
     }
 
-    public void test(String fileName, String pdfName){
-        final String PATH = "D:/parttime/ESE's source/ese/web/site/report/" ;
-        String fillFileName =PATH + "BarcodePrinting.jasper" ;
+    public void genBarcode128(String pathPDF, String startBarcode, int qty) throws IOException, DocumentException{
+        final float MARGIN = 12f;//50mm
+        final float INCH = 63.5f;//1"
+        final float HEIGHT = INCH;
+        final float WIDTH = INCH*4;
 
-        try
-        {
-            // compile the .jrxml file to create .jasper file
-            JasperCompileManager.compileReportToFile(fileName,fillFileName);
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        externalContext.addResponseHeader("Content-disposition", "attachment; filename="+pathPDF+".pdf");
+        OutputStream outputStream =  externalContext.getResponseOutputStream();
 
-//            File reportFile = new File();
+        // step 1
+        Document document = new Document(new Rectangle(WIDTH, HEIGHT));
+        document.setMargins(MARGIN, MARGIN, MARGIN, MARGIN);
 
-            JasperPrint jasperPrint = JasperFillManager.fillReport(fillFileName,null,new JREmptyDataSource());
+        // step 2
+        PdfWriter writer = PdfWriter.getInstance(document, outputStream);
+        // step 3
+        document.open();
+        // step 4
+        PdfContentByte cb = writer.getDirectContent();
 
-            // export the report in pdf format
-            JRPdfExporter exporter = new JRPdfExporter();
-            File destFile = new File("D:/test/" + pdfName );
-            exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-            exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, destFile.toString());
-            exporter.exportReport();
+        // CODE 128
+        Barcode128 code128 = new Barcode128();
+        code128.setCodeType(Barcode.CODE128);
+        code128.setTextAlignment(Element.ALIGN_CENTER);
+
+        for (int i = 0; i < qty; i++) {
+            int barcode = Utils.parseInt(replaceFormat(startBarcode),0)+i;
+            final String result = barcode > 99999999 ? "99999999" : String.format("%08d", barcode);
+            StringBuilder barcodeString = new StringBuilder();
+            barcodeString.append("TW").append(result);
+
+            code128.setCode(barcodeString.toString());
+            Image image = code128.createImageWithBarcode(cb, null, null);
+            float documentWidth = document.getPageSize().getWidth() - document.leftMargin() - document.rightMargin();
+            float documentHeight = document.getPageSize().getHeight() - document.topMargin() - document.bottomMargin();
+            image.scaleAbsolute(documentWidth, documentHeight);
+            document.add(image);
+            document.newPage();
         }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+
+        // step 5
+        document.close();
+    }
+
+    private String replaceFormat(String startBarcode){
+        return startBarcode.replace("TW", "");
     }
 }

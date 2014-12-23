@@ -47,6 +47,8 @@ public class BarcodePrintingBean extends Bean {
                 showDialogWarning("Plz try again.");
                 init();
             }
+            //before print we have to check seq. of start barcode for other user may click ok by the same start barcode.
+            barcodePrintingService.onPrintBarcode(startBarcode, qty);
         } else {
             showDialogWarning("QTY must more than 0.");
         }
