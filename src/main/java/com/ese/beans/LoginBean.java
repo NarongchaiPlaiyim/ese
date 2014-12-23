@@ -1,6 +1,7 @@
 package com.ese.beans;
 
 import com.ese.model.db.StaffModel;
+import com.ese.service.BarcodePrintingService;
 import com.ese.service.security.SimpleAuthenticationManager;
 import com.ese.service.security.encryption.EncryptionService;
 import com.ese.service.LoginService;
@@ -40,6 +41,7 @@ public class LoginBean extends Bean{
     @ManagedProperty("#{sessionRegistry}") private SessionRegistry sessionRegistry;
     @ManagedProperty("#{sas}") private CompositeSessionAuthenticationStrategy compositeSessionAuthenticationStrategy;
 
+    @ManagedProperty("#{barcodePrintingService}") private BarcodePrintingService barcodePrintingService;
     private String userName = "";
     private String password = "";
     private UserDetail userDetail;
@@ -99,7 +101,7 @@ public class LoginBean extends Bean{
 
     public void test(){
         System.out.println("test");
-        System.out.println(loginService.getAuthorize().toString());
+        barcodePrintingService.insert();
 //        try {
 ////            loginService.getStaffModel()
 //        } catch (InterruptedException e) {

@@ -21,6 +21,7 @@ public class BarcodePrintingBean extends Bean {
     private String startBarcode;
     private int qty;
     private String finishBarcode;
+    private String lastBarcode;
 
     @PostConstruct
     public void onCreation(){
@@ -31,16 +32,21 @@ public class BarcodePrintingBean extends Bean {
     }
 
     private void init(){
-        barcodePrintingService.getLastSeq();//setting to start barcode
-        setStartBarcode("TW00000009");
-
-        setFinishBarcode("TW00000009");
+        setLastBarcode(barcodePrintingService.getLastSeq());
+        String formatBarcode = "TW"+String.format("%08d", Utils.parseInt(getLastBarcode(), 0));
+        setStartBarcode(formatBarcode);
+        setFinishBarcode(formatBarcode);
     }
 
     public void onClickOk(){
         if(!Utils.isZero(getQty())){
-            //before print we have to check seq. of start barcode for other user may click ok by the same start barcode.
-            barcodePrintingService.onPrintBarcode();
+            if(!getLastBarcode().equalsIgnoreCase(barcodePrintingService.getLastSeq())){
+                barcodePrintingService.save(getQty(), replaceFormat(getStartBarcode()), replaceFormat(getFinishBarcode()));
+                barcodePrintingService.onPrintBarcode();
+            } else {
+                showDialogWarning("Plz try again.");
+                init();
+            }
         } else {
             showDialogWarning("QTY must more than 0.");
         }
