@@ -42,13 +42,11 @@ public class BarcodePrintingBean extends Bean {
         if(!Utils.isZero(getQty())){
             if(!getLastBarcode().equalsIgnoreCase(barcodePrintingService.getLastSeq())){
                 barcodePrintingService.save(getQty(), replaceFormat(getStartBarcode()), replaceFormat(getFinishBarcode()));
-                barcodePrintingService.onPrintBarcode();
+                barcodePrintingService.onPrintBarcode(getStartBarcode(), getQty());
             } else {
                 showDialogWarning("Plz try again.");
                 init();
             }
-            //before print we have to check seq. of start barcode for other user may click ok by the same start barcode.
-            barcodePrintingService.onPrintBarcode(startBarcode, qty);
         } else {
             showDialogWarning("QTY must more than 0.");
         }
