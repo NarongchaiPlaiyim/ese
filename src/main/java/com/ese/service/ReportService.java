@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.Collection;
 import java.util.Map;
@@ -25,6 +26,46 @@ import com.itextpdf.text.*;
 @Transactional
 public class ReportService extends Service{
     private static final long serialVersionUID = 4112578632409874840L;
+
+    public void exportPDF(String fileName){
+        System.out.println("File name : "+ fileName);
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
+        response.setContentType("application/pdf");
+        response.addHeader("Content-Disposition", "attachment; filename=" + "barcode.pdf");
+
+        FileInputStream fileInputStream = null;
+        OutputStream responseOutputStream = null;
+        try {
+            fileInputStream = new FileInputStream(new File(fileName));
+            responseOutputStream = response.getOutputStream();
+            int bytes;
+            while ((bytes = fileInputStream.read()) != -1) {
+                responseOutputStream.write(bytes);
+            }
+            responseOutputStream.flush();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } finally {
+            if(!Utils.isNull(responseOutputStream)){
+                try {
+                    responseOutputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                }
+            }
+            if(!Utils.isNull(fileInputStream)){
+                try {
+                    fileInputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                }
+            }
+        }
+
+    }
 
     public void exportPDF(String fileName, Map<String,Object> parameters,String pdfName, Collection reportList) throws Exception {
 
@@ -73,13 +114,25 @@ public class ReportService extends Service{
         PdfWriter writer = null;
         OutputStream outputStream = null;
         PdfContentByte cb = null;
+
+        HttpServletResponse response = FacesUtil.getResponse();
+        //Set content type to application / pdf
+        //browser will open the document only if this is set
+        response.setContentType("application/pdf");
+        //Get the output stream for writing PDF object
+
         try {
             // step 1
             document = new Document(new Rectangle(WIDTH, HEIGHT));
             document.setMargins(MARGIN, MARGIN, MARGIN, MARGIN);
 //            outputStream =  externalContext.getResponseOutputStream();
             // step 2
-            writer = PdfWriter.getInstance(document, new FileOutputStream(pathPDF));
+            writer = PdfWriter.getInstance(document, response.getOutputStream());
+
+            // step 2
+//            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//            writer = PdfWriter.getInstance(document, baos);
+
             // step 3
             document.open();
             // step 4
@@ -103,12 +156,15 @@ public class ReportService extends Service{
                 document.add(image);
                 document.newPage();
             }
+            response.getOutputStream().flush();
+//            document.close();
+
         } catch (Exception e){
             System.err.println(e);
         } finally {
-            if(!Utils.isNull(document)){
-                document.close();
-            }
+//            if(!Utils.isNull(document)){
+//                document.close();
+//            }
             if(!Utils.isNull(writer)){
                 writer.close();
             }
