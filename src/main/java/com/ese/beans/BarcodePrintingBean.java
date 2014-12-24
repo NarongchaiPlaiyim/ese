@@ -1,6 +1,7 @@
 package com.ese.beans;
 
 import com.ese.service.BarcodePrintingService;
+import com.ese.utils.MessageDialog;
 import com.ese.utils.Utils;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,6 +24,9 @@ public class BarcodePrintingBean extends Bean {
     private String finishBarcode;
     private String lastBarcode;
 
+    private int qtyReport;
+    private String starBarcodeReport;
+
     @PostConstruct
     public void onCreation(){
         log.debug("onCreation().");
@@ -42,14 +46,11 @@ public class BarcodePrintingBean extends Bean {
     public void onClickOk(){
         if(!Utils.isZero(getQty())){
             if(getLastBarcode().equalsIgnoreCase(barcodePrintingService.getLastSeq())){
+                qtyReport = getQty();
+                starBarcodeReport = replaceFormat(getStartBarcode());
                 barcodePrintingService.save(getQty(), replaceFormat(getStartBarcode()), replaceFormat(getFinishBarcode()));
-                showDialogSaved();
-                try {
-                    barcodePrintingService.onPrintBarcode(getStartBarcode(), getQty());
-                } catch (Exception e) {
-
-                }
-
+                setMessage(MessageDialog.SAVE.getMessage());
+                setMessageHeader(MessageDialog.SAVE.getMessageHeader());
                 onCreation();
             } else {
                 showDialogWarning("Plz try again.");
@@ -58,6 +59,12 @@ public class BarcodePrintingBean extends Bean {
         } else {
             showDialogWarning("QTY must more than 0.");
         }
+    }
+
+    public void onPrintReport(){
+        log.debug("starBarcodeReport : {}, qtyReport : {}", starBarcodeReport, qtyReport);
+        barcodePrintingService.onPrintBarcode(starBarcodeReport, qtyReport);
+
     }
 
     public void calculator(){

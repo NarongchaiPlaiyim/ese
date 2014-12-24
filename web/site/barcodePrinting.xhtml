@@ -72,11 +72,9 @@
                             <td>
                                 <p:commandButton value="#{msg.get('btn.name.ok')}"
                                                  style="min-width: 200px; max-width: 200px;"
-                                                 onstart="PF('bui').block()"
                                                  action="#{barcodePrintingBean.onClickOk}"
-                                                 oncomplete="PF('bui').unblock()"
-                                                 ajax="false"
-                                                 update=":msgBoxSystemMessagePanel"
+                                                 oncomplete="PF('msgBoxSystemMessageDlg2').show()"
+                                                 update=":msgBoxSystemMessagePanel, :pnlDlg, :barcodePrintingForm"
                                                  icon="ui-icon-check"/>
                             </td>
                         </tr>
@@ -96,6 +94,24 @@
                                      process="@this"
                                      update=":barcodePrintingForm"
                                      oncomplete="PF('msgBoxSystemMessageDlg').hide()"/>
+                </div>
+            </p:confirmDialog>
+        </p:panel>
+
+        <p:panel id="pnlDlg" style="border: 0">
+            <p:confirmDialog id="msgBoxSystemMessageDialog2" widgetVar="msgBoxSystemMessageDlg2" width="#{msg.get('dialog.message.size')}"
+                             closable="false"
+                             header="#{barcodePrintingBean.messageHeader}" message="#{barcodePrintingBean.message}" >
+                <div style="text-align: right">
+                    <h:form>
+                        <p:commandButton value="#{msg.get('btn.name.ok')}"
+                                         styleClass="medium" style="#{msg.get('btn.size')}"
+                                         process="@form"
+                                         update="barcodePrintingForm"
+                                         action="#{barcodePrintingBean.onPrintReport()}"
+                                         ajax="false"
+                                         onclick="PF('msgBoxSystemMessageDlg2').hide()"/>
+                    </h:form>
                 </div>
             </p:confirmDialog>
         </p:panel>

@@ -2,6 +2,7 @@ package com.ese.service;
 
 import com.ese.model.dao.BarcodePrintingDAO;
 import com.ese.model.db.BarcodePrintingModel;
+import com.ese.model.view.BarcodePrintingView;
 import com.ese.model.view.report.BarcodeRegisterModelReport;
 import com.ese.utils.Utils;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,7 +22,7 @@ public class BarcodePrintingService extends Service{
     @Resource private BarcodePrintingDAO barcodePrintingDAO;
     @Resource private ReportService reportService;
     @Value("#{config['report.barcodeprinting']}")
-    private String path;
+    private String pathBarcodePrinting;
 
     public String getLastSeq(){
         String result = "";
@@ -69,11 +70,31 @@ public class BarcodePrintingService extends Service{
     }
 
     public void onPrintBarcode(String startBarcode, int qty){
-        String printBarcodeName = path + Utils.genDateReportStringDDMMYYYY(new Date()) + "_BarcodePrinting.pdf";
+//        String printBarcodeName = "D:/" + Utils.genDateReportStringDDMMYYYY(new Date()) + "_BarcodePrinting.pdf";
+        String printBarcodeName = Utils.genDateReportStringDDMMYYYY(new Date()) + "_BarcodePrinting.pdf";
+        List<BarcodePrintingView> barcodePrintingViewList = new ArrayList<BarcodePrintingView>();
         try {
-            reportService.genBarcode128(printBarcodeName, startBarcode, qty);
+
+            for (int i = 0; i < qty; i++) {
+                BarcodePrintingView printingView = new BarcodePrintingView();
+                int barcode = Utils.parseInt(replaceFormat(startBarcode),0)+i;
+                final String result = barcode > 99999999 ? "99999999" : String.format("%08d", barcode);
+                StringBuilder barcodeString = new StringBuilder();
+                barcodeString.append("TW").append(result);
+                printingView.setBarcode(barcodeString.toString());
+                barcodePrintingViewList.add(printingView);
+            }
+             log.debug("------- {}", barcodePrintingViewList.toString());
+            HashMap map = new HashMap<String, Object>();
+//            map.put("barcode", barcodePrintingViewList);
+//            reportService.genBarcode128(printBarcodeName, startBarcode, qty);
+            reportService.exportPDF(pathBarcodePrinting, map, printBarcodeName, barcodePrintingViewList);
         } catch (Exception e) {
             log.debug("Exception Report : ", e);
         }
+    }
+
+    private String replaceFormat(String startBarcode){
+        return startBarcode.replace("TW", "");
     }
 }

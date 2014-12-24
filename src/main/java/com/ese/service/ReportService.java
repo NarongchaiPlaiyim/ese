@@ -72,9 +72,10 @@ public class ReportService extends Service{
         log.debug("generate pdf.");
         JasperReport jasperReport = JasperCompileManager.compileReport(fileName);
         JRDataSource dataSource = new JRBeanCollectionDataSource(reportList);
-
+//        log.debug("############# {}", reportList.toString());
         JasperPrint print ;
         if (!Utils.isNull(dataSource) && Utils.isCollection(reportList) && !Utils.isNull(reportList)){
+//            log.debug("++++++++++++ {}", dataSource.toString());
             print = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
         } else {
             print = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
