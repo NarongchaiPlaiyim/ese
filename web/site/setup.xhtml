@@ -202,8 +202,7 @@
                                          var="location"
                                          rowKey="#{location.id}"
                                          value="#{setup.msLocationModelList}"
-                                         rows="10"
-                                         paginator="true"
+                                         scrollable="true" scrollHeight="450"
                                          selectionMode="single"
                                          selection="#{setup.msLocationModel}"
                                          styleClass="full_table">
@@ -352,8 +351,7 @@
                                                              var="stockInOutNote"
                                                              rowKey="#{stockInOutNote.id}"
                                                              value="#{setup.stockInOutNoteModelList}"
-                                                             rows="10"
-                                                             paginator="true"
+                                                             scrollable="true" scrollHeight="450"
                                                              selectionMode="single"
                                                              selection="#{setup.stockInOutNoteModel}"
                                                              rowIndexVar="rowIndex2">

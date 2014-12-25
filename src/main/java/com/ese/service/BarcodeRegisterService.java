@@ -101,11 +101,17 @@ public class BarcodeRegisterService extends Service{
         }
     }
 
-    public void save(BarcodeRegisterView view){
+    public void saveORupdate(BarcodeRegisterView view){
         log.debug("-- save(BarcodeRegisterView.id[{}])", view.getId());
         try {
             view.setCost(barcodeRegisterDAO.getPrice(view.getMsItemModel().getItemId()));
-            barcodeRegisterDAO.persist(barcodeRegisterTransform.transformToModel(view));
+
+            if (!Utils.isZero(view.getId())){
+                barcodeRegisterDAO.persist(barcodeRegisterTransform.transformToModel(view));
+            } else {
+                BarcodeRegisterModel model = barcodeRegisterTransform.transformToModel(view);
+                barcodeRegisterDAO.update(model);
+            }
         } catch (Exception e) {
             log.error("{}",e);
         }

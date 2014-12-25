@@ -153,7 +153,7 @@
             </table>
             <p:dataTable id="userTable" rowIndexVar="rowIndex"
                          styleClass="full_table"
-                         rows="8" paginator="true"
+                         scrollable="true" scrollHeight="450"
                          rowKey="#{user.id}"
                          value="#{userManagement.staffModelList}"
                          var="user"
@@ -325,7 +325,7 @@
                             </table>
                             <p:dataTable id="roleTable" rowIndexVar="rowIndex"
                                          styleClass="full_table"
-                                         rows="5" paginator="true"
+                                         scrollable="true" scrollHeight="410"
                                          selectionMode="single"
                                          rowKey="#{role.id}"
                                          value="#{roleAccess.systemRoleModelList}"
@@ -381,6 +381,7 @@
                                                  id="btnDeleteRoleAccess"
                                                  styleClass="medium" style="#{msg.get('btn.size')}"
                                                  icon="ui-icon-trash"
+                                                 process="@form"
                                                  update=":confirmDeleteRoleAccessPanel, :msgBoxSystemMessagePanel"
                                                  action="#{roleAccess.preDeleteRoelAccess()}"
                                                  disabled="#{roleAccess.flagBtnDeleteRoleAccess}"
@@ -434,16 +435,17 @@
                                 </tr>
                             </table>
 
-                            <p:dataTable id="roleAccessTable" rowIndexVar="rowIndex"
+                            <p:dataTable id="roleAccessTable"
+                                         rowIndexVar="rowIndex"
                                          styleClass="full_table"
-                                         rows="5" paginator="true"
+                                         scrollable="true" scrollHeight="450"
                                          selection="#{roleAccess.selectRoleAccess}"
                                          value="#{roleAccess.roleAccessModelList}"
                                          var="roleAccessList"
                                          rowKey="#{roleAccessList.id}"
                                          style="width: 100%; max-width: 100%; min-width: 100%">
                                 <p:ajax event="rowSelect"/>
-                                <p:column selectionMode="multiple" style="width:16px;text-align:center; height: 20px"/>
+                                <p:column selectionMode="multiple" style="width:16px;text-align:center;"/>
                                 <p:column headerText="Action Number" style="width: 100px; max-width: 100px; min-width: 100px" styleClass="center">
                                     <h:outputText value="#{roleAccessList.menuObjectModel.code}" />
                                 </p:column>

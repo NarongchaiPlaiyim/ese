@@ -51,7 +51,6 @@
 
                             <p:commandButton value="#{msg.get('btn.name.save')}"
                                              id="btnSave"
-                                             disabled="#{barcodeRegisterBean.flagBtnSave}"
                                              styleClass="medium" style="#{msg.get('btn.size')}"
                                              onstart="PF('bui').block()"
                                              action="#{barcodeRegisterBean.onSave()}"
@@ -62,19 +61,19 @@
                                             :msgBoxSystemMessagePanel"
                                              icon="ui-icon-check"/>
 
-                            <p:commandButton value="#{msg.get('btn.name.edit')}"
-                                             rendered="#{loginBean.isRendered(msg.get('authorize.menu.barcode.edit'))}"
-                                             id="btnEdit"
-                                             disabled="#{barcodeRegisterBean.flagBtnEdit}"
-                                             styleClass="medium" style="#{msg.get('btn.size')}"
-                                             onstart="PF('bui').block()"
-                                             action="#{barcodeRegisterBean.onEdit()}"
-                                             oncomplete="PF('bui').unblock()"
-                                             update="@this,
-                                            :setupForm:btnDelete,
-                                            :setupForm:barcodeRegisterTable,
-                                            :msgBoxSystemMessagePanel"
-                                             icon="ui-icon-wrench"/>
+                            <!--<p:commandButton value="#{msg.get('btn.name.edit')}"-->
+                                             <!--rendered="#{loginBean.isRendered(msg.get('authorize.menu.barcode.edit'))}"-->
+                                             <!--id="btnEdit"-->
+                                             <!--disabled="#{barcodeRegisterBean.flagBtnEdit}"-->
+                                             <!--styleClass="medium" style="#{msg.get('btn.size')}"-->
+                                             <!--onstart="PF('bui').block()"-->
+                                             <!--action="#{barcodeRegisterBean.onEdit()}"-->
+                                             <!--oncomplete="PF('bui').unblock()"-->
+                                             <!--update="@this,-->
+                                            <!--:setupForm:btnDelete,-->
+                                            <!--:setupForm:barcodeRegisterTable,-->
+                                            <!--:msgBoxSystemMessagePanel"-->
+                                             <!--icon="ui-icon-wrench"/>-->
 
                             <p:commandButton value="#{msg.get('btn.name.delete')}"
                                              rendered="#{loginBean.isRendered(msg.get('authorize.menu.barcode.delete'))}"
@@ -256,8 +255,7 @@
                         <tr>
                             <td colspan="6">
                                 <p:dataTable id="barcodeRegisterTable"
-                                             rows="8"
-                                             paginator="true"
+                                             scrollable="true" scrollHeight="450"
                                              var="barcodeModel"
                                              value="#{barcodeRegisterBean.barcodeRegisterModelList}"
                                              selectionMode="single"
