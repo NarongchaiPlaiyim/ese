@@ -59,11 +59,11 @@ public enum Utils {
     }
 
     public static String getBatchNo(){
-        return getCalendar().get(Calendar.YEAR) + "-" + getCalendar().get(Calendar.WEEK_OF_YEAR);
+        return new SimpleDateFormat("yyyy", Locale.ENGLISH).format(currentDate()) + "-" + getCalendar().get(Calendar.WEEK_OF_YEAR);
     }
 
     public static String getDocumentNo(){
-        return "i-"+new SimpleDateFormat("yyyyMMddHHmmss").format(currentDate());
+        return "i-"+new SimpleDateFormat("yyyyMMddHHmmss", Locale.ENGLISH).format(currentDate());
     }
 
     public static boolean isTrue(int value) {

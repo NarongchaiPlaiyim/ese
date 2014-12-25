@@ -58,7 +58,7 @@
                                      rowIndexVar="rowIndex">
                             <p:ajax event="rowSelect" update=":frmFindProduct:productTable, :frmFindProduct:btnSelectDialog"
                                     listener="#{barcodeRegisterBean.onClickTableDialog()}"/>
-                            <p:column headerText="No" style="min-width: 10px; width: 10px; max-width: 10px;">
+                            <p:column headerText="No" style="min-width: 25px; width: 25px; max-width: 25px;">
                                 <h:outputText value="#{rowIndex+1}" style="text-align: right;"/>
                             </p:column>
                             <p:column headerText="Item Code" style="min-width: 100px; width: 100px; max-width: 100px;" styleClass="center">
