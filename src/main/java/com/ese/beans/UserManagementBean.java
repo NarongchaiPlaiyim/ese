@@ -23,7 +23,7 @@ import java.util.List;
 public class UserManagementBean extends Bean{
     private static final long serialVersionUID = 4312578634029874840L;
     @ManagedProperty("#{userManagementService}") private UserManagementService userManagementService;
-    @Value("#{config['authorize.menu.user']}") private String key;
+    @ManagedProperty("#{message['authorize.menu.user']}") private String key;
 
     private String modeUserManage;
     private List<MSDepartmentModel> msDepartmentModelList;
@@ -83,7 +83,7 @@ public class UserManagementBean extends Bean{
     @PostConstruct
     public void onCreation(){
         log.debug("onCreation().");
-        if(preLoad() && isAuthorize("0800")){
+        if(preLoad() && isAuthorize(key)){
             init();
         }
     }

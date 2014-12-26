@@ -33,6 +33,7 @@ public class SetupBean extends Bean{
     @ManagedProperty("#{locationItemService}") private LocationItemService locationItemService;
     @ManagedProperty("#{itemService}") private ItemService itemService;
     @ManagedProperty("#{stockInOutNoteService}") private StockInOutNoteService stockInOutNoteService;
+    @ManagedProperty("#{message['authorize.menu.setup']}") private String key;
 
     private SetupView setupView;
     private WarehouseAndLocationView warehouseAndLocationView;
@@ -74,7 +75,7 @@ public class SetupBean extends Bean{
     @PostConstruct
     public void onCreation(){
         log.debug("onCreation()");
-        if(preLoad() && isAuthorize("0700")){
+        if(preLoad() && isAuthorize(key)){
             init();
         }
     }

@@ -18,6 +18,7 @@ import javax.faces.bean.ViewScoped;
 public class BarcodePrintingBean extends Bean {
     private static final long serialVersionUID = 4112578634029879990L;
     @ManagedProperty("#{barcodePrintingService}") private BarcodePrintingService barcodePrintingService;
+    @ManagedProperty("#{message['authorize.menu.barcode']}") private String key;
 
     private String startBarcode;
     private int qty;

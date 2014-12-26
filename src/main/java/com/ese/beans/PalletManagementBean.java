@@ -32,7 +32,7 @@ public class PalletManagementBean extends Bean {
     @ManagedProperty("#{workingAreaService}") private WorkingAreaService workingAreaService;
     @ManagedProperty("#{locationService}") private LocationService locationService;
     @ManagedProperty("#{locationItemService}") private LocationItemService locationItemService;
-    @Value("#{config['authorize.menu.pallet']}") private String key;
+    @ManagedProperty("#{message['authorize.menu.pallet']}") private String key;
 
     private List<MSWarehouseModel> warehouseModelList;
     private MSWarehouseModel warehouseMode;
@@ -60,7 +60,7 @@ public class PalletManagementBean extends Bean {
     @PostConstruct
     public void onCreation(){
         log.debug("onCreation().");
-        if(preLoad() && isAuthorize("0200")){
+        if(preLoad() && isAuthorize(key)){
             init();
         }
     }
