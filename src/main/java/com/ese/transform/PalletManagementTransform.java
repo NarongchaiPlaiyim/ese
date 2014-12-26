@@ -105,6 +105,7 @@ public class PalletManagementTransform extends Transform {
         palletMeanegementView.setConvetorLine(palletModel.getMsWorkingAreaModel());
         palletMeanegementView.setShift(palletModel.getMsShiftModel());
         palletMeanegementView.setIsCombine(palletModel.getIsCombine());
+        palletMeanegementView.setIsFoil(palletModel.getIsFoil());
 
 //        if (Utils.isZero(palletModel.getIsCombine())){
 //            palletMeanegementView.setIsCombine("red");

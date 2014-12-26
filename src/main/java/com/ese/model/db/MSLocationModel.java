@@ -52,6 +52,9 @@ public class MSLocationModel extends AbstractModel{
     @Column(name = "ismix", nullable=false, columnDefinition="int default 0")
     private Integer isMix;
 
+    @Column(name = "isFoil", nullable=false, columnDefinition="int default 0")
+    private Integer isFoil;
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
@@ -66,7 +69,8 @@ public class MSLocationModel extends AbstractModel{
                 .append("isValid", isValid)
                 .append("version", version)
                 .append("reservedQty", reservedQty)
-                .append("ismix", isMix)
+                .append("isMix", isMix)
+                .append("isFoil", isFoil)
                 .toString();
     }
 }

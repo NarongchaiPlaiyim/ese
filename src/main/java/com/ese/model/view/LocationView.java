@@ -28,6 +28,7 @@ public class LocationView {
     private int version;
     private int reservedQty;
     private int isMix;
+    private int isFoil;
 
     public LocationView() {
         warehouseModel = new MSWarehouseModel();
@@ -44,6 +45,18 @@ public class LocationView {
 
     public void setMix(boolean mix){
         setMix(mix ? 1 : 0);
+    }
+
+    public void setFoil(int foil) {
+        isFoil = foil;
+    }
+
+    public boolean isFoil(){
+        return isFoil != 0;
+    }
+
+    public void setFoil(boolean foil){
+        setFoil(foil ? 1 : 0);
     }
 
     @Override
@@ -65,6 +78,7 @@ public class LocationView {
                 .append("version", version)
                 .append("reservedQty", reservedQty)
                 .append("isMix", isMix)
+                .append("isFoil", isFoil)
                 .toString();
     }
 }

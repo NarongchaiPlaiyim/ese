@@ -113,24 +113,39 @@
                                     <p:ajax listener="#{palletManagement.onFind}" update=":palletForm:palletManagementTable, :palletForm:findKey"/>
                                 </p:selectOneMenu>
                             </td>
-                            <td>
-                                <table border="0" style="width: 100px; max-width: 100px; min-width: 100px">
+                            <td style="width: 350px; max-width: 350px; min-width: 350px">
+                                <table border="0" style="width: 300px; max-width: 300px; min-width: 300px">
                                     <tr>
-                                        <td style="width: 20px">
+                                        <td style="width: 3px; max-width: 3px; min-width: 3px">
                                             <h:selectBooleanCheckbox id="combineBox"
                                                                      value="#{palletManagement.combine}">
                                                 <p:ajax event="change" update=":palletForm:palletManagementTable, :palletForm:findKey" listener="#{palletManagement.onFind}"/>
                                             </h:selectBooleanCheckbox>
                                         </td>
+                                        <td class="left" style="width: 80px">
+                                            <h:outputLabel value="Show Combine Pallet"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td>
+                                <table border="0" style="width: 300px; max-width: 300px; min-width: 300px">
+                                    <tr>
+                                        <td style="width: 20px">
+                                            <h:selectBooleanCheckbox id="foilBox"
+                                                                     value="#{palletManagement.foil}">
+                                                <p:ajax event="change" update=":palletForm:palletManagementTable, :palletForm:findKey" listener="#{palletManagement.onFind}"/>
+                                            </h:selectBooleanCheckbox>
+                                        </td>
                                         <td class="left">
-                                            <h:outputLabel value="Combine"/>
+                                            <h:outputLabel value="Show Foil Pallet"/>
                                         </td>
                                     </tr>
                                 </table>
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="8">
+                            <td colspan="9">
                                 <p:dataTable id="palletManagementTable" rowIndexVar="rowIndex"
                                              value="#{palletManagement.palletManegamentViewList}"
                                              var="palletView" styleClass="full_table"
@@ -139,7 +154,7 @@
                                              selectionMode="single" rowKey="#{palletView.id}"
                                              selection="#{palletManagement.palletMeanegementView}"
                                              style="width: 100%; max-width: 100%; min-width: 100%">
-                                    <p:ajax event="rowSelect" update=":palletForm:palletManagementTable, :palletForm:btnFindlocation, :palletForm:btnPrintTag ,:palletForm:btnClosePallet"
+                                    <p:ajax event="rowSelect" update=":palletForm:btnFindlocation, :palletForm:btnPrintTag ,:palletForm:btnClosePallet"
                                             listener="#{palletManagement.onClickPalletTB}"/>
                                     <p:column headerText="No" style="width: 20px" styleClass="center">
                                         <h:outputText value="#{rowIndex+1}"/>
@@ -174,6 +189,9 @@
                                         <h:outputText value="#{palletView.qty}"/>
                                     </p:column>
                                     <p:column headerText="Combine" style="width: 50px; background-color: #{palletView.isCombine == 1 ? 'green' : 'red'};">
+                                        <h:outputText value=""/>
+                                    </p:column>
+                                    <p:column headerText="Combine" style="width: 50px; background-color: #{palletView.isFoil == 1 ? 'green' : 'red'};">
                                         <h:outputText value=""/>
                                     </p:column>
                                     <p:column headerText="Status" style="width: 120px" styleClass="center">

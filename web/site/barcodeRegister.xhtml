@@ -259,10 +259,23 @@
                                              var="barcodeModel"
                                              value="#{barcodeRegisterBean.barcodeRegisterModelList}"
                                              selectionMode="single"
+                                             resizableColumns="true"
                                              selection="#{barcodeRegisterBean.barcodeRegisterModel}"
                                              rowKey="#{barcodeModel.id}"
                                              rowIndexVar="rowIndex">
-                                    <p:ajax event="rowSelect" update=":setupForm" listener="#{barcodeRegisterBean.onClickTable()}"/>
+                                    <p:ajax event="rowSelect"
+                                            update=":setupForm:btnDelete,
+                                                    :setupForm:#{msg.get('btn.name.print')},
+                                                    :setupForm:modeBarcode,
+                                                    :setupForm:itemLabel
+                                                    :setupForm:otyLabel
+                                                    :setupForm:documentNoLabel
+                                                    :setupForm:startLabel
+                                                    :setupForm:docDateLabel
+                                                    :setupForm:labelFinishBarcode
+                                                    :setupForm:batchNoLabel
+                                                    :setupForm:remarkLabel"
+                                            listener="#{barcodeRegisterBean.onClickTable()}"/>
                                     <p:column headerText="No" style="min-width: 5px; width: 5px; max-width: 5px;">
                                         <h:outputText value="#{rowIndex+1}" styleClass="center" />
                                     </p:column>

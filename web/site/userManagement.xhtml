@@ -159,6 +159,7 @@
                          var="user"
                          selection="#{userManagement.staffModel}"
                          selectionMode="single"
+                         resizableColumns="true"
                          style="width: 100%; max-width: 100%; min-width: 100%">
                 <p:ajax event="rowSelect" listener="#{userManagement.onClickUserAccess}"
                         update=":userManagementForm:mainForm:manegementTab:btnEdit,
@@ -330,6 +331,7 @@
                                          rowKey="#{role.id}"
                                          value="#{roleAccess.systemRoleModelList}"
                                          var="role"
+                                         resizableColumns="true"
                                          selection="#{roleAccess.systemRoleModel}"
                                          style="width: 100%; max-width: 100%; min-width: 100%">
                                 <p:ajax event="rowSelect" listener="#{roleAccess.onClickRoleTB}"
@@ -377,16 +379,27 @@
                                                  disabled="#{roleAccess.flagBtnAddRoleAccess}"
                                                  oncomplete="PF('userRoleAccessDlg').show()"/>
                                 <p:commandButton value="#{msg.get('btn.name.delete')}"
-                                                 rendered="#{loginBean.isRendered(msg.get('authorize.menu.user.tab.2.role.delete'))}"
+                                                 rendered="#{loginBean.isRendered(msg.get('authorize.menu.user.tab.2.delete'))}"
                                                  id="btnDeleteRoleAccess"
                                                  styleClass="medium" style="#{msg.get('btn.size')}"
                                                  icon="ui-icon-trash"
-                                                 process="@form"
-                                                 update=":confirmDeleteRoleAccessPanel, :msgBoxSystemMessagePanel"
-                                                 action="#{roleAccess.preDeleteRoelAccess()}"
                                                  disabled="#{roleAccess.flagBtnDeleteRoleAccess}"
+                                                 process="@form"
+                                                 action="#{roleAccess.preDeleteRoelAccess()}"
                                                  onstart="PF('bui').block()"
-                                                 oncomplete="PF('bui').unblock()" />
+                                                 oncomplete="PF('bui').unblock()"
+                                                 update=":confirmDeleteRoleAccessPanel, :msgBoxSystemMessagePanel"/>
+                                <!--<p:commandButton value="#{msg.get('btn.name.delete')}"-->
+                                                 <!--rendered="#{loginBean.isRendered(msg.get('authorize.menu.user.tab.2.role.delete'))}"-->
+                                                 <!--id="btnDeleteRoleAccess"-->
+                                                 <!--styleClass="medium" style="#{msg.get('btn.size')}"-->
+                                                 <!--icon="ui-icon-trash"-->
+                                                 <!--process="@form"-->
+                                                 <!--update=":confirmDeleteRoleAccessPanel, :msgBoxSystemMessagePanel"-->
+                                                 <!--action="#{roleAccess.preDeleteRoelAccess()}"-->
+                                                 <!--disabled="#{roleAccess.flagBtnDeleteRoleAccess}"-->
+                                                 <!--onstart="PF('bui').block()"-->
+                                                 <!--oncomplete="PF('bui').unblock()" />-->
                             </div>
 
                             <table>
@@ -442,6 +455,7 @@
                                          selection="#{roleAccess.selectRoleAccess}"
                                          value="#{roleAccess.roleAccessModelList}"
                                          var="roleAccessList"
+                                         resizableColumns="true"
                                          rowKey="#{roleAccessList.id}"
                                          style="width: 100%; max-width: 100%; min-width: 100%">
                                 <p:ajax event="rowSelect"/>

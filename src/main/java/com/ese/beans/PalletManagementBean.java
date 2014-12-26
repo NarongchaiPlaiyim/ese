@@ -54,6 +54,7 @@ public class PalletManagementBean extends Bean {
     private boolean isCheckLocationDialog;
 
     private boolean isCombine;
+    private boolean isFoil;
 
     private int pmvId;
 
@@ -95,6 +96,7 @@ public class PalletManagementBean extends Bean {
         int waokingAreaId = 0;
         int locationId = 0;
         int combine = 0;
+        int foil = 0;
         palletMeanegementView = new PalletManagementView();
 
         if (!Utils.isNull(warehouseMode.getId())){
@@ -115,7 +117,11 @@ public class PalletManagementBean extends Bean {
             combine = 1;
         }
 
-        palletManegamentViewList = palletService.findByChang(statusOnShow, warehouseId, waokingAreaId, locationId, findKeyItemDescription, combine);
+        if (isFoil == true){
+            foil = 1;
+        }
+
+        palletManegamentViewList = palletService.findByChang(statusOnShow, warehouseId, waokingAreaId, locationId, findKeyItemDescription, combine, foil);
     }
 
     public void onClickPalletTB(){

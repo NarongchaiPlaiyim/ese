@@ -91,6 +91,12 @@ public class LocationTransform extends Transform {
             locationView.setIsMix(0);
         }
 
+        if (!Utils.isNull(msLocationModel.getIsFoil())){
+            locationView.setIsFoil(msLocationModel.getIsFoil());
+        } else {
+            locationView.setIsFoil(0);
+        }
+
         return locationView;
     }
 
@@ -115,6 +121,7 @@ public class LocationTransform extends Transform {
         msLocationModel.setQty(locationView.getQty());
         msLocationModel.setReservedQty(locationView.getReservedQty());
         msLocationModel.setIsMix(locationView.getIsMix());
+        msLocationModel.setIsFoil(locationView.getIsFoil());
 
         if (Utils.isZero(locationView.getId())){
             msLocationModel.setCreateBy(1111);

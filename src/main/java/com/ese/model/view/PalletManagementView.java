@@ -33,6 +33,7 @@ public class PalletManagementView {
     private MSWorkingAreaModel convetorLine;
     private MSShiftModel shift;
     private int isCombine;
+    private int isFoil;
 
     @Override
     public String toString() {
@@ -56,6 +57,7 @@ public class PalletManagementView {
                 .append("convetorLine", convetorLine)
                 .append("shift", shift)
                 .append("isCombine", isCombine)
+                .append("isFoil", isFoil)
                 .toString();
     }
 }

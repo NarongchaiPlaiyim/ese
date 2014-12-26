@@ -63,8 +63,11 @@ public class PalletModel extends AbstractModel{
     @JoinColumn(name = "location_id")
     private MSLocationModel msLocationModel;
 
-    @Column(name="combine")
+    @Column(name="combine", nullable=false, columnDefinition="int default 0")
     private int isCombine;
+
+    @Column(name="foil", nullable=false, columnDefinition="int default 0")
+    private int isFoil;
 
     @Override
     public String toString() {
@@ -84,6 +87,7 @@ public class PalletModel extends AbstractModel{
                 .append("msItemModel", msItemModel)
                 .append("msLocationModel", msLocationModel)
                 .append("isCombine", isCombine)
+                .append("isFoil", isFoil)
                 .toString();
     }
 }

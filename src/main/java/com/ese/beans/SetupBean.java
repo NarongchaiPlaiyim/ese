@@ -68,6 +68,8 @@ public class SetupBean extends Bean{
     private String modeWarehouseDlg;
     private String keySearch;
 
+    private boolean flagFoil;
+
     public SetupBean() {
 
     }
@@ -93,6 +95,7 @@ public class SetupBean extends Bean{
         nameBtn = "New";
         modeStock = "Mode(New)";
         nameBtnStock = "Cancel";
+        flagFoil = false;
         btnOnLoad();
         onLoadLocationTB();
         warehouseOnLoad();
@@ -189,6 +192,11 @@ public class SetupBean extends Bean{
         nameBtn = "New";
         flagBtnDelete = false;
         flagBtnAddShowItem = false;
+        if (Utils.isZero(msLocationModel.getQty()) && Utils.isZero(msLocationModel.getReservedQty())){
+            flagFoil = true;
+        } else {
+            flagFoil = false;
+        }
         locationView = locationService.clickToWarehouseView(msLocationModel);
     }
 

@@ -108,7 +108,7 @@
                                                          update=":warehouseDialogForm"
                                                          oncomplete="PF('warehouseDlg').show()"/>
                                     </td>
-                                    <td colspan="3">
+                                    <td>
                                         <table border="0" style="width: 100%">
                                             <tr>
                                                 <td style="width: 20px">
@@ -117,6 +117,20 @@
                                                 </td>
                                                 <td class="left">
                                                     <h:outputLabel value="Is Mix"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td colspan="2">
+                                        <table border="0" style="width: 100%">
+                                            <tr>
+                                                <td style="width: 20px">
+                                                    <h:selectBooleanCheckbox id="foilChkBox"
+                                                                             disabled="#{setup.flagFoil}"
+                                                                             value="#{setup.locationView.foil}"/>
+                                                </td>
+                                                <td class="left">
+                                                    <h:outputLabel value="Is Foil"/>
                                                 </td>
                                             </tr>
                                         </table>
@@ -204,22 +218,24 @@
                                          value="#{setup.msLocationModelList}"
                                          scrollable="true" scrollHeight="450"
                                          selectionMode="single"
+                                         resizableColumns="true"
                                          selection="#{setup.msLocationModel}"
                                          styleClass="full_table">
                                 <p:ajax event="rowSelect"
                                         listener="#{setup.onClickTableWarehouseAndLocation}"
                                         update=":setupForm:mainForm:setupTab:modeWarehouse,
-                                                                          :setupForm:mainForm:setupTab:btnNewLocation,
-                                                                          :setupForm:mainForm:setupTab:btnSaveLocation,
-                                                                          :setupForm:mainForm:setupTab:warehouseMenu,
-                                                                          :setupForm:mainForm:setupTab:btnNewEditWarehouse,
-                                                                          :setupForm:mainForm:setupTab:mixChkBox,
-                                                                          :setupForm:mainForm:setupTab:locationBarcode,
-                                                                          :setupForm:mainForm:setupTab:locationRemark,
-                                                                          :setupForm:mainForm:setupTab:locationName,
-                                                                          :setupForm:mainForm:setupTab:capacity,
-                                                                          :setupForm:mainForm:setupTab:btnShowAddItem
-                                                                          :setupForm:mainForm:setupTab:btnDelete"/>
+                                                :setupForm:mainForm:setupTab:btnNewLocation,
+                                                :setupForm:mainForm:setupTab:btnSaveLocation,
+                                                :setupForm:mainForm:setupTab:warehouseMenu,
+                                                :setupForm:mainForm:setupTab:btnNewEditWarehouse,
+                                                :setupForm:mainForm:setupTab:mixChkBox,
+                                                :setupForm:mainForm:setupTab:foilChkBox,
+                                                :setupForm:mainForm:setupTab:locationBarcode,
+                                                :setupForm:mainForm:setupTab:locationRemark,
+                                                :setupForm:mainForm:setupTab:locationName,
+                                                :setupForm:mainForm:setupTab:capacity,
+                                                :setupForm:mainForm:setupTab:btnShowAddItem
+                                                :setupForm:mainForm:setupTab:btnDelete"/>
                                 <p:column headerText="No" style="width: 20px; min-width: 20px; max-width: 20px" styleClass="center">
                                     <h:outputText value="#{rowIndex+1}"/>
                                 </p:column>
@@ -234,6 +250,12 @@
                                 </p:column>
                                 <p:column headerText="Capacities (Pallet)" style="width: 60px; min-width: 60px; max-width: 60px" styleClass="center">
                                     <h:outputText value="#{location.capacity}"/>
+                                </p:column>
+                                <p:column headerText="Is Mix" style="width: 50px; background-color: #{location.isMix == 1 ? 'green' : 'red'};">
+                                    <h:outputText value=""/>
+                                </p:column>
+                                <p:column headerText="Is Foil" style="width: 50px; background-color: #{location.isFoil == 1 ? 'green' : 'red'};">
+                                    <h:outputText value=""/>
                                 </p:column>
                                 <p:column headerText="Remark" styleClass="center" style="width: 200px; min-width: 200px; max-width: 200px">
                                     <h:outputText value="#{location.remark}" style="word-wrap:break-word;"/>
@@ -353,18 +375,19 @@
                                                              value="#{setup.stockInOutNoteModelList}"
                                                              scrollable="true" scrollHeight="450"
                                                              selectionMode="single"
+                                                             resizableColumns="true"
                                                              selection="#{setup.stockInOutNoteModel}"
                                                              rowIndexVar="rowIndex2">
                                                     <p:ajax event="rowSelect"
                                                             listener="#{setup.onClickTableStockInOutNote}"
                                                             update=":setupForm:mainForm:setupTab:typeRadio,
-                                                                              :setupForm:mainForm:setupTab:mode,
-                                                                              :setupForm:mainForm:setupTab:btnNew,
-                                                                              :setupForm:mainForm:setupTab:btnSave,
-                                                                              :setupForm:mainForm:setupTab:remark,
-                                                                              :setupForm:mainForm:setupTab:inoutCode,
-                                                                              :setupForm:mainForm:setupTab:inoutNote,
-                                                                              :setupForm:mainForm:setupTab:btnDeleteStock"/>
+                                                                    :setupForm:mainForm:setupTab:mode,
+                                                                    :setupForm:mainForm:setupTab:btnNew,
+                                                                    :setupForm:mainForm:setupTab:btnSave,
+                                                                    :setupForm:mainForm:setupTab:remark,
+                                                                    :setupForm:mainForm:setupTab:inoutCode,
+                                                                    :setupForm:mainForm:setupTab:inoutNote,
+                                                                    :setupForm:mainForm:setupTab:btnDeleteStock"/>
                                                     <p:column headerText="No" style="width: 20px" styleClass="center">
                                                         <h:outputText value="#{rowIndex2+1}"/>
                                                     </p:column>
