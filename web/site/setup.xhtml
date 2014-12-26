@@ -200,6 +200,7 @@
                             <p:dataTable id="warehouseAndLocationTable"
                                          rowIndexVar="rowIndex"
                                          var="location"
+                                         resizableColumns="true"
                                          rowKey="#{location.id}"
                                          value="#{setup.msLocationModelList}"
                                          scrollable="true" scrollHeight="450"
@@ -352,6 +353,7 @@
                                                              rowKey="#{stockInOutNote.id}"
                                                              value="#{setup.stockInOutNoteModelList}"
                                                              scrollable="true" scrollHeight="450"
+                                                             resizableColumns="true"
                                                              selectionMode="single"
                                                              selection="#{setup.stockInOutNoteModel}"
                                                              rowIndexVar="rowIndex2">
