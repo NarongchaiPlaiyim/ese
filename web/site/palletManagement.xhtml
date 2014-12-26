@@ -139,7 +139,7 @@
                                              selectionMode="single" rowKey="#{palletView.id}"
                                              selection="#{palletManagement.palletMeanegementView}"
                                              style="width: 100%; max-width: 100%; min-width: 100%">
-                                    <p:ajax event="rowSelect" update=":palletForm:palletManagementTable, :palletForm:btnFindlocation, :palletForm:btnPrintTag ,:palletForm:btnClosePallet"
+                                    <p:ajax event="rowSelect" update=":palletForm:btnFindlocation, :palletForm:btnPrintTag ,:palletForm:btnClosePallet"
                                             listener="#{palletManagement.onClickPalletTB}"/>
                                     <p:column headerText="No" style="width: 20px" styleClass="center">
                                         <h:outputText value="#{rowIndex+1}"/>
