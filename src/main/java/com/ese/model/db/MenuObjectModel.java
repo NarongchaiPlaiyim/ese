@@ -36,6 +36,9 @@ public class MenuObjectModel {
     @Column(name="remark")
     private String remark;
 
+    @Column(name="seq")
+    private int seq;
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
@@ -46,6 +49,7 @@ public class MenuObjectModel {
                 .append("objCategory", objCategory)
                 .append("name", name)
                 .append("remark", remark)
+                .append("seq", seq)
                 .toString();
     }
 }

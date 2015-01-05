@@ -425,7 +425,7 @@
                                             <f:selectItem itemLabel="- Please Select -" itemValue=""/>
                                             <f:selectItems value="#{roleAccess.menuObjectModelList}"
                                                            var="menuObjItem"
-                                                           itemLabel="#{menuObjItem.code}"
+                                                           itemLabel="#{menuObjItem.name}"
                                                            itemValue="#{menuObjItem.id}"/>
                                             <p:ajax event="change" process="@form" listener="#{roleAccess.onFilterRoleAccess}"
                                                     update=":userManagementForm:mainForm:manegementTab:roleAccessTable"/>

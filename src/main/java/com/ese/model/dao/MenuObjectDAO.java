@@ -4,6 +4,7 @@ import com.ese.model.db.MenuObjectModel;
 import com.ese.utils.Utils;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.type.StringType;
 import org.springframework.stereotype.Repository;
@@ -18,6 +19,7 @@ public class MenuObjectDAO extends GenericDAO<MenuObjectModel, Integer>{
         try {
             Criteria criteria = getCriteria();
             criteria.add(Restrictions.eq("objCategory", 1));
+            criteria.addOrder(Order.asc("seq"));
             menuObjectModels = Utils.safetyList(criteria.list());
         } catch (Exception e) {
             log.debug("Exception error findByObjCategory : ", e);
@@ -51,6 +53,20 @@ public class MenuObjectDAO extends GenericDAO<MenuObjectModel, Integer>{
                 Criterion objecyName = Restrictions.like("name", "%"+keySearch.trim()+"%");
                 criteria.add(Restrictions.or(objectCode,objecyName));
             }
+            criteria.addOrder(Order.asc("seq"));
+            menuObjectModels = criteria.list();
+        } catch (Exception e) {
+            log.debug("Exception error findByObjCategory : ", e);
+        }
+
+        return menuObjectModels;
+    }
+
+    public List<MenuObjectModel> findAllOrderBySeq(){
+        List<MenuObjectModel> menuObjectModels = null;
+        try {
+            Criteria criteria = getCriteria();
+            criteria.addOrder(Order.asc("seq"));
             menuObjectModels = criteria.list();
         } catch (Exception e) {
             log.debug("Exception error findByObjCategory : ", e);

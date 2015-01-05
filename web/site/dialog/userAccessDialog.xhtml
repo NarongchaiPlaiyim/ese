@@ -8,7 +8,7 @@
     <h:head>
     </h:head>
     <h:form id="userAccessForm">
-        <table border="0">
+        <table border="0" class="top">
             <tr>
                 <td class="top">
                     <table border="0" class="top" style="border: 1px solid #acacac; border-spacing: 0; margin-top: 10px;">
@@ -18,7 +18,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td style="min-width: 210px; width: 210px; max-width: 210px;">
                                 <p:selectOneMenu id="choiceMenu" value="#{userManagement.menuObjectModel.id}"
                                                  style="min-width: 200px; width: 200px; max-width: 200px;">
                                     <f:selectItem itemLabel="- Please Select -" itemValue=""/>
@@ -30,10 +30,10 @@
                                             update=":userAccessForm:userAccessTable"/>
                                 </p:selectOneMenu>
                             </td>
-                            <td>
+                            <td style="min-width: 250px; width: 250px; max-width: 250px;">
                                 <p:inputText value="#{userManagement.keySearchUserAccessDialog}"/>
                             </td>
-                            <td style="width: 40px; min-width: 40px; max-width: 40px">
+                            <td style="width: 300px; min-width: 300px; max-width: 300px">
                                 <p:commandButton id="btnSearch" icon="ui-icon-search"
                                                  onstart="PF('bui').block()"
                                                  oncomplete="PF('bui').unblock()"
@@ -112,8 +112,8 @@
                             <td style="width: 80px; min-width: 80px; max-width: 80px">
                                 <h:outputLabel value="Department"/>
                             </td>
-                            <td>
-                                <p:inputText value="#{userManagement.userAuthorizeView.msDepartmentModel.name}" disabled="true"/>
+                            <td style="min-width: 200px; width: 200px; max-width: 200px;">
+                                <p:inputText value="#{userManagement.userAuthorizeView.msDepartmentModel.name}" disabled="true" style="min-width: 180px; width: 180px; max-width: 180px;"/>
                             </td>
                             <td rowspan="4" class="top">
                                 <p:dataTable id="roleTabble" rowIndexVar="rowIndex"
@@ -125,13 +125,13 @@
                                              var="staffRole"
                                              style="width: 100%; max-width: 100%; min-width: 100%">
                                     <p:ajax event="rowSelect"/>
-                                    <p:column headerText="No" style="width: 20px; min-width: 20px; max-width: 20px" styleClass="center">
+                                    <p:column headerText="No" style="width: 10px; min-width: 10px; max-width: 10px" styleClass="center">
                                         <h:outputText value="#{rowIndex+1}"/>
                                     </p:column>
                                     <p:column headerText="Role " style="width: 80px; max-width: 80px; min-width: 80px" styleClass="center">
                                         <h:outputText value="#{staffRole.roles.code}" />
                                     </p:column>
-                                    <p:column headerText="" style="width: 10px; max-width: 10px; min-width: 10px" styleClass="center">
+                                    <p:column headerText="" style="width: 15px; max-width: 15px; min-width: 15px" styleClass="center">
                                         <p:commandButton icon="ui-icon-trash"
                                                          action="#{userManagement.onPopupRole()}"
                                                          process="@this"
@@ -147,24 +147,24 @@
                             <td>
                                 <h:outputLabel value="Faction"/>
                             </td>
-                            <td>
-                                <p:inputText value="#{userManagement.userAuthorizeView.factionModel.name}" disabled="true"/>
+                            <td style="min-width: 200px; width: 200px; max-width: 200px;">
+                                <p:inputText value="#{userManagement.userAuthorizeView.factionModel.name}" disabled="true" style="min-width: 180px; width: 180px; max-width: 180px;"/>
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <h:outputLabel value="Name"/>
                             </td>
-                            <td>
-                                <p:inputText value="#{userManagement.userAuthorizeView.name}" disabled="true"/>
+                            <td style="min-width: 200px; width: 200px; max-width: 200px;">
+                                <p:inputText value="#{userManagement.userAuthorizeView.name}" disabled="true" style="min-width: 180px; width: 180px; max-width: 180px;"/>
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <h:outputLabel value="Login Name"/>
                             </td>
-                            <td>
-                                <p:inputText value="#{userManagement.userAuthorizeView.username}" disabled="true"/>
+                            <td style="min-width: 200px; width: 200px; max-width: 200px;">
+                                <p:inputText value="#{userManagement.userAuthorizeView.username}" disabled="true" style="min-width: 180px; width: 180px; max-width: 180px;"/>
                             </td>
                         </tr>
                         <tr style="height: 10px"/>
@@ -174,7 +174,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td style="min-width: 140px; width: 140px; max-width: 140px;">
                                 <p:selectOneMenu id="codeMenu" value="#{userManagement.objectUserAuthorize.id}"
                                                  style="min-width: 130px; width: 130px; max-width: 130px;">
                                     <f:selectItem itemLabel="- Please Select -" itemValue=""/>
@@ -186,8 +186,8 @@
                                             update=":userAccessForm:userAuthorizeTable"/>
                                 </p:selectOneMenu>
                             </td>
-                            <td>
-                                <p:inputText value="#{userManagement.keySearchUserAuthorize}"/>
+                            <td style="min-width: 200px; width: 200px; max-width: 200px;">
+                                <p:inputText value="#{userManagement.keySearchUserAuthorize}" style="min-width: 180px; width: 180px; max-width: 180px;"/>
                             </td>
                             <td style="width: 40px; min-width: 40px; max-width: 40px">
                                 <p:commandButton id="btnAuthorize" icon="ui-icon-search"
