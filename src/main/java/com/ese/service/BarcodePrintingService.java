@@ -71,7 +71,7 @@ public class BarcodePrintingService extends Service{
 
     public void onPrintBarcode(String startBarcode, int qty){
 //        String printBarcodeName = "D:/" + Utils.genDateReportStringDDMMYYYY(new Date()) + "_BarcodePrinting.pdf";
-        String printBarcodeName = Utils.genDateReportStringDDMMYYYY(new Date()) + "_BarcodePrinting.pdf";
+        String printBarcodeName = Utils.genDateReportStringDDMMYYYY(new Date()) + "_BarcodePrinting";
         List<BarcodePrintingView> barcodePrintingViewList = new ArrayList<BarcodePrintingView>();
         try {
 
