@@ -1,5 +1,6 @@
 package com.ese.model.db;
 
+import com.ese.model.StatusBarcodeRegiterValue;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -52,8 +53,8 @@ public class BarcodeRegisterModel extends AbstractModel {
     @Column(name = "remark")
     private String remark;
 
-    @Column(name = "status")
-    private int status;
+    @Column(name = "status", columnDefinition="int default 1")
+    private StatusBarcodeRegiterValue status;
 
     @Column(name = "isvalid")
     private int isValid;

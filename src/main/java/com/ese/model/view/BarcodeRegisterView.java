@@ -1,5 +1,6 @@
 package com.ese.model.view;
 
+import com.ese.model.StatusBarcodeRegiterValue;
 import com.ese.model.db.MSItemModel;
 import com.ese.utils.Utils;
 import lombok.Getter;
@@ -25,7 +26,7 @@ public class BarcodeRegisterView extends View{
     private String startBarcodeText;
     private String finishBarcodeText;
     private String remark;
-    private int status;
+    private StatusBarcodeRegiterValue status;
     private int isValid;
     private int version;
     private BigDecimal cost;

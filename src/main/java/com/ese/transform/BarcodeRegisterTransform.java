@@ -1,5 +1,6 @@
 package com.ese.transform;
 
+import com.ese.model.StatusBarcodeRegiterValue;
 import com.ese.model.db.BarcodeRegisterModel;
 import com.ese.model.view.BarcodeRegisterView;
 import com.ese.utils.Utils;
@@ -63,7 +64,7 @@ public class BarcodeRegisterTransform {
             model.setUpdateBy(8888);
             model.setIsValid(1);
             model.setVersion(1);
-            model.setStatus(1);
+            model.setStatus(StatusBarcodeRegiterValue.INPROCESS);
         }
         return model;
     }
