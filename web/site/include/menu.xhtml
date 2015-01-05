@@ -46,6 +46,18 @@
                 <p:menuitem value="#{msg.get('menu.picking.title.sub')}" outcome="#{msg.get('menu.picking.sub.url')}"/>
             </p:submenu>
 
+            <p:separator/>
+            <p:menuitem value="#{msg.get('menu.londing.title')}" icon="ui-icon-gear"/>
+
+            <p:separator/>
+            <p:menuitem value="#{msg.get('menu.stockmovement.title')}" icon="ui-icon-gear"/>
+
+            <p:separator/>
+            <p:menuitem value="#{msg.get('menu.stocktaking.title')}" icon="ui-icon-gear"/>
+
+            <p:separator/>
+            <p:menuitem value="#{msg.get('menu.report.title')}" icon="ui-icon-gear"/>
+
             <p:separator
                     rendered="#{loginBean.isRendered(msg.get('authorize.menu.setup'))}"/>
             <p:menuitem value="#{msg.get('menu.setup.title')}" icon="ui-icon-gear" outcome="#{msg.get('menu.setup.url')}"
