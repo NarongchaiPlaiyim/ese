@@ -55,19 +55,6 @@
 				<textFieldExpression><![CDATA[$F{warehouseCode}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="0d600182-8566-4984-a64e-b831c4cff69d" x="410" y="242" width="396" height="79"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="20" isBold="true" pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{palletBarcode}]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement uuid="7985f6c5-ce58-4e41-a9a8-51645be9d6c1" x="0" y="321" width="410" height="79"/>
 				<box>
 					<topPen lineWidth="1.0"/>
@@ -147,6 +134,23 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{countId}]]></textFieldExpression>
 			</textField>
+			<componentElement>
+				<reportElement uuid="1f53c545-ce94-475b-9857-2095ab9d48ad" x="411" y="258" width="394" height="77"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="true" checksumRequired="false">
+					<jr:codeExpression><![CDATA[$F{palletBarcode}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<staticText>
+				<reportElement uuid="f4c0775c-45f2-4271-a257-cd79e8b243eb" x="410" y="242" width="396" height="79"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[]]></text>
+			</staticText>
 		</band>
 	</detail>
 	<columnFooter>
