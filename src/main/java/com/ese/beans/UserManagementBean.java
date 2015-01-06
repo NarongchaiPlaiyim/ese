@@ -352,10 +352,12 @@ public class UserManagementBean extends Bean{
     }
 
     public void onDeleteUserAuthorize(){
-        log.debug("selectUserAuthorize Size : {}", selectUserAuthorize.size());
+        log.debug("selectRootUserAuthorize length : {}", selectRootUserAuthorize.length);
 
-        for (Document document : selectOnRemove()){
-            userManagementService.deleteUserAuthorize(document);
+        if (!Utils.isZero(selectRootUserAuthorize.length) && !Utils.isNull(selectRootUserAuthorize)){
+            for (Document document : selectOnRemove()){
+                userManagementService.deleteUserAuthorize(document);
+            }
         }
 
         userAccessModelList = userManagementService.getMenuObjectByUserId(staffModel.getId());
