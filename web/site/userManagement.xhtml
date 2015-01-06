@@ -17,7 +17,7 @@
     <p:layoutUnit id="layoutTop" position="north" size="180" header="#{msg.get('header.north')}" collapsible="true" style="border: 0">
         <ui:include src="#{msg.get('include.header')}"/>
     </p:layoutUnit>
-    <p:layoutUnit id="layoutLeft" position="west" size="250" header="#{msg.get('header.west')}" collapsible="true" style="border: 0">
+    <p:layoutUnit id="layoutLeft" position="west" size="#{msg.get('layoutLeft.size')}" header="#{msg.get('header.west')}" collapsible="true" style="border: 0">
         <ui:include src="#{msg.get('include.menu')}"/>
     </p:layoutUnit>
 
@@ -25,7 +25,7 @@
         <h:form id="userManagementForm">
         <h:form id="mainForm" style="width: 100%;border-spacing: 0;">
         <p:tabView id="manegementTab" cache="false" dynamic="false" style="border: 0">
-        <p:tab id="userManageSub" title="8.1 User Management"
+        <p:tab id="userManageSub" title="9.1 User Management"
                rendered="#{loginBean.isRendered(msg.get('authorize.menu.user.tab.1'))}"
                 >
             <p:panel style="border: 0">
@@ -187,7 +187,7 @@
             </p:dataTable>
 
         </p:tab>
-        <p:tab id="roleAccessSub" title="8.2 Role Access"
+        <p:tab id="roleAccessSub" title="9.2 Role Access"
                rendered="#{loginBean.isRendered(msg.get('authorize.menu.user.tab.2'))}"
                 >
             <div class="ui-grid ui-grid-responsive">

@@ -13,14 +13,14 @@
             <p:layoutUnit id="layoutTop" position="north" size="180" header="#{msg.get('header.north')}" collapsible="true" style="border: 0">
                 <ui:include src="#{msg.get('include.header')}"/>
             </p:layoutUnit>
-            <p:layoutUnit id="layoutLeft" position="west" size="250" header="#{msg.get('header.west')}" collapsible="true" style="border: 0">
+            <p:layoutUnit id="layoutLeft" position="west" size="#{msg.get('layoutLeft.size')}" header="#{msg.get('header.west')}" collapsible="true" style="border: 0">
                 <ui:include src="#{msg.get('include.menu')}"/>
             </p:layoutUnit>
             <p:layoutUnit id="layoutCenter" position="center" header="#{msg.get('menu.setup.title')}" >
                 <h:form id="setupForm">
                     <h:form id="mainForm" style="width: 100%;border-spacing: 0;">
                     <p:tabView id="setupTab" cache="false" dynamic="false" style="border: 0">
-                    <p:tab id="warehouseTab" title="7.1 Warehouse and Location"
+                    <p:tab id="warehouseTab" title="8.1 Warehouse and Location"
                            rendered="#{loginBean.isRendered(msg.get('authorize.menu.setup.tab.1'))}"
                             >
                         <p:panel style="border: 0">
@@ -265,7 +265,7 @@
                     </tr>
                     </table>
                     </p:tab>
-                    <p:tab id="stockInoutTag" title="7.2 Stock In Out Note"
+                    <p:tab id="stockInoutTag" title="8.2 Stock In Out Note"
                            rendered="#{loginBean.isRendered(msg.get('authorize.menu.setup.tab.2'))}"
                             >
                         <p:panel style="border: 0">

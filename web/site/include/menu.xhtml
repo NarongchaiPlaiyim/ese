@@ -32,7 +32,7 @@
                         <!--rendered="#{loginBean.isRendered(msg.get('authorize.menu.user'))}"/>-->
         <!--</p:menu>-->
 
-        <p:slideMenu >
+        <p:slideMenu style="max-width: 299px; min-width: 299px">
             <p:menuitem value="#{msg.get('menu.barcode.title')}" icon="ui-icon-disk" outcome="#{msg.get('menu.barcode.url')}"
                         rendered="#{loginBean.isRendered(msg.get('authorize.menu.barcode'))}"/>
             <p:separator
@@ -42,7 +42,7 @@
             <p:separator
                     rendered="#{loginBean.isRendered(msg.get('authorize.menu.pallet'))}"/>
 
-            <p:submenu label="#{msg.get('menu.picking.title')}">
+            <p:submenu icon="ui-icon-cart" label="#{msg.get('menu.picking.title')}">
                 <p:menuitem value="#{msg.get('menu.picking.title.sub')}" outcome="#{msg.get('menu.picking.sub.url')}"/>
             </p:submenu>
 

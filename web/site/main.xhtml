@@ -15,7 +15,7 @@
         <ui:include src="#{msg.get('include.header')}"/>
     </ui:insert>
 </p:layoutUnit>
-<p:layoutUnit id="layoutLeft" position="west" size="250" header="#{msg.get('header.west')}" collapsible="true" style="border: 0">
+<p:layoutUnit id="layoutLeft" position="west" size="#{msg.get('layoutLeft.size')}" header="#{msg.get('header.west')}" collapsible="true" style="border: 0">
     <ui:include src="#{msg.get('include.menu')}"/>
 </p:layoutUnit>
 
