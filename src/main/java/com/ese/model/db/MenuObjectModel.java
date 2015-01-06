@@ -19,16 +19,16 @@ public class MenuObjectModel {
     private int id;
 
     @Column(name="app_category")
-    private int appCategory;
+    private Integer appCategory;
 
     @Column(name="parent_id")
-    private int parentId;
+    private Integer parentId;
 
     @Column(name="code")
     private String code;
 
     @Column(name="obj_category")
-    private int objCategory;
+    private Integer objCategory;
 
     @Column(name="name")
     private String name;
@@ -37,7 +37,7 @@ public class MenuObjectModel {
     private String remark;
 
     @Column(name="seq")
-    private int seq;
+    private Integer seq;
 
     @Override
     public String toString() {

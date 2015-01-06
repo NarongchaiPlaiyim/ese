@@ -74,4 +74,16 @@ public class MenuObjectDAO extends GenericDAO<MenuObjectModel, Integer>{
 
         return menuObjectModels;
     }
+
+    public List<MenuObjectModel> findAllOrderByCode(){
+        List<MenuObjectModel> menuObjectModelList = Utils.getEmptyList();
+        try {
+            Criteria criteria = getCriteria();
+            criteria.addOrder(Order.asc("code"));
+            menuObjectModelList = Utils.safetyList(criteria.list());
+        } catch (Exception e) {
+            log.debug("Exception error findAllOrderByCode : ", e);
+        }
+        return menuObjectModelList;
+    }
 }

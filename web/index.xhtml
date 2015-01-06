@@ -4,35 +4,22 @@
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:ui="http://java.sun.com/jsf/facelets"
-        xmlns:p="http://primefaces.org/ui"
-        xmlns:fn="http://java.sun.com/jsp/jstl/functions"
-        >
+        xmlns:p="http://primefaces.org/ui">
 <h:body>
-
-    <p:layout fullPage="true">
-
-        <p:layoutUnit position="north" size="100" header="Top" resizable="true" closable="true" collapsible="true">
-            <h:outputText value="North unit content." />
-        </p:layoutUnit>
-
-        <p:layoutUnit position="south" size="100" header="Bottom" resizable="true" closable="true" collapsible="true">
-            <h:outputText value="South unit content." />
-        </p:layoutUnit>
-
-        <p:layoutUnit position="west" size="200" header="Left" resizable="true" closable="true" collapsible="true">
-            <h:outputText value="West unit content." />
-        </p:layoutUnit>
-
-        <p:layoutUnit position="east" size="200" header="Right" resizable="true" closable="true" collapsible="true" effect="drop">
-            <h:outputText value="Right unit content." />
-        </p:layoutUnit>
-
-        <p:layoutUnit position="center">
-            //page code
-        </p:layoutUnit>
-
-    </p:layout>
-
+    <p:treeTable value="#{index.root}" var="document">
+        <f:facet name="header">
+            Document Viewer
+        </f:facet>
+        <p:column headerText="Name">
+            <h:outputText value="#{document.name}" />
+        </p:column>
+        <p:column headerText="Size">
+            <h:outputText value="#{document.size}" />
+        </p:column>
+        <p:column headerText="Type">
+            <h:outputText value="#{document.type}" />
+        </p:column>
+    </p:treeTable>
 </h:body>
 </f:view>
 </html>

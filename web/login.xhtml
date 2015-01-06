@@ -50,6 +50,25 @@
                                      oncomplete="PF('bui').unblock()" />
                 </p:panel>
             </div>
+            <p:panel style="border: 0">
+                <p:treeTable value="#{index.root}" var="document">
+                    <p:column style="min-width: 20px; max-width: 20px" />
+                    <p:column style="min-width: 20px; max-width: 20px" headerText="Select">
+                        <h:selectBooleanCheckbox id="combineBox"
+                                                 value="#{true}">
+                        </h:selectBooleanCheckbox>
+                    </p:column>
+                    <p:column headerText="Menu">
+                        <h:outputText value="#{document.name}" />
+                    </p:column>
+                    <p:column headerText="Tab">
+                        <h:outputText value="#{document.size}" />
+                    </p:column>
+                    <p:column headerText="Action">
+                        <h:outputText value="#{document.type}" />
+                    </p:column>
+                </p:treeTable>
+            </p:panel>
         </h:form>
     </h:body>
     <div class="loginfooter">

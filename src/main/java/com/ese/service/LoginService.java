@@ -70,6 +70,14 @@ public class LoginService extends Service{
         }
     }
 
+    public List<MenuObjectModel> getAllMenuObject(){
+        try {
+            return menuObjectDAO.findAllOrderByCode();
+        } catch (Exception e) {
+            System.err.println(e);
+            return Collections.EMPTY_LIST;
+        }
+    }
 
     public void test(String startBarcode, String finishBarcode){
         try {
