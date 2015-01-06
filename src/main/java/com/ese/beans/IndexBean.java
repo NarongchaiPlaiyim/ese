@@ -51,6 +51,7 @@ public class IndexBean extends Bean{
         final int ACTION = 3;
 
         Map<Integer, DefaultTreeNode> treeNodeMap = new HashMap<Integer, DefaultTreeNode>();
+
         for (MenuObjectModel model : menuObjectModelList) {
             if ( !Utils.isNull(model.getObjCategory()) ) {
                 if ( !Utils.isZero(Utils.parseInt(model.getCode(), 0)) && model.getObjCategory() == MENU ) {
@@ -63,6 +64,25 @@ public class IndexBean extends Bean{
             }
         }
 
+
+                            /*///////////////////////////////////////////*/
+        root = new DefaultTreeNode();
+        System.out.println(menuObjectModelList.size());
+        menuObjectModelList.remove(1);//Example
+        System.out.println(menuObjectModelList.size());
+
+        for (MenuObjectModel model : menuObjectModelList) {
+            System.out.println(model.getId());
+            if ( !Utils.isNull(model.getObjCategory()) ) {
+                if ( !Utils.isZero(Utils.parseInt(model.getCode(), 0)) && model.getObjCategory() == MENU ) {
+                    treeNodeMap.put(model.getId(), new DefaultTreeNode(new Document(model.getName(), "", ""), root));
+                } else if ( model.getObjCategory() == TAB ) {
+                    treeNodeMap.put(model.getId(), new DefaultTreeNode(new Document("", model.getName(), ""), treeNodeMap.get(model.getParentId())));
+                } else if ( model.getObjCategory() == ACTION ) {
+                    new DefaultTreeNode(new Document("", "", model.getName()), treeNodeMap.get(model.getParentId()));
+                }
+            }
+        }
         return root;
     }
 
