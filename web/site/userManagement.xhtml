@@ -458,7 +458,7 @@
                                          selectionMode="checkbox"
                                          selection="#{roleAccess.selectRootRoleAccess}"
                                          value="#{roleAccess.rootRoleAccessMode}">
-                                <p:ajax event="select" listener="#{roleAccess.test}"/>
+                                <!--<p:ajax event="select" listener="#{roleAccess.test(roleAccess.selectRootRoleAccess)}"/>-->
                                 <p:column headerText="Action Number" style="width: 100px; max-width: 100px; min-width: 100px" styleClass="center">
                                     <h:outputText value="#{roleAccessList.code}" />
                                 </p:column>

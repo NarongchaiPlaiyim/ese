@@ -1,5 +1,6 @@
 package com.ese.service;
 
+import com.ese.beans.Document;
 import com.ese.model.dao.MenuObjectDAO;
 import com.ese.model.dao.RoleAccessDAO;
 import com.ese.model.dao.SystemRoleDAO;
@@ -81,15 +82,25 @@ public class RoleAccessService extends Service{
         return roleAccessDAO.findByMenuObjectIdAndSystemRoleId(menuObjId, systemRoleId, key);
     }
 
-    public void deleteRoleAccess(List<RoleAccessModel> modelsList){
-        for (RoleAccessModel model : modelsList){
-            log.debug("model : {}", model.toString());
+    public void deleteRoleAccess(List<Document> modelsList){
+
+        for (Document document : modelsList){
             try {
-                roleAccessDAO.delete(model);
+                roleAccessDAO.delete(roleAccessDAO.findByID(document.getId()));
+//                RoleAccessModel model = roleAccessDAO.findByID(document.getId());
             } catch (Exception e) {
-                log.debug("Exception error deleteRoleAccess : ", e);
+                log.debug("Exception error deleteRoleAccess :", e);
             }
         }
+
+//        for (RoleAccessModel model : modelsList){
+//            log.debug("model : {}", model.toString());
+//            try {
+//                roleAccessDAO.delete(model);
+//            } catch (Exception e) {
+//                log.debug("Exception error deleteRoleAccess : ", e);
+//            }
+//        }
     }
 
     public List<MenuObjectModel> getMenuObjAll(){

@@ -75,6 +75,7 @@ public class RoleAccessBean extends Bean{
         roleTBOnload();
     }
 
+
     private void btnAndtextOnload(){
         modeRole = "Mode:Search";
         modeRoleAccess = "Mode:Search";
@@ -120,7 +121,7 @@ public class RoleAccessBean extends Bean{
     }
 
     private TreeNode creRootRoleAccess() {
-        TreeNode root = new CheckboxTreeNode(new Document("", ""), null);
+        TreeNode root = new CheckboxTreeNode(new Document(0, "", ""), null);
         log.debug("roleAccessModelList Size : ", roleAccessModelList.size());
         final int MENU = 1;
         final int TAB = 2;
@@ -130,11 +131,11 @@ public class RoleAccessBean extends Bean{
         for (RoleAccessModel model : roleAccessModelList) {
             if ( !Utils.isNull(model) ) {
                 if ( !Utils.isZero(Utils.parseInt(model.getMenuObjectModel().getCode(), 0)) && model.getMenuObjectModel().getObjCategory() == MENU ) {
-                    treeNodeMap.put(model.getMenuObjectModel().getId(), new CheckboxTreeNode(new Document( model.getMenuObjectModel().getCode(), model.getMenuObjectModel().getName()), root));
+                    treeNodeMap.put(model.getMenuObjectModel().getId(), new CheckboxTreeNode(new Document(model.getId(), model.getMenuObjectModel().getCode(), model.getMenuObjectModel().getName()), root));
                 } else if ( model.getMenuObjectModel().getObjCategory() == TAB ) {
-                    treeNodeMap.put(model.getMenuObjectModel().getId(), new CheckboxTreeNode(new Document(model.getMenuObjectModel().getCode(), model.getMenuObjectModel().getName()), treeNodeMap.get(model.getMenuObjectModel().getParentId())));
+                    treeNodeMap.put(model.getMenuObjectModel().getId(), new CheckboxTreeNode(new Document(model.getId(), model.getMenuObjectModel().getCode(), model.getMenuObjectModel().getName()), treeNodeMap.get(model.getMenuObjectModel().getParentId())));
                 } else if ( model.getMenuObjectModel().getObjCategory() == ACTION ) {
-                    new CheckboxTreeNode(new Document(model.getMenuObjectModel().getCode(), model.getMenuObjectModel().getName()), treeNodeMap.get(model.getMenuObjectModel().getParentId()));
+                    new CheckboxTreeNode(new Document(model.getId(), model.getMenuObjectModel().getCode(), model.getMenuObjectModel().getName()), treeNodeMap.get(model.getMenuObjectModel().getParentId()));
                 }
             }
         }
@@ -192,8 +193,24 @@ public class RoleAccessBean extends Bean{
         rootRoleAccessMode = creRootRoleAccess();
     }
 
+
+    public List<Document> selectOnDelete(){
+        List<Document> documents = new ArrayList<Document>();
+        Document document = null;
+
+        if (!Utils.isZero(selectRootRoleAccess.length)){
+            for (TreeNode node : selectRootRoleAccess){
+                document = new Document(0, "", "");
+                document = (Document) node.getData();
+                documents.add(document);
+            }
+        }
+
+        return documents;
+    }
+
     public void preDeleteRoelAccess(){
-        if (!Utils.isSafetyList(selectRoleAccess)){
+        if (Utils.isZero(selectRootRoleAccess.length) && Utils.isNull(selectRootRoleAccess)){
             showDialog(MessageDialog.WARNING.getMessageHeader(), "Please select Menu Object and Action.", "msgBoxSystemMessageDlg");
         } else {
             showDialog(MessageDialog.WARNING.getMessageHeader(), "Click Yes confirm delete.", "confirmDeleteRoleAccessDlg");
@@ -201,8 +218,8 @@ public class RoleAccessBean extends Bean{
     }
 
     public void onDeleteRoleAccess(){
-        log.debug("selectRoleAccess Size : {}", selectRoleAccess.size());
-        roleAccessService.deleteRoleAccess(selectRoleAccess);
+        log.debug("selectRoleAccess length : {}", selectRootRoleAccess.length);
+        roleAccessService.deleteRoleAccess(selectOnDelete());
         roleAccessModelList = roleAccessService.getRoleAccessBySystemRoleId(systemRoleModel.getId());
         rootRoleAccessMode = creRootRoleAccess();
     }
