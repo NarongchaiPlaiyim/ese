@@ -37,7 +37,7 @@
                             <f:selectItem itemLabel="- Please Select -" itemValue=""/>
                             <f:selectItems value="#{roleAccess.menuRoleAccessItemList}"
                                            var="menuObjItem"
-                                           itemLabel="#{menuObjItem.code}"
+                                           itemLabel="#{menuObjItem.name}"
                                            itemValue="#{menuObjItem.id}"/>
                             <p:ajax event="change" process="@form" listener="#{roleAccess.onFilterMenuObjDlg}"
                                     update=":userRoleAccessForm:roleAccessTableDlg"/>
@@ -58,23 +58,39 @@
                     </td>
                 </tr>
             </table>
-            <p:dataTable id="roleAccessTableDlg" rowIndexVar="rowIndex"
+            <!--<p:dataTable id="roleAccessTableDlg" rowIndexVar="rowIndex"-->
+                         <!--styleClass="full_table"-->
+                         <!--rows="5" paginator="true"-->
+                         <!--value="#{roleAccess.menuRoleAccessDlgList}"-->
+                         <!--selection="#{roleAccess.selectMenuRoleAccessDlg}"-->
+                         <!--var="menuRoleAccess"-->
+                         <!--rowKey="#{menuRoleAccess.id}"-->
+                         <!--style="width: 100%; max-width: 100%; min-width: 100%">-->
+                <!--<p:ajax event="rowSelect"/>-->
+                <!--<p:column selectionMode="multiple" style="width:16px;text-align:center; height: 20px"/>-->
+                <!--<p:column headerText="Code" style="width: 100px; max-width: 100px; min-width: 100px" styleClass="center">-->
+                    <!--<h:outputText value="#{menuRoleAccess.code}" />-->
+                <!--</p:column>-->
+                <!--<p:column headerText="Menu Object and Action" style="width: 300px; max-width: 300px; min-width: 300px" styleClass="center">-->
+                    <!--<h:outputText value="#{menuRoleAccess.name}"/>-->
+                <!--</p:column>-->
+            <!--</p:dataTable>-->
+
+            <p:treeTable id="roleAccessTableDlg"
+                         rowIndexVar="rowIndex"
                          styleClass="full_table"
-                         rows="5" paginator="true"
-                         value="#{roleAccess.menuRoleAccessDlgList}"
-                         selection="#{roleAccess.selectMenuRoleAccessDlg}"
                          var="menuRoleAccess"
-                         rowKey="#{menuRoleAccess.id}"
-                         style="width: 100%; max-width: 100%; min-width: 100%">
-                <p:ajax event="rowSelect"/>
-                <p:column selectionMode="multiple" style="width:16px;text-align:center; height: 20px"/>
+                         style="width: 100%; max-width: 100%; min-width: 100%"
+                         selectionMode="checkbox"
+                         selection="#{roleAccess.selectRootMenuRoleAccess}"
+                         value="#{roleAccess.rootMenuRoleAccessMode}">
                 <p:column headerText="Code" style="width: 100px; max-width: 100px; min-width: 100px" styleClass="center">
                     <h:outputText value="#{menuRoleAccess.code}" />
                 </p:column>
                 <p:column headerText="Menu Object and Action" style="width: 300px; max-width: 300px; min-width: 300px" styleClass="center">
-                    <h:outputText value="#{menuRoleAccess.name}"/>
+                    <h:outputText value="#{menuRoleAccess.name}" />
                 </p:column>
-            </p:dataTable>
+            </p:treeTable>
         </h:form>
 </f:view>
 </html>

@@ -116,13 +116,12 @@ public class RoleAccessService extends Service{
         return menuObjectDAO.findByObjectId(objId, key);
     }
 
-    public void saveMenuObjectInRoleAccess(List<MenuObjectModel> modelsList, SystemRoleModel systemRoleModel){
+    public void saveMenuObjectInRoleAccess(List<Document> modelsList, SystemRoleModel systemRoleModel){
         RoleAccessModel roleAccessModel = new RoleAccessModel();
         List<RoleAccessModel> roleAccessModelList = new ArrayList<RoleAccessModel>();
-        for (MenuObjectModel model : modelsList){
-            roleAccessModel = roleAccessTransform.transformToModel(model, systemRoleModel);
-
+        for (Document model : modelsList){
             try {
+                roleAccessModel = roleAccessTransform.transformToModel(menuObjectDAO.findByID(model.getId()), systemRoleModel);
                 roleAccessDAO.persist(roleAccessModel);
 
                 roleAccessModelList = roleAccessDAO.findBySystemRoleId(systemRoleModel.getId());

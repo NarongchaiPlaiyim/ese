@@ -309,7 +309,7 @@ public class UserManagementBean extends Bean{
         List<Document> documents = new ArrayList<Document>();
         Document document = null;
 
-        if (!Utils.isZero(selectRootMenuObj.length)){
+        if (!Utils.isNull(selectRootMenuObj)){
             for (TreeNode node : selectRootMenuObj){
                 document = new Document(0, "", "");
                 document = (Document) node.getData();
@@ -323,7 +323,7 @@ public class UserManagementBean extends Bean{
     public void onAddToUserAuthorize(){
         log.debug("selectList Size : {}", selectList.size());
 
-        if (Utils.isZero(selectRootMenuObj.length) && Utils.isNull(selectRootMenuObj)){
+        if (Utils.isNull(selectRootMenuObj)){
             showDialog(MessageDialog.WARNING.getMessageHeader(), "Please select Menu Object and Action.", "msgBoxSystemMessageDlg");
         } else {
             userManagementService.onSaveUserAccess(selectOnAdd(), staffModel);
@@ -339,7 +339,7 @@ public class UserManagementBean extends Bean{
         List<Document> documents = new ArrayList<Document>();
         Document document = null;
 
-        if (!Utils.isZero(selectRootUserAuthorize.length)){
+        if (!Utils.isNull(selectRootUserAuthorize)){
             for (TreeNode node : selectRootUserAuthorize){
                 document = new Document(0, "", "");
                 document = (Document) node.getData();
@@ -359,9 +359,9 @@ public class UserManagementBean extends Bean{
     }
 
     public void onDeleteUserAuthorize(){
-        log.debug("selectRootUserAuthorize length : {}", selectRootUserAuthorize.length);
+//        log.debug("selectRootUserAuthorize length : {}", selectRootUserAuthorize.length);
 
-        if (!Utils.isZero(selectRootUserAuthorize.length) && !Utils.isNull(selectRootUserAuthorize)){
+        if (!Utils.isNull(selectRootUserAuthorize)){
             for (Document document : selectOnRemove()){
                 userManagementService.deleteUserAuthorize(document);
             }
