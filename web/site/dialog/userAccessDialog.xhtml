@@ -44,22 +44,38 @@
                         </tr>
                         <tr>
                             <td colspan="3">
-                                <p:dataTable id="userAccessTable"
+                                <!--<p:dataTable id="userAccessTable"-->
+                                             <!--var="menuObject"-->
+                                             <!--rows="5"-->
+                                             <!--paginator="true"-->
+                                             <!--selection="#{userManagement.selectList}"-->
+                                             <!--value="#{userManagement.menuObjectModelTableList}"-->
+                                             <!--rowKey="#{menuObject.id}"-->
+                                             <!--style="width: 100%; max-width: 100%; min-width: 100%">-->
+                                    <!--<p:column selectionMode="multiple" style="width:16px;text-align:center; height: 20px"/>-->
+                                    <!--<p:column headerText="Code " style="width: 100px; max-width: 100px; min-width: 100px" styleClass="center">-->
+                                        <!--<h:outputText value="#{menuObject.code}" />-->
+                                    <!--</p:column>-->
+                                    <!--<p:column headerText="Menu Object and Action" style="width: 250px; max-width: 250px; min-width: 250px" styleClass="center">-->
+                                        <!--<h:outputText value="#{menuObject.name}"/>-->
+                                    <!--</p:column>-->
+                                <!--</p:dataTable>-->
+
+                                <p:treeTable id="userAccessTable"
+                                             rowIndexVar="rowIndex"
+                                             styleClass="full_table"
                                              var="menuObject"
-                                             rows="5"
-                                             paginator="true"
-                                             selection="#{userManagement.selectList}"
-                                             value="#{userManagement.menuObjectModelTableList}"
-                                             rowKey="#{menuObject.id}"
-                                             style="width: 100%; max-width: 100%; min-width: 100%">
-                                    <p:column selectionMode="multiple" style="width:16px;text-align:center; height: 20px"/>
-                                    <p:column headerText="Code " style="width: 100px; max-width: 100px; min-width: 100px" styleClass="center">
+                                             style="width: 100%; max-width: 100%; min-width: 100%"
+                                             selectionMode="checkbox"
+                                             selection="#{userManagement.selectRootMenuObj}"
+                                             value="#{userManagement.rootMenuObj}">
+                                    <p:column headerText="Code" style="width: 100px; max-width: 100px; min-width: 100px" styleClass="center">
                                         <h:outputText value="#{menuObject.code}" />
                                     </p:column>
-                                    <p:column headerText="Menu Object and Action" style="width: 250px; max-width: 250px; min-width: 250px" styleClass="center">
-                                        <h:outputText value="#{menuObject.name}"/>
+                                    <p:column headerText="Menu Object and Action" style="width: 300px; max-width: 300px; min-width: 300px" styleClass="center">
+                                        <h:outputText value="#{menuObject.name}" />
                                     </p:column>
-                                </p:dataTable>
+                                </p:treeTable>
                             </td>
                         </tr>
                     </table>
@@ -200,23 +216,39 @@
                         </tr>
                         <tr>
                             <td colspan="3">
-                                <p:dataTable id="userAuthorizeTable"
+                                <!--<p:dataTable id="userAuthorizeTable"-->
+                                             <!--styleClass="full_table"-->
+                                             <!--rows="5"-->
+                                             <!--paginator="true"-->
+                                             <!--value="#{userManagement.userAccessModelList}"-->
+                                             <!--selection="#{userManagement.selectUserAuthorize}"-->
+                                             <!--var="userAccessList"-->
+                                             <!--rowKey="#{userAccessList.id}"-->
+                                             <!--style="width: 100%; max-width: 100%; min-width: 100%">-->
+                                    <!--<p:column selectionMode="multiple" style="width:16px;text-align:center; height: 20px"/>-->
+                                    <!--<p:column headerText="Code " style="width: 100px; max-width: 100px; min-width: 100px" styleClass="center">-->
+                                        <!--<h:outputText value="#{userAccessList.menuObjectModel.code}" />-->
+                                    <!--</p:column>-->
+                                    <!--<p:column headerText="Menu Object and Action" style="width: 250px; max-width: 250px; min-width: 250px" styleClass="center">-->
+                                        <!--<h:outputText value="#{userAccessList.menuObjectModel.name}"/>-->
+                                    <!--</p:column>-->
+                                <!--</p:dataTable>-->
+
+                                <p:treeTable id="userAuthorizeTable"
+                                             rowIndexVar="rowIndex"
                                              styleClass="full_table"
-                                             rows="5"
-                                             paginator="true"
-                                             value="#{userManagement.userAccessModelList}"
-                                             selection="#{userManagement.selectUserAuthorize}"
                                              var="userAccessList"
-                                             rowKey="#{userAccessList.id}"
-                                             style="width: 100%; max-width: 100%; min-width: 100%">
-                                    <p:column selectionMode="multiple" style="width:16px;text-align:center; height: 20px"/>
-                                    <p:column headerText="Code " style="width: 100px; max-width: 100px; min-width: 100px" styleClass="center">
-                                        <h:outputText value="#{userAccessList.menuObjectModel.code}" />
+                                             style="width: 100%; max-width: 100%; min-width: 100%"
+                                             selectionMode="checkbox"
+                                             selection="#{userManagement.selectRootUserAuthorize}"
+                                             value="#{userManagement.rootAccessModel}">
+                                    <p:column headerText="Code" style="width: 100px; max-width: 100px; min-width: 100px" styleClass="center">
+                                        <h:outputText value="#{userAccessList.code}" />
                                     </p:column>
-                                    <p:column headerText="Menu Object and Action" style="width: 250px; max-width: 250px; min-width: 250px" styleClass="center">
-                                        <h:outputText value="#{userAccessList.menuObjectModel.name}"/>
-                                    </p:column>
-                                </p:dataTable>
+                                    <p:column headerText="Menu Object and Action" style="width: 300px; max-width: 300px; min-width: 300px" styleClass="center">
+                                        <h:outputText value="#{userAccessList.name}" />
+                                </p:column>
+                                </p:treeTable>
                             </td>
                         </tr>
                     </table>

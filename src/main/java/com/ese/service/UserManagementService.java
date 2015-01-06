@@ -1,5 +1,6 @@
 package com.ese.service;
 
+import com.ese.beans.Document;
 import com.ese.model.dao.*;
 import com.ese.model.db.*;
 import com.ese.model.view.UserView;
@@ -140,15 +141,15 @@ public class UserManagementService extends Service{
         return userAccessDAO.findByUserId(userId);
     }
 
-    public void onSaveUserAccess(List<MenuObjectModel> objectModels, StaffModel staffModel){
+    public void onSaveUserAccess(List<Document> objectModels, StaffModel staffModel){
         log.debug("objectModels Size : {}, staffModel {}", objectModels.size(), staffModel.toString());
         UserAccessModel model = new UserAccessModel();
         List<UserAccessModel> userAccessModelList = new ArrayList<UserAccessModel>();
 
         if (Utils.isSafetyList(objectModels)){
-            for (MenuObjectModel menuObjectModel : objectModels){
-                model = userAccessTransform.transformToModel(menuObjectModel, staffModel);
+            for (Document document : objectModels){
                 try {
+                    model = userAccessTransform.transformToModel(menuObjectDAO.findByID(document.getId()), staffModel);
                     userAccessDAO.persist(model);
                     userAccessModelList = userAccessDAO.findByUserId(staffModel.getId());
 
@@ -169,9 +170,9 @@ public class UserManagementService extends Service{
         }
     }
 
-    public void deleteUserAuthorize(UserAccessModel userAccessModels){
+    public void deleteUserAuthorize(Document document){
         try {
-            userAccessDAO.delete(userAccessModels);
+            userAccessDAO.delete(userAccessDAO.findByID(document.getId()));
         } catch (Exception e) {
             log.debug("Exception error deleteUserAuthorize : ", e);
         }

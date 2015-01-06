@@ -7,6 +7,8 @@ import com.ese.utils.MessageDialog;
 import com.ese.utils.Utils;
 import lombok.Getter;
 import lombok.Setter;
+import org.primefaces.model.CheckboxTreeNode;
+import org.primefaces.model.TreeNode;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.PostConstruct;
@@ -14,7 +16,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -47,6 +51,16 @@ public class UserManagementBean extends Bean{
     //Table
     private List<MenuObjectModel> menuObjectModelTableList;
     private List<MenuObjectModel> selectList;
+
+    //Root RoleAccessMode
+    private TreeNode rootMenuObj;
+    private TreeNode rootAccessModel;
+    //Select Root
+    private TreeNode[] selectRootMenuObj;
+    private TreeNode[] selectRootUserAuthorize;
+
+    Map<Integer, CheckboxTreeNode> treeNodeMenuObjMap;
+    Map<Integer, CheckboxTreeNode> treeNodeUserAccessMap;
 
     //Add User Dialog
     private List<MSDepartmentModel> departmentDialogList;
@@ -103,6 +117,8 @@ public class UserManagementBean extends Bean{
         menuObjectModel = new MenuObjectModel();
         staffRolesModel = new StaffRolesModel();
         objectUserAuthorize = new MenuObjectModel();
+        rootMenuObj = new CheckboxTreeNode();
+        rootAccessModel = new CheckboxTreeNode();
 //        msTitleModel = new MSTitleModel();
     }
 
@@ -220,35 +236,117 @@ public class UserManagementBean extends Bean{
     public void onClickUserAccessDialog(){
         menuObjectModelList = userManagementService.getMenuObjectByObjCategory();
         menuObjectModelTableList = userManagementService.getMenuObjectAll();
+        rootMenuObj = creRootMenuObj();
         userAuthorizeView = userManagementService.setModelToViewUserAccess(staffModel);
         staffRolesModelList = userManagementService.getStaffRoleByUserId(staffModel.getId());
         userAccessModelList = userManagementService.getMenuObjectByUserId(staffModel.getId());
+        rootAccessModel = creRootUserAccess();
         objectUserAuthorizeList = userManagementService.getMenuObjectByObjCategory();
         selectList = new ArrayList<MenuObjectModel>();
     }
 
     public void onChangeMenuObject(){
         menuObjectModelTableList = userManagementService.getMenuObjectId(menuObjectModel.getId(), keySearchUserAccessDialog);
+        rootMenuObj = creRootMenuObj();
+    }
+
+    private TreeNode creRootUserAccess() {
+        TreeNode root = new CheckboxTreeNode(new Document(0, "", ""), null);
+        log.debug("userAccessModelList Size : ", userAccessModelList.size());
+        final int MENU = 1;
+        final int TAB = 2;
+        final int ACTION = 3;
+
+        treeNodeUserAccessMap = new HashMap<Integer, CheckboxTreeNode>();
+        for (UserAccessModel model : userAccessModelList) {
+            if ( !Utils.isNull(model) ) {
+                if ( !Utils.isZero(Utils.parseInt(model.getMenuObjectModel().getCode(), 0)) && model.getMenuObjectModel().getObjCategory() == MENU ) {
+                    treeNodeUserAccessMap.put(model.getId(), new CheckboxTreeNode(new Document(model.getId(), model.getMenuObjectModel().getCode(), model.getMenuObjectModel().getName()), root));
+                } else if ( model.getMenuObjectModel().getObjCategory() == TAB ) {
+                    treeNodeUserAccessMap.put(model.getId(), new CheckboxTreeNode(new Document(model.getId(), model.getMenuObjectModel().getCode(), model.getMenuObjectModel().getName()), treeNodeUserAccessMap.get(model.getMenuObjectModel().getParentId())));
+                } else if ( model.getMenuObjectModel().getObjCategory() == ACTION ) {
+                    new CheckboxTreeNode(new Document(model.getId(), model.getMenuObjectModel().getCode(), model.getMenuObjectModel().getName()), treeNodeUserAccessMap.get(model.getMenuObjectModel().getParentId()));
+                }
+            }
+        }
+
+        return root;
+    }
+
+    private TreeNode creRootMenuObj() {
+        TreeNode root = new CheckboxTreeNode(new Document(0, "", ""), null);
+        log.debug("menuObjectModelTableList Size : ", menuObjectModelTableList.size());
+        final int MENU = 1;
+        final int TAB = 2;
+        final int ACTION = 3;
+
+        treeNodeMenuObjMap = new HashMap<Integer, CheckboxTreeNode>();
+        for (MenuObjectModel model : menuObjectModelTableList) {
+            if ( !Utils.isNull(model) ) {
+                if ( !Utils.isZero(Utils.parseInt(model.getCode(), 0)) && model.getObjCategory() == MENU ) {
+                    treeNodeMenuObjMap.put(model.getId(), new CheckboxTreeNode(
+                            new Document(model.getId(), model.getCode(), model.getName()), root));
+                } else if ( model.getObjCategory() == TAB ) {
+                    treeNodeMenuObjMap.put(model.getId(), new CheckboxTreeNode(
+                            new Document(model.getId(), model.getCode(), model.getName()), treeNodeMenuObjMap.get(model.getParentId())));
+                } else if ( model.getObjCategory() == ACTION ) {
+                    new CheckboxTreeNode(new Document(model.getId(), model.getCode(), model.getName()), treeNodeMenuObjMap.get(model.getParentId()));
+                }
+            }
+        }
+
+        return root;
+    }
+
+    public List<Document> selectOnAdd(){
+        List<Document> documents = new ArrayList<Document>();
+        Document document = null;
+
+        if (!Utils.isZero(selectRootMenuObj.length)){
+            for (TreeNode node : selectRootMenuObj){
+                document = new Document(0, "", "");
+                document = (Document) node.getData();
+                documents.add(document);
+            }
+        }
+
+        return documents;
     }
 
     public void onAddToUserAuthorize(){
         log.debug("selectList Size : {}", selectList.size());
 
-        if (!Utils.isSafetyList(selectList)){
+        if (Utils.isZero(selectRootMenuObj.length) && Utils.isNull(selectRootMenuObj)){
             showDialog(MessageDialog.WARNING.getMessageHeader(), "Please select Menu Object and Action.", "msgBoxSystemMessageDlg");
         } else {
-            userManagementService.onSaveUserAccess(selectList, staffModel);
+            userManagementService.onSaveUserAccess(selectOnAdd(), staffModel);
             showDialogSaved();
             selectList = new ArrayList<MenuObjectModel>();
         }
 
         userAccessModelList = userManagementService.getMenuObjectByUserId(staffModel.getId());
+        rootAccessModel = creRootUserAccess();
+    }
+
+    public List<Document> selectOnRemove(){
+        List<Document> documents = new ArrayList<Document>();
+        Document document = null;
+
+        if (!Utils.isZero(selectRootUserAuthorize.length)){
+            for (TreeNode node : selectRootUserAuthorize){
+                document = new Document(0, "", "");
+                document = (Document) node.getData();
+                documents.add(document);
+            }
+        }
+
+        return documents;
     }
 
     public void onRemoveUserAuthorize(){
         StringBuilder selectValue = new StringBuilder();
-        for (UserAccessModel model : selectUserAuthorize){
-            selectValue = selectValue.append(model.getMenuObjectModel().getCode()).append(" ");
+        for (Document model : selectOnRemove()){
+            selectValue = selectValue.append(model.getCode()).append(" ");
         }
         showDialog(MessageDialog.WARNING.getMessageHeader(), "Click Yes to delete " + selectValue.toString(), "confirmRemoveUserAuthorizeDlg");
     }
@@ -256,15 +354,17 @@ public class UserManagementBean extends Bean{
     public void onDeleteUserAuthorize(){
         log.debug("selectUserAuthorize Size : {}", selectUserAuthorize.size());
 
-        for (UserAccessModel userAccessModel : selectUserAuthorize){
-            userManagementService.deleteUserAuthorize(userAccessModel);
+        for (Document document : selectOnRemove()){
+            userManagementService.deleteUserAuthorize(document);
         }
 
         userAccessModelList = userManagementService.getMenuObjectByUserId(staffModel.getId());
+        rootAccessModel = creRootUserAccess();
     }
 
     public void onFilterUserAuthorize(){
         userAccessModelList = userManagementService.getUserAuthorizeByMenuObjOrKey(objectUserAuthorize.getId(), keySearchUserAuthorize);
+        rootAccessModel = creRootUserAccess();
     }
 
     public void onPopupRole(){
@@ -295,6 +395,7 @@ public class UserManagementBean extends Bean{
             showDialogSaved();
             staffRolesModelList = userManagementService.getStaffRoleByUserId(staffModel.getId());
             userAccessModelList = userManagementService.getMenuObjectByUserId(staffModel.getId());
+            rootAccessModel = creRootUserAccess();
         }
     }
 }
