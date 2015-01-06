@@ -261,12 +261,19 @@ public class UserManagementBean extends Bean{
         for (UserAccessModel model : userAccessModelList) {
             if ( !Utils.isNull(model) ) {
                 if ( !Utils.isZero(Utils.parseInt(model.getMenuObjectModel().getCode(), 0)) && model.getMenuObjectModel().getObjCategory() == MENU ) {
-                    treeNodeUserAccessMap.put(model.getId(), new CheckboxTreeNode(new Document(model.getId(), model.getMenuObjectModel().getCode(), model.getMenuObjectModel().getName()), root));
+                    treeNodeUserAccessMap.put(model.getMenuObjectModel().getId(), new CheckboxTreeNode(new Document(model.getId(), model.getMenuObjectModel().getCode(), model.getMenuObjectModel().getName()), root));
                 } else if ( model.getMenuObjectModel().getObjCategory() == TAB ) {
-                    treeNodeUserAccessMap.put(model.getId(), new CheckboxTreeNode(new Document(model.getId(), model.getMenuObjectModel().getCode(), model.getMenuObjectModel().getName()), treeNodeUserAccessMap.get(model.getMenuObjectModel().getParentId())));
+                    treeNodeUserAccessMap.put(model.getMenuObjectModel().getId(), new CheckboxTreeNode(new Document(model.getId(), model.getMenuObjectModel().getCode(), model.getMenuObjectModel().getName()), treeNodeUserAccessMap.get(model.getMenuObjectModel().getParentId())));
                 } else if ( model.getMenuObjectModel().getObjCategory() == ACTION ) {
                     new CheckboxTreeNode(new Document(model.getId(), model.getMenuObjectModel().getCode(), model.getMenuObjectModel().getName()), treeNodeUserAccessMap.get(model.getMenuObjectModel().getParentId()));
                 }
+//                if ( !Utils.isZero(Utils.parseInt(model.getMenuObjectModel().getCode(), 0)) && model.getMenuObjectModel().getObjCategory() == MENU ) {
+//                    treeNodeUserAccessMap.put(model.getId(), new CheckboxTreeNode(new Document(model.getId(), model.getMenuObjectModel().getCode(), model.getMenuObjectModel().getName()), root));
+//                } else if ( model.getMenuObjectModel().getObjCategory() == TAB ) {
+//                    treeNodeUserAccessMap.put(model.getId(), new CheckboxTreeNode(new Document(model.getId(), model.getMenuObjectModel().getCode(), model.getMenuObjectModel().getName()), treeNodeUserAccessMap.get(model.getMenuObjectModel().getParentId())));
+//                } else if ( model.getMenuObjectModel().getObjCategory() == ACTION ) {
+//                    new CheckboxTreeNode(new Document(model.getId(), model.getMenuObjectModel().getCode(), model.getMenuObjectModel().getName()), treeNodeUserAccessMap.get(model.getMenuObjectModel().getParentId()));
+//                }
             }
         }
 
