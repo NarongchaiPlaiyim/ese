@@ -20,6 +20,11 @@ public class Document implements Serializable, Comparable<Document> {
         this.type = type;
     }
 
+    public Document(String code, String name) {
+        this.code = code;
+        this.name = name;
+    }
+
     @Override
     public int compareTo(Document o) {
         return 0;  //To change body of implemented methods use File | Settings | File Templates.

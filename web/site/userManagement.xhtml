@@ -448,25 +448,44 @@
                                 </tr>
                             </table>
 
-                            <p:dataTable id="roleAccessTable"
+                            <p:treeTable id="roleAccessTable"
                                          rowIndexVar="rowIndex"
                                          styleClass="full_table"
                                          scrollable="true" scrollHeight="450"
-                                         selection="#{roleAccess.selectRoleAccess}"
-                                         value="#{roleAccess.roleAccessModelList}"
                                          var="roleAccessList"
                                          resizableColumns="true"
-                                         rowKey="#{roleAccessList.id}"
-                                         style="width: 100%; max-width: 100%; min-width: 100%">
-                                <p:ajax event="rowSelect"/>
-                                <p:column selectionMode="multiple" style="width:16px;text-align:center;"/>
+                                         style="width: 100%; max-width: 100%; min-width: 100%"
+                                         selectionMode="checkbox"
+                                         selection="#{roleAccess.selectRootRoleAccess}"
+                                         value="#{roleAccess.rootRoleAccessMode}">
+                                <p:ajax event="select" listener="#{roleAccess.test}"/>
                                 <p:column headerText="Action Number" style="width: 100px; max-width: 100px; min-width: 100px" styleClass="center">
-                                    <h:outputText value="#{roleAccessList.menuObjectModel.code}" />
+                                    <h:outputText value="#{roleAccessList.code}" />
                                 </p:column>
                                 <p:column headerText="Menu Object and Action" style="width: 300px; max-width: 300px; min-width: 300px" styleClass="center">
-                                    <h:outputText value="#{roleAccessList.menuObjectModel.name}" />
+                                    <h:outputText value="#{roleAccessList.name}" />
                                 </p:column>
-                            </p:dataTable>
+                            </p:treeTable>
+
+                            <!--<p:dataTable id="roleAccessTable"-->
+                                         <!--rowIndexVar="rowIndex"-->
+                                         <!--styleClass="full_table"-->
+                                         <!--scrollable="true" scrollHeight="450"-->
+                                         <!--selection="#{roleAccess.selectRoleAccess}"-->
+                                         <!--value="#{roleAccess.roleAccessModelList}"-->
+                                         <!--var="roleAccessList"-->
+                                         <!--resizableColumns="true"-->
+                                         <!--rowKey="#{roleAccessList.id}"-->
+                                         <!--style="width: 100%; max-width: 100%; min-width: 100%">-->
+                                <!--<p:ajax event="rowSelect"/>-->
+                                <!--<p:column selectionMode="multiple" style="width:16px;text-align:center;"/>-->
+                                <!--<p:column headerText="Action Number" style="width: 100px; max-width: 100px; min-width: 100px" styleClass="center">-->
+                                    <!--<h:outputText value="#{roleAccessList.menuObjectModel.code}" />-->
+                                <!--</p:column>-->
+                                <!--<p:column headerText="Menu Object and Action" style="width: 300px; max-width: 300px; min-width: 300px" styleClass="center">-->
+                                    <!--<h:outputText value="#{roleAccessList.menuObjectModel.name}" />-->
+                                <!--</p:column>-->
+                            <!--</p:dataTable>-->
                         </p:panel>
                     </div>
                 </div>

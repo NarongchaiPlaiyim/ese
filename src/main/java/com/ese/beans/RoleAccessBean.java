@@ -9,13 +9,17 @@ import com.ese.utils.MessageDialog;
 import com.ese.utils.Utils;
 import lombok.Getter;
 import lombok.Setter;
+import org.primefaces.model.CheckboxTreeNode;
+import org.primefaces.model.TreeNode;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -42,6 +46,14 @@ public class RoleAccessBean extends Bean{
     private SystemRoleModel systemRoleModel;
     private List<RoleAccessModel> roleAccessModelList;
     private List<RoleAccessModel> selectRoleAccess;
+
+    //Root RoleAccessMode
+    private TreeNode rootRoleAccessMode;
+    //Select Root
+    private TreeNode[] selectRootRoleAccess;
+
+    Map<Integer, CheckboxTreeNode> treeNodeMap;
+
     private SystemRoleView systemRoleView;
     private List<MenuObjectModel> menuObjectModelList;
     private MenuObjectModel menuObjectModel;
@@ -83,6 +95,7 @@ public class RoleAccessBean extends Bean{
         systemRoleModel = new SystemRoleModel();
         systemRoleView = new SystemRoleView();
         menuObjectModel = new MenuObjectModel();
+        rootRoleAccessMode = new CheckboxTreeNode();
     }
 
     private void roleTBOnload(){
@@ -103,7 +116,30 @@ public class RoleAccessBean extends Bean{
         flagBtnSearchRoleAccess = false;
         systemRoleView = roleAccessService.getModelToView(systemRoleModel);
         roleAccessModelList = roleAccessService.getRoleAccessBySystemRoleId(systemRoleModel.getId());
+        rootRoleAccessMode = creRootRoleAccess();
+    }
+
+    private TreeNode creRootRoleAccess() {
+        TreeNode root = new CheckboxTreeNode(new Document("", ""), null);
         log.debug("roleAccessModelList Size : ", roleAccessModelList.size());
+        final int MENU = 1;
+        final int TAB = 2;
+        final int ACTION = 3;
+
+        treeNodeMap = new HashMap<Integer, CheckboxTreeNode>();
+        for (RoleAccessModel model : roleAccessModelList) {
+            if ( !Utils.isNull(model) ) {
+                if ( !Utils.isZero(Utils.parseInt(model.getMenuObjectModel().getCode(), 0)) && model.getMenuObjectModel().getObjCategory() == MENU ) {
+                    treeNodeMap.put(model.getMenuObjectModel().getId(), new CheckboxTreeNode(new Document( model.getMenuObjectModel().getCode(), model.getMenuObjectModel().getName()), root));
+                } else if ( model.getMenuObjectModel().getObjCategory() == TAB ) {
+                    treeNodeMap.put(model.getMenuObjectModel().getId(), new CheckboxTreeNode(new Document(model.getMenuObjectModel().getCode(), model.getMenuObjectModel().getName()), treeNodeMap.get(model.getMenuObjectModel().getParentId())));
+                } else if ( model.getMenuObjectModel().getObjCategory() == ACTION ) {
+                    new CheckboxTreeNode(new Document(model.getMenuObjectModel().getCode(), model.getMenuObjectModel().getName()), treeNodeMap.get(model.getMenuObjectModel().getParentId()));
+                }
+            }
+        }
+
+        return root;
     }
 
     public void onFilterRoleTB(){
@@ -127,6 +163,7 @@ public class RoleAccessBean extends Bean{
         systemRoleModel = new SystemRoleModel();
         systemRoleView = new SystemRoleView();
         roleAccessModelList = new ArrayList<RoleAccessModel>();
+        rootRoleAccessMode = creRootRoleAccess();
     }
 
     public void preDeleteRole(){
@@ -140,6 +177,7 @@ public class RoleAccessBean extends Bean{
         modeRole = "Mode:New";
         modeRoleAccess = "Mode:Search";
         roleAccessModelList = new ArrayList<RoleAccessModel>();
+        rootRoleAccessMode = creRootRoleAccess();
     }
 
     public void onDeleteRole(){
@@ -151,6 +189,7 @@ public class RoleAccessBean extends Bean{
     public void onFilterRoleAccess(){
         log.debug("Object ID : {}, SystemRoleId : {}, keySearchRoleAccess : {}", menuObjectModel.getId(), systemRoleModel.getId(), keySearchRoleAccess);
         roleAccessModelList = roleAccessService.getRoleAccessByMenuObjectIdAndSystemRoleId(menuObjectModel.getId(), systemRoleModel.getId(), keySearchRoleAccess);
+        rootRoleAccessMode = creRootRoleAccess();
     }
 
     public void preDeleteRoelAccess(){
@@ -165,6 +204,7 @@ public class RoleAccessBean extends Bean{
         log.debug("selectRoleAccess Size : {}", selectRoleAccess.size());
         roleAccessService.deleteRoleAccess(selectRoleAccess);
         roleAccessModelList = roleAccessService.getRoleAccessBySystemRoleId(systemRoleModel.getId());
+        rootRoleAccessMode = creRootRoleAccess();
     }
 
     public void onLoadMenuObjDialog(){
@@ -186,6 +226,7 @@ public class RoleAccessBean extends Bean{
             showDialogSaved();
             onLoadMenuObjDialog();
             roleAccessModelList = roleAccessService.getRoleAccessBySystemRoleId(systemRoleModel.getId());
+            rootRoleAccessMode = creRootRoleAccess();
         }
     }
 }
