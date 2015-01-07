@@ -260,7 +260,7 @@ public class UserManagementBean extends Bean{
         treeNodeUserAccessMap = new HashMap<Integer, CheckboxTreeNode>();
         for (UserAccessModel model : userAccessModelList) {
             if ( !Utils.isNull(model) ) {
-                if ( !Utils.isZero(Utils.parseInt(model.getMenuObjectModel().getCode(), 0)) && model.getMenuObjectModel().getObjCategory() == MENU ) {
+                if ( !Utils.isZero(Utils.parseInt(model.getMenuObjectModel().getCode().length(), 0)) && model.getMenuObjectModel().getObjCategory() == MENU ) {
                     treeNodeUserAccessMap.put(model.getMenuObjectModel().getId(), new CheckboxTreeNode(new Document(model.getId(), model.getMenuObjectModel().getCode(), model.getMenuObjectModel().getName()), root));
                 } else if ( model.getMenuObjectModel().getObjCategory() == TAB ) {
                     treeNodeUserAccessMap.put(model.getMenuObjectModel().getId(), new CheckboxTreeNode(new Document(model.getId(), model.getMenuObjectModel().getCode(), model.getMenuObjectModel().getName()), treeNodeUserAccessMap.get(model.getMenuObjectModel().getParentId())));
@@ -290,7 +290,7 @@ public class UserManagementBean extends Bean{
         treeNodeMenuObjMap = new HashMap<Integer, CheckboxTreeNode>();
         for (MenuObjectModel model : menuObjectModelTableList) {
             if ( !Utils.isNull(model) ) {
-                if ( !Utils.isZero(Utils.parseInt(model.getCode(), 0)) && model.getObjCategory() == MENU ) {
+                if ( !Utils.isZero(Utils.parseInt(model.getCode().length(), 0)) && model.getObjCategory() == MENU ) {
                     treeNodeMenuObjMap.put(model.getId(), new CheckboxTreeNode(
                             new Document(model.getId(), model.getCode(), model.getName()), root));
                 } else if ( model.getObjCategory() == TAB ) {
