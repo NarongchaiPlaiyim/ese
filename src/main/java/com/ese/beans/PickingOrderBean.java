@@ -1,5 +1,6 @@
 package com.ese.beans;
 
+import com.ese.model.view.PickingOrderView;
 import com.ese.service.PickingOrderService;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,8 +23,7 @@ public class PickingOrderBean extends Bean {
     private boolean flagBtnShow;
     private boolean flagBtnPrint;
     private String selectType;
-    private boolean overseaOrder;
-    private boolean domesticOrder;
+    private PickingOrderView pickingOrderView;
 
     @PostConstruct
     public void onCreation(){
@@ -35,6 +35,7 @@ public class PickingOrderBean extends Bean {
 
     private void init(){
         initBtn();
+        pickingOrderView = new PickingOrderView();
     }
 
     private void initBtn(){
