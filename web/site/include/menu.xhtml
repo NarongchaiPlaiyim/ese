@@ -5,33 +5,6 @@
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:p="http://primefaces.org/ui">
     <h:form>
-        <!--<p:menu style="border: 0" toggleable="true">-->
-            <!--<p:menuitem value="#{msg.get('menu.barcode.title')}" icon="ui-icon-disk" outcome="#{msg.get('menu.barcode.url')}"-->
-                        <!--rendered="#{loginBean.isRendered(msg.get('authorize.menu.barcode'))}"/>-->
-            <!--<p:separator-->
-                        <!--rendered="#{loginBean.isRendered(msg.get('authorize.menu.barcode'))}"/>-->
-            <!--<p:menuitem value="#{msg.get('menu.pallet.title')}" icon="ui-icon-cart" outcome="#{msg.get('menu.pallet.url')}"-->
-                        <!--rendered="#{loginBean.isRendered(msg.get('authorize.menu.pallet'))}"/>-->
-            <!--<p:separator-->
-                        <!--rendered="#{loginBean.isRendered(msg.get('authorize.menu.pallet'))}"/>-->
-        <!--</p:menu>-->
-        <!--<p:menu style="border: 0" toggleable="false"  >-->
-            <!--<p:submenu label="#{msg.get('menu.picking.title')}">-->
-                <!--<p:menuitem value="#{msg.get('menu.picking.title.sub')}" outcome="#{msg.get('menu.picking.sub.url')}"/>-->
-            <!--</p:submenu>-->
-
-        <!--</p:menu>-->
-        <!--<p:menu style="border: 0">-->
-            <!--<p:separator-->
-                    <!--rendered="#{loginBean.isRendered(msg.get('authorize.menu.setup'))}"/>-->
-            <!--<p:menuitem value="#{msg.get('menu.setup.title')}" icon="ui-icon-gear" outcome="#{msg.get('menu.setup.url')}"-->
-                        <!--rendered="#{loginBean.isRendered(msg.get('authorize.menu.setup'))}"/>-->
-            <!--<p:separator-->
-                    <!--rendered="#{loginBean.isRendered(msg.get('authorize.menu.setup'))}"/>-->
-            <!--<p:menuitem value="#{msg.get('menu.user.title')}" icon="ui-icon-person" outcome="#{msg.get('menu.user.url')}"-->
-                        <!--rendered="#{loginBean.isRendered(msg.get('authorize.menu.user'))}"/>-->
-        <!--</p:menu>-->
-
         <p:slideMenu style="max-width: 275px; min-width: 275px">
             <p:menuitem value="#{msg.get('menu.barcode.title')}" icon="ui-icon-disk" outcome="#{msg.get('menu.barcode.url')}"
                         rendered="#{loginBean.isRendered(msg.get('authorize.menu.barcode'))}"/>
@@ -43,7 +16,8 @@
                     rendered="#{loginBean.isRendered(msg.get('authorize.menu.pallet'))}"/>
 
             <p:submenu icon="ui-icon-cart" label="#{msg.get('menu.picking.title')}">
-                <p:menuitem value="#{msg.get('menu.picking.title.sub')}" outcome="#{msg.get('menu.picking.sub.url')}"/>
+                <p:menuitem value="#{msg.get('menu.picking.title.sub.1')}" outcome="#{msg.get('menu.picking.sub.url.1')}"/>
+                <p:menuitem value="#{msg.get('menu.picking.title.sub.2')}" outcome="#{msg.get('menu.picking.sub.url.2')}"/>
             </p:submenu>
 
             <p:separator/>
