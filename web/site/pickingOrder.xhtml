@@ -20,7 +20,234 @@
             </p:layoutUnit>
 
             <p:layoutUnit id="layoutCenter" position="center" header="#{msg.get('menu.picking.title.sub.1')}" >
-                <h:form id="barcodePrintingForm">
+                <h:form id="pickingOrderForm">
+                    <p:panel style="border: 0">
+                        <div style="text-align: right;">
+                            <p:commandButton id="AAAA"
+                                             value="Sync from AX"
+                                             process="@form"
+                                             update=":pickingOrderForm"
+                                             onstart="PF('bui').block()"
+                                             oncomplete="PF('bui').unblock()"
+                                             ajax="false"
+                                             icon="ui-icon-print"
+                                             styleClass="medium"/>
+
+                            <p:commandButton id="BBBB"
+                                             value="Show items"
+                                             process="@form"
+                                             update=":pickingOrderForm"
+                                             onstart="PF('bui').block()"
+                                             oncomplete="PF('bui').unblock()"
+                                             ajax="false"
+                                             icon="ui-icon-print"
+                                             styleClass="medium" />
+
+                            <p:commandButton id="#{msg.get('btn.name.print')}"
+                                             value="#{msg.get('btn.name.print')}"
+                                             process="@form"
+                                             update=":pickingOrderForm"
+                                             onstart="PF('bui').block()"
+                                             oncomplete="PF('bui').unblock()"
+                                             ajax="false"
+                                             icon="ui-icon-print"
+                                             styleClass="medium" style="#{msg.get('btn.size')}"/>
+                        </div>
+                    </p:panel>
+
+                    <table border="1" class="content_table_form">
+                        <tr >
+                            <td style="min-width: 150px; width: 150px; max-width: 150px;" class="left" />
+                            <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
+                            <td style="min-width: 150px; width: 150px; max-width: 150px;" class="left" />
+                            <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
+                            <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
+                            <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
+                            <td style="min-width: 150px; width: 150px; max-width: 150px;" class="left" />
+                            <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
+                            <td style="min-width: 150px; width: 150px; max-width: 150px;" class="left" />
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <h:outputText value="Confirm Id"/>
+                            </td>
+                            <td>
+                                <p:inputText
+                                        style="#{msg.get('fix.size.200')}"
+                                        value="TEST"
+                                        />
+                            </td>
+
+                            <td>
+                                <h:outputText value="Purchase Order"/>
+                            </td>
+                            <td>
+                                <p:inputText
+                                        style="#{msg.get('fix.size.200')}"
+                                        value="TEST"
+                                        />
+                            </td>
+
+                            <td>
+                                <h:outputText value="Request Ship Date"/>
+                            </td>
+                            <td style="min-width: 50px; width: 50px; max-width: 50px;" class="left">
+                                <p:calendar value="#{barcodeRegisterBean.barcodeRegisterView.documentDate}"
+                                            styleClass=""
+                                            pattern="dd/MM/yyyy"
+                                            showOn="button">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </p:calendar>
+                            </td>
+
+                            <td>
+                                <h:outputText value="Status"/>
+                            </td>
+                            <td>
+                                <p:inputText
+                                        style="#{msg.get('fix.size.200')}"
+                                        value="TEST"
+                                        />
+                            </td>
+                            <td>
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <h:outputText value="Confirm Date"/>
+                            </td>
+                            <td>
+                                <p:calendar value="#{barcodeRegisterBean.barcodeRegisterView.documentDate}"
+                                            style="min-width: 50px; max-width: 50px;"
+                                            pattern="dd/MM/yyyy"
+                                            showOn="button">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </p:calendar>
+                            </td>
+
+                            <td>
+                                <h:outputText value="Sale Order"/>
+                            </td>
+                            <td>
+                                <p:inputText
+                                        style="#{msg.get('fix.size.200')}"
+                                        value="TEST"
+                                        />
+                            </td>
+
+                            <td>
+                                <h:outputText value="EDD Date"/>
+                            </td>
+                            <td>
+                                <p:calendar value="#{barcodeRegisterBean.barcodeRegisterView.documentDate}"
+                                            style="min-width: 50px; max-width: 50px;"
+                                            pattern="dd/MM/yyyy"
+                                            showOn="button">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </p:calendar>
+                            </td>
+
+                            <td>
+                                <h:outputText value=""/>
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <h:outputText value="Customer Code"/>
+                            </td>
+                            <td>
+                                <p:inputText
+                                        style="#{msg.get('fix.size.200')}"
+                                        value="TEST"
+                                        />
+                            </td>
+
+                            <td>
+                                <h:outputText value="Delivery Name"/>
+                            </td>
+                            <td>
+                                <p:inputText
+                                        style="#{msg.get('fix.size.200')}"
+                                        value="TEST"
+                                        />
+                            </td>
+
+                            <td>
+                                <h:outputText value="Avaliable Date"/>
+                            </td>
+                            <td>
+                                <p:calendar value="#{barcodeRegisterBean.barcodeRegisterView.documentDate}"
+                                            style="min-width: 50px; max-width: 50px;"
+                                            pattern="dd/MM/yyyy"
+                                            showOn="button">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </p:calendar>
+                            </td>
+
+                            <td>
+                                <h:outputText value=""/>
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <h:outputText value="Customer Name"/>
+                            </td>
+                            <td>
+                                <p:inputText
+                                        style="#{msg.get('fix.size.200')}"
+                                        value="TEST"
+                                        />
+                            </td>
+
+                            <td>
+                                <h:outputText value="Delivery Address"/>
+                            </td>
+                            <td>
+                                <p:inputText
+                                        style="#{msg.get('fix.size.200')}"
+                                        value="TEST"
+                                        />
+                            </td>
+
+                            <td>
+                                <h:outputText value=""/>
+                            </td>
+                            <td>
+
+                            </td>
+
+                            <td>
+                                <h:outputText value=""/>
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+
+                            </td>
+                        </tr>
+
+
+
+                    </table>
+
                 </h:form>
             </p:layoutUnit>
         </p:layout>
