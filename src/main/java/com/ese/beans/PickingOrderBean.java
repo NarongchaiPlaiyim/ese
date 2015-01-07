@@ -1,5 +1,6 @@
 package com.ese.beans;
 
+import com.ese.model.db.PickingOrderModel;
 import com.ese.model.view.PickingOrderView;
 import com.ese.service.PickingOrderService;
 import lombok.Getter;
@@ -9,6 +10,8 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,6 +27,8 @@ public class PickingOrderBean extends Bean {
     private boolean flagBtnPrint;
     private String selectType;
     private PickingOrderView pickingOrderView;
+    private PickingOrderModel pickingOrderModel;
+    private List<PickingOrderModel> pickingOrderModelList;
 
     @PostConstruct
     public void onCreation(){
@@ -36,6 +41,7 @@ public class PickingOrderBean extends Bean {
     private void init(){
         initBtn();
         pickingOrderView = new PickingOrderView();
+        pickingOrderModelList = new ArrayList<PickingOrderModel>();
     }
 
     private void initBtn(){
