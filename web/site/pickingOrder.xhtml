@@ -55,16 +55,16 @@
                         </div>
                     </p:panel>
 
-                    <table border="1" class="content_table_form">
+                    <table border="0" class="content_table_form">
                         <tr >
                             <td style="min-width: 150px; width: 150px; max-width: 150px;" class="left" />
-                            <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
+                            <td style="min-width: 300px; width: 300px; max-width: 300px;" class="left" />
                             <td style="min-width: 150px; width: 150px; max-width: 150px;" class="left" />
+                            <td style="min-width: 300px; width: 300px; max-width: 300px;" class="left" />
                             <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
-                            <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
-                            <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
+                            <td style="min-width: 300px; width: 300px; max-width: 300px;" class="left" />
                             <td style="min-width: 150px; width: 150px; max-width: 150px;" class="left" />
-                            <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
+                            <td style="min-width: 300px; width: 300px; max-width: 300px;" class="left" />
                             <td style="min-width: 150px; width: 150px; max-width: 150px;" class="left" />
                         </tr>
 
@@ -74,7 +74,7 @@
                             </td>
                             <td>
                                 <p:inputText
-                                        style="#{msg.get('fix.size.200')}"
+                                        style="#{msg.get('fix.size.300')}"
                                         value="TEST"
                                         />
                             </td>
@@ -84,7 +84,7 @@
                             </td>
                             <td>
                                 <p:inputText
-                                        style="#{msg.get('fix.size.200')}"
+                                        style="#{msg.get('fix.size.300')}"
                                         value="TEST"
                                         />
                             </td>
@@ -106,7 +106,7 @@
                             </td>
                             <td>
                                 <p:inputText
-                                        style="#{msg.get('fix.size.200')}"
+                                        style="#{msg.get('fix.size.300')}"
                                         value="TEST"
                                         />
                             </td>
@@ -133,7 +133,7 @@
                             </td>
                             <td>
                                 <p:inputText
-                                        style="#{msg.get('fix.size.200')}"
+                                        style="#{msg.get('fix.size.300')}"
                                         value="TEST"
                                         />
                             </td>
@@ -167,7 +167,7 @@
                             </td>
                             <td>
                                 <p:inputText
-                                        style="#{msg.get('fix.size.200')}"
+                                        style="#{msg.get('fix.size.300')}"
                                         value="TEST"
                                         />
                             </td>
@@ -177,7 +177,7 @@
                             </td>
                             <td>
                                 <p:inputText
-                                        style="#{msg.get('fix.size.200')}"
+                                        style="#{msg.get('fix.size.300')}"
                                         value="TEST"
                                         />
                             </td>
@@ -211,7 +211,7 @@
                             </td>
                             <td>
                                 <p:inputText
-                                        style="#{msg.get('fix.size.200')}"
+                                        style="#{msg.get('fix.size.300')}"
                                         value="TEST"
                                         />
                             </td>
@@ -221,7 +221,7 @@
                             </td>
                             <td>
                                 <p:inputText
-                                        style="#{msg.get('fix.size.200')}"
+                                        style="#{msg.get('fix.size.300')}"
                                         value="TEST"
                                         />
                             </td>
@@ -243,11 +243,49 @@
 
                             </td>
                         </tr>
-
-
-
                     </table>
 
+                    <p:dataTable id="palletManagementTable" rowIndexVar="rowIndex"
+                                 value="#{palletManagement.palletManegamentViewList}"
+                                 var="palletView" styleClass="full_table"
+                                 scrollable="true" scrollHeight="450"
+                                 resizableColumns="true"
+                                 selectionMode="single" rowKey="#{palletView.id}"
+                                 selection="#{palletManagement.palletMeanegementView}"
+                                 style="width: 100%; max-width: 100%; min-width: 100%">
+                        <!--<p:ajax event="rowSelect" update=":palletForm:btnFindlocation, :palletForm:btnPrintTag ,:palletForm:btnClosePallet"-->
+                                <!--listener="#{palletManagement.onClickPalletTB}"/>-->
+                        <p:column headerText="No" style="width: 20px" styleClass="center">
+                            <h:outputText value="#{rowIndex+1}"/>
+                        </p:column>
+                        <p:column headerText="Customer Code" style="width: 120px" styleClass="center">
+
+                        </p:column>
+                        <p:column headerText="Customer Name" style="width: 120px" styleClass="center">
+
+                        </p:column>
+                        <p:column headerText="Confirm Id" style="width: 120px" styleClass="center">
+
+                        </p:column>
+                        <p:column headerText="Confirm Date" style="width: 120px" styleClass="center">
+
+                        </p:column>
+                        <p:column headerText="Purchase Order" style="width: 120px" styleClass="center">
+
+                        </p:column>
+                        <p:column headerText="Sale Order" style="width: 120px" styleClass="center">
+
+                        </p:column>
+                        <p:column headerText="Picking Slip No" style="width: 120px" styleClass="center">
+
+                        </p:column>
+                        <p:column headerText="Picking Date" style="width: 120px" styleClass="center">
+
+                        </p:column>
+                        <p:column headerText="Status" style="width: 120px" styleClass="center">
+
+                        </p:column>
+                    </p:dataTable>
                 </h:form>
             </p:layoutUnit>
         </p:layout>
