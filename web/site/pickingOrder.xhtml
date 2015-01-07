@@ -25,6 +25,7 @@
                         <div style="text-align: right;">
                             <p:commandButton id="AAAA"
                                              value="Sync from AX"
+                                             disabled="#{pickingOrderBean.flagSync}"
                                              process="@form"
                                              update=":pickingOrderForm"
                                              onstart="PF('bui').block()"
@@ -35,6 +36,7 @@
 
                             <p:commandButton id="BBBB"
                                              value="Show items"
+                                             disabled="#{pickingOrderBean.flagBtnShow}"
                                              process="@form"
                                              update=":pickingOrderForm"
                                              onstart="PF('bui').block()"
@@ -45,6 +47,7 @@
 
                             <p:commandButton id="#{msg.get('btn.name.print')}"
                                              value="#{msg.get('btn.name.print')}"
+                                             disabled="#{pickingOrderBean.flagBtnPrint}"
                                              process="@form"
                                              update=":pickingOrderForm"
                                              onstart="PF('bui').block()"
@@ -55,7 +58,7 @@
                         </div>
                     </p:panel>
 
-                    <table border="0" class="content_table_form">
+                    <table border="1" class="content_table_form">
                         <tr >
                             <td style="min-width: 150px; width: 150px; max-width: 150px;" class="left" />
                             <td style="min-width: 300px; width: 300px; max-width: 300px;" class="left" />
@@ -65,7 +68,6 @@
                             <td style="min-width: 300px; width: 300px; max-width: 300px;" class="left" />
                             <td style="min-width: 150px; width: 150px; max-width: 150px;" class="left" />
                             <td style="min-width: 300px; width: 300px; max-width: 300px;" class="left" />
-                            <td style="min-width: 150px; width: 150px; max-width: 150px;" class="left" />
                         </tr>
 
                         <tr>
@@ -78,7 +80,6 @@
                                         value="TEST"
                                         />
                             </td>
-
                             <td>
                                 <h:outputText value="Purchase Order"/>
                             </td>
@@ -88,7 +89,6 @@
                                         value="TEST"
                                         />
                             </td>
-
                             <td>
                                 <h:outputText value="Request Ship Date"/>
                             </td>
@@ -100,18 +100,17 @@
                                     <f:convertDateTime pattern="dd/MM/yyyy"/>
                                 </p:calendar>
                             </td>
-
                             <td>
                                 <h:outputText value="Status"/>
                             </td>
                             <td>
-                                <p:inputText
-                                        style="#{msg.get('fix.size.300')}"
-                                        value="TEST"
-                                        />
-                            </td>
-                            <td>
-
+                                <p:selectOneMenu
+                                        value="#{pickingOrderBean.selectType}"
+                                        style="#{msg.get('fix.size.200')} margin-top: 4px">
+                                    <f:selectItem itemLabel="Item Description" itemValue="3"/>
+                                    <f:selectItem itemLabel="Item Name" itemValue="1"/>
+                                    <f:selectItem itemLabel="Item Code" itemValue="2"/>
+                                </p:selectOneMenu>
                             </td>
                         </tr>
 
@@ -127,7 +126,6 @@
                                     <f:convertDateTime pattern="dd/MM/yyyy"/>
                                 </p:calendar>
                             </td>
-
                             <td>
                                 <h:outputText value="Sale Order"/>
                             </td>
@@ -137,7 +135,6 @@
                                         value="TEST"
                                         />
                             </td>
-
                             <td>
                                 <h:outputText value="EDD Date"/>
                             </td>
@@ -151,13 +148,13 @@
                             </td>
 
                             <td>
-                                <h:outputText value=""/>
-                            </td>
-                            <td>
 
                             </td>
                             <td>
-
+                                <h:selectBooleanCheckbox id="overseaOrder"
+                                                         value="#{pickingOrderBean.overseaOrder}">
+                                </h:selectBooleanCheckbox>
+                                <h:outputLabel value="Oversea Order"/>
                             </td>
                         </tr>
 
@@ -195,13 +192,13 @@
                             </td>
 
                             <td>
-                                <h:outputText value=""/>
-                            </td>
-                            <td>
 
                             </td>
                             <td>
-
+                                <h:selectBooleanCheckbox id="domesticOrder"
+                                                         value="#{pickingOrderBean.domesticOrder}">
+                                </h:selectBooleanCheckbox>
+                                <h:outputLabel value="Domestic Order"/>
                             </td>
                         </tr>
 
@@ -235,9 +232,6 @@
 
                             <td>
                                 <h:outputText value=""/>
-                            </td>
-                            <td>
-
                             </td>
                             <td>
 
