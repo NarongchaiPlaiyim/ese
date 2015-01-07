@@ -37,7 +37,7 @@ public class MenuObjectModel {
     private String remark;
 
     @Column(name="seq")
-    private Integer seq;
+    private String seq;
 
     @Override
     public String toString() {
