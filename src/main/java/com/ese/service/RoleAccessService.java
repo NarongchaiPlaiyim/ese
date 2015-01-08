@@ -8,17 +8,17 @@ import com.ese.model.db.MenuObjectModel;
 import com.ese.model.db.RoleAccessModel;
 import com.ese.model.db.SystemRoleModel;
 import com.ese.model.view.SystemRoleView;
+import com.ese.model.view.report.RoleAccessViewReport;
+import com.ese.service.security.UserDetail;
 import com.ese.transform.RoleAccessTransform;
 import com.ese.transform.SystemRoleTransform;
 import com.ese.utils.Utils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component
 @Transactional
@@ -29,6 +29,12 @@ public class RoleAccessService extends Service{
     @Resource SystemRoleTransform systemRoleTransform;
     @Resource MenuObjectDAO menuObjectDAO;
     @Resource RoleAccessTransform roleAccessTransform;
+    @Resource private ReportService reportService;
+
+    @Value("#{config['report.roleaccess']}")
+    private String pathPrintRoleAccess;
+    @Value("#{config['report.subreport']}")
+    private String path;
 
     public List<SystemRoleModel> getSystemRoleByIsValid(){
         return systemRoleDAO.findByIsValid();
@@ -139,6 +145,24 @@ public class RoleAccessService extends Service{
             } catch (Exception e) {
                 log.debug("Exception error saveMenuObjectInRoleAccess : ", e);
             }
+        }
+    }
+
+    public void onPrintRoleAccess(UserDetail userDetail){
+        String printTagReportname = Utils.genDateReportStringDDMMYYYY(new Date()) + "_UserAndRoleReport";
+        HashMap map = new HashMap<String, Object>();
+        List<RoleAccessViewReport> reportViews = null;
+
+        map.put("userPrint", userDetail.getUserName());
+        map.put("printDate", Utils.convertToStringYYYYMMDDHHmmss(new Date()));
+        map.put("path", path);
+
+        reportViews = roleAccessDAO.genSQLReportUserAndRole();
+
+        try {
+            reportService.exportPDF(pathPrintRoleAccess, map, printTagReportname, reportViews);
+        } catch (Exception e) {
+            log.debug("Exception Report : ", e);
         }
     }
 }

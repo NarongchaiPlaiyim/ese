@@ -5,6 +5,7 @@ import com.ese.model.db.RoleAccessModel;
 import com.ese.model.db.SystemRoleModel;
 import com.ese.model.view.SystemRoleView;
 import com.ese.service.RoleAccessService;
+import com.ese.service.security.UserDetail;
 import com.ese.utils.MessageDialog;
 import com.ese.utils.Utils;
 import lombok.Getter;
@@ -70,6 +71,8 @@ public class RoleAccessBean extends Bean{
     //Item
     private List<MenuObjectModel> menuRoleAccessItemList;
     private MenuObjectModel menuRoleAccessItem;
+
+    private UserDetail userDetail;
 
     @PostConstruct
     private void onLoad(){
@@ -292,5 +295,10 @@ public class RoleAccessBean extends Bean{
         }
 
         return documents;
+    }
+
+    public void onPrint(){
+        userDetail = getUser();
+        roleAccessService.onPrintRoleAccess(userDetail);
     }
 }

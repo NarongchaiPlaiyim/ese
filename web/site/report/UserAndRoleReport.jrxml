@@ -229,9 +229,9 @@
 		<band splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="178" splitType="Stretch">
+		<band height="129" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="2104c553-0039-470b-87b2-92a4ee809342" x="0" y="129" width="555" height="49"/>
+				<reportElement uuid="2104c553-0039-470b-87b2-92a4ee809342" x="0" y="80" width="555" height="49"/>
 				<box>
 					<pen lineWidth="0.0" lineColor="#FFFFFF"/>
 					<topPen lineWidth="0.0" lineColor="#FFFFFF"/>
@@ -245,7 +245,7 @@
 				<text><![CDATA[User and Role Report]]></text>
 			</staticText>
 			<image>
-				<reportElement uuid="269c20cc-b69f-4748-9683-2859b13b7169" x="190" y="0" width="187" height="129"/>
+				<reportElement uuid="269c20cc-b69f-4748-9683-2859b13b7169" x="230" y="0" width="94" height="80"/>
 				<imageExpression><![CDATA[$P{path} + "DN1.png"]]></imageExpression>
 			</image>
 		</band>
