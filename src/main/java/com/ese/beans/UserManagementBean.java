@@ -3,6 +3,7 @@ package com.ese.beans;
 import com.ese.model.db.*;
 import com.ese.model.view.UserView;
 import com.ese.service.UserManagementService;
+import com.ese.service.security.UserDetail;
 import com.ese.utils.MessageDialog;
 import com.ese.utils.Utils;
 import lombok.Getter;
@@ -93,6 +94,8 @@ public class UserManagementBean extends Bean{
     private List<SystemRoleModel> systemRoleModelDialogList;
     private List<SystemRoleModel> selectRole;
     private String keySearchRole;
+
+    private UserDetail userDetail;
 
     @PostConstruct
     public void onCreation(){
@@ -267,13 +270,6 @@ public class UserManagementBean extends Bean{
                 } else if ( model.getMenuObjectModel().getObjCategory() == ACTION ) {
                     new CheckboxTreeNode(new Document(model.getId(), model.getMenuObjectModel().getCode(), model.getMenuObjectModel().getName()), treeNodeUserAccessMap.get(model.getMenuObjectModel().getParentId()));
                 }
-//                if ( !Utils.isZero(Utils.parseInt(model.getMenuObjectModel().getCode(), 0)) && model.getMenuObjectModel().getObjCategory() == MENU ) {
-//                    treeNodeUserAccessMap.put(model.getId(), new CheckboxTreeNode(new Document(model.getId(), model.getMenuObjectModel().getCode(), model.getMenuObjectModel().getName()), root));
-//                } else if ( model.getMenuObjectModel().getObjCategory() == TAB ) {
-//                    treeNodeUserAccessMap.put(model.getId(), new CheckboxTreeNode(new Document(model.getId(), model.getMenuObjectModel().getCode(), model.getMenuObjectModel().getName()), treeNodeUserAccessMap.get(model.getMenuObjectModel().getParentId())));
-//                } else if ( model.getMenuObjectModel().getObjCategory() == ACTION ) {
-//                    new CheckboxTreeNode(new Document(model.getId(), model.getMenuObjectModel().getCode(), model.getMenuObjectModel().getName()), treeNodeUserAccessMap.get(model.getMenuObjectModel().getParentId()));
-//                }
             }
         }
 
@@ -406,5 +402,10 @@ public class UserManagementBean extends Bean{
             userAccessModelList = userManagementService.getMenuObjectByUserId(staffModel.getId());
             rootAccessModel = creRootUserAccess();
         }
+    }
+
+    public void onPrint(){
+        userDetail = getUser();
+        userManagementService.printReportUserAndRole(userDetail);
     }
 }

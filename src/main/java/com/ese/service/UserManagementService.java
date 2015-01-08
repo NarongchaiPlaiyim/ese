@@ -4,6 +4,8 @@ import com.ese.beans.Document;
 import com.ese.model.dao.*;
 import com.ese.model.db.*;
 import com.ese.model.view.UserView;
+import com.ese.model.view.report.UserAndRoleViewReport;
+import com.ese.service.security.UserDetail;
 import com.ese.service.security.encryption.EncryptionService;
 import com.ese.transform.StaffRoleTransform;
 import com.ese.transform.UserAccessTransform;
@@ -11,14 +13,12 @@ import com.ese.transform.UserManagementTranstorm;
 import com.ese.utils.Utils;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component
 @Transactional
@@ -36,6 +36,12 @@ public class UserManagementService extends Service{
     @Resource SystemRoleDAO systemRoleDAO;
     @Resource StaffRoleTransform staffRoleTransform;
     @Resource RoleAccessDAO roleAccessDAO;
+    @Resource private ReportService reportService;
+
+    @Value("#{config['report.userandrole']}")
+    private String pathPrintUserAndRole;
+    @Value("#{config['report.subreport']}")
+    private String path;
 
     public List<MSDepartmentModel> getDepartAll(){
         return msDepartmentDAO.findDepartmentByIsValid();
@@ -265,6 +271,24 @@ public class UserManagementService extends Service{
         } catch (Exception e) {
             log.debug("Exception error getUserName : {}", e);
             return new UserView();
+        }
+    }
+
+    public void printReportUserAndRole(UserDetail user){
+        String printTagReportname = Utils.genDateReportStringDDMMYYYY(new Date()) + "_UserAndRoleReport";
+        HashMap map = new HashMap<String, Object>();
+        List<UserAndRoleViewReport> reportViews = null;
+
+        map.put("userPrint", user.getUserName());
+        map.put("printDate", Utils.convertToStringYYYYMMDDHHmmss(new Date()));
+        map.put("path", path);
+
+        reportViews = staffDAO.genSQLReportUserAndRole();
+
+        try {
+            reportService.exportPDF(pathPrintUserAndRole, map, printTagReportname, reportViews);
+        } catch (Exception e) {
+            log.debug("Exception Report : ", e);
         }
     }
 }
