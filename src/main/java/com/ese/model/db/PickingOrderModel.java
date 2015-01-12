@@ -1,5 +1,6 @@
 package com.ese.model.db;
 
+import com.ese.model.view.StatusPickingValue;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -76,13 +77,25 @@ public class PickingOrderModel extends AbstractModel{
     private String quotationDate;
 
     @Column(name = "status")
-    private Integer status;
+    private StatusPickingValue status;
 
     @Column(name = "isvalid")
     private Integer isValid;
 
     @Column(name = "version")
     private Integer version;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "request_shift_date")
+    private Date requestShiftDate;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "edd_date")
+    private Date eddDate;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "avaliable_date")
+    private Date avalibleDate;
 
     @Override
     public String toString() {
@@ -109,6 +122,9 @@ public class PickingOrderModel extends AbstractModel{
                 .append("status", status)
                 .append("isValid", isValid)
                 .append("version", version)
+                .append("requestShiftDate", requestShiftDate)
+                .append("eddDate", eddDate)
+                .append("avalibleDate", avalibleDate)
                 .toString();
     }
 }

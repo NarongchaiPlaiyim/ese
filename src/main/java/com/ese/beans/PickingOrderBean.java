@@ -3,6 +3,7 @@ package com.ese.beans;
 import com.ese.model.db.PickingOrderModel;
 import com.ese.model.view.PickingOrderView;
 import com.ese.service.PickingOrderService;
+import com.ese.service.security.UserDetail;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,6 +31,8 @@ public class PickingOrderBean extends Bean {
     private PickingOrderModel pickingOrderModel;
     private List<PickingOrderModel> pickingOrderModelList;
 
+    private UserDetail userDetail;
+
     @PostConstruct
     public void onCreation(){
         log.debug("onCreation().");
@@ -42,11 +45,21 @@ public class PickingOrderBean extends Bean {
         initBtn();
         pickingOrderView = new PickingOrderView();
         pickingOrderModelList = new ArrayList<PickingOrderModel>();
+        getCurrent();
+        onLoadTable();
     }
 
     private void initBtn(){
         flagSync = false;
         flagBtnShow = true;
         flagBtnPrint = true;
+    }
+
+    private void getCurrent(){
+        userDetail = getUser();
+    }
+
+    private void onLoadTable(){
+        pickingOrderModelList = pickingOrderService.getPickingOrderByOverSeaOrder(pickingOrderService.getTypeBeforeOnLoaf(userDetail.getId()));
     }
 }
