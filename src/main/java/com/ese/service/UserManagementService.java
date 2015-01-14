@@ -128,7 +128,7 @@ public class UserManagementService extends Service{
 
     public List<MenuObjectModel> getMenuObjectAll(){
         try {
-            return menuObjectDAO.findAllOrderBySeq();
+            return menuObjectDAO.findAll();
         } catch (Exception e) {
             log.debug("Exception error getMenuObjectAll : ", e);
             return null;
