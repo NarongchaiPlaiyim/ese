@@ -69,7 +69,7 @@ public class LoginBean extends Bean{
                                             "USER",
                                             staffModel.getMsTitleModel().getName(),
                                             staffModel.getName());
-                userDetail.setId(Utils.parseLong(staffModel.getId(), 0L));
+                userDetail.setId(Utils.parseInt(staffModel.getId(), 0));
                 HttpServletRequest httpServletRequest = FacesUtil.getRequest();
                 HttpServletResponse httpServletResponse = FacesUtil.getResponse();
                 UsernamePasswordAuthenticationToken request = new UsernamePasswordAuthenticationToken(getUserDetail(), getPassword());

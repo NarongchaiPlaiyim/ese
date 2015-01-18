@@ -23,18 +23,16 @@
                 <h:form id="pickingOrderForm">
                     <p:panel style="border: 0">
                         <div style="text-align: right;">
-                            <p:commandButton id="AAAA"
+                            <p:commandButton id="syncAX"
                                              value="Sync from AX"
                                              disabled="#{pickingOrderBean.flagSync}"
                                              process="@form"
-                                             update=":pickingOrderForm"
-                                             onstart="PF('bui').block()"
-                                             oncomplete="PF('bui').unblock()"
-                                             ajax="false"
-                                             icon="ui-icon-print"
+                                             action="#{pickingOrderBean.onSyncData}"
+                                             update=":axConfirmOrderForm"
+                                             oncomplete="PF('axConfirmOrderDlg').show()"
                                              styleClass="medium"/>
 
-                            <p:commandButton id="BBBB"
+                            <p:commandButton id="showItem"
                                              value="Show items"
                                              disabled="#{pickingOrderBean.flagBtnShow}"
                                              process="@form"
@@ -93,23 +91,28 @@
                                 <h:outputText value="Request Ship Date"/>
                             </td>
                             <td style="min-width: 50px; width: 50px; max-width: 50px;" class="left">
-                                <p:calendar value="#{pickingOrderBean.pickingOrderView.requestShipDate}"
-                                            styleClass=""
-                                            pattern="dd/MM/yyyy"
-                                            showOn="button">
-                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
-                                </p:calendar>
+                                <!--<p:calendar value="#{pickingOrderBean.pickingOrderView.requestShipDate}"-->
+                                            <!--styleClass=""-->
+                                            <!--pattern="dd/MM/yyyy"-->
+                                            <!--showOn="button">-->
+                                    <!--<f:convertDateTime pattern="dd/MM/yyyy"/>-->
+                                <!--</p:calendar>-->
+                                <p:inputMask value="#{pickingOrderBean.pickingOrderView.requestShipDate}"
+                                             onkeydown="return onKeyDownNumber(event);"
+                                             onkeypress="return onKeyPressNumber(event);"
+                                             mask="99/99/9999"/>
                             </td>
                             <td>
                                 <h:outputText value="Status"/>
                             </td>
                             <td>
-                                <p:selectOneMenu
-                                        value="#{pickingOrderBean.pickingOrderView.status}"
-                                        style="#{msg.get('fix.size.200')} margin-top: 4px">
-                                    <f:selectItem itemLabel="Item Description" itemValue="3"/>
-                                    <f:selectItem itemLabel="Item Name" itemValue="1"/>
-                                    <f:selectItem itemLabel="Item Code" itemValue="2"/>
+                                <p:selectOneMenu value="#{pickingOrderBean.pickingOrderView.status}"
+                                                 style="#{msg.get('fix.size.200')} margin-top: 4px">
+                                    <f:selectItem itemLabel=" All " itemValue=""/>
+                                    <f:selectItems value="#{pickingOrderBean.statusValue}"
+                                                   var="statusItem"
+                                                   itemLabel="#{statusItem.name}"
+                                                   itemValue="#{statusItem.id}"/>
                                 </p:selectOneMenu>
                             </td>
                         </tr>
@@ -119,12 +122,10 @@
                                 <h:outputText value="Confirm Date"/>
                             </td>
                             <td>
-                                <p:calendar value="#{pickingOrderBean.pickingOrderView.confirmDate}"
-                                            style="min-width: 50px; max-width: 50px;"
-                                            pattern="dd/MM/yyyy"
-                                            showOn="button">
-                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
-                                </p:calendar>
+                                <p:inputMask value="#{pickingOrderBean.pickingOrderView.confirmDate}"
+                                             onkeydown="return onKeyDownNumber(event);"
+                                             onkeypress="return onKeyPressNumber(event);"
+                                             mask="99/99/9999"/>
                             </td>
                             <td>
                                 <h:outputText value="Sale Order"/>
@@ -139,12 +140,10 @@
                                 <h:outputText value="EDD Date"/>
                             </td>
                             <td>
-                                <p:calendar value="#{pickingOrderBean.pickingOrderView.eddDate}"
-                                            style="min-width: 50px; max-width: 50px;"
-                                            pattern="dd/MM/yyyy"
-                                            showOn="button">
-                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
-                                </p:calendar>
+                                <p:inputMask value="#{pickingOrderBean.pickingOrderView.eddDate}"
+                                             onkeydown="return onKeyDownNumber(event);"
+                                             onkeypress="return onKeyPressNumber(event);"
+                                             mask="99/99/9999"/>
                             </td>
 
                             <td>
@@ -183,12 +182,11 @@
                                 <h:outputText value="Available Date"/>
                             </td>
                             <td>
-                                <p:calendar value="#{pickingOrderBean.pickingOrderView.availableDate}"
-                                            style="min-width: 50px; max-width: 50px;"
-                                            pattern="dd/MM/yyyy"
-                                            showOn="button">
-                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
-                                </p:calendar>
+                                <p:inputMask id="startLabel"
+                                             value="#{pickingOrderBean.pickingOrderView.availableDate}"
+                                             onkeydown="return onKeyDownNumber(event);"
+                                             onkeypress="return onKeyPressNumber(event);"
+                                             mask="99/99/9999"/>
                             </td>
 
                             <td>
@@ -245,7 +243,9 @@
                                              id="btnSearchMainPage"
                                              styleClass="medium" style="#{msg.get('btn.size')}"
                                              icon="ui-icon-search"
+                                             action="#{pickingOrderBean.onSearch}"
                                              onstart="PF('bui').block()"
+                                             update=":pickingOrderForm:pickingOrderTable"
                                              oncomplete="PF('bui').unblock()"
                                     />
                         </div>
@@ -259,22 +259,24 @@
                                  selectionMode="single" rowKey="#{pickingOrderModel.id}"
                                  selection="#{pickingOrderBean.pickingOrderModel}"
                                  style="width: 100%; max-width: 100%; min-width: 100%">
-                        <!--<p:ajax event="rowSelect" update=":palletForm:btnFindlocation, :palletForm:btnPrintTag ,:palletForm:btnClosePallet"-->
-                                <!--listener="#{palletManagement.onClickPalletTB}"/>-->
+                        <p:ajax event="rowSelect" update=":pickingOrderForm:showItem, :pickingOrderForm:#{msg.get('btn.name.print')}"
+                                listener="#{pickingOrderBean.onClickTable}"/>
                         <p:column headerText="No" style="width: 20px" styleClass="center">
                             <h:outputText value="#{rowIndex+1}"/>
                         </p:column>
                         <p:column headerText="Customer Code" style="width: 120px" styleClass="center">
-                            <h:outputText value="#{pickingOrderModel.customerCode}"/>
+                            <h:outputText value="#{pickingOrderModel.customerCode.accountNum}"/>
                         </p:column>
                         <p:column headerText="Customer Name" style="width: 120px" styleClass="center">
-                            <h:outputText value="#{pickingOrderModel.customerCode}"/>
+                            <h:outputText value="#{pickingOrderModel.customerCode.name}"/>
                         </p:column>
                         <p:column headerText="Confirm Id" style="width: 120px" styleClass="center">
                             <h:outputText value="#{pickingOrderModel.confirmId}"/>
                         </p:column>
                         <p:column headerText="Confirm Date" style="width: 120px" styleClass="center">
-                            <h:outputText value="#{pickingOrderModel.confirmDate}"/>
+                            <h:outputText value="#{pickingOrderModel.confirmDate}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" locale="en-EN"/>
+                            </h:outputText>
                         </p:column>
                         <p:column headerText="Purchase Order" style="width: 120px" styleClass="center">
                             <h:outputText value="#{pickingOrderModel.purchaseOrder}"/>
@@ -286,7 +288,9 @@
                             <h:outputText value="#{pickingOrderModel.purchaseOrder}"/>
                         </p:column>
                         <p:column headerText="Picking Date" style="width: 120px" styleClass="center">
-                            <h:outputText value="#{pickingOrderModel.requestShiftDate}"/>
+                            <h:outputText value="#{pickingOrderModel.requestShiftDate}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" locale="en-EN"/>
+                            </h:outputText>
                         </p:column>
                         <p:column headerText="Status" style="width: 120px" styleClass="center">
                             <h:outputText value="#{pickingOrderModel.status.name}"/>
@@ -295,6 +299,45 @@
                 </h:form>
             </p:layoutUnit>
         </p:layout>
+
+        <p:panel id="axConfirmOrderPanel" styleClass="panel">
+            <p:dialog id="axConfirmOrderDialog" widgetVar="axConfirmOrderDlg" header="Ax Conform Order"
+                      onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
+                      modal="true" width="100%" closable="false">
+                <ui:include src="../site/dialog/axConfirmOrderDialog.xhtml"/>
+            </p:dialog>
+        </p:panel>
+
+        <p:panel id="msgBoxSystemMessagePanel" style="border: 0">
+            <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="#{msg.get('dialog.message.size')}"
+                             closable="false"
+                             header="#{pickingOrderBean.messageHeader}" message="#{pickingOrderBean.message}" >
+                <div style="text-align: right">
+                    <p:commandButton value="#{msg.get('btn.name.ok')}"
+                                     styleClass="medium" style="#{msg.get('btn.size')}"
+                                     icon="ui-icon-check"
+                                     process="@this"
+                                     update="pickingOrderForm"
+                                     oncomplete="PF('msgBoxSystemMessageDlg').hide()"/>
+                </div>
+            </p:confirmDialog>
+        </p:panel>
+
+        <p:panel id="msgBoxSystemMessagePanel2" style="border: 0">
+            <p:confirmDialog id="msgBoxSystemMessageDialog2" widgetVar="msgBoxSystemMessageDlg2" width="#{msg.get('dialog.message.size')}"
+                             closable="false"
+                             header="#{pickingOrderBean.messageHeader}" message="#{pickingOrderBean.message}" >
+                <div style="text-align: right">
+                    <p:commandButton value="#{msg.get('btn.name.ok')}"
+                                     styleClass="medium" style="#{msg.get('btn.size')}"
+                                     icon="ui-icon-check"
+                                     process="@this"
+                                     update="pickingOrderForm"
+                                     oncomplete="PF('msgBoxSystemMessageDlg2').hide(), PF('axConfirmOrderDlg').hide()"/>
+                </div>
+            </p:confirmDialog>
+        </p:panel>
+
     </h:body>
 </f:view>
 </html>

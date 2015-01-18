@@ -12,30 +12,19 @@ import java.util.Date;
 @Setter
 public class PickingOrderView {
     private String confirmId;
-    private Date confirmDate;
+    private String confirmDate;
     private String customerCode;
     private String customerName;
     private String purchaseOrder;
     private String saleOrder;
     private String deliveryName;
     private String deliveryAddress;
-    private Date requestShipDate;
-    private Date eddDate;
-    private Date availableDate;
-    private String status;
+    private String requestShipDate;
+    private String eddDate;
+    private String availableDate;
+    private int status;
     private boolean overseaOrder;
     private boolean domesticOrder;
-
-    public PickingOrderView() {
-        init();
-    }
-
-    private void init(){
-        confirmDate = Utils.currentDate();
-        requestShipDate = Utils.currentDate();
-        eddDate = Utils.currentDate();
-        availableDate = Utils.currentDate();
-    }
 
     @Override
     public String toString() {

@@ -1,6 +1,5 @@
 package com.ese.model.db;
 
-import com.ese.model.view.StatusPickingValue;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -23,17 +22,18 @@ public class PickingOrderModel extends AbstractModel{
     @Column(name = "docno")
     private String docNo;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "doc_date")
     private Date docDate;
 
-    @Column(name = "customer_code")
-    private String customerCode;
+    @OneToOne
+    @JoinColumn(name = "customer_code", nullable=false)
+    private AXCustomerTableModel customerCode;
 
     @Column(name = "confirmid")
     private String confirmId;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "confirm_date")
     private Date confirmDate;
 
@@ -73,11 +73,13 @@ public class PickingOrderModel extends AbstractModel{
     @Column(name = "quotation")
     private String quotation;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "quotation_date")
-    private String quotationDate;
+    private Date quotationDate;
 
-    @Column(name = "status")
-    private StatusPickingValue status;
+    @OneToOne
+    @JoinColumn(name = "status", nullable=false, columnDefinition="int default 0")
+    private StatusModel status;
 
     @Column(name = "isvalid")
     private Integer isValid;
@@ -85,15 +87,15 @@ public class PickingOrderModel extends AbstractModel{
     @Column(name = "version")
     private Integer version;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "request_shift_date")
     private Date requestShiftDate;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "edd_date")
     private Date eddDate;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "avaliable_date")
     private Date avalibleDate;
 

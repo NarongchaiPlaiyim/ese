@@ -66,6 +66,14 @@ public enum Utils {
         return "i-"+new SimpleDateFormat("yyyyMMddHHmmss", Locale.ENGLISH).format(currentDate());
     }
 
+    public static String getDocumentOverSeaOrder(){
+        return "PKO-" + new SimpleDateFormat("yyyyMMddHHmmss", Locale.ENGLISH).format(currentDate());
+    }
+
+    public static String getDocumentDomesticOrder(){
+        return "PKD-" + new SimpleDateFormat("yyyyMMddHHmmss", Locale.ENGLISH).format(currentDate());
+    }
+
     public static boolean isTrue(int value) {
         return value == 1;
     }
@@ -199,5 +207,16 @@ public enum Utils {
             String dateString = simpleDateFormat.format(date);
             return dateString;
         }
+    }
+
+    public static Date convertStringToDate(String stringDate) throws Exception{
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+        Date date = null;
+
+        if (!Utils.isNull(stringDate.trim()) && !Utils.isZero(stringDate.length())){
+            date = format.parse(stringDate);
+        }
+
+        return date;
     }
 }

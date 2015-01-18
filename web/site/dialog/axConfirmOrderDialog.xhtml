@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:form id="axConfirmOrderForm">
+        <p:panel style="border: 0">
+            <div style="text-align: right;">
+                <p:commandButton id="btnSyncOrder"
+                                 value="Sync Order"
+                                 process="@form"
+                                 disabled="#{pickingOrderBean.flagSync}"
+                                 update=":msgBoxSystemMessagePanel,
+                                         :pickingOrderForm:pickingOrderTable,
+                                         :msgBoxSystemMessagePanel2"
+                                 action="#{pickingOrderBean.onSyncOrder}"
+                                 styleClass="medium" style="#{msg.get('fix.size.200')}"
+                                 onstart="PF('bui').block()"
+                                 oncomplete="PF('bui').unblock()"
+                                 icon="ui-icon-plusthick"/>
+            </div>
+        </p:panel>
+
+        <table border="0">
+            <tr>
+                <td>
+                    <p:dataTable id="axConfirmOrderTableDlg" rowIndexVar="rowIndex"
+                                 styleClass="full_table"
+                                 rows="5" paginator="true"
+                                 value="#{pickingOrderBean.syncConfirmOrderViewList}"
+                                 selection="#{pickingOrderBean.seleteDataSync}"
+                                 var="data"
+                                 rowKey="#{data.customerCode}"
+                                 style="width: 100%; max-width: 100%; min-width: 100%">
+                        <p:ajax event="rowSelect"/>
+                        <p:column selectionMode="multiple" style="width:16px;text-align:center; height: 20px"/>
+                        <p:column headerText="Customer Code" style="width: 60px; max-width: 60px; min-width: 60px" styleClass="center">
+                            <h:outputText value="#{data.customerCode}" />
+                        </p:column>
+                        <p:column headerText="Customer Name" style="width: 80px; max-width: 80px; min-width: 80px" styleClass="center">
+                            <h:outputText value="#{data.customerName}"/>
+                        </p:column>
+                        <p:column headerText="Customer Group" style="width: 60px; max-width: 60px; min-width: 60px" styleClass="center">
+                            <h:outputText value="#{data.customerGroup}"/>
+                        </p:column>
+                        <p:column headerText="Confirm ID" style="width: 60px; max-width: 60px; min-width: 60px" styleClass="center">
+                            <h:outputText value="#{data.confirmId}"/>
+                        </p:column>
+                        <p:column headerText="Confirm Date" style="width: 60px; max-width: 60px; min-width: 60px" styleClass="center">
+                            <h:outputText value="#{data.confirmDate}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" locale="en-EN"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Purchase Order" style="width: 100px; max-width: 100px; min-width: 100px" styleClass="center">
+                            <h:outputText value="#{data.purchaseOrder}"/>
+                        </p:column>
+                        <p:column headerText="Sale Order" style="width: 60px; max-width: 60px; min-width: 60px" styleClass="center">
+                            <h:outputText value="#{data.saleId}"/>
+                        </p:column>
+                        <p:column headerText="Delivery Name" style="width: 110px; max-width: 110px; min-width: 110px" styleClass="center">
+                            <h:outputText value="#{data.deliveryName}"/>
+                        </p:column>
+                        <p:column headerText="Delivery Address" style="width: 150px; max-width: 150px; min-width: 150px" styleClass="center">
+                            <h:outputText value="#{data.deliveryAddress}"/>
+                        </p:column>
+                        <p:column headerText="Remark" style="width: 150px; max-width: 150px; min-width: 150px" styleClass="center">
+                            <h:outputText value="#{data.remark}"/>
+                        </p:column>
+                    </p:dataTable>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">
+                    <p:commandButton id="btnClose"
+                                     value="Close"
+                                     process="@form"
+                                     action="#{pickingOrderBean.onClose}"
+                                     update=":pickingOrderForm:pickingOrderTable"
+                                     styleClass="medium" style="width: 100px"
+                                     onstart="PF('bui').block()"
+                                     oncomplete="PF('axConfirmOrderDlg').hide(), PF('bui').unblock()"/>
+                </td>
+            </tr>
+        </table>
+
+    </h:form>
+</f:view>
+</html>

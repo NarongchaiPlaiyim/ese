@@ -14,7 +14,7 @@ public class UserDetail implements Serializable {
     private String userName;
     private String password;
     private String role;
-    private Long id;
+    private int id;
     private String firstName;
     private String lastName;
     private boolean isRequestFlag;
