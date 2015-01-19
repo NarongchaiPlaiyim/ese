@@ -38,7 +38,7 @@ public class BarcodePrintingBean extends Bean {
 
     private void init(){
         setLastBarcode(barcodePrintingService.getLastSeq());
-        String formatBarcode = "TW"+String.format("%08d", Utils.parseInt(getLastBarcode(), 0));
+        String formatBarcode = "TW"+String.format("%08d", Utils.parseInt(getLastBarcode(), 0)+1);
         setStartBarcode(formatBarcode);
         setFinishBarcode(formatBarcode);
         setQty(0);
