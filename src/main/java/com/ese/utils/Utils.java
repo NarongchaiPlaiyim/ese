@@ -63,7 +63,7 @@ public enum Utils {
     }
 
     public static String getDocumentNo(){
-        return "i-"+new SimpleDateFormat("yyyyMMddHHmmss", Locale.ENGLISH).format(currentDate());
+        return "i-"+new SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.ENGLISH).format(currentDate());
     }
 
     public static String getDocumentOverSeaOrder(){
