@@ -13,11 +13,17 @@ import java.util.List;
 @Component
 public class PickingOrderTransform extends Transform{
 
-    public PickingOrderModel tranformToModel(DataSyncConfirmOrderView syncView, AXCustomerTableModel axCustomerTableModel, StatusModel statusModel, UserDetail detail){
+    public PickingOrderModel tranformToModel(DataSyncConfirmOrderView syncView, AXCustomerTableModel axCustomerTableModel, StatusModel statusModel, UserDetail detail, String typeGroup){
         PickingOrderModel model = new PickingOrderModel();
 
 //        model.setId(1);
-        model.setDocNo(Utils.getDocumentDomesticOrder());
+
+        if ("OverSeaOrder".equals(typeGroup)){
+            model.setDocNo(Utils.getDocumentOverSeaOrder());
+        } else {
+            model.setDocNo(Utils.getDocumentDomesticOrder());
+        }
+
         model.setDocDate(Utils.currentDate());
         model.setCustomerCode(axCustomerTableModel);
         model.setConfirmId(syncView.getConfirmId());

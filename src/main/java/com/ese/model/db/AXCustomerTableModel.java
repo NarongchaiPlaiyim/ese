@@ -31,8 +31,9 @@ public class AXCustomerTableModel {
     @Column(name="InvoiceAccount")
     private String invoiceAccount;
 
-    @Column(name="CustGroup")
-    private String custGroup;
+    @OneToOne
+    @JoinColumn(name="CustGroup")
+    private AxCustomerGroupModel custGroup;
 
     @Column(name="Currency")
     private String currency;

@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Getter
@@ -24,7 +25,7 @@ public class PickingOrderLineModel extends AbstractModel{
     private PickingOrderModel pickingOrderId;
 
     @Column(name = "line_num")
-    private Integer line_num;
+    private BigDecimal line_num;
 
     @Column(name = "ItemId")
     private String ItemId;
@@ -33,7 +34,7 @@ public class PickingOrderLineModel extends AbstractModel{
     private String origSaleId;
 
     @Column(name = "qty")
-    private Integer qty;
+    private BigDecimal qty;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "ship_date")
@@ -42,11 +43,12 @@ public class PickingOrderLineModel extends AbstractModel{
     @Column(name = "salesunit")
     private String salesUnit;
 
-    @Column(name = "isfoil")
-    private Integer isFoil;
+    @Column(name = "isfoil", nullable=false, columnDefinition="int default 0")
+    private boolean isFoil;
 
-    @Column(name = "status")
-    private Integer status;
+    @OneToOne
+    @JoinColumn(name = "status", nullable=false, columnDefinition="int default 0")
+    private StatusModel status;
 
     @Column(name = "isvalid")
     private Integer isValid;

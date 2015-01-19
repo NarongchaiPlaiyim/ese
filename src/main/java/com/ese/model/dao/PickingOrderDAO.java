@@ -161,4 +161,21 @@ public class PickingOrderDAO extends GenericDAO<PickingOrderModel, Integer> {
 
         return pickingOrderModelList;
     }
+
+    public PickingOrderModel findByCustomerCode(String customerCode){
+        PickingOrderModel model = new PickingOrderModel();
+
+        try {
+            Criteria criteria = getCriteria();
+            criteria.add(Restrictions.eq("customerCode.accountNum", customerCode));
+
+            model = (PickingOrderModel) criteria.uniqueResult();
+
+            log.debug("PickingOrderModel : {}", model);
+        } catch (Exception e) {
+            log.debug("Exception error  findByCustomerCode : ", e);
+        }
+
+        return model;
+    }
 }

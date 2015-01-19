@@ -5,6 +5,7 @@ import com.ese.model.db.*;
 import com.ese.model.view.DataSyncConfirmOrderView;
 import com.ese.model.view.PickingOrderView;
 import com.ese.service.security.UserDetail;
+import com.ese.transform.PickingOrderLineTransform;
 import com.ese.transform.PickingOrderTransform;
 import com.ese.utils.Utils;
 import org.springframework.stereotype.Component;
@@ -24,6 +25,8 @@ public class PickingOrderService extends Service {
     @Resource private AXCustomerConfirmTransDAO axCustomerConfirmTransDAO;
     @Resource private AXCustomerTableDAO axCustomerTableDAO;
     @Resource private PickingOrderTransform pickingOrderTransform;
+    @Resource private PickingOrderLineDAO pickingOrderLineDAO;
+    @Resource private PickingOrderLineTransform pickingOrderLineTransform;
 
     public String getTypeBeforeOnLoaf(long staffId){
         List<UserAccessModel> userAccessModelList = userAccessDAO.findByPickingOrder(Utils.parseInt(staffId, 0));
@@ -100,10 +103,22 @@ public class PickingOrderService extends Service {
             try {
                 AXCustomerTableModel customerTableModel = axCustomerTableDAO.findByAccountNum(view.getCustomerCode());
                 StatusModel statusModel = statusDAO.findByID(2);
-                PickingOrderModel model = pickingOrderTransform.tranformToModel(view, customerTableModel, statusModel, userDetail);
+
+                String group = "";
+
+                if ("OVS".equals(view.getCustomerGroup())){
+                    group = "OverSeaOrder";
+                } else {
+                    group = "DomesticOrder";
+                }
+
+                PickingOrderModel model = pickingOrderTransform.tranformToModel(view, customerTableModel, statusModel, userDetail, group);
                 log.debug("model : {}" ,model.toString());
 
                 pickingOrderDAO.persist(model);
+
+                onSavePickingOrderLine(view, statusModel, userDetail);
+
             } catch (Exception e) {
                 log.debug("Exception error syncOrder : ", e);
             }
@@ -114,5 +129,18 @@ public class PickingOrderService extends Service {
 
         axCustomerConfirmJourDAO.rollbackStatus();
         axCustomerConfirmTransDAO.rollbackStatus();
+    }
+
+    private void onSavePickingOrderLine(DataSyncConfirmOrderView view, StatusModel status, UserDetail userDetail){
+        AXCustomerConfirmTransModel axCustomerConfirmTransModel = axCustomerConfirmTransDAO.findByPrimaryKey(view.getSaleId(), view.getConfirmId(), view.getConfirmDate());
+        PickingOrderModel model = pickingOrderDAO.findByCustomerCode(view.getCustomerCode());
+
+        PickingOrderLineModel pickingOrderLineModel = pickingOrderLineTransform.transformToModel(axCustomerConfirmTransModel, model, status, userDetail);
+
+        try {
+            pickingOrderLineDAO.persist(pickingOrderLineModel);
+        } catch (Exception e) {
+            log.debug("Exception error onSavePickingOrderLine : ", e);
+        }
     }
 }

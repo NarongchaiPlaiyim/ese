@@ -61,4 +61,26 @@ public class AXCustomerConfirmTransDAO extends GenericDAO<AXCustomerConfirmTrans
             log.debug("Exception : ", e);
         }
     }
+
+    public AXCustomerConfirmTransModel findByPrimaryKey(String saleId, String confirmId, Date confirmDate){
+        AXCustomerConfirmTransModel axCustomerConfirmTransModel = new AXCustomerConfirmTransModel();
+
+        log.debug("------------- {}", saleId);
+        log.debug("++++++++++++++ {}", confirmId);
+        log.debug("############ {}", confirmDate);
+        try {
+            Criteria criteria = getCriteria();
+            criteria.add(Restrictions.eq("salesId", saleId));
+            criteria.add(Restrictions.eq("confirmId", confirmId));
+            criteria.add(Restrictions.eq("confirmDate", confirmDate));
+
+            axCustomerConfirmTransModel = (AXCustomerConfirmTransModel) criteria.uniqueResult();
+            log.debug("axCustomerConfirmTransModel : {}", axCustomerConfirmTransModel.toString());
+
+        } catch (Exception e) {
+            log.debug("Exception error findByPrimaryKey : ", e);
+        }
+
+        return axCustomerConfirmTransModel;
+    }
 }
