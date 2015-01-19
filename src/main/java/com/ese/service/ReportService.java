@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.Collection;
@@ -70,8 +71,11 @@ public class ReportService extends Service{
     public void exportPDF(String fileName, Map<String,Object> parameters,String pdfName, Collection reportList) throws Exception {
 
         log.debug("generate pdf.");
-        JasperReport jasperReport = JasperCompileManager.compileReport(fileName);
+        InputStream inputStream = FacesUtil.getFacesContext().getExternalContext().getResourceAsStream(fileName);
+
+        JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
         JRDataSource dataSource = new JRBeanCollectionDataSource(reportList);
+
 //        log.debug("############# {}", reportList.toString());
         JasperPrint print ;
         if (!Utils.isNull(dataSource) && Utils.isCollection(reportList) && !Utils.isNull(reportList)){
