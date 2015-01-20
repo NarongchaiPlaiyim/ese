@@ -102,7 +102,7 @@ public class PickingOrderService extends Service {
 
             try {
                 AXCustomerTableModel customerTableModel = axCustomerTableDAO.findByAccountNum(view.getCustomerCode());
-                StatusModel statusModel = statusDAO.findByID(2);
+                StatusModel statusModel = statusDAO.findByStatusSeqTablePickingOrder(1);
 
                 String group = "";
 
