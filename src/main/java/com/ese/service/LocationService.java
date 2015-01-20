@@ -28,11 +28,11 @@ public class LocationService extends Service{
     @Resource private WarehouseDAO warehouseDAO;
 
 
-    public List<MSLocationModel> getLocationList(){
+    public List<MSLocationModel> getLocationByWarehouse(int warehouseId){
         log.debug("getLocationList()");
         List<MSLocationModel> msLocationModelList = Utils.getEmptyList();
         try{
-            msLocationModelList = locationDAO.findAll();
+            msLocationModelList = locationDAO.findByWarehouseId(warehouseId);
         } catch (Exception e){
             log.debug("Exception getLocationList.", e);
         }

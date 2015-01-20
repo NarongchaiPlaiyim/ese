@@ -82,7 +82,10 @@
                                                    var="wareItem"
                                                    itemLabel="#{wareItem.warehouseCode}"
                                                    itemValue="#{wareItem.id}"/>
-                                    <p:ajax listener="#{palletManagement.onFind}" update=":palletForm:palletManagementTable, :palletForm:findKey"/>
+                                    <p:ajax listener="#{palletManagement.onFind}"
+                                            update=":palletForm:palletManagementTable,
+                                                    :palletForm:findKey,
+                                                    :palletForm:locationMenu"/>
                                 </p:selectOneMenu>
                             </td>
                             <td style="width: 150px">
@@ -103,7 +106,7 @@
                                 <h:outputLabel value="Location :"/>
                             </td>
                             <td style="width: 100px">
-                                <p:selectOneMenu value="#{palletManagement.msLocationModel.id}"
+                                <p:selectOneMenu id="locationMenu" value="#{palletManagement.msLocationModel.id}"
                                                  style="#{msg.get('fix.size.200')} margin-top: 4px">
                                     <f:selectItem itemLabel="- Please Select -" itemValue=""/>
                                     <f:selectItems value="#{palletManagement.msLocationModelList}"

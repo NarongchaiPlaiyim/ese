@@ -75,7 +75,6 @@ public class PalletManagementBean extends Bean {
 
         warehouseModelList = warehouseService.getWarehouseAll();
         workingAreaModelList = workingAreaService.getWorkingAreaList();
-        msLocationModelList = locationService.getLocationList();
         findKeyItemDescription = "";
         isCheckLocation = true;
         isCheckPrintTag = true;
@@ -100,6 +99,7 @@ public class PalletManagementBean extends Bean {
         palletMeanegementView = new PalletManagementView();
 
         if (!Utils.isNull(warehouseMode.getId())){
+            msLocationModelList = locationService.getLocationByWarehouse(warehouseMode.getId());
             warehouseId = warehouseMode.getId();
         }
 

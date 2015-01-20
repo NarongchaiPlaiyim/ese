@@ -71,4 +71,20 @@ public class LocationDAO extends GenericDAO<MSLocationModel, Integer>{
 
         return msLocationModels;
     }
+
+    public List<MSLocationModel> findByWarehouseId(int warehouseId){
+        List<MSLocationModel> msLocationModels = new ArrayList<MSLocationModel>();
+
+        try{
+            Criteria criteria = getCriteria();
+            criteria.add(Restrictions.eq("msWarehouseModel.id",warehouseId));
+            criteria.add(Restrictions.eq("isValid", 1));
+            msLocationModels = Utils.safetyList(criteria.list());
+        } catch (Exception e){
+            log.debug("Exception error findByWarehouseId : ", e);
+        }
+        log.debug("msLocationModels Size : {}", msLocationModels.size());
+
+        return msLocationModels;
+    }
 }
