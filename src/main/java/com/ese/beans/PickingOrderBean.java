@@ -72,7 +72,7 @@ public class PickingOrderBean extends Bean {
     }
 
     private void onLoadStatue(){
-        statusValue = pickingOrderService.getStatusAll();
+        statusValue = pickingOrderService.getStatusAll(1);
     }
 
     public void onSearch(){

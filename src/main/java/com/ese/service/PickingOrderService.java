@@ -62,9 +62,9 @@ public class PickingOrderService extends Service {
         return pickingOrderModelList;
     }
 
-    public List<StatusModel> getStatusAll(){
+    public List<StatusModel> getStatusAll(int tableId){
         try {
-            return statusDAO.findAll();
+            return statusDAO.findByTablePickingOrder(tableId);
         } catch (Exception e) {
             log.debug("Excrption error getStatusAll", e);
             return null;
