@@ -112,16 +112,16 @@ public class PickingOrderDAO extends GenericDAO<PickingOrderModel, Integer> {
 
                 if (Utils.isTrue(pickingOrderView.isDomesticOrder()) == 1 && Utils.isTrue(pickingOrderView.isOverseaOrder()) == 1){
 //                    Criterion overseaOrder = Restrictions.like("docNo", "o%");
-                    criteria.add(Restrictions.or(Restrictions.like("docNo", "o%"), Restrictions.like("docNo", "d%")));
+                    criteria.add(Restrictions.or(Restrictions.like("docNo", "PKO%"), Restrictions.like("docNo", "PKD%")));
                 } else {
                     if (Utils.isTrue(pickingOrderView.isOverseaOrder()) == 1){
                         log.debug("isOverseaOrder {}", pickingOrderView.isOverseaOrder());
-                        criteria.add(Restrictions.like("docNo", "o%"));
+                        criteria.add(Restrictions.like("docNo", "PKO%"));
                     }
 
                     if (Utils.isTrue(pickingOrderView.isDomesticOrder()) == 1){
                         log.debug("isDomesticOrder {}", pickingOrderView.isDomesticOrder());
-                        criteria.add(Restrictions.like("docNo", "d%"));
+                        criteria.add(Restrictions.like("docNo", "PKD%"));
                     }
                 }
 
