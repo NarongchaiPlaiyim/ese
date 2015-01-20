@@ -38,7 +38,7 @@ public class BarcodeRegisterService extends Service{
             } else if("3".equalsIgnoreCase(type)){
                 barcodeRegisterModelList = barcodeRegisterDAO.findByLike(text);
             } else {
-                barcodeRegisterModelList = barcodeRegisterDAO.findByBetween(text);
+                barcodeRegisterModelList = barcodeRegisterDAO.findByBetween(getOnlyDigit(text));
             }
         } catch (Exception e) {
             log.error("{}",e);
@@ -170,5 +170,17 @@ public class BarcodeRegisterService extends Service{
             log.error("{}", e);
             return true;
         }
+    }
+
+    private String getOnlyDigit(String s) {
+        StringBuilder result = new StringBuilder("");
+        for(int i = 0; i < s.length(); i++) {
+            try {
+                result.append(Integer.parseInt(String.valueOf(s.charAt(i))));
+            } catch (Exception e) {
+
+            }
+        }
+        return result.toString();
     }
 }

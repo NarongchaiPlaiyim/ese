@@ -2,6 +2,7 @@ package com.ese.internal.test;
 
 
 import com.ese.utils.FacesUtil;
+import com.ese.utils.Utils;
 import org.apache.commons.io.FilenameUtils;
 
 import javax.faces.context.FacesContext;
@@ -9,41 +10,23 @@ import java.io.File;
 
 public class Main {
     public static void main(String[] args) {
-        final String fileName = "PalletManagement.jrxml";
-        System.out.println(new File(fileName).getAbsolutePath());
-        System.out.println("sdf "+FilenameUtils.getPath("D:\\ese\\ESE's Project\\ese\\PalletManagement.jrxml"));
-        String fileNameWithOutExt = FilenameUtils.removeExtension(fileName);
-        System.out.println(fileNameWithOutExt);
+        String input = "T0123dc4asd56";
 
-        System.out.println(FilenameUtils.getBaseName(fileName));
-        System.out.println(FilenameUtils.getFullPath(fileName));
+//        if(input.charAt(0) == '(') {
+//            System.out.println(getDigit(input));
+//        }
+    }
 
-//        FacesUtil.getExternalContext().getRealPath("/");
+    private static String getOnlyDigit(String s) {
+        StringBuilder result = new StringBuilder("");
+        for(int i = 0; i < s.length(); i++) {
+            try {
+                result.append(Integer.parseInt(String.valueOf(s.charAt(i))));
+            } catch (Exception e) {
 
-        File f = null;
-        String path = "";
-        boolean bool = false;
-
-        try{
-            // create new files
-            f = new File("PalletManagement.jrxml");
-
-            // returns true if the file exists
-            bool = f.exists();
-
-            // if file exists
-            if(bool) {
-                // get absolute path
-                path = f.getAbsolutePath();
-
-                // prints
-                System.out.print("Absolute Pathname "+ path);
             }
-        }catch(Exception e){
-            // if any error occurs
-            e.printStackTrace();
-            System.err.println(e);
         }
+        return result.toString();
     }
 
 
