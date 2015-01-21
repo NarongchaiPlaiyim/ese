@@ -33,6 +33,7 @@ public class DataSyncConfirmOrderView {
     private Date shippingDate;
     private Date eddDate;
     private Date availableDate;
+    private String dsgRemark;
 
     @Override
     public String toString() {
@@ -59,6 +60,7 @@ public class DataSyncConfirmOrderView {
                 .append("shippingDate", shippingDate)
                 .append("eddDate", eddDate)
                 .append("availableDate", availableDate)
+                .append("dsgRemark", dsgRemark)
                 .toString();
     }
 }

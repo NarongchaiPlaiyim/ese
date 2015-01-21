@@ -52,6 +52,7 @@ public class PickingOrderTransform extends Transform{
         model.setRequestShiftDate(syncView.getShippingDate());
         model.setEddDate(syncView.getEddDate());
         model.setAvalibleDate(syncView.getAvailableDate());
+        model.setDsgRemark(syncView.getDsgRemark());
 
         return model;
     }

@@ -99,6 +99,9 @@ public class PickingOrderModel extends AbstractModel{
     @Column(name = "avaliable_date")
     private Date avalibleDate;
 
+    @Column(name="dsg_remark")
+    private String dsgRemark;
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
@@ -127,6 +130,7 @@ public class PickingOrderModel extends AbstractModel{
                 .append("requestShiftDate", requestShiftDate)
                 .append("eddDate", eddDate)
                 .append("avalibleDate", avalibleDate)
+                .append("dsgRemark", dsgRemark)
                 .toString();
     }
 }

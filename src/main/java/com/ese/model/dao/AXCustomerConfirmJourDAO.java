@@ -41,7 +41,8 @@ public class AXCustomerConfirmJourDAO extends GenericDAO<AXCustomerConfirmJourMo
         sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustConfirmJour.quotationcreatedate AS QUOTATION_DATE,");
         sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustConfirmJour.DSG_ShippingDateRequested AS SHIPPING_DATE,");
         sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustConfirmJour.DSG_EDDDate AS EDD_DATE,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustConfirmJour.DSG_AvailableDate AS AVAILABLE_DATE");
+        sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustConfirmJour.DSG_AvailableDate AS AVAILABLE_DATE,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustConfirmJour.DSG_remark AS DSG_REMARK");
         sqlBuilder.append(" FROM ").append(getPrefix()).append(".ax_CustConfirmJour");
         sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".ax_CustTable");
         sqlBuilder.append(" ON  ").append(getPrefix()).append(".ax_CustConfirmJour.InvoiceAccount = ").append(getPrefix()).append(".ax_CustTable.AccountNum");
@@ -75,7 +76,8 @@ public class AXCustomerConfirmJourDAO extends GenericDAO<AXCustomerConfirmJourMo
                     .addScalar("QUOTATION_DATE", TimestampType.INSTANCE)
                     .addScalar("SHIPPING_DATE", TimestampType.INSTANCE)
                     .addScalar("EDD_DATE", TimestampType.INSTANCE)
-                    .addScalar("AVAILABLE_DATE", TimestampType.INSTANCE);
+                    .addScalar("AVAILABLE_DATE", TimestampType.INSTANCE)
+                    .addScalar("DSG_REMARK", StringType.INSTANCE);
             List<Object[]> objects = query.list();
 
             for (Object[] entity : objects) {
@@ -101,6 +103,7 @@ public class AXCustomerConfirmJourDAO extends GenericDAO<AXCustomerConfirmJourMo
                 sync.setShippingDate(Utils.parseDate(entity[18], null));
                 sync.setEddDate(Utils.parseDate(entity[19], null));
                 sync.setAvailableDate(Utils.parseDate(entity[20], null));
+                sync.setDsgRemark(Utils.parseString(entity[21], ""));
                 syncDataList.add(sync);
             }
         } catch (Exception e) {
