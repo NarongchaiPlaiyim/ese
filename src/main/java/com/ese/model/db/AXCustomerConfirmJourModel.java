@@ -140,6 +140,21 @@ public class AXCustomerConfirmJourModel {
     @Column(name="status")
     private int status;
 
+    @Temporal(TemporalType.DATE)
+    @Column(name="DSG_ShippingDateRequested ")
+    private Date dSG_ShippingDateRequested;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name="DSG_EDDDate ")
+    private Date dSG_EDDDate;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name="DSG_AvailableDate ")
+    private Date dSG_AvailableDate;
+
+    @Column(name="DSG_remark")
+    private String dSG_remark;
+
 
     @Override
     public String toString() {
@@ -183,6 +198,10 @@ public class AXCustomerConfirmJourModel {
                 .append("version", version)
                 .append("deletedatetime_timestamp", deletedatetime_timestamp)
                 .append("status", status)
+                .append("dSG_ShippingDateRequested", dSG_ShippingDateRequested)
+                .append("dSG_EDDDate", dSG_EDDDate)
+                .append("dSG_AvailableDate", dSG_AvailableDate)
+                .append("dSG_remark", dSG_remark)
                 .toString();
     }
 }

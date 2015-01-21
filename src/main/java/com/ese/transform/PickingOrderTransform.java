@@ -49,9 +49,9 @@ public class PickingOrderTransform extends Transform{
         model.setUpdateBy(detail.getId());
         model.setUpdateDate(Utils.currentDate());
 
-        model.setRequestShiftDate(Utils.currentDate()); //ยังไม่มีข้อมูลว่าดึงจากไหน
-        model.setEddDate(Utils.currentDate());      //ยังไม่มีข้อมูลว่าดึงจากไหน
-        model.setAvalibleDate(Utils.currentDate());      //ยังไม่มีข้อมูลว่าดึงจากไหน
+        model.setRequestShiftDate(syncView.getShippingDate());
+        model.setEddDate(syncView.getEddDate());
+        model.setAvalibleDate(syncView.getAvailableDate());
 
         return model;
     }

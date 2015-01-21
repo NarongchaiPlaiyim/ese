@@ -30,10 +30,14 @@ public class DataSyncConfirmOrderView {
     private String modeDlv;
     private String quotationId;
     private Date quotationDate;
+    private Date shippingDate;
+    private Date eddDate;
+    private Date availableDate;
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("id", id)
                 .append("customerCode", customerCode)
                 .append("customerName", customerName)
                 .append("customerGroup", customerGroup)
@@ -52,6 +56,9 @@ public class DataSyncConfirmOrderView {
                 .append("modeDlv", modeDlv)
                 .append("quotationId", quotationId)
                 .append("quotationDate", quotationDate)
+                .append("shippingDate", shippingDate)
+                .append("eddDate", eddDate)
+                .append("availableDate", availableDate)
                 .toString();
     }
 }
