@@ -1,12 +1,14 @@
 package com.ese.model.dao;
 
 import com.ese.model.db.AXCustomerConfirmTransModel;
+import com.ese.utils.Utils;
 import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
+import java.util.List;
 
 @Repository
 public class AXCustomerConfirmTransDAO extends GenericDAO<AXCustomerConfirmTransModel, String> {
@@ -62,8 +64,8 @@ public class AXCustomerConfirmTransDAO extends GenericDAO<AXCustomerConfirmTrans
         }
     }
 
-    public AXCustomerConfirmTransModel findByPrimaryKey(String saleId, String confirmId, Date confirmDate){
-        AXCustomerConfirmTransModel axCustomerConfirmTransModel = new AXCustomerConfirmTransModel();
+    public List<AXCustomerConfirmTransModel> findByPrimaryKey(String saleId, String confirmId, Date confirmDate){
+        List<AXCustomerConfirmTransModel> confirmTransModelList = Utils.getEmptyList();
 
         log.debug("------------- {}", saleId);
         log.debug("++++++++++++++ {}", confirmId);
@@ -74,13 +76,13 @@ public class AXCustomerConfirmTransDAO extends GenericDAO<AXCustomerConfirmTrans
             criteria.add(Restrictions.eq("confirmId", confirmId));
             criteria.add(Restrictions.eq("confirmDate", confirmDate));
 
-            axCustomerConfirmTransModel = (AXCustomerConfirmTransModel) criteria.uniqueResult();
-            log.debug("axCustomerConfirmTransModel : {}", axCustomerConfirmTransModel.toString());
+            confirmTransModelList = criteria.list();
+            log.debug("axCustomerConfirmTransModel : {}", confirmTransModelList.toString());
 
         } catch (Exception e) {
             log.debug("Exception error findByPrimaryKey : ", e);
         }
 
-        return axCustomerConfirmTransModel;
+        return confirmTransModelList;
     }
 }

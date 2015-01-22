@@ -132,15 +132,17 @@ public class PickingOrderService extends Service {
     }
 
     private void onSavePickingOrderLine(DataSyncConfirmOrderView view, StatusModel status, UserDetail userDetail){
-        AXCustomerConfirmTransModel axCustomerConfirmTransModel = axCustomerConfirmTransDAO.findByPrimaryKey(view.getSaleId(), view.getConfirmId(), view.getConfirmDate());
+        List<AXCustomerConfirmTransModel> confirmTransModelList = axCustomerConfirmTransDAO.findByPrimaryKey(view.getSaleId(), view.getConfirmId(), view.getConfirmDate());
         PickingOrderModel model = pickingOrderDAO.findByCustomerCode(view.getCustomerCode());
 
-        PickingOrderLineModel pickingOrderLineModel = pickingOrderLineTransform.transformToModel(axCustomerConfirmTransModel, model, status, userDetail);
+        for (AXCustomerConfirmTransModel axCustomerConfirmTransModel : confirmTransModelList){
+            PickingOrderLineModel pickingOrderLineModel = pickingOrderLineTransform.transformToModel(axCustomerConfirmTransModel, model, status, userDetail);
 
-        try {
-            pickingOrderLineDAO.persist(pickingOrderLineModel);
-        } catch (Exception e) {
-            log.debug("Exception error onSavePickingOrderLine : ", e);
+            try {
+                pickingOrderLineDAO.persist(pickingOrderLineModel);
+            } catch (Exception e) {
+                log.debug("Exception error onSavePickingOrderLine : ", e);
+            }
         }
     }
 }
