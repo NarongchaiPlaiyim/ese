@@ -64,7 +64,7 @@ public class AXCustomerConfirmJourModel {
     private int cuM;
 
     @Column(name="DSG_ToPortDesc")
-    private String dSG_ToPortDesc;
+    private String dSGToPortDesc;
 
     @Column(name="Containers")
     private String containers;
@@ -116,44 +116,44 @@ public class AXCustomerConfirmJourModel {
     private String totalTerm;
 
     @Column(name="record_boolean")
-    private boolean record_boolean;
+    private boolean recordBoolean;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="createdatetime_timestamp")
-    private Date createdatetime_timestamp;
+    private Date createdatetimeTimestamp;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="modifydatetime_timestamp")
-    private Date modifydatetime_timestamp;
+    private Date modifydatetimeTimestamp;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="deletedatetime_timestampg")
-    private Date deletedatetime_timestampg;
+    private Date deletedatetimeTimestampg;
 
     @Column(name="version")
     private int version;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="deletedatetime_timestamp")
-    private Date deletedatetime_timestamp;
+    private Date deletedatetimeTimestamp;
 
     @Column(name="status")
     private int status;
 
     @Temporal(TemporalType.DATE)
     @Column(name="DSG_ShippingDateRequested ")
-    private Date dSG_ShippingDateRequested;
+    private Date dSGShippingDateRequested;
 
     @Temporal(TemporalType.DATE)
     @Column(name="DSG_EDDDate ")
-    private Date dSG_EDDDate;
+    private Date dSGEDDDate;
 
     @Temporal(TemporalType.DATE)
     @Column(name="DSG_AvailableDate ")
-    private Date dSG_AvailableDate;
+    private Date dSGAvailableDate;
 
     @Column(name="DSG_remark")
-    private String dSG_remark;
+    private String dSGRemark;
 
 
     @Override
@@ -174,7 +174,7 @@ public class AXCustomerConfirmJourModel {
                 .append("salesBalance", salesBalance)
                 .append("remark", remark)
                 .append("cuM", cuM)
-                .append("dSG_ToPortDesc", dSG_ToPortDesc)
+                .append("dSG_ToPortDesc", dSGToPortDesc)
                 .append("containers", containers)
                 .append("fOBPrice", fOBPrice)
                 .append("totalnetweigth", totalnetweigth)
@@ -191,17 +191,17 @@ public class AXCustomerConfirmJourModel {
                 .append("quotationCreateDate", quotationCreateDate)
                 .append("dlvTerm", dlvTerm)
                 .append("totalTerm", totalTerm)
-                .append("record_boolean", record_boolean)
-                .append("createdatetime_timestamp", createdatetime_timestamp)
-                .append("modifydatetime_timestamp", modifydatetime_timestamp)
-                .append("deletedatetime_timestampg", deletedatetime_timestampg)
+                .append("record_boolean", recordBoolean)
+                .append("createdatetime_timestamp", createdatetimeTimestamp)
+                .append("modifydatetime_timestamp", modifydatetimeTimestamp)
+                .append("deletedatetime_timestampg", deletedatetimeTimestampg)
                 .append("version", version)
-                .append("deletedatetime_timestamp", deletedatetime_timestamp)
+                .append("deletedatetime_timestamp", deletedatetimeTimestamp)
                 .append("status", status)
-                .append("dSG_ShippingDateRequested", dSG_ShippingDateRequested)
-                .append("dSG_EDDDate", dSG_EDDDate)
-                .append("dSG_AvailableDate", dSG_AvailableDate)
-                .append("dSG_remark", dSG_remark)
+                .append("dSG_ShippingDateRequested", dSGShippingDateRequested)
+                .append("dSG_EDDDate", dSGEDDDate)
+                .append("dSG_AvailableDate", dSGAvailableDate)
+                .append("dSG_remark", dSGRemark)
                 .toString();
     }
 }
