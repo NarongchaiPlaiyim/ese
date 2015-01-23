@@ -44,6 +44,7 @@ public class PickingOrderBean extends Bean {
     public void onCreation(){
         log.debug("onCreation().");
         if(preLoad()/* && isAuthorize(key)*/){
+            userDetail = getUser();
             init();
         }
     }
@@ -115,7 +116,10 @@ public class PickingOrderBean extends Bean {
     }
 
     public void stikerWorkLoadReport(){
-        userDetail = getUser();
         pickingOrderService.getStikerWorkLoadReport(pickingOrderModel.getId(), userDetail);
+    }
+
+    public void confirmationPackingReport(){
+        pickingOrderService.getConfirmationPackingReport(pickingOrderModel.getId(), userDetail);
     }
 }

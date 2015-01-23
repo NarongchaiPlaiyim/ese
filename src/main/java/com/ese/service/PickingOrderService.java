@@ -4,6 +4,7 @@ import com.ese.model.dao.*;
 import com.ese.model.db.*;
 import com.ese.model.view.DataSyncConfirmOrderView;
 import com.ese.model.view.PickingOrderView;
+import com.ese.model.view.report.ConfirmationPackingViewModel;
 import com.ese.model.view.report.StiketWorkLoadViewReport;
 import com.ese.service.security.UserDetail;
 import com.ese.transform.PickingOrderLineTransform;
@@ -35,6 +36,8 @@ public class PickingOrderService extends Service {
 
     @Value("#{config['report.stikerworkload']}")
     private String pathStikerWorkLoad;
+    @Value("#{config['report.confirmationpacking']}")
+    private String pathConfirmationPacking;
 
     public String getTypeBeforeOnLoaf(long staffId){
         List<UserAccessModel> userAccessModelList = userAccessDAO.findByPickingOrder(Utils.parseInt(staffId, 0));
@@ -167,5 +170,22 @@ public class PickingOrderService extends Service {
         } catch (Exception e) {
             log.debug("Exception Report : ", e);
         }
+    }
+
+    public void getConfirmationPackingReport(int pickingId, UserDetail user){
+
+        String nameReport = Utils.genDateReportStringDDMMYYYY(new Date()) + "_ConfirmationPacking";
+        List<ConfirmationPackingViewModel> viewReports = axCustomerConfirmJourDAO.genConfirmationPackingReport(pickingId);
+
+        HashMap map = new HashMap<String, Object>();
+        map.put("userPrint", user.getUserName());
+        map.put("printDate", Utils.convertToStringDDMMYYYY(new Date()));
+
+        try {
+            reportService.exportPDF(pathConfirmationPacking, map, nameReport, viewReports);
+        } catch (Exception e) {
+            log.debug("Exception Report : ", e);
+        }
+
     }
 }
