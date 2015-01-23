@@ -67,19 +67,19 @@ public class AXCustomerConfirmTransModel {
     private String salesUnit;
 
     @Column(name="record_boolean")
-    private boolean record_boolean;
+    private boolean recordBoolean;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="createdatetime_timestamp")
-    private Date createdatetime_timestamp;
+    private Date createdatetimeTimestamp;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="modifydatetime_timestamp")
-    private Date modifydatetime_timestamp;
+    private Date modifydatetimeTimestamp;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="deletedatetime_timestamp")
-    private Date deletedatetime_timestamp;
+    private Date deletedatetimeTimestamp;
 
     @Column(name="version")
     private int version;
@@ -105,10 +105,10 @@ public class AXCustomerConfirmTransModel {
                 .append("lineAmountTax", lineAmountTax)
                 .append("dlvDate", dlvDate)
                 .append("salesUnit", salesUnit)
-                .append("record_boolean", record_boolean)
-                .append("createdatetime_timestamp", createdatetime_timestamp)
-                .append("modifydatetime_timestamp", modifydatetime_timestamp)
-                .append("deletedatetime_timestamp", deletedatetime_timestamp)
+                .append("record_boolean", recordBoolean)
+                .append("createdatetime_timestamp", createdatetimeTimestamp)
+                .append("modifydatetime_timestamp", modifydatetimeTimestamp)
+                .append("deletedatetime_timestamp", deletedatetimeTimestamp)
                 .append("version", version)
                 .append("status", status)
                 .toString();

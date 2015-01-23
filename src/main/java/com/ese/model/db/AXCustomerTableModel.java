@@ -20,7 +20,7 @@ public class AXCustomerTableModel {
     private String accountNum;
 
     @Column(name="DSG_ByProductCode")
-    private String dSG_ByProductCode;
+    private String dSGByProductCode;
 
     @Column(name="Name")
     private String name;
@@ -91,25 +91,25 @@ public class AXCustomerTableModel {
     private String dimension3_;
 
     @Column(name="record_boolean")
-    private boolean record_boolean;
+    private boolean recordBoolean;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="createdatetime_timestamp")
-    private Date createdatetime_timestamp;
+    private Date createdatetimeTimestamp;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="modifydatetime_timestamp")
-    private Date modifydatetime_timestamp;
+    private Date modifydatetimeTimestamp;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="deletedatetime_timestamp")
-    private Date deletedatetime_timestamp;
+    private Date deletedatetimeTimestamp;
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("accountNum", accountNum)
-                .append("dSG_ByProductCode", dSG_ByProductCode)
+                .append("dSG_ByProductCode", dSGByProductCode)
                 .append("name", name)
                 .append("nameAlias", nameAlias)
                 .append("invoiceAccount", invoiceAccount)
@@ -132,9 +132,9 @@ public class AXCustomerTableModel {
                 .append("dimension", dimension)
                 .append("dimension2_", dimension2_)
                 .append("dimension3_", dimension3_)
-                .append("record_boolean", record_boolean)
-                .append("createdatetime_timestamp", createdatetime_timestamp)
-                .append("modifydatetime_timestamp", modifydatetime_timestamp)
+                .append("record_boolean", recordBoolean)
+                .append("createdatetime_timestamp", createdatetimeTimestamp)
+                .append("modifydatetime_timestamp", modifydatetimeTimestamp)
                 .toString();
     }
 }

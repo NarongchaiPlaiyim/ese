@@ -25,13 +25,13 @@ public class AxCustomerGroupModel {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="createdatetime_timestamp")
-    private Date createdatetime_timestamp;
+    private Date createdatetimeTimestamp;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="modifydatetime_timestamp")
-    private Date modifydatetime_timestamp;
+    private Date modifydatetimeTimestamp;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="deletedatetime_timestamp")
-    private Date deletedatetime_timestamp;
+    private Date deletedatetimeTimestamp;
 }
