@@ -28,6 +28,7 @@ public class PickingOrderTransform extends Transform{
         model.setCustomerCode(axCustomerTableModel);
         model.setConfirmId(syncView.getConfirmId());
         model.setConfirmDate(syncView.getConfirmDate());
+        model.setConfirmDocNo(syncView.getConfirmDocNo());
         model.setSalesOrder(syncView.getSaleId());
         model.setPurchaseOrder(syncView.getPurchaseOrder());
         model.setDeliveryName(syncView.getDeliveryName());

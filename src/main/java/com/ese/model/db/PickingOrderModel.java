@@ -37,6 +37,9 @@ public class PickingOrderModel extends AbstractModel{
     @Column(name = "confirm_date")
     private Date confirmDate;
 
+    @Column(name = "confirm_docno")
+    private String confirmDocNo;
+
     @Column(name = "sales_order")
     private String salesOrder;
 
@@ -111,6 +114,7 @@ public class PickingOrderModel extends AbstractModel{
                 .append("customerCode", customerCode)
                 .append("confirmId", confirmId)
                 .append("confirmDate", confirmDate)
+                .append("confirmDocNo", confirmDocNo)
                 .append("salesOrder", salesOrder)
                 .append("purchaseOrder", purchaseOrder)
                 .append("deliveryName", deliveryName)

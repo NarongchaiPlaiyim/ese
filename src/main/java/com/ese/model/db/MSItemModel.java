@@ -192,6 +192,9 @@ public class MSItemModel {
     @Column(name = "version", nullable=false, columnDefinition="int default 0")
     private Integer version;
 
+    @Column(name="DSG_PrimaryPlant")
+    private String dSGPrimaryplant;
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)

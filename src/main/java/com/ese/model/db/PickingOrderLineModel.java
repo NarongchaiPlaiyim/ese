@@ -56,6 +56,28 @@ public class PickingOrderLineModel extends AbstractModel{
     @Column(name = "version")
     private Integer version;
 
+    @Column(name="DSG_SubGroupDescription")
+    private String dSGSubGroupDescription;
+
+    @Column(name="PIDescription")
+    private String pIDescription;
+
+    @Column(name="DSG_Ext_Item_NO")
+    private String dSGExtItemNO;
+
+    @Column(name="Name")
+    private String name;
+
+    @Column(name="DSG_PackingQty")
+    private BigDecimal dSGPackingQty;
+
+
+    @Column(name="salesUnitTxt")
+    private String salesUnitTxt;
+
+    @Column(name="Cum")
+    private BigDecimal cum;
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
@@ -71,6 +93,13 @@ public class PickingOrderLineModel extends AbstractModel{
                 .append("status", status)
                 .append("isValid", isValid)
                 .append("version", version)
+                .append("dSGSubGroupDescription", dSGSubGroupDescription)
+                .append("pIDescription", pIDescription)
+                .append("dSGExtItemNO", dSGExtItemNO)
+                .append("name", name)
+                .append("dSGPackingQty", dSGPackingQty)
+                .append("salesUnitTxt", salesUnitTxt)
+                .append("cum", cum)
                 .toString();
     }
 }

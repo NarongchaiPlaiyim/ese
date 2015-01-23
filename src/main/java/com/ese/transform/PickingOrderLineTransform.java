@@ -30,6 +30,13 @@ public class PickingOrderLineTransform extends Transform{
         pickingOrderLineModel.setUpdateDate(Utils.currentDate());
         pickingOrderLineModel.setIsValid(1);
         pickingOrderLineModel.setVersion(1);
+        pickingOrderLineModel.setDSGSubGroupDescription(confirmTransModel.getDSGSubGroupDescription());
+        pickingOrderLineModel.setPIDescription(confirmTransModel.getPIDescription());
+        pickingOrderLineModel.setDSGExtItemNO(confirmTransModel.getDSGExtItemNO());
+        pickingOrderLineModel.setName(confirmTransModel.getName());
+        pickingOrderLineModel.setDSGPackingQty(confirmTransModel.getDSGPackingQty());
+        pickingOrderLineModel.setSalesUnitTxt(confirmTransModel.getSalesUnitTxt());
+        pickingOrderLineModel.setCum(confirmTransModel.getCum());
 
         return pickingOrderLineModel;
     }

@@ -32,6 +32,9 @@ public class AXSalesQuantationTableModel {
     @Column(name="CreatedDate")
     private Date createdate;
 
+    @Column(name="DlvTerm")
+    private String dlvTerm;
+
     @OneToOne
     @JoinColumn(name="Payment")
     private AXPaymTremModel paymant;

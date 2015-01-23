@@ -25,6 +25,7 @@ public class AXCustomerConfirmJourDAO extends GenericDAO<AXCustomerConfirmJourMo
         sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustTable.CustGroup AS CUST_GROUP,");
         sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustConfirmJour.confirmId AS CONFIRM_ID,");
         sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustConfirmJour.confirmdate AS CONFIRM_DATE,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustConfirmJour.ConfirmDocNum AS CONFIRM_DOCNUM,");
         sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustConfirmJour.SalesId AS SALE_ID,");
         sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustConfirmJour.purchaseorder AS PURCHASE_ORDER,");
         sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustConfirmJour.deliveryname AS DELIVERY_NAME,");
@@ -60,6 +61,7 @@ public class AXCustomerConfirmJourDAO extends GenericDAO<AXCustomerConfirmJourMo
                     .addScalar("CUST_GROUP", StringType.INSTANCE)
                     .addScalar("CONFIRM_ID", StringType.INSTANCE)
                     .addScalar("CONFIRM_DATE", TimestampType.INSTANCE)
+                    .addScalar("CONFIRM_DOCNUM", StringType.INSTANCE)
                     .addScalar("SALE_ID", StringType.INSTANCE)
                     .addScalar("PURCHASE_ORDER", StringType.INSTANCE)
                     .addScalar("DELIVERY_NAME", StringType.INSTANCE)
@@ -86,23 +88,24 @@ public class AXCustomerConfirmJourDAO extends GenericDAO<AXCustomerConfirmJourMo
                 sync.setCustomerGroup(Utils.parseString(entity[2], ""));
                 sync.setConfirmId(Utils.parseString(entity[3], ""));
                 sync.setConfirmDate(Utils.parseDate(entity[4], null));
-                sync.setSaleId(Utils.parseString(entity[5], ""));
-                sync.setPurchaseOrder(Utils.parseString(entity[6], ""));
-                sync.setDeliveryName(Utils.parseString(entity[7], ""));
-                sync.setDeliveryAddress(Utils.parseString(entity[8], ""));
-                sync.setCustomerRef(Utils.parseString(entity[9], ""));
-                sync.setContainer(Utils.parseString(entity[10], ""));
-                sync.setDlvTerm(Utils.parseString(entity[11], ""));
-                sync.setPaymentCondition(Utils.parseString(entity[12], ""));
-                sync.setRemark(Utils.parseString(entity[13], ""));
-                sync.setSaleAdmin(Utils.parseString(entity[14], ""));
-                sync.setModeDlv(Utils.parseString(entity[15], ""));
-                sync.setQuotationId(Utils.parseString(entity[16], ""));
-                sync.setQuotationDate(Utils.parseDate(entity[17], null));
-                sync.setShippingDate(Utils.parseDate(entity[18], null));
-                sync.setEddDate(Utils.parseDate(entity[19], null));
-                sync.setAvailableDate(Utils.parseDate(entity[20], null));
-                sync.setDsgRemark(Utils.parseString(entity[21], ""));
+                sync.setConfirmDocNo(Utils.parseString(entity[5], ""));
+                sync.setSaleId(Utils.parseString(entity[6], ""));
+                sync.setPurchaseOrder(Utils.parseString(entity[7], ""));
+                sync.setDeliveryName(Utils.parseString(entity[8], ""));
+                sync.setDeliveryAddress(Utils.parseString(entity[9], ""));
+                sync.setCustomerRef(Utils.parseString(entity[10], ""));
+                sync.setContainer(Utils.parseString(entity[11], ""));
+                sync.setDlvTerm(Utils.parseString(entity[12], ""));
+                sync.setPaymentCondition(Utils.parseString(entity[13], ""));
+                sync.setRemark(Utils.parseString(entity[14], ""));
+                sync.setSaleAdmin(Utils.parseString(entity[15], ""));
+                sync.setModeDlv(Utils.parseString(entity[16], ""));
+                sync.setQuotationId(Utils.parseString(entity[17], ""));
+                sync.setQuotationDate(Utils.parseDate(entity[18], null));
+                sync.setShippingDate(Utils.parseDate(entity[19], null));
+                sync.setEddDate(Utils.parseDate(entity[20], null));
+                sync.setAvailableDate(Utils.parseDate(entity[21], null));
+                sync.setDsgRemark(Utils.parseString(entity[22], ""));
                 syncDataList.add(sync);
             }
         } catch (Exception e) {

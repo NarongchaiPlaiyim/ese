@@ -17,6 +17,7 @@ public class DataSyncConfirmOrderView {
     private String customerGroup;
     private String confirmId;
     private Date confirmDate;
+    private String confirmDocNo;
     private String saleId;
     private String purchaseOrder;
     private String deliveryName;
@@ -44,6 +45,7 @@ public class DataSyncConfirmOrderView {
                 .append("customerGroup", customerGroup)
                 .append("confirmId", confirmId)
                 .append("confirmDate", confirmDate)
+                .append("confirmDocNo", confirmDocNo)
                 .append("saleId", saleId)
                 .append("purchaseOrder", purchaseOrder)
                 .append("deliveryName", deliveryName)
