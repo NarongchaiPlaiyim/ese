@@ -113,4 +113,9 @@ public class PickingOrderBean extends Bean {
             showDialogWarning("Please select data.");
         }
     }
+
+    public void stikerWorkLoadReport(){
+        userDetail = getUser();
+        pickingOrderService.getStikerWorkLoadReport(pickingOrderModel.getId(), userDetail);
+    }
 }

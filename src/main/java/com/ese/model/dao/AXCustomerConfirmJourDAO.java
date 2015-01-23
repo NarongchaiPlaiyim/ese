@@ -2,14 +2,13 @@ package com.ese.model.dao;
 
 import com.ese.model.db.AXCustomerConfirmJourModel;
 import com.ese.model.view.DataSyncConfirmOrderView;
+import com.ese.model.view.report.StiketWorkLoadViewReport;
 import com.ese.utils.Utils;
-import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
-import org.hibernate.criterion.Restrictions;
-import org.hibernate.type.StringType;
-import org.hibernate.type.TimestampType;
+import org.hibernate.type.*;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -156,5 +155,73 @@ public class AXCustomerConfirmJourDAO extends GenericDAO<AXCustomerConfirmJourMo
         } catch (Exception e) {
             log.debug("Exception : ", e);
         }
+    }
+
+    public List<StiketWorkLoadViewReport> genStikerWorkLoadReport(int pickingId){
+        List<StiketWorkLoadViewReport> viewReports = new ArrayList<StiketWorkLoadViewReport>();
+
+        StringBuilder sqlBuilder = new StringBuilder();
+
+        sqlBuilder.append(" SELECT ");
+        sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.sales_order AS ORDER_ID,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.docno AS DOC_NO,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustTable.name AS CUSTOMER_NAME,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.ItemId AS ITEM_NUMBER,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".item_master.DSGThaiItemDescription AS THAI_ITEM_DESCRIPTION,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".reserved_order.picked_qty AS QUANTITY,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.salesunit AS ORDER_UNIT,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.dsg_remark AS REMARK");
+        sqlBuilder.append(" FROM ").append(getPrefix()).append(".picking_order");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".picking_order_line");
+        sqlBuilder.append(" ON  ").append(getPrefix()).append(".picking_order.id = ").append(getPrefix()).append(".picking_order_line.picking_order_id");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".item_master");
+        sqlBuilder.append(" ON ").append(getPrefix()).append(".picking_order_line.ItemId = ").append(getPrefix()).append(".item_master.ItemId");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".ax_CustTable");
+        sqlBuilder.append(" ON ").append(getPrefix()).append(".picking_order.customer_code = ").append(getPrefix()).append(".ax_CustTable.AccountNum");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".ax_SalesTable");
+        sqlBuilder.append(" ON ").append(getPrefix()).append(".picking_order.sales_admin = ").append(getPrefix()).append(".ax_SalesTable.SalesId");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".reserved_order");
+        sqlBuilder.append(" ON ").append(getPrefix()).append(".picking_order_line.id = ").append(getPrefix()).append(".reserved_order.picking_order_line_id");
+        sqlBuilder.append(" WHERE ").append(getPrefix()).append(".picking_order.id = " ).append(pickingId);
+
+        log.debug("--SQL {}",sqlBuilder.toString());
+
+        try {
+            SQLQuery query = getSession().createSQLQuery(sqlBuilder.toString())
+                    .addScalar("ORDER_ID", StringType.INSTANCE)
+                    .addScalar("DOC_NO", StringType.INSTANCE)
+                    .addScalar("CUSTOMER_NAME", StringType.INSTANCE)
+                    .addScalar("ITEM_NUMBER", StringType.INSTANCE)
+                    .addScalar("THAI_ITEM_DESCRIPTION", StringType.INSTANCE)
+                    .addScalar("QUANTITY", BigDecimalType.INSTANCE)
+                    .addScalar("ORDER_UNIT", StringType.INSTANCE)
+                    .addScalar("REMARK", StringType.INSTANCE);
+            List<Object[]> objects = query.list();
+            log.debug("----------- {}", objects.size());
+
+            for (Object[] entity : objects) {
+                StiketWorkLoadViewReport report = new StiketWorkLoadViewReport();
+//                log.debug("{}",Utils.parseString(entity[0], ""));
+//                log.debug("{}",Utils.parseString(entity[1], ""));
+//                log.debug("{}",Utils.parseString(entity[2], ""));
+//                log.debug("{}", Utils.parseString(entity[3], ""));
+//                log.debug("{}", Utils.parseBigDecimal(entity[4], BigDecimal.ZERO));
+//                log.debug("{}", Utils.parseString(entity[5], ""));
+//                log.debug("{}", Utils.parseString(entity[6], ""));
+                report.setSalesId(Utils.parseString(entity[0], ""));
+                report.setDocNo(Utils.parseString(entity[1], ""));
+                report.setCustomerName(Utils.parseString(entity[2], ""));
+                report.setItemId(Utils.parseString(entity[3], ""));
+                report.setThaiItemDes(Utils.parseString(entity[4], ""));
+                report.setQuantity(Utils.parseBigDecimal(entity[5], BigDecimal.ZERO));
+                report.setOrderUnit(Utils.parseString(entity[6], ""));
+                report.setRemark(Utils.parseString(entity[7], ""));
+                viewReports.add(report);
+            }
+        } catch (Exception e) {
+            log.debug("Exception SQL : {}", e);
+        }
+
+        return viewReports;
     }
 }

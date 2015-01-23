@@ -39,20 +39,19 @@
                                              update=":pickingOrderForm"
                                              onstart="PF('bui').block()"
                                              oncomplete="PF('bui').unblock()"
+                                             action="#{pickingOrderBean.stikerWorkLoadReport()}"
                                              ajax="false"
                                              icon="ui-icon-print"
                                              styleClass="medium" />
 
                             <p:commandButton id="#{msg.get('btn.name.print')}"
                                              value="#{msg.get('btn.name.print')}"
-                                             disabled="#{pickingOrderBean.flagBtnPrint}"
                                              process="@form"
                                              update=":pickingOrderForm"
-                                             onstart="PF('bui').block()"
-                                             oncomplete="PF('bui').unblock()"
-                                             ajax="false"
+                                             oncomplete="PF('reportPickingDlg').show()"
                                              icon="ui-icon-print"
                                              styleClass="medium" style="#{msg.get('btn.size')}"/>
+                            <!--disabled="#{pickingOrderBean.flagBtnPrint}"-->
                         </div>
                     </p:panel>
 
@@ -305,6 +304,14 @@
                       onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
                       modal="true" width="100%" closable="false">
                 <ui:include src="../site/dialog/axConfirmOrderDialog.xhtml"/>
+            </p:dialog>
+        </p:panel>
+
+        <p:panel id="reportPickingPanel" styleClass="panel">
+            <p:dialog id="reportPickingDialog" widgetVar="reportPickingDlg" header="Print Selection"
+                      onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
+                      modal="true" closable="true">
+                <ui:include src="../site/dialog/pickingOrderReport.xhtml"/>
             </p:dialog>
         </p:panel>
 

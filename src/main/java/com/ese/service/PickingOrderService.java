@@ -4,14 +4,18 @@ import com.ese.model.dao.*;
 import com.ese.model.db.*;
 import com.ese.model.view.DataSyncConfirmOrderView;
 import com.ese.model.view.PickingOrderView;
+import com.ese.model.view.report.StiketWorkLoadViewReport;
 import com.ese.service.security.UserDetail;
 import com.ese.transform.PickingOrderLineTransform;
 import com.ese.transform.PickingOrderTransform;
 import com.ese.utils.Utils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Component
@@ -27,6 +31,10 @@ public class PickingOrderService extends Service {
     @Resource private PickingOrderTransform pickingOrderTransform;
     @Resource private PickingOrderLineDAO pickingOrderLineDAO;
     @Resource private PickingOrderLineTransform pickingOrderLineTransform;
+    @Resource private ReportService reportService;
+
+    @Value("#{config['report.stikerworkload']}")
+    private String pathStikerWorkLoad;
 
     public String getTypeBeforeOnLoaf(long staffId){
         List<UserAccessModel> userAccessModelList = userAccessDAO.findByPickingOrder(Utils.parseInt(staffId, 0));
@@ -143,6 +151,21 @@ public class PickingOrderService extends Service {
             } catch (Exception e) {
                 log.debug("Exception error onSavePickingOrderLine : ", e);
             }
+        }
+    }
+
+    public void getStikerWorkLoadReport(int pickingId, UserDetail user){
+        String nameReport = Utils.genDateReportStringDDMMYYYY(new Date()) + "_StikerWorkLoad";
+        List<StiketWorkLoadViewReport> viewReports = axCustomerConfirmJourDAO.genStikerWorkLoadReport(pickingId);
+
+        HashMap map = new HashMap<String, Object>();
+        map.put("userPrint", user.getUserName());
+        map.put("printDate", Utils.convertToStringDDMMYYYY(new Date()));
+
+        try {
+            reportService.exportPDF(pathStikerWorkLoad, map, nameReport, viewReports);
+        } catch (Exception e) {
+            log.debug("Exception Report : ", e);
         }
     }
 }
