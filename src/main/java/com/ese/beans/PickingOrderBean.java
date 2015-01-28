@@ -6,6 +6,7 @@ import com.ese.model.view.DataSyncConfirmOrderView;
 import com.ese.model.view.PickingOrderView;
 import com.ese.service.PickingOrderService;
 import com.ese.service.security.UserDetail;
+import com.ese.utils.FacesUtil;
 import com.ese.utils.Utils;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,6 +105,7 @@ public class PickingOrderBean extends Bean {
 
     public void onClose(){
         pickingOrderService.rollbackStatus();
+        seleteDataSync = new ArrayList<DataSyncConfirmOrderView>();
     }
 
     public void onSyncOrder(){
@@ -121,5 +124,11 @@ public class PickingOrderBean extends Bean {
 
     public void confirmationPackingReport(){
         pickingOrderService.getConfirmationPackingReport(pickingOrderModel.getId(), userDetail);
+    }
+
+    public void onAddtoPickingOrderShowItem(){
+        HttpSession session = FacesUtil.getSession(true);
+        session.setAttribute("pickingOrderId", pickingOrderModel);
+        FacesUtil.redirect("/site/pickingOrderShowItem.xhtml");
     }
 }

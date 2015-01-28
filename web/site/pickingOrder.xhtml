@@ -39,19 +39,18 @@
                                              update=":pickingOrderForm"
                                              onstart="PF('bui').block()"
                                              oncomplete="PF('bui').unblock()"
-                                             action="#{pickingOrderBean.stikerWorkLoadReport()}"
-                                             ajax="false"
+                                             action="#{pickingOrderBean.onAddtoPickingOrderShowItem()}"
                                              icon="ui-icon-print"
                                              styleClass="medium" />
 
                             <p:commandButton id="#{msg.get('btn.name.print')}"
                                              value="#{msg.get('btn.name.print')}"
                                              process="@form"
+                                             disabled="#{pickingOrderBean.flagBtnPrint}"
                                              update=":pickingOrderForm"
                                              oncomplete="PF('reportPickingDlg').show()"
                                              icon="ui-icon-print"
                                              styleClass="medium" style="#{msg.get('btn.size')}"/>
-                            <!--disabled="#{pickingOrderBean.flagBtnPrint}"-->
                         </div>
                     </p:panel>
 

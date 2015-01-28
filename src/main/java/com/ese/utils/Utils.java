@@ -169,6 +169,24 @@ public enum Utils {
         }
     }
 
+    public static boolean parseBoolean(Object input, boolean defaultValue){
+        if(input == null)
+            return defaultValue;
+        else if (input instanceof Boolean)
+            return (Boolean) input;
+        else {
+            try{
+                if(isNull(input)){
+                    return defaultValue;
+                } else {
+                    return false;
+                }
+            } catch (ClassCastException e){
+                return defaultValue;
+            }
+        }
+    }
+
     public static String convertToStringDDMMYYYY(Date date){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.ENGLISH);
         if (Utils.isNull(date)){

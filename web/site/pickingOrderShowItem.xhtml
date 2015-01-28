@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>#{msg.get('menu.pickingsowitem.title')}</title>
+    </h:head>
+    <h:body>
+        <p:layout fullPage="true" id="layoutPanel">
+            <p:layoutUnit id="layoutTop" position="north" size="180" header="#{msg.get('header.north')}" collapsible="true" style="border: 0">
+                <ui:insert name="header">
+                    <ui:include src="#{msg.get('include.header')}"/>
+                </ui:insert>
+            </p:layoutUnit>
+            <p:layoutUnit id="layoutLeft" position="west" size="#{msg.get('layoutLeft.size')}" header="#{msg.get('header.west')}" collapsible="true" style="border: 0">
+                <ui:include src="#{msg.get('include.menu')}"/>
+            </p:layoutUnit>
+
+            <p:layoutUnit id="layoutCenter" position="center" header="#{msg.get('menu.pickingsowitem.title')}" >
+                <h:form id="pickingOrderShowItemForm">
+                    <p:panel style="border: 0">
+                        <div style="text-align: right;">
+                            <p:commandButton id="#{msg.get('btn.name.print')}"
+                                             value="#{msg.get('btn.name.print')}"
+                                             process="@form"
+                                             disabled="#{pickingOrderShowItemBean.flagPrint}"
+                                             update=":pickingOrderShowItemForm"
+                                             icon="ui-icon-print"
+                                             styleClass="medium" style="#{msg.get('btn.size')}"/>
+                            <p:commandButton id="Close"
+                                             value="Close"
+                                             process="@form"
+                                             update=":pickingOrderShowItemForm"
+                                             action="#{pickingOrderShowItemBean.onClose}"
+                                             onstart="PF('bui').block()"
+                                             oncomplete="PF('bui').unblock()"
+                                             styleClass="medium" />
+                        </div>
+                    </p:panel>
+
+                    <table border="0" class="content_table_form">
+                        <tr >
+                            <td style="min-width: 150px; width: 150px; max-width: 150px;" class="left" />
+                            <td style="min-width: 320px; width: 320px; max-width: 320px;" class="left" />
+                            <td style="min-width: 130px; width: 130px; max-width: 130px;" class="left" />
+                            <td style="min-width: 320px; width: 320px; max-width: 320px;" class="left" />
+                            <td style="min-width: 150px; width: 150px; max-width: 150px;" class="left" />
+                            <td style="min-width: 320px; width: 320px; max-width: 320px;" class="left" />
+                            <td style="min-width: 180px; width: 180px; max-width: 180px;" class="left" />
+                            <td style="min-width: 300px; width: 300px; max-width: 300px;" class="left" />
+                        </tr>
+                        <tr>
+                            <td>
+                                <h:outputText value="Customer Code"/>
+                            </td>
+                            <td>
+                                <p:inputText style="#{msg.get('fix.size.300')}"
+                                             value="#{pickingOrderShowItemBean.pickingOrderModel.customerCode.accountNum}"
+                                             disabled="true"/>
+                            </td>
+                            <td>
+                                <h:outputText value="Confirm Id"/>
+                            </td>
+                            <td>
+                                <p:inputText style="#{msg.get('fix.size.300')}"
+                                             value="#{pickingOrderShowItemBean.pickingOrderModel.confirmId}"
+                                             disabled="true"/>
+                            </td>
+                            <td>
+                                <h:outputText value="Delivery Name"/>
+                            </td>
+                            <td>
+                                <p:inputText style="#{msg.get('fix.size.300')}"
+                                             value="#{pickingOrderShowItemBean.pickingOrderModel.deliveryName}"
+                                             disabled="true"/>
+                            </td>
+                            <td>
+                                <h:outputText value="Requset Ship Date"/>
+                            </td>
+                            <td>
+                                <p:inputText style="#{msg.get('fix.size.300')}"
+                                             value="#{pickingOrderShowItemBean.pickingOrderModel.requestShiftDate}"
+                                             disabled="true"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h:outputText value="Customer Name"/>
+                            </td>
+                            <td>
+                                <p:inputText style="#{msg.get('fix.size.300')}"
+                                             value="#{pickingOrderShowItemBean.pickingOrderModel.customerCode.name}"
+                                             disabled="true"/>
+                            </td>
+                            <td>
+                                <h:outputText value="Confirm Date"/>
+                            </td>
+                            <td>
+                                <p:inputText style="#{msg.get('fix.size.300')}"
+                                             value="#{pickingOrderShowItemBean.pickingOrderModel.confirmDate}"
+                                             disabled="true"/>
+                            </td>
+                            <td>
+                                <h:outputText value="Delivery Address"/>
+                            </td>
+                            <td>
+                                <p:inputText style="#{msg.get('fix.size.300')}"
+                                             value="#{pickingOrderShowItemBean.pickingOrderModel.deliveryAddress}"
+                                             disabled="true"/>
+                            </td>
+                            <td>
+                                <h:outputText value="EDD Date"/>
+                            </td>
+                            <td>
+                                <p:inputText style="#{msg.get('fix.size.300')}"
+                                             value="#{pickingOrderShowItemBean.pickingOrderModel.eddDate}"
+                                             disabled="true"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h:outputText value="Puchase Order"/>
+                            </td>
+                            <td>
+                                <p:inputText style="#{msg.get('fix.size.300')}"
+                                             value="#{pickingOrderShowItemBean.pickingOrderModel.purchaseOrder}"
+                                             disabled="true"/>
+                            </td>
+                            <td>
+                                <h:outputText value="Sale Order"/>
+                            </td>
+                            <td>
+                                <p:inputText style="#{msg.get('fix.size.300')}"
+                                             value="#{pickingOrderShowItemBean.pickingOrderModel.salesOrder}"
+                                             disabled="true"/>
+                            </td>
+                            <td>
+                                <h:outputText value="Remark"/>
+                            </td>
+                            <td>
+                                <p:inputTextarea style="#{msg.get('fix.size.300')}"
+                                                 value="#{pickingOrderShowItemBean.pickingOrderModel.remark}"
+                                                 disabled="true"/>
+                            </td>
+                            <td>
+                                <h:outputText value="Avaliable Date"/>
+                            </td>
+                            <td>
+                                <p:inputText style="#{msg.get('fix.size.300')}"
+                                             value="#{pickingOrderShowItemBean.pickingOrderModel.avalibleDate}"
+                                             disabled="true"/>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <p:panel style="border: 0">
+                        <div style="text-align: right;">
+                            <p:commandButton value="Add/Edit Item" id="addBtn"
+                                             styleClass="medium" style="#{msg.get('fix.size.200')}"
+                                             disabled="#{pickingOrderShowItemBean.flagItem}"
+                                             onstart="PF('bui').block()"
+                                             oncomplete="PF('bui').unblock()" />
+                            <p:commandButton value="FIFO Reserve" id="fifoBtn"
+                                             styleClass="medium" style="#{msg.get('fix.size.200')}"
+                                             disabled="#{pickingOrderShowItemBean.flagFIFOReserved}"
+                                             onstart="PF('bui').block()"
+                                             oncomplete="PF('bui').unblock()" />
+                            <p:commandButton value="Period Reserve" id="periodBtn"
+                                             styleClass="medium" style="#{msg.get('fix.size.200')}"
+                                             disabled="#{pickingOrderShowItemBean.flagPeriodReserved}"
+                                             onstart="PF('bui').block()"
+                                             oncomplete="PF('bui').unblock()" />
+                            <p:commandButton value="Manual Reserve" id="manualBtn"
+                                             styleClass="medium" style="#{msg.get('fix.size.200')}"
+                                             disabled="#{pickingOrderShowItemBean.flagManualReserved}"
+                                             onstart="PF('bui').block()"
+                                             oncomplete="PF('bui').unblock()" />
+                            <p:commandButton value="Foil" id="poilBtn"
+                                             styleClass="medium" style="#{msg.get('btn.size')}"
+                                             disabled="#{pickingOrderShowItemBean.flagPoil}"
+                                             update=":foilPanel"
+                                             action="#{pickingOrderShowItemBean.onClickFoil}"
+                                             onstart="PF('bui').block()"
+                                             oncomplete="PF('bui').unblock()" />
+                            <p:commandButton value="Show Item Status" id="showStatusBtn"
+                                             styleClass="medium" style="#{msg.get('fix.size.200')}"
+                                             disabled="#{pickingOrderShowItemBean.flagShowStatus}"
+                                             onstart="PF('bui').block()"
+                                             oncomplete="PF('bui').unblock()" />
+                        </div>
+                    </p:panel>
+
+                    <p:dataTable id="pickingOrderShowItemTable"
+                                 styleClass="full_table"
+                                 selection="#{pickingOrderShowItemBean.selectPickingLine}"
+                                 value="#{pickingOrderShowItemBean.orderLineModelList}"
+                                 var="pickingLine"
+                                 rowKey="#{pickingLine.id}"
+                                 resizableColumns="true"
+                                 style="width: 100%; max-width: 100%; min-width: 100%">
+                        <p:ajax event="rowSelectCheckbox"
+                                listener="#{pickingOrderShowItemBean.onClickTable()}"
+                                update=":pickingOrderShowItemForm:addBtn,
+                                        :pickingOrderShowItemForm:fifoBtn,
+                                        :pickingOrderShowItemForm:periodBtn,
+                                        :pickingOrderShowItemForm:manualBtn,
+                                        :pickingOrderShowItemForm:poilBtn,
+                                        :pickingOrderShowItemForm:showStatusBtn"/>
+                        <p:ajax event="rowSelect"
+                                listener="#{pickingOrderShowItemBean.onClickTable()}"
+                                update=":pickingOrderShowItemForm:addBtn,
+                                        :pickingOrderShowItemForm:fifoBtn,
+                                        :pickingOrderShowItemForm:periodBtn,
+                                        :pickingOrderShowItemForm:manualBtn,
+                                        :pickingOrderShowItemForm:poilBtn,
+                                        :pickingOrderShowItemForm:showStatusBtn"/>
+                        <p:ajax event="rowUnselectCheckbox"
+                                listener="#{pickingOrderShowItemBean.onClickTable()}"
+                                update=":pickingOrderShowItemForm:addBtn,
+                                        :pickingOrderShowItemForm:fifoBtn,
+                                        :pickingOrderShowItemForm:periodBtn,
+                                        :pickingOrderShowItemForm:manualBtn,
+                                        :pickingOrderShowItemForm:poilBtn,
+                                        :pickingOrderShowItemForm:showStatusBtn"/>
+                        <p:column selectionMode="multiple" style="width:16px;text-align:center; height: 20px"/>
+                        <p:column headerText="Item" style="width: 80px" styleClass="center">
+                            <h:outputText value="#{pickingLine.item}"/>
+                        </p:column>
+                        <p:column headerText="Descript" style="width: 220px" styleClass="center">
+                            <h:outputText value="#{pickingLine.description}"/>
+                        </p:column>
+                        <p:column headerText="Order Qty" style="width: 80px; text-align: center" styleClass="center">
+                            <h:outputText value="#{pickingLine.orderQty}">
+                                <f:convertNumber pattern="#,##0"  minFractionDigits="2" maxFractionDigits="2"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Reserved Qty" style="width: 80px; text-align: center" styleClass="center">
+                            <h:outputText value="#{pickingLine.reservedQty}">
+                                <f:convertNumber pattern="#,##0"  minFractionDigits="2" maxFractionDigits="2"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="%Picked" style="width: 80px; text-align: center" styleClass="center">
+                            <h:outputText value="#{pickingLine.perPicked}">
+                                <f:convertNumber pattern="#,##0"  minFractionDigits="2" maxFractionDigits="2"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Foil" style="width: 50px; background-color: #{pickingLine.foil == 1 ? 'green' : 'red'};">
+                            <h:outputText value=""/>
+                        </p:column>
+                        <p:column headerText="Foil Qty" style="width: 80px; text-align: center" styleClass="center">
+                            <h:outputText value="#{pickingLine.foilQty}">
+                                <f:convertNumber pattern="#,##0"  minFractionDigits="2" maxFractionDigits="2"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Status" style="width: 120px" styleClass="center">
+                            <h:outputText value="${pickingLine.status}"/>
+                        </p:column>
+                    </p:dataTable>
+
+                </h:form>
+            </p:layoutUnit>
+        </p:layout>
+
+        <p:panel id="foilPanel" style="border: 0">
+            <p:confirmDialog id="foilDialog" widgetVar="foilDlg" width="#{msg.get('dialog.message.size')}"
+                             closable="false"
+                             header="#{pickingOrderShowItemBean.messageHeader}" message="#{pickingOrderShowItemBean.message}">
+                <div style="text-align: right">
+                    <p:commandButton value="#{msg.get('btn.name.yes')}"
+                                     process="@this"
+                                     styleClass="medium" style="#{msg.get('btn.size')}"
+                                     action="#{pickingOrderShowItemBean.warpOnFoil}"
+                                     onstart="PF('bui').block()"
+                                     oncomplete="PF('bui').unblock(), PF('foilDlg').hide()"
+                                     update=":pickingOrderShowItemForm"
+                                     icon="ui-icon-check"/>
+                    <p:commandButton value="#{msg.get('btn.name.cancel')}"
+                                     process="@this"
+                                     styleClass="medium" style="#{msg.get('btn.size')}"
+                                     oncomplete="PF('foilDlg').hide()"
+                                     icon="ui-icon-cancel"/>
+                </div>
+            </p:confirmDialog>
+        </p:panel>
+
+    </h:body>
+</f:view>
+</html>

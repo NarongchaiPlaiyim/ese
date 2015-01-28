@@ -39,6 +39,9 @@ public class ReservedOrderModel extends AbstractModel{
     @JoinColumn(name="status")
     private StatusModel statusModel;
 
+    @Column(name="foil_qty")
+    private BigDecimal foilQty;
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
@@ -49,6 +52,7 @@ public class ReservedOrderModel extends AbstractModel{
                 .append("reservedQty", reservedQty)
                 .append("pickedQty", pickedQty)
                 .append("statusModel", statusModel)
+                .append("foilQty", foilQty)
                 .toString();
     }
 }
