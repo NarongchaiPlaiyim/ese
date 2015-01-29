@@ -33,7 +33,7 @@ public class RoleAccessService extends Service{
 
     @Value("#{config['report.roleaccess']}")
     private String pathPrintRoleAccess;
-    @Value("#{config['report.subreport']}")
+    @Value("#{config['report.logo']}")
     private String path;
 
     public List<SystemRoleModel> getSystemRoleByIsValid(){

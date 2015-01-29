@@ -125,7 +125,7 @@
 			</staticText>
 			<image>
 				<reportElement uuid="dc0fda23-b9af-4df5-b5b3-ea20445e9b6e" x="214" y="0" width="94" height="80"/>
-				<imageExpression><![CDATA[$P{path} + "DN1.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{path}]]></imageExpression>
 			</image>
 		</band>
 	</pageHeader>

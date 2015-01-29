@@ -40,7 +40,7 @@ public class UserManagementService extends Service{
 
     @Value("#{config['report.userandrole']}")
     private String pathPrintUserAndRole;
-    @Value("#{config['report.subreport']}")
+    @Value("#{config['report.logo']}")
     private String path;
 
     public List<MSDepartmentModel> getDepartAll(){
