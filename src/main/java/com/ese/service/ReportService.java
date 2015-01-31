@@ -32,7 +32,6 @@ public class ReportService extends Service{
 
         log.debug("generate pdf.");
         InputStream inputStream = FacesUtil.getFacesContext().getExternalContext().getResourceAsStream(fileName);
-
         JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
         JRDataSource dataSource = new JRBeanCollectionDataSource(reportList);
 

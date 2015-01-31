@@ -12,6 +12,7 @@ import com.ese.model.view.report.RoleAccessViewReport;
 import com.ese.service.security.UserDetail;
 import com.ese.transform.RoleAccessTransform;
 import com.ese.transform.SystemRoleTransform;
+import com.ese.utils.FacesUtil;
 import com.ese.utils.Utils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -155,7 +156,7 @@ public class RoleAccessService extends Service{
 
         map.put("userPrint", userDetail.getUserName());
         map.put("printDate", Utils.convertToStringYYYYMMDDHHmmss(new Date()));
-        map.put("path", path);
+        map.put("path", FacesUtil.getFacesContext().getExternalContext().getRealPath(path));
 
         reportViews = roleAccessDAO.genSQLReportUserAndRole();
 
