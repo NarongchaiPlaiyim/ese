@@ -9,6 +9,7 @@ import com.ese.model.view.LocationItemView;
 import com.ese.model.view.PalletManagementView;
 import com.ese.model.view.report.PalletManagemengModelReport;
 import com.ese.transform.PalletManagementTransform;
+import com.ese.utils.FacesUtil;
 import com.ese.utils.Utils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -33,7 +34,7 @@ public class PalletService extends Service{
     private String pathPrintTagReport;
     @Value("#{config['report.printtagv2']}")
     private String pathPrintTagV2Report;
-    @Value("#{config['report.subreport']}")
+    @Value("#{config['report.subpallet']}")
     private String pathSubReport;
 
     public void test(){
@@ -102,7 +103,7 @@ public class PalletService extends Service{
                 partReport = pathPrintTagReport;
             } else if (!Utils.isNull(palletModel) && !Utils.isZero(palletModel.getIsCombine())){
                 partReport = pathPrintTagV2Report;
-                map.put("path", pathSubReport);
+                map.put("path", FacesUtil.getFacesContext().getExternalContext().getRealPath(pathSubReport));
                 map.put("MainPallet", palletDAO.findByIdToReport(palletModel.getId()));
                 map.put("SubPallet", palletDAO.genSQLReportPalletV2(palletModel.getId()));
             }

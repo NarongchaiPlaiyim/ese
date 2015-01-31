@@ -77,7 +77,7 @@
 			<subreport>
 				<reportElement uuid="884694c0-2e61-4ec2-98f1-c846e0549d74" x="0" y="0" width="555" height="46"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{SubPallet})]]></dataSourceExpression>
-				<subreportExpression><![CDATA[$P{path} + "PalletManagementV2_subreport.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{path}]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

@@ -10,6 +10,7 @@ import com.ese.service.security.encryption.EncryptionService;
 import com.ese.transform.StaffRoleTransform;
 import com.ese.transform.UserAccessTransform;
 import com.ese.transform.UserManagementTranstorm;
+import com.ese.utils.FacesUtil;
 import com.ese.utils.Utils;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
@@ -281,7 +282,7 @@ public class UserManagementService extends Service{
 
         map.put("userPrint", user.getUserName());
         map.put("printDate", Utils.convertToStringYYYYMMDDHHmmss(new Date()));
-        map.put("path", path);
+        map.put("path", FacesUtil.getFacesContext().getExternalContext().getRealPath(path));
 
         reportViews = staffDAO.genSQLReportUserAndRole();
 
