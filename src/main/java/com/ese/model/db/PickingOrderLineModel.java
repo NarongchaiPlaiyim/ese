@@ -28,7 +28,7 @@ public class PickingOrderLineModel extends AbstractModel{
     private BigDecimal line_num;
 
     @Column(name = "ItemId")
-    private String ItemId;
+    private String itemId;
 
     @Column(name = "origsaleid")
     private String origSaleId;
@@ -84,7 +84,7 @@ public class PickingOrderLineModel extends AbstractModel{
                 .append("id", id)
                 .append("pickingOrderId", pickingOrderId)
                 .append("line_num", line_num)
-                .append("ItemId", ItemId)
+                .append("itemId", itemId)
                 .append("origSaleId", origSaleId)
                 .append("qty", qty)
                 .append("shipDate", shipDate)

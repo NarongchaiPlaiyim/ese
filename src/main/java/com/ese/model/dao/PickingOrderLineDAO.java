@@ -1,5 +1,7 @@
 package com.ese.model.dao;
 import com.ese.model.db.PickingOrderLineModel;
+import com.ese.model.view.FIFOReservedView;
+import com.ese.model.view.LocationQtyView;
 import com.ese.model.view.PickingOrderShowItemView;
 import com.ese.utils.Utils;
 import org.hibernate.Criteria;
@@ -27,15 +29,15 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
         sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.id AS ID,");
         sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.ItemId AS ITEM,");
         sqlBuilder.append(" ").append(getPrefix()).append(".item_master.DSGThaiItemDescription AS DESCRIPTION,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.qty AS ORDER_QTY,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".reserved_order.reserved_qty AS RESERVED_QTY,");
-        sqlBuilder.append(" (CASE WHEN ").append(getPrefix()).append(".reserved_order.reserved_qty IS NULL THEN 0 ELSE ");
-        sqlBuilder.append(" ").append(getPrefix()).append(".reserved_order.reserved_qty END /");
-        sqlBuilder.append(" CASE WHEN ").append(getPrefix()).append(".reserved_order.picked_qty IS NULL THEN 0 ELSE");
-        sqlBuilder.append(" ").append(getPrefix()).append(".reserved_order.picked_qty END) *  100 AS PER_PICKED,");
+        sqlBuilder.append(" SUM(").append(getPrefix()).append(".picking_order_line.qty) AS ORDER_QTY,");
+        sqlBuilder.append(" SUM(").append(getPrefix()).append(".reserved_order.reserved_qty) AS RESERVED_QTY,");
+        sqlBuilder.append(" (CASE WHEN SUM(").append(getPrefix()).append(".reserved_order.reserved_qty) IS NULL THEN 0 ELSE ");
+        sqlBuilder.append(" SUM(").append(getPrefix()).append(".reserved_order.reserved_qty) / (CASE WHEN SUM(");
+        sqlBuilder.append("").append(getPrefix()).append(".reserved_order.picked_qty) IS NULL THEN 0 ELSE");
+        sqlBuilder.append(" SUM(").append(getPrefix()).append(".reserved_order.picked_qty) END) *  100 END)  AS PER_PICKED,");
         sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.isfoil AS FOIL,");
-        sqlBuilder.append(" CASE WHEN ").append(getPrefix()).append(".reserved_order.foil_qty IS NULL THEN 0 ELSE");
-        sqlBuilder.append(" ").append(getPrefix()).append(".reserved_order.foil_qty END AS FOIL_QTY,");
+        sqlBuilder.append(" CASE WHEN SUM(").append(getPrefix()).append(".reserved_order.foil_qty) IS NULL THEN 0 ELSE");
+        sqlBuilder.append(" SUM(").append(getPrefix()).append(".reserved_order.foil_qty) END AS FOIL_QTY,");
         sqlBuilder.append(" ").append(getPrefix()).append(".mst_status.caption AS STATUS,");
         sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.status AS STATUS_ID");
         sqlBuilder.append(" FROM ").append(getPrefix()).append(".picking_order_line");
@@ -47,6 +49,9 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
         sqlBuilder.append(" ON ").append(getPrefix()).append(".picking_order_line.status = ").append(getPrefix()).append(".mst_status.status_seq");
         sqlBuilder.append(" AND ").append(getPrefix()).append(".mst_status.table_id = 1");
         sqlBuilder.append(" WHERE ").append(getPrefix()).append(".picking_order_line.picking_order_id = " ).append(pickingOrderId);
+        sqlBuilder.append(" GROUP BY ").append(getPrefix()).append(".picking_order_line.id, ").append(getPrefix()).append(".picking_order_line.ItemId, ");
+        sqlBuilder.append(getPrefix()).append(".item_master.DSGThaiItemDescription, ").append(getPrefix()).append(".picking_order_line.isfoil, ");
+        sqlBuilder.append(getPrefix()).append(".mst_status.caption, ").append(getPrefix()).append(".picking_order_line.status");
 
         log.debug(sqlBuilder.toString());
 
@@ -113,5 +118,216 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
         } catch (Exception e) {
             log.debug("Exception error updateToWrap: ", e);
         }
+    }
+
+    public FIFOReservedView findQtyOnInventTran(int pickingOrderLineId){
+        FIFOReservedView fifoReservedView = new FIFOReservedView();
+        StringBuilder selectInventTrans = new StringBuilder();
+
+        selectInventTrans.append(" SELECT ");
+        selectInventTrans.append(" ").append(getPrefix()).append(".picking_order_line.id AS PICKING_ORDER_LINE_ID,");
+        selectInventTrans.append(" ").append(getPrefix()).append(".picking_order.sales_order AS SALES_ID,");
+        selectInventTrans.append(" ").append(getPrefix()).append(".picking_order_line.ItemId AS ITEM_ID,");
+        selectInventTrans.append(" ").append(getPrefix()).append(".ax_InventTrans.id AS INVENTTRANS_ID,");
+        selectInventTrans.append(" ").append(getPrefix()).append(".ax_InventTrans.qty AS INVENTTRANS_QTY");
+        selectInventTrans.append(" FROM ").append(getPrefix()).append(".picking_order_line");
+        selectInventTrans.append(" LEFT JOIN ").append(getPrefix()).append(".picking_order");
+        selectInventTrans.append(" ON  ").append(getPrefix()).append(".picking_order_line.picking_order_id = ").append(getPrefix()).append(".picking_order.id");
+        selectInventTrans.append(" LEFT JOIN ").append(getPrefix()).append(".ax_InventTrans");
+        selectInventTrans.append(" ON ").append(getPrefix()).append(".picking_order.sales_order = ").append(getPrefix()).append(".ax_InventTrans.transrefid");
+        selectInventTrans.append(" AND ").append(getPrefix()).append(".picking_order_line.ItemId = ").append(getPrefix()).append(".ax_InventTrans.itemid");
+        selectInventTrans.append(" WHERE ").append(getPrefix()).append(".picking_order_line.id = " ).append(pickingOrderLineId);
+
+        log.debug("Query findQtyOnInventTran : {}", selectInventTrans.toString());
+
+        try {
+            SQLQuery query = getSession().createSQLQuery(selectInventTrans.toString())
+                    .addScalar("PICKING_ORDER_LINE_ID", IntegerType.INSTANCE)
+                    .addScalar("SALES_ID", StringType.INSTANCE)
+                    .addScalar("ITEM_ID", StringType.INSTANCE)
+                    .addScalar("INVENTTRANS_ID", IntegerType.INSTANCE)
+                    .addScalar("INVENTTRANS_QTY", IntegerType.INSTANCE);
+            List<Object[]> objects = query.list();
+
+            for (Object[] entity : objects) {
+                fifoReservedView.setPickingOrderLineId(Utils.parseInt(entity[0], 0));
+                fifoReservedView.setSalesId(Utils.parseString(entity[1], ""));
+                fifoReservedView.setItemId(Utils.parseString(entity[2], ""));
+                fifoReservedView.setInventtransId(Utils.parseInt(entity[3], 0));
+                fifoReservedView.setInventtransQty(Utils.parseInt(entity[4], 0));
+            }
+        } catch (Exception e) {
+            log.debug("Exception SQL : {}", e);
+        }
+        log.debug("fifoReservedView : {}", fifoReservedView.toString());
+
+        return fifoReservedView;
+    }
+
+    public void updateInventTransByUse(int inventransId){
+        StringBuilder updateInventTrans = new StringBuilder();
+        updateInventTrans.append(" UPDATE ").append(getPrefix()).append(".ax_InventTrans SET ").append(getPrefix()).append(".ax_InventTrans.status = 2 ");
+        updateInventTrans.append(" WHERE ").append(getPrefix()).append(".ax_InventTrans.id = ").append("'").append(inventransId).append("'");
+
+        log.debug("SQL updateInventTransByUse : {}", updateInventTrans.toString());
+
+        try {
+            SQLQuery q = getSession().createSQLQuery(updateInventTrans.toString());
+            q.executeUpdate();
+        } catch (Exception e) {
+            log.debug("Exception error updateInventTransByUse: ", e);
+        }
+    }
+
+    public void updateInventTransByUseFinish(int inventransId){
+        StringBuilder updateInventTrans = new StringBuilder();
+        updateInventTrans.append(" UPDATE ").append(getPrefix()).append(".ax_InventTrans SET ").append(getPrefix()).append(".ax_InventTrans.status = 1 ");
+        updateInventTrans.append(" WHERE ").append(getPrefix()).append(".ax_InventTrans.id = ").append("'").append(inventransId).append("'");
+
+        log.debug("SQL updateInventTransByUseFinish : {}", updateInventTrans.toString());
+
+        try {
+            SQLQuery q = getSession().createSQLQuery(updateInventTrans.toString());
+            q.executeUpdate();
+        } catch (Exception e) {
+            log.debug("Exception error updateInventTransByUseFinish: ", e);
+        }
+    }
+
+    public List<LocationQtyView> findByItemId(String itemId, String startBtach, String toBatch, int warehouseId, int locationId, int locationQtyId){
+        List<LocationQtyView> locationQtyViewList = new ArrayList<LocationQtyView>();
+
+        StringBuilder selectLocationQty = new StringBuilder();
+
+        selectLocationQty.append(" SELECT ");
+        selectLocationQty.append(" ").append(getPrefix()).append(".location_qty.id AS ID,");
+        selectLocationQty.append(" ").append(getPrefix()).append(".location_qty.item_master_id AS ITEM_ID,");
+        selectLocationQty.append(" ").append(getPrefix()).append(".location_qty.location_id AS LOCATION_ID,");
+        selectLocationQty.append(" (CASE WHEN ").append(getPrefix()).append(".location_qty.qty IS NULL THEN 0 ELSE ");
+        selectLocationQty.append(" ").append(getPrefix()).append(".location_qty.qty END) -");
+        selectLocationQty.append(" (CASE WHEN ").append(getPrefix()).append(".location_qty.reserved_qty IS NULL THEN 0 ELSE");
+        selectLocationQty.append(" ").append(getPrefix()).append(".location_qty.reserved_qty END) AS AVAILABLE,");
+        selectLocationQty.append(" ").append(getPrefix()).append(".location_qty.qty AS QTY,");
+        selectLocationQty.append(" ").append(getPrefix()).append(".location_qty.reserved_qty AS RESERVED_QTY,");
+        selectLocationQty.append(" ").append(getPrefix()).append(".warehouse.warehouse_code AS WAREHOUSE_CODE,");
+        selectLocationQty.append(" ").append(getPrefix()).append(".location_qty.batchno AS BATCH_NO,");
+        selectLocationQty.append(" ").append(getPrefix()).append(".location.location_barcode AS LOCATION_NAME,");
+        selectLocationQty.append(" ").append(getPrefix()).append(".item_master.DSGThaiItemDescription AS DESCRIPTION");
+        selectLocationQty.append(" FROM ").append(getPrefix()).append(".location_qty");
+        selectLocationQty.append(" LEFT JOIN ").append(getPrefix()).append(".item_master");
+        selectLocationQty.append(" ON  ").append(getPrefix()).append(".location_qty.item_master_id = ").append(getPrefix()).append(".item_master.id");
+        selectLocationQty.append(" LEFT JOIN ").append(getPrefix()).append(".location");
+        selectLocationQty.append(" ON  ").append(getPrefix()).append(".location_qty.location_id = ").append(getPrefix()).append(".location.id");
+        selectLocationQty.append(" LEFT JOIN ").append(getPrefix()).append(".warehouse");
+        selectLocationQty.append(" ON  ").append(getPrefix()).append(".location.warehouse_id = ").append(getPrefix()).append(".warehouse.id");
+        selectLocationQty.append(" WHERE ").append(getPrefix()).append(".item_master.ItemId = '" ).append(itemId).append("'");
+        selectLocationQty.append(" AND ").append(getPrefix()).append(".location_qty.qty - " ).append(getPrefix()).append(".location_qty.reserved_qty <> 0");
+
+        if (!Utils.isZero(startBtach.trim().length()) && !Utils.isZero(toBatch.trim().length())){
+            selectLocationQty.append(" AND ").append(getPrefix()).append(".location_qty.batchno >= '" ).append(startBtach).append("'");
+            selectLocationQty.append(" AND ").append(getPrefix()).append(".location_qty.batchno <= '" ).append(toBatch).append("'");
+        }
+
+        if (!Utils.isZero(warehouseId)){
+            selectLocationQty.append(" AND warehouse_id = ").append(warehouseId);
+        }
+
+        if (!Utils.isZero(locationId)){
+            selectLocationQty.append(" AND location.id = ").append(locationId);
+        }
+
+        if (!Utils.isZero(locationQtyId)){
+            selectLocationQty.append(" AND location_qty.id = ").append(locationQtyId);
+        }
+
+        selectLocationQty.append(" ORDER BY ").append(getPrefix()).append(".location_qty.batchno ASC");
+
+        log.debug("Query Location QTY : {}", selectLocationQty.toString());
+
+        try {
+            SQLQuery query = getSession().createSQLQuery(selectLocationQty.toString())
+                    .addScalar("ID", IntegerType.INSTANCE)
+                    .addScalar("ITEM_ID", StringType.INSTANCE)
+                    .addScalar("LOCATION_ID", IntegerType.INSTANCE)
+                    .addScalar("AVAILABLE", IntegerType.INSTANCE)
+                    .addScalar("QTY", IntegerType.INSTANCE)
+                    .addScalar("RESERVED_QTY", IntegerType.INSTANCE)
+                    .addScalar("WAREHOUSE_CODE", StringType.INSTANCE)
+                    .addScalar("BATCH_NO", StringType.INSTANCE)
+                    .addScalar("LOCATION_NAME", StringType.INSTANCE)
+                    .addScalar("DESCRIPTION", StringType.INSTANCE);
+            List<Object[]> objects = query.list();
+
+            for (Object[] entity : objects) {
+                LocationQtyView locationQtyView = new LocationQtyView();
+                locationQtyView.setId(Utils.parseInt(entity[0], 0));
+                locationQtyView.setItemId(Utils.parseString(entity[1], ""));
+                locationQtyView.setLocationId(Utils.parseInt(entity[2], 0));
+                locationQtyView.setAvailable(Utils.parseInt(entity[3], 0));
+                locationQtyView.setQty(Utils.parseInt(entity[4], 0));
+                locationQtyView.setReservedQty(Utils.parseInt(entity[5], 0));
+                locationQtyView.setWarehouseCode(Utils.parseString(entity[6], ""));
+                locationQtyView.setBatchNo(Utils.parseString(entity[7], ""));
+                locationQtyView.setLocationName(Utils.parseString(entity[8], ""));
+                locationQtyView.setDescription(Utils.parseString(entity[9], ""));
+                locationQtyViewList.add(locationQtyView);
+            }
+        } catch (Exception e) {
+            log.debug("Exception SQL : {}", e);
+        }
+
+        log.debug("locationQtyViewList Size : {}", locationQtyViewList.size());
+
+        return locationQtyViewList;
+    }
+
+
+    public void updateReservedQtyByLocaitonQtyId(int locationQtyId, int reservedQty){
+        StringBuilder updateLocationQty = new StringBuilder();
+        updateLocationQty.append(" UPDATE ").append(getPrefix()).append(".location_qty SET ").append(getPrefix()).append(".location_qty.reserved_qty += ").append(reservedQty);
+        updateLocationQty.append(" WHERE ").append(getPrefix()).append(".location_qty.id = ").append("").append(locationQtyId);
+
+        log.debug("SQL updateReservedQtyByLocaitonQtyId : {}", updateLocationQty.toString());
+
+        try {
+            SQLQuery q = getSession().createSQLQuery(updateLocationQty.toString());
+            q.executeUpdate();
+        } catch (Exception e) {
+            log.debug("Exception error updateReservedQtyByLocaitonQtyId: ", e);
+        }
+    }
+
+    public  List<LocationQtyView> findByLocationId(int locationId){
+        List<LocationQtyView> locationQtyViewList = new ArrayList<LocationQtyView>();
+
+        StringBuilder selectLocationQty = new StringBuilder();
+
+        selectLocationQty.append(" SELECT ");
+        selectLocationQty.append(" ").append(getPrefix()).append(".location_qty.id AS ID,");
+        selectLocationQty.append(" ").append(getPrefix()).append(".location_qty.batchno AS BATCH_NO");
+        selectLocationQty.append(" FROM ").append(getPrefix()).append(".location_qty");
+        selectLocationQty.append(" WHERE ").append(getPrefix()).append(".location_qty.location_id = '" ).append(locationId).append("'");
+
+        log.debug("Query Location QTY : {}", selectLocationQty.toString());
+
+        try {
+            SQLQuery query = getSession().createSQLQuery(selectLocationQty.toString())
+                    .addScalar("ID", IntegerType.INSTANCE)
+                    .addScalar("BATCH_NO", StringType.INSTANCE);
+            List<Object[]> objects = query.list();
+
+            for (Object[] entity : objects) {
+                LocationQtyView locationQtyView = new LocationQtyView();
+                locationQtyView.setId(Utils.parseInt(entity[0], 0));
+                locationQtyView.setBatchNo(Utils.parseString(entity[1], ""));
+                locationQtyViewList.add(locationQtyView);
+            }
+        } catch (Exception e) {
+            log.debug("Exception findByLocationId SQL : {}", e);
+        }
+
+        log.debug("locationQtyViewList Size : {}", locationQtyViewList.size());
+
+        return locationQtyViewList;
     }
 }

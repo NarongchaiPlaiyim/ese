@@ -166,18 +166,21 @@
                             <p:commandButton value="FIFO Reserve" id="fifoBtn"
                                              styleClass="medium" style="#{msg.get('fix.size.200')}"
                                              disabled="#{pickingOrderShowItemBean.flagFIFOReserved}"
+                                             action="#{pickingOrderShowItemBean.FIFOReserved()}"
+                                             update=":msgBoxSystemMessagePanel"
                                              onstart="PF('bui').block()"
                                              oncomplete="PF('bui').unblock()" />
                             <p:commandButton value="Period Reserve" id="periodBtn"
                                              styleClass="medium" style="#{msg.get('fix.size.200')}"
+                                             process="@form"
                                              disabled="#{pickingOrderShowItemBean.flagPeriodReserved}"
-                                             onstart="PF('bui').block()"
-                                             oncomplete="PF('bui').unblock()" />
+                                             oncomplete="PF('periodDlg').show()" />
                             <p:commandButton value="Manual Reserve" id="manualBtn"
                                              styleClass="medium" style="#{msg.get('fix.size.200')}"
+                                             action="#{pickingOrderShowItemBean.preManualReserved()}"
+                                             update=":manualReserveForm, :msgBoxSystemMessagePanel"
                                              disabled="#{pickingOrderShowItemBean.flagManualReserved}"
-                                             onstart="PF('bui').block()"
-                                             oncomplete="PF('bui').unblock()" />
+                                             oncomplete="PF('manualDlg').show()" />
                             <p:commandButton value="Foil" id="poilBtn"
                                              styleClass="medium" style="#{msg.get('btn.size')}"
                                              disabled="#{pickingOrderShowItemBean.flagPoil}"
@@ -284,6 +287,45 @@
                                      icon="ui-icon-cancel"/>
                 </div>
             </p:confirmDialog>
+        </p:panel>
+
+        <p:panel id="msgBoxSystemMessagePanel" style="border: 0">
+            <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="#{msg.get('dialog.message.size')}"
+                             closable="false"
+                             header="#{pickingOrderShowItemBean.messageHeader}" message="#{pickingOrderShowItemBean.message}" >
+                <div style="text-align: right">
+                    <p:commandButton value="#{msg.get('btn.name.ok')}"
+                                     styleClass="medium" style="#{msg.get('btn.size')}"
+                                     icon="ui-icon-check"
+                                     process="@this"
+                                     update="pickingOrderShowItemForm"
+                                     oncomplete="PF('msgBoxSystemMessageDlg').hide(); PF('periodDlg').hide(); PF('reservdDlg').hide()"/>
+                </div>
+            </p:confirmDialog>
+        </p:panel>
+
+        <p:panel id="periodPanel" styleClass="panel">
+            <p:dialog id="periodDialog" widgetVar="periodDlg" header="Period Reserve"
+                      onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
+                      modal="true" closable="true">
+                <ui:include src="../site/dialog/periodReserveDialog.xhtml"/>
+            </p:dialog>
+        </p:panel>
+
+        <p:panel id="manualPanel" styleClass="panel">
+            <p:dialog id="manualDialog" widgetVar="manualDlg" header="Manual Reserve"
+                      onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
+                      modal="true" closable="true" width="1480">
+                <ui:include src="../site/dialog/manualReserveDialog.xhtml"/>
+            </p:dialog>
+        </p:panel>
+
+        <p:panel id="reservdPanel" styleClass="panel">
+            <p:dialog id="reservdDialog" widgetVar="reservdDlg" header="Reserved Qty"
+                      onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
+                      modal="true" closable="true">
+                <ui:include src="../site/dialog/reservedQty.xhtml"/>
+            </p:dialog>
         </p:panel>
 
     </h:body>

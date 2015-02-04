@@ -16,21 +16,21 @@ import java.math.BigDecimal;
 @Proxy(lazy=false)
 public class ReservedOrderModel extends AbstractModel{
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @OneToOne
     @JoinColumn(name="picking_order_line_id")
     private PickingOrderLineModel pickingOrderLineModel;
 
-    @OneToOne
-    @JoinColumn(name="location_id")
-    private MSLocationModel msLocationModel;
+    @Column(name="location_id")
+    private int locationId;
 
     @Column(name="location_barcode")
     private String locationBarcode;
 
     @Column(name="reserved_qty")
-    private BigDecimal reservedQty;
+    private int reservedQty;
 
     @Column(name="picked_qty")
     private BigDecimal pickedQty;
@@ -42,12 +42,15 @@ public class ReservedOrderModel extends AbstractModel{
     @Column(name="foil_qty")
     private BigDecimal foilQty;
 
+    @Column(name = "isvalid", nullable=false, columnDefinition="int default 1")
+    private Integer isValid;
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("id", id)
                 .append("pickingOrderLineModel", pickingOrderLineModel)
-                .append("msLocationModel", msLocationModel)
+                .append("locationId", locationId)
                 .append("locationBarcode", locationBarcode)
                 .append("reservedQty", reservedQty)
                 .append("pickedQty", pickedQty)

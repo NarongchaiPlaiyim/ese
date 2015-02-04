@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:form id="periodForm">
+        <table border="0">
+            <tr>
+                <td>
+                    <h:outputLabel value="Start Batch"/>
+                </td>
+                <td>
+                    <p:inputMask id="startBatch"
+                                 style="width: 80px; max-width: 80px; min-width: 80px;"
+                                 value="#{pickingOrderShowItemBean.startBatch}"
+                                 onkeydown="return onKeyDownNumber(event);"
+                                 onkeypress="return onKeyPressNumber(event);"
+                                 mask="9999-99"/>
+                </td>
+                <td rowspan="2">
+                    <p:commandButton value="OK"
+                                     style="width: 80px; max-width: 80px; min-width: 80px; height: 80px; max-height: 80px; min-height: 80px"
+                                     process="@form"
+                                     update=":msgBoxSystemMessagePanel"
+                                     action="#{pickingOrderShowItemBean.PeriodReserve()}"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h:outputLabel value="To Batch"/>
+                </td>
+                <td>
+                    <p:inputMask id="toBatch"
+                                 style="width: 80px; max-width: 80px; min-width: 80px;"
+                                 value="#{pickingOrderShowItemBean.toBatch}"
+                                 onkeydown="return onKeyDownNumber(event);"
+                                 onkeypress="return onKeyPressNumber(event);"
+                                 mask="9999-99"/>
+                </td>
+            </tr>
+        </table>
+    </h:form>
+</f:view>
+</html>

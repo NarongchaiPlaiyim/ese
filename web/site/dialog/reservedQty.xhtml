@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <div>
+        <h:form id="reservedQtyForm">
+            <table border="0">
+                <tr>
+                    <td style="#{msg.get('fix.size.150')}"/>
+                    <td style="#{msg.get('fix.size.200')}"/>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel value="Item Code"/>
+                    </td>
+                    <td>
+                        <p:inputText value="#{pickingOrderShowItemBean.selectLocationQtyView.itemId}" disabled="true"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel value="Item Description"/>
+                    </td>
+                    <td>
+                        <p:inputTextarea value="#{pickingOrderShowItemBean.selectLocationQtyView.description}" disabled="true"/>
+                        <!--<p:inputText value="#{pickingOrderShowItemBean.selectLocationQtyView.description}" disabled="true"/>-->
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel value="Warehouse"/>
+                    </td>
+                    <td>
+                        <p:inputText value="#{pickingOrderShowItemBean.selectLocationQtyView.warehouseCode}" disabled="true"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel value="Location"/>
+                    </td>
+                    <td>
+                        <p:inputText value="#{pickingOrderShowItemBean.selectLocationQtyView.locationName}" disabled="true"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel value="Batch"/>
+                    </td>
+                    <td>
+                        <p:inputText value="#{pickingOrderShowItemBean.selectLocationQtyView.batchNo}" disabled="true"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel value="Avaliable Qty"/>
+                    </td>
+                    <td>
+                        <p:inputText value="#{pickingOrderShowItemBean.selectLocationQtyView.available}" disabled="true"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel value="Reserved Qty"/>
+                    </td>
+                    <td>
+                        <p:inputText value="#{pickingOrderShowItemBean.reservedManualQty}"
+                                     onkeydown="return onKeyDownNumber(event);"
+                                     onkeypress="return onKeyPressNumber(event);"/>
+                    </td>
+                </tr>
+            </table>
+            <p:panel style="border: 0">
+                <div style="text-align: right;">
+                    <p:commandButton value="#{msg.get('btn.name.ok')}"
+                                     id="btnOK"
+                                     action="#{pickingOrderShowItemBean.ManualReserved}"
+                                     update=":msgBoxSystemMessagePanel, :manualReserveForm, :pickingOrderShowItemForm"
+                                     styleClass="medium" style="#{msg.get('btn.size')}"
+                                     onstart="PF('bui').block()"
+                                     oncomplete="PF('bui').unblock()"/>
+                </div>
+            </p:panel>
+        </h:form>
+    </div>
+</f:view>
+</html>

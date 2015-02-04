@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <div>
+        <h:form id="manualReserveForm">
+            <table border="0">
+                <tr>
+                    <td style="width: 50px; max-width: 50px; min-width: 50px"/>
+                    <td style="width: 100px; max-width: 100px; min-width: 100px"/>
+                    <td style="width: 150px; max-width: 150px; min-width: 150px"/>
+                    <td style="width: 120px; max-width: 120px; min-width: 120px"/>
+                    <td style="width: 110px; max-width: 110px; min-width: 110px"/>
+                    <td style="width: 100px; max-width: 100px; min-width: 100px"/>
+                    <td style="width: 125px; max-width: 125px; min-width: 125px"/>
+                    <td style="width: 100px; max-width: 100px; min-width: 100px"/>
+                </tr>
+                <tr>
+                    <td>
+                        <h:outputLabel value="Item Code"/>
+                    </td>
+                    <td>
+                        <p:inputText value="#{pickingOrderShowItemBean.itemView.item}"
+                                     disabled="true"
+                                     style="#{msg.get('fix.size.200')}"/>
+                    </td>
+                    <td>
+                        <h:outputLabel value="Item Description"/>
+                    </td>
+                    <td>
+                        <p:inputTextarea value="#{pickingOrderShowItemBean.itemView.description}"
+                                         disabled="true"
+                                         style="min-width: 250px; width: 250px; max-width: 250px;"/>
+                        <!--<p:inputText value="#{pickingOrderShowItemBean.itemView.description}"-->
+                                     <!--disabled="true"-->
+                                     <!--style="#{msg.get('fix.size.200')}"/>-->
+                    </td>
+                    <td>
+                        <h:outputLabel value="Request Qty"/>
+                    </td>
+                    <td>
+                        <p:inputText value="#{pickingOrderShowItemBean.itemView.orderQty}"
+                                     disabled="true"
+                                     style="#{msg.get('fix.size.200')}"/>
+                    </td>
+                    <td>
+                        <h:outputLabel value="Reserved Qty"/>
+                    </td>
+                    <td>
+                        <p:inputText value="#{pickingOrderShowItemBean.itemView.reservedQty}"
+                                     disabled="true"
+                                     style="#{msg.get('fix.size.200')}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h:outputLabel value="Warehouse "/>
+                    </td>
+                    <td style="width: 100px">
+                        <p:selectOneMenu id="warehouseMenu" value="#{pickingOrderShowItemBean.warehouseId}"
+                                         style="#{msg.get('fix.size.200')} margin-top: 4px">
+                            <f:selectItem itemLabel="- Please Select -" itemValue=""/>
+                            <f:selectItems value="#{pickingOrderShowItemBean.msWarehouseModelList}"
+                                           var="wareItem"
+                                           itemLabel="#{wareItem.warehouseCode}"
+                                           itemValue="#{wareItem.id}"/>
+                            <p:ajax listener="#{pickingOrderShowItemBean.getLocationByWarehouseId}"
+                                    update=":manualReserveForm:locationMenu, :manualReserveForm:batchMenu"/>
+                        </p:selectOneMenu>
+                    </td>
+                    <td>
+                        <h:outputLabel value="Location "/>
+                    </td>
+                    <td style="width: 100px">
+                        <p:selectOneMenu id="locationMenu" value="#{pickingOrderShowItemBean.locationId}"
+                                         style="#{msg.get('fix.size.200')} margin-top: 4px">
+                            <f:selectItem itemLabel="- Please Select -" itemValue=""/>
+                            <f:selectItems value="#{pickingOrderShowItemBean.msLocationModelList}"
+                                           var="locaitionItem"
+                                           itemLabel="#{locaitionItem.locationBarcode}"
+                                           itemValue="#{locaitionItem.id}"/>
+                            <p:ajax listener="#{pickingOrderShowItemBean.getBtachByLocationName}"
+                                    update=":manualReserveForm:batchMenu"/>
+                        </p:selectOneMenu>
+                    </td>
+                    <td>
+                        <h:outputLabel value="Batch No "/>
+                    </td>
+                    <td style="width: 100px">
+                        <p:selectOneMenu id="batchMenu" value="#{pickingOrderShowItemBean.locationQtyId}"
+                                         style="#{msg.get('fix.size.200')} margin-top: 4px">
+                            <f:selectItem itemLabel="- Please Select -" itemValue=""/>
+                            <f:selectItems value="#{pickingOrderShowItemBean.locationQtyBox}"
+                                           var="batchItem"
+                                           itemLabel="#{batchItem.batchNo}"
+                                           itemValue="#{batchItem.id}"/>
+                        </p:selectOneMenu>
+                    </td>
+                    <td>
+                        <p:commandButton value="Search"
+                                         action="#{pickingOrderShowItemBean.onSearchByManual()}"
+                                         process="@form"
+                                         update=":manualReserveForm:pickingOrderTable"
+                                         onstart="PF('bui').block()"
+                                         oncomplete="PF('bui').unblock()"/>
+                    </td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <td>
+                        <p:dataTable id="pickingOrderTable" rowIndexVar="rowIndex"
+                                     value="#{pickingOrderShowItemBean.locationQtyViewList}"
+                                     var="reserved" styleClass="full_table"
+                                     style="width: 100%; max-width: 100%; min-width: 100%"
+                                     rowKey="#{reserved.id}">
+                            <p:column headerText="No" style="width: 20px; max-width: 20px; min-width: 20px" styleClass="center">
+                                <h:outputText value="#{rowIndex+1}"/>
+                            </p:column>
+                            <p:column headerText="Warehouse" style="width: 100px; max-width: 100px; min-width: 100px" styleClass="center">
+                                <h:outputText value="#{reserved.warehouseCode}"/>
+                            </p:column>
+                            <p:column headerText="Location" style="width: 100px; max-width: 100px; min-width: 100px" styleClass="center">
+                                <h:outputText value="#{reserved.locationName}"/>
+                            </p:column>
+                            <p:column headerText="Batch" style="width: 100px; max-width: 100px; min-width: 100px" styleClass="center">
+                                <h:outputText value="#{reserved.batchNo}"/>
+                            </p:column>
+                            <p:column headerText= "Avaliable Qty" style="width: 100px; max-width: 100px; min-width: 100px" styleClass="center">
+                                <h:outputText value="#{reserved.available}"/>
+                            </p:column>
+                            <p:column headerText="Reserved Qty" style="width: 100px; max-width: 100px; min-width: 100px" styleClass="center">
+                                <h:outputText value="#{reserved.reservedQty}"/>
+                            </p:column>
+                            <p:column headerText="Select" style="width: 50px; max-width: 50px; min-width: 50px; text-align: center;" >
+                                <p:commandButton icon="ui-icon-plusthick"
+                                                 oncomplete="PF('reservdDlg').show()"
+                                                 update=":reservedQtyForm">
+                                    <f:setPropertyActionListener value="#{reserved}"
+                                                                 target="#{pickingOrderShowItemBean.selectLocationQtyView}"/>
+                                    <f:setPropertyActionListener value="#{rowIndex}"
+                                                                 target="#{pickingOrderShowItemBean.rowIndex}"/>
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                    </td>
+                </tr>
+            </table>
+        </h:form>
+    </div>
+</f:view>
+</html>
