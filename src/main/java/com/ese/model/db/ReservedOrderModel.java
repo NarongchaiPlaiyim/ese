@@ -40,7 +40,7 @@ public class ReservedOrderModel extends AbstractModel{
     private StatusModel statusModel;
 
     @Column(name="foil_qty")
-    private int foilQty;
+    private BigDecimal foilQty;
 
     @Column(name = "isvalid", nullable=false, columnDefinition="int default 1")
     private Integer isValid;
