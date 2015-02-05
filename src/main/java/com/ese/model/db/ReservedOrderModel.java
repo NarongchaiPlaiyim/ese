@@ -29,11 +29,11 @@ public class ReservedOrderModel extends AbstractModel{
     @Column(name="location_barcode")
     private String locationBarcode;
 
-    @Column(name="reserved_qty")
+    @Column(name="reserved_qty", nullable=false, columnDefinition="int default 0")
     private int reservedQty;
 
-    @Column(name="picked_qty")
-    private BigDecimal pickedQty;
+    @Column(name="picked_qty", nullable=false, columnDefinition="int default 0")
+    private int pickedQty;
 
     @OneToOne
     @JoinColumn(name="status")
