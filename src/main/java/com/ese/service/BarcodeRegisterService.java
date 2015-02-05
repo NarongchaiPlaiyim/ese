@@ -106,7 +106,7 @@ public class BarcodeRegisterService extends Service{
         try {
             view.setCost(barcodeRegisterDAO.getPrice(view.getMsItemModel().getItemId()));
 
-            if (!Utils.isZero(view.getId())){
+            if (Utils.isZero(view.getId())){
                 barcodeRegisterDAO.persist(barcodeRegisterTransform.transformToModel(view));
             } else {
                 BarcodeRegisterModel model = barcodeRegisterTransform.transformToModel(view);
