@@ -31,10 +31,11 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
         sqlBuilder.append(" ").append(getPrefix()).append(".item_master.DSGThaiItemDescription AS DESCRIPTION,");
         sqlBuilder.append(" SUM(").append(getPrefix()).append(".picking_order_line.qty) AS ORDER_QTY,");
         sqlBuilder.append(" SUM(").append(getPrefix()).append(".reserved_order.reserved_qty) AS RESERVED_QTY,");
-        sqlBuilder.append(" (CASE WHEN SUM(").append(getPrefix()).append(".reserved_order.reserved_qty) IS NULL THEN 0 ELSE ");
-        sqlBuilder.append(" SUM(").append(getPrefix()).append(".reserved_order.reserved_qty) / (CASE WHEN SUM(");
-        sqlBuilder.append("").append(getPrefix()).append(".reserved_order.picked_qty) IS NULL THEN 0 ELSE");
-        sqlBuilder.append(" SUM(").append(getPrefix()).append(".reserved_order.picked_qty) END) *  100 END)  AS PER_PICKED,");
+        sqlBuilder.append(" (CASE WHEN SUM(").append(getPrefix()).append(".reserved_order.picked_qty) = 0 THEN 0 ELSE ");
+        sqlBuilder.append(" (CASE WHEN SUM(").append(getPrefix()).append(".reserved_order.reserved_qty) = 0 THEN 0 ELSE ");
+        sqlBuilder.append(" SUM(").append(getPrefix()).append(".reserved_order.reserved_qty) END) / ");
+        sqlBuilder.append(" (CASE WHEN SUM(").append(getPrefix()).append(".reserved_order.picked_qty) IS NULL THEN 0 ELSE");
+        sqlBuilder.append(" SUM(").append(getPrefix()).append(".reserved_order.picked_qty) END) *  100 END) AS PER_PICKED,");
         sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.isfoil AS FOIL,");
         sqlBuilder.append(" CASE WHEN SUM(").append(getPrefix()).append(".reserved_order.foil_qty) IS NULL THEN 0 ELSE");
         sqlBuilder.append(" SUM(").append(getPrefix()).append(".reserved_order.foil_qty) END AS FOIL_QTY,");
