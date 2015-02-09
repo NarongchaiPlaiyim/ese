@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ReservedOrderTransform {
 
-    public ReservedOrderModel tramsformToModel(PickingOrderLineModel pickingOrderLineModel, MSLocationModel msLocationModel, StatusModel statusModel, int reServedQty){
+    public ReservedOrderModel tramsformToModel(PickingOrderLineModel pickingOrderLineModel, MSLocationModel msLocationModel, StatusModel statusModel, int reServedQty, String batchNo){
         ReservedOrderModel reservedOrderModel = new ReservedOrderModel();
 
         reservedOrderModel.setLocationId(msLocationModel.getId());
@@ -24,6 +24,7 @@ public class ReservedOrderTransform {
         reservedOrderModel.setCreateBy(1111);
         reservedOrderModel.setUpdateDate(Utils.currentDate());
         reservedOrderModel.setUpdateBy(1111);
+        reservedOrderModel.setBatchNo(batchNo);
 
         return reservedOrderModel;
     }

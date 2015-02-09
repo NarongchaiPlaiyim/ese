@@ -63,26 +63,26 @@ public class PickingOrderShowItemService extends Service{
                         msLocationModel = locationDAO.findByID(locationQtyView.getLocationId());
                         if (!Utils.isZero(restQty)){
                             if (locationQtyView.getAvailable() - restQty > 0 || locationQtyView.getAvailable() - restQty == 0){
-                                reservedOrderModel = reservedOrderTransform.tramsformToModel(pickingOrderLineModel, msLocationModel, statusModel, restQty);
+                                reservedOrderModel = reservedOrderTransform.tramsformToModel(pickingOrderLineModel, msLocationModel, statusModel, restQty, locationQtyView.getBatchNo());
                                 pickingOrderLineDAO.updateReservedQtyByLocaitonQtyId(locationQtyView.getId(), restQty);
                                 reservedOrderDAO.persist(reservedOrderModel);
                                 pickingOrderLineDAO.updateInventTransByUseFinish(fifoReservedView.getInventtransId());
                                 break;
                             } else {
-                                reservedOrderModel = reservedOrderTransform.tramsformToModel(pickingOrderLineModel, msLocationModel, statusModel, restQty - (restQty - locationQtyView.getAvailable()));
+                                reservedOrderModel = reservedOrderTransform.tramsformToModel(pickingOrderLineModel, msLocationModel, statusModel, restQty - (restQty - locationQtyView.getAvailable()), locationQtyView.getBatchNo());
                                 pickingOrderLineDAO.updateReservedQtyByLocaitonQtyId(locationQtyView.getId(), restQty - (restQty - locationQtyView.getAvailable()));
                                 reservedOrderDAO.persist(reservedOrderModel);
                                 //update location_qty.reserved_qty = restQty - (restQty - locationQtyView.getAvilable);
                                 restQty = restQty - locationQtyView.getAvailable();
                             }
                         } else if (locationQtyView.getAvailable() - fifoReservedView.getInventtransQty() > 0 || locationQtyView.getAvailable() - fifoReservedView.getInventtransQty() == 0 && Utils.isZero(restQty)){
-                            reservedOrderModel = reservedOrderTransform.tramsformToModel(pickingOrderLineModel, msLocationModel, statusModel, fifoReservedView.getInventtransQty());
+                            reservedOrderModel = reservedOrderTransform.tramsformToModel(pickingOrderLineModel, msLocationModel, statusModel, fifoReservedView.getInventtransQty(), locationQtyView.getBatchNo());
                             pickingOrderLineDAO.updateReservedQtyByLocaitonQtyId(locationQtyView.getId(), fifoReservedView.getInventtransQty());
                             reservedOrderDAO.persist(reservedOrderModel);
                             pickingOrderLineDAO.updateInventTransByUseFinish(fifoReservedView.getInventtransId());
                             break;
                         } else {
-                            reservedOrderModel = reservedOrderTransform.tramsformToModel(pickingOrderLineModel, msLocationModel, statusModel, fifoReservedView.getInventtransQty() - (fifoReservedView.getInventtransQty() - locationQtyView.getAvailable()));
+                            reservedOrderModel = reservedOrderTransform.tramsformToModel(pickingOrderLineModel, msLocationModel, statusModel, fifoReservedView.getInventtransQty() - (fifoReservedView.getInventtransQty() - locationQtyView.getAvailable()), locationQtyView.getBatchNo());
                             pickingOrderLineDAO.updateReservedQtyByLocaitonQtyId(locationQtyView.getId(), fifoReservedView.getInventtransQty() - (fifoReservedView.getInventtransQty() - locationQtyView.getAvailable()));
                             reservedOrderDAO.persist(reservedOrderModel);
                             // update location_qty.reserved_qty = fifoReservedView.getInventtransQty - (fifoReservedView.getInventtransQty - locationQtyView.getAvailable());
@@ -132,7 +132,7 @@ public class PickingOrderShowItemService extends Service{
         try {
             PickingOrderLineModel pickingOrderLineModel = pickingOrderLineDAO.findByID(pickingLineId);
             MSLocationModel msLocationModel = locationDAO.findByID(locationQtyId.getLocationId());
-            ReservedOrderModel reservedOrderModel = reservedOrderTransform.tramsformToModel(pickingOrderLineModel, msLocationModel, statusModel, reservedQty);
+            ReservedOrderModel reservedOrderModel = reservedOrderTransform.tramsformToModel(pickingOrderLineModel, msLocationModel, statusModel, reservedQty, locationQtyId.getBatchNo());
             pickingOrderLineDAO.updateReservedQtyByLocaitonQtyId(locationQtyId.getId(), reservedQty);
             reservedOrderDAO.persist(reservedOrderModel);
             FIFOReservedView fifoReservedView = pickingOrderLineDAO.findQtyOnInventTran(pickingOrderLineModel.getId());

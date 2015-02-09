@@ -45,6 +45,9 @@ public class ReservedOrderModel extends AbstractModel{
     @Column(name = "isvalid", nullable=false, columnDefinition="int default 1")
     private Integer isValid;
 
+    @Column(name="batchno")
+    private String batchNo;
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)

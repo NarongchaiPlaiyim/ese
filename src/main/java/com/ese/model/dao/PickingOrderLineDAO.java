@@ -54,7 +54,7 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
         sqlBuilder.append(getPrefix()).append(".item_master.DSGThaiItemDescription, ").append(getPrefix()).append(".picking_order_line.isfoil, ");
         sqlBuilder.append(getPrefix()).append(".mst_status.caption, ").append(getPrefix()).append(".picking_order_line.status");
 
-        log.debug(sqlBuilder.toString());
+        log.debug("findByPickingOrderId : {}", sqlBuilder.toString());
 
         try {
             SQLQuery query = getSession().createSQLQuery(sqlBuilder.toString())
@@ -139,7 +139,7 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
         selectInventTrans.append(" AND ").append(getPrefix()).append(".picking_order_line.ItemId = ").append(getPrefix()).append(".ax_InventTrans.itemid");
         selectInventTrans.append(" WHERE ").append(getPrefix()).append(".picking_order_line.id = " ).append(pickingOrderLineId);
 
-        log.debug("Query findQtyOnInventTran : {}", selectInventTrans.toString());
+        log.debug("findQtyOnInventTran : {}", selectInventTrans.toString());
 
         try {
             SQLQuery query = getSession().createSQLQuery(selectInventTrans.toString())
@@ -243,7 +243,7 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
 
         selectLocationQty.append(" ORDER BY ").append(getPrefix()).append(".location_qty.batchno ASC");
 
-        log.debug("Query Location QTY : {}", selectLocationQty.toString());
+        log.debug("findByItemId : {}", selectLocationQty.toString());
 
         try {
             SQLQuery query = getSession().createSQLQuery(selectLocationQty.toString())
@@ -309,7 +309,7 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
         selectLocationQty.append(" FROM ").append(getPrefix()).append(".location_qty");
         selectLocationQty.append(" WHERE ").append(getPrefix()).append(".location_qty.location_id = '" ).append(locationId).append("'");
 
-        log.debug("Query Location QTY : {}", selectLocationQty.toString());
+        log.debug("findByLocationId : {}", selectLocationQty.toString());
 
         try {
             SQLQuery query = getSession().createSQLQuery(selectLocationQty.toString())
