@@ -20,7 +20,7 @@ public class AXCustomerConfirmJourDAO extends GenericDAO<AXCustomerConfirmJourMo
         List<DataSyncConfirmOrderView> syncDataList = new ArrayList<DataSyncConfirmOrderView>();
         StringBuilder sqlBuilder = new StringBuilder();
 
-        sqlBuilder.append(" SELECT ");
+        sqlBuilder.append(" SELECT DISTINCT ");
         sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustTable.AccountNum AS CUST_CODE,");
         sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustTable.Name AS CUST_NAME,");
         sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustTable.CustGroup AS CUST_GROUP,");
