@@ -162,7 +162,9 @@
                                              styleClass="medium" style="#{msg.get('fix.size.200')}"
                                              process="@this"
                                              action="#{pickingOrderShowItemBean.onAddEditItem}"
-                                             update=":itemQtyForm, :addItemQtyForm"/>
+                                             update=":itemQtyForm, :addItemQtyForm">
+                                <p:resetInput target=":addItemQtyForm" />
+                            </p:commandButton>
                             <p:commandButton value="FIFO Reserve" id="fifoBtn"
                                              styleClass="medium" style="#{msg.get('fix.size.200')}"
                                              disabled="#{pickingOrderShowItemBean.flagFIFOReserved}"

@@ -153,7 +153,7 @@ public class PickingOrderShowItemService extends Service{
     }
 
     public void onSavePickingLine(PickingOrderModel pickingOrderModel, UserDetail userDetail, ItemQtyView itemQtyView){
-        StatusModel statusModel = statusDAO.findByStatusSeqTablePickingOrder(1);
+        StatusModel statusModel = statusDAO.findByStatusSeqTablePickingOrder();
         pickingOrderLineTransform.transformToModelByAddItemQty(pickingOrderModel, statusModel, userDetail);
     }
 }

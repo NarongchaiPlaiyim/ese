@@ -17,7 +17,7 @@ import java.util.List;
 public class AXCustomerConfirmJourDAO extends GenericDAO<AXCustomerConfirmJourModel, String>{
 
     public List<DataSyncConfirmOrderView> genSQLSyncData(){
-        List<DataSyncConfirmOrderView> syncDataList = Utils.getEmptyList();
+        List<DataSyncConfirmOrderView> syncDataList = new ArrayList<DataSyncConfirmOrderView>();
         StringBuilder sqlBuilder = new StringBuilder();
 
         sqlBuilder.append(" SELECT DISTINCT ");

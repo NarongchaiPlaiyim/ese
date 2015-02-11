@@ -245,6 +245,7 @@ public class PickingOrderShowItemBean extends Bean {
             }
         } else {
             showDialog("SearchItem Order Qty.", "", "searchItemQtyDlg");
+            itemQtyViewList = new ArrayList<MSItemModel>();
             itemQtySearchView = new ItemQtySearchView();
             flagSearch = false;
             flagSelect = true;
