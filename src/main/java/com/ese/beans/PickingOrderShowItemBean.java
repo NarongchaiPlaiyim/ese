@@ -81,7 +81,6 @@ public class PickingOrderShowItemBean extends Bean {
 
         if(preLoad()/* && isAuthorize(key)*/){
             userDetail = getUser();
-            init();
         }
 
         btnOnload();
@@ -258,12 +257,14 @@ public class PickingOrderShowItemBean extends Bean {
         if (Utils.isZero(itemQtyView.getPickLineId())){
             if (!Utils.isZero(itemQtyView.getOrderQty())){
                 pickingOrderShowItemService.onSavePickingLine(pickingOrderModel, userDetail, itemQtyView);
+                showDialog(MessageDialog.SAVE.getMessageHeader(), "Success.", "msgBoxSystemMessageDlg");
             } else {
                 showDialog(MessageDialog.WARNING.getMessageHeader(), "กรุณาใส่ Order Qty.", "msgBoxSystemMessageDlg");
             }
         } else {
             if (itemQtyView.getOrderQty() <= itemQtyView.getReservedQty()){
                 pickingOrderShowItemService.saveItemQty(itemQtyView.getPickLineId(), itemQtyView.getOrderQty());
+                showDialog(MessageDialog.SAVE.getMessageHeader(), "Success.", "msgBoxSystemMessageDlg");
                 init();
             } else {
                 showDialog(MessageDialog.WARNING.getMessageHeader(), "Edit fail. This item was reserved. Please cancel the reserved qty first.", "msgBoxSystemMessageDlg");

@@ -303,8 +303,8 @@
                                      styleClass="medium" style="#{msg.get('btn.size')}"
                                      icon="ui-icon-check"
                                      process="@this"
-                                     update="pickingOrderShowItemForm"
-                                     oncomplete="PF('msgBoxSystemMessageDlg').hide(); PF('periodDlg').hide(); PF('reservdDlg').hide()"/>
+                                     update=":pickingOrderShowItemForm"
+                                     oncomplete="PF('msgBoxSystemMessageDlg').hide(); PF('periodDlg').hide(); PF('reservdDlg').hide();  PF('itemQtyDlg').hide()"/>
                 </div>
             </p:confirmDialog>
         </p:panel>
@@ -340,14 +340,6 @@
                 <ui:include src="../site/dialog/itemQty.xhtml"/>
             </p:dialog>
         </p:panel>
-
-        <!--<p:panel id="addItemQtyPanel" styleClass="panel">-->
-            <!--<p:dialog id="addItemQtyDialog" widgetVar="addItemQtyDlg" header="Add Order Qty"-->
-                      <!--onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"-->
-                      <!--modal="true" closable="true">-->
-                <!--<ui:include src="../site/dialog/itemQty.xhtml"/>-->
-            <!--</p:dialog>-->
-        <!--</p:panel>-->
 
         <p:panel id="searchItemQtyPanel" styleClass="panel">
             <p:dialog id="searchItemQtyDialog" widgetVar="searchItemQtyDlg" header="Search Order Qty" width="1380"
