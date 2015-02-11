@@ -38,6 +38,7 @@ public class PickingOrderShowItemService extends Service{
     }
 
     public boolean onReserved(int pickingOrderLineId, String startBatch, String toBatch){
+        boolean result = false;
         ReservedOrderModel reservedOrderModel;
         PickingOrderLineModel pickingOrderLineModel;
         MSLocationModel msLocationModel;
@@ -93,10 +94,9 @@ public class PickingOrderShowItemService extends Service{
                     }
                 }
             }
-            return true;
-        } else {
-            return false;
+            result = true;
         }
+        return result;
     }
 
     public List<LocationQtyView> onManualReserved(int pickingOrderLineId, String batchNo, int warehouseId, int locationId){
@@ -106,12 +106,13 @@ public class PickingOrderShowItemService extends Service{
     }
 
     public List<MSWarehouseModel> getWarehouseAll(){
+        List<MSWarehouseModel> msWarehouseModelList = Utils.getEmptyList();
         try {
-            return warehouseDAO.findAll();
+            msWarehouseModelList = warehouseDAO.findAll();
         } catch (Exception e) {
             log.debug("Exception error getWarehouseAll : ", e);
-            return Utils.getEmptyList();
         }
+        return msWarehouseModelList;
     }
 
     public List<MSLocationModel> getLocationByWarehouse(int warehouseId){

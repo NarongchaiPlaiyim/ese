@@ -50,11 +50,11 @@ public class PalletService extends Service{
         log.debug("findPalletJoinLocation().");
         List<PalletManagementView> palletMeanegementViewList = Utils.getEmptyList();
 
-        List<PalletModel> palletModels = palletDAO.findPalletTable();
+        List<PalletModel> palletModelList = palletDAO.findPalletTable();
 
-        if (Utils.isSafetyList(palletModels)){
-            log.debug("palletModels size. {}", palletModels);
-            palletMeanegementViewList = palletManagementTransform.tranformToViewList(palletModels);
+        if (Utils.isSafetyList(palletModelList)){
+            log.debug("palletModels size. {}", palletModelList);
+            palletMeanegementViewList = palletManagementTransform.tranformToViewList(palletModelList);
         }
 
         return palletMeanegementViewList;

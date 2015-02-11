@@ -39,9 +39,9 @@ public class LoginService extends Service{
         }
     }
 
-    public Map<String,String> getAuthorize(){
+    public Map<String, String> getAuthorize(){
         List<String> stringList;
-        Map<String,String> map = new HashMap<String,String>();
+        Map<String, String> map = new HashMap();
         try {
             stringList = menuObjectDAO.findByStaffId(staffModel.getId());
             for (String s : stringList) map.put(s, s);
@@ -50,24 +50,6 @@ public class LoginService extends Service{
             log.error("Exception while calling getAuthorize()", e);
         }
         return map;
-    }
-
-    public List<StaffModel> getList(){
-        try {
-            return staffDAO.findAll();
-        } catch (Exception e) {
-            return Collections.EMPTY_LIST;
-        }
-    }
-
-    public StaffModel getObject(){
-        try{
-            int i = 5;
-            return staffDAO.findByID(i);
-        } catch (Exception e){
-            System.out.println("e :"+e);
-            return new StaffModel();
-        }
     }
 
     public List<MenuObjectModel> getAllMenuObject(){

@@ -90,33 +90,23 @@ public class RoleAccessService extends Service{
     }
 
     public void deleteRoleAccess(List<Document> modelsList){
-
         for (Document document : modelsList){
             try {
                 roleAccessDAO.delete(roleAccessDAO.findByID(document.getId()));
-//                RoleAccessModel model = roleAccessDAO.findByID(document.getId());
             } catch (Exception e) {
                 log.debug("Exception error deleteRoleAccess :", e);
             }
         }
-
-//        for (RoleAccessModel model : modelsList){
-//            log.debug("model : {}", model.toString());
-//            try {
-//                roleAccessDAO.delete(model);
-//            } catch (Exception e) {
-//                log.debug("Exception error deleteRoleAccess : ", e);
-//            }
-//        }
     }
 
     public List<MenuObjectModel> getMenuObjAll(){
+        List<MenuObjectModel> menuObjectModelList = Utils.getEmptyList();
         try {
-            return menuObjectDAO.findAll();
+            menuObjectModelList =  menuObjectDAO.findAll();
         } catch (Exception e) {
             log.debug("Exception error getMenuAll : ", e);
-            return Utils.getEmptyList();
         }
+        return menuObjectModelList;
     }
 
     public List<MenuObjectModel> getMenuObjByIdAndKey(int objId, String key){
@@ -124,8 +114,8 @@ public class RoleAccessService extends Service{
     }
 
     public void saveMenuObjectInRoleAccess(List<Document> modelsList, SystemRoleModel systemRoleModel){
-        RoleAccessModel roleAccessModel = new RoleAccessModel();
-        List<RoleAccessModel> roleAccessModelList = new ArrayList<RoleAccessModel>();
+        RoleAccessModel roleAccessModel;
+        List<RoleAccessModel> roleAccessModelList;
         for (Document model : modelsList){
             try {
                 roleAccessModel = roleAccessTransform.transformToModel(menuObjectDAO.findByID(model.getId()), systemRoleModel);
@@ -150,12 +140,12 @@ public class RoleAccessService extends Service{
     }
 
     public void onPrintRoleAccess(UserDetail userDetail){
-        String printTagReportname = Utils.genDateReportStringDDMMYYYY(new Date()) + "_UserAndRoleReport";
+        String printTagReportname = Utils.genReportName("_UserAndRoleReport");
         HashMap map = new HashMap<String, Object>();
-        List<RoleAccessViewReport> reportViews = null;
+        List<RoleAccessViewReport> reportViews;
 
         map.put("userPrint", userDetail.getUserName());
-        map.put("printDate", Utils.convertToStringYYYYMMDDHHmmss(new Date()));
+        map.put("printDate", Utils.convertCurrentDateToStringDDMMYYYY());
         map.put("path", FacesUtil.getFacesContext().getExternalContext().getRealPath(path));
 
         reportViews = roleAccessDAO.genSQLReportUserAndRole();
