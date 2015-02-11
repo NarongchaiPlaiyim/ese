@@ -24,7 +24,7 @@ public class PickingOrderDAO extends GenericDAO<PickingOrderModel, Integer> {
             criteria.add(Restrictions.eq("isValid", 1));
             criteria.addOrder(Order.asc("requestShiftDate"));
 
-            pickingOrderModelList = criteria.list();
+            pickingOrderModelList = Utils.safetyList(criteria.list());
         } catch (Exception e) {
             log.debug("Exception error findByOverSeaOrder : ", e);
         }
@@ -41,7 +41,7 @@ public class PickingOrderDAO extends GenericDAO<PickingOrderModel, Integer> {
             criteria.add(Restrictions.eq("isValid", 1));
             criteria.addOrder(Order.asc("requestShiftDate"));
 
-            pickingOrderModelList = criteria.list();
+            pickingOrderModelList = Utils.safetyList(criteria.list());
         } catch (Exception e) {
             log.debug("Exception error findByDomesticOrder : ", e);
         }
@@ -57,7 +57,7 @@ public class PickingOrderDAO extends GenericDAO<PickingOrderModel, Integer> {
             criteria.add(Restrictions.eq("isValid", 1));
             criteria.addOrder(Order.asc("requestShiftDate"));
 
-            pickingOrderModelList = criteria.list();
+            pickingOrderModelList = Utils.safetyList(criteria.list());
         } catch (Exception e) {
             log.debug("Exception error findByOverSeaAndDomesticOrder : ", e);
         }
@@ -154,7 +154,7 @@ public class PickingOrderDAO extends GenericDAO<PickingOrderModel, Integer> {
             criteria.add(Restrictions.eq("isValid", 1));
             criteria.addOrder(Order.asc("requestShiftDate"));
 
-            pickingOrderModelList = criteria.list();
+            pickingOrderModelList = Utils.safetyList(criteria.list());
         } catch (Exception e) {
             log.debug("Exception error findByOverSeaAndDomesticOrder : ", e);
         }

@@ -105,7 +105,7 @@ public class PickingOrderBean extends Bean {
 
     public void onClose(){
         pickingOrderService.rollbackStatus();
-        seleteDataSync = new ArrayList<DataSyncConfirmOrderView>();
+        seleteDataSync = Utils.getEmptyList();
     }
 
     public void onSyncOrder(){
