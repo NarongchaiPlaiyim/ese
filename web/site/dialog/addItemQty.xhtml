@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <p:panel id="addItemQtyDlgPanel" styleClass="panel-dialog">
+        <h:form id="addItemQtyForm">
+            <table border="0">
+                <tr>
+                    <td style="min-width: 100px; width: 100px; max-width: 100px;" class="left">
+                        <p:outputLabel value="ItemName"/>
+                    </td>
+                    <td style="min-width: 250px; width: 250px; max-width: 250px;" class="left">
+                        <p:inputText value="#{pickingOrderShowItemBean.itemQtySearchView.itemName}"/>
+                    </td>
+                    <td style="min-width: 100px; width: 100px; max-width: 100px;" class="left">
+                        <p:outputLabel value="Item Code"/>
+                    </td>
+                    <td style="min-width: 250px; width: 250px; max-width: 250px;" class="left">
+                        <p:inputText value="#{pickingOrderShowItemBean.itemQtySearchView.itemCode}"/>
+                    </td>
+                    <td style="min-width: 110px; width: 110px; max-width: 110px;" class="left">
+                        <p:outputLabel value="Description"/>
+                    </td>
+                    <td style="min-width: 250px; width: 250px; max-width: 250px;" class="left">
+                        <p:inputText value="#{pickingOrderShowItemBean.itemQtySearchView.description}"/>
+                    </td>
+                    <td style="min-width: 180px; width: 180px; max-width: 180px;" class="left">
+                        <p:commandButton  id="btnsearch" icon="ui-icon-search"
+                                          value="#{msg.get('btn.name.search')}"
+                                          disabled="#{pickingOrderShowItemBean.flagSearch}"
+                                          styleClass="medium" style="#{msg.get('btn.size')}"
+                                          action="#{pickingOrderShowItemBean.onSearchItemQty}"
+                                          update=":addItemQtyForm:addItemTable"
+                                          onstart="PF('bui').block()"
+                                          oncomplete="PF('bui').unblock()"
+                                          process="@form"/>
+                    </td>
+                </tr>
+            </table>
+
+            <p:panel style="border: 0">
+                <div style="text-align: right;">
+                    <p:commandButton value="Select" id="selectBtn"
+                                     disabled="#{pickingOrderShowItemBean.flagSelect}"
+                                     action="#{pickingOrderShowItemBean.onSelectItemQty}"
+                                     oncomplete="PF('itemQtyDlg').show()"
+                                     update=":itemQtyDlgPanel"
+                                     styleClass="medium" style="#{msg.get('fix.size.200')}"
+                                     process="@this"/>
+
+                </div>
+            </p:panel>
+
+            <table border="0">
+                <tr>
+                    <td>
+                        <p:dataTable id="addItemTable"
+                                     styleClass="full_table"
+                                     rows="7" paginator="true"
+                                     selectionMode="single"
+                                     rowKey="#{itemQty.id}"
+                                     value="#{pickingOrderShowItemBean.itemQtyViewList}"
+                                     selection="#{pickingOrderShowItemBean.selectItemQty}"
+                                     var="itemQty"
+                                     style="width: 100%; max-width: 100%; min-width: 100%">
+                            <p:ajax event="rowSelect" listener="#{pickingOrderShowItemBean.onClickItemQty()}" update=":addItemQtyForm:selectBtn"/>
+                            <p:column headerText="Item Name" style="width: 100px" styleClass="center">
+                                <h:outputText value="#{itemQty.itemName}"/>
+                            </p:column>
+                            <p:column headerText="Item Code" style="width: 100px" styleClass="center">
+                                <h:outputText value="#{itemQty.itemId}"/>
+                            </p:column>
+                            <p:column headerText="Description" style="width: 220px" styleClass="center">
+                                <h:outputText value="#{itemQty.DSGThaiItemDescription}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </td>
+                </tr>
+            </table>
+        </h:form>
+    </p:panel>
+</f:view>
+</html>

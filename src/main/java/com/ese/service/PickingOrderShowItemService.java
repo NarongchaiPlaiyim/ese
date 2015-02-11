@@ -2,9 +2,9 @@ package com.ese.service;
 
 import com.ese.model.dao.*;
 import com.ese.model.db.*;
-import com.ese.model.view.FIFOReservedView;
-import com.ese.model.view.LocationQtyView;
-import com.ese.model.view.PickingOrderShowItemView;
+import com.ese.model.view.*;
+import com.ese.service.security.UserDetail;
+import com.ese.transform.PickingOrderLineTransform;
 import com.ese.transform.ReservedOrderTransform;
 import com.ese.utils.Utils;
 import org.springframework.stereotype.Component;
@@ -24,6 +24,8 @@ public class PickingOrderShowItemService extends Service{
     @Resource private LocationDAO locationDAO;
     @Resource private StatusDAO statusDAO;
     @Resource private WarehouseDAO warehouseDAO;
+    @Resource private ItemDAO itemDAO;
+    @Resource private PickingOrderLineTransform pickingOrderLineTransform;
 
     public List<PickingOrderShowItemView> getPickingOrderLineByPickingOrderId(int pickingOrderId){
         return pickingOrderLineDAO.findByPickingOrderId(pickingOrderId);
@@ -141,5 +143,18 @@ public class PickingOrderShowItemService extends Service{
         } catch (Exception e) {
             log.debug("Exception error saveManualReserved : ", e);
         }
+    }
+
+    public void saveItemQty(int pickingLineId, int orderQty){
+        pickingOrderLineDAO.updateOrderQty(pickingLineId, orderQty);
+    }
+
+    public List<MSItemModel> searchItemQty(ItemQtySearchView itemQtySearchView){
+        return itemDAO.findBySearch(itemQtySearchView);
+    }
+
+    public void onSavePickingLine(PickingOrderModel pickingOrderModel, UserDetail userDetail, ItemQtyView itemQtyView){
+        StatusModel statusModel = statusDAO.findByStatusSeqTablePickingOrder();
+        pickingOrderLineTransform.transformToModelByAddItemQty(pickingOrderModel, statusModel, userDetail);
     }
 }

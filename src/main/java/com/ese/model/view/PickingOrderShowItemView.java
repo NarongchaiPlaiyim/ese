@@ -13,13 +13,15 @@ public class PickingOrderShowItemView {
     private int id;
     private String item;
     private String description;
-    private BigDecimal orderQty;
-    private BigDecimal reservedQty;
-    private BigDecimal perPicked;
+    private int orderQty;
+    private int reservedQty;
+    private int perPicked;
     private int foil;
     private BigDecimal foilQty;
     private String status;
     private int statusID;
+    private int qty;
+    private String itemName;
 
     @Override
     public String toString() {
@@ -34,6 +36,8 @@ public class PickingOrderShowItemView {
                 .append("foilQty", foilQty)
                 .append("status", status)
                 .append("statusID", statusID)
+                .append("qty", qty)
+                .append("itemName", itemName)
                 .toString();
     }
 }

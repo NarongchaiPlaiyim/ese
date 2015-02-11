@@ -115,6 +115,7 @@
                         <p:dataTable id="pickingOrderTable" rowIndexVar="rowIndex"
                                      value="#{pickingOrderShowItemBean.locationQtyViewList}"
                                      var="reserved" styleClass="full_table"
+                                     rows="7" paginator="true"
                                      style="width: 100%; max-width: 100%; min-width: 100%"
                                      rowKey="#{reserved.id}">
                             <p:column headerText="No" style="width: 20px; max-width: 20px; min-width: 20px" styleClass="center">

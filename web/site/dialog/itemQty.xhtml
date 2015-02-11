@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <p:panel id="itemQtyDlgPanel" styleClass="panel-dialog">
+        <h:form id="itemQtyForm">
+            <table border="0">
+                <tr>
+                    <td style="width: 150px; max-width: 150px; min-width: 150px"/>
+                    <td style="width: 120px; max-width: 120px; min-width: 120px"/>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel value="Item Code"/>
+                    </td>
+                    <td>
+                        <p:inputText value="#{pickingOrderShowItemBean.itemQtyView.itemCode}" disabled="true"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel value="Item Description"/>
+                    </td>
+                    <td>
+                        <p:inputTextarea value="#{pickingOrderShowItemBean.itemQtyView.itemDes}" disabled="true"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel value="Order Qty"/>
+                    </td>
+                    <td>
+                        <p:inputText value="#{pickingOrderShowItemBean.itemQtyView.orderQty}"
+                                     onkeydown="return onKeyDownNumber(event);"
+                                     onkeypress="return onKeyPressNumber(event);"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: right;">
+                        <p:commandButton value="#{msg.get('btn.name.save')}"
+                                         id="btnSave"
+                                         process="@form"
+                                         update=":pickingOrderShowItemForm, :msgBoxSystemMessagePanel"
+                                         action="#{pickingOrderShowItemBean.onSaveItemQty}"
+                                         styleClass="medium" style="#{msg.get('btn.size')}"
+                                         onstart="PF('bui').block()"
+                                         oncomplete="PF('bui').unblock()"/>
+                    </td>
+                </tr>
+            </table>
+        </h:form>
+    </p:panel>
+</f:view>
+</html>

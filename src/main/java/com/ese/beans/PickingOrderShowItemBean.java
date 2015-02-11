@@ -1,8 +1,11 @@
 package com.ese.beans;
 
 import com.ese.model.db.*;
+import com.ese.model.view.ItemQtySearchView;
+import com.ese.model.view.ItemQtyView;
 import com.ese.model.view.LocationQtyView;
 import com.ese.model.view.PickingOrderShowItemView;
+import com.ese.service.security.UserDetail;
 import com.ese.utils.FacesUtil;
 import com.ese.utils.MessageDialog;
 import com.ese.utils.Utils;
@@ -60,11 +63,25 @@ public class PickingOrderShowItemBean extends Bean {
     private int rowIndex;
 
     private int reservedManualQty;
+    private ItemQtyView itemQtyView;
+
+    //addItemDialog
+    private boolean flagSearch;
+    private boolean flagSelect;
+    private ItemQtySearchView itemQtySearchView;
+    private List<MSItemModel> itemQtyViewList;
+    private MSItemModel selectItemQty;
+
+    private UserDetail userDetail;
 
     @PostConstruct
     private void init(){
         HttpSession session = FacesUtil.getSession(false);
         pickingOrderModel = (PickingOrderModel) session.getAttribute("pickingOrderId");
+
+        if(preLoad()/* && isAuthorize(key)*/){
+            userDetail = getUser();
+        }
 
         btnOnload();
         onLoadTable();
@@ -125,9 +142,7 @@ public class PickingOrderShowItemBean extends Bean {
             pickingOrderShowItemService.updateIsFoil(itemView.getId(), itemView.getFoil());
         }
 
-        btnOnload();
-        onLoadTable();
-        onNewObject();
+        init();
     }
 
     public void FIFOReserved(){
@@ -209,6 +224,69 @@ public class PickingOrderShowItemBean extends Bean {
         }
         reservedManualQty = 0;
         locationQtyViewList = pickingOrderShowItemService.getLocationQtyBySearch(itemView.getItem(), warehouseId, locationId, locationQtyId);
-        orderLineModelList = pickingOrderShowItemService.getPickingOrderLineByPickingOrderId(pickingOrderModel.getId());
+        init();
+    }
+
+    public void onAddEditItem(){
+        log.debug("--onAddEditItem.");
+        if (!Utils.isZero(selectPickingLine.size())){
+            itemQtyView = new ItemQtyView();
+            if (selectPickingLine.size() > 1){
+                flagItem = true;
+            } else {
+                showDialog("Edit Order Qty.", "", "itemQtyDlg");
+                for (PickingOrderShowItemView view : selectPickingLine){
+                    itemQtyView.setPickLineId(view.getId());
+                    itemQtyView.setItemCode(view.getItem());
+                    itemQtyView.setItemDes(view.getDescription());
+                    itemQtyView.setOrderQty(view.getQty());
+                    itemQtyView.setReservedQty(view.getReservedQty());
+                }
+            }
+        } else {
+            showDialog("SearchItem Order Qty.", "", "searchItemQtyDlg");
+            itemQtyViewList = new ArrayList<MSItemModel>();
+            itemQtySearchView = new ItemQtySearchView();
+            flagSearch = false;
+            flagSelect = true;
+        }
+    }
+
+    public void onSaveItemQty(){
+        log.debug("------ {}", itemQtyView.toString());
+
+        if (Utils.isZero(itemQtyView.getPickLineId())){
+            if (!Utils.isZero(itemQtyView.getOrderQty())){
+                pickingOrderShowItemService.onSavePickingLine(pickingOrderModel, userDetail, itemQtyView);
+                showDialog(MessageDialog.SAVE.getMessageHeader(), "Success.", "msgBoxSystemMessageDlg");
+            } else {
+                showDialog(MessageDialog.WARNING.getMessageHeader(), "กรุณาใส่ Order Qty.", "msgBoxSystemMessageDlg");
+            }
+        } else {
+            if (itemQtyView.getOrderQty() <= itemQtyView.getReservedQty()){
+                pickingOrderShowItemService.saveItemQty(itemQtyView.getPickLineId(), itemQtyView.getOrderQty());
+                showDialog(MessageDialog.SAVE.getMessageHeader(), "Success.", "msgBoxSystemMessageDlg");
+                init();
+            } else {
+                showDialog(MessageDialog.WARNING.getMessageHeader(), "Edit fail. This item was reserved. Please cancel the reserved qty first.", "msgBoxSystemMessageDlg");
+            }
+        }
+    }
+
+    public void onSearchItemQty(){
+        itemQtyViewList = pickingOrderShowItemService.searchItemQty(itemQtySearchView);
+        log.debug("itemQtyViewList Size : {}", itemQtyViewList.size());
+    }
+
+    public void onClickItemQty(){
+        flagSelect = false;
+    }
+
+    public void onSelectItemQty(){
+        itemQtyView = new ItemQtyView();
+        itemQtyView.setItemCode(selectItemQty.getItemId());
+        itemQtyView.setItemName(selectItemQty.getItemName());
+        itemQtyView.setItemDes(selectItemQty.getDSGThaiItemDescription());
+        itemQtyView.setOrderQty(0);
     }
 }

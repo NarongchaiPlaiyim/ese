@@ -115,27 +115,8 @@ public class AXCustomerConfirmJourModel {
     @Column(name="TotalTerm")
     private String totalTerm;
 
-    @Column(name="record_boolean")
-    private boolean recordBoolean;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="createdatetime_timestamp")
-    private Date createdatetimeTimestamp;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="modifydatetime_timestamp")
-    private Date modifydatetimeTimestamp;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="deletedatetime_timestampg")
-    private Date deletedatetimeTimestampg;
-
     @Column(name="version")
     private int version;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="deletedatetime_timestamp")
-    private Date deletedatetimeTimestamp;
 
     @Column(name="status")
     private int status;
@@ -174,7 +155,7 @@ public class AXCustomerConfirmJourModel {
                 .append("salesBalance", salesBalance)
                 .append("remark", remark)
                 .append("cuM", cuM)
-                .append("dSG_ToPortDesc", dSGToPortDesc)
+                .append("dSGToPortDesc", dSGToPortDesc)
                 .append("containers", containers)
                 .append("fOBPrice", fOBPrice)
                 .append("totalnetweigth", totalnetweigth)
@@ -191,17 +172,12 @@ public class AXCustomerConfirmJourModel {
                 .append("quotationCreateDate", quotationCreateDate)
                 .append("dlvTerm", dlvTerm)
                 .append("totalTerm", totalTerm)
-                .append("record_boolean", recordBoolean)
-                .append("createdatetime_timestamp", createdatetimeTimestamp)
-                .append("modifydatetime_timestamp", modifydatetimeTimestamp)
-                .append("deletedatetime_timestampg", deletedatetimeTimestampg)
                 .append("version", version)
-                .append("deletedatetime_timestamp", deletedatetimeTimestamp)
                 .append("status", status)
-                .append("dSG_ShippingDateRequested", dSGShippingDateRequested)
-                .append("dSG_EDDDate", dSGEDDDate)
-                .append("dSG_AvailableDate", dSGAvailableDate)
-                .append("dSG_remark", dSGRemark)
+                .append("dSGShippingDateRequested", dSGShippingDateRequested)
+                .append("dSGEDDDate", dSGEDDDate)
+                .append("dSGAvailableDate", dSGAvailableDate)
+                .append("dSGRemark", dSGRemark)
                 .toString();
     }
 }

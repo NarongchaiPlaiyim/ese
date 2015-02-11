@@ -2,6 +2,8 @@ package com.ese.model.db;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
@@ -20,18 +22,11 @@ public class AxCustomerGroupModel {
     @Column(name="Name")
     private String name;
 
-    @Column(name="record_boolean")
-    private boolean recordBoolean;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="createdatetime_timestamp")
-    private Date createdatetimeTimestamp;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="modifydatetime_timestamp")
-    private Date modifydatetimeTimestamp;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="deletedatetime_timestamp")
-    private Date deletedatetimeTimestamp;
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("customerGroup", customerGroup)
+                .append("name", name)
+                .toString();
+    }
 }

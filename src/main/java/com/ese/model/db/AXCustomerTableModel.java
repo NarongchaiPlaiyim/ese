@@ -88,28 +88,13 @@ public class AXCustomerTableModel {
     private String dimension2_;
 
     @Column(name="Dimension3_")
-    private String dimension3_;
-
-    @Column(name="record_boolean")
-    private boolean recordBoolean;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="createdatetime_timestamp")
-    private Date createdatetimeTimestamp;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="modifydatetime_timestamp")
-    private Date modifydatetimeTimestamp;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="deletedatetime_timestamp")
-    private Date deletedatetimeTimestamp;
+    private String dimension3_ ;
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("accountNum", accountNum)
-                .append("dSG_ByProductCode", dSGByProductCode)
+                .append("dSGByProductCode", dSGByProductCode)
                 .append("name", name)
                 .append("nameAlias", nameAlias)
                 .append("invoiceAccount", invoiceAccount)
@@ -132,9 +117,6 @@ public class AXCustomerTableModel {
                 .append("dimension", dimension)
                 .append("dimension2_", dimension2_)
                 .append("dimension3_", dimension3_)
-                .append("record_boolean", recordBoolean)
-                .append("createdatetime_timestamp", createdatetimeTimestamp)
-                .append("modifydatetime_timestamp", modifydatetimeTimestamp)
                 .toString();
     }
 }
