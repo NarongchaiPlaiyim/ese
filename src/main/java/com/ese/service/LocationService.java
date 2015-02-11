@@ -1,22 +1,16 @@
 package com.ese.service;
 
 import com.ese.model.dao.LocationDAO;
-import com.ese.model.dao.StockInOutNoteDAO;
 import com.ese.model.dao.WarehouseDAO;
 import com.ese.model.db.MSLocationModel;
-import com.ese.model.db.MSStockInOutNoteModel;
 import com.ese.model.db.MSWarehouseModel;
 import com.ese.model.view.LocationView;
-import com.ese.model.view.StockInOutNoteView;
 import com.ese.transform.LocationTransform;
-import com.ese.transform.StockInOutNoteTransform;
 import com.ese.utils.Utils;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -63,7 +57,6 @@ public class LocationService extends Service{
 
     public MSWarehouseModel checkWarehouse(int warehouseId){
         log.debug("checkWarehouse : {}", warehouseId);
-
         return warehouseDAO.findCheckDelete(warehouseId);
     }
 

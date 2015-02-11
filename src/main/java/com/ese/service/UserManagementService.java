@@ -85,13 +85,11 @@ public class UserManagementService extends Service{
         try {
             return staffDAO.isUsernameExist(userName);
         } catch (Exception e) {
-            System.err.println(e);
             return true;
         }
     }
     public void onSaveUserAccess(UserView userView){
         StaffModel staffModel = userManagementTranstorm.transformToModel(userView);
-
         try {
             staffDAO.persist(staffModel);
         } catch (Exception e) {
@@ -107,20 +105,6 @@ public class UserManagementService extends Service{
         } catch (Exception e) {
             log.debug("Exception error update : ", e);
         }
-    }
-
-    //Created by Chai
-    public void onChangePassword(final StaffModel staffModel){
-        try {
-            staffModel.setPassword(EncryptionService.encryption(staffModel.getPassword()));
-            staffDAO.update(staffModel);
-        } catch (Exception e) {
-            log.debug("Exception error update : ", e);
-        }
-    }
-
-    public MSTitleModel getTitleById(int titleId){
-        return msTitleDAO.findById(titleId);
     }
 
     public List<MenuObjectModel> getMenuObjectByObjCategory(){
@@ -150,8 +134,8 @@ public class UserManagementService extends Service{
 
     public void onSaveUserAccess(List<Document> objectModels, StaffModel staffModel){
         log.debug("objectModels Size : {}, staffModel {}", objectModels.size(), staffModel.toString());
-        UserAccessModel model = new UserAccessModel();
-        List<UserAccessModel> userAccessModelList = new ArrayList<UserAccessModel>();
+        UserAccessModel model;
+        List<UserAccessModel> userAccessModelList;
 
         if (Utils.isSafetyList(objectModels)){
             for (Document document : objectModels){
@@ -207,11 +191,11 @@ public class UserManagementService extends Service{
 
     public void onSaveRole(List<SystemRoleModel> roleModels, StaffModel staffModel) {
         log.debug("roleModels Size : {}, staffModel {}", roleModels.size(), staffModel.toString());
-        StaffRolesModel staffRolesModel = new StaffRolesModel();
-        List<StaffRolesModel> staffRolesModelList = new ArrayList<StaffRolesModel>();
-        List<RoleAccessModel> roleAccessModels = new ArrayList<RoleAccessModel>();
-        UserAccessModel userAccessModel = new UserAccessModel();
-        List<UserAccessModel> userAccessModelList = new ArrayList<UserAccessModel>();
+        StaffRolesModel staffRolesModel;
+        List<StaffRolesModel> staffRolesModelList;
+        List<RoleAccessModel> roleAccessModels;
+        UserAccessModel userAccessModel;
+        List<UserAccessModel> userAccessModelList;
 
         for (SystemRoleModel roleModel : roleModels){
             staffRolesModel = staffRoleTransform.tramsformToModel(roleModel, staffModel);
@@ -267,7 +251,6 @@ public class UserManagementService extends Service{
         try {
             StaffModel staffModel = staffDAO.findByUserName(userName);
             UserView userView = userManagementTranstorm.transformToView(staffModel);
-//            userView.setMsTitleModel(getTitleById(staffModel.getMsTitleModel().getId()));
             return userView;
         } catch (Exception e) {
             log.debug("Exception error getUserName : {}", e);
@@ -276,13 +259,13 @@ public class UserManagementService extends Service{
     }
 
     public void printReportUserAndRole(UserDetail user){
-        String printTagReportname = Utils.genDateReportStringDDMMYYYY(new Date()) + "_UserAndRoleReport";
+        String printTagReportname = Utils.genReportName("_UserAndRoleReport");
         HashMap map = new HashMap<String, Object>();
-        List<UserAndRoleViewReport> reportViews = null;
+        List<UserAndRoleViewReport> reportViews;
 
         map.put("userPrint", user.getUserName());
-        map.put("printDate", Utils.convertToStringYYYYMMDDHHmmss(new Date()));
-        map.put("path", FacesUtil.getFacesContext().getExternalContext().getRealPath(path));
+        map.put("printDate", Utils.convertCurrentDateToStringDDMMYYYY());
+        map.put("path", FacesUtil.getRealPath(path));
 
         reportViews = staffDAO.genSQLReportUserAndRole();
 

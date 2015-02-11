@@ -28,11 +28,10 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
             criteria.add(Restrictions.eq("status", 2));
             palletModelList = Utils.safetyList(criteria.list());
             log.debug("findOnloadPallet Size : {}", palletModelList.size());
-            return palletModelList;
         } catch (Exception e){
             log.debug("Exception : {}", e);
-            return palletModelList;
         }
+        return palletModelList;
     }
 
     public List<PalletModel> findChang(int statusId, int warehouse, int conveyorLine, int location, String keyItemDescription, int combine, int foil){

@@ -18,11 +18,12 @@ public class WorkingAreaService extends Service{
 
     public List<MSWorkingAreaModel> getWorkingAreaList(){
         log.debug("getWorkingAreaList().");
+        List<MSWorkingAreaModel> msWorkingAreaModelList = Utils.getEmptyList();
         try{
-            return workingAreaDAO.findAll();
+            msWorkingAreaModelList = workingAreaDAO.findAll();
         } catch (Exception e){
             log.debug("Exception : {}", e);
-            return Utils.getEmptyList();
         }
+        return msWorkingAreaModelList;
     }
 }

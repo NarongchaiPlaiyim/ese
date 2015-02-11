@@ -35,14 +35,11 @@ public class StockInOutNoteService extends Service{
 
     public StockInOutNoteView clickToStockInOutNoteView(MSStockInOutNoteModel msStockInOutNoteModel){
         log.debug("clickToStockInOutNoteView(). {}", msStockInOutNoteModel.toString());
-        StockInOutNoteView stockInOutNoteView;
-
+        StockInOutNoteView stockInOutNoteView = new StockInOutNoteView();
         if (!Utils.isNull(msStockInOutNoteModel)){
             stockInOutNoteView = stockInOutNoteTransform.transformToView(msStockInOutNoteModel);
-            return stockInOutNoteView;
-        } else {
-            return new StockInOutNoteView();
         }
+        return stockInOutNoteView;
     }
 
     public void onSaveStockInOutNote(StockInOutNoteView stockInOutNoteView){

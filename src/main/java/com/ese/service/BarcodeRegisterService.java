@@ -84,12 +84,13 @@ public class BarcodeRegisterService extends Service{
 
     public BarcodeRegisterView convertToView(BarcodeRegisterModel model){
         log.debug("-- convertToView(BarcodeRegisterModel.id[{}])", model.getId());
+        BarcodeRegisterView barcodeRegisterView = new BarcodeRegisterView();
         try {
-            return barcodeRegisterTransform.transformToView(model);
+            barcodeRegisterView = barcodeRegisterTransform.transformToView(model);
         } catch (Exception e) {
             log.error("{}",e);
-            return new BarcodeRegisterView();
         }
+        return barcodeRegisterView;
     }
 
     public void saveORupdate(BarcodeRegisterView view){
@@ -120,7 +121,7 @@ public class BarcodeRegisterService extends Service{
     }
 
     public void onPrintBarcode(int barcodeId){
-        String printBarcodeName = Utils.genDateReportStringDDMMYYYY(new Date()) + "_BarcodeRegister";
+        String printBarcodeName = Utils.genReportName("_BarcodeRegister");
         List<BarcodeRegisterModelReport> reports = barcodeRegisterDAO.genSQLReportBarcode(barcodeId);
 
         log.debug("reportViews {}", reports.size());
