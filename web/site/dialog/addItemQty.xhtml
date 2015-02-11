@@ -56,32 +56,26 @@
                 </div>
             </p:panel>
 
-            <table border="0">
-                <tr>
-                    <td>
-                        <p:dataTable id="addItemTable"
-                                     styleClass="full_table"
-                                     rows="7" paginator="true"
-                                     selectionMode="single"
-                                     rowKey="#{itemQty.id}"
-                                     value="#{pickingOrderShowItemBean.itemQtyViewList}"
-                                     selection="#{pickingOrderShowItemBean.selectItemQty}"
-                                     var="itemQty"
-                                     style="width: 100%; max-width: 100%; min-width: 100%">
-                            <p:ajax event="rowSelect" listener="#{pickingOrderShowItemBean.onClickItemQty()}" update=":addItemQtyForm:selectBtn"/>
-                            <p:column headerText="Item Name" style="width: 100px" styleClass="center">
-                                <h:outputText value="#{itemQty.itemName}"/>
-                            </p:column>
-                            <p:column headerText="Item Code" style="width: 100px" styleClass="center">
-                                <h:outputText value="#{itemQty.itemId}"/>
-                            </p:column>
-                            <p:column headerText="Description" style="width: 220px" styleClass="center">
-                                <h:outputText value="#{itemQty.DSGThaiItemDescription}"/>
-                            </p:column>
-                        </p:dataTable>
-                    </td>
-                </tr>
-            </table>
+            <p:dataTable id="addItemTable"
+                         styleClass="full_table"
+                         rows="7" paginator="true"
+                         selectionMode="single"
+                         rowKey="#{itemQty.id}"
+                         value="#{pickingOrderShowItemBean.itemQtyViewList}"
+                         selection="#{pickingOrderShowItemBean.selectItemQty}"
+                         var="itemQty"
+                         style="width: 100%; max-width: 100%; min-width: 100%">
+                <p:ajax event="rowSelect" listener="#{pickingOrderShowItemBean.onClickItemQty()}" update=":addItemQtyForm:selectBtn"/>
+                <p:column headerText="Item Name" style="width: 100px" styleClass="center">
+                    <h:outputText value="#{itemQty.itemName}"/>
+                </p:column>
+                <p:column headerText="Item Code" style="width: 100px" styleClass="center">
+                    <h:outputText value="#{itemQty.itemId}"/>
+                </p:column>
+                <p:column headerText="Description" style="width: 220px" styleClass="center">
+                    <h:outputText value="#{itemQty.DSGThaiItemDescription}"/>
+                </p:column>
+            </p:dataTable>
         </h:form>
     </p:panel>
 </f:view>

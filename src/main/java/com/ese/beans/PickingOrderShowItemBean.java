@@ -1,10 +1,7 @@
 package com.ese.beans;
 
 import com.ese.model.db.*;
-import com.ese.model.view.ItemQtySearchView;
-import com.ese.model.view.ItemQtyView;
-import com.ese.model.view.LocationQtyView;
-import com.ese.model.view.PickingOrderShowItemView;
+import com.ese.model.view.*;
 import com.ese.service.security.UserDetail;
 import com.ese.utils.FacesUtil;
 import com.ese.utils.MessageDialog;
@@ -73,6 +70,11 @@ public class PickingOrderShowItemBean extends Bean {
     private MSItemModel selectItemQty;
 
     private UserDetail userDetail;
+
+    //showItemStatusDialog
+    private List<ShowItemStatusView> showItemStatusViewList;
+    private ShowItemStatusView selectShowItemStatus;
+    private boolean flagRemove;
 
     @PostConstruct
     private void init(){
@@ -191,12 +193,17 @@ public class PickingOrderShowItemBean extends Bean {
         if (selectPickingLine.size() > 1){
             showDialog(MessageDialog.WARNING.getMessageHeader(), "กรุณา Reserved ทีละ 1", "msgBoxSystemMessageDlg");
         } else {
-            for (PickingOrderShowItemView view : selectPickingLine){
-                locationQtyViewList = pickingOrderShowItemService.onManualReserved(view.getId(), "", 0, 0);
-                itemView = view;
-                msWarehouseModelList = pickingOrderShowItemService.getWarehouseAll();
-                log.debug("msLocationModelList Size : {}", msWarehouseModelList.size());
-            }
+            onLoadManualReserved();
+        }
+    }
+
+    private void onLoadManualReserved(){
+        log.debug("selectPickingLine Size : {}", selectPickingLine.size());
+        for (PickingOrderShowItemView view : selectPickingLine){
+            locationQtyViewList = pickingOrderShowItemService.onManualReserved(view.getId(), "", 0, 0);
+            itemView = view;
+            msWarehouseModelList = pickingOrderShowItemService.getWarehouseAll();
+            log.debug("msLocationModelList Size : {}", msWarehouseModelList.size());
         }
     }
 
@@ -216,15 +223,20 @@ public class PickingOrderShowItemBean extends Bean {
     public void ManualReserved(){
         if (reservedManualQty > selectLocationQtyView.getAvailable()){
             showDialog(MessageDialog.WARNING.getMessageHeader(), "Reserved Qty > Avaliable Qty.", "msgBoxSystemMessageDlg");
+//            onLoadManualReserved();
+//            return;
         } else if (Utils.isZero(reservedManualQty)){
             showDialog(MessageDialog.WARNING.getMessageHeader(), "กรุณาใส่จำนวน Reserved Qty.", "msgBoxSystemMessageDlg");
+//            onLoadManualReserved();
+//            return;
         } else  if (reservedManualQty <= selectLocationQtyView.getAvailable()){
             pickingOrderShowItemService.saveManualReserved(selectLocationQtyView, reservedManualQty, itemView.getId());
             showDialog(MessageDialog.SAVE.getMessageHeader(), "Success.", "msgBoxSystemMessageDlg");
         }
         reservedManualQty = 0;
         locationQtyViewList = pickingOrderShowItemService.getLocationQtyBySearch(itemView.getItem(), warehouseId, locationId, locationQtyId);
-        init();
+        onLoadTable();
+        onLoadManualReserved();
     }
 
     public void onAddEditItem(){
@@ -244,7 +256,7 @@ public class PickingOrderShowItemBean extends Bean {
                 }
             }
         } else {
-            showDialog("SearchItem Order Qty.", "", "searchItemQtyDlg");
+            showDialog("searchItemQtyDlg");
             itemQtyViewList = new ArrayList<MSItemModel>();
             itemQtySearchView = new ItemQtySearchView();
             flagSearch = false;
@@ -259,6 +271,7 @@ public class PickingOrderShowItemBean extends Bean {
             if (!Utils.isZero(itemQtyView.getOrderQty())){
                 pickingOrderShowItemService.onSavePickingLine(pickingOrderModel, userDetail, itemQtyView);
                 showDialog(MessageDialog.SAVE.getMessageHeader(), "Success.", "msgBoxSystemMessageDlg");
+                init();
             } else {
                 showDialog(MessageDialog.WARNING.getMessageHeader(), "กรุณาใส่ Order Qty.", "msgBoxSystemMessageDlg");
             }
@@ -288,5 +301,38 @@ public class PickingOrderShowItemBean extends Bean {
         itemQtyView.setItemName(selectItemQty.getItemName());
         itemQtyView.setItemDes(selectItemQty.getDSGThaiItemDescription());
         itemQtyView.setOrderQty(0);
+    }
+
+    public void onShowItemStatus(){
+        if (selectPickingLine.size() > 1){
+            showDialog(MessageDialog.WARNING.getMessageHeader(), "กรุณาเลือก Picking Order Line ทีละ 1", "msgBoxSystemMessageDlg");
+        } else {
+            showDialog("showItemStatusDlg");
+            flagRemove = true;
+            onLoadShowItemStatus();
+        }
+    }
+
+    private void onLoadShowItemStatus(){
+        selectShowItemStatus = new ShowItemStatusView();
+        for (PickingOrderShowItemView view : selectPickingLine){
+            itemQtyView = new ItemQtyView();
+            itemQtyView.setItemCode(view.getItem());
+            itemQtyView.setItemName(view.getItemName());
+            itemQtyView.setItemDes(view.getDescription());
+            itemQtyView.setOrderQty(view.getOrderQty());
+            itemQtyView.setReservedQty(view.getReservedQty());
+            itemQtyView.setPickingQty(view.getQty());
+            showItemStatusViewList = pickingOrderShowItemService.getReservedOrder(view.getId());
+        }
+    }
+
+    public void removeShowItemStatus(){
+        pickingOrderShowItemService.onRemove(selectShowItemStatus.getId());
+        onLoadShowItemStatus();
+    }
+
+    public void onClickShowItemStatusTable(){
+        flagRemove = false;
     }
 }

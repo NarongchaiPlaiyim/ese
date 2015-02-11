@@ -66,6 +66,10 @@ public abstract class Bean implements Serializable {
         FacesUtil.showDialog(dialogName);
     }
 
+    protected void showDialog(String dialogName){
+        FacesUtil.showDialog(dialogName);
+    }
+
     protected boolean preLoad(){
         boolean result = true;
         try{

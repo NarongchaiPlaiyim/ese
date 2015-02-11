@@ -42,7 +42,7 @@ public class AXCustomerConfirmTransModel {
     private String inventdimId;
 
     @Column(name="Qty")
-    private BigDecimal qty;
+    private int qty;
 
     @Column(name="SalesPrice")
     private BigDecimal salesPrice;

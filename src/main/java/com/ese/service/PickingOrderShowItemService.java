@@ -154,6 +154,24 @@ public class PickingOrderShowItemService extends Service{
 
     public void onSavePickingLine(PickingOrderModel pickingOrderModel, UserDetail userDetail, ItemQtyView itemQtyView){
         StatusModel statusModel = statusDAO.findByStatusSeqTablePickingOrder();
-        pickingOrderLineTransform.transformToModelByAddItemQty(pickingOrderModel, statusModel, userDetail);
+        PickingOrderLineModel pickingOrderLineModel = pickingOrderLineTransform.transformToModelByAddItemQty(pickingOrderModel, statusModel, userDetail, itemQtyView);
+
+        try {
+            pickingOrderLineDAO.persist(pickingOrderLineModel);
+        } catch (Exception e) {
+            log.debug("Exception error onSavePickingLine : ", e);
+        }
+    }
+
+    public List<ShowItemStatusView> getReservedOrder(int pickingLineId){
+        return reservedOrderDAO.findByPickingLineId(pickingLineId);
+    }
+
+    public void onRemove(int reservedOrderId){
+        try {
+            reservedOrderDAO.delete(reservedOrderDAO.remove(reservedOrderId));
+        } catch (Exception e) {
+            log.debug("Exception error onRemove");
+        }
     }
 }

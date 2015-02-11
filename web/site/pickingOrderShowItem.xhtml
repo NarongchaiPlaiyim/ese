@@ -197,9 +197,9 @@
                                              oncomplete="PF('bui').unblock()" />
                             <p:commandButton value="Show Item Status" id="showStatusBtn"
                                              styleClass="medium" style="#{msg.get('fix.size.200')}"
-                                             disabled="#{pickingOrderShowItemBean.flagShowStatus}"
-                                             onstart="PF('bui').block()"
-                                             oncomplete="PF('bui').unblock()" />
+                                             update=":msgBoxSystemMessagePanel, :showItemStatusForm"
+                                             action="#{pickingOrderShowItemBean.onShowItemStatus()}"
+                                             disabled="#{pickingOrderShowItemBean.flagShowStatus}"/>
                         </div>
                     </p:panel>
 
@@ -348,6 +348,14 @@
                       onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
                       modal="true" closable="true">
                 <ui:include src="../site/dialog/addItemQty.xhtml"/>
+            </p:dialog>
+        </p:panel>
+
+        <p:panel id="showItemStatusPanel" styleClass="panel">
+            <p:dialog id="showItemStatusDialog" widgetVar="showItemStatusDlg" header="Picking Order Show Item" width="1960"
+                      onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
+                      modal="true" closable="true">
+                <ui:include src="../site/dialog/showItemStatus.xhtml"/>
             </p:dialog>
         </p:panel>
 

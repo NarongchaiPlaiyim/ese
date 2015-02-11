@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <p:panel id="showItemPanel" styleClass="panel-dialog">
+        <h:form id="showItemStatusForm">
+            <table border="0" class="content_table_form">
+                <tr >
+                    <td style="min-width: 150px; width: 150px; max-width: 150px;" class="left" />
+                    <td style="min-width: 300px; width: 300px; max-width: 300px;" class="left" />
+                    <td style="min-width: 150px; width: 150px; max-width: 150px;" class="left" />
+                    <td style="min-width: 300px; width: 300px; max-width: 300px;" class="left" />
+                    <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
+                    <td style="min-width: 300px; width: 300px; max-width: 300px;" class="left" />
+                    <td style="min-width: 150px; width: 150px; max-width: 150px;" class="left" />
+                    <td style="min-width: 300px; width: 300px; max-width: 300px;" class="left" />
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel value="Customer Code"/>
+                    </td>
+                    <td>
+                        <p:inputText value="#{pickingOrderShowItemBean.pickingOrderModel.customerCode.accountNum}" disabled="true"/>
+                    </td>
+                    <td>
+                        <p:outputLabel value="Confirm Id"/>
+                    </td>
+                    <td>
+                        <p:inputText value="#{pickingOrderShowItemBean.pickingOrderModel.confirmId}" disabled="true"/>
+                    </td>
+                    <td>
+                        <p:outputLabel value="Delivery Name"/>
+                    </td>
+                    <td>
+                        <p:inputText value="#{pickingOrderShowItemBean.pickingOrderModel.deliveryName}" disabled="true"/>
+                    </td>
+                    <td>
+                        <p:outputLabel value="Request Ship Date"/>
+                    </td>
+                    <td>
+                        <p:inputText value="#{pickingOrderShowItemBean.pickingOrderModel.requestShiftDate}" disabled="true"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel value="Customer Name"/>
+                    </td>
+                    <td>
+                        <p:inputText value="#{pickingOrderShowItemBean.pickingOrderModel.customerCode.name}" disabled="true"/>
+                    </td>
+                    <td>
+                        <p:outputLabel value="Confirm Date"/>
+                    </td>
+                    <td>
+                        <p:inputText value="#{pickingOrderShowItemBean.pickingOrderModel.confirmDate}" disabled="true"/>
+                    </td>
+                    <td>
+                        <p:outputLabel value="Delivery Address"/>
+                    </td>
+                    <td>
+                        <p:inputText value="#{pickingOrderShowItemBean.pickingOrderModel.deliveryAddress}" disabled="true"/>
+                    </td>
+                    <td>
+                        <p:outputLabel value="EDD Date"/>
+                    </td>
+                    <td>
+                        <p:inputText value="#{pickingOrderShowItemBean.pickingOrderModel.eddDate}" disabled="true"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel value="Purchase Order"/>
+                    </td>
+                    <td>
+                        <p:inputText value="#{pickingOrderShowItemBean.pickingOrderModel.purchaseOrder}" disabled="true"/>
+                    </td>
+                    <td>
+                        <p:outputLabel value="Sale Order"/>
+                    </td>
+                    <td>
+                        <p:inputText value="#{pickingOrderShowItemBean.pickingOrderModel.salesOrder}" disabled="true"/>
+                    </td>
+                    <td>
+                        <p:outputLabel value="Remark"/>
+                    </td>
+                    <td>
+                        <p:inputTextarea value="#{pickingOrderShowItemBean.pickingOrderModel.remark}" disabled="true"/>
+                    </td>
+                    <td>
+                        <p:outputLabel value="Avaliable Date"/>
+                    </td>
+                    <td>
+                        <p:inputText value="#{pickingOrderShowItemBean.pickingOrderModel.avalibleDate}" disabled="true"/>
+                    </td>
+                </tr>
+            </table>
+            <table border="0">
+                <tr>
+                    <td style="min-width: 105px; width: 105px; max-width: 105px;">
+                        <p:outputLabel value="Item Code"/>
+                    </td>
+                    <td style="min-width: 250px; width: 250px; max-width: 250px;">
+                        <p:inputText value="#{pickingOrderShowItemBean.itemQtyView.itemCode}"  disabled="true"/>
+                    </td>
+                    <td style="min-width: 155px; width: 155px; max-width: 155px;">
+                        <p:outputLabel value="Item Description"/>
+                    </td>
+                    <td style="min-width: 250px; width: 250px; max-width: 250px;">
+                        <p:inputTextarea value="#{pickingOrderShowItemBean.itemQtyView.itemDes}"  disabled="true"/>
+                    </td>
+                    <td style="min-width: 95px; width: 95px; max-width: 95px;">
+                        <p:outputLabel value="Order Qty"/>
+                    </td>
+                    <td style="min-width: 250px; width: 250px; max-width: 250px;">
+                        <p:inputText value="#{pickingOrderShowItemBean.itemQtyView.orderQty}" disabled="true"/>
+                    </td>
+                    <td style="min-width: 125px; width: 125px; max-width: 125px;">
+                        <p:outputLabel value="Reserved Qty"/>
+                    </td>
+                    <td style="min-width: 250px; width: 250px; max-width: 250px;">
+                        <p:inputText value="#{pickingOrderShowItemBean.itemQtyView.reservedQty}" disabled="true"/>
+                    </td>
+                    <td style="min-width: 100px; width: 100px; max-width: 100px;">
+                        <p:outputLabel value="Picked Qty"/>
+                    </td>
+                    <td style="min-width: 250px; width: 250px; max-width: 250px;">
+                        <p:inputText value="#{pickingOrderShowItemBean.itemQtyView.pickingQty}" disabled="true"/>
+                    </td>
+                </tr>
+            </table>
+
+            <p:panel style="border: 0">
+                <div style="text-align: right;">
+                    <p:commandButton value="Remove" id="removeBtn"
+                                     action="#{pickingOrderShowItemBean.removeShowItemStatus}"
+                                     disabled="#{pickingOrderShowItemBean.flagRemove}"
+                                     update=":showItemStatusForm:showItemTable"
+                                     styleClass="medium" style="#{msg.get('fix.size.200')}"
+                                     onstart="PF('bui').block()"
+                                     oncomplete="PF('bui').unblock()"
+                                     process="@form"/>
+
+                </div>
+            </p:panel>
+
+            <p:dataTable id="showItemTable"
+                         styleClass="full_table"
+                         value="#{pickingOrderShowItemBean.showItemStatusViewList}"
+                         selection="#{pickingOrderShowItemBean.selectShowItemStatus}"
+                         var="showItemStatus"
+                         rowKey="#{showItemStatus.id}"
+                         rowIndexVar="rowIndex"
+                         rows="7" paginator="true"
+                         selectionMode="single"
+                         style="width: 100%; max-width: 100%; min-width: 100%">
+                <p:ajax event="rowSelect" listener="#{pickingOrderShowItemBean.onClickShowItemStatusTable()}" update=":showItemStatusForm:removeBtn"/>
+                <p:column headerText="No"  style="width: 80px" styleClass="center">
+                    <h:outputText value="#{rowIndex+1}"/>
+                </p:column>
+                <p:column headerText="Warehouse" style="width: 150px" styleClass="center">
+                    <h:outputText value="#{showItemStatus.warehouse}"/>
+                </p:column>
+                <p:column headerText="Location" style="width: 100px" styleClass="center">
+                    <h:outputText value="#{showItemStatus.location}"/>
+                </p:column>
+                <p:column headerText="Batch" style="width: 100px" styleClass="center">
+                    <h:outputText value="#{showItemStatus.batchNo}"/>
+                </p:column>
+                <p:column headerText="Reserved Qty" style="width: 80px" styleClass="center">
+                    <h:outputText value="#{showItemStatus.reservedQty}"/>
+                </p:column>
+                <p:column headerText="Picked Qty" style="width: 80px" styleClass="center">
+                    <h:outputText value="#{showItemStatus.pickedQty}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </p:panel>
+</f:view>
+</html>

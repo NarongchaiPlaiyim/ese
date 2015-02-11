@@ -34,7 +34,7 @@ public class PickingOrderLineModel extends AbstractModel{
     private String origSaleId;
 
     @Column(name = "qty")
-    private BigDecimal qty;
+    private int qty;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "ship_date")

@@ -14,6 +14,7 @@ public class ItemQtyView {
     private int orderQty;
     private int reservedQty;
     private String itemName;
+    private int pickingQty;
 
     @Override
     public String toString() {
@@ -24,6 +25,7 @@ public class ItemQtyView {
                 .append("orderQty", orderQty)
                 .append("reservedQty", reservedQty)
                 .append("itemName", itemName)
+                .append("pickingQty", pickingQty)
                 .toString();
     }
 }
