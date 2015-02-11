@@ -99,6 +99,10 @@ public enum Utils {
         }
     }
 
+    public static int parseInt(Object input){
+        return parseInt(input, 0);
+    }
+
     public static BigDecimal parseBigDecimal(Object input, BigDecimal defaultValue){
         if(input == null)
             return defaultValue;
@@ -187,6 +191,10 @@ public enum Utils {
         }
     }
 
+    public static String convertCurrentDateToStringDDMMYYYY(){
+        return convertToStringDDMMYYYY(currentDate());
+    }
+
     public static String convertToStringDDMMYYYY(Date date){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.ENGLISH);
         if (Utils.isNull(date)){
@@ -206,6 +214,11 @@ public enum Utils {
             return dateString;
         }
     }
+
+    public static String genReportName(String fileName){
+        return genDateReportStringDDMMYYYY(currentDate())+ fileName;
+    }
+
 
     public static String convertToStringYYYYMMDDHHmmss(Date date){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);

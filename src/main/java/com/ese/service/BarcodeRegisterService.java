@@ -28,7 +28,6 @@ public class BarcodeRegisterService extends Service{
     @Resource private ReportService reportService;
     @Value("#{config['report.barcode']}")private String pathBarcodeReport;
 
-
     public List<BarcodeRegisterModel> findBarcodeByCondition(final String type, final String text){
         log.debug("-- findBarcodeByCondition({}, {})", type, text);
         List<BarcodeRegisterModel> barcodeRegisterModelList = Utils.getEmptyList();
@@ -63,23 +62,15 @@ public class BarcodeRegisterService extends Service{
         return msItemModelList;
     }
 
-    public List<MSItemModel> findAll(){
-        try {
-            return itemDAO.findAll();
-        } catch (Exception e) {
-            log.error("{}",e);
-            return Utils.getEmptyList();
-        }
-    }
-
     public List<BarcodeRegisterModel> getByIsValid(){
         log.debug("-- getByIsValid()");
+        List<BarcodeRegisterModel> barcodeRegisterModelList = Utils.getEmptyList();
         try {
-            return barcodeRegisterDAO.findByIsValid();
+            barcodeRegisterModelList = barcodeRegisterDAO.findByIsValid();
         } catch (Exception e) {
             log.error("{}",e);
-            return Utils.getEmptyList();
         }
+        return barcodeRegisterModelList;
     }
 
     public void delete(BarcodeRegisterModel model){

@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public class StatusDAO extends GenericDAO<StatusModel, Integer>{
 
-    public StatusModel findByStatusSeqTablePickingOrder(int id){
+    public StatusModel findByStatusSeqTablePickingOrder(){
         StatusModel statusModel = new StatusModel();
         try {
             Criteria criteria = getCriteria();
@@ -33,7 +33,7 @@ public class StatusDAO extends GenericDAO<StatusModel, Integer>{
             Criteria criteria = getCriteria();
             criteria.add(Restrictions.eq("tableId.id", 1));
 
-            modelList = criteria.list();
+            modelList = Utils.safetyList(criteria.list());
         } catch (Exception e) {
             log.debug("Exception error findByTablePickingOrder : ", e);
         }

@@ -39,55 +39,55 @@ public class PickingOrderService extends Service {
     @Value("#{config['report.confirmationpacking']}")
     private String pathConfirmationPacking;
 
+    private static final String A031 ="031A";
+    private static final String B031 ="031B";
+    private static final String ALL ="All";
+
     public String getTypeBeforeOnLoaf(long staffId){
-        List<UserAccessModel> userAccessModelList = userAccessDAO.findByPickingOrder(Utils.parseInt(staffId, 0));
-        String mode = "";
-        if (userAccessModelList.size() == 2){
-            mode = "All";
-        } else {
+        List<UserAccessModel> userAccessModelList = userAccessDAO.findByPickingOrder(Utils.parseInt(staffId));
+        String mode = ALL;
+        final int SEARCH_ALL = 2;
+        if(SEARCH_ALL != userAccessModelList.size()){
             for(UserAccessModel model : userAccessModelList){
-                log.debug("");
-                if ("031A".equals(model.getMenuObjectModel().getCode())){
-                    mode = "031A";
-                } else if ("031B".equals(model.getMenuObjectModel().getCode())){
-                    mode = "031B";
+                if (A031.equals(model.getMenuObjectModel().getCode())){
+                    mode = A031;
+                } else if (B031.equals(model.getMenuObjectModel().getCode())){
+                    mode = B031;
                 }
             }
         }
-
         return mode;
     }
 
     public List<PickingOrderModel> getPickingOrderByOverSeaOrder(String modeFind){
         List<PickingOrderModel> pickingOrderModelList = Utils.getEmptyList();
         log.debug("getPickingOrderByOverSeaOrder : {}", modeFind);
-
-        if ("031A".equals(modeFind)){
+        if (A031.equals(modeFind)){
             pickingOrderModelList = pickingOrderDAO.findByOverSeaOrder();
-        } else if ("031B".equals(modeFind)){
+        } else if (B031.equals(modeFind)){
             pickingOrderModelList = pickingOrderDAO.findByDomesticOrder();
-        } else if ("All".equals(modeFind)){
+        } else if (ALL.equals(modeFind)){
             pickingOrderModelList = pickingOrderDAO.findByOverSeaAndDomesticOrder();
         }
-
         return pickingOrderModelList;
     }
 
     public List<StatusModel> getStatusAll(int tableId){
+        List<StatusModel> statusModelList = Utils.getEmptyList();
         try {
-            return statusDAO.findByTablePickingOrder(tableId);
+            statusModelList = statusDAO.findByTablePickingOrder(tableId);
         } catch (Exception e) {
-            log.debug("Excrption error getStatusAll", e);
-            return null;
+            log.debug("Exception error getStatusAll", e);
         }
+        return statusModelList;
     }
 
     public List<PickingOrderModel> getPickingOnSearch(PickingOrderView pickingOrderView){
+        List<PickingOrderModel> pickingOrderModelList = Utils.getEmptyList();
         if (!Utils.isNull(pickingOrderView)){
-            return pickingOrderDAO.findByPickingView(pickingOrderView);
-        } else {
-            return Utils.getEmptyList();
+            pickingOrderModelList = pickingOrderDAO.findByPickingView(pickingOrderView);
         }
+        return pickingOrderModelList;
     }
 
     public List<DataSyncConfirmOrderView> getDataOnSync(){
@@ -95,7 +95,6 @@ public class PickingOrderService extends Service {
     }
 
     public void updateStatus(List<DataSyncConfirmOrderView> viewList){
-
         for (DataSyncConfirmOrderView view : viewList){
             axCustomerConfirmJourDAO.updateStatusRunning(view.getCustomerCode());
             axCustomerConfirmTransDAO.updateStatusRunning(view.getSaleId(), view.getConfirmId(), view.getConfirmDate());
@@ -113,7 +112,7 @@ public class PickingOrderService extends Service {
 
             try {
                 AXCustomerTableModel customerTableModel = axCustomerTableDAO.findByAccountNum(view.getCustomerCode());
-                StatusModel statusModel = statusDAO.findByStatusSeqTablePickingOrder(1);
+                StatusModel statusModel = statusDAO.findByStatusSeqTablePickingOrder();
 
                 String group = "";
 
@@ -146,9 +145,9 @@ public class PickingOrderService extends Service {
         List<AXCustomerConfirmTransModel> confirmTransModelList = axCustomerConfirmTransDAO.findByPrimaryKey(view.getSaleId(), view.getConfirmId(), view.getConfirmDate());
         PickingOrderModel model = pickingOrderDAO.findByCustomerCode(view.getCustomerCode());
 
+        PickingOrderLineModel pickingOrderLineModel;
         for (AXCustomerConfirmTransModel axCustomerConfirmTransModel : confirmTransModelList){
-            PickingOrderLineModel pickingOrderLineModel = pickingOrderLineTransform.transformToModel(axCustomerConfirmTransModel, model, status, userDetail);
-
+            pickingOrderLineModel = pickingOrderLineTransform.transformToModel(axCustomerConfirmTransModel, model, status, userDetail);
             try {
                 pickingOrderLineDAO.persist(pickingOrderLineModel);
             } catch (Exception e) {
@@ -158,12 +157,12 @@ public class PickingOrderService extends Service {
     }
 
     public void getStikerWorkLoadReport(int pickingId, UserDetail user){
-        String nameReport = Utils.genDateReportStringDDMMYYYY(new Date()) + "_StikerWorkLoad";
+        String nameReport = Utils.genReportName("_StikerWorkLoad");
         List<StiketWorkLoadViewReport> viewReports = axCustomerConfirmJourDAO.genStikerWorkLoadReport(pickingId);
 
         HashMap map = new HashMap<String, Object>();
         map.put("userPrint", user.getUserName());
-        map.put("printDate", Utils.convertToStringDDMMYYYY(new Date()));
+        map.put("printDate", Utils.convertCurrentDateToStringDDMMYYYY());
 
         try {
             reportService.exportPDF(pathStikerWorkLoad, map, nameReport, viewReports);
@@ -174,12 +173,12 @@ public class PickingOrderService extends Service {
 
     public void getConfirmationPackingReport(int pickingId, UserDetail user){
 
-        String nameReport = Utils.genDateReportStringDDMMYYYY(new Date()) + "_ConfirmationPacking";
+        String nameReport = Utils.genReportName("_ConfirmationPacking");
         List<ConfirmationPackingViewModel> viewReports = axCustomerConfirmJourDAO.genConfirmationPackingReport(pickingId);
 
         HashMap map = new HashMap<String, Object>();
         map.put("userPrint", user.getUserName());
-        map.put("printDate", Utils.convertToStringDDMMYYYY(new Date()));
+        map.put("printDate", Utils.convertCurrentDateToStringDDMMYYYY());
 
         try {
             reportService.exportPDF(pathConfirmationPacking, map, nameReport, viewReports);

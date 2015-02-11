@@ -31,7 +31,7 @@ public class BarcodePrintingService extends Service{
             barcodePrintingModel = barcodePrintingDAO.findLastInsert();
             result = barcodePrintingModel.getFinishBarcode();
         } catch (Exception e) {
-            System.err.println(e);
+//            System.err.println(e);
         }
         return result;
     }
@@ -70,14 +70,13 @@ public class BarcodePrintingService extends Service{
     }
 
     public void onPrintBarcode(String startBarcode, int qty){
-//        String printBarcodeName = "D:/" + Utils.genDateReportStringDDMMYYYY(new Date()) + "_BarcodePrinting.pdf";
-        String printBarcodeName = Utils.genDateReportStringDDMMYYYY(new Date()) + "_BarcodePrinting";
+        String printBarcodeName = Utils.genReportName("_BarcodePrinting");
         List<BarcodePrintingView> barcodePrintingViewList = new ArrayList<BarcodePrintingView>();
         try {
 
             for (int i = 0; i < qty; i++) {
                 BarcodePrintingView printingView = new BarcodePrintingView();
-                int barcode = Utils.parseInt(replaceFormat(startBarcode),0)+i;
+                int barcode = Utils.parseInt(replaceFormat(startBarcode))+i;
                 final String result = barcode > 99999999 ? "99999999" : String.format("%08d", barcode);
                 StringBuilder barcodeString = new StringBuilder();
                 barcodeString.append("TW").append(result);

@@ -100,13 +100,13 @@ public class PickingOrderBean extends Bean {
 
     public void onClose(){
         pickingOrderService.rollbackStatus();
-        seleteDataSync = new ArrayList<DataSyncConfirmOrderView>();
+        seleteDataSync = Utils.getEmptyList();
     }
 
     public void onSyncOrder(){
         if (!Utils.isZero(seleteDataSync.size())){
             pickingOrderService.syncOrder(seleteDataSync, userDetail);
-            showDialog("Sync Suscess.", "Suscess.", "msgBoxSystemMessageDlg2");
+            showDialog("Sync Success.", "Success.", "msgBoxSystemMessageDlg2");
             onLoadTable();
         } else {
             showDialogWarning("Please select data.");
