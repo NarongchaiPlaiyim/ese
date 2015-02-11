@@ -40,7 +40,9 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
         sqlBuilder.append(" CASE WHEN SUM(").append(getPrefix()).append(".reserved_order.foil_qty) IS NULL THEN 0 ELSE");
         sqlBuilder.append(" SUM(").append(getPrefix()).append(".reserved_order.foil_qty) END AS FOIL_QTY,");
         sqlBuilder.append(" ").append(getPrefix()).append(".mst_status.caption AS STATUS,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.status AS STATUS_ID");
+        sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.status AS STATUS_ID,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.qty AS QTY, ");
+        sqlBuilder.append(" ").append(getPrefix()).append(".item_master.ItemName AS ITEM_NAME");
         sqlBuilder.append(" FROM ").append(getPrefix()).append(".picking_order_line");
         sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".reserved_order");
         sqlBuilder.append(" ON  ").append(getPrefix()).append(".picking_order_line.id = ").append(getPrefix()).append(".reserved_order.picking_order_line_id");
@@ -52,7 +54,8 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
         sqlBuilder.append(" WHERE ").append(getPrefix()).append(".picking_order_line.picking_order_id = " ).append(pickingOrderId);
         sqlBuilder.append(" GROUP BY ").append(getPrefix()).append(".picking_order_line.id, ").append(getPrefix()).append(".picking_order_line.ItemId, ");
         sqlBuilder.append(getPrefix()).append(".item_master.DSGThaiItemDescription, ").append(getPrefix()).append(".picking_order_line.isfoil, ");
-        sqlBuilder.append(getPrefix()).append(".mst_status.caption, ").append(getPrefix()).append(".picking_order_line.status");
+        sqlBuilder.append(getPrefix()).append(".mst_status.caption, ").append(getPrefix()).append(".picking_order_line.status, ");
+        sqlBuilder.append(getPrefix()).append(".picking_order_line.qty, ").append(getPrefix()).append(".item_master.ItemName");
 
         log.debug("findByPickingOrderId : {}", sqlBuilder.toString());
 
@@ -67,7 +70,9 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
                     .addScalar("FOIL", IntegerType.INSTANCE)
                     .addScalar("FOIL_QTY", BigDecimalType.INSTANCE)
                     .addScalar("STATUS", StringType.INSTANCE)
-                    .addScalar("STATUS_ID", IntegerType.INSTANCE);
+                    .addScalar("STATUS_ID", IntegerType.INSTANCE)
+                    .addScalar("QTY", IntegerType.INSTANCE)
+                    .addScalar("ITEM_NAME", StringType.INSTANCE);
             List<Object[]> objects = query.list();
 
             for (Object[] entity : objects) {
@@ -75,13 +80,15 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
                 pickingOrderShowItemView.setId(Utils.parseInt(entity[0], 0));
                 pickingOrderShowItemView.setItem(Utils.parseString(entity[1], ""));
                 pickingOrderShowItemView.setDescription(Utils.parseString(entity[2], ""));
-                pickingOrderShowItemView.setOrderQty(Utils.parseBigDecimal(entity[3], BigDecimal.ZERO));
-                pickingOrderShowItemView.setReservedQty(Utils.parseBigDecimal(entity[4], BigDecimal.ZERO));
-                pickingOrderShowItemView.setPerPicked(Utils.parseBigDecimal(entity[5], BigDecimal.ZERO));
+                pickingOrderShowItemView.setOrderQty(Utils.parseInt(entity[3], 0));
+                pickingOrderShowItemView.setReservedQty(Utils.parseInt(entity[4], 0));
+                pickingOrderShowItemView.setPerPicked(Utils.parseInt(entity[5], 0));
                 pickingOrderShowItemView.setFoil(Utils.parseInt(entity[6], 0));
                 pickingOrderShowItemView.setFoilQty(Utils.parseBigDecimal(entity[7], BigDecimal.ZERO));
                 pickingOrderShowItemView.setStatus(Utils.parseString(entity[8], ""));
                 pickingOrderShowItemView.setStatusID(Utils.parseInt(entity[9], 0));
+                pickingOrderShowItemView.setQty(Utils.parseInt(entity[10], 0));
+                pickingOrderShowItemView.setItemName(Utils.parseString(entity[11], ""));
                 showItemViews.add(pickingOrderShowItemView);
             }
         } catch (Exception e) {
@@ -330,5 +337,20 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
         log.debug("locationQtyViewList Size : {}", locationQtyViewList.size());
 
         return locationQtyViewList;
+    }
+
+    public void updateOrderQty(int pickingLineId, int orderQty){
+        StringBuilder updateOrderQty = new StringBuilder();
+        updateOrderQty.append(" UPDATE ").append(getPrefix()).append(".picking_order_line SET ").append(getPrefix()).append(".picking_order_line.qty = ").append(orderQty);
+        updateOrderQty.append(" WHERE ").append(getPrefix()).append(".picking_order_line.id = ").append(pickingLineId);
+
+        log.debug("SQL updateOrderQty : {}", updateOrderQty.toString());
+
+        try {
+            SQLQuery q = getSession().createSQLQuery(updateOrderQty.toString());
+            q.executeUpdate();
+        } catch (Exception e) {
+            log.debug("Exception error updateOrderQty: ", e);
+        }
     }
 }

@@ -40,4 +40,33 @@ public class PickingOrderLineTransform extends Transform{
 
         return pickingOrderLineModel;
     }
+
+    public PickingOrderLineModel transformToModelByAddItemQty(PickingOrderModel pickingOrderModel, StatusModel statusModel,UserDetail userDetail){
+        PickingOrderLineModel pickingOrderLineModel = new PickingOrderLineModel();
+
+        pickingOrderLineModel.setPickingOrderId(pickingOrderModel);
+//        pickingOrderLineModel.setLine_num(confirmTransModel.getLineNum());
+//        pickingOrderLineModel.setItemId(confirmTransModel.getItemId());
+//        pickingOrderLineModel.setOrigSaleId(confirmTransModel.getOrigSalesId());
+//        pickingOrderLineModel.setQty(confirmTransModel.getQty());
+//        pickingOrderLineModel.setShipDate(confirmTransModel.getConfirmDate());
+//        pickingOrderLineModel.setSalesUnit(confirmTransModel.getSalesUnit());
+        pickingOrderLineModel.setFoil(false);
+        pickingOrderLineModel.setStatus(statusModel);
+        pickingOrderLineModel.setCreateBy(userDetail.getId());
+        pickingOrderLineModel.setCreateDate(Utils.currentDate());
+        pickingOrderLineModel.setUpdateBy(userDetail.getId());
+        pickingOrderLineModel.setUpdateDate(Utils.currentDate());
+        pickingOrderLineModel.setIsValid(1);
+        pickingOrderLineModel.setVersion(1);
+//        pickingOrderLineModel.setDSGSubGroupDescription(confirmTransModel.getDSGSubGroupDescription());
+//        pickingOrderLineModel.setPIDescription(confirmTransModel.getPIDescription());
+//        pickingOrderLineModel.setDSGExtItemNO(confirmTransModel.getDSGExtItemNO());
+//        pickingOrderLineModel.setName(confirmTransModel.getName());
+//        pickingOrderLineModel.setDSGPackingQty(confirmTransModel.getDSGPackingQty());
+//        pickingOrderLineModel.setSalesUnitTxt(confirmTransModel.getSalesUnitTxt());
+//        pickingOrderLineModel.setCum(confirmTransModel.getCum());
+
+        return pickingOrderLineModel;
+    }
 }

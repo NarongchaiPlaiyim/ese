@@ -160,9 +160,9 @@
                         <div style="text-align: right;">
                             <p:commandButton value="Add/Edit Item" id="addBtn"
                                              styleClass="medium" style="#{msg.get('fix.size.200')}"
-                                             disabled="#{pickingOrderShowItemBean.flagItem}"
-                                             onstart="PF('bui').block()"
-                                             oncomplete="PF('bui').unblock()" />
+                                             process="@this"
+                                             action="#{pickingOrderShowItemBean.onAddEditItem}"
+                                             update=":itemQtyForm, :addItemQtyForm"/>
                             <p:commandButton value="FIFO Reserve" id="fifoBtn"
                                              styleClass="medium" style="#{msg.get('fix.size.200')}"
                                              disabled="#{pickingOrderShowItemBean.flagFIFOReserved}"
@@ -237,7 +237,7 @@
                         <p:column headerText="Item" style="width: 80px" styleClass="center">
                             <h:outputText value="#{pickingLine.item}"/>
                         </p:column>
-                        <p:column headerText="Descript" style="width: 220px" styleClass="center">
+                        <p:column headerText="Description" style="width: 220px" styleClass="center">
                             <h:outputText value="#{pickingLine.description}"/>
                         </p:column>
                         <p:column headerText="Order Qty" style="width: 80px; text-align: center" styleClass="center">
@@ -330,6 +330,30 @@
                       onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
                       modal="true" closable="true">
                 <ui:include src="../site/dialog/reservedQty.xhtml"/>
+            </p:dialog>
+        </p:panel>
+
+        <p:panel id="itemQtyPanel" styleClass="panel">
+            <p:dialog id="itemQtyDialog" widgetVar="itemQtyDlg" header="Add/Edit Order Qty"
+                      onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
+                      modal="true" closable="true">
+                <ui:include src="../site/dialog/itemQty.xhtml"/>
+            </p:dialog>
+        </p:panel>
+
+        <!--<p:panel id="addItemQtyPanel" styleClass="panel">-->
+            <!--<p:dialog id="addItemQtyDialog" widgetVar="addItemQtyDlg" header="Add Order Qty"-->
+                      <!--onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"-->
+                      <!--modal="true" closable="true">-->
+                <!--<ui:include src="../site/dialog/itemQty.xhtml"/>-->
+            <!--</p:dialog>-->
+        <!--</p:panel>-->
+
+        <p:panel id="searchItemQtyPanel" styleClass="panel">
+            <p:dialog id="searchItemQtyDialog" widgetVar="searchItemQtyDlg" header="Search Order Qty" width="1380"
+                      onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
+                      modal="true" closable="true">
+                <ui:include src="../site/dialog/addItemQty.xhtml"/>
             </p:dialog>
         </p:panel>
 

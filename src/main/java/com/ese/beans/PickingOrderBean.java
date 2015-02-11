@@ -55,7 +55,6 @@ public class PickingOrderBean extends Bean {
         initBtn();
         pickingOrderView = new PickingOrderView();
         pickingOrderModelList = new ArrayList<PickingOrderModel>();
-        getCurrent();
         onLoadTable();
         onLoadStatue();
     }
@@ -64,10 +63,6 @@ public class PickingOrderBean extends Bean {
         flagSync = false;
         flagBtnShow = true;
         flagBtnPrint = true;
-    }
-
-    private void getCurrent(){
-        userDetail = getUser();
     }
 
     private void onLoadTable(){

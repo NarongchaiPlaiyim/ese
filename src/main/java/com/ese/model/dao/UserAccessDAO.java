@@ -52,10 +52,12 @@ public class UserAccessDAO extends GenericDAO<UserAccessModel, Integer>{
     public List<UserAccessModel> findByPickingOrder(int staffId){
         List<UserAccessModel> userAccessModels = Utils.getEmptyList();
         try {
-            Criteria criteria = getCriteria();
+            Criteria criteria = getSession().createCriteria(UserAccessModel.class, "ua");
             criteria.add(Restrictions.eq("staffModel.id", staffId));
-            Criterion overSeaOrder = Restrictions.like("menuObjectModel.id", 67);
-            Criterion domesticOrder = Restrictions.like("menuObjectModel.id", 68);
+
+            criteria.createAlias("ua.menuObjectModel", "mo");
+            Criterion overSeaOrder = Restrictions.like("mo.code", "031A");
+            Criterion domesticOrder = Restrictions.like("mo.code", "031B");
             criteria.add(Restrictions.or(overSeaOrder,domesticOrder));
             criteria.add(Restrictions.eq("isValid", 1));
             userAccessModels = Utils.safetyList(criteria.list());
