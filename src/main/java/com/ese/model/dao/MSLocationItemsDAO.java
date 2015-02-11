@@ -19,24 +19,6 @@ import java.util.List;
 public class MSLocationItemsDAO extends GenericDAO<MSLocationItemsModel, Integer> {
 
     public List<LocationItemView> findLocationByItemId(int itemId) throws Exception {
-
-
-
-//        Criteria criteria = getCriteria();       getSession().createCriteria(getEntityClass());
-//        Criteria criteria = getSession().createCriteria(MSLocationItemsModel.class, "b");
-//        criteria.createAlias("b.msLocationModel", "c");
-////        criteria.add(Restrictions.eq("msLocationModel.id", 2));
-//        criteria.add(Restrictions.eq("c.status", 2));
-//        criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
-//        List<MSLocationItemsModel> returnInfoList = criteria.list();
-//        System.out.println(returnInfoList.size());
-//        for (MSLocationItemsModel msLocationItemsModel : returnInfoList){
-//            System.out.println("location_items.id "+msLocationItemsModel.getId());
-//            System.out.println("--location.id "+msLocationItemsModel.getMsLocationModel().getId());
-//            System.out.println("--location.status "+msLocationItemsModel.getMsLocationModel().getStatus());
-//        }
-
-
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(" SELECT ").append(getPrefix()).append(".location.id, ").append(getPrefix()).append(".warehouse.warehouse_code, ").append(getPrefix()).append(".location.location_barcode, ").append(getPrefix()).append(".location.capacity, (").append(getPrefix()).append(".location.capacity - ").append(getPrefix()).append(".location.qty - ").append(getPrefix()).append(".location.reserved_qty) as avaliable");
         stringBuilder.append(" FROM ").append(getPrefix()).append(".location_items");

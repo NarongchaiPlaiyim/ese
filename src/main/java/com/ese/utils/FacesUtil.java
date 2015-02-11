@@ -19,6 +19,10 @@ public class FacesUtil implements Serializable {
         return FacesContext.getCurrentInstance();
     }
 
+    public static String getRealPath(String path) {
+        return getFacesContext().getExternalContext().getRealPath(path);
+    }
+
     public static HttpServletRequest getRequest() {
         return (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
     }

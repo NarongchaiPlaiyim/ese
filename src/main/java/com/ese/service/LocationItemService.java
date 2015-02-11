@@ -23,23 +23,14 @@ public class LocationItemService extends Service{
     @Resource private MSLocationItemsDAO msLocationItemsDAO;
     @Resource private LocationItemTransform locationItemTransform;
 
-    public List<MSLocationItemsModel> getAll(){
-        log.debug("getAll Location()");
-        try{
-            return msLocationItemsDAO.findAll();
-        } catch (Exception e){
-            log.debug("Exception : {}", e);
-            return Utils.getEmptyList();
-        }
-    }
-
     public List<LocationItemView> findLocationByItemId(int itemId){
+        List<LocationItemView> locationItemViewList = Utils.getEmptyList();
         try {
-            return msLocationItemsDAO.findLocationByItemId(itemId);
+            locationItemViewList = msLocationItemsDAO.findLocationByItemId(itemId);
         } catch (Exception e) {
             log.debug("Exception : {}", e);
-            return Utils.getEmptyList();
         }
+        return locationItemViewList;
     }
 
     public List<MSLocationItemsModel> findLocationItemByLocationId(int locationId){
@@ -56,8 +47,8 @@ public class LocationItemService extends Service{
 
     public void addToLocationItemModel(List<MSItemModel> msItemModels, MSLocationModel msLocationModel){
         log.debug("addToLocationItemModel() {}, {}", msItemModels.size(),msLocationModel.toString());
-        MSLocationItemsModel model = new MSLocationItemsModel();
-        List<MSLocationItemsModel> msLocationItemsModels = new ArrayList<MSLocationItemsModel>();
+        MSLocationItemsModel model;
+        List<MSLocationItemsModel> msLocationItemsModels;
 
         if (Utils.isSafetyList(msItemModels)){
             for (MSItemModel msItemModel : msItemModels){

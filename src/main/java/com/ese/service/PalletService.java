@@ -90,7 +90,7 @@ public class PalletService extends Service{
     }
 
     public void onPrintTag(int palletId){
-        String printTagReportname = Utils.genDateReportStringDDMMYYYY(new Date()) + "_PrintTag";
+        String printTagReportName = Utils.genReportName("_PrintTag");
         String partReport = "";
         PalletModel palletModel = null;
         List<PalletManagemengModelReport> reportViews = null;
@@ -103,7 +103,7 @@ public class PalletService extends Service{
                 partReport = pathPrintTagReport;
             } else if (!Utils.isNull(palletModel) && !Utils.isZero(palletModel.getIsCombine())){
                 partReport = pathPrintTagV2Report;
-                map.put("path", FacesUtil.getFacesContext().getExternalContext().getRealPath(pathSubReport));
+                map.put("path", FacesUtil.getRealPath(pathSubReport));
                 map.put("MainPallet", palletDAO.findByIdToReport(palletModel.getId()));
                 map.put("SubPallet", palletDAO.genSQLReportPalletV2(palletModel.getId()));
             }
@@ -112,7 +112,7 @@ public class PalletService extends Service{
         }
 
         try {
-            reportService.exportPDF(partReport, map, printTagReportname, reportViews);
+            reportService.exportPDF(partReport, map, printTagReportName, reportViews);
         } catch (Exception e) {
             log.debug("Exception Report : ", e);
         }
