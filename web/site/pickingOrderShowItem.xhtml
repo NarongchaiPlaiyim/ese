@@ -161,6 +161,7 @@
                             <p:commandButton value="Add/Edit Item" id="addBtn"
                                              styleClass="medium" style="#{msg.get('fix.size.200')}"
                                              process="@this"
+                                             disabled="#{pickingOrderShowItemBean.flagItem}"
                                              action="#{pickingOrderShowItemBean.onAddEditItem}"
                                              update=":itemQtyForm, :addItemQtyForm">
                                 <p:resetInput target=":addItemQtyForm" />
@@ -196,7 +197,7 @@
                                              onstart="PF('bui').block()"
                                              oncomplete="PF('bui').unblock()" />
                             <p:commandButton value="Show Item Status" id="showStatusBtn"
-                                             styleClass="medium" style="#{msg.get('fix.size.200')}"
+                                             styleClass="medium" style="#{msg.get('fix.size.300')}"
                                              update=":msgBoxSystemMessagePanel, :showItemStatusForm"
                                              action="#{pickingOrderShowItemBean.onShowItemStatus()}"
                                              disabled="#{pickingOrderShowItemBean.flagShowStatus}"/>

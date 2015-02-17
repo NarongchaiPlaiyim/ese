@@ -92,7 +92,7 @@ public class PickingOrderShowItemBean extends Bean {
     }
 
     private void btnOnload(){
-        flagItem = true;
+        flagItem = false;
         flagFIFOReserved = true;
         flagPeriodReserved = true;
         flagManualReserved = true;
@@ -120,7 +120,11 @@ public class PickingOrderShowItemBean extends Bean {
         if (Utils.isSafetyList(selectPickingLine)){
             for (PickingOrderShowItemView view : selectPickingLine){
                 if (view.getStatusID() < 3){
-                    flagItem = false;
+                    if (selectPickingLine.size() > 1){
+                        flagItem = true;
+                    } else {
+                        flagItem = false;
+                    }
                     flagFIFOReserved = false;
                     flagPeriodReserved = false;
                     flagManualReserved = false;
@@ -282,7 +286,8 @@ public class PickingOrderShowItemBean extends Bean {
                 showDialog(MessageDialog.WARNING.getMessageHeader(), "กรุณาใส่ Order Qty.", "msgBoxSystemMessageDlg");
             }
         } else {
-            if (itemQtyView.getOrderQty() <= itemQtyView.getReservedQty()){
+            log.debug("OrderQty : [{}] :::::: ReservedQty : [{}]", itemQtyView.getOrderQty(), itemQtyView.getReservedQty());
+            if (itemQtyView.getReservedQty() <= itemQtyView.getOrderQty()){
                 pickingOrderShowItemService.saveItemQty(itemQtyView.getPickLineId(), itemQtyView.getOrderQty());
                 showDialog(MessageDialog.SAVE.getMessageHeader(), "Success.", "msgBoxSystemMessageDlg");
                 init();
