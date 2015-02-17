@@ -61,6 +61,7 @@ public class PickingOrderShowItemBean extends Bean {
 
     private int reservedManualQty;
     private ItemQtyView itemQtyView;
+    private int pickingLineId;
 
     //addItemDialog
     private boolean flagSearch;
@@ -201,10 +202,15 @@ public class PickingOrderShowItemBean extends Bean {
         log.debug("selectPickingLine Size : {}", selectPickingLine.size());
         for (PickingOrderShowItemView view : selectPickingLine){
             locationQtyViewList = pickingOrderShowItemService.onManualReserved(view.getId(), "", 0, 0);
+            pickingLineId = view.getId();
             itemView = view;
             msWarehouseModelList = pickingOrderShowItemService.getWarehouseAll();
             log.debug("msLocationModelList Size : {}", msWarehouseModelList.size());
         }
+    }
+
+    public void onCloseManual(){
+        pickingOrderShowItemService.closeManual(pickingLineId);
     }
 
     public void getLocationByWarehouseId(){

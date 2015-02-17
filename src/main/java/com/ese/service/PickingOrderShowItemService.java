@@ -175,4 +175,9 @@ public class PickingOrderShowItemService extends Service{
             log.debug("Exception error onRemove");
         }
     }
+
+    public void closeManual(int pickingLineId){
+        FIFOReservedView fifoReservedView = pickingOrderLineDAO.findQtyOnInventTran(pickingLineId);
+        pickingOrderLineDAO.updateInventTransByUseFinish(fifoReservedView.getInventtransId());
+    }
 }
