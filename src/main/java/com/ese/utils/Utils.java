@@ -1,5 +1,6 @@
 package com.ese.utils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -93,8 +94,10 @@ public enum Utils {
                 return defaultValue;
             try{
                 return Integer.parseInt(inputStr);
-            }catch (ClassCastException e){
+            } catch (ClassCastException e){
                 return defaultValue;
+            } catch (NumberFormatException e){
+                return NumberUtils.createInteger(NumberUtils.createDouble(inputStr).intValue() + "");
             }
         }
     }
@@ -118,6 +121,10 @@ public enum Utils {
                 return defaultValue;
             }
         }
+    }
+
+    public static BigDecimal parseBigDecimal(Object input){
+        return parseBigDecimal(input, BigDecimal.ZERO);
     }
 
     public static long parseLong(Object input,long defaultValue) {
@@ -153,6 +160,10 @@ public enum Utils {
                 return defaultValue;
             }
         }
+    }
+
+    public static String parseString(Object input){
+        return parseString(input, "");
     }
 
     public static Date parseDate(Object input, Date defaultValue){

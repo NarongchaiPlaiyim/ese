@@ -64,8 +64,8 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
                     .addScalar("ID", IntegerType.INSTANCE)
                     .addScalar("ITEM", StringType.INSTANCE)
                     .addScalar("DESCRIPTION", StringType.INSTANCE)
-                    .addScalar("ORDER_QTY", BigDecimalType.INSTANCE)
-                    .addScalar("RESERVED_QTY", BigDecimalType.INSTANCE)
+                    .addScalar("ORDER_QTY", IntegerType.INSTANCE)
+                    .addScalar("RESERVED_QTY", IntegerType.INSTANCE)
                     .addScalar("PER_PICKED", BigDecimalType.INSTANCE)
                     .addScalar("FOIL", IntegerType.INSTANCE)
                     .addScalar("FOIL_QTY", BigDecimalType.INSTANCE)
@@ -77,18 +77,18 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
 
             for (Object[] entity : objects) {
                 PickingOrderShowItemView pickingOrderShowItemView = new PickingOrderShowItemView();
-                pickingOrderShowItemView.setId(Utils.parseInt(entity[0], 0));
-                pickingOrderShowItemView.setItem(Utils.parseString(entity[1], ""));
-                pickingOrderShowItemView.setDescription(Utils.parseString(entity[2], ""));
-                pickingOrderShowItemView.setOrderQty(Utils.parseInt(entity[3], 0));
-                pickingOrderShowItemView.setReservedQty(Utils.parseInt(entity[4], 0));
-                pickingOrderShowItemView.setPerPicked(Utils.parseInt(entity[5], 0));
-                pickingOrderShowItemView.setFoil(Utils.parseInt(entity[6], 0));
-                pickingOrderShowItemView.setFoilQty(Utils.parseBigDecimal(entity[7], BigDecimal.ZERO));
-                pickingOrderShowItemView.setStatus(Utils.parseString(entity[8], ""));
-                pickingOrderShowItemView.setStatusID(Utils.parseInt(entity[9], 0));
-                pickingOrderShowItemView.setQty(Utils.parseInt(entity[10], 0));
-                pickingOrderShowItemView.setItemName(Utils.parseString(entity[11], ""));
+                pickingOrderShowItemView.setId(Utils.parseInt(entity[0]));
+                pickingOrderShowItemView.setItem(Utils.parseString(entity[1]));
+                pickingOrderShowItemView.setDescription(Utils.parseString(entity[2]));
+                pickingOrderShowItemView.setOrderQty(Utils.parseInt(entity[3]));
+                pickingOrderShowItemView.setReservedQty(Utils.parseInt(entity[4]));
+                pickingOrderShowItemView.setPerPicked(Utils.parseBigDecimal(entity[5]));
+                pickingOrderShowItemView.setFoil(Utils.parseInt(entity[6]));
+                pickingOrderShowItemView.setFoilQty(Utils.parseBigDecimal(entity[7]));
+                pickingOrderShowItemView.setStatus(Utils.parseString(entity[8]));
+                pickingOrderShowItemView.setStatusID(Utils.parseInt(entity[9]));
+                pickingOrderShowItemView.setQty(Utils.parseInt(entity[10]));
+                pickingOrderShowItemView.setItemName(Utils.parseString(entity[11]));
                 showItemViews.add(pickingOrderShowItemView);
             }
         } catch (Exception e) {
@@ -158,11 +158,11 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
             List<Object[]> objects = query.list();
 
             for (Object[] entity : objects) {
-                fifoReservedView.setPickingOrderLineId(Utils.parseInt(entity[0], 0));
-                fifoReservedView.setSalesId(Utils.parseString(entity[1], ""));
-                fifoReservedView.setItemId(Utils.parseString(entity[2], ""));
-                fifoReservedView.setInventtransId(Utils.parseInt(entity[3], 0));
-                fifoReservedView.setInventtransQty(Utils.parseInt(entity[4], 0));
+                fifoReservedView.setPickingOrderLineId(Utils.parseInt(entity[0]));
+                fifoReservedView.setSalesId(Utils.parseString(entity[1]));
+                fifoReservedView.setItemId(Utils.parseString(entity[2]));
+                fifoReservedView.setInventtransId(Utils.parseInt(entity[3]));
+                fifoReservedView.setInventtransQty(Utils.parseInt(entity[4]));
             }
         } catch (Exception e) {
             log.debug("Exception SQL : {}", e);
@@ -268,16 +268,16 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
 
             for (Object[] entity : objects) {
                 LocationQtyView locationQtyView = new LocationQtyView();
-                locationQtyView.setId(Utils.parseInt(entity[0], 0));
-                locationQtyView.setItemId(Utils.parseString(entity[1], ""));
-                locationQtyView.setLocationId(Utils.parseInt(entity[2], 0));
-                locationQtyView.setAvailable(Utils.parseInt(entity[3], 0));
-                locationQtyView.setQty(Utils.parseInt(entity[4], 0));
-                locationQtyView.setReservedQty(Utils.parseInt(entity[5], 0));
-                locationQtyView.setWarehouseCode(Utils.parseString(entity[6], ""));
-                locationQtyView.setBatchNo(Utils.parseString(entity[7], ""));
-                locationQtyView.setLocationName(Utils.parseString(entity[8], ""));
-                locationQtyView.setDescription(Utils.parseString(entity[9], ""));
+                locationQtyView.setId(Utils.parseInt(entity[0]));
+                locationQtyView.setItemId(Utils.parseString(entity[1]));
+                locationQtyView.setLocationId(Utils.parseInt(entity[2]));
+                locationQtyView.setAvailable(Utils.parseInt(entity[3]));
+                locationQtyView.setQty(Utils.parseInt(entity[4]));
+                locationQtyView.setReservedQty(Utils.parseInt(entity[5]));
+                locationQtyView.setWarehouseCode(Utils.parseString(entity[6]));
+                locationQtyView.setBatchNo(Utils.parseString(entity[7]));
+                locationQtyView.setLocationName(Utils.parseString(entity[8]));
+                locationQtyView.setDescription(Utils.parseString(entity[9]));
                 locationQtyViewList.add(locationQtyView);
             }
         } catch (Exception e) {
@@ -326,8 +326,8 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
 
             for (Object[] entity : objects) {
                 LocationQtyView locationQtyView = new LocationQtyView();
-                locationQtyView.setId(Utils.parseInt(entity[0], 0));
-                locationQtyView.setBatchNo(Utils.parseString(entity[1], ""));
+                locationQtyView.setId(Utils.parseInt(entity[0]));
+                locationQtyView.setBatchNo(Utils.parseString(entity[1]));
                 locationQtyViewList.add(locationQtyView);
             }
         } catch (Exception e) {

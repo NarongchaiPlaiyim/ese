@@ -15,7 +15,7 @@ public class PickingOrderShowItemView {
     private String description;
     private int orderQty;
     private int reservedQty;
-    private int perPicked;
+    private BigDecimal perPicked;
     private int foil;
     private BigDecimal foilQty;
     private String status;
