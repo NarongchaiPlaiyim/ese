@@ -2,6 +2,7 @@ package com.ese.service;
 
 import com.ese.model.dao.*;
 import com.ese.model.db.*;
+import com.ese.model.view.CustomerConfirmTransView;
 import com.ese.model.view.DataSyncConfirmOrderView;
 import com.ese.model.view.PickingOrderView;
 import com.ese.model.view.report.ConfirmationPackingViewModel;
@@ -142,11 +143,12 @@ public class PickingOrderService extends Service {
     }
 
     private void onSavePickingOrderLine(DataSyncConfirmOrderView view, StatusModel status, UserDetail userDetail){
-        List<AXCustomerConfirmTransModel> confirmTransModelList = axCustomerConfirmTransDAO.findByPrimaryKey(view.getSaleId(), view.getConfirmId(), view.getConfirmDate());
+        List<CustomerConfirmTransView> confirmTransModelList = axCustomerConfirmTransDAO.findByPrimaryKey(view.getSaleId(), view.getConfirmId(), view.getConfirmDate());
         PickingOrderModel model = pickingOrderDAO.findByCustomerCode(view.getCustomerCode());
 
         PickingOrderLineModel pickingOrderLineModel;
-        for (AXCustomerConfirmTransModel axCustomerConfirmTransModel : confirmTransModelList){
+        for (CustomerConfirmTransView axCustomerConfirmTransModel : confirmTransModelList){
+            log.debug("-----------axCustomerConfirmTransModel : {}", axCustomerConfirmTransModel.getItemId());
             pickingOrderLineModel = pickingOrderLineTransform.transformToModel(axCustomerConfirmTransModel, model, status, userDetail);
             try {
                 pickingOrderLineDAO.persist(pickingOrderLineModel);
