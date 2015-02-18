@@ -49,6 +49,7 @@ public class PickingOrderService extends Service {
         final int SEARCH_ALL = 2;
         if(SEARCH_ALL != userAccessModelList.size()){
             for(UserAccessModel model : userAccessModelList){
+                mode = ALL;
                 if (A031.equals(model.getMenuObjectModel().getCode())){
                     mode = A031;
                 } else if (B031.equals(model.getMenuObjectModel().getCode())){
@@ -107,36 +108,25 @@ public class PickingOrderService extends Service {
     }
 
     public void syncOrder(List<DataSyncConfirmOrderView> viewList, UserDetail userDetail){
-
+        String group;
         for (DataSyncConfirmOrderView view : viewList){
-
             try {
                 AXCustomerTableModel customerTableModel = axCustomerTableDAO.findByAccountNum(view.getCustomerCode());
                 StatusModel statusModel = statusDAO.findByStatusSeqTablePickingOrder();
-
-                String group = "";
-
+                group = "DomesticOrder";
                 if ("OVS".equals(view.getCustomerGroup())){
                     group = "OverSeaOrder";
-                } else {
-                    group = "DomesticOrder";
                 }
-
                 PickingOrderModel model = pickingOrderTransform.tranformToModel(view, customerTableModel, statusModel, userDetail, group);
                 log.debug("model : {}" ,model.toString());
-
                 pickingOrderDAO.persist(model);
-
                 onSavePickingOrderLine(view, statusModel, userDetail);
-
             } catch (Exception e) {
                 log.debug("Exception error syncOrder : ", e);
             }
-
             axCustomerConfirmJourDAO.updateStatusFinish(view.getCustomerCode());
             axCustomerConfirmTransDAO.updateStatusFinish(view.getSaleId(), view.getConfirmId(), view.getConfirmDate());
         }
-
         axCustomerConfirmJourDAO.rollbackStatus();
         axCustomerConfirmTransDAO.rollbackStatus();
     }
@@ -160,7 +150,7 @@ public class PickingOrderService extends Service {
         String nameReport = Utils.genReportName("_StikerWorkLoad");
         List<StiketWorkLoadViewReport> viewReports = axCustomerConfirmJourDAO.genStikerWorkLoadReport(pickingId);
 
-        HashMap map = new HashMap<String, Object>();
+        HashMap map = new HashMap();
         map.put("userPrint", user.getUserName());
         map.put("printDate", Utils.convertCurrentDateToStringDDMMYYYY());
 
@@ -176,7 +166,7 @@ public class PickingOrderService extends Service {
         String nameReport = Utils.genReportName("_ConfirmationPacking");
         List<ConfirmationPackingViewModel> viewReports = axCustomerConfirmJourDAO.genConfirmationPackingReport(pickingId);
 
-        HashMap map = new HashMap<String, Object>();
+        HashMap map = new HashMap();
         map.put("userPrint", user.getUserName());
         map.put("printDate", Utils.convertCurrentDateToStringDDMMYYYY());
 

@@ -28,7 +28,7 @@ import com.itextpdf.text.*;
 public class ReportService extends Service{
     private static final long serialVersionUID = 4112578632409874840L;
 
-    public void exportPDF(String fileName, Map<String,Object> parameters,String pdfName, Collection reportList) throws Exception {
+    public void exportPDF(String fileName, Map parameters,String pdfName, Collection reportList) throws Exception {
 
         log.debug("generate pdf.");
         InputStream inputStream = FacesUtil.getFacesContext().getExternalContext().getResourceAsStream(fileName);
