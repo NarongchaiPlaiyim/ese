@@ -149,6 +149,18 @@
                         </p:dataTable>
                     </td>
                 </tr>
+                <tr>
+                    <td style="text-align: center;">
+                        <p:commandButton id="btnClose"
+                                         value="Close"
+                                         process="@form"
+                                         action="#{pickingOrderShowItemBean.onCloseManual()}"
+                                         update=":pickingOrderShowItemForm"
+                                         styleClass="medium" style="width: 100px"
+                                         onstart="PF('bui').block()"
+                                         oncomplete="PF('manualDlg').hide(), PF('bui').unblock()"/>
+                    </td>
+                </tr>
             </table>
         </h:form>
     </div>
