@@ -30,7 +30,9 @@
             <p:menuitem value="#{msg.get('menu.stocktaking.title')}" icon="ui-icon-gear"/>
 
             <p:separator/>
-            <p:menuitem value="#{msg.get('menu.report.title')}" icon="ui-icon-gear"/>
+            <p:submenu icon="ui-icon-cart" label="#{msg.get('menu.report.title')}">
+                <p:menuitem value="#{msg.get('menu.report.title.sub.1')}" outcome="#{msg.get('menu.report.sub.url.1')}"/>
+            </p:submenu>
 
             <p:separator
                     rendered="#{loginBean.isRendered(msg.get('authorize.menu.setup'))}"/>

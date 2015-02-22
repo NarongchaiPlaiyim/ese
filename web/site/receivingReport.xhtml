@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>#{msg.get('menu.report.title.sub.1')}</title>
+    </h:head>
+    <h:body>
+        <p:layout fullPage="true" id="layoutPanel">
+            <p:layoutUnit id="layoutTop" position="north" size="180" header="#{msg.get('header.north')}" collapsible="true" style="border: 0">
+                <ui:insert name="header">
+                    <ui:include src="#{msg.get('include.header')}"/>
+                </ui:insert>
+            </p:layoutUnit>
+            <p:layoutUnit id="layoutLeft" position="west" size="#{msg.get('layoutLeft.size')}" header="#{msg.get('header.west')}" collapsible="true" style="border: 0">
+                <ui:include src="#{msg.get('include.menu')}"/>
+            </p:layoutUnit>
+
+            <p:layoutUnit id="layoutCenter" position="center" header="#{msg.get('menu.report.title.sub.1')}" >
+                <h:form id="receivingReportForm">
+                    <table border="0">
+                        <tr>
+                            <td>
+                                <p:outputLabel value="Start :"/>
+                            </td>
+                            <td>
+                                <p:calendar id="startDate"
+                                            maxdate="#{receivingReportBean.endDate}"
+                                            value="#{receivingReportBean.startDate}"
+                                            pattern="dd/MM/yyyy HH:mm"
+                                            showOn="button">
+                                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+                                </p:calendar>
+                            </td>
+                            <td rowspan="2">
+                                <p:commandButton id="btnSearcch"
+                                                 value="Search" action="#{receivingReportBean.onSearchReceivingReport}"
+                                                 styleClass="medium" style="#{msg.get('btn.size')}"
+                                                 icon="ui-icon-search"
+                                                 onstart="PF('bui').block()"
+                                                 oncomplete="PF('bui').unblock()"
+                                                 process="@form" update=":receivingReportForm:receivingReportTable, :msgBoxSystemMessagePanel"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p:outputLabel value="Finish :"/>
+                            </td>
+                            <td>
+                                <p:calendar id="endDate"
+                                            value="#{receivingReportBean.endDate}"
+                                            pattern="dd/MM/yyyy HH:mm"
+                                            showOn="button">
+                                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+                                    <p:ajax event="blur" update="startDate"/>
+                                </p:calendar>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <p:panel style="border: 0">
+                        <div style="text-align: right;">
+                            <p:commandButton  value="#{msg.get('btn.name.print')}"
+                                              process="@form"
+                                              onstart="PF('bui').block()"
+                                              oncomplete="PF('bui').unblock()"
+                                              action="#{receivingReportBean.onPrintPDF}"
+                                              ajax="false"
+                                              icon="ui-icon-print"
+                                              styleClass="medium" style="#{msg.get('btn.size')}"/>
+                            <p:commandButton value="CSV Export" action="#{receivingReportBean.onExportCSV()}"
+                                             ajax="false" icon="ui-icon-print"
+                                             onstart="PF('bui').block()"
+                                             oncomplete="PF('bui').unblock()"
+                                             styleClass="medium" style="#{msg.get('btn.size.200')}"
+                                             allowTypes="/(\.|\/)(csv)$/" process="@form"/>
+                        </div>
+                    </p:panel>
+
+                    <table border="0">
+                        <tr>
+                            <td>
+                                <p:dataTable id = "receivingReportTable"
+                                             value="#{receivingReportBean.receivingReportViewList}"
+                                             var="receivingReport"
+                                             filteredValue="#{receivingReportBean.filterValue}"
+                                             rowIndexVar="rowIndex">
+                                    <p:column headerText="No" style="min-width: 20px; width: 20px; max-width: 20px;">
+                                        <h:outputText value="#{rowIndex+1}" styleClass="center" />
+                                    </p:column>
+                                    <p:column headerText="Receiving Date" filterBy="#{receivingReport.receivingDate}" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="left" filterMatchMode="contains">
+                                        <h:outputText value="#{receivingReport.receivingDate}">
+                                            <f:convertDateTime pattern="dd/MM/YYY"/>
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column headerText="Warehouse" filterBy="#{receivingReport.warehouseCode}" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="left" filterMatchMode="contains">
+                                        <h:outputText value="#{receivingReport.warehouseCode}"/>
+                                    </p:column>
+                                    <p:column headerText="Conveyor Line" filterBy="#{receivingReport.conveyorLine}" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="left" filterMatchMode="contains">
+                                        <h:outputText value="#{receivingReport.conveyorLine}"/>
+                                    </p:column>
+                                    <p:column headerText="Item" filterBy="#{receivingReport.itemName}" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="left" filterMatchMode="contains">
+                                        <h:outputText value="#{receivingReport.itemName}"/>
+                                    </p:column>
+                                    <p:column headerText="Item Description" filterBy="#{receivingReport.itemDesc}" style="min-width: 300px; width: 300px; max-width: 300px;" styleClass="left" filterMatchMode="contains">
+                                        <h:outputText value="#{receivingReport.itemDesc}"/>
+                                    </p:column>
+                                    <p:column headerText="Grade" filterBy="#{receivingReport.grade}" style="min-width: 60px; width: 60px; max-width: 60px;" styleClass="left" filterMatchMode="contains">
+                                        <h:outputText value="#{receivingReport.grade}"/>
+                                    </p:column>
+                                    <p:column headerText="Qty" filterBy="#{receivingReport.qty}" style="min-width: 40px; width: 40px; max-width: 40px;" styleClass="left"  filterMatchMode="contains">
+                                        <h:outputText value="#{receivingReport.qty}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </td>
+                        </tr>
+                    </table>
+                </h:form>
+            </p:layoutUnit>
+        </p:layout>
+        <p:panel id="msgBoxSystemMessagePanel" style="border: 0">
+            <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="#{msg.get('dialog.message.size')}" closable="false"
+                             header="#{receivingReportBean.messageHeader}" message="#{receivingReportBean.message}" >
+                <div style="text-align: right">
+                    <p:commandButton value="#{msg.get('btn.name.ok')}"
+                                     process="@this"
+                                     update="receivingReportForm"
+                                     icon="ui-icon-check"
+                                     styleClass="medium" style="#{msg.get('btn.size')}"
+                                     oncomplete="PF('msgBoxSystemMessageDlg').hide()"/>
+                </div>
+            </p:confirmDialog>
+        </p:panel>
+    </h:body>
+</f:view>
+</html>

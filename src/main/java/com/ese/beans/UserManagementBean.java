@@ -406,6 +406,6 @@ public class UserManagementBean extends Bean{
 
     public void onPrint(){
         userDetail = getUser();
-        userManagementService.printReportUserAndRole(userDetail);
+        userManagementService.printReportUserAndRole(userDetail.getUserName());
     }
 }

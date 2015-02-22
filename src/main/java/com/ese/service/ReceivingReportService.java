@@ -1,0 +1,73 @@
+package com.ese.service;
+
+import com.ese.model.dao.ReceivingReportDAO;
+import com.ese.model.view.ReceivingReportView;
+import com.ese.service.security.UserDetail;
+import com.ese.utils.Utils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.List;
+
+@Component
+@Transactional
+public class ReceivingReportService extends Service{
+    private static final long serialVersionUID = 4112578634920874840L;
+    @Resource private ReceivingReportDAO receivingReportDAO;
+    @Resource private ReportService reportService;
+    @Resource private CSVService csvService;
+    @Value("#{config['report.receivingreport']}")
+    private String pathreport;
+    private final String  COMMA_DELIMITED = ",";
+
+    public List<ReceivingReportView> getReceivingReportView(String startDate, String endDate){
+        return receivingReportDAO.findReceivingReport(startDate, endDate);
+    }
+
+    public void onPrintReceivingReport(List<ReceivingReportView> reportViews, String user){
+        String printTagReportname = Utils.genReportName("_ReceivingReport");
+        HashMap map = new HashMap<String, Object>();
+
+        map.put("userPrint", user);
+        map.put("printDate", Utils.convertCurrentDateToStringDDMMYYYY());
+
+        try {
+            reportService.exportPDF(pathreport, map, printTagReportname, reportViews);
+        } catch (Exception e) {
+            log.debug("Exception error onPrintReceivingReport : ", e);
+        }
+    }
+
+    public void onExportCSV(List<ReceivingReportView> reportViews){
+        String printTagReportname = Utils.genReportName("_ReceivingReport");
+
+        StringBuilder csvReceiving =  new StringBuilder();
+        csvReceiving.append("NO").append(COMMA_DELIMITED);
+        csvReceiving.append("Receiving_Date").append(COMMA_DELIMITED);
+        csvReceiving.append("Warehouse").append(COMMA_DELIMITED);
+        csvReceiving.append("Conveyor_line").append(COMMA_DELIMITED);
+        csvReceiving.append("Item").append(COMMA_DELIMITED);
+        csvReceiving.append("Item_Description").append(COMMA_DELIMITED);
+        csvReceiving.append("Grade").append(COMMA_DELIMITED);
+        csvReceiving.append("Qty").append('\n');
+
+        int no = 1;
+        for (ReceivingReportView view : reportViews){
+            csvReceiving.append(no).append(COMMA_DELIMITED);
+            csvReceiving.append('"' + Utils.convertDateToString(view.getReceivingDate()) + '"').append(COMMA_DELIMITED);
+            csvReceiving.append('"' + Utils.EmptyString(view.getWarehouseCode()) + '"').append(COMMA_DELIMITED);
+            csvReceiving.append('"' + Utils.EmptyString(view.getConveyorLine()) + '"').append(COMMA_DELIMITED);
+            csvReceiving.append('"' + Utils.EmptyString(view.getItemName()) + '"').append(COMMA_DELIMITED);
+            csvReceiving.append('"' + Utils.EmptyString(view.getItemDesc()) + '"').append(COMMA_DELIMITED);
+            csvReceiving.append('"' + Utils.EmptyString(view.getGrade()) + '"').append(COMMA_DELIMITED);
+            csvReceiving.append('"' + Utils.EmptyInteget(view.getQty()) + '"').append('\n');
+
+            no++;
+        }
+
+        csvService.exportCSV(printTagReportname, csvReceiving.toString());
+    }
+}

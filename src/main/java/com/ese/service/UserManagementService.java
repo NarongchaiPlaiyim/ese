@@ -258,12 +258,12 @@ public class UserManagementService extends Service{
         }
     }
 
-    public void printReportUserAndRole(UserDetail user){
+    public void printReportUserAndRole(String user){
         String printTagReportname = Utils.genReportName("_UserAndRoleReport");
         HashMap map = new HashMap<String, Object>();
         List<UserAndRoleViewReport> reportViews;
 
-        map.put("userPrint", user.getUserName());
+        map.put("userPrint", user);
         map.put("printDate", Utils.convertCurrentDateToStringDDMMYYYY());
         map.put("path", FacesUtil.getRealPath(path));
 
