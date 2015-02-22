@@ -12,9 +12,7 @@
 	<field name="itemDesc" class="java.lang.String"/>
 	<field name="grade" class="java.lang.String"/>
 	<field name="qty" class="java.lang.Integer"/>
-	<variable name="no" class="java.lang.Integer" resetType="Column" calculation="Count">
-		<variableExpression><![CDATA[$F{receivingDate}]]></variableExpression>
-	</variable>
+	<field name="no" class="java.lang.Integer"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -147,7 +145,7 @@ Line]]></text>
 					<font size="8" pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					<paragraph firstLineIndent="2" spacingBefore="2" spacingAfter="2"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{no}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{no}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd/MM/YYYY">
 				<reportElement uuid="e2f94339-7309-4ebc-912d-7a8d8fa0cecf" stretchType="RelativeToBandHeight" x="30" y="0" width="80" height="14"/>
@@ -250,7 +248,7 @@ Line]]></text>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="40" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<textField>
 				<reportElement uuid="4e9004ce-7583-466f-af50-35e664c9a521" x="0" y="0" width="147" height="20"/>
 				<box>

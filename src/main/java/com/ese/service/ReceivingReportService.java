@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -27,15 +28,32 @@ public class ReceivingReportService extends Service{
         return receivingReportDAO.findReceivingReport(startDate, endDate);
     }
 
-    public void onPrintReceivingReport(List<ReceivingReportView> reportViews, String user){
+    public void onPrintReceivingReport(List<ReceivingReportView> receivingReportViews, String user){
         String printTagReportname = Utils.genReportName("_ReceivingReport");
+        List<ReceivingReportView> reportViewList = new ArrayList<ReceivingReportView>();
         HashMap map = new HashMap<String, Object>();
 
         map.put("userPrint", user);
         map.put("printDate", Utils.convertCurrentDateToStringDDMMYYYY());
 
+        int no = 1;
+        for (ReceivingReportView view : receivingReportViews){
+            ReceivingReportView reportView = new ReceivingReportView();
+            reportView.setNo(no);
+            reportView.setReceivingDate(view.getReceivingDate());
+            reportView.setWarehouseCode(view.getWarehouseCode());
+            reportView.setConveyorLine(view.getConveyorLine());
+            reportView.setItemName(view.getItemName());
+            reportView.setItemDesc(view.getItemDesc());
+            reportView.setGrade(view.getGrade());
+            reportView.setQty(view.getQty());
+            reportViewList.add(reportView);
+
+            no++;
+        }
+
         try {
-            reportService.exportPDF(pathreport, map, printTagReportname, reportViews);
+            reportService.exportPDF(pathreport, map, printTagReportname, reportViewList);
         } catch (Exception e) {
             log.debug("Exception error onPrintReceivingReport : ", e);
         }

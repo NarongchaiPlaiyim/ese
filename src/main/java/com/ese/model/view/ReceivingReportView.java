@@ -11,6 +11,7 @@ import java.util.Date;
 @Setter
 public class ReceivingReportView {
 
+    private int no;
     private Date receivingDate;
     private String warehouseCode;
     private String conveyorLine;
@@ -26,6 +27,7 @@ public class ReceivingReportView {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("no", no)
                 .append("receivingDate", receivingDate)
                 .append("warehouseCode", warehouseCode)
                 .append("conveyorLine", conveyorLine)
