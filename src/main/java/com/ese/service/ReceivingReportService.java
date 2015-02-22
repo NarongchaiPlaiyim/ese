@@ -2,7 +2,6 @@ package com.ese.service;
 
 import com.ese.model.dao.ReceivingReportDAO;
 import com.ese.model.view.ReceivingReportView;
-import com.ese.service.security.UserDetail;
 import com.ese.utils.Utils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -61,6 +60,7 @@ public class ReceivingReportService extends Service{
 
     public void onExportCSV(List<ReceivingReportView> reportViews){
         String printTagReportname = Utils.genReportName("_ReceivingReport");
+        int sumQty = 0;
 
         StringBuilder csvReceiving =  new StringBuilder();
         csvReceiving.append("NO").append(COMMA_DELIMITED);
@@ -75,16 +75,19 @@ public class ReceivingReportService extends Service{
         int no = 1;
         for (ReceivingReportView view : reportViews){
             csvReceiving.append(no).append(COMMA_DELIMITED);
-            csvReceiving.append('"' + Utils.convertDateToString(view.getReceivingDate()) + '"').append(COMMA_DELIMITED);
+            csvReceiving.append('"' + Utils.EmptyString(view.getReceivingDate()) + '"').append(COMMA_DELIMITED);
             csvReceiving.append('"' + Utils.EmptyString(view.getWarehouseCode()) + '"').append(COMMA_DELIMITED);
             csvReceiving.append('"' + Utils.EmptyString(view.getConveyorLine()) + '"').append(COMMA_DELIMITED);
             csvReceiving.append('"' + Utils.EmptyString(view.getItemName()) + '"').append(COMMA_DELIMITED);
             csvReceiving.append('"' + Utils.EmptyString(view.getItemDesc()) + '"').append(COMMA_DELIMITED);
             csvReceiving.append('"' + Utils.EmptyString(view.getGrade()) + '"').append(COMMA_DELIMITED);
             csvReceiving.append('"' + Utils.EmptyInteget(view.getQty()) + '"').append('\n');
-
+            sumQty = sumQty + view.getQty();
             no++;
         }
+
+        csvReceiving.append(COMMA_DELIMITED).append(COMMA_DELIMITED).append(COMMA_DELIMITED).append(COMMA_DELIMITED).append(COMMA_DELIMITED)
+                .append(COMMA_DELIMITED).append(" Total :").append(COMMA_DELIMITED).append(Utils.EmptyInteget(sumQty));
 
         csvService.exportCSV(printTagReportname, csvReceiving.toString());
     }

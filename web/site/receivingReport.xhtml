@@ -86,35 +86,40 @@
                                 <p:dataTable id = "receivingReportTable"
                                              value="#{receivingReportBean.receivingReportViewList}"
                                              var="receivingReport"
-                                             scrollable="true" scrollHeight="450"
                                              filteredValue="#{receivingReportBean.filterValue}"
                                              rowIndexVar="rowIndex">
-                                    <p:column headerText="No" style="min-width: 20px; width: 20px; max-width: 20px;">
+                                    <p:column headerText="No" style="min-width: 10px; width: 10px; max-width: 10px;">
                                         <h:outputText value="#{rowIndex+1}" styleClass="center" />
                                     </p:column>
-                                    <p:column headerText="Receiving Date" filterBy="#{receivingReport.receivingDate}" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="left" filterMatchMode="contains">
+                                    <p:column headerText="Receiving Date" sortBy="#{receivingReport.receivingDate}" filterBy="#{receivingReport.receivingDate}" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="left" filterMatchMode="contains">
                                         <h:outputText value="#{receivingReport.receivingDate}">
                                             <f:convertDateTime pattern="dd/MM/YYY"/>
                                         </h:outputText>
                                     </p:column>
-                                    <p:column headerText="Warehouse" filterBy="#{receivingReport.warehouseCode}" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="left" filterMatchMode="contains">
+                                    <p:column headerText="Warehouse" sortBy="#{receivingReport.warehouseCode}" filterBy="#{receivingReport.warehouseCode}" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="left" filterMatchMode="contains">
                                         <h:outputText value="#{receivingReport.warehouseCode}"/>
                                     </p:column>
-                                    <p:column headerText="Conveyor Line" filterBy="#{receivingReport.conveyorLine}" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="left" filterMatchMode="contains">
+                                    <p:column headerText="Conveyor Line" sortBy="#{receivingReport.conveyorLine}" filterBy="#{receivingReport.conveyorLine}" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="left" filterMatchMode="contains">
                                         <h:outputText value="#{receivingReport.conveyorLine}"/>
                                     </p:column>
-                                    <p:column headerText="Item" filterBy="#{receivingReport.itemName}" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="left" filterMatchMode="contains">
+                                    <p:column headerText="Item" sortBy="#{receivingReport.itemName}" filterBy="#{receivingReport.itemName}" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="left" filterMatchMode="contains">
                                         <h:outputText value="#{receivingReport.itemName}"/>
                                     </p:column>
-                                    <p:column headerText="Item Description" filterBy="#{receivingReport.itemDesc}" style="min-width: 300px; width: 300px; max-width: 300px;" styleClass="left" filterMatchMode="contains">
+                                    <p:column headerText="Item Description" sortBy="#{receivingReport.itemDesc}" filterBy="#{receivingReport.itemDesc}" style="min-width: 300px; width: 300px; max-width: 300px;" styleClass="left" filterMatchMode="contains">
                                         <h:outputText value="#{receivingReport.itemDesc}"/>
                                     </p:column>
-                                    <p:column headerText="Grade" filterBy="#{receivingReport.grade}" style="min-width: 60px; width: 60px; max-width: 60px;" styleClass="left" filterMatchMode="contains">
+                                    <p:column headerText="Grade" sortBy="#{receivingReport.grade}" filterBy="#{receivingReport.grade}" style="min-width: 60px; width: 60px; max-width: 60px;" styleClass="left" filterMatchMode="contains">
                                         <h:outputText value="#{receivingReport.grade}"/>
                                     </p:column>
-                                    <p:column headerText="Qty" filterBy="#{receivingReport.qty}" style="min-width: 40px; width: 40px; max-width: 40px;" styleClass="left"  filterMatchMode="contains">
+                                    <p:column headerText="Qty" sortBy="#{receivingReport.qty}" filterBy="#{receivingReport.qty}" style="min-width: 40px; width: 40px; max-width: 40px;" styleClass="left"  filterMatchMode="contains">
                                         <h:outputText value="#{receivingReport.qty}"/>
                                     </p:column>
+                                    <p:columnGroup type="footer">
+                                        <p:row>
+                                           <p:column colspan="7" style="text-align: right" footerText="Total"/>
+                                           <p:column footerText="#{receivingReportBean.sumQty}"/>
+                                        </p:row>
+                                    </p:columnGroup>
                                 </p:dataTable>
                             </td>
                         </tr>

@@ -12,7 +12,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +29,8 @@ public class ReceivingReportBeans extends Bean{
     private Date startDate;
     private Date endDate;
     private UserDetail userDetail;
+
+    private int sumQty;
 
     @PostConstruct
     private void init(){
@@ -75,34 +76,19 @@ public class ReceivingReportBeans extends Bean{
         }
     }
 
-//    private List<ReceivingReportView> getData(){
-//        ReceivingReportView receivingReportView = new ReceivingReportView();
-//        receivingReportView.setReceivingDate(new Date());
-//        receivingReportView.setWarehouseCode("w1");
-//        receivingReportView.setConveyorLine("c1");
-//        receivingReportView.setItemName("i1");
-//        receivingReportView.setItemDesc("id1");
-//        receivingReportView.setGrade("g1");
-//        receivingReportView.setQty(1);
-//        receivingReportViewList.add(receivingReportView);
-//
-//        receivingReportView = new ReceivingReportView();
-//        receivingReportView.setReceivingDate(new Date());
-//        receivingReportView.setWarehouseCode("w2");
-//        receivingReportView.setConveyorLine("c2");
-//        receivingReportView.setItemName("i2");
-//        receivingReportView.setItemDesc("id2");
-//        receivingReportView.setGrade("g2");
-//        receivingReportView.setQty(2);
-//        receivingReportViewList.add(receivingReportView);
-//
-//        return receivingReportViewList;
-//    }
+    public int getSumQty() {
+        if (Utils.isNull(filterValue)){
+            for (ReceivingReportView view : receivingReportViewList){
+                log.debug("-----------1 : [{}]", view.getQty());
+                sumQty += view.getQty();
+            }
+        } else {
+            for (ReceivingReportView view : filterValue){
+                log.debug("-----------2 : [{}]", view.getQty());
+                sumQty += view.getQty();
+            }
+        }
 
-    public void test(){
-        log.debug("------------- : {}", filterValue.size());
-        log.debug("----- : {}", Utils.convertToStringYYYYMMDDHHmm(startDate));
-        log.debug("-- : {}", Utils.convertToStringYYYYMMDDHHmm(endDate));
-//        log.debug("### : {}", endDate.compareTo(startDate));
+        return sumQty;
     }
 }

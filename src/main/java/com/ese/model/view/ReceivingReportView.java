@@ -5,14 +5,12 @@ import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import java.util.Date;
-
 @Getter
 @Setter
 public class ReceivingReportView {
 
     private int no;
-    private Date receivingDate;
+    private String receivingDate;
     private String warehouseCode;
     private String conveyorLine;
     private String itemName;

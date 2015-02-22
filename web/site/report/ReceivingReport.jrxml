@@ -5,7 +5,7 @@
 	<property name="ireport.y" value="0"/>
 	<parameter name="userPrint" class="java.lang.String"/>
 	<parameter name="printDate" class="java.lang.String"/>
-	<field name="receivingDate" class="java.util.Date"/>
+	<field name="receivingDate" class="java.lang.String"/>
 	<field name="warehouseCode" class="java.lang.String"/>
 	<field name="conveyorLine" class="java.lang.String"/>
 	<field name="itemName" class="java.lang.String"/>
@@ -13,6 +13,9 @@
 	<field name="grade" class="java.lang.String"/>
 	<field name="qty" class="java.lang.Integer"/>
 	<field name="no" class="java.lang.Integer"/>
+	<variable name="sumQty" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{qty}]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -282,6 +285,35 @@ Line]]></text>
 		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="c9a21232-f095-437d-be94-fac0b538ba37" x="0" y="0" width="515" height="14"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<text><![CDATA[Total :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="71c70770-6eae-48b5-aa71-143988bbef8b" stretchType="RelativeToBandHeight" x="515" y="0" width="40" height="14"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8" pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<paragraph firstLineIndent="2" spacingBefore="2" spacingAfter="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumQty}]]></textFieldExpression>
+			</textField>
+		</band>
 	</summary>
 </jasperReport>

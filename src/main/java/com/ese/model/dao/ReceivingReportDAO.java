@@ -29,16 +29,18 @@ public class ReceivingReportDAO extends GenericDAO<ReceivingReportView, Integer>
         queryInvOnhandView.append(" FROM ").append(getPrefix()).append(".inv_onhand_view");
 
         if (Utils.isZero(startDate.trim()) && Utils.isZero(endDate.trim())){
-            queryInvOnhandView.append(" WHERE ").append(getPrefix()).append(".inv_onhand_view.receiving_date >= CONVERT(CHAR(10), GETDATE(), 120)");
-            queryInvOnhandView.append(" AND ").append(getPrefix()).append(".inv_onhand_view.receiving_date < CONVERT(CHAR(10), GETDATE()+1, 120)");
+            queryInvOnhandView.append(" WHERE CONVERT(CHAR(10), ").append(getPrefix()).append(".inv_onhand_view.receiving_date, 120) >= CONVERT(CHAR(10), GETDATE(), 120)");
+            queryInvOnhandView.append(" AND CONVERT(CHAR(10), ").append(getPrefix()).append(".inv_onhand_view.receiving_date, 120) < CONVERT(CHAR(10), GETDATE()+1, 120)");
         } else {
-            queryInvOnhandView.append(" WHERE ").append(getPrefix()).append(".inv_onhand_view.receiving_date >= '").append(startDate).append("'");
-            queryInvOnhandView.append(" AND ").append(getPrefix()).append(".inv_onhand_view.receiving_date < '").append(endDate).append("'");
+            queryInvOnhandView.append(" WHERE CONVERT(CHAR(16), ").append(getPrefix()).append(".inv_onhand_view.receiving_date, 120) >= ");
+            queryInvOnhandView.append(" CONVERT(CHAR(16), '").append(startDate).append("', 120)");
+            queryInvOnhandView.append(" AND CONVERT(CHAR(16), ").append(getPrefix()).append(".inv_onhand_view.receiving_date, 120) <= ");
+            queryInvOnhandView.append(" CONVERT(CHAR(16), '").append(endDate).append("', 120)");
         }
 
         queryInvOnhandView.append(" GROUP BY ").append(getPrefix()).append(".inv_onhand_view.name, ").append(getPrefix()).append(".inv_onhand_view.ItemId, ")
                 .append(getPrefix()).append(".inv_onhand_view.warehouse_code, ").append(getPrefix()).append(".inv_onhand_view.grade, ").append(getPrefix()).append(".inv_onhand_view.item_description, ")
-                .append(getPrefix()).append(".inv_onhand_view.receiving_date");
+                .append(" CONVERT(CHAR(10), ").append(getPrefix()).append(".inv_onhand_view.receiving_date, 120)");
         queryInvOnhandView.append(" ORDER BY ").append(getPrefix()).append(".inv_onhand_view.warehouse_code, ").append(getPrefix()).append(".inv_onhand_view.name, ")
                 .append(getPrefix()).append(".inv_onhand_view.ItemId");
 
@@ -57,7 +59,7 @@ public class ReceivingReportDAO extends GenericDAO<ReceivingReportView, Integer>
 
             for (Object[] entity : objects){
                 ReceivingReportView reportView = new ReceivingReportView();
-                reportView.setReceivingDate(Utils.parseDate(entity[0], null));
+                reportView.setReceivingDate(Utils.convertDateToString(Utils.parseDate(entity[0], null)));
                 reportView.setWarehouseCode(Utils.parseString(entity[1], ""));
                 reportView.setConveyorLine(Utils.parseString(entity[2], ""));
                 reportView.setItemName(Utils.parseString(entity[3], ""));
