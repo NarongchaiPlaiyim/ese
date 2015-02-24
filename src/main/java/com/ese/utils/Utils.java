@@ -3,7 +3,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import java.math.BigDecimal;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -60,7 +59,11 @@ public enum Utils {
     }
 
     public static String getBatchNo(){
-        return new SimpleDateFormat("yyyy", Locale.ENGLISH).format(currentDate()) + "-" + getCalendar().get(Calendar.WEEK_OF_YEAR);
+        return new SimpleDateFormat("yyyy-ww", Locale.ENGLISH).format(currentDate());
+    }
+
+    public static String getBatchNo(Date date){
+        return new SimpleDateFormat("yyyy-ww", Locale.ENGLISH).format(date);
     }
 
     public static String getDocumentNo(){

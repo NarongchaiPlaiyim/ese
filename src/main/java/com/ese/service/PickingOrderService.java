@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -97,7 +96,7 @@ public class PickingOrderService extends Service {
 
     public void updateStatus(List<DataSyncConfirmOrderView> viewList){
         for (DataSyncConfirmOrderView view : viewList){
-            axCustomerConfirmJourDAO.updateStatusRunning(view.getCustomerCode());
+            axCustomerConfirmJourDAO.updateStatusRunning(view.getConfirmId(), view.getConfirmDate(), view.getSaleId());
             axCustomerConfirmTransDAO.updateStatusRunning(view.getSaleId(), view.getConfirmId(), view.getConfirmDate());
         }
     }
@@ -134,7 +133,7 @@ public class PickingOrderService extends Service {
                 log.debug("Exception error syncOrder : ", e);
             }
 
-            axCustomerConfirmJourDAO.updateStatusFinish(view.getCustomerCode());
+            axCustomerConfirmJourDAO.updateStatusFinish(view.getConfirmId(), view.getConfirmDate(), view.getSaleId());
             axCustomerConfirmTransDAO.updateStatusFinish(view.getSaleId(), view.getConfirmId(), view.getConfirmDate());
         }
 

@@ -4,17 +4,12 @@ import com.ese.model.view.FIFOReservedView;
 import com.ese.model.view.LocationQtyView;
 import com.ese.model.view.PickingOrderShowItemView;
 import com.ese.utils.Utils;
-import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 import org.hibernate.type.BigDecimalType;
-import org.hibernate.type.BooleanType;
 import org.hibernate.type.IntegerType;
 import org.hibernate.type.StringType;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -137,7 +132,8 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
         selectInventTrans.append(" ").append(getPrefix()).append(".picking_order.sales_order AS SALES_ID,");
         selectInventTrans.append(" ").append(getPrefix()).append(".picking_order_line.ItemId AS ITEM_ID,");
         selectInventTrans.append(" ").append(getPrefix()).append(".ax_InventTrans.id AS INVENTTRANS_ID,");
-        selectInventTrans.append(" ").append(getPrefix()).append(".ax_InventTrans.qty AS INVENTTRANS_QTY");
+        selectInventTrans.append(" ").append(getPrefix()).append(".ax_InventTrans.qty AS INVENTTRANS_QTY,");
+        selectInventTrans.append(" ").append(getPrefix()).append(".ppwms03.dbo.picking_order_line.qty AS PICKING_LINE_QTY");
         selectInventTrans.append(" FROM ").append(getPrefix()).append(".picking_order_line");
         selectInventTrans.append(" LEFT JOIN ").append(getPrefix()).append(".picking_order");
         selectInventTrans.append(" ON  ").append(getPrefix()).append(".picking_order_line.picking_order_id = ").append(getPrefix()).append(".picking_order.id");
@@ -154,7 +150,8 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
                     .addScalar("SALES_ID", StringType.INSTANCE)
                     .addScalar("ITEM_ID", StringType.INSTANCE)
                     .addScalar("INVENTTRANS_ID", IntegerType.INSTANCE)
-                    .addScalar("INVENTTRANS_QTY", IntegerType.INSTANCE);
+                    .addScalar("INVENTTRANS_QTY", IntegerType.INSTANCE)
+                    .addScalar("PICKING_LINE_QTY", IntegerType.INSTANCE);
             List<Object[]> objects = query.list();
 
             for (Object[] entity : objects) {
@@ -163,6 +160,7 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
                 fifoReservedView.setItemId(Utils.parseString(entity[2]));
                 fifoReservedView.setInventtransId(Utils.parseInt(entity[3]));
                 fifoReservedView.setInventtransQty(Utils.parseInt(entity[4]));
+                fifoReservedView.setPickingLineQty(Utils.parseInt(entity[5]));
             }
         } catch (Exception e) {
             log.debug("Exception SQL findQtyOnInventTran : {}", e);

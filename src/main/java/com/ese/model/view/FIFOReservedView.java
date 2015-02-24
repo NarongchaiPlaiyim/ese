@@ -5,8 +5,6 @@ import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import java.math.BigDecimal;
-
 @Setter
 @Getter
 public class FIFOReservedView {
@@ -16,6 +14,7 @@ public class FIFOReservedView {
     private String itemId;
     private int inventtransId;
     private int inventtransQty;
+    private int pickingLineQty;
 
     @Override
     public String toString() {
@@ -25,6 +24,7 @@ public class FIFOReservedView {
                 .append("itemId", itemId)
                 .append("inventtransId", inventtransId)
                 .append("inventtransQty", inventtransQty)
+                .append("pickingLineQty", pickingLineQty)
                 .toString();
     }
 }

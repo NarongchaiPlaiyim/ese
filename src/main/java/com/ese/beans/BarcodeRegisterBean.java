@@ -8,7 +8,6 @@ import com.ese.utils.MessageDialog;
 import com.ese.utils.Utils;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -250,5 +249,11 @@ public class BarcodeRegisterBean extends Bean{
 
     private String replaceFormat(String startBarcode){
         return startBarcode.replace("T", "").replace("-", "").replace("_", "");
+    }
+
+    public void onChangeDocumentDate(){
+        log.debug("--- {}", barcodeRegisterView.getDocumentDate());
+        barcodeRegisterView.setBatchNo(Utils.getBatchNo(barcodeRegisterView.getDocumentDate()));
+        log.debug("------- {}", Utils.getBatchNo(barcodeRegisterView.getDocumentDate()));
     }
 }

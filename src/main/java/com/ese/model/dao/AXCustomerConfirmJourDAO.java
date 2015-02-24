@@ -6,11 +6,15 @@ import com.ese.model.view.report.ConfirmationPackingViewModel;
 import com.ese.model.view.report.StiketWorkLoadViewReport;
 import com.ese.utils.Utils;
 import org.hibernate.SQLQuery;
-import org.hibernate.type.*;
+import org.hibernate.type.BigDecimalType;
+import org.hibernate.type.DateType;
+import org.hibernate.type.StringType;
+import org.hibernate.type.TimestampType;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -116,10 +120,12 @@ public class AXCustomerConfirmJourDAO extends GenericDAO<AXCustomerConfirmJourMo
         return syncDataList;
     }
 
-    public void updateStatusRunning(String custCode){
+    public void updateStatusRunning(String confirmId, Date confirmDate, String saleId){
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(" UPDATE ").append(getPrefix()).append(".ax_CustConfirmJour SET ").append(getPrefix()).append(".ax_CustConfirmJour.status = 2 ");
-        stringBuilder.append(" WHERE ").append(getPrefix()).append(".ax_CustConfirmJour.invoiceAccount = ").append("'").append(custCode).append("'");
+        stringBuilder.append(" WHERE ").append(getPrefix()).append(".ax_CustConfirmJour.ConfirmId = ").append("'").append(confirmId).append("'");
+        stringBuilder.append(" AND ").append(getPrefix()).append(".ax_CustConfirmJour.ConfirmDate = ").append("'").append(confirmDate).append("'");
+        stringBuilder.append(" AND ").append(getPrefix()).append(".ax_CustConfirmJour.SalesId = ").append("'").append(saleId).append("'");
 
         log.debug("SQL ax_CustConfirmJour : {}", stringBuilder.toString());
 
@@ -146,10 +152,12 @@ public class AXCustomerConfirmJourDAO extends GenericDAO<AXCustomerConfirmJourMo
         }
     }
 
-    public void updateStatusFinish(String custCode){
+    public void updateStatusFinish(String confirmId, Date confirmDate, String saleId){
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(" UPDATE ").append(getPrefix()).append(".ax_CustConfirmJour SET ").append(getPrefix()).append(".ax_CustConfirmJour.status = 3 ");
-        stringBuilder.append(" WHERE ").append(getPrefix()).append(".ax_CustConfirmJour.invoiceAccount = ").append("'").append(custCode).append("'");
+        stringBuilder.append(" WHERE ").append(getPrefix()).append(".ax_CustConfirmJour.ConfirmId = ").append("'").append(confirmId).append("'");
+        stringBuilder.append(" AND ").append(getPrefix()).append(".ax_CustConfirmJour.ConfirmDate = ").append("'").append(confirmDate).append("'");
+        stringBuilder.append(" AND ").append(getPrefix()).append(".ax_CustConfirmJour.SalesId = ").append("'").append(saleId).append("'");
 
         log.debug("SQL ax_CustConfirmJour : {}", stringBuilder.toString());
 

@@ -181,6 +181,8 @@
                                             pattern="dd/MM/yyyy"
                                             showOn="button">
                                     <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    <p:ajax event="dateSelect" update=":setupForm:batchNoLabel, docDateLabel"
+                                            listener="#{barcodeRegisterBean.onChangeDocumentDate()}"/>
                                 </p:calendar>
                             </td>
                             <td>

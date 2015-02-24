@@ -1,6 +1,9 @@
 package com.ese.beans;
 
-import com.ese.model.db.*;
+import com.ese.model.db.MSItemModel;
+import com.ese.model.db.MSLocationModel;
+import com.ese.model.db.MSWarehouseModel;
+import com.ese.model.db.PickingOrderModel;
 import com.ese.model.view.*;
 import com.ese.service.security.UserDetail;
 import com.ese.utils.FacesUtil;
@@ -8,7 +11,6 @@ import com.ese.utils.MessageDialog;
 import com.ese.utils.Utils;
 import lombok.Getter;
 import lombok.Setter;
-import sun.security.timestamp.Timestamper;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -16,8 +18,6 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -40,7 +40,7 @@ public class PickingOrderShowItemBean extends Bean {
 
     private String startBatch;
     private String toBatch;
-    boolean resultReserve;
+    private String resultReserve;
 
     private List<PickingOrderShowItemView> orderLineModelList;
     private List<PickingOrderShowItemView> selectPickingLine;
@@ -122,12 +122,13 @@ public class PickingOrderShowItemBean extends Bean {
                 if (view.getStatusID() < 3){
                     if (selectPickingLine.size() > 1){
                         flagItem = true;
+                        flagManualReserved = true;
                     } else {
                         flagItem = false;
+                        flagManualReserved = false;
                     }
                     flagFIFOReserved = false;
                     flagPeriodReserved = false;
-                    flagManualReserved = false;
                     flagPoil = false;
                     flagShowStatus = false;
                     flagPrint = false;
@@ -157,11 +158,11 @@ public class PickingOrderShowItemBean extends Bean {
         for (PickingOrderShowItemView view : selectPickingLine){
             resultReserve = pickingOrderShowItemService.onReserved(view.getId(), "", "");
 
-            if (resultReserve){
+            if ("Success".equals(resultReserve)){
                 showDialog(MessageDialog.SAVE.getMessageHeader(), "Success.", "msgBoxSystemMessageDlg");
                 init();
             } else {
-                showDialog(MessageDialog.WARNING.getMessageHeader(), "ไม่สามารถจองได้", "msgBoxSystemMessageDlg");
+                showDialog(MessageDialog.WARNING.getMessageHeader(), "can't  reserve", "msgBoxSystemMessageDlg");
             }
         }
     }
@@ -177,11 +178,11 @@ public class PickingOrderShowItemBean extends Bean {
             for (PickingOrderShowItemView view : selectPickingLine){
                 resultReserve = pickingOrderShowItemService.onReserved(view.getId(), startBatch, toBatch);
 
-                if (resultReserve){
+                if ("Success".equals(resultReserve)){
                     showDialog(MessageDialog.SAVE.getMessageHeader(), "Success.", "msgBoxSystemMessageDlg");
                     init();
                 } else {
-                    showDialog(MessageDialog.WARNING.getMessageHeader(), "ไม่สามารถจองได้", "msgBoxSystemMessageDlg");
+                    showDialog(MessageDialog.WARNING.getMessageHeader(), "can't  reserve", "msgBoxSystemMessageDlg");
                 }
             }
         } else {
