@@ -61,7 +61,7 @@ public class ReceivingReportBeans extends Bean{
 
     public void onPrintPDF(){
 
-        if (Utils.isNull(filterValue)){
+        if (!Utils.isSafetyList(filterValue)){
             receivingReportService.onPrintReceivingReport(receivingReportViewList, userDetail.getUserName());
         } else {
             receivingReportService.onPrintReceivingReport(filterValue, userDetail.getUserName());
@@ -77,6 +77,7 @@ public class ReceivingReportBeans extends Bean{
     }
 
     public int getSumQty() {
+        sumQty = 0;
         if (Utils.isNull(filterValue)){
             for (ReceivingReportView view : receivingReportViewList){
                 log.debug("-----------1 : [{}]", view.getQty());

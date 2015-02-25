@@ -27,7 +27,7 @@ public class InvOnHandModel extends AbstractModel{
     @Column(name = "grade")
     private String grade;
 
-    @Column(name = "cost")
+    @Column(name = "cost", nullable=false, columnDefinition="int default 0")
     private Long cost;
 
     @Column(name = "status")
@@ -42,7 +42,7 @@ public class InvOnHandModel extends AbstractModel{
     @Column(name = "barcode")
     private String barcode;
 
-    @Column(name = "isfoil")
+    @Column(name = "isfoil", nullable=false, columnDefinition="int default 0")
     private Integer isFoil;
 
     @OneToOne

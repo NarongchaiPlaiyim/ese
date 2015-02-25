@@ -132,8 +132,8 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
         selectInventTrans.append(" ").append(getPrefix()).append(".picking_order.sales_order AS SALES_ID,");
         selectInventTrans.append(" ").append(getPrefix()).append(".picking_order_line.ItemId AS ITEM_ID,");
         selectInventTrans.append(" ").append(getPrefix()).append(".ax_InventTrans.id AS INVENTTRANS_ID,");
-        selectInventTrans.append(" ").append(getPrefix()).append(".ax_InventTrans.qty AS INVENTTRANS_QTY,");
-        selectInventTrans.append(" ").append(getPrefix()).append(".ppwms03.dbo.picking_order_line.qty AS PICKING_LINE_QTY");
+        selectInventTrans.append(" COALESCE(").append(getPrefix()).append(".ax_InventTrans.qty, 0) AS INVENTTRANS_QTY,");
+        selectInventTrans.append(" SUM(COALESCE(").append(getPrefix()).append(".picking_order_line.qty, 0)) AS PICKING_LINE_QTY ");
         selectInventTrans.append(" FROM ").append(getPrefix()).append(".picking_order_line");
         selectInventTrans.append(" LEFT JOIN ").append(getPrefix()).append(".picking_order");
         selectInventTrans.append(" ON  ").append(getPrefix()).append(".picking_order_line.picking_order_id = ").append(getPrefix()).append(".picking_order.id");
@@ -141,6 +141,9 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
         selectInventTrans.append(" ON ").append(getPrefix()).append(".picking_order.sales_order = ").append(getPrefix()).append(".ax_InventTrans.transrefid");
         selectInventTrans.append(" AND ").append(getPrefix()).append(".picking_order_line.ItemId = ").append(getPrefix()).append(".ax_InventTrans.itemid");
         selectInventTrans.append(" WHERE ").append(getPrefix()).append(".picking_order_line.id = " ).append(pickingOrderLineId);
+        selectInventTrans.append(" GROUP BY ").append(getPrefix()).append(".picking_order_line.id, ").append(getPrefix()).append(".picking_order.sales_order, ");
+        selectInventTrans.append(getPrefix()).append(".picking_order_line.ItemId, ").append(getPrefix()).append(".ax_InventTrans.id, ");
+        selectInventTrans.append(getPrefix()).append(".ax_InventTrans.qty");
 
         log.debug("findQtyOnInventTran : {}", selectInventTrans.toString());
 

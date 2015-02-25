@@ -28,7 +28,6 @@
                             </td>
                             <td>
                                 <p:calendar id="startDate"
-                                            maxdate="#{receivingReportBean.endDate}"
                                             value="#{receivingReportBean.startDate}"
                                             pattern="dd/MM/yyyy HH:mm"
                                             showOn="button">
@@ -55,7 +54,6 @@
                                             pattern="dd/MM/yyyy HH:mm"
                                             showOn="button">
                                     <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
-                                    <p:ajax event="blur" update="startDate"/>
                                 </p:calendar>
                             </td>
                         </tr>

@@ -49,6 +49,7 @@ public class PickingOrderShowItemService extends Service{
         int restQty = 0;
 
         FIFOReservedView fifoReservedView = pickingOrderLineDAO.findQtyOnInventTran(pickingOrderLineId);
+        log.debug("InvenQty : [{}], sumPickingLineQty : [{}]", fifoReservedView.getInventtransQty(), fifoReservedView.getPickingLineQty());
 
         if (fifoReservedView.getInventtransQty() > fifoReservedView.getPickingLineQty()){
             if (Utils.isZero(startBatch.trim().length()) && Utils.isZero(toBatch.trim().length())){
