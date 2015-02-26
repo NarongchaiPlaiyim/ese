@@ -4,6 +4,7 @@ import com.ese.model.db.AXCustomerConfirmTransModel;
 import com.ese.model.db.PickingOrderLineModel;
 import com.ese.model.db.PickingOrderModel;
 import com.ese.model.db.StatusModel;
+import com.ese.model.view.CustomerConfirmTransView;
 import com.ese.model.view.ItemQtyView;
 import com.ese.service.security.UserDetail;
 import com.ese.utils.Utils;
@@ -13,15 +14,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class PickingOrderLineTransform extends Transform{
 
-    public PickingOrderLineModel transformToModel(AXCustomerConfirmTransModel confirmTransModel, PickingOrderModel pickingOrderModel, StatusModel statusModel,UserDetail userDetail){
+    public PickingOrderLineModel transformToModel(CustomerConfirmTransView confirmTransModel, PickingOrderModel pickingOrderModel, StatusModel statusModel,UserDetail userDetail){
         PickingOrderLineModel pickingOrderLineModel = new PickingOrderLineModel();
 
         pickingOrderLineModel.setPickingOrderId(pickingOrderModel);
         pickingOrderLineModel.setLine_num(confirmTransModel.getLineNum());
+        log.debug("-----ItemId : {}", confirmTransModel.getItemId());
         pickingOrderLineModel.setItemId(confirmTransModel.getItemId());
-        pickingOrderLineModel.setOrigSaleId(confirmTransModel.getOrigSalesId());
+        pickingOrderLineModel.setOrigSaleId(confirmTransModel.getOrigSaleId());
         pickingOrderLineModel.setQty(confirmTransModel.getQty());
-        pickingOrderLineModel.setShipDate(confirmTransModel.getConfirmDate());
+        pickingOrderLineModel.setShipDate(confirmTransModel.getShipDate());
         pickingOrderLineModel.setSalesUnit(confirmTransModel.getSalesUnit());
         pickingOrderLineModel.setFoil(false);
         pickingOrderLineModel.setStatus(statusModel);

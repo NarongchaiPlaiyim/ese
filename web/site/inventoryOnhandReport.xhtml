@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>#{msg.get('menu.report.title.sub.2')}</title>
+    </h:head>
+    <h:body>
+        <p:layout fullPage="true" id="layoutPanel">
+            <p:layoutUnit id="layoutTop" position="north" size="180" header="#{msg.get('header.north')}" collapsible="true" style="border: 0">
+                <ui:insert name="header">
+                    <ui:include src="#{msg.get('include.header')}"/>
+                </ui:insert>
+            </p:layoutUnit>
+            <p:layoutUnit id="layoutLeft" position="west" size="#{msg.get('layoutLeft.size')}" header="#{msg.get('header.west')}" collapsible="true" style="border: 0">
+                <ui:include src="#{msg.get('include.menu')}"/>
+            </p:layoutUnit>
+
+            <p:layoutUnit id="layoutCenter" position="center" header="#{msg.get('menu.report.title.sub.2')}" >
+                <h:form id="inventoryOnhandReportForm">
+                    <p:panel style="border: 0">
+                        <div style="text-align: right;">
+                            <p:commandButton  value="#{msg.get('btn.name.print')}"
+                                              process="@form"
+                                              onstart="PF('bui').block()"
+                                              oncomplete="PF('bui').unblock()"
+                                              action="#{inventoryOnhandReportBean.onPrint()}"
+                                              ajax="false"
+                                              icon="ui-icon-print"
+                                              styleClass="medium" style="#{msg.get('btn.size')}"/>
+                            <p:commandButton value="CSV Export"
+                                             ajax="false" icon="ui-icon-print"
+                                             onstart="PF('bui').block()"
+                                             action="#{inventoryOnhandReportBean.onCSV()}"
+                                             oncomplete="PF('bui').unblock()"
+                                             styleClass="medium" style="#{msg.get('btn.size.200')}"
+                                             allowTypes="/(\.|\/)(csv)$/" process="@form"/>
+                        </div>
+                    </p:panel>
+                    <p:dataTable id = "inventoryOnhandReportTable"
+                                 value="#{inventoryOnhandReportBean.onhandReportViewList}"
+                                 var="inventoryOnhandReport"
+                                 filteredValue="#{inventoryOnhandReportBean.filterOnhandReport}"
+                                 rowIndexVar="rowIndex">
+                        <p:columnGroup type="header">
+                            <p:row>
+                                <p:column headerText="No" style="min-width: 10px; width: 10px; max-width: 10px;" rowspan="2"/>
+                                <p:column headerText="Item Code" sortBy="#{inventoryOnhandReport.itemCode}" filterBy="#{inventoryOnhandReport.itemCode}" rowspan="2"
+                                          style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="left" filterMatchMode="contains"/>
+                                <p:column headerText="Warehouse" sortBy="#{inventoryOnhandReport.warehouseName}" filterBy="#{inventoryOnhandReport.warehouseName}" rowspan="2"
+                                          style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="left" filterMatchMode="contains"/>
+                                <p:column headerText="Location" sortBy="#{inventoryOnhandReport.locationBarcode}" filterBy="#{inventoryOnhandReport.locationBarcode}" rowspan="2"
+                                          style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="left" filterMatchMode="contains"/>
+                                <p:column headerText="Batch" sortBy="#{inventoryOnhandReport.batchNo}" filterBy="#{inventoryOnhandReport.batchNo}" rowspan="2"
+                                          style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="left" filterMatchMode="contains"/>
+                                <p:column headerText="Available" colspan="2" style="min-width: 100px; width: 100px; max-width: 100px;" styleClass="left" filterMatchMode="contains"/>
+                                <p:column headerText="Reserved" colspan="2" style="min-width: 100px; width: 100px; max-width: 100px;" styleClass="left" filterMatchMode="contains"/>
+                                <p:column headerText="Pick" colspan="2" style="min-width: 100px; width: 100px; max-width: 100px;" styleClass="left"  filterMatchMode="contains"/>
+                                <p:column headerText="Pack" colspan="2" style="min-width: 100px; width: 100px; max-width: 100px;" styleClass="left"  filterMatchMode="contains"/>
+                                <p:column headerText="Physical" colspan="2" style="min-width: 100px; width: 100px; max-width: 100px;" styleClass="left"  filterMatchMode="contains"/>
+                            </p:row>
+                            <p:row>
+                                <!--  **** Available ****  -->
+                                <p:column headerText="Qty" sortBy="#{inventoryOnhandReport.availableView.qty}" filterBy="#{inventoryOnhandReport.availableView.qty}"
+                                          style="min-width: 50px; width: 50px; max-width: 50px;"/>
+                                <p:column headerText="Amount" sortBy="#{inventoryOnhandReport.availableView.amount}" filterBy="#{inventoryOnhandReport.availableView.amount}"
+                                          style="min-width: 50px; width: 50px; max-width: 50px;"/>
+                                <!--********-->
+                                <!--  **** Reserved ****  -->
+                                <p:column headerText="Qty" sortBy="#{inventoryOnhandReport.reservedView.qty}" filterBy="#{inventoryOnhandReport.reservedView.qty}"
+                                          style="min-width: 50px; width: 50px; max-width: 50px;"/>
+                                <p:column headerText="Amount" sortBy="#{inventoryOnhandReport.reservedView.amount}" filterBy="#{inventoryOnhandReport.reservedView.amount}"
+                                          style="min-width: 50px; width: 50px; max-width: 50px;"/>
+                                <!--********-->
+                                <!--  **** Pick ****  -->
+                                <p:column headerText="Qty" sortBy="#{inventoryOnhandReport.pickView.qty}" filterBy="#{inventoryOnhandReport.pickView.qty}"
+                                          style="min-width: 50px; width: 50px; max-width: 50px;"/>
+                                <p:column headerText="Amount" sortBy="#{inventoryOnhandReport.pickView.amount}" filterBy="#{inventoryOnhandReport.pickView.amount}"
+                                          style="min-width: 50px; width: 50px; max-width: 50px;"/>
+                                <!--********-->
+                                <!--  **** Pack ****  -->
+                                <p:column headerText="Qty" sortBy="#{inventoryOnhandReport.packView.qty}" filterBy="#{inventoryOnhandReport.packView.qty}"
+                                          style="min-width: 50px; width: 50px; max-width: 50px;"/>
+                                <p:column headerText="Amount" sortBy="#{inventoryOnhandReport.packView.amount}" filterBy="#{inventoryOnhandReport.packView.amount}"
+                                          style="min-width: 50px; width: 50px; max-width: 50px;"/>
+                                <!--********-->
+                                <!--  **** Physical ****  -->
+                                <p:column headerText="Qty" sortBy="#{inventoryOnhandReport.physicalView.qty}" filterBy="#{inventoryOnhandReport.physicalView.qty}"
+                                          style="min-width: 50px; width: 50px; max-width: 50px;"/>
+                                <p:column headerText="Amount" sortBy="#{inventoryOnhandReport.physicalView.amount}" filterBy="#{inventoryOnhandReport.physicalView.amount}"
+                                          style="min-width: 50px; width: 50px; max-width: 50px;"/>
+                                <!--********-->
+                            </p:row>
+                        </p:columnGroup>
+
+                        <p:column>
+                            <h:outputText value="#{rowIndex+1}" styleClass="center" />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{inventoryOnhandReport.itemCode}"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{inventoryOnhandReport.warehouseName}"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{inventoryOnhandReport.locationBarcode}"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{inventoryOnhandReport.batchNo}"/>
+                        </p:column>
+                        <!--  **** Available ****  -->
+                        <p:column>
+                            <h:outputText value="#{inventoryOnhandReport.availableView.qty}" style="min-width: 50px; width: 50px; max-width: 50px;"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{inventoryOnhandReport.availableView.amount}" style="min-width: 50px; width: 50px; max-width: 50px;"/>
+                        </p:column>
+                        <!--********-->
+                        <!--  **** Reserved ****  -->
+                        <p:column>
+                            <h:outputText value="#{inventoryOnhandReport.reservedView.qty}" style="min-width: 50px; width: 50px; max-width: 50px;"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{inventoryOnhandReport.reservedView.amount}" style="min-width: 50px; width: 50px; max-width: 50px;"/>
+                        </p:column>
+                        <!--********-->
+                        <!--  **** Pick ****  -->
+                        <p:column>
+                            <h:outputText value="#{inventoryOnhandReport.pickView.qty}" style="min-width: 50px; width: 50px; max-width: 50px;"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{inventoryOnhandReport.pickView.amount}" style="min-width: 50px; width: 50px; max-width: 50px;"/>
+                        </p:column>
+                        <!--********-->
+                        <!--  **** Pack ****  -->
+                        <p:column>
+                            <h:outputText value="#{inventoryOnhandReport.packView.qty}" style="min-width: 50px; width: 50px; max-width: 50px;"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{inventoryOnhandReport.packView.amount}" style="min-width: 50px; width: 50px; max-width: 50px;"/>
+                        </p:column>
+                        <!--********-->
+                        <!--  **** Physical ****  -->
+                        <p:column>
+                            <h:outputText value="#{inventoryOnhandReport.physicalView.qty}" style="min-width: 50px; width: 50px; max-width: 50px;"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{inventoryOnhandReport.physicalView.amount}" style="min-width: 50px; width: 50px; max-width: 50px;"/>
+                        </p:column>
+                        <!--********-->
+                        <p:columnGroup type="footer">
+                            <p:row>
+                                <p:column colspan="5" style="text-align: right" footerText="Total"/>
+                                <p:column footerText="#{inventoryOnhandReportBean.sumAvailableQty}"/>
+                                <p:column footerText="#{inventoryOnhandReportBean.sumAvailableAmount}"/>
+                            </p:row>
+                        </p:columnGroup>
+                    </p:dataTable>
+                </h:form>
+            </p:layoutUnit>
+        </p:layout>
+    </h:body>
+</f:view>
+</html>

@@ -34,10 +34,14 @@
                                  value="#{pickingOrderBean.syncConfirmOrderViewList}"
                                  selection="#{pickingOrderBean.seleteDataSync}"
                                  var="data"
-                                 rowKey="#{data.customerCode}"
+                                 rowKey="#{data.confirmId}; #{data.confirmDate}; #{data.saleId}"
                                  style="width: 100%; max-width: 100%; min-width: 100%">
+                        <f:facet name="header">
+                            <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-plusthick" />
+                            <p:columnToggler datasource="axConfirmOrderTableDlg" trigger="toggler" />
+                        </f:facet>
                         <p:ajax event="rowSelect"/>
-                        <p:column selectionMode="multiple" style="width:16px;text-align:center; height: 20px"/>
+                        <p:column headerText="No" selectionMode="multiple" style="width:16px;text-align:center; height: 20px"/>
                         <p:column headerText="Customer Code" style="width: 60px; max-width: 60px; min-width: 60px" styleClass="center">
                             <h:outputText value="#{data.customerCode}" />
                         </p:column>

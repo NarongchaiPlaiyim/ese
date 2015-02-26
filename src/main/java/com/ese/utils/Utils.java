@@ -3,7 +3,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import java.math.BigDecimal;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -60,7 +59,11 @@ public enum Utils {
     }
 
     public static String getBatchNo(){
-        return new SimpleDateFormat("yyyy", Locale.ENGLISH).format(currentDate()) + "-" + getCalendar().get(Calendar.WEEK_OF_YEAR);
+        return new SimpleDateFormat("yyyy-ww", Locale.ENGLISH).format(currentDate());
+    }
+
+    public static String getBatchNo(Date date){
+        return new SimpleDateFormat("yyyy-ww", Locale.ENGLISH).format(date);
     }
 
     public static String getDocumentNo(){
@@ -241,6 +244,16 @@ public enum Utils {
         }
     }
 
+    public static String convertToStringYYYYMMDDHHmm(Date date){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH);
+        if (Utils.isNull(date)){
+            return "";
+        } else {
+            String dateString = simpleDateFormat.format(date);
+            return dateString;
+        }
+    }
+
     public static String convertDateToString(Date date){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
         if (Utils.isNull(date)){
@@ -262,5 +275,11 @@ public enum Utils {
         return date;
     }
 
+    public static String EmptyString(String field) {
+        return isNull(field) ? "" : field;
+    }
 
+    public static String EmptyInteget(int field){
+        return isZero(field) ? "0" : new StringBuffer().append(field).toString();
+    }
 }
