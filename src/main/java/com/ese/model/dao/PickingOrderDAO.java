@@ -5,6 +5,7 @@ import com.ese.model.view.PickingOrderView;
 import com.ese.model.view.StatusPickingValue;
 import com.ese.utils.Utils;
 import org.hibernate.Criteria;
+import org.hibernate.SQLQuery;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -78,7 +79,7 @@ public class PickingOrderDAO extends GenericDAO<PickingOrderModel, Integer> {
 
                 if (!Utils.isNull(pickingOrderView.getPurchaseOrder()) && !Utils.isZero(pickingOrderView.getPurchaseOrder().length())){
                     log.debug("purchaseOrder {}", pickingOrderView.getPurchaseOrder());
-                    criteria.add(Restrictions.like("purchaseOrder", "%" + pickingOrderView.getPurchaseOrder()  + "%"));
+                    criteria.add(Restrictions.like("purchaseOrder", "%" + pickingOrderView.getPurchaseOrder() + "%"));
                 }
 
                 if (!Utils.isNull(pickingOrderView.getRequestShipDate()) && !Utils.isZero(pickingOrderView.getRequestShipDate().length())){
@@ -89,7 +90,7 @@ public class PickingOrderDAO extends GenericDAO<PickingOrderModel, Integer> {
                 log.debug("status {}", pickingOrderView.getStatus());
 
                 if (!Utils.isZero(pickingOrderView.getStatus())){
-                    criteria.add(Restrictions.like("status.id", "%" + pickingOrderView.getStatus()  + "%"));
+                    criteria.add(Restrictions.like("status.id", "%" + pickingOrderView.getStatus() + "%"));
                 }
 
                 if (!Utils.isNull(pickingOrderView.getConfirmDate()) && !Utils.isZero(pickingOrderView.getConfirmDate().length())){
@@ -99,7 +100,7 @@ public class PickingOrderDAO extends GenericDAO<PickingOrderModel, Integer> {
 
                 if (!Utils.isNull(pickingOrderView.getSaleOrder()) && !Utils.isZero(pickingOrderView.getSaleOrder().length())){
                     log.debug("salesOrder {}", pickingOrderView.getSaleOrder());
-                    criteria.add(Restrictions.like("salesOrder", "%" + pickingOrderView.getSaleOrder()  + "%"));
+                    criteria.add(Restrictions.like("salesOrder", "%" + pickingOrderView.getSaleOrder() + "%"));
                 }
 
                 if (!Utils.isNull(pickingOrderView.getEddDate()) && !Utils.isZero(pickingOrderView.getEddDate().length())){
@@ -126,12 +127,12 @@ public class PickingOrderDAO extends GenericDAO<PickingOrderModel, Integer> {
 
                 if (!Utils.isNull(pickingOrderView.getCustomerCode()) && !Utils.isZero(pickingOrderView.getCustomerCode().length())){
                     log.debug("customerCode {}", pickingOrderView.getCustomerCode());
-                    criteria.add(Restrictions.like("cc.accountNum", "%" + pickingOrderView.getCustomerCode().trim()  + "%"));
+                    criteria.add(Restrictions.like("cc.accountNum", "%" + pickingOrderView.getCustomerCode().trim() + "%"));
                 }
 
                 if (!Utils.isNull(pickingOrderView.getDeliveryName()) && !Utils.isZero(pickingOrderView.getDeliveryName().length())){
                     log.debug("deliveryName {}", pickingOrderView.getDeliveryName());
-                    criteria.add(Restrictions.like("deliveryName", "%" + pickingOrderView.getDeliveryName().trim()  + "%"));
+                    criteria.add(Restrictions.like("deliveryName", "%" + pickingOrderView.getDeliveryName().trim() + "%"));
                 }
 
                 if (!Utils.isNull(pickingOrderView.getAvailableDate()) && !Utils.isZero(pickingOrderView.getAvailableDate().length())){
@@ -141,12 +142,12 @@ public class PickingOrderDAO extends GenericDAO<PickingOrderModel, Integer> {
 
                 if (!Utils.isNull(pickingOrderView.getCustomerName()) && !Utils.isZero(pickingOrderView.getCustomerName().length())){
                     log.debug("customerName {}", pickingOrderView.getCustomerName());
-                    criteria.add(Restrictions.like("cc.name", "%" + pickingOrderView.getCustomerName()  + "%"));
+                    criteria.add(Restrictions.like("cc.name", "%" + pickingOrderView.getCustomerName() + "%"));
                 }
 
                 if (!Utils.isNull(pickingOrderView.getDeliveryAddress()) && !Utils.isZero(pickingOrderView.getDeliveryAddress().length())){
                     log.debug("deliveryAddress {}", pickingOrderView.getDeliveryAddress());
-                    criteria.add(Restrictions.like("deliveryAddress", "%" + pickingOrderView.getDeliveryAddress()  + "%"));
+                    criteria.add(Restrictions.like("deliveryAddress", "%" + pickingOrderView.getDeliveryAddress() + "%"));
                 }
             }
 
@@ -176,5 +177,20 @@ public class PickingOrderDAO extends GenericDAO<PickingOrderModel, Integer> {
         }
 
         return model;
+    }
+
+    public void updateStatus(int pickingId){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(" UPDATE ").append(getPrefix()).append(".picking_order SET ").append(getPrefix()).append(".picking_order.status = 2 ");
+        stringBuilder.append(" WHERE ").append(getPrefix()).append(".picking_order.id = ").append("'").append(pickingId).append("'");
+
+        log.debug("SQL updateStatus : {}", stringBuilder.toString());
+
+        try {
+            SQLQuery q = getSession().createSQLQuery(stringBuilder.toString());
+            q.executeUpdate();
+        } catch (Exception e) {
+            log.debug("Exception error updateToWrap: ", e);
+        }
     }
 }

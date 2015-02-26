@@ -354,4 +354,53 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
             log.debug("Exception error updateOrderQty: ", e);
         }
     }
+
+    public LocationQtyView findLocationQtyByRemoveShowItem(int locationId, String batchNo, int itemId){
+        LocationQtyView locationQtyView = new LocationQtyView();
+
+        StringBuilder selectLocationQty = new StringBuilder();
+
+        selectLocationQty.append(" SELECT ");
+        selectLocationQty.append(" ").append(getPrefix()).append(".location_qty.id AS ID,");
+        selectLocationQty.append(" ").append(getPrefix()).append(".location_qty.reserved_qty AS RESERVED_QTY");
+        selectLocationQty.append(" FROM ").append(getPrefix()).append(".location_qty");
+        selectLocationQty.append(" WHERE ").append(getPrefix()).append(".location_qty.location_id = " ).append(locationId);
+        selectLocationQty.append(" AND ").append(getPrefix()).append(".location_qty.batchno = '" ).append(batchNo).append("'");
+        selectLocationQty.append(" AND ").append(getPrefix()).append(".location_qty.item_master_id = " ).append(itemId);
+
+        log.debug("findByLocationId : {}", selectLocationQty.toString());
+
+        try {
+            SQLQuery query = getSession().createSQLQuery(selectLocationQty.toString())
+                    .addScalar("ID", IntegerType.INSTANCE)
+                    .addScalar("RESERVED_QTY", IntegerType.INSTANCE);
+            List<Object[]> objects = query.list();
+
+            for (Object[] entity : objects) {
+                locationQtyView.setId(Utils.parseInt(entity[0]));
+                locationQtyView.setReservedQty(Utils.parseInt(entity[1]));
+            }
+        } catch (Exception e) {
+            log.debug("Exception findByLocationId SQL : {}", e);
+        }
+
+        log.debug("locationQtyViewList Size : {}", locationQtyView.toString());
+
+        return locationQtyView;
+    }
+
+    public void updateLocationQtyByRemoveShowItem(int locationQtyId, int updateValue){
+        StringBuilder updateOrderQty = new StringBuilder();
+        updateOrderQty.append(" UPDATE ").append(getPrefix()).append(".location_qty SET ").append(getPrefix()).append(".location_qty.reserved_qty = ").append(updateValue);
+        updateOrderQty.append(" WHERE ").append(getPrefix()).append(".location_qty.id = ").append(locationQtyId);
+
+        log.debug("SQL updateOrderQty : {}", updateOrderQty.toString());
+
+        try {
+            SQLQuery q = getSession().createSQLQuery(updateOrderQty.toString());
+            q.executeUpdate();
+        } catch (Exception e) {
+            log.debug("Exception error updateOrderQty: ", e);
+        }
+    }
 }
