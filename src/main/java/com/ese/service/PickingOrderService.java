@@ -49,7 +49,6 @@ public class PickingOrderService extends Service {
         final int SEARCH_ALL = 2;
         if(SEARCH_ALL != userAccessModelList.size()){
             for(UserAccessModel model : userAccessModelList){
-                mode = ALL;
                 if (A031.equals(model.getMenuObjectModel().getCode())){
                     mode = A031;
                 } else if (B031.equals(model.getMenuObjectModel().getCode())){
@@ -127,8 +126,7 @@ public class PickingOrderService extends Service {
             axCustomerConfirmJourDAO.updateStatusFinish(view.getCustomerCode());
             axCustomerConfirmTransDAO.updateStatusFinish(view.getSaleId(), view.getConfirmId(), view.getConfirmDate());
         }
-        axCustomerConfirmJourDAO.rollbackStatus();
-        axCustomerConfirmTransDAO.rollbackStatus();
+        rollbackStatus();
     }
 
     private void onSavePickingOrderLine(DataSyncConfirmOrderView view, StatusModel status, UserDetail userDetail){
