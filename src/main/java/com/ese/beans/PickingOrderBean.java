@@ -80,7 +80,7 @@ public class PickingOrderBean extends Bean {
     public void onClickTable(){
         log.debug("pickingOrderModel : {}", pickingOrderModel.toString());
 
-        if (pickingOrderModel.getStatus().getId() > 2){
+        if (pickingOrderModel.getStatus().getId() >= 2){
             flagBtnShow = false;
             flagBtnPrint = false;
         } else if (pickingOrderModel.getStatus().getId() == 1){

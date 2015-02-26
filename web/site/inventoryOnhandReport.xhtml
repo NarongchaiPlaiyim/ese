@@ -154,8 +154,26 @@
                         <p:columnGroup type="footer">
                             <p:row>
                                 <p:column colspan="5" style="text-align: right" footerText="Total"/>
+                                <!--  **** Available ****  -->
                                 <p:column footerText="#{inventoryOnhandReportBean.sumAvailableQty}"/>
                                 <p:column footerText="#{inventoryOnhandReportBean.sumAvailableAmount}"/>
+                                <!--********-->
+                                <!--  **** Reserved ****  -->
+                                <p:column footerText="#{inventoryOnhandReportBean.sumReservedQty}"/>
+                                <p:column footerText="#{inventoryOnhandReportBean.sumReservedAmount}"/>
+                                <!--********-->
+                                <!--  **** Pick ****  -->
+                                <p:column footerText="#{inventoryOnhandReportBean.sumPickQty}"/>
+                                <p:column footerText="#{inventoryOnhandReportBean.sumPickAmount}"/>
+                                <!--********-->
+                                <!--  **** Pack ****  -->
+                                <p:column footerText="#{inventoryOnhandReportBean.sumPackQty}"/>
+                                <p:column footerText="#{inventoryOnhandReportBean.sumPackAmount}"/>
+                                <!--********-->
+                                <!--  **** Physical ****  -->
+                                <p:column footerText="#{inventoryOnhandReportBean.sumPhysicalQty}"/>
+                                <p:column footerText="#{inventoryOnhandReportBean.sumPhysicalAmount}"/>
+                                <!--********-->
                             </p:row>
                         </p:columnGroup>
                     </p:dataTable>
