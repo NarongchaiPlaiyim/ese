@@ -18,6 +18,8 @@ public class ReceivingReportView {
     private String grade;
     private int qty;
 
+    private int sum;
+
     public ReceivingReportView() {
 
     }
@@ -33,6 +35,7 @@ public class ReceivingReportView {
                 .append("itemDesc", itemDesc)
                 .append("grade", grade)
                 .append("qty", qty)
+                .append("sum", sum)
                 .toString();
     }
 }

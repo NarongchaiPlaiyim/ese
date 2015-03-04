@@ -33,6 +33,7 @@ public class InventoryOnhandReportDAO extends GenericDAO<InventoryOnhandReportVi
         sqlReport.append(" ON ").append(getPrefix()).append(".inv_onhand.location_id = ").append(getPrefix()).append(".location.id");
         sqlReport.append(" LEFT JOIN ").append(getPrefix()).append(".warehouse");
         sqlReport.append(" ON ").append(getPrefix()).append(".location.warehouse_id = ").append(getPrefix()).append(".warehouse.id");
+        sqlReport.append(" WHERE ").append(getPrefix()).append(".inv_onhand.status > 1 ");
         sqlReport.append(" GROUP BY ").append(getPrefix()).append(".item_master.ItemId, ").append(getPrefix()).append(".item_master.DSGThaiItemDescription, ");
         sqlReport.append(getPrefix()).append(".inv_onhand.batchno, ").append(getPrefix()).append(".inv_onhand.grade, ");
         sqlReport.append(getPrefix()).append(".warehouse.warehouse_code, ").append(getPrefix()).append(".location.location_barcode, ");

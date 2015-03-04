@@ -159,6 +159,7 @@ public class PickingOrderShowItemBean extends Bean {
             resultReserve = pickingOrderShowItemService.onReserved(view.getId(), "", "");
 
             if ("Success".equals(resultReserve)){
+                pickingOrderShowItemService.setStatusPickingOrder(pickingOrderModel.getId());
                 showDialog(MessageDialog.SAVE.getMessageHeader(), "Success.", "msgBoxSystemMessageDlg");
                 init();
             } else {
@@ -179,6 +180,7 @@ public class PickingOrderShowItemBean extends Bean {
                 resultReserve = pickingOrderShowItemService.onReserved(view.getId(), startBatch, toBatch);
 
                 if ("Success".equals(resultReserve)){
+                    pickingOrderShowItemService.setStatusPickingOrder(pickingOrderModel.getId());
                     showDialog(MessageDialog.SAVE.getMessageHeader(), "Success.", "msgBoxSystemMessageDlg");
                     init();
                 } else {
@@ -242,6 +244,7 @@ public class PickingOrderShowItemBean extends Bean {
 //            return;
         } else  if (reservedManualQty <= selectLocationQtyView.getAvailable()){
             pickingOrderShowItemService.saveManualReserved(selectLocationQtyView, reservedManualQty, itemView.getId());
+            pickingOrderShowItemService.setStatusPickingOrder(pickingOrderModel.getId());
             showDialog(MessageDialog.SAVE.getMessageHeader(), "Success.", "msgBoxSystemMessageDlg");
         }
         reservedManualQty = 0;
@@ -340,7 +343,7 @@ public class PickingOrderShowItemBean extends Bean {
     }
 
     public void removeShowItemStatus(){
-        pickingOrderShowItemService.onRemove(selectShowItemStatus.getId());
+        pickingOrderShowItemService.onRemove(selectShowItemStatus.getId(), itemQtyView.getItemCode());
         onLoadShowItemStatus();
     }
 

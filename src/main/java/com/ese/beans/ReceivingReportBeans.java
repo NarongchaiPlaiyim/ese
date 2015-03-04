@@ -3,6 +3,7 @@ package com.ese.beans;
 import com.ese.model.view.ReceivingReportView;
 import com.ese.service.ReceivingReportService;
 import com.ese.service.security.UserDetail;
+import com.ese.utils.FacesUtil;
 import com.ese.utils.MessageDialog;
 import com.ese.utils.Utils;
 import lombok.Getter;
@@ -12,6 +13,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
 
@@ -37,6 +39,7 @@ public class ReceivingReportBeans extends Bean{
         newOnload();
         getDataOnload();
         userDetail = getUser();
+        getSummary();
     }
 
     private void newOnload(){
@@ -45,17 +48,21 @@ public class ReceivingReportBeans extends Bean{
 //        filterValue = new ArrayList<ReceivingReportView>();
     }
 
+    private void getSummary(){
+        HttpSession session = FacesUtil.getSession(false);
+        sumQty = (Integer)session.getAttribute("summary");
+    }
+
     private void getDataOnload(){
         receivingReportViewList = receivingReportService.getReceivingReportView("", "");
     }
 
     public void onSearchReceivingReport(){
-        log.debug("------- {}", endDate.compareTo(startDate)
-        );
-        if (endDate.compareTo(startDate) < 0){
+        if (endDate.before(startDate)){
             showDialog(MessageDialog.WARNING.getMessageHeader(), "Start Date > Finish Date.", "msgBoxSystemMessageDlg");
         } else {
             receivingReportViewList = receivingReportService.getReceivingReportView(Utils.convertToStringYYYYMMDDHHmm(startDate), Utils.convertToStringYYYYMMDDHHmm(endDate));
+            getSummary();
         }
     }
 
@@ -69,27 +76,18 @@ public class ReceivingReportBeans extends Bean{
     }
 
     public void onExportCSV(){
-        if (Utils.isNull(filterValue)){
+        if (!Utils.isSafetyList(filterValue)){
             receivingReportService.onExportCSV(receivingReportViewList);
         } else {
             receivingReportService.onExportCSV(filterValue);
         }
     }
 
-    public int getSumQty() {
-        sumQty = 0;
-        if (Utils.isNull(filterValue)){
-            for (ReceivingReportView view : receivingReportViewList){
-                log.debug("-----------1 : [{}]", view.getQty());
-                sumQty += view.getQty();
-            }
+    public void onFilter(){
+        if (!Utils.isSafetyList(filterValue)){
+            log.debug("---------");
         } else {
-            for (ReceivingReportView view : filterValue){
-                log.debug("-----------2 : [{}]", view.getQty());
-                sumQty += view.getQty();
-            }
+            log.debug("+++++++++");
         }
-
-        return sumQty;
     }
 }

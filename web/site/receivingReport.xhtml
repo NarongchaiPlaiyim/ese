@@ -81,6 +81,7 @@
                     <table border="0">
                         <tr>
                             <td>
+                                <!--<p:remoteCommand name="updateFilters"  update="receivingReportTable:summary"/>-->
                                 <p:dataTable id = "receivingReportTable"
                                              value="#{receivingReportBean.receivingReportViewList}"
                                              var="receivingReport"
@@ -112,10 +113,17 @@
                                     <p:column headerText="Qty" sortBy="#{receivingReport.qty}" filterBy="#{receivingReport.qty}" style="min-width: 40px; width: 40px; max-width: 40px;" styleClass="left"  filterMatchMode="contains">
                                         <h:outputText value="#{receivingReport.qty}"/>
                                     </p:column>
-                                    <p:columnGroup type="footer">
+
+                                    <p:columnGroup id="summary" type="footer">
                                         <p:row>
-                                           <p:column colspan="7" style="text-align: right" footerText="Total"/>
-                                           <p:column footerText="#{receivingReportBean.sumQty}"/>
+                                            <p:column colspan="7" style="text-align: right" footerText="Total"/>
+                                            <p:outputPanel autoUpdate="true">
+                                                <p:column>
+                                                    <f:facet name="footer">
+                                                        <h:outputText value="#{receivingReport.qty}"/>
+                                                    </f:facet>
+                                                </p:column>
+                                            </p:outputPanel>
                                         </p:row>
                                     </p:columnGroup>
                                 </p:dataTable>

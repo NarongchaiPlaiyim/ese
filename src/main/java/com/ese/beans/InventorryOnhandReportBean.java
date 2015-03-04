@@ -41,6 +41,7 @@ public class InventorryOnhandReportBean extends Bean{
     private void init(){
         onLoadInventoryReport();
         userDetail = getUser();
+        calTotal();
     }
 
     private void onLoadInventoryReport(){
@@ -63,31 +64,34 @@ public class InventorryOnhandReportBean extends Bean{
         }
     }
 
-    public int getSumAvailableQty() {
+    private void calTotal() {
         if (Utils.isNull(filterOnhandReport)){
             for (InventoryOnhandReportView view : onhandReportViewList){
                 sumAvailableQty += view.getAvailableView().getQty();
+                sumAvailableAmount += view.getAvailableView().getAmount();
+                sumReservedQty += view.getReservedView().getQty();
+                sumReservedAmount += view.getReservedView().getAmount();
+                sumPickQty += view.getPickView().getQty();
+                sumPickAmount += view.getPickView().getAmount();
+                sumPackQty += view.getPackView().getQty();
+                sumPackAmount += view.getPackView().getAmount();
+                sumPhysicalQty += view.getPhysicalView().getQty();
+                sumPhysicalAmount += view.getPhysicalView().getAmount();
             }
         } else {
             for (InventoryOnhandReportView view : filterOnhandReport){
                 sumAvailableQty += view.getAvailableView().getQty();
+                sumAvailableAmount += view.getAvailableView().getAmount();
+                sumReservedQty += view.getReservedView().getQty();
+                sumReservedAmount += view.getReservedView().getAmount();
+                sumPickQty += view.getPickView().getQty();
+                sumPickAmount += view.getPickView().getAmount();
+                sumPackQty += view.getPackView().getQty();
+                sumPackAmount += view.getPackView().getAmount();
+                sumPhysicalQty += view.getPhysicalView().getQty();
+                sumPhysicalAmount += view.getPhysicalView().getAmount();
             }
         }
 
-        return sumAvailableQty;
-    }
-
-    public int getSumAvailableAmount() {
-        if (Utils.isNull(filterOnhandReport)){
-            for (InventoryOnhandReportView view : onhandReportViewList){
-                sumAvailableAmount += view.getAvailableView().getAmount();
-            }
-        } else {
-            for (InventoryOnhandReportView view : filterOnhandReport){
-                sumAvailableAmount += view.getAvailableView().getAmount();
-            }
-        }
-
-        return sumAvailableAmount;
     }
 }

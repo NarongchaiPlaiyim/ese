@@ -1,6 +1,7 @@
 package com.ese.model.dao;
 
 import com.ese.model.view.ReceivingReportView;
+import com.ese.utils.FacesUtil;
 import com.ese.utils.Utils;
 import org.hibernate.SQLQuery;
 import org.hibernate.type.DateType;
@@ -8,6 +9,7 @@ import org.hibernate.type.IntegerType;
 import org.hibernate.type.StringType;
 import org.springframework.stereotype.Repository;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,17 +59,22 @@ public class ReceivingReportDAO extends GenericDAO<ReceivingReportView, Integer>
                     .addScalar("QTY", IntegerType.INSTANCE);
             List<Object[]> objects = query.list();
 
+            int sum = 0;
             for (Object[] entity : objects){
                 ReceivingReportView reportView = new ReceivingReportView();
                 reportView.setReceivingDate(Utils.convertDateToString(Utils.parseDate(entity[0], null)));
-                reportView.setWarehouseCode(Utils.parseString(entity[1], ""));
-                reportView.setConveyorLine(Utils.parseString(entity[2], ""));
-                reportView.setItemName(Utils.parseString(entity[3], ""));
-                reportView.setItemDesc(Utils.parseString(entity[4], ""));
-                reportView.setGrade(Utils.parseString(entity[5], ""));
-                reportView.setQty(Utils.parseInt(entity[6], 0));
+                reportView.setWarehouseCode(Utils.parseString(entity[1]));
+                reportView.setConveyorLine(Utils.parseString(entity[2]));
+                reportView.setItemName(Utils.parseString(entity[3]));
+                reportView.setItemDesc(Utils.parseString(entity[4]));
+                reportView.setGrade(Utils.parseString(entity[5]));
+                reportView.setQty(Utils.parseInt(entity[6]));
+                sum += Utils.parseInt(entity[6]);
+
                 receivingReportViewList.add(reportView);
             }
+            HttpSession session = FacesUtil.getSession(true);
+            session.setAttribute("summary", sum);
         } catch (Exception e) {
             log.debug("Exception error findReceivingReport : ", e);
         }

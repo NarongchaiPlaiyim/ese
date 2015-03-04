@@ -25,6 +25,7 @@ public class PickingOrderShowItemService extends Service{
     @Resource private WarehouseDAO warehouseDAO;
     @Resource private ItemDAO itemDAO;
     @Resource private PickingOrderLineTransform pickingOrderLineTransform;
+    @Resource private PickingOrderDAO pickingOrderDAO;
 
     private String message = "Fail";
 
@@ -41,7 +42,6 @@ public class PickingOrderShowItemService extends Service{
     }
 
     public String onReserved(int pickingOrderLineId, String startBatch, String toBatch){
-        boolean result = false;
         ReservedOrderModel reservedOrderModel;
         PickingOrderLineModel pickingOrderLineModel;
         MSLocationModel msLocationModel;
@@ -53,8 +53,10 @@ public class PickingOrderShowItemService extends Service{
 
         if (fifoReservedView.getInventtransQty() > fifoReservedView.getPickingLineQty()){
             if (Utils.isZero(startBatch.trim().length()) && Utils.isZero(toBatch.trim().length())){
+                //FIFO Reserved
                 locationQtyViewList = pickingOrderLineDAO.findByItemId(fifoReservedView.getItemId(), "", "", 0, 0, 0);
             } else if (!Utils.isZero(startBatch.trim().length()) && !Utils.isZero(toBatch.trim().length())){
+                //Period Reserved
                 locationQtyViewList = pickingOrderLineDAO.findByItemId(fifoReservedView.getItemId(), startBatch.trim(), toBatch.trim(), 0, 0, 0);
             }
 
@@ -173,8 +175,11 @@ public class PickingOrderShowItemService extends Service{
         return reservedOrderDAO.findByPickingLineId(pickingLineId);
     }
 
-    public void onRemove(int reservedOrderId){
+    public void onRemove(int reservedOrderId, String itemId){
         try {
+            ReservedOrderModel orderModel = reservedOrderDAO.findByID(reservedOrderId);
+            updateLocationQtyOnRemove(orderModel.getLocationId(), orderModel.getBatchNo(), itemId,  orderModel.getReservedQty());
+
             reservedOrderDAO.delete(reservedOrderDAO.remove(reservedOrderId));
         } catch (Exception e) {
             log.debug("Exception error onRemove");
@@ -184,5 +189,16 @@ public class PickingOrderShowItemService extends Service{
     public void closeManual(int pickingLineId){
         FIFOReservedView fifoReservedView = pickingOrderLineDAO.findQtyOnInventTran(pickingLineId);
         pickingOrderLineDAO.updateInventTransByUseFinish(fifoReservedView.getInventtransId());
+    }
+
+    public void setStatusPickingOrder(int pickingOrderId){
+        pickingOrderDAO.updateStatus(pickingOrderId);
+    }
+
+    public void updateLocationQtyOnRemove(int locationId, String batchNo, String itemId, int reservedQty){
+        MSItemModel model = itemDAO.findByItemId(itemId);
+        LocationQtyView locationQtyView = pickingOrderLineDAO.findLocationQtyByRemoveShowItem(locationId, batchNo, model.getId());
+        pickingOrderLineDAO.updateLocationQtyByRemoveShowItem(locationQtyView.getId(), locationQtyView.getReservedQty() - reservedQty);
+
     }
 }

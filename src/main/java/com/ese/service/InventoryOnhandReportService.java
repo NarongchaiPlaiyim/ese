@@ -67,6 +67,16 @@ public class InventoryOnhandReportService extends Service{
 
     public void onExportCSV(List<InventoryOnhandReportView> reportViews){
         String printTagReportname = Utils.genReportName("_ReceivingReport");
+        int sumAvailableQty = 0;
+        int sumAvailableAmount = 0;
+        int sumReservedQty = 0;
+        int sumReservedAmount = 0;
+        int sumPickQty = 0;
+        int sumPickAmount = 0;
+        int sumPackQty = 0;
+        int sumPackAmount = 0;
+        int sumPhysicalQty = 0;
+        int sumPhysicalAmount = 0;
 
         StringBuilder csvReceiving =  new StringBuilder();
         csvReceiving.append("NO").append(COMMA_DELIMITED);
@@ -96,15 +106,33 @@ public class InventoryOnhandReportService extends Service{
             csvReceiving.append('"' + Utils.EmptyInteget(view.getAvailableView().getAmount()) + '"').append(COMMA_DELIMITED);
             csvReceiving.append('"' + Utils.EmptyInteget(view.getReservedView().getQty()) + '"').append(COMMA_DELIMITED);
             csvReceiving.append('"' + Utils.EmptyInteget(view.getReservedView().getAmount()) + '"').append(COMMA_DELIMITED);
-            csvReceiving.append('"' + Utils.EmptyInteget(view.getPackView().getQty()) + '"').append(COMMA_DELIMITED);
-            csvReceiving.append('"' + Utils.EmptyInteget(view.getPackView().getAmount()) + '"').append(COMMA_DELIMITED);
+            csvReceiving.append('"' + Utils.EmptyInteget(view.getPickView().getQty()) + '"').append(COMMA_DELIMITED);
+            csvReceiving.append('"' + Utils.EmptyInteget(view.getPickView().getAmount()) + '"').append(COMMA_DELIMITED);
             csvReceiving.append('"' + Utils.EmptyInteget(view.getPackView().getQty()) + '"').append(COMMA_DELIMITED);
             csvReceiving.append('"' + Utils.EmptyInteget(view.getPackView().getAmount()) + '"').append(COMMA_DELIMITED);
             csvReceiving.append('"' + Utils.EmptyInteget(view.getPhysicalView().getQty()) + '"').append(COMMA_DELIMITED);
             csvReceiving.append('"' + Utils.EmptyInteget(view.getPhysicalView().getAmount()) + '"').append('\n');
 
+            sumAvailableQty += view.getAvailableView().getQty();
+            sumAvailableAmount += view.getAvailableView().getAmount();
+            sumReservedQty += view.getReservedView().getQty();
+            sumReservedAmount += view.getReservedView().getAmount();
+            sumPickQty += view.getPickView().getQty();
+            sumPickAmount += view.getPickView().getAmount();
+            sumPackQty += view.getPackView().getQty();
+            sumPackAmount += view.getPackView().getAmount();
+            sumPhysicalQty += view.getPhysicalView().getQty();
+            sumPhysicalAmount += view.getPhysicalView().getAmount();
+
             no++;
         }
+        csvReceiving.append(COMMA_DELIMITED).append(COMMA_DELIMITED).append(COMMA_DELIMITED).append(COMMA_DELIMITED);
+        csvReceiving.append("Total").append(COMMA_DELIMITED).append(sumAvailableQty).append(COMMA_DELIMITED);
+        csvReceiving.append(sumAvailableAmount).append(COMMA_DELIMITED).append(sumReservedQty).append(COMMA_DELIMITED);
+        csvReceiving.append(sumReservedAmount).append(COMMA_DELIMITED).append(sumPickQty).append(COMMA_DELIMITED);
+        csvReceiving.append(sumPickAmount).append(COMMA_DELIMITED).append(sumPackQty).append(COMMA_DELIMITED);
+        csvReceiving.append(sumPackAmount).append(COMMA_DELIMITED).append(sumPhysicalQty).append(COMMA_DELIMITED);
+        csvReceiving.append(sumPhysicalAmount);
 
         csvService.exportCSV(printTagReportname, csvReceiving.toString());
     }

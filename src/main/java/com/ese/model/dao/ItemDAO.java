@@ -42,4 +42,19 @@ public class ItemDAO extends GenericDAO<MSItemModel, Integer>{
         }
         return itemModels;
     }
+
+    public MSItemModel findByItemId(String itemId){
+        MSItemModel msItemModel = new MSItemModel();
+
+        try {
+            Criteria criteria = getCriteria();
+            criteria.add(Restrictions.eq("itemId", itemId));
+
+            msItemModel = (MSItemModel) criteria.uniqueResult();
+        } catch (Exception e) {
+            log.debug("Exception error findBySearch : ", e);
+        }
+
+        return msItemModel;
+    }
 }
