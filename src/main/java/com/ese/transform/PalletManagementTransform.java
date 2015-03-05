@@ -159,6 +159,10 @@ public class PalletManagementTransform extends Transform {
         }
 
 
+        if ("unFoil".equals(redirect)){
+
+        }
+
         palletModel.setCreateBy(palletManagementView.getCreateBy());
         palletModel.setCreateDate(palletManagementView.getCreateDate());
         palletModel.setUpdateBy(palletManagementView.getUpdateBy());
@@ -179,15 +183,15 @@ public class PalletManagementTransform extends Transform {
         return palletModel;
     }
 
-    public PalletModel transformToModelByChangeLocation(PalletManagementView palletManagementView, MSLocationModel msLocationModel){
+    public PalletModel transformToMode(PalletManagementView palletManagementView){
         PalletModel palletModel = new PalletModel();
 
         palletModel.setId(palletManagementView.getId());
         palletModel.setPalletBarcode(palletManagementView.getPalletBarcode());
         palletModel.setMsWarehouseModel(palletManagementView.getWarehouseModel());
         palletModel.setMsItemModel(palletManagementView.getItemModel());
-        palletModel.setMsLocationModel(msLocationModel);
-        palletModel.setTagPrint(palletManagementView.getTagPrint() + 1);
+        palletModel.setMsLocationModel(palletManagementView.getLocationModel());
+        palletModel.setTagPrint(palletManagementView.getTagPrint());
         palletModel.setQty(palletManagementView.getQty());
         palletModel.setReservedQty(palletManagementView.getReservedQty());
         palletModel.setStatus(transformStatusInt(palletManagementView.getStatus()));
@@ -200,6 +204,8 @@ public class PalletManagementTransform extends Transform {
         palletModel.setCapacity(palletManagementView.getCapacity());
         palletModel.setMsWorkingAreaModel(palletManagementView.getConvetorLine());
         palletModel.setMsShiftModel(palletManagementView.getShift());
+        palletModel.setIsCombine(palletManagementView.getIsCombine());
+        palletModel.setIsFoil(2);
         return palletModel;
     }
 

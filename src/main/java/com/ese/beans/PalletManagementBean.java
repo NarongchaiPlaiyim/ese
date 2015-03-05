@@ -52,6 +52,7 @@ public class PalletManagementBean extends Bean {
     private boolean isCheckPrintTag;
     private boolean isCheckClosePallet;
     private boolean isCheckLocationDialog;
+    private boolean isCheckUnFoil;
 
     private boolean isCombine;
     private boolean isFoil;
@@ -79,6 +80,7 @@ public class PalletManagementBean extends Bean {
         isCheckLocation = true;
         isCheckPrintTag = true;
         isCheckClosePallet = true;
+        isCheckUnFoil = true;
         statusOnShow = 0;
         onLoadPallet();
     }
@@ -132,6 +134,10 @@ public class PalletManagementBean extends Bean {
             isCheckLocation = false;
         } else {
             isCheckLocation = true;
+        }
+
+        if (palletMeanegementView.getIsFoil() == 1){
+            isCheckUnFoil = false;
         }
     }
 
@@ -188,6 +194,12 @@ public class PalletManagementBean extends Bean {
         log.debug("OnChangeLocationToPallet().");
         log.debug("PalletView : {}, locationView : {}",palletMeanegementView.getId(),locationItemViews.getId());
         palletService.changeLocation(palletMeanegementView, locationItemViews);
+        showDialogUpdated();
+        onCreation();
+    }
+
+    public void onUnfoil(){
+        palletService.unFoil(palletMeanegementView);
         showDialogUpdated();
         onCreation();
     }

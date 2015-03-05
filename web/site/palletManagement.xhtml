@@ -21,6 +21,11 @@
                 <h:form id="palletForm">
                     <p:panel style="border: 0">
                         <div style="text-align: right;">
+                            <p:commandButton id="btnUnfoil" value="Unfoil"
+                                             action="#{palletManagement.onUnfoil()}"
+                                             disabled="#{palletManagement.checkUnFoil}"
+                                             process="@this"
+                                             update=":palletForm, :msgBoxSystemMessagePanel"/>
                             <p:commandButton id="btnRefresh" value="Refresh" action="#{palletManagement.init()}"
                                              process="@this"
                                              update=":palletForm"/>
@@ -71,7 +76,7 @@
                                                  oncomplete="PF('bui').unblock()"
                                                  process="@form" update=":palletForm:palletManagementTable, :palletForm:findKey"/>
                             </td>
-                            <td style="width: 120px">
+                            <td style="width: 130px">
                                 <h:outputLabel value="Warehouse :"/>
                             </td>
                             <td style="width: 100px">
@@ -88,7 +93,7 @@
                                                     :palletForm:locationMenu"/>
                                 </p:selectOneMenu>
                             </td>
-                            <td style="width: 150px">
+                            <td style="width: 160px">
                                 <h:outputLabel value="Conveyor Line :"/>
                             </td>
                             <td style="width: 100px">
@@ -157,7 +162,7 @@
                                              selectionMode="single" rowKey="#{palletView.id}"
                                              selection="#{palletManagement.palletMeanegementView}"
                                              style="width: 100%; max-width: 100%; min-width: 100%">
-                                    <p:ajax event="rowSelect" update=":palletForm:btnFindlocation, :palletForm:btnPrintTag ,:palletForm:btnClosePallet"
+                                    <p:ajax event="rowSelect" update=":palletForm:btnFindlocation, :palletForm:btnPrintTag ,:palletForm:btnClosePallet, :palletForm:btnUnfoil"
                                             listener="#{palletManagement.onClickPalletTB}"/>
                                     <p:column headerText="No" style="width: 20px" styleClass="center">
                                         <h:outputText value="#{rowIndex+1}"/>
@@ -194,7 +199,7 @@
                                     <p:column headerText="Combine" style="width: 50px; background-color: #{palletView.isCombine == 1 ? 'green' : 'red'};">
                                         <h:outputText value=""/>
                                     </p:column>
-                                    <p:column headerText="Foil" style="width: 50px; background-color: #{palletView.isFoil == 1 ? 'green' : 'red'};">
+                                    <p:column headerText="Foil" style="width: 50px; background-color: #{palletView.isFoil == 1 ? 'green' : palletView.isFoil == 2 ? 'yellow' : 'red'};">
                                         <h:outputText value=""/>
                                     </p:column>
                                     <p:column headerText="Status" style="width: 120px" styleClass="center">

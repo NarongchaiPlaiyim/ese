@@ -140,4 +140,13 @@ public class PalletService extends Service{
             log.debug("Exception : {}", e);
         }
     }
+
+    public void unFoil(PalletManagementView palletManagementView){
+        PalletModel model = palletManagementTransform.transformToMode(palletManagementView);
+        try {
+            palletDAO.update(model);
+        } catch (Exception e) {
+            log.debug("Exception error unFoil : ", e);
+        }
+    }
 }
