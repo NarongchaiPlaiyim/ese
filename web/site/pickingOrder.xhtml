@@ -23,6 +23,13 @@
                 <h:form id="pickingOrderForm">
                     <p:panel style="border: 0">
                         <div style="text-align: right;">
+                            <p:commandButton id="cancelPicking"
+                                             value="Cancel"
+                                             disabled="#{pickingOrderBean.flagBtnCancel}"
+                                             process="@form"
+                                             action="#{pickingOrderBean.onCancel()}"
+                                             update=":axConfirmOrderForm, :msgBoxSystemMessagePanel"
+                                             styleClass="medium"/>
                             <p:commandButton id="syncAX"
                                              value="Sync from AX"
                                              disabled="#{pickingOrderBean.flagSync}"
@@ -257,7 +264,7 @@
                                  selectionMode="single" rowKey="#{pickingOrderModel.id}"
                                  selection="#{pickingOrderBean.pickingOrderModel}"
                                  style="width: 100%; max-width: 100%; min-width: 100%">
-                        <p:ajax event="rowSelect" update=":pickingOrderForm:showItem, :pickingOrderForm:#{msg.get('btn.name.print')}"
+                        <p:ajax event="rowSelect" update=":pickingOrderForm:showItem, :pickingOrderForm:#{msg.get('btn.name.print')}, :pickingOrderForm:cancelPicking"
                                 listener="#{pickingOrderBean.onClickTable}"/>
                         <p:column headerText="No" style="width: 20px" styleClass="center">
                             <h:outputText value="#{rowIndex+1}"/>

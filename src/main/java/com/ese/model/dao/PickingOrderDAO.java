@@ -193,4 +193,19 @@ public class PickingOrderDAO extends GenericDAO<PickingOrderModel, Integer> {
             log.debug("Exception error updateToWrap: ", e);
         }
     }
+
+    public void cancelByPickingOrder(int pickingId){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(" UPDATE ").append(getPrefix()).append(".picking_order SET ").append(getPrefix()).append(".picking_order.status = 6 ");
+        stringBuilder.append(" WHERE ").append(getPrefix()).append(".picking_order.id = ").append("'").append(pickingId).append("'");
+
+        log.debug("SQL updateToWrap : {}", stringBuilder.toString());
+
+        try {
+            SQLQuery q = getSession().createSQLQuery(stringBuilder.toString());
+            q.executeUpdate();
+        } catch (Exception e) {
+            log.debug("Exception error updateToWrap: ", e);
+        }
+    }
 }

@@ -4,6 +4,7 @@ import com.ese.model.dao.*;
 import com.ese.model.db.*;
 import com.ese.model.view.CustomerConfirmTransView;
 import com.ese.model.view.DataSyncConfirmOrderView;
+import com.ese.model.view.LocationQtyView;
 import com.ese.model.view.PickingOrderView;
 import com.ese.model.view.report.ConfirmationPackingViewModel;
 import com.ese.model.view.report.StiketWorkLoadViewReport;
@@ -33,6 +34,8 @@ public class PickingOrderService extends Service {
     @Resource private PickingOrderLineDAO pickingOrderLineDAO;
     @Resource private PickingOrderLineTransform pickingOrderLineTransform;
     @Resource private ReportService reportService;
+    @Resource private ItemDAO itemDAO;
+    @Resource private ReservedOrderDAO reservedOrderDAO;
 
     @Value("#{config['report.stikerworkload']}")
     private String pathStikerWorkLoad;
@@ -186,6 +189,34 @@ public class PickingOrderService extends Service {
         } catch (Exception e) {
             log.debug("Exception Report : ", e);
         }
+    }
+
+    public void updateOnCancel(int pickindId){
+        pickingOrderDAO.cancelByPickingOrder(pickindId);
+        pickingOrderLineDAO.cancelByPickingOrder(pickindId);
+    }
+
+    public void cancel(PickingOrderModel pickingModel){
+        try {
+            List<PickingOrderLineModel> pickingOrderLineModelList = pickingOrderLineDAO.findByPickingId(pickingModel.getId());
+
+            for (PickingOrderLineModel lineModel : pickingOrderLineModelList){
+                List<ReservedOrderModel> reservedOrderModelList = reservedOrderDAO.findByLineId(lineModel.getId());
+
+                for (ReservedOrderModel reservedOrderModel : reservedOrderModelList){
+                    updateLocationQtyOnRemove(reservedOrderModel.getLocationId(), reservedOrderModel.getBatchNo(), lineModel.getItemId(),  reservedOrderModel.getReservedQty());
+                    reservedOrderDAO.delete(reservedOrderDAO.remove(reservedOrderModel.getId()));
+                }
+            }
+        } catch (Exception e) {
+            log.debug("Exception error cancel : ", e);
+        }
+    }
+
+    public void updateLocationQtyOnRemove(int locationId, String batchNo, String itemId, int reservedQty){
+        MSItemModel model = itemDAO.findByItemId(itemId);
+        LocationQtyView locationQtyView = pickingOrderLineDAO.findLocationQtyByRemoveShowItem(locationId, batchNo, model.getId());
+        pickingOrderLineDAO.updateLocationQtyByRemoveShowItem(locationQtyView.getId(), locationQtyView.getReservedQty() - reservedQty);
 
     }
 }

@@ -38,6 +38,20 @@
                                          styleClass="medium" />
                     </td>
                 </tr>
+                <tr>
+                    <td class="right">
+                        <p:commandButton id="pickOrderWithBarcode"
+                                         value="Picking Order with iten barcode"
+                                         style="width: 250px; max-width: 250px; min-width: 250px"
+                                         process="@this"
+                                         update=":pickingOrderForm"
+                                         action="#{pickingOrderBean.stikerWorkLoadReport()}"
+                                         ajax="false"
+                                         oncomplete="PF('reportPickingDlg').hide()"
+                                         icon="ui-icon-print"
+                                         styleClass="medium" />
+                    </td>
+                </tr>
             </table>
         </h:form>
     </p:panel>

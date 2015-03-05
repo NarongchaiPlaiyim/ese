@@ -7,6 +7,7 @@ import com.ese.model.view.PickingOrderView;
 import com.ese.service.PickingOrderService;
 import com.ese.service.security.UserDetail;
 import com.ese.utils.FacesUtil;
+import com.ese.utils.MessageDialog;
 import com.ese.utils.Utils;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,6 +33,7 @@ public class PickingOrderBean extends Bean {
     private boolean flagBtnShow;
     private boolean flagBtnPrint;
     private boolean flagBtnSync;
+    private boolean flagBtnCancel;
     private String selectType;
     private PickingOrderView pickingOrderView;
     private PickingOrderModel pickingOrderModel;
@@ -63,6 +65,7 @@ public class PickingOrderBean extends Bean {
         flagSync = false;
         flagBtnShow = true;
         flagBtnPrint = true;
+        flagBtnCancel = true;
     }
 
     private void onLoadTable(){
@@ -79,11 +82,11 @@ public class PickingOrderBean extends Bean {
 
     public void onClickTable(){
         log.debug("pickingOrderModel : {}", pickingOrderModel.toString());
-
-        if (pickingOrderModel.getStatus().getId() >= 2){
+        flagBtnCancel = false;
+        if (pickingOrderModel.getStatus().getStatusSeq() >= 2){
             flagBtnShow = false;
             flagBtnPrint = false;
-        } else if (pickingOrderModel.getStatus().getId() == 1){
+        } else if (pickingOrderModel.getStatus().getStatusSeq() == 1){
             flagBtnShow = false;
             flagBtnPrint = true;
         }
@@ -125,5 +128,25 @@ public class PickingOrderBean extends Bean {
         HttpSession session = FacesUtil.getSession(true);
         session.setAttribute("pickingOrderId", pickingOrderModel);
         FacesUtil.redirect("/site/pickingOrderShowItem.xhtml");
+    }
+
+    public void onCancel(){
+        if (pickingOrderModel.getStatus().getStatusSeq() == 1){
+            pickingOrderService.updateOnCancel(pickingOrderModel.getId());
+            showDialog("Cancel", "Cancel Suscess");
+        }else if (pickingOrderModel.getStatus().getStatusSeq() == 2){
+            pickingOrderService.cancel(pickingOrderModel);
+            pickingOrderService.updateOnCancel(pickingOrderModel.getId());
+            showDialog("Cancel", "Cancel Suscess");
+        }else if (pickingOrderModel.getStatus().getStatusSeq() == 3){
+            showDialog(MessageDialog.WARNING.getMessageHeader(), "This order has assign to pick. You can’t cancel this order now. You should wait for the picked data from picker");
+        }else if (pickingOrderModel.getStatus().getStatusSeq() == 4 || pickingOrderModel.getStatus().getStatusSeq() == 5){
+
+
+            pickingOrderService.updateOnCancel(pickingOrderModel.getId());
+            showDialog("Cancel", "Cancel Suscess");
+        }
+
+        init();
     }
 }

@@ -90,4 +90,17 @@ public class ReservedOrderDAO extends GenericDAO<ReservedOrderModel, Integer> {
         }
         return reservedOrderModel;
     }
+
+    public List<ReservedOrderModel> findByLineId(int pickingLineId){
+        List<ReservedOrderModel> reservedOrderModelList = Utils.getEmptyList();
+        try {
+            Criteria criteria = getCriteria();
+            criteria.add(Restrictions.eq("pickingOrderLineModel.id", pickingLineId));
+            reservedOrderModelList = criteria.list();
+        } catch (Exception e) {
+            log.debug("Exception error remove : ", e);
+        }
+
+        return reservedOrderModelList;
+    }
 }

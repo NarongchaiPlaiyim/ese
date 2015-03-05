@@ -4,7 +4,9 @@ import com.ese.model.view.FIFOReservedView;
 import com.ese.model.view.LocationQtyView;
 import com.ese.model.view.PickingOrderShowItemView;
 import com.ese.utils.Utils;
+import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.type.BigDecimalType;
 import org.hibernate.type.IntegerType;
 import org.hibernate.type.StringType;
@@ -35,7 +37,7 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
         sqlBuilder.append(" CASE WHEN SUM(").append(getPrefix()).append(".reserved_order.foil_qty) IS NULL THEN 0 ELSE");
         sqlBuilder.append(" SUM(").append(getPrefix()).append(".reserved_order.foil_qty) END AS FOIL_QTY,");
         sqlBuilder.append(" ").append(getPrefix()).append(".mst_status.caption AS STATUS,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.status AS STATUS_ID,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".mst_status.status_seq AS STATUS_ID,");
         sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.qty AS QTY, ");
         sqlBuilder.append(" ").append(getPrefix()).append(".item_master.ItemName AS ITEM_NAME");
         sqlBuilder.append(" FROM ").append(getPrefix()).append(".picking_order_line");
@@ -44,12 +46,12 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
         sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".item_master");
         sqlBuilder.append(" ON ").append(getPrefix()).append(".picking_order_line.ItemId = ").append(getPrefix()).append(".item_master.ItemId");
         sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".mst_status");
-        sqlBuilder.append(" ON ").append(getPrefix()).append(".picking_order_line.status = ").append(getPrefix()).append(".mst_status.status_seq");
-        sqlBuilder.append(" AND ").append(getPrefix()).append(".mst_status.table_id = 1");
+        sqlBuilder.append(" ON ").append(getPrefix()).append(".picking_order_line.status = ").append(getPrefix()).append(".mst_status.id");
+//        sqlBuilder.append(" AND ").append(getPrefix()).append(".mst_status.table_id = 1");
         sqlBuilder.append(" WHERE ").append(getPrefix()).append(".picking_order_line.picking_order_id = " ).append(pickingOrderId);
         sqlBuilder.append(" GROUP BY ").append(getPrefix()).append(".picking_order_line.id, ").append(getPrefix()).append(".picking_order_line.ItemId, ");
         sqlBuilder.append(getPrefix()).append(".item_master.DSGThaiItemDescription, ").append(getPrefix()).append(".picking_order_line.isfoil, ");
-        sqlBuilder.append(getPrefix()).append(".mst_status.caption, ").append(getPrefix()).append(".picking_order_line.status, ");
+        sqlBuilder.append(getPrefix()).append(".mst_status.caption, ").append(getPrefix()).append(".mst_status.status_seq, ");
         sqlBuilder.append(getPrefix()).append(".picking_order_line.qty, ").append(getPrefix()).append(".item_master.ItemName");
 
         log.debug("findByPickingOrderId : {}", sqlBuilder.toString());
@@ -402,5 +404,33 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
         } catch (Exception e) {
             log.debug("Exception error updateOrderQty: ", e);
         }
+    }
+
+    public void cancelByPickingOrder(int pickingId){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(" UPDATE ").append(getPrefix()).append(".picking_order_line SET ").append(getPrefix()).append(".picking_order_line.status = 9 ");
+        stringBuilder.append(" WHERE ").append(getPrefix()).append(".picking_order_line.picking_order_id = ").append("'").append(pickingId).append("'");
+
+        log.debug("SQL updateToWrap : {}", stringBuilder.toString());
+
+        try {
+            SQLQuery q = getSession().createSQLQuery(stringBuilder.toString());
+            q.executeUpdate();
+        } catch (Exception e) {
+            log.debug("Exception error updateToWrap: ", e);
+        }
+    }
+
+    public List<PickingOrderLineModel> findByPickingId(int pickingOrderId){
+        List<PickingOrderLineModel> orderLineModelList = Utils.getEmptyList();
+        try {
+            Criteria criteria = getCriteria();
+            criteria.add(Restrictions.eq("pickingOrderId.id", pickingOrderId));
+            orderLineModelList = criteria.list();
+        } catch (Exception e) {
+            log.debug("Exception error findByPickingId : ", e);
+        }
+
+        return orderLineModelList;
     }
 }

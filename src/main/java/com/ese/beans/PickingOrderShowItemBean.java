@@ -119,6 +119,7 @@ public class PickingOrderShowItemBean extends Bean {
 
         if (Utils.isSafetyList(selectPickingLine)){
             for (PickingOrderShowItemView view : selectPickingLine){
+                log.debug("------------- : {}, {} : {}", view.toString(), view.getStatusID(), view.getStatus());
                 if (view.getStatusID() < 3){
                     if (selectPickingLine.size() > 1){
                         flagItem = true;
