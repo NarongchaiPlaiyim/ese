@@ -1,5 +1,6 @@
 package com.ese.service;
 
+import com.ese.model.TableValue;
 import com.ese.model.dao.*;
 import com.ese.model.db.*;
 import com.ese.model.view.CustomerConfirmTransView;
@@ -76,10 +77,10 @@ public class PickingOrderService extends Service {
         return pickingOrderModelList;
     }
 
-    public List<StatusModel> getStatusAll(int tableId){
+    public List<StatusModel> getStatusAll(){
         List<StatusModel> statusModelList = Utils.getEmptyList();
         try {
-            statusModelList = statusDAO.findByTablePickingOrder(tableId);
+            statusModelList = statusDAO.findByTablePickingOrder(TableValue.PICKING_LINE.getId());
         } catch (Exception e) {
             log.debug("Exception error getStatusAll", e);
         }
@@ -116,7 +117,7 @@ public class PickingOrderService extends Service {
 
             try {
                 AXCustomerTableModel customerTableModel = axCustomerTableDAO.findByAccountNum(view.getCustomerCode());
-                StatusModel statusModel = statusDAO.findByStatusSeqTablePickingOrder();
+                StatusModel statusModel = statusDAO.findByStatusSeqTablePickingOrder(TableValue.PICKING_ORDER.getId());
 
                 String group = "";
 
@@ -131,7 +132,7 @@ public class PickingOrderService extends Service {
 
                 pickingOrderDAO.persist(model);
 
-                onSavePickingOrderLine(view, statusModel, userDetail);
+                onSavePickingOrderLine(view, userDetail);
 
             } catch (Exception e) {
                 log.debug("Exception error syncOrder : ", e);
@@ -145,14 +146,15 @@ public class PickingOrderService extends Service {
         axCustomerConfirmTransDAO.rollbackStatus();
     }
 
-    private void onSavePickingOrderLine(DataSyncConfirmOrderView view, StatusModel status, UserDetail userDetail){
+    private void onSavePickingOrderLine(DataSyncConfirmOrderView view, UserDetail userDetail){
         List<CustomerConfirmTransView> confirmTransModelList = axCustomerConfirmTransDAO.findByPrimaryKey(view.getSaleId(), view.getConfirmId(), view.getConfirmDate());
         PickingOrderModel model = pickingOrderDAO.findByCustomerCode(view.getCustomerCode());
+        StatusModel statusModel = statusDAO.findByStatusSeqTablePickingOrder(TableValue.PICKING_LINE.getId());
 
         PickingOrderLineModel pickingOrderLineModel;
         for (CustomerConfirmTransView axCustomerConfirmTransModel : confirmTransModelList){
             log.debug("-----------axCustomerConfirmTransModel : {}", axCustomerConfirmTransModel.getItemId());
-            pickingOrderLineModel = pickingOrderLineTransform.transformToModel(axCustomerConfirmTransModel, model, status, userDetail);
+            pickingOrderLineModel = pickingOrderLineTransform.transformToModel(axCustomerConfirmTransModel, model, statusModel, userDetail);
             try {
                 pickingOrderLineDAO.persist(pickingOrderLineModel);
             } catch (Exception e) {

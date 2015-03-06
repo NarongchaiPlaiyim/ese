@@ -113,11 +113,11 @@
                             <td>
                                 <p:selectOneMenu value="#{pickingOrderBean.pickingOrderView.status}"
                                                  style="#{msg.get('fix.size.200')} margin-top: 4px">
-                                    <f:selectItem itemLabel=" All " itemValue=""/>
+                                    <f:selectItem itemLabel=" All " itemValue="10"/>
                                     <f:selectItems value="#{pickingOrderBean.statusValue}"
                                                    var="statusItem"
                                                    itemLabel="#{statusItem.caption}"
-                                                   itemValue="#{statusItem.id}"/>
+                                                   itemValue="#{statusItem.statusSeq}"/>
                                 </p:selectOneMenu>
                             </td>
                         </tr>

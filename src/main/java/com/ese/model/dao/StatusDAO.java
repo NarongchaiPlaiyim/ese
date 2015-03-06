@@ -12,12 +12,12 @@ import java.util.List;
 @Repository
 public class StatusDAO extends GenericDAO<StatusModel, Integer>{
 
-    public StatusModel findByStatusSeqTablePickingOrder(){
+    public StatusModel findByStatusSeqTablePickingOrder(int tableId){
         StatusModel statusModel = new StatusModel();
         try {
             Criteria criteria = getCriteria();
             criteria.add(Restrictions.eq("statusSeq", 1));
-            criteria.add(Restrictions.eq("tableId.id", 1));
+            criteria.add(Restrictions.eq("tableId.id", tableId));
 
             statusModel = (StatusModel) criteria.uniqueResult();
         } catch (Exception e) {
@@ -39,21 +39,5 @@ public class StatusDAO extends GenericDAO<StatusModel, Integer>{
         }
 
         return modelList;
-    }
-
-    public StatusModel findByTable(int tableId, int statusSeq){
-        StatusModel statusModel = new StatusModel();
-
-        try {
-            Criteria criteria = getCriteria();
-            criteria.add(Restrictions.eq("tableId.id", tableId));
-            criteria.add(Restrictions.eq("statusSeq", statusSeq));
-
-            statusModel = (StatusModel) criteria.uniqueResult();
-        } catch (Exception e) {
-            log.debug("Exception error findByTablePickingOrder : ", e);
-        }
-
-        return statusModel;
     }
 }

@@ -1,5 +1,6 @@
 package com.ese.service;
 
+import com.ese.model.TableValue;
 import com.ese.model.dao.*;
 import com.ese.model.db.*;
 import com.ese.model.view.*;
@@ -60,7 +61,7 @@ public class PickingOrderShowItemService extends Service{
                 locationQtyViewList = pickingOrderLineDAO.findByItemId(fifoReservedView.getItemId(), startBatch.trim(), toBatch.trim(), 0, 0, 0);
             }
 
-            StatusModel statusModel = statusDAO.findByTable(2, 1);
+            StatusModel statusModel = statusDAO.findByStatusSeqTablePickingOrder(TableValue.RESERVED_ORDER.getId());
 
             if (Utils.isSafetyList(locationQtyViewList)){
                 pickingOrderLineDAO.updateInventTransByUse(fifoReservedView.getInventtransId());
@@ -137,7 +138,7 @@ public class PickingOrderShowItemService extends Service{
     }
 
     public void saveManualReserved(LocationQtyView locationQtyId, int reservedQty, int pickingLineId){
-        StatusModel statusModel = statusDAO.findByTable(2, 1);
+        StatusModel statusModel = statusDAO.findByStatusSeqTablePickingOrder(TableValue.RESERVED_ORDER.getId());
 
         try {
             PickingOrderLineModel pickingOrderLineModel = pickingOrderLineDAO.findByID(pickingLineId);
@@ -161,7 +162,7 @@ public class PickingOrderShowItemService extends Service{
     }
 
     public void onSavePickingLine(PickingOrderModel pickingOrderModel, UserDetail userDetail, ItemQtyView itemQtyView){
-        StatusModel statusModel = statusDAO.findByStatusSeqTablePickingOrder();
+        StatusModel statusModel = statusDAO.findByStatusSeqTablePickingOrder(TableValue.PICKING_LINE.getId());
         PickingOrderLineModel pickingOrderLineModel = pickingOrderLineTransform.transformToModelByAddItemQty(pickingOrderModel, statusModel, userDetail, itemQtyView);
 
         try {
