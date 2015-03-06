@@ -8,8 +8,9 @@ public enum StatusPickingValue {
     CANCEL(0, "Cancel"),
     CREATE(1, "Create"),
     RESERVED(2, "Reserved"),
-    PICKING(3, "Picking"),
-    POST(4, "Post");
+    ASSIGN_TO_PICK(3, "Assign to pick"),
+    PICKING(4, "Picking"),
+    POST(5, "Post");
 
     private int id;
     private String name;

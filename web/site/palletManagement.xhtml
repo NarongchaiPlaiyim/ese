@@ -24,6 +24,7 @@
                             <p:commandButton id="btnUnfoil" value="Unfoil"
                                              action="#{palletManagement.onUnfoil()}"
                                              disabled="#{palletManagement.checkUnFoil}"
+                                             rendered="#{loginBean.isRendered(msg.get('authorize.menu.pallet.unfoil'))}"
                                              process="@this"
                                              update=":palletForm, :msgBoxSystemMessagePanel"/>
                             <p:commandButton id="btnRefresh" value="Refresh" action="#{palletManagement.init()}"

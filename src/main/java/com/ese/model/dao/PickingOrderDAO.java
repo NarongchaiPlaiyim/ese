@@ -18,9 +18,10 @@ public class PickingOrderDAO extends GenericDAO<PickingOrderModel, Integer> {
     public List<PickingOrderModel> findByOverSeaOrder(){
         List<PickingOrderModel> pickingOrderModelList = Utils.getEmptyList();
         try {
-            Criteria criteria = getCriteria();
+            Criteria criteria = getSession().createCriteria(PickingOrderModel.class, "po");
+            criteria.createAlias("po.status", "st");
+            criteria.add(Restrictions.lt("st.statusSeq", StatusPickingValue.POST.getId()));
             criteria.add(Restrictions.like("docNo", "PKO%"));
-            criteria.add(Restrictions.lt("status.id", StatusPickingValue.POST.getId()));
             criteria.add(Restrictions.eq("isValid", 1));
             criteria.addOrder(Order.asc("requestShiftDate"));
 
@@ -35,9 +36,11 @@ public class PickingOrderDAO extends GenericDAO<PickingOrderModel, Integer> {
     public List<PickingOrderModel> findByDomesticOrder(){
         List<PickingOrderModel> pickingOrderModelList = Utils.getEmptyList();
         try {
-            Criteria criteria = getCriteria();
+
+            Criteria criteria = getSession().createCriteria(PickingOrderModel.class, "po");
+            criteria.createAlias("po.status", "st");
+            criteria.add(Restrictions.lt("st.statusSeq", StatusPickingValue.POST.getId()));
             criteria.add(Restrictions.like("docNo", "PKD%"));
-            criteria.add(Restrictions.lt("status.id", StatusPickingValue.POST.getId()));
             criteria.add(Restrictions.eq("isValid", 1));
             criteria.addOrder(Order.asc("requestShiftDate"));
 
@@ -52,8 +55,9 @@ public class PickingOrderDAO extends GenericDAO<PickingOrderModel, Integer> {
     public List<PickingOrderModel> findByOverSeaAndDomesticOrder(){
         List<PickingOrderModel> pickingOrderModelList = Utils.getEmptyList();
         try {
-            Criteria criteria = getCriteria();
-            criteria.add(Restrictions.lt("status.id", StatusPickingValue.POST.getId()));
+            Criteria criteria = getSession().createCriteria(PickingOrderModel.class, "po");
+            criteria.createAlias("po.status", "st");
+            criteria.add(Restrictions.lt("st.statusSeq", StatusPickingValue.POST.getId()));
             criteria.add(Restrictions.eq("isValid", 1));
             criteria.addOrder(Order.asc("requestShiftDate"));
 
@@ -87,10 +91,9 @@ public class PickingOrderDAO extends GenericDAO<PickingOrderModel, Integer> {
                     criteria.add(Restrictions.eq("requestShiftDate", Utils.convertStringToDate(pickingOrderView.getRequestShipDate())));
                 }
 
-                log.debug("status {}", pickingOrderView.getStatus());
-
+                criteria.createAlias("po.status", "st");
                 if (!Utils.isZero(pickingOrderView.getStatus())){
-                    criteria.add(Restrictions.like("status.id", "%" + pickingOrderView.getStatus() + "%"));
+                    criteria.add(Restrictions.like("st.statusSeq", pickingOrderView.getStatus()));
                 }
 
                 if (!Utils.isNull(pickingOrderView.getConfirmDate()) && !Utils.isZero(pickingOrderView.getConfirmDate().length())){

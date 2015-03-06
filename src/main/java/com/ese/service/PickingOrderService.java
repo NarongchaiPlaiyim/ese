@@ -36,6 +36,7 @@ public class PickingOrderService extends Service {
     @Resource private ReportService reportService;
     @Resource private ItemDAO itemDAO;
     @Resource private ReservedOrderDAO reservedOrderDAO;
+    @Resource private LoadingOrderDAO loadingOrderDAO;
 
     @Value("#{config['report.stikerworkload']}")
     private String pathStikerWorkLoad;
@@ -217,6 +218,14 @@ public class PickingOrderService extends Service {
         MSItemModel model = itemDAO.findByItemId(itemId);
         LocationQtyView locationQtyView = pickingOrderLineDAO.findLocationQtyByRemoveShowItem(locationId, batchNo, model.getId());
         pickingOrderLineDAO.updateLocationQtyByRemoveShowItem(locationQtyView.getId(), locationQtyView.getReservedQty() - reservedQty);
+    }
 
+    public LoadingOrderModel getStatusLoadingOrder(int pickingId){
+        try {
+            return loadingOrderDAO.findByID(pickingId);
+        } catch (Exception e) {
+            log.debug("Exception error getStatusLoadingOrder :", e);
+            return null;
+        }
     }
 }

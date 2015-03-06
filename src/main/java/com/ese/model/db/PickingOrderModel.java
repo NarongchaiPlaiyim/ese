@@ -30,6 +30,10 @@ public class PickingOrderModel extends AbstractModel{
     @JoinColumn(name = "customer_code", nullable=false)
     private AXCustomerTableModel customerCode;
 
+    @OneToOne
+    @JoinColumn(name="loading_order_id")
+    private LoadingOrderModel loadingOrderModel;
+
     @Column(name = "confirmid")
     private String confirmId;
 
@@ -112,6 +116,7 @@ public class PickingOrderModel extends AbstractModel{
                 .append("docNo", docNo)
                 .append("docDate", docDate)
                 .append("customerCode", customerCode)
+                .append("loadingOrderModel", loadingOrderModel)
                 .append("confirmId", confirmId)
                 .append("confirmDate", confirmDate)
                 .append("confirmDocNo", confirmDocNo)

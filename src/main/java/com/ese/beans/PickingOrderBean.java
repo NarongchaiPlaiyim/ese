@@ -1,5 +1,6 @@
 package com.ese.beans;
 
+import com.ese.model.db.LoadingOrderModel;
 import com.ese.model.db.PickingOrderModel;
 import com.ese.model.db.StatusModel;
 import com.ese.model.view.DataSyncConfirmOrderView;
@@ -140,11 +141,17 @@ public class PickingOrderBean extends Bean {
             showDialog("Cancel", "Cancel Suscess");
         }else if (pickingOrderModel.getStatus().getStatusSeq() == 3){
             showDialog(MessageDialog.WARNING.getMessageHeader(), "This order has assign to pick. You can’t cancel this order now. You should wait for the picked data from picker");
+            pickingOrderModel = new PickingOrderModel();
         }else if (pickingOrderModel.getStatus().getStatusSeq() == 4 || pickingOrderModel.getStatus().getStatusSeq() == 5){
-
-
-            pickingOrderService.updateOnCancel(pickingOrderModel.getId());
-            showDialog("Cancel", "Cancel Suscess");
+            if (!Utils.isNull(pickingOrderModel.getLoadingOrderModel()) && !Utils.isNull(pickingOrderModel.getLoadingOrderModel().getStatusModel())){
+                if (Utils.isZero(pickingOrderModel.getLoadingOrderModel().getStatusModel().getStatusSeq())){
+                    pickingOrderService.cancel(pickingOrderModel);
+                    pickingOrderService.updateOnCancel(pickingOrderModel.getId());
+                    showDialog("Cancel", "Cancel Suscess");
+                } else {
+                    showDialog(MessageDialog.WARNING.getMessageHeader(), "This order has move to loading area please unpack first.");
+                }
+            }
         }
 
         init();
