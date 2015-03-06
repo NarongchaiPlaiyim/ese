@@ -11,9 +11,6 @@
         <table border="0" class="top">
             <tr>
                 <td class="top">
-
-
-
                     <table border="0" class="top" style="border: 0px solid #acacac; border-spacing: 0; margin-top: 10px;">
                         <tr>
                             <td class="titlemenu" colspan="3">
@@ -118,7 +115,12 @@
                 </td>
 
                 <td>
-                    <table border="0" style="border: 0px solid #acacac; border-spacing: 0; margin-top: 10px;">
+                    <table border="1" style="border: 0px solid #acacac; border-spacing: 0; margin-top: 10px;">
+                        <tr>
+                            <td style="min-width: 120px; width: 120px; max-width: 120px"/>
+                            <td style="min-width: 120px; width: 120px; max-width: 120px"/>
+                            <td style="min-width: 120px; width: 120px; max-width: 120px"/>
+                        </tr>
                         <tr>
                             <td colspan="3"  class="titlemenu">
                                 <h:outputLabel value="User Authorize"/>
@@ -137,10 +139,10 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="width: 80px; min-width: 80px; max-width: 80px">
+                            <td>
                                 <h:outputLabel value="Department"/>
                             </td>
-                            <td style="min-width: 200px; width: 200px; max-width: 200px;">
+                            <td>
                                 <p:inputText value="#{userManagement.userAuthorizeView.msDepartmentModel.name}" disabled="true" style="min-width: 180px; width: 180px; max-width: 180px;"/>
                             </td>
                             <td rowspan="4" class="top">
@@ -175,7 +177,7 @@
                             <td>
                                 <h:outputLabel value="Faction"/>
                             </td>
-                            <td style="min-width: 200px; width: 200px; max-width: 200px;">
+                            <td>
                                 <p:inputText value="#{userManagement.userAuthorizeView.factionModel.name}" disabled="true" style="min-width: 180px; width: 180px; max-width: 180px;"/>
                             </td>
                         </tr>
@@ -183,7 +185,7 @@
                             <td>
                                 <h:outputLabel value="Name"/>
                             </td>
-                            <td style="min-width: 200px; width: 200px; max-width: 200px;">
+                            <td>
                                 <p:inputText value="#{userManagement.userAuthorizeView.name}" disabled="true" style="min-width: 180px; width: 180px; max-width: 180px;"/>
                             </td>
                         </tr>
@@ -191,7 +193,7 @@
                             <td>
                                 <h:outputLabel value="Login Name"/>
                             </td>
-                            <td style="min-width: 200px; width: 200px; max-width: 200px;">
+                            <td>
                                 <p:inputText value="#{userManagement.userAuthorizeView.username}" disabled="true" style="min-width: 180px; width: 180px; max-width: 180px;"/>
                             </td>
                         </tr>
@@ -202,10 +204,10 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="min-width: 140px; width: 140px; max-width: 140px;">
+                            <td>
                                 <p:selectOneMenu id="codeMenu" value="#{userManagement.objectUserAuthorize.id}"
-                                                 style="min-width: 130px; width: 130px; max-width: 130px;">
-                                    <f:selectItem itemLabel="- Please Select -" itemValue=""/>
+                                                 style="min-width: 180px; width: 180px; max-width: 180px;">
+                                    <f:selectItem itemLabel="Please Select" itemValue=""/>
                                     <f:selectItems value="#{userManagement.objectUserAuthorizeList}"
                                                    var="objectUserAuthorizeItem"
                                                    itemLabel="#{objectUserAuthorizeItem.name}"
@@ -214,10 +216,10 @@
                                             update=":userAccessForm:userAuthorizeTable"/>
                                 </p:selectOneMenu>
                             </td>
-                            <td style="min-width: 200px; width: 200px; max-width: 200px;">
+                            <td>
                                 <p:inputText value="#{userManagement.keySearchUserAuthorize}" style="min-width: 180px; width: 180px; max-width: 180px;"/>
                             </td>
-                            <td style="width: 40px; min-width: 40px; max-width: 40px">
+                            <td>
                                 <p:commandButton id="btnAuthorize" icon="ui-icon-search"
                                                  onstart="PF('bui').block()"
                                                  oncomplete="PF('bui').unblock()"
