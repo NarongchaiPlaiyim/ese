@@ -5,6 +5,7 @@ import com.ese.model.db.MSLocationModel;
 import com.ese.model.db.MSWarehouseModel;
 import com.ese.model.db.PickingOrderModel;
 import com.ese.model.view.*;
+import com.ese.service.PickingOrderService;
 import com.ese.service.security.UserDetail;
 import com.ese.utils.FacesUtil;
 import com.ese.utils.MessageDialog;
@@ -27,6 +28,7 @@ import java.util.List;
 public class PickingOrderShowItemBean extends Bean {
     private static final long serialVersionUID = 4112578334029874840L;
     @ManagedProperty("#{pickingOrderShowItemService}") private com.ese.service.PickingOrderShowItemService pickingOrderShowItemService;
+    @ManagedProperty("#{pickingOrderService}") private PickingOrderService pickingOrderService;
 
     private PickingOrderModel pickingOrderModel;
 
@@ -350,5 +352,13 @@ public class PickingOrderShowItemBean extends Bean {
 
     public void onClickShowItemStatusTable(){
         flagRemove = false;
+    }
+
+    public void stikerWorkLoadReport(){
+        pickingOrderService.getStikerWorkLoadReport(pickingOrderModel.getId(), userDetail);
+    }
+
+    public void confirmationPackingReport(){
+        pickingOrderService.getConfirmationPackingReport(pickingOrderModel.getId(), userDetail);
     }
 }

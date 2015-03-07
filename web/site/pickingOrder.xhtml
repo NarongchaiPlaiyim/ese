@@ -29,7 +29,6 @@
                                              process="@this"
                                              disabled="#{pickingOrderBean.flagBtnPrint}"
                                              update=":pickingOrderForm"
-                                             oncomplete="PF('reportPickingDlg').hide()"
                                              action="#{pickingOrderBean.confirmationPackingReport()}"
                                              ajax="false"
                                              icon="ui-icon-print"
@@ -42,7 +41,6 @@
                                              update=":pickingOrderForm"
                                              action="#{pickingOrderBean.stikerWorkLoadReport()}"
                                              ajax="false"
-                                             oncomplete="PF('reportPickingDlg').hide()"
                                              icon="ui-icon-print"
                                              styleClass="medium" />
                             <p:commandButton id="pickOrderWithBarcode"
@@ -52,7 +50,6 @@
                                              update=":pickingOrderForm"
                                              action="#{pickingOrderBean.stikerWorkLoadReport()}"
                                              ajax="false"
-                                             oncomplete="PF('reportPickingDlg').hide()"
                                              icon="ui-icon-print"
                                              styleClass="medium" />
                             <p:commandButton id="cancelPicking"
