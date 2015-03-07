@@ -144,7 +144,7 @@ public class PickingOrderBean extends Bean {
             pickingOrderModel = new PickingOrderModel();
         }else if (pickingOrderModel.getStatus().getStatusSeq() == 4 || pickingOrderModel.getStatus().getStatusSeq() == 5){
             if (!Utils.isNull(pickingOrderModel.getLoadingOrderModel()) && !Utils.isNull(pickingOrderModel.getLoadingOrderModel().getStatusModel())){
-                if (Utils.isZero(pickingOrderModel.getLoadingOrderModel().getStatusModel().getStatusSeq())){
+                if (pickingOrderModel.getLoadingOrderModel().getStatusModel().getStatusSeq() <= 1){
                     pickingOrderService.cancel(pickingOrderModel);
                     pickingOrderService.updateOnCancel(pickingOrderModel.getId());
                     showDialog("Cancel", "Cancel Suscess");
