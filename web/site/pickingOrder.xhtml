@@ -23,6 +23,38 @@
                 <h:form id="pickingOrderForm">
                     <p:panel style="border: 0">
                         <div style="text-align: right;">
+                            <p:commandButton id="confirmation"
+                                             style="width: 280px; max-width: 280px; min-width: 280px"
+                                             value="Confirmation Packing"
+                                             process="@this"
+                                             disabled="#{pickingOrderBean.flagBtnPrint}"
+                                             update=":pickingOrderForm"
+                                             oncomplete="PF('reportPickingDlg').hide()"
+                                             action="#{pickingOrderBean.confirmationPackingReport()}"
+                                             ajax="false"
+                                             icon="ui-icon-print"
+                                             styleClass="medium" />
+                            <p:commandButton id="stiketWorkLoad"
+                                             value="Stiker Work Load"
+                                             style="width: 250px; max-width: 250px; min-width: 250px"
+                                             process="@this"
+                                             disabled="#{pickingOrderBean.flagBtnPrint}"
+                                             update=":pickingOrderForm"
+                                             action="#{pickingOrderBean.stikerWorkLoadReport()}"
+                                             ajax="false"
+                                             oncomplete="PF('reportPickingDlg').hide()"
+                                             icon="ui-icon-print"
+                                             styleClass="medium" />
+                            <p:commandButton id="pickOrderWithBarcode"
+                                             value="Picking Order with iten barcode"
+                                             style="width: 400px; max-width: 400px; min-width: 400px"
+                                             process="@this"
+                                             update=":pickingOrderForm"
+                                             action="#{pickingOrderBean.stikerWorkLoadReport()}"
+                                             ajax="false"
+                                             oncomplete="PF('reportPickingDlg').hide()"
+                                             icon="ui-icon-print"
+                                             styleClass="medium" />
                             <p:commandButton id="cancelPicking"
                                              value="Cancel"
                                              disabled="#{pickingOrderBean.flagBtnCancel}"
@@ -49,28 +81,27 @@
                                              action="#{pickingOrderBean.onAddtoPickingOrderShowItem()}"
                                              icon="ui-icon-print"
                                              styleClass="medium" />
-
-                            <p:commandButton id="#{msg.get('btn.name.print')}"
-                                             value="#{msg.get('btn.name.print')}"
-                                             process="@form"
-                                             disabled="#{pickingOrderBean.flagBtnPrint}"
-                                             update=":pickingOrderForm"
-                                             oncomplete="PF('reportPickingDlg').show()"
-                                             icon="ui-icon-print"
-                                             styleClass="medium" style="#{msg.get('btn.size')}"/>
+                            <!--<p:commandButton id="#{msg.get('btn.name.print')}"-->
+                                             <!--value="#{msg.get('btn.name.print')}"-->
+                                             <!--process="@form"-->
+                                             <!--disabled="#{pickingOrderBean.flagBtnPrint}"-->
+                                             <!--update=":pickingOrderForm"-->
+                                             <!--oncomplete="PF('reportPickingDlg').show()"-->
+                                             <!--icon="ui-icon-print"-->
+                                             <!--styleClass="medium" style="#{msg.get('btn.size')}"/>-->
                         </div>
                     </p:panel>
 
                     <table border="0" class="content_table_form">
                         <tr >
-                            <td style="min-width: 150px; width: 150px; max-width: 150px;" class="left" />
-                            <td style="min-width: 300px; width: 300px; max-width: 300px;" class="left" />
-                            <td style="min-width: 150px; width: 150px; max-width: 150px;" class="left" />
-                            <td style="min-width: 300px; width: 300px; max-width: 300px;" class="left" />
+                            <td style="min-width: 180px; width: 180px; max-width: 180px;" class="left" />
+                            <td style="min-width: 320px; width: 320px; max-width: 320px;" class="left" />
+                            <td style="min-width: 180px; width: 180px; max-width: 180px;" class="left" />
+                            <td style="min-width: 320px; width: 320px; max-width: 320px;" class="left" />
                             <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
-                            <td style="min-width: 300px; width: 300px; max-width: 300px;" class="left" />
-                            <td style="min-width: 150px; width: 150px; max-width: 150px;" class="left" />
-                            <td style="min-width: 300px; width: 300px; max-width: 300px;" class="left" />
+                            <td style="min-width: 320px; width: 320px; max-width: 320px;" class="left" />
+                            <td style="min-width: 80px; width: 80px; max-width: 80px;" class="left" />
+                            <td style="min-width: 320px; width: 320px; max-width: 320px;" class="left" />
                         </tr>
 
                         <tr>
@@ -265,8 +296,9 @@
                                  selectionMode="single" rowKey="#{pickingOrderModel.id}"
                                  selection="#{pickingOrderBean.pickingOrderModel}"
                                  style="width: 100%; max-width: 100%; min-width: 100%">
-                        <p:ajax event="rowSelect" update=":pickingOrderForm:showItem, :pickingOrderForm:#{msg.get('btn.name.print')}, :pickingOrderForm:cancelPicking"
-                                listener="#{pickingOrderBean.onClickTable}"/>
+                        <p:ajax event="rowSelect" listener="#{pickingOrderBean.onClickTable}"
+                                update=":pickingOrderForm:showItem, :pickingOrderForm:confirmation, :pickingOrderForm:cancelPicking,
+                                        :pickingOrderForm:stiketWorkLoad, :pickingOrderForm:pickOrderWithBarcode"/>
                         <p:column headerText="No" style="width: 20px" styleClass="center">
                             <h:outputText value="#{rowIndex+1}"/>
                         </p:column>
@@ -314,13 +346,13 @@
             </p:dialog>
         </p:panel>
 
-        <p:panel id="reportPickingPanel" styleClass="panel">
-            <p:dialog id="reportPickingDialog" widgetVar="reportPickingDlg" header="Print Selection"
-                      onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
-                      modal="true" closable="true">
-                <ui:include src="../site/dialog/pickingOrderReport.xhtml"/>
-            </p:dialog>
-        </p:panel>
+        <!--<p:panel id="reportPickingPanel" styleClass="panel">-->
+            <!--<p:dialog id="reportPickingDialog" widgetVar="reportPickingDlg" header="Print Selection"-->
+                      <!--onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"-->
+                      <!--modal="true" closable="true">-->
+                <!--<ui:include src="../site/dialog/pickingOrderReport.xhtml"/>-->
+            <!--</p:dialog>-->
+        <!--</p:panel>-->
 
         <p:panel id="msgBoxSystemMessagePanel" style="border: 0">
             <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="#{msg.get('dialog.message.size')}"
