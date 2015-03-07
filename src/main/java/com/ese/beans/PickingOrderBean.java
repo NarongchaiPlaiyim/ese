@@ -82,14 +82,21 @@ public class PickingOrderBean extends Bean {
     }
 
     public void onClickTable(){
-        log.debug("pickingOrderModel : {}", pickingOrderModel.toString());
-        flagBtnCancel = false;
+        log.debug("pickingOrderModel : {}", pickingOrderModel.getStatus().getStatusSeq());
         if (pickingOrderModel.getStatus().getStatusSeq() >= 2){
             flagBtnShow = false;
             flagBtnPrint = false;
+            flagBtnCancel = false;
         } else if (pickingOrderModel.getStatus().getStatusSeq() == 1){
             flagBtnShow = false;
             flagBtnPrint = true;
+            flagBtnCancel = false;
+        }
+
+        if (pickingOrderModel.getStatus().getStatusSeq() == 0){
+            flagBtnCancel = true;
+            flagBtnPrint = true;
+            flagBtnShow = true;
         }
     }
 
