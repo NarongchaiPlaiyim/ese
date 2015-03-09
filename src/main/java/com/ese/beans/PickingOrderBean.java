@@ -35,6 +35,7 @@ public class PickingOrderBean extends Bean {
     private boolean flagBtnPrint;
     private boolean flagBtnSync;
     private boolean flagBtnCancel;
+    private boolean flagBtnPickingOrderWithItemBarcode;
     private String selectType;
     private PickingOrderView pickingOrderView;
     private PickingOrderModel pickingOrderModel;
@@ -67,6 +68,7 @@ public class PickingOrderBean extends Bean {
         flagBtnShow = true;
         flagBtnPrint = true;
         flagBtnCancel = true;
+        flagBtnPickingOrderWithItemBarcode = true;
     }
 
     private void onLoadTable(){
@@ -83,6 +85,7 @@ public class PickingOrderBean extends Bean {
 
     public void onClickTable(){
         log.debug("pickingOrderModel : {}", pickingOrderModel.getStatus().getStatusSeq());
+        flagBtnPickingOrderWithItemBarcode = false;
         if (pickingOrderModel.getStatus().getStatusSeq() >= 2){
             flagBtnShow = false;
             flagBtnPrint = false;
@@ -130,6 +133,11 @@ public class PickingOrderBean extends Bean {
 
     public void confirmationPackingReport(){
         pickingOrderService.getConfirmationPackingReport(pickingOrderModel.getId(), userDetail);
+    }
+
+    public void pickingOrderWithItemBarcode(){
+        log.debug("-------------------");
+        pickingOrderService.getPickingOrderWithItemBarcodeReport(pickingOrderModel.getId(), userDetail);
     }
 
     public void onAddtoPickingOrderShowItem(){

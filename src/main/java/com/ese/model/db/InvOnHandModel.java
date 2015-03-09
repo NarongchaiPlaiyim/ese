@@ -65,6 +65,10 @@ public class InvOnHandModel extends AbstractModel{
     @JoinColumn(name = "working_area_id")
     private MSWorkingAreaModel msWorkingAreaModel;
 
+    @OneToOne
+    @JoinColumn(name="picking_order_id")
+    private PickingOrderModel pickingOrderModel;
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)

@@ -2,6 +2,7 @@ package com.ese.model.dao;
 
 import com.ese.model.db.AXCustomerConfirmJourModel;
 import com.ese.model.view.DataSyncConfirmOrderView;
+import com.ese.model.view.PickingOrderWithItemBarcodeReport;
 import com.ese.model.view.report.ConfirmationPackingViewModel;
 import com.ese.model.view.report.StiketWorkLoadViewReport;
 import com.ese.utils.Utils;
@@ -19,6 +20,8 @@ import java.util.List;
 
 @Repository
 public class AXCustomerConfirmJourDAO extends GenericDAO<AXCustomerConfirmJourModel, String>{
+
+    private final String EMTPY = "";
 
     public List<DataSyncConfirmOrderView> genSQLSyncData(){
         List<DataSyncConfirmOrderView> syncDataList = new ArrayList<DataSyncConfirmOrderView>();
@@ -88,29 +91,29 @@ public class AXCustomerConfirmJourDAO extends GenericDAO<AXCustomerConfirmJourMo
 
             for (Object[] entity : objects) {
                 DataSyncConfirmOrderView sync = new DataSyncConfirmOrderView();
-                sync.setCustomerCode(Utils.parseString(entity[0], ""));
-                sync.setCustomerName(Utils.parseString(entity[1], ""));
-                sync.setCustomerGroup(Utils.parseString(entity[2], ""));
-                sync.setConfirmId(Utils.parseString(entity[3], ""));
+                sync.setCustomerCode(Utils.parseString(entity[0], EMTPY));
+                sync.setCustomerName(Utils.parseString(entity[1], EMTPY));
+                sync.setCustomerGroup(Utils.parseString(entity[2], EMTPY));
+                sync.setConfirmId(Utils.parseString(entity[3], EMTPY));
                 sync.setConfirmDate(Utils.parseDate(entity[4], null));
-                sync.setConfirmDocNo(Utils.parseString(entity[5], ""));
-                sync.setSaleId(Utils.parseString(entity[6], ""));
-                sync.setPurchaseOrder(Utils.parseString(entity[7], ""));
-                sync.setDeliveryName(Utils.parseString(entity[8], ""));
-                sync.setDeliveryAddress(Utils.parseString(entity[9], ""));
-                sync.setCustomerRef(Utils.parseString(entity[10], ""));
-                sync.setContainer(Utils.parseString(entity[11], ""));
-                sync.setDlvTerm(Utils.parseString(entity[12], ""));
-                sync.setPaymentCondition(Utils.parseString(entity[13], ""));
-                sync.setRemark(Utils.parseString(entity[14], ""));
-                sync.setSaleAdmin(Utils.parseString(entity[15], ""));
-                sync.setModeDlv(Utils.parseString(entity[16], ""));
-                sync.setQuotationId(Utils.parseString(entity[17], ""));
+                sync.setConfirmDocNo(Utils.parseString(entity[5], EMTPY));
+                sync.setSaleId(Utils.parseString(entity[6], EMTPY));
+                sync.setPurchaseOrder(Utils.parseString(entity[7], EMTPY));
+                sync.setDeliveryName(Utils.parseString(entity[8], EMTPY));
+                sync.setDeliveryAddress(Utils.parseString(entity[9], EMTPY));
+                sync.setCustomerRef(Utils.parseString(entity[10], EMTPY));
+                sync.setContainer(Utils.parseString(entity[11], EMTPY));
+                sync.setDlvTerm(Utils.parseString(entity[12], EMTPY));
+                sync.setPaymentCondition(Utils.parseString(entity[13], EMTPY));
+                sync.setRemark(Utils.parseString(entity[14], EMTPY));
+                sync.setSaleAdmin(Utils.parseString(entity[15], EMTPY));
+                sync.setModeDlv(Utils.parseString(entity[16], EMTPY));
+                sync.setQuotationId(Utils.parseString(entity[17], EMTPY));
                 sync.setQuotationDate(Utils.parseDate(entity[18], null));
                 sync.setShippingDate(Utils.parseDate(entity[19], null));
                 sync.setEddDate(Utils.parseDate(entity[20], null));
                 sync.setAvailableDate(Utils.parseDate(entity[21], null));
-                sync.setDsgRemark(Utils.parseString(entity[22], ""));
+                sync.setDsgRemark(Utils.parseString(entity[22], EMTPY));
                 syncDataList.add(sync);
             }
         } catch (Exception e) {
@@ -213,14 +216,14 @@ public class AXCustomerConfirmJourDAO extends GenericDAO<AXCustomerConfirmJourMo
 
             for (Object[] entity : objects) {
                 StiketWorkLoadViewReport report = new StiketWorkLoadViewReport();
-                report.setSalesId(Utils.parseString(entity[0], ""));
-                report.setDocNo(Utils.parseString(entity[1], ""));
-                report.setCustomerName(Utils.parseString(entity[2], ""));
-                report.setItemId(Utils.parseString(entity[3], ""));
-                report.setThaiItemDes(Utils.parseString(entity[4], ""));
+                report.setSalesId(Utils.parseString(entity[0], EMTPY));
+                report.setDocNo(Utils.parseString(entity[1], EMTPY));
+                report.setCustomerName(Utils.parseString(entity[2], EMTPY));
+                report.setItemId(Utils.parseString(entity[3], EMTPY));
+                report.setThaiItemDes(Utils.parseString(entity[4], EMTPY));
                 report.setQuantity(Utils.parseBigDecimal(entity[5], BigDecimal.ZERO));
-                report.setOrderUnit(Utils.parseString(entity[6], ""));
-                report.setRemark(Utils.parseString(entity[7], ""));
+                report.setOrderUnit(Utils.parseString(entity[6], EMTPY));
+                report.setRemark(Utils.parseString(entity[7], EMTPY));
                 viewReports.add(report);
             }
         } catch (Exception e) {
@@ -340,42 +343,42 @@ public class AXCustomerConfirmJourDAO extends GenericDAO<AXCustomerConfirmJourMo
 
             for (Object[] entity : objects) {
                 ConfirmationPackingViewModel report = new ConfirmationPackingViewModel();
-                report.setCustomerName(Utils.parseString(entity[0], ""));
-                report.setCustomerAddess(Utils.parseString(entity[1], ""));
-                report.setBankAcc(Utils.parseString(entity[2], ""));
-                report.setNumber(Utils.parseString(entity[3], ""));
+                report.setCustomerName(Utils.parseString(entity[0], EMTPY));
+                report.setCustomerAddess(Utils.parseString(entity[1], EMTPY));
+                report.setBankAcc(Utils.parseString(entity[2], EMTPY));
+                report.setNumber(Utils.parseString(entity[3], EMTPY));
                 report.setDate(Utils.parseDate(entity[4], null));
-                report.setSalesOrder(Utils.parseString(entity[5], ""));
-                report.setRequisition(Utils.parseString(entity[6], ""));
-                report.setOurRef(Utils.parseString(entity[7], ""));
-                report.setPaymentPicking(Utils.parseString(entity[8], ""));
-                report.setSalesMan(Utils.parseString(entity[9], ""));
-                report.setModeOfDelivery(Utils.parseString(entity[10], ""));
-                report.setQuotation(Utils.parseString(entity[11], ""));
+                report.setSalesOrder(Utils.parseString(entity[5], EMTPY));
+                report.setRequisition(Utils.parseString(entity[6], EMTPY));
+                report.setOurRef(Utils.parseString(entity[7], EMTPY));
+                report.setPaymentPicking(Utils.parseString(entity[8], EMTPY));
+                report.setSalesMan(Utils.parseString(entity[9], EMTPY));
+                report.setModeOfDelivery(Utils.parseString(entity[10], EMTPY));
+                report.setQuotation(Utils.parseString(entity[11], EMTPY));
                 report.setPiDate(Utils.parseDate(entity[12], null));
-                report.setDeliveryTerm(Utils.parseString(entity[13], ""));
-                report.setPaymentTerm(Utils.parseString(entity[14], ""));
-                report.setBrandName(Utils.parseString(entity[15], ""));
-                report.setSubGroup(Utils.parseString(entity[16], ""));
-                report.setItemId(Utils.parseString(entity[17], ""));
-                report.setThaiDes(Utils.parseString(entity[18], ""));
+                report.setDeliveryTerm(Utils.parseString(entity[13], EMTPY));
+                report.setPaymentTerm(Utils.parseString(entity[14], EMTPY));
+                report.setBrandName(Utils.parseString(entity[15], EMTPY));
+                report.setSubGroup(Utils.parseString(entity[16], EMTPY));
+                report.setItemId(Utils.parseString(entity[17], EMTPY));
+                report.setThaiDes(Utils.parseString(entity[18], EMTPY));
                 report.setPackingQty(Utils.parseBigDecimal(entity[19], BigDecimal.ZERO));
-                report.setSalesUnit(Utils.parseString(entity[20], ""));
-                report.setItemNo(Utils.parseString(entity[21], ""));
-                report.setLineName(Utils.parseString(entity[22], ""));
-                report.setAreaName(Utils.parseString(entity[23], ""));
-                report.setShippingMark(Utils.parseString(entity[24], ""));
-                report.setCustomerRef(Utils.parseString(entity[25], ""));
-                report.setContainer1(Utils.parseString(entity[26], ""));
-                report.setContainer2(Utils.parseString(entity[27], ""));
-                report.setContainer3(Utils.parseString(entity[28], ""));
-                report.setContainer4(Utils.parseString(entity[29], ""));
-                report.setRemark(Utils.parseString(entity[30], ""));
+                report.setSalesUnit(Utils.parseString(entity[20], EMTPY));
+                report.setItemNo(Utils.parseString(entity[21], EMTPY));
+                report.setLineName(Utils.parseString(entity[22], EMTPY));
+                report.setAreaName(Utils.parseString(entity[23], EMTPY));
+                report.setShippingMark(Utils.parseString(entity[24], EMTPY));
+                report.setCustomerRef(Utils.parseString(entity[25], EMTPY));
+                report.setContainer1(Utils.parseString(entity[26], EMTPY));
+                report.setContainer2(Utils.parseString(entity[27], EMTPY));
+                report.setContainer3(Utils.parseString(entity[28], EMTPY));
+                report.setContainer4(Utils.parseString(entity[29], EMTPY));
+                report.setRemark(Utils.parseString(entity[30], EMTPY));
                 report.setAvailablePackingDate(Utils.parseDate(entity[31], null));
-                report.setSalesRemark(Utils.parseString(entity[32], ""));
-                report.setPacking(Utils.parseString(entity[33], ""));
-                report.setDocuintro(Utils.parseString(entity[34], ""));
-                report.setDocno(Utils.parseString(entity[35], ""));
+                report.setSalesRemark(Utils.parseString(entity[32], EMTPY));
+                report.setPacking(Utils.parseString(entity[33], EMTPY));
+                report.setDocuintro(Utils.parseString(entity[34], EMTPY));
+                report.setDocno(Utils.parseString(entity[35], EMTPY));
                 viewReports.add(report);
             }
         } catch (Exception e) {
@@ -384,4 +387,120 @@ public class AXCustomerConfirmJourDAO extends GenericDAO<AXCustomerConfirmJourMo
 
         return viewReports;
     }
+
+   public List<PickingOrderWithItemBarcodeReport> getPcikingOrderWithItemBarcodeReport(int pickingId){
+       List<PickingOrderWithItemBarcodeReport> viewReports = new ArrayList<PickingOrderWithItemBarcodeReport>();
+
+       StringBuilder sqlBuilder = new StringBuilder();
+
+       sqlBuilder.append(" SELECT ");
+       sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustTable.name AS CUST_NAME,");
+       sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustTable.Address AS CUST_ADDESS,");
+       sqlBuilder.append(" ").append(getPrefix()).append(".ax_SalesQuantationTable.BankAcc AS BANKACC,");
+       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.confirm_docno AS NUMBER,");
+       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.confirm_date AS DATE,");
+       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.sales_order AS SALES_ORDER,");
+       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.purchase_order AS REQUISITION,");
+       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.sales_admin AS OUR_REF,");
+       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.payment_condition AS PAYMENT_PICKING,");
+       sqlBuilder.append(" ").append(getPrefix()).append(".ax_CommissionSalesGroup.Name AS SALES_MAN,");
+       sqlBuilder.append(" ").append(getPrefix()).append(".ax_DlvMode.Txt AS MODE_OF_DELIVERY,");
+       sqlBuilder.append(" ").append(getPrefix()).append(".ax_SalesTable.QuotationId AS QUOTATION,");
+       sqlBuilder.append(" ").append(getPrefix()).append(".ax_SalesQuantationTable.CreatedDate AS PI_DATE,");
+       sqlBuilder.append(" ").append(getPrefix()).append(".ax_SalesQuantationTable.DlvTerm AS DELIVERY_TERM,");
+       sqlBuilder.append(" ").append(getPrefix()).append(".ax_PaymTerm.Description AS PAYMENT_TERM,");
+       sqlBuilder.append(" ").append(getPrefix()).append(".ax_DSGBrand.DSGBrandName AS BRAND_NAME,");
+       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.DSG_SubGroupDescription AS SUB_GROUP,");
+       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.ItemId AS ITEM_ID,");
+       sqlBuilder.append(" ").append(getPrefix()).append(".item_master.DSGThaiItemDescription AS THAI_DES,");
+       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.DSG_PackingQty AS PACKING_QTY,");
+       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.salesunit AS SALES_UNIT,");
+       sqlBuilder.append(" ").append(getPrefix()).append(".ax_DataArea.name AS AREA_NAME,");
+       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.docno AS DOCNO");
+       sqlBuilder.append(" FROM ").append(getPrefix()).append(".picking_order");
+       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".ax_CustTable");
+       sqlBuilder.append(" ON ").append(getPrefix()).append(".picking_order.customer_code = ").append(getPrefix()).append(".ax_CustTable.AccountNum");
+       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".ax_SalesQuantationTable");
+       sqlBuilder.append(" ON ").append(getPrefix()).append(".picking_order.quotation = ").append(getPrefix()).append(".ax_SalesQuantationTable.QuantationId");
+       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".ax_DlvMode");
+       sqlBuilder.append(" ON ").append(getPrefix()).append(".picking_order.mode_delivery = ").append(getPrefix()).append(".ax_DlvMode.Txt");
+       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".ax_CommissionSalesGroup");
+       sqlBuilder.append(" ON ").append(getPrefix()).append(".ax_CustTable.SalesGroup = ").append(getPrefix()).append(".ax_CommissionSalesGroup.GroupId");
+       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".ax_SalesTable");
+       sqlBuilder.append(" ON ").append(getPrefix()).append(".picking_order.sales_order = ").append(getPrefix()).append(".ax_SalesTable.SalesId");
+       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".ax_PaymTerm");
+       sqlBuilder.append(" ON ").append(getPrefix()).append(".ax_CustTable.PaymTermId = ").append(getPrefix()).append(".ax_PaymTerm.PaymTermId");
+       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".picking_order_line");
+       sqlBuilder.append(" ON ").append(getPrefix()).append(".picking_order.id = ").append(getPrefix()).append(".picking_order_line.picking_order_id");
+       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".item_master");
+       sqlBuilder.append(" ON ").append(getPrefix()).append(".picking_order_line.ItemId = ").append(getPrefix()).append(".item_master.ItemId");
+       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".ax_DSGBrand");
+       sqlBuilder.append(" ON ").append(getPrefix()).append(".item_master.DSGBandID = ").append(getPrefix()).append(".ax_DSGBrand.DSGBrandID");
+       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".ax_DataArea");
+       sqlBuilder.append(" ON ").append(getPrefix()).append(".item_master.DSG_PrimaryPlant = ").append(getPrefix()).append(".ax_DataArea.id");
+       sqlBuilder.append(" WHERE ").append(getPrefix()).append(".picking_order.id = " ).append(pickingId);
+
+       log.debug("--SQL {}",sqlBuilder.toString());
+
+       try {
+           SQLQuery query = getSession().createSQLQuery(sqlBuilder.toString())
+                   .addScalar("CUST_NAME", StringType.INSTANCE)
+                   .addScalar("CUST_ADDESS", StringType.INSTANCE)
+                   .addScalar("BANKACC", StringType.INSTANCE)
+                   .addScalar("NUMBER", StringType.INSTANCE)
+                   .addScalar("DATE", DateType.INSTANCE)
+                   .addScalar("SALES_ORDER", StringType.INSTANCE)
+                   .addScalar("REQUISITION", StringType.INSTANCE)
+                   .addScalar("OUR_REF", StringType.INSTANCE)
+                   .addScalar("PAYMENT_PICKING", StringType.INSTANCE)
+                   .addScalar("SALES_MAN", StringType.INSTANCE)
+                   .addScalar("MODE_OF_DELIVERY", StringType.INSTANCE)
+                   .addScalar("QUOTATION", StringType.INSTANCE)
+                   .addScalar("PI_DATE", DateType.INSTANCE)
+                   .addScalar("DELIVERY_TERM", StringType.INSTANCE)
+                   .addScalar("PAYMENT_TERM", StringType.INSTANCE)
+                   .addScalar("BRAND_NAME", StringType.INSTANCE)
+                   .addScalar("SUB_GROUP", StringType.INSTANCE)
+                   .addScalar("ITEM_ID", StringType.INSTANCE)
+                   .addScalar("THAI_DES", StringType.INSTANCE)
+                   .addScalar("PACKING_QTY", BigDecimalType.INSTANCE)
+                   .addScalar("SALES_UNIT", StringType.INSTANCE)
+                   .addScalar("AREA_NAME", StringType.INSTANCE)
+                   .addScalar("DOCNO", StringType.INSTANCE);
+           List<Object[]> objects = query.list();
+           log.debug("----------- {}", objects.size());
+
+           for (Object[] entity : objects) {
+               PickingOrderWithItemBarcodeReport report = new PickingOrderWithItemBarcodeReport();
+               report.setCustomerName(Utils.parseString(entity[0], EMTPY));
+               report.setCustomerAddess(Utils.parseString(entity[1], EMTPY));
+               report.setBankAcc(Utils.parseString(entity[2], EMTPY));
+               report.setNumber(Utils.parseString(entity[3], EMTPY));
+               report.setDate(Utils.parseDate(entity[4], null));
+               report.setSalesOrder(Utils.parseString(entity[5], EMTPY));
+               report.setRequisition(Utils.parseString(entity[6], EMTPY));
+               report.setOurRef(Utils.parseString(entity[7], EMTPY));
+               report.setPaymentPicking(Utils.parseString(entity[8], EMTPY));
+               report.setSalesMan(Utils.parseString(entity[9], EMTPY));
+               report.setModeOfDelivery(Utils.parseString(entity[10], EMTPY));
+               report.setQuotation(Utils.parseString(entity[11], EMTPY));
+               report.setPiDate(Utils.parseDate(entity[12], null));
+               report.setDeliveryTerm(Utils.parseString(entity[13], EMTPY));
+               report.setPaymentTerm(Utils.parseString(entity[14], EMTPY));
+               report.setBrandName(Utils.parseString(entity[15], EMTPY));
+               report.setSubGroup(Utils.parseString(entity[16], EMTPY));
+               report.setItemId(Utils.parseString(entity[17], EMTPY));
+               report.setThaiDes(Utils.parseString(entity[18], EMTPY));
+               report.setPackingQty(Utils.parseBigDecimal(entity[19], BigDecimal.ZERO));
+               report.setSalesUnit(Utils.parseString(entity[20], EMTPY));
+               report.setAreaName(Utils.parseString(entity[21], EMTPY));
+               report.setDocno(Utils.parseString(entity[22], EMTPY));
+               viewReports.add(report);
+           }
+       } catch (Exception e){
+           log.debug("Exception error getPcikingOrderWithItemBarcodeReport : ", e);
+       }
+
+       return viewReports;
+   }
 }

@@ -48,7 +48,8 @@
                                              style="width: 400px; max-width: 400px; min-width: 400px"
                                              process="@this"
                                              update=":pickingOrderForm"
-                                             action="#{pickingOrderBean.stikerWorkLoadReport()}"
+                                             disabled="#{pickingOrderBean.flagBtnPrint}"
+                                             action="#{pickingOrderBean.pickingOrderWithItemBarcode()}"
                                              ajax="false"
                                              icon="ui-icon-print"
                                              styleClass="medium" />

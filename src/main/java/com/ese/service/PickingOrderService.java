@@ -3,21 +3,21 @@ package com.ese.service;
 import com.ese.model.TableValue;
 import com.ese.model.dao.*;
 import com.ese.model.db.*;
-import com.ese.model.view.CustomerConfirmTransView;
-import com.ese.model.view.DataSyncConfirmOrderView;
-import com.ese.model.view.LocationQtyView;
-import com.ese.model.view.PickingOrderView;
+import com.ese.model.view.*;
 import com.ese.model.view.report.ConfirmationPackingViewModel;
+import com.ese.model.view.report.InventoryOnHandViewReport;
 import com.ese.model.view.report.StiketWorkLoadViewReport;
 import com.ese.service.security.UserDetail;
 import com.ese.transform.PickingOrderLineTransform;
 import com.ese.transform.PickingOrderTransform;
+import com.ese.utils.FacesUtil;
 import com.ese.utils.Utils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -37,12 +37,16 @@ public class PickingOrderService extends Service {
     @Resource private ReportService reportService;
     @Resource private ItemDAO itemDAO;
     @Resource private ReservedOrderDAO reservedOrderDAO;
-    @Resource private LoadingOrderDAO loadingOrderDAO;
+    @Resource private InvOnHandDAO invOnHandDAO;
 
     @Value("#{config['report.stikerworkload']}")
     private String pathStikerWorkLoad;
     @Value("#{config['report.confirmationpacking']}")
     private String pathConfirmationPacking;
+    @Value("#{config['report.pickingorder']}")
+    private String pathPickingOrderWithItemBarcode;
+    @Value("#{config['report.pickingorder.sub']}")
+    private String pathPickingOrderWithItemBarcodeSub;
 
     private static final String A031 ="031A";
     private static final String B031 ="031B";
@@ -222,12 +226,44 @@ public class PickingOrderService extends Service {
         pickingOrderLineDAO.updateLocationQtyByRemoveShowItem(locationQtyView.getId(), locationQtyView.getReservedQty() - reservedQty);
     }
 
-    public LoadingOrderModel getStatusLoadingOrder(int pickingId){
+    public void getPickingOrderWithItemBarcodeReport(int pickingId, UserDetail user){
+
+        String nameReport = Utils.genReportName("_PickingOrderWithItemBarcode");
+        List<PickingOrderWithItemBarcodeReport> viewReports = axCustomerConfirmJourDAO.getPcikingOrderWithItemBarcodeReport(pickingId);
+
+        HashMap map = new HashMap<String, Object>();
+        map.put("userPrint", user.getUserName());
+        map.put("printDate", Utils.convertCurrentDateToStringDDMMYYYY());
+        map.put("path", FacesUtil.getRealPath(pathPickingOrderWithItemBarcodeSub));
+        map.put("subreport", getBySubReport(pickingId));
+
         try {
-            return loadingOrderDAO.findByID(pickingId);
+            reportService.exportPDF(pathPickingOrderWithItemBarcode, map, nameReport, viewReports);
         } catch (Exception e) {
-            log.debug("Exception error getStatusLoadingOrder :", e);
-            return null;
+            log.debug("Exception Report : ", e);
         }
+    }
+
+    private List<InventoryOnHandViewReport> getBySubReport(int pickingId){
+        List<InvOnHandModel> invOnHandModelList = invOnHandDAO.findByPickingId(pickingId);
+        List<InventoryOnHandViewReport> reportList = new ArrayList<InventoryOnHandViewReport>();
+        int i = 1;
+
+        for (InvOnHandModel model : invOnHandModelList){
+            InventoryOnHandViewReport report = new InventoryOnHandViewReport();
+            report.setNo(i);
+
+            if (!Utils.isNull(model.getPalletModel()) && !Utils.isZero(model.getPalletModel().getPalletBarcode().length())){
+                report.setPalletBarcode(model.getPalletModel().getPalletBarcode());
+            } else {
+                report.setPalletBarcode("");
+            }
+
+            report.setSnBarcode(model.getSnBarcode());
+            i++;
+            reportList.add(report);
+        }
+
+        return reportList;
     }
 }
