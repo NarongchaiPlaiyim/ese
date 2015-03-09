@@ -81,6 +81,7 @@ public class PickingOrderBean extends Bean {
 
     public void onSearch(){
         pickingOrderModelList =  pickingOrderService.getPickingOnSearch(pickingOrderView);
+        initBtn();
     }
 
     public void onClickTable(){

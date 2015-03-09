@@ -48,7 +48,7 @@
                                              style="width: 400px; max-width: 400px; min-width: 400px"
                                              process="@this"
                                              update=":pickingOrderForm"
-                                             disabled="#{pickingOrderBean.flagBtnPrint}"
+                                             disabled="#{pickingOrderBean.flagBtnPickingOrderWithItemBarcode}"
                                              action="#{pickingOrderBean.pickingOrderWithItemBarcode()}"
                                              ajax="false"
                                              icon="ui-icon-print"
@@ -280,7 +280,9 @@
                                              icon="ui-icon-search"
                                              action="#{pickingOrderBean.onSearch}"
                                              onstart="PF('bui').block()"
-                                             update=":pickingOrderForm:pickingOrderTable"
+                                             update=":pickingOrderForm:pickingOrderTable, :pickingOrderForm:showItem,
+                                                     :pickingOrderForm:confirmation, :pickingOrderForm:cancelPicking,
+                                                     :pickingOrderForm:stiketWorkLoad, :pickingOrderForm:pickOrderWithBarcode"
                                              oncomplete="PF('bui').unblock()"
                                     />
                         </div>
