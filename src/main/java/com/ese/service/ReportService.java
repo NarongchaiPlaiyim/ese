@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.Collection;
@@ -29,38 +30,43 @@ public class ReportService extends Service{
     private static final long serialVersionUID = 4112578632409874840L;
 
     public void exportPDF(String fileName, Map parameters,String pdfName, Collection reportList) throws Exception {
-
         log.debug("generate pdf.");
-        InputStream inputStream = FacesUtil.getFacesContext().getExternalContext().getResourceAsStream(fileName);
-        JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
-        JRDataSource dataSource = new JRBeanCollectionDataSource(reportList);
-
-//        log.debug("############# {}", reportList.toString());
-        JasperPrint print ;
-        if (!Utils.isNull(dataSource) && Utils.isCollection(reportList) && !Utils.isNull(reportList)){
-//            log.debug("++++++++++++ {}", dataSource.toString());
-            print = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
-        } else {
-            print = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
-        }
-
-        log.debug("--Pring report.");
-
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        externalContext.addResponseHeader("Content-disposition", "attachment; filename="+pdfName+".pdf");
-        OutputStream outputStream =  externalContext.getResponseOutputStream();
-
+        InputStream inputStream = null;
+        JasperReport jasperReport;
+        JRDataSource dataSource;
+        JasperPrint print;
+        ServletOutputStream servletOutputStream = null;
         try {
-            JasperExportManager.exportReportToPdfStream(print, outputStream);
-            FacesContext.getCurrentInstance().responseComplete();
+            inputStream = FacesUtil.getFacesContext().getExternalContext().getResourceAsStream(fileName);
+            jasperReport = JasperCompileManager.compileReport(inputStream);
+            dataSource = new JRBeanCollectionDataSource(reportList);
+            if (!Utils.isNull(dataSource) && Utils.isCollection(reportList) && !Utils.isNull(reportList)){
+                print = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
+            } else {
+                print = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
+            }
+
+            byte[] bytes;
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
+            servletOutputStream = response.getOutputStream();
+            servletOutputStream.flush();
+            bytes = JasperExportManager.exportReportToPdf(print);
+            response.setContentType("application/pdf");
+            response.setContentLength(bytes.length);
+            servletOutputStream.write(bytes, 0, bytes.length);
+            servletOutputStream.flush();
+            facesContext.responseComplete();
+            facesContext.renderResponse();
             log.debug("generatePDF completed.");
-
-        } catch (JRException e) {
-            log.error("Error generating pdf report!", e);
+        } catch (Exception e) {
+            System.out.println();
         } finally {
-            outputStream.flush();
-            outputStream.close();
-        }
+            if (servletOutputStream != null)servletOutputStream.close();
 
+            if (inputStream != null)inputStream.close();
+
+            if (servletOutputStream != null)servletOutputStream.close();
+        }
     }
 }
