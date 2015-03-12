@@ -40,6 +40,7 @@
                                      oncomplete="PF('bui').unblock()"
                                      action="#{userManagement.onPrint()}"
                                      disabled="#{userManagement.flagPrint}"
+                                     onclick="this.form.target='_blank'"
                                      ajax="false"
                                      icon="ui-icon-print"
                                      styleClass="medium" style="#{msg.get('btn.size')}"/>

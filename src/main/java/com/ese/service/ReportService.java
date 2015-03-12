@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.Collection;
@@ -35,32 +36,97 @@ public class ReportService extends Service{
         JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
         JRDataSource dataSource = new JRBeanCollectionDataSource(reportList);
 
-//        log.debug("############# {}", reportList.toString());
         JasperPrint print ;
         if (!Utils.isNull(dataSource) && Utils.isCollection(reportList) && !Utils.isNull(reportList)){
-//            log.debug("++++++++++++ {}", dataSource.toString());
             print = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
         } else {
             print = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
         }
+//
+//        log.debug("--Pring report.");
+//
+//        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+//        externalContext.setResponseHeader("Pragma", "no-cache");
+//        externalContext.setResponseContentType("application/octet-stream");
+//        externalContext.addResponseHeader("Content-disposition", "attachment; filename="+pdfName+".pdf");
+//        OutputStream outputStream =  externalContext.getResponseOutputStream();
+//
+//        try {
+//            JasperExportManager.exportReportToPdfStream(print);
 
-        log.debug("--Pring report.");
-
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        externalContext.addResponseHeader("Content-disposition", "attachment; filename="+pdfName+".pdf");
-        OutputStream outputStream =  externalContext.getResponseOutputStream();
-
+//            FacesContext.getCurrentInstance().responseComplete();
+//            log.debug("generatePDF completed.");
+//        } catch (JRException e) {
+//            log.error("Error generating pdf report!", e);
+//        } finally {
+//            outputStream.flush();
+//            outputStream.close();
+//        }
         try {
-            JasperExportManager.exportReportToPdfStream(print, outputStream);
-            FacesContext.getCurrentInstance().responseComplete();
+            ServletOutputStream servletOutputStream = null;
+            byte[] bytes;
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
+            servletOutputStream = response.getOutputStream();
+            servletOutputStream.flush();
+//            String fileName = app.getRealPath() + reportTemplate;
+//            String jasperReportString = JasperCompileManager.compileReportToFile(fileName);
+//            log.debug("PDF jasperReport : {}", jasperReportString);
+//            File file = new File(jasperReportString);
+//            if (dataSource == null) {
+//                bytes = JasperExportManager.exportReportToPdf(print);
+////                bytes = JasperRunManager.runReportToPdf(file.getPath(), parameters, new JREmptyDataSource());
+//            } else {
+//                bytes = JasperRunManager.runReportToPdf(file.getPath(), parameters, dataSource.getRecordCount() != 0 ? dataSource : new JREmptyDataSource());
+//            }
+            bytes = JasperExportManager.exportReportToPdf(print);
+            response.setContentType("application/pdf");
+            response.setContentLength(bytes.length);
+            servletOutputStream.write(bytes, 0, bytes.length);
+            servletOutputStream.flush();
+            facesContext.responseComplete();
+            facesContext.renderResponse();
             log.debug("generatePDF completed.");
-
-        } catch (JRException e) {
-            log.error("Error generating pdf report!", e);
-        } finally {
-            outputStream.flush();
-            outputStream.close();
+        } catch (Exception e) {
+            System.out.println();
         }
-
     }
+
+//    ﻿public void generatePDF(Map<String, Object> parameters,
+//                             JRBeanCollectionDataSource dataSource) throws Exception {
+//        log.debug("generate pdf. (jrDataSource: {})", dataSource);
+//        FacesContext facesContext = FacesContext.getCurrentInstance();
+//        HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
+//        byte[] bytes;
+//        ServletOutputStream servletOutputStream = null;
+//        try {
+//            servletOutputStream = response.getOutputStream();
+////            String fileName = app.getRealPath() + reportTemplate;
+//            String jasperReport = JasperCompileManager.compileReportToFile("");
+//            log.debug("PDF jasperReport : {}", jasperReport);
+//            File file = new File(jasperReport);
+//            if (dataSource == null) {
+//                bytes = JasperRunManager.runReportToPdf(file.getPath(), parameters, new JREmptyDataSource());
+//            } else {
+//                bytes = JasperRunManager.runReportToPdf(file.getPath(), parameters, dataSource.getRecordCount() != 0 ? dataSource : new JREmptyDataSource());
+//            }
+//            response.setContentType("application/pdf");
+//            response.setContentLength(bytes.length);
+//            servletOutputStream.write(bytes, 0, bytes.length);
+//            servletOutputStream.flush();
+//            facesContext.responseComplete();
+//            facesContext.renderResponse();
+//            log.debug("generatePDF completed.");
+//        } catch (JRException e) {
+//            log.error("Error generating pdf report!", e);
+//        } catch (Exception e) {
+//            log.error("", e);
+//            StringWriter stringWriter = new StringWriter();
+//            response.setContentType("application/txt");
+//            response.getOutputStream().print(stringWriter.toString());
+//        } finally {
+//            if (servletOutputStream != null)
+//                servletOutputStream.close();
+//        }
+//    }
 }

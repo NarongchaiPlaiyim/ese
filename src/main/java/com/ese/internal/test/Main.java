@@ -7,17 +7,40 @@ import org.apache.commons.io.FilenameUtils;
 
 import javax.faces.context.FacesContext;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
 
-        System.out.println(getBinaryInt1());
-        System.out.println(getBinaryInt2());
-        System.out.println(getBinaryLong());
-//        System.out.println(Arrays.deepToString(getBinaryArray()));
-        System.out.println(getInt1());
-        System.out.println(getInt2());
+//        semester
+
+//        academic year
+
+
+        Calendar now = Calendar.getInstance();
+
+
+        int year = now.get(Calendar.YEAR);
+        System.out.println(year-2);
+        System.out.println(year-1);
+        System.out.println(year);
+        System.out.println(year+1);
+
+        List<Integer> academicYear = new ArrayList();
+        academicYear.add(year);
+        academicYear.add(year-1);
+        academicYear.add(year+1);
+        academicYear.add(year+2);
+
+        List<String> semester = new ArrayList();
+        semester.add("1");
+        semester.add("2");
+        semester.add("Summer");
+
+        ArrayList<Integer> list = new ArrayList<Integer>(7);
     }
 
 
