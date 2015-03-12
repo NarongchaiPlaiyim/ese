@@ -433,4 +433,31 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
 
         return orderLineModelList;
     }
+
+    public int getSumReservedOrder(int pickingLineId){
+        StringBuilder selectLocationQty = new StringBuilder();
+        int sumQty = 0;
+
+        selectLocationQty.append(" SELECT ");
+        selectLocationQty.append(" sum( ").append(getPrefix()).append(".reserved_order.reserved_qty) AS RESERVED_QTY");
+        selectLocationQty.append(" FROM ").append(getPrefix()).append(".reserved_order");
+        selectLocationQty.append(" WHERE ").append(getPrefix()).append(".reserved_order.picking_order_line_id = " ).append(pickingLineId);
+        log.debug("findByLocationId : {}", selectLocationQty.toString());
+
+        try {
+            SQLQuery query = getSession().createSQLQuery(selectLocationQty.toString())
+                    .addScalar("RESERVED_QTY", IntegerType.INSTANCE);
+            List<Object[]> objects = query.list();
+
+//            for (Object[] entity : objects) {
+                sumQty = Utils.parseInt(objects.get(0));
+//            }
+        } catch (Exception e) {
+            log.debug("Exception getSumReservedOrder SQL : {}", e);
+        }
+
+        log.debug("sumQty : {}", sumQty);
+
+        return sumQty;
+    }
 }
