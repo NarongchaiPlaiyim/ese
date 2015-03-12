@@ -232,7 +232,7 @@
                                          update="palletForm"
                                          action="#{palletManagement.callReport()}"
                                          ajax="false"
-                                         onclick="PF('msgBoxSystemMessageDlg2').hide()"/>
+                                         onclick="PF('msgBoxSystemMessageDlg2').hide(); this.form.target='_blank'"/>
                     </h:form>
                 </div>
             </p:confirmDialog>

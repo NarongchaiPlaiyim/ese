@@ -57,7 +57,7 @@ public class InventoryOnhandReportService extends Service{
 
             no++;
         }
-
+        log.debug("reportViewList siz : {}", reportViewList.size());
         try {
             reportService.exportPDF(pathreport, map, printTagReportname, reportViewList);
         } catch (Exception e) {

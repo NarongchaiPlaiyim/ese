@@ -30,6 +30,7 @@
                                              disabled="#{pickingOrderBean.flagBtnPrint}"
                                              update=":pickingOrderForm"
                                              action="#{pickingOrderBean.confirmationPackingReport()}"
+                                             onclick="this.form.target='_blank'"
                                              ajax="false"
                                              icon="ui-icon-print"
                                              styleClass="medium" />
@@ -40,6 +41,7 @@
                                              disabled="#{pickingOrderBean.flagBtnPrint}"
                                              update=":pickingOrderForm"
                                              action="#{pickingOrderBean.stikerWorkLoadReport()}"
+                                             onclick="this.form.target='_blank'"
                                              ajax="false"
                                              icon="ui-icon-print"
                                              styleClass="medium" />
@@ -50,6 +52,7 @@
                                              update=":pickingOrderForm"
                                              disabled="#{pickingOrderBean.flagBtnPickingOrderWithItemBarcode}"
                                              action="#{pickingOrderBean.pickingOrderWithItemBarcode()}"
+                                             onclick="this.form.target='_blank'"
                                              ajax="false"
                                              icon="ui-icon-print"
                                              styleClass="medium" />
