@@ -36,6 +36,7 @@
                                              onstart="PF('bui').block()"
                                              action="#{barcodeRegisterBean.onPrint}"
                                              oncomplete="PF('bui').unblock()"
+                                             onclick="this.form.target='_blank'"
                                              ajax="false"
                                              icon="ui-icon-print"
                                              styleClass="medium" style="#{msg.get('btn.size')}"/>
