@@ -28,7 +28,7 @@ public class PickingOrderShowItemService extends Service{
     @Resource private PickingOrderLineTransform pickingOrderLineTransform;
     @Resource private PickingOrderDAO pickingOrderDAO;
 
-    private String message = "Fail";
+    private String message;
 
     public List<PickingOrderShowItemView> getPickingOrderLineByPickingOrderId(int pickingOrderId){
         return pickingOrderLineDAO.findByPickingOrderId(pickingOrderId);
@@ -48,6 +48,7 @@ public class PickingOrderShowItemService extends Service{
         MSLocationModel msLocationModel;
         List<LocationQtyView> locationQtyViewList = Utils.getEmptyList();
         int restQty = 0;
+        message = "Fail";
 
         FIFOReservedView fifoReservedView = pickingOrderLineDAO.findQtyOnInventTran(pickingOrderLineId);
         int sumReservedOrder = pickingOrderLineDAO.getSumReservedOrder(pickingOrderLineId);

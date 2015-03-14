@@ -26,15 +26,15 @@ public class ItemDAO extends GenericDAO<MSItemModel, Integer>{
             Criteria criteria = getCriteria();
 
             if (!Utils.isZero(itemQtySearchView.getItemName().trim().length())){
-                criteria.add(Restrictions.eq("itemName", itemQtySearchView.getItemName().trim()));
+                criteria.add(Restrictions.like("itemName", "%" + itemQtySearchView.getItemName().trim() + "%"));
             }
 
             if (!Utils.isZero(itemQtySearchView.getItemCode().trim().length())){
-                criteria.add(Restrictions.eq("itemId", itemQtySearchView.getItemCode().trim()));
+                criteria.add(Restrictions.like("itemId", "%" + itemQtySearchView.getItemCode().trim() + "%"));
             }
 
             if (!Utils.isZero(itemQtySearchView.getDescription().trim().length())){
-                criteria.add(Restrictions.eq("dSGThaiItemDescription", itemQtySearchView.getDescription().trim()));
+                criteria.add(Restrictions.like("dSGThaiItemDescription", "%" + itemQtySearchView.getDescription().trim() + "%"));
             }
             itemModels = criteria.list();
         } catch (Exception e) {
