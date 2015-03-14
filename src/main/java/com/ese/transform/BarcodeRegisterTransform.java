@@ -2,14 +2,19 @@ package com.ese.transform;
 
 import com.ese.model.StatusBarcodeRegiterValue;
 import com.ese.model.db.BarcodeRegisterModel;
+import com.ese.model.db.StaffModel;
 import com.ese.model.view.BarcodeRegisterView;
+import com.ese.utils.AttributeName;
+import com.ese.utils.FacesUtil;
 import com.ese.utils.Utils;
 import org.springframework.stereotype.Component;
 
 @Component
 public class BarcodeRegisterTransform {
+
     public BarcodeRegisterView transformToView(final BarcodeRegisterModel model){
         BarcodeRegisterView view = null;
+        int staffModel = (int) FacesUtil.getSession(false).getAttribute(AttributeName.STAFF.getName());
         view = new BarcodeRegisterView();
         view.setId(model.getId());
         view.setStartBarcode(String.format("%09d", model.getStartBarcode()));
@@ -20,9 +25,9 @@ public class BarcodeRegisterTransform {
         view.setQty(model.getQty());
         view.setRemark(model.getRemark());
         view.setCreateDate(model.getCreateDate());
-        view.setCreateBy(model.getCreateBy());
+        view.setCreateBy(staffModel);
         view.setUpdateDate(model.getUpdateDate());
-        view.setUpdateBy(model.getUpdateBy());
+        view.setUpdateBy(staffModel);
         view.setFinishBarcodeText(model.getFinishBarcodeText());
         view.setStartBarcodeText(model.getStartBarcodeText());
         view.setCost(model.getCost());
@@ -35,6 +40,7 @@ public class BarcodeRegisterTransform {
 
     public BarcodeRegisterModel transformToModel(final BarcodeRegisterView view){
         BarcodeRegisterModel model = null;
+        int staffModel = (int) FacesUtil.getSession(false).getAttribute(AttributeName.STAFF.getName());
         model = new BarcodeRegisterModel();
         model.setId(view.getId());
         model.setStartBarcode(Utils.parseInt(view.getStartBarcode(), 0));
@@ -59,9 +65,9 @@ public class BarcodeRegisterTransform {
 
         if(Utils.isZero(view.getId())){
             model.setCreateDate(Utils.currentDate());
-            model.setCreateBy(9999);
+            model.setCreateBy(staffModel);
             model.setUpdateDate(Utils.currentDate());
-            model.setUpdateBy(8888);
+            model.setUpdateBy(staffModel);
             model.setIsValid(1);
             model.setVersion(1);
             model.setStatus(StatusBarcodeRegiterValue.INPROCESS);

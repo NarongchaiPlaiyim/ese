@@ -54,7 +54,7 @@ public class LoginBean extends Bean{
             map = (Map<String, String>) FacesUtil.getSession(false).getAttribute(AttributeName.AUTHORIZE.getName());
         } else {
             log.debug("[NEW] CODE MAP");
-            map = new HashMap<String, String>();
+            map = new HashMap();
         }
     }
 
@@ -82,6 +82,7 @@ public class LoginBean extends Bean{
                 HttpSession httpSession = FacesUtil.getSession(false);
                 httpSession.setAttribute(AttributeName.USER_DETAIL.getName(), getUserDetail());
                 httpSession.setAttribute(AttributeName.AUTHORIZE.getName(), loginService.getAuthorize());
+                httpSession.setAttribute(AttributeName.STAFF.getName(), staffModel.getId());
                 log.debug("-- userDetail[{}]", userDetail.toString());
                 return "PASS";
             }

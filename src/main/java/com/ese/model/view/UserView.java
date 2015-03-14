@@ -3,6 +3,7 @@ package com.ese.model.view;
 import com.ese.model.db.FactionModel;
 import com.ese.model.db.MSDepartmentModel;
 import com.ese.model.db.MSTitleModel;
+import com.ese.model.db.StaffModel;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -12,7 +13,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class UserView {
+public class UserView  extends View{
 
     private int id;
     private String password;
@@ -25,10 +26,6 @@ public class UserView {
     private int isValid;
     private String position;
     private MSTitleModel msTitleModel;
-    private Integer createBy;
-    private Date createDate;
-    private Integer updateBy;
-    private Date updateDate;
 
     public UserView() {
         msDepartmentModel = new MSDepartmentModel();
@@ -50,10 +47,6 @@ public class UserView {
                 .append("isValid", isValid)
                 .append("position", position)
                 .append("msTitleModel", msTitleModel)
-                .append("createBy", createBy)
-                .append("createDate", createDate)
-                .append("updateBy", updateBy)
-                .append("updateDate", updateDate)
                 .toString();
     }
 }

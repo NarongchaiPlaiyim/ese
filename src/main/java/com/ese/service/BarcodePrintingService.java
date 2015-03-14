@@ -2,8 +2,11 @@ package com.ese.service;
 
 import com.ese.model.dao.BarcodePrintingDAO;
 import com.ese.model.db.BarcodePrintingModel;
+import com.ese.model.db.StaffModel;
 import com.ese.model.view.BarcodePrintingView;
 import com.ese.model.view.report.BarcodeRegisterModelReport;
+import com.ese.utils.AttributeName;
+import com.ese.utils.FacesUtil;
 import com.ese.utils.Utils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -24,6 +27,8 @@ public class BarcodePrintingService extends Service{
     @Value("#{config['report.barcodeprinting']}")
     private String pathBarcodePrinting;
 
+
+
     public String getLastSeq(){
         String result = "";
         BarcodePrintingModel barcodePrintingModel;
@@ -38,10 +43,11 @@ public class BarcodePrintingService extends Service{
 
     public void save(int qty, String sbc, String fbc){
         BarcodePrintingModel barcodePrintingModel = new BarcodePrintingModel();
+        int staffModel = (int) FacesUtil.getSession(false).getAttribute(AttributeName.STAFF.getName());
         try {
             barcodePrintingModel.setCreateDate(Utils.currentDate());
-            barcodePrintingModel.setCreateBy(99);
-            barcodePrintingModel.setUpdateBy(88);
+            barcodePrintingModel.setCreateBy(staffModel);
+            barcodePrintingModel.setUpdateBy(staffModel);
             barcodePrintingModel.setUpdateDate(Utils.currentDate());
             barcodePrintingModel.setStartBarcode(sbc);
             barcodePrintingModel.setFinishBarcode(fbc);
@@ -54,11 +60,11 @@ public class BarcodePrintingService extends Service{
 
     public void insert(){
         BarcodePrintingModel barcodePrintingModel = new BarcodePrintingModel();
-
+        int staffModel = (int) FacesUtil.getSession(false).getAttribute(AttributeName.STAFF.getName());
         try {
             barcodePrintingModel.setCreateDate(Utils.currentDate());
-            barcodePrintingModel.setCreateBy(99);
-            barcodePrintingModel.setUpdateBy(88);
+            barcodePrintingModel.setCreateBy(staffModel);
+            barcodePrintingModel.setUpdateBy(staffModel);
             barcodePrintingModel.setUpdateDate(Utils.currentDate());
             barcodePrintingModel.setStartBarcode("TW00000101");
             barcodePrintingModel.setFinishBarcode("TW00000109");

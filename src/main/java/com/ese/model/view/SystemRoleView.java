@@ -1,5 +1,6 @@
 package com.ese.model.view;
 
+import com.ese.model.db.StaffModel;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -9,7 +10,7 @@ import java.util.Date;
 
 @Setter
 @Getter
-public class SystemRoleView {
+public class SystemRoleView extends View{
 
     private int id;
     private String code;
@@ -17,10 +18,6 @@ public class SystemRoleView {
     private String description;
     private Integer version;
     private int isValid;
-    private Integer createBy;
-    private Date createDate;
-    private Integer updateBy;
-    private Date updateDate;
 
     @Override
     public String toString() {
@@ -31,10 +28,6 @@ public class SystemRoleView {
                 .append("description", description)
                 .append("version", version)
                 .append("isValid", isValid)
-                .append("createBy", createBy)
-                .append("createDate", createDate)
-                .append("updateBy", updateBy)
-                .append("updateDate", updateDate)
                 .toString();
     }
 }

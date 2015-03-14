@@ -1,12 +1,11 @@
 package com.ese.transform;
 
-import com.ese.model.db.AXCustomerConfirmTransModel;
-import com.ese.model.db.PickingOrderLineModel;
-import com.ese.model.db.PickingOrderModel;
-import com.ese.model.db.StatusModel;
+import com.ese.model.db.*;
 import com.ese.model.view.CustomerConfirmTransView;
 import com.ese.model.view.ItemQtyView;
 import com.ese.service.security.UserDetail;
+import com.ese.utils.AttributeName;
+import com.ese.utils.FacesUtil;
 import com.ese.utils.Utils;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +13,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class PickingOrderLineTransform extends Transform{
 
+
     public PickingOrderLineModel transformToModel(CustomerConfirmTransView confirmTransModel, PickingOrderModel pickingOrderModel, StatusModel statusModel,UserDetail userDetail){
+        int staffModel = (int) FacesUtil.getSession(false).getAttribute(AttributeName.STAFF.getName());
         PickingOrderLineModel pickingOrderLineModel = new PickingOrderLineModel();
 
         pickingOrderLineModel.setPickingOrderId(pickingOrderModel);
@@ -27,9 +28,9 @@ public class PickingOrderLineTransform extends Transform{
         pickingOrderLineModel.setSalesUnit(confirmTransModel.getSalesUnit());
         pickingOrderLineModel.setFoil(false);
         pickingOrderLineModel.setStatus(statusModel);
-        pickingOrderLineModel.setCreateBy(userDetail.getId());
+        pickingOrderLineModel.setCreateBy(staffModel);
         pickingOrderLineModel.setCreateDate(Utils.currentDate());
-        pickingOrderLineModel.setUpdateBy(userDetail.getId());
+        pickingOrderLineModel.setUpdateBy(staffModel);
         pickingOrderLineModel.setUpdateDate(Utils.currentDate());
         pickingOrderLineModel.setIsValid(1);
         pickingOrderLineModel.setVersion(1);
@@ -46,7 +47,7 @@ public class PickingOrderLineTransform extends Transform{
 
     public PickingOrderLineModel transformToModelByAddItemQty(PickingOrderModel pickingOrderModel, StatusModel statusModel,UserDetail userDetail, ItemQtyView itemQtyView){
         PickingOrderLineModel pickingOrderLineModel = new PickingOrderLineModel();
-
+        int staffModel = (int) FacesUtil.getSession(false).getAttribute(AttributeName.STAFF.getName());
         pickingOrderLineModel.setPickingOrderId(pickingOrderModel);
 //        pickingOrderLineModel.setLine_num(confirmTransModel.getLineNum());
         pickingOrderLineModel.setItemId(itemQtyView.getItemCode());
@@ -56,9 +57,9 @@ public class PickingOrderLineTransform extends Transform{
 //        pickingOrderLineModel.setSalesUnit(pickingOrderModel.getSalesOrder());
         pickingOrderLineModel.setFoil(false);
         pickingOrderLineModel.setStatus(statusModel);
-        pickingOrderLineModel.setCreateBy(userDetail.getId());
+        pickingOrderLineModel.setCreateBy(staffModel);
         pickingOrderLineModel.setCreateDate(Utils.currentDate());
-        pickingOrderLineModel.setUpdateBy(userDetail.getId());
+        pickingOrderLineModel.setUpdateBy(staffModel);
         pickingOrderLineModel.setUpdateDate(Utils.currentDate());
         pickingOrderLineModel.setIsValid(1);
         pickingOrderLineModel.setVersion(1);

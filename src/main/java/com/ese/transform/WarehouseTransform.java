@@ -1,7 +1,10 @@
 package com.ese.transform;
 
 import com.ese.model.db.MSWarehouseModel;
+import com.ese.model.db.StaffModel;
 import com.ese.model.view.WarehouseView;
+import com.ese.utils.AttributeName;
+import com.ese.utils.FacesUtil;
 import com.ese.utils.Utils;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +33,7 @@ public class WarehouseTransform extends Transform{
     }
 
     public MSWarehouseModel transformToModel(WarehouseView view){
+        int staffModel = (int) FacesUtil.getSession(false).getAttribute(AttributeName.STAFF.getName());
         MSWarehouseModel model = new MSWarehouseModel();
 
         model.setId(view.getId());
@@ -43,16 +47,16 @@ public class WarehouseTransform extends Transform{
             model.setIsValid(1);
             model.setStatus("1");
             model.setVersion(1);
-            model.setCreateBy(1111);
+            model.setCreateBy(staffModel);
             model.setCreateDate(Utils.currentDate());
-            model.setUpdateBy(1111);
+            model.setUpdateBy(staffModel);
         } else {
             model.setIsValid(view.getIsvalid());
             model.setStatus(view.getStatus());
             model.setVersion(view.getVersion());
             model.setCreateBy(view.getCreateBy());
             model.setCreateDate(view.getCreateDate());
-            model.setUpdateBy(1111);
+            model.setUpdateBy(staffModel);
         }
 
         return model;

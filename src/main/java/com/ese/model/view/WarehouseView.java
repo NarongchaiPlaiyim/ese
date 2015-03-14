@@ -1,5 +1,6 @@
 package com.ese.model.view;
 
+import com.ese.model.db.StaffModel;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -9,15 +10,11 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class WarehouseView {
+public class WarehouseView extends View{
     private int id;
     private String warehouseCode;
     private String warehouseName;
     private String remark;
-    private int createBy;
-    private Date createDate;
-    private int updateBy;
-    private Date updateDate;
     private int isvalid;
     private String status;
     private int version;
@@ -29,10 +26,6 @@ public class WarehouseView {
                 .append("warehouseCode", warehouseCode)
                 .append("warehouseName", warehouseName)
                 .append("remark", remark)
-                .append("createBy", createBy)
-                .append("createDate", createDate)
-                .append("updateBy", updateBy)
-                .append("updateDate", updateDate)
                 .append("isvalid", isvalid)
                 .append("status", status)
                 .append("version", version)

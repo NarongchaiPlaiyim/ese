@@ -1,7 +1,10 @@
 package com.ese.transform;
 
+import com.ese.model.db.StaffModel;
 import com.ese.model.db.SystemRoleModel;
 import com.ese.model.view.SystemRoleView;
+import com.ese.utils.AttributeName;
+import com.ese.utils.FacesUtil;
 import com.ese.utils.Utils;
 import org.springframework.stereotype.Component;
 
@@ -27,6 +30,7 @@ public class SystemRoleTransform extends Transform{
 
     public SystemRoleModel transformToModel(SystemRoleView view){
         log.debug("view {}", view.toString());
+        int staffModel = (int) FacesUtil.getSession(false).getAttribute(AttributeName.STAFF.getName());
         SystemRoleModel model = new SystemRoleModel();
 
         model.setCode(view.getCode());
@@ -39,14 +43,14 @@ public class SystemRoleTransform extends Transform{
             model.setIsValid(view.getIsValid());
             model.setCreateBy(view.getCreateBy());
             model.setCreateDate(view.getCreateDate());
-            model.setUpdateBy(1);
+            model.setUpdateBy(staffModel);
             model.setUpdateDate(Utils.currentDate());
         } else {
             model.setVersion(1);
             model.setIsValid(1);
-            model.setCreateBy(1);
+            model.setCreateBy(staffModel);
             model.setCreateDate(Utils.currentDate());
-            model.setUpdateBy(1);
+            model.setUpdateBy(staffModel);
             model.setUpdateDate(Utils.currentDate());
         }
 

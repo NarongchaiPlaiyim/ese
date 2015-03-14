@@ -1,7 +1,10 @@
 package com.ese.transform;
 
 import com.ese.model.db.MSStockInOutNoteModel;
+import com.ese.model.db.StaffModel;
 import com.ese.model.view.StockInOutNoteView;
+import com.ese.utils.AttributeName;
+import com.ese.utils.FacesUtil;
 import com.ese.utils.Utils;
 import org.springframework.stereotype.Component;
 
@@ -29,6 +32,7 @@ public class StockInOutNoteTransform extends Transform{
 
     public MSStockInOutNoteModel transformToModel(StockInOutNoteView inOutNoteView){
         log.debug("transformToModel().");
+        int staffModel = (int) FacesUtil.getSession(false).getAttribute(AttributeName.STAFF.getName());
         MSStockInOutNoteModel stockInOutNoteModel = new MSStockInOutNoteModel();
 
         stockInOutNoteModel.setId(inOutNoteView.getId());
@@ -41,16 +45,16 @@ public class StockInOutNoteTransform extends Transform{
         if (Utils.isZero(inOutNoteView.getId())){
             stockInOutNoteModel.setIsValid(1);
             stockInOutNoteModel.setVersion(1);
-            stockInOutNoteModel.setCreateBy(1111);
+            stockInOutNoteModel.setCreateBy(staffModel);
             stockInOutNoteModel.setCreateDate(Utils.currentDate());
-            stockInOutNoteModel.setUpdateBy(1111);
+            stockInOutNoteModel.setUpdateBy(staffModel);
             stockInOutNoteModel.setUpdateDate(Utils.currentDate());
         } else {
             stockInOutNoteModel.setIsValid(inOutNoteView.getIsValid());
             stockInOutNoteModel.setVersion(inOutNoteView.getVersion());
             stockInOutNoteModel.setCreateBy(inOutNoteView.getCreateBy());
             stockInOutNoteModel.setCreateDate(Utils.currentDate());
-            stockInOutNoteModel.setUpdateBy(1111);
+            stockInOutNoteModel.setUpdateBy(staffModel);
             stockInOutNoteModel.setUpdateDate(Utils.currentDate());
         }
 

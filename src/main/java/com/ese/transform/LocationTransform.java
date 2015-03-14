@@ -3,7 +3,10 @@ package com.ese.transform;
 import com.ese.model.dao.WarehouseDAO;
 import com.ese.model.db.MSLocationModel;
 import com.ese.model.db.MSWarehouseModel;
+import com.ese.model.db.StaffModel;
 import com.ese.model.view.LocationView;
+import com.ese.utils.AttributeName;
+import com.ese.utils.FacesUtil;
 import com.ese.utils.Utils;
 import org.springframework.stereotype.Component;
 
@@ -101,6 +104,7 @@ public class LocationTransform extends Transform {
     }
 
     public MSLocationModel transformToModel(LocationView locationView){
+        int staffModel = (int) FacesUtil.getSession(false).getAttribute(AttributeName.STAFF.getName());
         MSLocationModel msLocationModel = new MSLocationModel();
         MSWarehouseModel warehouseModel = null;
 
@@ -124,9 +128,9 @@ public class LocationTransform extends Transform {
         msLocationModel.setIsFoil(locationView.getIsFoil());
 
         if (Utils.isZero(locationView.getId())){
-            msLocationModel.setCreateBy(1111);
+            msLocationModel.setCreateBy(staffModel);
             msLocationModel.setCreateDate(Utils.currentDate());
-            msLocationModel.setUpdateBy(1111);
+            msLocationModel.setUpdateBy(staffModel);
             msLocationModel.setUpdateDate(Utils.currentDate());
             msLocationModel.setIsValid(1);
             msLocationModel.setVersion(1);
@@ -134,7 +138,7 @@ public class LocationTransform extends Transform {
         } else {
             msLocationModel.setCreateBy(locationView.getCreateBy());
             msLocationModel.setCreateDate(locationView.getCreateDate());
-            msLocationModel.setUpdateBy(1111);
+            msLocationModel.setUpdateBy(staffModel);
             msLocationModel.setUpdateDate(Utils.currentDate());
             msLocationModel.setIsValid(locationView.getIsvalid());
             msLocationModel.setVersion(locationView.getVersion());

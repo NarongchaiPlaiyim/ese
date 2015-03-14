@@ -1,5 +1,6 @@
 package com.ese.model.view;
 
+import com.ese.model.db.StaffModel;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -9,7 +10,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class StockInOutNoteView {
+public class StockInOutNoteView extends View{
 
     private int id;
     private String type;
@@ -18,10 +19,6 @@ public class StockInOutNoteView {
     private String remark;
     private Integer isValid;
     private Integer version;
-    private int createBy;
-    private Date createDate;
-    private int updateBy;
-    private Date updateDate;
 
     @Override
     public String toString() {
@@ -33,10 +30,6 @@ public class StockInOutNoteView {
                 .append("remark", remark)
                 .append("isValid", isValid)
                 .append("version", version)
-                .append("createBy", createBy)
-                .append("createDate", createDate)
-                .append("updateBy", updateBy)
-                .append("updateDate", updateDate)
                 .toString();
     }
 }

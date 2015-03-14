@@ -3,6 +3,8 @@ package com.ese.transform;
 import com.ese.model.db.StaffModel;
 import com.ese.model.view.UserView;
 import com.ese.service.security.encryption.EncryptionService;
+import com.ese.utils.AttributeName;
+import com.ese.utils.FacesUtil;
 import com.ese.utils.Utils;
 import org.springframework.stereotype.Component;
 
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Component;
 public class UserManagementTranstorm extends Transform{
 
     public StaffModel transformToModel(UserView userView){
+        int staffModel2 = (int) FacesUtil.getSession(false).getAttribute(AttributeName.STAFF.getName());
         StaffModel staffModel = new StaffModel();
 
         staffModel.setId(userView.getId());
@@ -25,12 +28,12 @@ public class UserManagementTranstorm extends Transform{
         staffModel.setIsValid(1);
 
         if (Utils.isZero(userView.getId())){
-            staffModel.setCreateBy(11);
+            staffModel.setCreateBy(staffModel2);
             staffModel.setCreateDate(Utils.currentDate());
-            staffModel.setUpdateBy(11);
+            staffModel.setUpdateBy(staffModel2);
             staffModel.setUpdateDate(Utils.currentDate());
         } else {
-            staffModel.setUpdateBy(11);
+            staffModel.setUpdateBy(staffModel2);
             staffModel.setUpdateDate(Utils.currentDate());
             staffModel.setCreateBy(userView.getCreateBy());
             staffModel.setCreateDate(userView.getCreateDate());

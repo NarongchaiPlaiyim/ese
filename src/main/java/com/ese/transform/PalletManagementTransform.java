@@ -3,10 +3,13 @@ package com.ese.transform;
 import com.ese.model.StatusValue;
 import com.ese.model.db.MSLocationModel;
 import com.ese.model.db.PalletModel;
+import com.ese.model.db.StaffModel;
 import com.ese.model.view.PalletManagementView;
 import com.ese.model.view.report.PalletListReport;
 import com.ese.model.view.report.PalletManagemengModelReport;
 import com.ese.model.view.report.PalletManagementViewReport;
+import com.ese.utils.AttributeName;
+import com.ese.utils.FacesUtil;
 import com.ese.utils.Utils;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +35,7 @@ public class PalletManagementTransform extends Transform {
     }
 
     private PalletManagementView tranformToView(PalletModel palletModel){
+        int staffModel = (int) FacesUtil.getSession(false).getAttribute(AttributeName.STAFF.getName());
         PalletManagementView palletMeanegementView = new PalletManagementView();
 
         palletMeanegementView.setId(palletModel.getId());
@@ -64,7 +68,7 @@ public class PalletManagementTransform extends Transform {
 
 
         if(Utils.isNull(palletModel.getCreateBy())){
-            palletMeanegementView.setCreateBy(0);
+            palletMeanegementView.setCreateBy(staffModel);
         } else {
             palletMeanegementView.setCreateBy(palletModel.getCreateBy());
         }
@@ -73,7 +77,7 @@ public class PalletManagementTransform extends Transform {
 
 
         if(Utils.isNull(palletModel.getUpdateBy())){
-            palletMeanegementView.setUpdateBy(0);
+            palletMeanegementView.setUpdateBy(staffModel);
         } else {
             palletMeanegementView.setUpdateBy(palletModel.getUpdateBy());
         }

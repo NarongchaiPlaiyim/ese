@@ -3,7 +3,10 @@ package com.ese.transform;
 import com.ese.model.db.MSItemModel;
 import com.ese.model.db.MSLocationItemsModel;
 import com.ese.model.db.MSLocationModel;
+import com.ese.model.db.StaffModel;
 import com.ese.model.view.LocationItemView;
+import com.ese.utils.AttributeName;
+import com.ese.utils.FacesUtil;
 import com.ese.utils.Utils;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,15 +51,16 @@ public class LocationItemTransform extends Transform{
 
     public MSLocationItemsModel transformToModel(MSItemModel msItemModel, MSLocationModel msLocationModel){
         log.debug("transformToModel().");
+        int staffModel = (int) FacesUtil.getSession(false).getAttribute(AttributeName.STAFF.getName());
         MSLocationItemsModel model = new MSLocationItemsModel();
 
         model.setId(model.getId());
         model.setMsLocationModel(msLocationModel);
         model.setMsItemModel(msItemModel);
 
-        model.setCreateBy(1111);
+        model.setCreateBy(staffModel);
         model.setCreateDate(Utils.currentDate());
-        model.setUpdateBy(1111);
+        model.setUpdateBy(staffModel);
         model.setUpdateDate(Utils.currentDate());
         model.setIsValid(1);
         model.setVersion(1);

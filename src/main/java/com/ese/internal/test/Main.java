@@ -1,8 +1,10 @@
 package com.ese.internal.test;
 
 
+import com.ese.model.db.AXCustomerConfirmJourModel;
 import com.ese.utils.FacesUtil;
 import com.ese.utils.Utils;
+import com.sun.istack.internal.NotNull;
 import org.apache.commons.io.FilenameUtils;
 
 import javax.faces.context.FacesContext;
@@ -13,7 +15,17 @@ import java.util.Calendar;
 import java.util.List;
 
 public class Main {
+
+    @NotNull private static AXCustomerConfirmJourModel axCustomerConfirmJourModel;
+    private static AXCustomerConfirmJourModel axCustomerConfirmJourModel2;
+
+    public Main() {
+
+    }
+
     public static void main(String[] args) {
+        System.out.println(axCustomerConfirmJourModel.toString());
+        System.out.println(axCustomerConfirmJourModel2.toString());
 
 //        semester
 
@@ -41,6 +53,9 @@ public class Main {
         semester.add("Summer");
 
         ArrayList<Integer> list = new ArrayList<Integer>(7);
+
+
+
     }
 
 

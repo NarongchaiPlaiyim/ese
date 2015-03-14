@@ -1,6 +1,7 @@
 package com.ese.model.view;
 
 import com.ese.model.db.MSWarehouseModel;
+import com.ese.model.db.StaffModel;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class LocationView {
+public class LocationView extends View{
     private int id;
     private String locationBarcode;
     private String locationName;
@@ -20,10 +21,6 @@ public class LocationView {
     private String remark;
     private int qty;
     private int status;
-    private int createBy;
-    private Date createDate;
-    private int updateBy;
-    private Date updateDate;
     private int isvalid;
     private int version;
     private int reservedQty;
@@ -70,10 +67,6 @@ public class LocationView {
                 .append("remark", remark)
                 .append("qty", qty)
                 .append("status", status)
-                .append("createBy", createBy)
-                .append("createDate", createDate)
-                .append("updateBy", updateBy)
-                .append("updateDate", updateDate)
                 .append("isvalid", isvalid)
                 .append("version", version)
                 .append("reservedQty", reservedQty)
