@@ -1,4 +1,4 @@
-package com.ese.model.db;
+    package com.ese.model.db;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,8 +7,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
+import java.util.Date;
 
-@Getter
+    @Getter
 @Setter
 @Entity
 @Table(name = "loading_order")
@@ -20,6 +21,10 @@ public class LoadingOrderModel extends AbstractModel{
 
     @Column(name="docno")
     private String docno;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "loadingdate")
+    private Date loadingDate;
 
     @OneToOne
     @JoinColumn(name="status")
