@@ -21,7 +21,10 @@
             </p:submenu>
 
             <p:separator/>
-            <p:menuitem value="#{msg.get('menu.londing.title')}" icon="ui-icon-gear"/>
+            <p:submenu label="#{msg.get('menu.loading.title')}" icon="ui-icon-gear">
+                <p:menuitem value="#{msg.get('menu.loading.title.sub.1')}" outcome="#{msg.get('menu.loading.title.sub.url.1')}"/>
+                <p:menuitem value="#{msg.get('menu.loading.title.sub.2')}" outcome="#{msg.get('menu.loading.title.sub.url.2')}"/>
+            </p:submenu>
 
             <p:separator/>
             <p:menuitem value="#{msg.get('menu.stockmovement.title')}" icon="ui-icon-gear"/>
