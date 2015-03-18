@@ -139,20 +139,32 @@ public class PickingOrderShowItemService extends Service{
         return pickingOrderLineDAO.findByItemId(itemId, "", "", warehouseId, locationId, locationQtyId);
     }
 
-    public void saveManualReserved(LocationQtyView locationQtyId, int reservedQty, int pickingLineId){
+    public String saveManualReserved(LocationQtyView locationQtyId, int reservedQty, int pickingLineId){
         StatusModel statusModel = statusDAO.findByStatusSeqTablePickingOrder(TableValue.RESERVED_ORDER.getId());
+        message = "Fail";
 
         try {
             PickingOrderLineModel pickingOrderLineModel = pickingOrderLineDAO.findByID(pickingLineId);
-            MSLocationModel msLocationModel = locationDAO.findByID(locationQtyId.getLocationId());
-            ReservedOrderModel reservedOrderModel = reservedOrderTransform.tramsformToModel(pickingOrderLineModel, msLocationModel, statusModel, reservedQty, locationQtyId.getBatchNo());
-            pickingOrderLineDAO.updateReservedQtyByLocaitonQtyId(locationQtyId.getId(), reservedQty);
-            reservedOrderDAO.persist(reservedOrderModel);
             FIFOReservedView fifoReservedView = pickingOrderLineDAO.findQtyOnInventTran(pickingOrderLineModel.getId());
-            pickingOrderLineDAO.updateInventTransByUseFinish(fifoReservedView.getInventtransId());
+            int sumReservedOrder = pickingOrderLineDAO.getSumReservedOrder(pickingLineId);
+            log.debug("InventtransQty [{}] : sumReservedOrder {[{}]", fifoReservedView.getInventtransQty(), sumReservedOrder);
+
+            if (fifoReservedView.getInventtransQty() > sumReservedOrder){
+                MSLocationModel msLocationModel = locationDAO.findByID(locationQtyId.getLocationId());
+                ReservedOrderModel reservedOrderModel = reservedOrderTransform.tramsformToModel(pickingOrderLineModel, msLocationModel, statusModel, reservedQty, locationQtyId.getBatchNo());
+                pickingOrderLineDAO.updateReservedQtyByLocaitonQtyId(locationQtyId.getId(), reservedQty);
+                reservedOrderDAO.persist(reservedOrderModel);
+                pickingOrderLineDAO.updateInventTransByUseFinish(fifoReservedView.getInventtransId());
+
+                message = "Success";
+            }
+
+
         } catch (Exception e) {
             log.debug("Exception error saveManualReserved : ", e);
         }
+
+        return message;
     }
 
     public void saveItemQty(int pickingLineId, int orderQty){

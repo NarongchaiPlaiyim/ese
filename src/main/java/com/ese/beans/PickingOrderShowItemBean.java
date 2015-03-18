@@ -246,9 +246,15 @@ public class PickingOrderShowItemBean extends Bean {
 //            onLoadManualReserved();
 //            return;
         } else  if (reservedManualQty <= selectLocationQtyView.getAvailable()){
-            pickingOrderShowItemService.saveManualReserved(selectLocationQtyView, reservedManualQty, itemView.getId());
-            pickingOrderShowItemService.setStatusPickingOrder(pickingOrderModel.getId());
-            showDialog(MessageDialog.SAVE.getMessageHeader(), "Success.", "msgBoxSystemMessageDlg");
+            String resultManual = pickingOrderShowItemService.saveManualReserved(selectLocationQtyView, reservedManualQty, itemView.getId());
+
+            if ("Success".equals(resultManual)){
+                pickingOrderShowItemService.setStatusPickingOrder(pickingOrderModel.getId());
+                showDialog(MessageDialog.SAVE.getMessageHeader(), "Success.", "msgBoxSystemMessageDlg");
+                init();
+            } else {
+                showDialog(MessageDialog.WARNING.getMessageHeader(), "can't  reserve", "msgBoxSystemMessageDlg");
+            }
         }
         reservedManualQty = 0;
         locationQtyViewList = pickingOrderShowItemService.getLocationQtyBySearch(itemView.getItem(), warehouseId, locationId, locationQtyId);
