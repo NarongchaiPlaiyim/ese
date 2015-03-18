@@ -31,7 +31,7 @@ public class StatusDAO extends GenericDAO<StatusModel, Integer>{
         List<StatusModel> modelList = Utils.getEmptyList();
         try {
             Criteria criteria = getCriteria();
-            criteria.add(Restrictions.eq("tableId.id", 1));
+            criteria.add(Restrictions.eq("tableId.id", tableId));
 
             modelList = Utils.safetyList(criteria.list());
         } catch (Exception e) {
