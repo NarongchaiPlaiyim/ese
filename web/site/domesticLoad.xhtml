@@ -20,8 +20,113 @@
             </p:layoutUnit>
 
             <p:layoutUnit id="layoutCenter" position="center" header="#{msg.get('menu.loading.title.sub.2')}" >
-                <h:form id="mainForm">
-                    MAIN_PAGE_TEST
+                <h:form id="domesticForm">
+                    <p:panel style="border: 0">
+                        <div style="text-align: right;">
+                            <p:commandButton id="btnRefresh"
+                                             value="New / Edit loading order"/>
+                            <p:commandButton id="btn2"
+                                             value="Pring loading report"/>
+                            <p:commandButton id="btn3"
+                                             value="Show picking list"/>
+                        </div>
+
+                        <div class="left">
+                            <table  border="0" class="content_table_form">
+                                <tr >
+                                    <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
+                                    <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
+                                    <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
+                                    <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
+                                    <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
+                                    <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
+                                    <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
+                                    <td/>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h:outputText value="Doc No"/>
+                                    </td>
+                                    <td>
+                                        <p:inputText id="docNo" style="min-width: 200px; width: 200px; max-width: 200px;"
+                                                    value="#{domesticLoadBean.docNo}"/>
+                                    </td>
+                                    <td>
+                                        <h:outputText value="Loading Date"/>
+                                    </td>
+                                    <td>
+                                        <p:calendar value="#{domesticLoadBean.loadingDate}"
+                                                    pattern="dd/MM/yyyy"
+                                                    showOn="button">
+                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                        </p:calendar>
+                                    </td>
+                                    <td>
+                                        <h:outputText value="Status"/>
+                                    </td>
+                                    <td>
+                                        <p:selectOneMenu value="#{domesticLoadBean.status}"
+                                                         style="#{msg.get('fix.size.200')} margin-top: 4px">
+                                            <f:selectItem itemLabel=" All " itemValue="10"/>
+                                            <f:selectItems value="#{domesticLoadBean.statusValue}"
+                                                           var="statusItem"
+                                                           itemLabel="#{statusItem.caption}"
+                                                           itemValue="#{statusItem.statusSeq}"/>
+                                        </p:selectOneMenu>
+                                    </td>
+                                    <td>
+                                        <p:commandButton id="btnSearch"
+                                                         value="Search"/>
+                                    </td>
+
+                                </tr>
+                            </table>
+                        </div>
+
+
+                    </p:panel>
+
+                    <table border="0" class="content_table_form">
+                        <tr >
+                            <td class="fixMinMax100 left" />
+                            <td class="fixMinMax200 left" />
+                            <td class="fixMinMax100 center" />
+                            <td class="fixMinMax100 left" />
+                            <td class="fixMinMax200 left" />
+                            <td/>
+                        </tr>
+                        <tr>
+                            <td colspan="6">
+                                <p:dataTable id="loadingOrderTable"
+                                             scrollable="true" scrollHeight="450"
+                                             var="loadingOrderModel"
+                                             resizableColumns="true"
+                                             value="#{domesticLoadBean.loadingOrderModelList}"
+                                             selectionMode="single"
+                                             selection="#{domesticLoadBean.loadingOrderModel}"
+                                             rowKey="#{loadingOrderModel.id}"
+                                             rowIndexVar="rowIndex">
+                                    <p:column headerText="No" style="min-width: 5px; width: 5px; max-width: 5px;">
+                                        <h:outputText value="#{rowIndex+1}" styleClass="center" />
+                                    </p:column>
+                                    <p:column headerText="Doc No" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
+                                        <h:outputText value="#{loadingOrderModel.docNo}"/>
+                                    </p:column>
+                                    <p:column headerText="Loading Date" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
+                                        <h:outputText value="#{loadingOrderModel.loadingDate}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column headerText="Remark" style="min-width: 150px; width: 150px; max-width: 150px;" styleClass="center">
+                                        <h:outputText value="#{loadingOrderModel.remark}" style="word-wrap:break-word;"/>
+                                    </p:column>
+                                    <p:column headerText="Status" style="min-width: 30px; width: 30px; max-width: 30px;" styleClass="center">
+                                        <h:outputText value="#{loadingOrderModel.statusModel.statusDes}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </td>
+                        </tr>
+                    </table>
                 </h:form>
             </p:layoutUnit>
         </p:layout>
