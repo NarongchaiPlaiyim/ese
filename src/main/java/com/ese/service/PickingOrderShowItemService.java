@@ -42,19 +42,30 @@ public class PickingOrderShowItemService extends Service{
         }
     }
 
-    public String onReserved(int pickingOrderLineId, String startBatch, String toBatch){
-        ReservedOrderModel reservedOrderModel;
-        PickingOrderLineModel pickingOrderLineModel;
-        MSLocationModel msLocationModel;
-        List<LocationQtyView> locationQtyViewList = Utils.getEmptyList();
-        int restQty = 0;
-        message = "Fail";
-
+    public String checkQty(int pickingOrderLineId){
         FIFOReservedView fifoReservedView = pickingOrderLineDAO.findQtyOnInventTran(pickingOrderLineId);
         int sumReservedOrder = pickingOrderLineDAO.getSumReservedOrder(pickingOrderLineId);
         log.debug("InvenQty : [{}], sumReservedOrder : [{}]", fifoReservedView.getInventtransQty(), sumReservedOrder);
 
         if (fifoReservedView.getInventtransQty() > sumReservedOrder){
+            return "Success";
+        }
+
+        return "Fail";
+    }
+
+    public void onReserved(int pickingOrderLineId, String startBatch, String toBatch){
+        ReservedOrderModel reservedOrderModel;
+        PickingOrderLineModel pickingOrderLineModel;
+        MSLocationModel msLocationModel;
+        List<LocationQtyView> locationQtyViewList = Utils.getEmptyList();
+        int restQty = 0;
+
+        FIFOReservedView fifoReservedView = pickingOrderLineDAO.findQtyOnInventTran(pickingOrderLineId);
+//        int sumReservedOrder = pickingOrderLineDAO.getSumReservedOrder(pickingOrderLineId);
+//        log.debug("InvenQty : [{}], sumReservedOrder : [{}]", fifoReservedView.getInventtransQty(), sumReservedOrder);
+
+//        if (fifoReservedView.getInventtransQty() > sumReservedOrder){
             if (Utils.isZero(startBatch.trim().length()) && Utils.isZero(toBatch.trim().length())){
                 //FIFO Reserved
                 locationQtyViewList = pickingOrderLineDAO.findByItemId(fifoReservedView.getItemId(), "", "", 0, 0, 0);
@@ -104,11 +115,8 @@ public class PickingOrderShowItemService extends Service{
                         }
                     }
                 }
-                message = "Success";
-            }
+//            }
         }
-
-        return message;
     }
 
     public List<LocationQtyView> onManualReserved(int pickingOrderLineId, String batchNo, int warehouseId, int locationId){
@@ -139,32 +147,32 @@ public class PickingOrderShowItemService extends Service{
         return pickingOrderLineDAO.findByItemId(itemId, "", "", warehouseId, locationId, locationQtyId);
     }
 
-    public String saveManualReserved(LocationQtyView locationQtyId, int reservedQty, int pickingLineId){
+    public void saveManualReserved(LocationQtyView locationQtyId, int reservedQty, int pickingLineId){
         StatusModel statusModel = statusDAO.findByStatusSeqTablePickingOrder(TableValue.RESERVED_ORDER.getId());
         message = "Fail";
 
         try {
             PickingOrderLineModel pickingOrderLineModel = pickingOrderLineDAO.findByID(pickingLineId);
             FIFOReservedView fifoReservedView = pickingOrderLineDAO.findQtyOnInventTran(pickingOrderLineModel.getId());
-            int sumReservedOrder = pickingOrderLineDAO.getSumReservedOrder(pickingLineId);
-            log.debug("InventtransQty [{}] : sumReservedOrder {[{}]", fifoReservedView.getInventtransQty(), sumReservedOrder);
+//            int sumReservedOrder = pickingOrderLineDAO.getSumReservedOrder(pickingLineId);
+//            log.debug("InventtransQty [{}] : sumReservedOrder {[{}]", fifoReservedView.getInventtransQty(), sumReservedOrder);
+//
+//            if (fifoReservedView.getInventtransQty() > sumReservedOrder){
+            MSLocationModel msLocationModel = locationDAO.findByID(locationQtyId.getLocationId());
+            ReservedOrderModel reservedOrderModel = reservedOrderTransform.tramsformToModel(pickingOrderLineModel, msLocationModel, statusModel, reservedQty, locationQtyId.getBatchNo());
+            pickingOrderLineDAO.updateReservedQtyByLocaitonQtyId(locationQtyId.getId(), reservedQty);
+            reservedOrderDAO.persist(reservedOrderModel);
+            pickingOrderLineDAO.updateInventTransByUseFinish(fifoReservedView.getInventtransId());
 
-            if (fifoReservedView.getInventtransQty() > sumReservedOrder){
-                MSLocationModel msLocationModel = locationDAO.findByID(locationQtyId.getLocationId());
-                ReservedOrderModel reservedOrderModel = reservedOrderTransform.tramsformToModel(pickingOrderLineModel, msLocationModel, statusModel, reservedQty, locationQtyId.getBatchNo());
-                pickingOrderLineDAO.updateReservedQtyByLocaitonQtyId(locationQtyId.getId(), reservedQty);
-                reservedOrderDAO.persist(reservedOrderModel);
-                pickingOrderLineDAO.updateInventTransByUseFinish(fifoReservedView.getInventtransId());
-
-                message = "Success";
-            }
+//                message = "Success";
+//            }
 
 
         } catch (Exception e) {
             log.debug("Exception error saveManualReserved : ", e);
         }
 
-        return message;
+//        return message;
     }
 
     public void saveItemQty(int pickingLineId, int orderQty){
