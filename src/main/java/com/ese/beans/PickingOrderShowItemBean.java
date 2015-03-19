@@ -120,8 +120,8 @@ public class PickingOrderShowItemBean extends Bean {
     public void onClickTable(){
 
         if (Utils.isSafetyList(selectPickingLine)){
+            btnOnload();
             for (PickingOrderShowItemView view : selectPickingLine){
-
                 String flagReserved = pickingOrderShowItemService.checkQty(view.getId());
 
                 if ("Success".equals(flagReserved)){
