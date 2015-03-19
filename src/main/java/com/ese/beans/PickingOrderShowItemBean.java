@@ -120,21 +120,29 @@ public class PickingOrderShowItemBean extends Bean {
     public void onClickTable(){
 
         if (Utils.isSafetyList(selectPickingLine)){
+            btnOnload();
             for (PickingOrderShowItemView view : selectPickingLine){
-                log.debug("------------- : {}, {} : {}", view.toString(), view.getStatusID(), view.getStatus());
-                if (view.getStatusID() < 3){
-                    if (selectPickingLine.size() > 1){
-                        flagItem = true;
-                        flagManualReserved = true;
-                    } else {
-                        flagItem = false;
-                        flagManualReserved = false;
+                String flagReserved = pickingOrderShowItemService.checkQty(view.getId());
+
+                if ("Success".equals(flagReserved)){
+                    if (view.getStatusID() < 3){
+                        if (selectPickingLine.size() > 1){
+                            flagItem = true;
+                            flagManualReserved = true;
+                        } else {
+                            flagItem = false;
+                            flagManualReserved = false;
+                        }
+                        flagFIFOReserved = false;
+                        flagPeriodReserved = false;
+                        flagPoil = false;
+                        flagShowStatus = false;
+                        flagPrint = false;
                     }
-                    flagFIFOReserved = false;
-                    flagPeriodReserved = false;
-                    flagPoil = false;
-                    flagShowStatus = false;
-                    flagPrint = false;
+                } else {
+                    flagFIFOReserved = true;
+                    flagPeriodReserved = true;
+                    flagManualReserved = true;
                 }
             }
         } else {
@@ -159,15 +167,10 @@ public class PickingOrderShowItemBean extends Bean {
     public void FIFOReserved(){
 
         for (PickingOrderShowItemView view : selectPickingLine){
-            resultReserve = pickingOrderShowItemService.onReserved(view.getId(), "", "");
-
-            if ("Success".equals(resultReserve)){
-                pickingOrderShowItemService.setStatusPickingOrder(pickingOrderModel.getId());
-                showDialog(MessageDialog.SAVE.getMessageHeader(), "Success.", "msgBoxSystemMessageDlg");
-                init();
-            } else {
-                showDialog(MessageDialog.WARNING.getMessageHeader(), "can't  reserve", "msgBoxSystemMessageDlg");
-            }
+            pickingOrderShowItemService.onReserved(view.getId(), "", "");
+            pickingOrderShowItemService.setStatusPickingOrder(pickingOrderModel.getId());
+            showDialog(MessageDialog.SAVE.getMessageHeader(), "Success.", "msgBoxSystemMessageDlg");
+            init();
         }
     }
 
@@ -180,15 +183,10 @@ public class PickingOrderShowItemBean extends Bean {
 
         if (Utils.parseInt(batchStart, 0) <= Utils.parseInt(batchTo, 0)){
             for (PickingOrderShowItemView view : selectPickingLine){
-                resultReserve = pickingOrderShowItemService.onReserved(view.getId(), startBatch, toBatch);
-
-                if ("Success".equals(resultReserve)){
-                    pickingOrderShowItemService.setStatusPickingOrder(pickingOrderModel.getId());
-                    showDialog(MessageDialog.SAVE.getMessageHeader(), "Success.", "msgBoxSystemMessageDlg");
-                    init();
-                } else {
-                    showDialog(MessageDialog.WARNING.getMessageHeader(), "can't  reserve", "msgBoxSystemMessageDlg");
-                }
+                pickingOrderShowItemService.onReserved(view.getId(), startBatch, toBatch);
+                pickingOrderShowItemService.setStatusPickingOrder(pickingOrderModel.getId());
+                showDialog(MessageDialog.SAVE.getMessageHeader(), "Success.", "msgBoxSystemMessageDlg");
+                init();
             }
         } else {
             showDialog(MessageDialog.WARNING.getMessageHeader(), "StartBatch > ToBatch", "msgBoxSystemMessageDlg");
@@ -246,15 +244,10 @@ public class PickingOrderShowItemBean extends Bean {
 //            onLoadManualReserved();
 //            return;
         } else  if (reservedManualQty <= selectLocationQtyView.getAvailable()){
-            String resultManual = pickingOrderShowItemService.saveManualReserved(selectLocationQtyView, reservedManualQty, itemView.getId());
-
-            if ("Success".equals(resultManual)){
-                pickingOrderShowItemService.setStatusPickingOrder(pickingOrderModel.getId());
-                showDialog(MessageDialog.SAVE.getMessageHeader(), "Success.", "msgBoxSystemMessageDlg");
-                init();
-            } else {
-                showDialog(MessageDialog.WARNING.getMessageHeader(), "can't  reserve", "msgBoxSystemMessageDlg");
-            }
+            pickingOrderShowItemService.saveManualReserved(selectLocationQtyView, reservedManualQty, itemView.getId());
+            pickingOrderShowItemService.setStatusPickingOrder(pickingOrderModel.getId());
+            showDialog(MessageDialog.SAVE.getMessageHeader(), "Success.", "msgBoxSystemMessageDlg");
+            init();
         }
         reservedManualQty = 0;
         locationQtyViewList = pickingOrderShowItemService.getLocationQtyBySearch(itemView.getItem(), warehouseId, locationId, locationQtyId);
