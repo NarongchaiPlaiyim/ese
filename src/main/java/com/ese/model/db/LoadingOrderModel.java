@@ -9,7 +9,7 @@ import org.hibernate.annotations.Proxy;
 import javax.persistence.*;
 import java.util.Date;
 
-    @Getter
+@Getter
 @Setter
 @Entity
 @Table(name = "loading_order")
@@ -20,22 +20,18 @@ public class LoadingOrderModel extends AbstractModel{
     private int id;
 
     @Column(name="docno")
-    private String docno;
+    private String docNo;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "loadingdate")
     private Date loadingDate;
 
+    @Column(name="remark")
+    private String remark;
+
     @OneToOne
     @JoinColumn(name="status")
     private StatusModel statusModel;
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("id", id)
-                .append("docno", docno)
-                .append("statusModel", statusModel)
-                .toString();
-    }
+
 }
