@@ -53,8 +53,7 @@ public class DomesticLoadService extends Service {
             int staffModel = (int) FacesUtil.getSession(false).getAttribute(AttributeName.STAFF.getName());
             loadingOrderModel.setUpdateBy(staffModel);
             loadingOrderModel.setUpdateDate(Utils.currentDate());
-            loadingOrderModel.setStatusModel(statusDAO.findByStatusId(12));
-            loadingOrderDAO.persist(loadingOrderModel);
+            loadingOrderDAO.update(loadingOrderModel);
         } catch (Exception e) {
             log.debug("Exception error during save ", e);
         }

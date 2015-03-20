@@ -21,7 +21,6 @@ public class LoadingOrderDAO extends GenericDAO<LoadingOrderModel, Integer>{
         } catch (Exception e){
             log.debug("Exception error findByStatusIs12 : ", e);
         }
-        System.out.println(loadingOrderModelList.size());
         return loadingOrderModelList;
     }
 }

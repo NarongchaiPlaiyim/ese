@@ -23,12 +23,11 @@
                 <h:form id="domesticForm">
                     <p:panel style="border: 0">
                         <div style="text-align: right;">
-                            <!--<p:commandButton id="btnRefresh"-->
-                                             <!--value="New / Edit loading order"/>-->
 
-                            <p:commandButton value="#{msg.get('btn.name.new')}"
+                            <p:commandButton id="btnNE"
+                                    value="#{domesticLoadBean.btnName}"
                                              action="#{domesticLoadBean.onClickButtonNew()}"
-                                             styleClass="medium" style="#{msg.get('btn.size')}"
+                                             styleClass="medium"
                                              oncomplete="PF('loadingOrderDlg').show()"
                                              icon="ui-icon-plusthick"/>
 
@@ -113,6 +112,8 @@
                                              selection="#{domesticLoadBean.loadingOrderModel}"
                                              rowKey="#{loadingOrderModel.id}"
                                              rowIndexVar="rowIndex">
+                                    <p:ajax event="rowSelect" update=":domesticForm:btnNE, :loadingOrderDlgForm"
+                                            listener="#{domesticLoadBean.onClickPalletTB}"/>
                                     <p:column headerText="No" style="min-width: 5px; width: 5px; max-width: 5px;">
                                         <h:outputText value="#{rowIndex+1}" styleClass="center" />
                                     </p:column>

@@ -32,12 +32,16 @@ public class DomesticLoadBean extends Bean {
     @NotNull private List<LoadingOrderModel> loadingOrderModelList;
     @NotNull private List<StatusModel> statusValue;
 
+    private String btnName = "New loading order";
+    private boolean mode = Boolean.TRUE;
+
+
     @PostConstruct
     private void onCreation(){
         log.debug("onCreation()");
-       // if(preLoad()) {//&& isAuthorize(key)){
+       if(preLoad()) {//&& isAuthorize(key)){
             init();
-        //}
+       }
     }
 
     private void init(){
@@ -48,7 +52,6 @@ public class DomesticLoadBean extends Bean {
 
     private void onLoadTable(){
         loadingOrderModelList = domesticLoadService.getList();
-        System.out.println(loadingOrderModelList.size());
     }
 
     private void onLoadStatue(){
@@ -56,13 +59,24 @@ public class DomesticLoadBean extends Bean {
     }
 
     public void onClickButtonNew(){
-        loadingOrderModel = new LoadingOrderModel();
+        if (mode) {
+            loadingOrderModel = new LoadingOrderModel();
+        }
     }
 
     public void onClickSaveLoadingOrderDialog(){
-
-        domesticLoadService.save(loadingOrderModel);
-        showDialogSaved();
+        System.out.println(mode);
+        if (mode) {
+            domesticLoadService.save(loadingOrderModel);
+            showDialogSaved();
+        } else {
+            domesticLoadService.edit(loadingOrderModel);
+            showDialogEdited();
+        }
         init();
+    }
+    public void onClickPalletTB(){
+        btnName = "Edit loading order";
+        mode = Boolean.FALSE;
     }
 }
