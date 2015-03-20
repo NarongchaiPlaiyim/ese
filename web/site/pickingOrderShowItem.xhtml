@@ -218,10 +218,10 @@
                     </p:panel>
 
                     <p:dataTable id="pickingOrderShowItemTable"
-                                 styleClass="full_table"
+                                 styleClass="full_table"  var="pickingLine"
                                  selection="#{pickingOrderShowItemBean.selectPickingLine}"
                                  value="#{pickingOrderShowItemBean.orderLineModelList}"
-                                 var="pickingLine"
+                                 scrollable="true" scrollHeight="450"
                                  rowKey="#{pickingLine.id}"
                                  resizableColumns="true"
                                  style="width: 100%; max-width: 100%; min-width: 100%">
@@ -249,7 +249,7 @@
                                         :pickingOrderShowItemForm:manualBtn,
                                         :pickingOrderShowItemForm:poilBtn,
                                         :pickingOrderShowItemForm:showStatusBtn"/>
-                        <p:column selectionMode="multiple" style="width:16px;text-align:center; height: 20px"/>
+                        <p:column selectionMode="multiple" style="width:16px;text-align:center;"/>
                         <p:column headerText="Item" style="width: 80px" styleClass="center">
                             <h:outputText value="#{pickingLine.item}"/>
                         </p:column>

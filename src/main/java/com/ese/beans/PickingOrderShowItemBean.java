@@ -140,6 +140,16 @@ public class PickingOrderShowItemBean extends Bean {
                         flagPrint = false;
                     }
                 } else {
+                    if (view.getStatusID() < 3){
+                        if (selectPickingLine.size() > 1){
+                            flagItem = true;
+                        } else {
+                            flagItem = false;
+                        }
+                    }
+
+                    flagPrint = false;
+                    flagShowStatus = false;
                     flagFIFOReserved = true;
                     flagPeriodReserved = true;
                     flagManualReserved = true;
