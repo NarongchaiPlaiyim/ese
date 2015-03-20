@@ -23,8 +23,15 @@
                 <h:form id="domesticForm">
                     <p:panel style="border: 0">
                         <div style="text-align: right;">
-                            <p:commandButton id="btnRefresh"
-                                             value="New / Edit loading order"/>
+                            <!--<p:commandButton id="btnRefresh"-->
+                                             <!--value="New / Edit loading order"/>-->
+
+                            <p:commandButton value="#{msg.get('btn.name.new')}"
+                                             action="#{domesticLoadBean.onClickButtonNew()}"
+                                             styleClass="medium" style="#{msg.get('btn.size')}"
+                                             oncomplete="PF('loadingOrderDlg').show()"
+                                             icon="ui-icon-plusthick"/>
+
                             <p:commandButton id="btn2"
                                              value="Pring loading report"/>
                             <p:commandButton id="btn3"
@@ -130,6 +137,27 @@
                 </h:form>
             </p:layoutUnit>
         </p:layout>
+
+        <p:panel id="msgBoxSystemMessagePanel" style="border: 0">
+            <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="#{msg.get('dialog.message.size')}" closable="false"
+                             header="#{domesticLoadBean.messageHeader}" message="#{domesticLoadBean.message}" >
+                <div style="text-align: right">
+                    <p:commandButton value="#{msg.get('btn.name.ok')}"
+                                     process="@this"
+                                     update=":domesticForm"
+                                     icon="ui-icon-check"
+                                     styleClass="medium" style="#{msg.get('btn.size')}"
+                                     oncomplete="PF('msgBoxSystemMessageDlg').hide(); PF('loadingOrderDlg').hide()"/>
+                </div>
+            </p:confirmDialog>
+        </p:panel>
+
+        <p:dialog id="loadingOrderDialog" widgetVar="loadingOrderDlg" header="Loading order" closable="false"
+                  onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
+                  modal="true" width="500" height="450">
+            <ui:include src="../site/dialog/loadingOrderDialog.xhtml"/>
+        </p:dialog>
+
     </h:body>
 </f:view>
 </html>

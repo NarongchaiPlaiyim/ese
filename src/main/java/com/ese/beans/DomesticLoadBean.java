@@ -33,19 +33,36 @@ public class DomesticLoadBean extends Bean {
     @NotNull private List<StatusModel> statusValue;
 
     @PostConstruct
-    public void onCreation(){
+    private void onCreation(){
         log.debug("onCreation()");
-        if(preLoad()) {//&& isAuthorize(key)){
+       // if(preLoad()) {//&& isAuthorize(key)){
             init();
-        }
+        //}
     }
 
     private void init(){
         loadingDate = Utils.currentDate();
         onLoadStatue();
+        onLoadTable();
+    }
+
+    private void onLoadTable(){
+        loadingOrderModelList = domesticLoadService.getList();
+        System.out.println(loadingOrderModelList.size());
     }
 
     private void onLoadStatue(){
         statusValue = domesticLoadService.getStatusAll();
+    }
+
+    public void onClickButtonNew(){
+        loadingOrderModel = new LoadingOrderModel();
+    }
+
+    public void onClickSaveLoadingOrderDialog(){
+
+        domesticLoadService.save(loadingOrderModel);
+        showDialogSaved();
+        init();
     }
 }

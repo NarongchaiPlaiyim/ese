@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+
+        <h:form id="loadingOrderDlgForm">
+            <table border="0">
+                <tr>
+                    <td style="width: 200px; max-width: 200px; min-width: 200px"/>
+                    <td style="width: 200px; max-width: 200px; min-width: 200px"/>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel value="Doc No."/>
+                    </td>
+                    <td>
+                        <p:inputText value="#{domesticLoadBean.loadingOrderModel.docNo}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel value="Loading Date"/>
+                    </td>
+                    <td>
+                        <p:calendar value="#{domesticLoadBean.loadingOrderModel.loadingDate}"
+                                    pattern="dd/MM/yyyy"
+                                    showOn="button">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:calendar>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel value="Remark"/>
+                    </td>
+                    <td>
+                        <p:inputText value="#{domesticLoadBean.loadingOrderModel.remark}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6">
+                        <div style="text-align: right;">
+                            <p:commandButton value="#{msg.get('btn.name.save')}"
+                                             id="btnSave"
+                                             styleClass="medium" style="#{msg.get('btn.size')}"
+                                             icon="ui-icon-check"
+                                             process="@form"
+                                             update=":domesticForm, :msgBoxSystemMessagePanel"
+                                             action="#{domesticLoadBean.onClickSaveLoadingOrderDialog()}"/>
+                            <p:commandButton value="#{msg.get('btn.name.cancel')}"
+                                             id="btnCancel"
+                                             icon="ui-icon-cancel"
+                                             styleClass="medium" style="#{msg.get('btn.size')}"
+                                             oncomplete="PF('loadingOrderDlg').hide()"/>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </h:form>
+</f:view>
+</html>
