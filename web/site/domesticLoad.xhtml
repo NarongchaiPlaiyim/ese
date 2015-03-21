@@ -41,11 +41,11 @@
                         <div class="left">
                             <table  border="0" class="content_table_form">
                                 <tr >
-                                    <td style="min-width: 150px; width: 150px; max-width: 150px;" class="left" />
+                                    <td style="min-width: 90px; width: 90px; max-width: 90px;" class="left" />
                                     <td style="min-width: 250px; width: 250px; max-width: 250px;" class="left" />
                                     <td style="min-width: 150px; width: 150px; max-width: 150px;" class="left" />
-                                    <td style="min-width: 250px; width: 250px; max-width: 250px;" class="left" />
-                                    <td style="min-width: 150px; width: 150px; max-width: 150px;" class="left" />
+                                    <td style="min-width: 190px; width: 190px; max-width: 190px;" class="left" />
+                                    <td style="min-width: 80px; width: 80px; max-width: 80px;" class="left" />
                                     <td style="min-width: 250px; width: 250px; max-width: 250px;" class="left" />
                                     <td style="min-width: 250px; width: 250px; max-width: 250px;" class="left" />
                                     <td/>
@@ -55,19 +55,17 @@
                                         <h:outputText value="Doc No"/>
                                     </td>
                                     <td>
-                                        <p:inputText id="docNo" style="min-width: 200px; width: 200px; max-width: 200px;"
-                                                    value="#{domesticLoadBean.docNo}"/>
+                                        <p:inputText  style="min-width: 200px; width: 200px; max-width: 200px;" value="#{domesticLoadBean.docNo}"/>
                                     </td>
                                     <td>
                                         <h:outputText value="Loading Date"/>
                                     </td>
                                     <td>
-                                        <p:calendar value="#{domesticLoadBean.loadingDate}"
-                                                    pattern="dd/MM/yyyy"
-                                                    style="min-width: 100px; width: 100px; max-width: 100px;"
-                                                    showOn="button">
-                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
-                                        </p:calendar>
+                                        <p:inputMask  style="min-width: 150px; width: 150px; max-width: 150px;"
+                                                      value="#{domesticLoadBean.loadingDate}"
+                                                     onkeydown="return onKeyDownNumber(event);"
+                                                     onkeypress="return onKeyPressNumber(event);"
+                                                     mask="99/99/9999"/>
                                     </td>
                                     <td>
                                         <h:outputText value="Status"/>
@@ -75,11 +73,11 @@
                                     <td>
                                         <p:selectOneMenu value="#{domesticLoadBean.status}"
                                                          style="#{msg.get('fix.size.200')} margin-top: 4px">
-                                            <f:selectItem itemLabel=" All " itemValue="10"/>
+                                            <f:selectItem itemLabel="- Please Select -" itemValue=""/>
                                             <f:selectItems value="#{domesticLoadBean.statusValue}"
                                                            var="statusItem"
                                                            itemLabel="#{statusItem.caption}"
-                                                           itemValue="#{statusItem.statusSeq}"/>
+                                                           itemValue="#{statusItem.id}"/>
                                         </p:selectOneMenu>
                                     </td>
                                     <td>

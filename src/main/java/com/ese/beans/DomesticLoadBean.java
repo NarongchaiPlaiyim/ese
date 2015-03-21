@@ -25,7 +25,7 @@ public class DomesticLoadBean extends Bean {
     @ManagedProperty("#{message['authorize.menu.loading.tab.1']}") private String key;
 
     private String docNo;
-    private Date loadingDate;
+    private String loadingDate;
     private int status;
 
     @NotNull private LoadingOrderModel loadingOrderModel;
@@ -45,7 +45,6 @@ public class DomesticLoadBean extends Bean {
     }
 
     private void init(){
-        loadingDate = Utils.currentDate();
         onLoadStatue();
         onLoadTable();
     }
@@ -82,6 +81,7 @@ public class DomesticLoadBean extends Bean {
     }
 
     public void onClickSearch(){
+        log.debug("------- {}", status);
         loadingOrderModelList = domesticLoadService.getSearch(docNo, loadingDate, status);
     }
 }

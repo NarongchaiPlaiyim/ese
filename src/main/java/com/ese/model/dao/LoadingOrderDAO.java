@@ -25,12 +25,27 @@ public class LoadingOrderDAO extends GenericDAO<LoadingOrderModel, Integer>{
         return loadingOrderModelList;
     }
 
-    public List<LoadingOrderModel> findBySearch(String docNo, Date loadingDate, int status){
+    public List<LoadingOrderModel> findBySearch(String docNo, String loadingDate, int status){
         List<LoadingOrderModel> loadingOrderModelList = Utils.getEmptyList();
+        log.debug("docNo : {[]}, loadingDate : {[]}, status : {[]}", docNo.trim().length(), loadingDate.trim().length(), status);
 
         try{
             Criteria criteria = getCriteria();
-            criteria.add(Restrictions.eq("statusModel.id", 1));
+
+            if (!Utils.isZero(docNo.trim().length())){
+                criteria.add(Restrictions.like("docNo", "%" + docNo + "%"));
+            }
+
+            if (!Utils.isZero(loadingDate.trim().length())){
+                criteria.add(Restrictions.like("loadingDate", "%" + loadingDate + "%"));
+            }
+
+            if (!Utils.isZero(status)){
+                criteria.add(Restrictions.eq("statusModel.id", status));
+            } else {
+                criteria.add(Restrictions.eq("statusModel.id", 12));
+            }
+
             loadingOrderModelList = Utils.safetyList(criteria.list());
         } catch (Exception e){
             log.debug("Exception error findByStatusIs12 : ", e);

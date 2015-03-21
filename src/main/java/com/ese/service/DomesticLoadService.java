@@ -35,7 +35,7 @@ public class DomesticLoadService extends Service {
         return loadingOrderDAO.findByStatusIs12();
     }
 
-    public List<LoadingOrderModel> getSearch(String docNo, Date loadingDate, int status){
+    public List<LoadingOrderModel> getSearch(String docNo, String loadingDate, int status){
         return loadingOrderDAO.findBySearch(docNo, loadingDate, status);
     }
 
