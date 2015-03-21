@@ -33,7 +33,7 @@
                                              icon="ui-icon-plusthick"/>
 
                             <p:commandButton id="btn2"
-                                             value="Pring loading report"/>
+                                             value="Print loading report"/>
 
                             <p:commandButton id="btn3"
                                              value="Show picking list"/>
@@ -62,11 +62,10 @@
                                         <h:outputText value="Loading Date"/>
                                     </td>
                                     <td>
-                                        <p:inputMask  style="min-width: 150px; width: 150px; max-width: 150px;"
-                                                      value="#{domesticLoadBean.loadingDate}"
-                                                     onkeydown="return onKeyDownNumber(event);"
-                                                     onkeypress="return onKeyPressNumber(event);"
-                                                     mask="99/99/9999"/>
+                                        <p:calendar value="#{domesticLoadBean.loadingDate}"
+                                                    pattern="dd/MM/yyyy">
+                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                        </p:calendar>
                                     </td>
                                     <td>
                                         <h:outputText value="Status"/>
