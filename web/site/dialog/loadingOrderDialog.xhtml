@@ -11,7 +11,7 @@
         <h:form id="loadingOrderDlgForm">
             <table border="0">
                 <tr>
-                    <td style="width: 200px; max-width: 200px; min-width: 200px"/>
+                    <td style="width: 150px; max-width: 150px; min-width: 150px"/>
                     <td style="width: 200px; max-width: 200px; min-width: 200px"/>
                 </tr>
                 <tr>
@@ -28,6 +28,7 @@
                     </td>
                     <td>
                         <p:calendar value="#{domesticLoadBean.loadingOrderModel.loadingDate}"
+                                    style="width: 100px; max-width: 100px; min-width: 100px"
                                     pattern="dd/MM/yyyy"
                                     showOn="button">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
@@ -39,7 +40,7 @@
                         <p:outputLabel value="Remark"/>
                     </td>
                     <td>
-                        <p:inputText value="#{domesticLoadBean.loadingOrderModel.remark}"/>
+                        <p:inputTextarea value="#{domesticLoadBean.loadingOrderModel.remark}"/>
                     </td>
                 </tr>
                 <tr>

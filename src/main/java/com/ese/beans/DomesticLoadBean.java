@@ -75,8 +75,13 @@ public class DomesticLoadBean extends Bean {
         }
         init();
     }
+
     public void onClickPalletTB(){
         btnName = "Edit loading order";
         mode = Boolean.FALSE;
+    }
+
+    public void onClickSearch(){
+
     }
 }

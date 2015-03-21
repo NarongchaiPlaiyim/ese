@@ -33,6 +33,7 @@
 
                             <p:commandButton id="btn2"
                                              value="Pring loading report"/>
+
                             <p:commandButton id="btn3"
                                              value="Show picking list"/>
                         </div>
@@ -40,13 +41,13 @@
                         <div class="left">
                             <table  border="0" class="content_table_form">
                                 <tr >
-                                    <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
-                                    <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
-                                    <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
-                                    <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
-                                    <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
-                                    <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
-                                    <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
+                                    <td style="min-width: 150px; width: 150px; max-width: 150px;" class="left" />
+                                    <td style="min-width: 250px; width: 250px; max-width: 250px;" class="left" />
+                                    <td style="min-width: 150px; width: 150px; max-width: 150px;" class="left" />
+                                    <td style="min-width: 250px; width: 250px; max-width: 250px;" class="left" />
+                                    <td style="min-width: 150px; width: 150px; max-width: 150px;" class="left" />
+                                    <td style="min-width: 250px; width: 250px; max-width: 250px;" class="left" />
+                                    <td style="min-width: 250px; width: 250px; max-width: 250px;" class="left" />
                                     <td/>
                                 </tr>
                                 <tr>
@@ -63,6 +64,7 @@
                                     <td>
                                         <p:calendar value="#{domesticLoadBean.loadingDate}"
                                                     pattern="dd/MM/yyyy"
+                                                    style="min-width: 100px; width: 100px; max-width: 100px;"
                                                     showOn="button">
                                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                                         </p:calendar>
@@ -81,8 +83,14 @@
                                         </p:selectOneMenu>
                                     </td>
                                     <td>
-                                        <p:commandButton id="btnSearch"
-                                                         value="Search"/>
+                                        <p:commandButton id="btnsearch" icon="ui-icon-search"
+                                                         value="#{msg.get('btn.name.search')}"
+                                                         styleClass="medium" style="#{msg.get('btn.size')}"
+                                                         onstart="PF('bui').block()"
+                                                         oncomplete="PF('bui').unblock()"
+                                                         process="@form"
+                                                         action="#{domesticLoadBean.onClickSearch}"
+                                                         update=":domesticForm:loadingOrderTable"/>
                                     </td>
 
                                 </tr>
@@ -155,7 +163,7 @@
 
         <p:dialog id="loadingOrderDialog" widgetVar="loadingOrderDlg" header="Loading order" closable="false"
                   onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
-                  modal="true" width="500" height="450">
+                  modal="true" width="500" height="300">
             <ui:include src="../site/dialog/loadingOrderDialog.xhtml"/>
         </p:dialog>
 
