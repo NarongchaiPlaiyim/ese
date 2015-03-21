@@ -82,6 +82,6 @@ public class DomesticLoadBean extends Bean {
     }
 
     public void onClickSearch(){
-
+        loadingOrderModelList = domesticLoadService.getSearch(docNo, loadingDate, status);
     }
 }

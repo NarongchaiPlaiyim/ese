@@ -6,6 +6,7 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -23,4 +24,18 @@ public class LoadingOrderDAO extends GenericDAO<LoadingOrderModel, Integer>{
         }
         return loadingOrderModelList;
     }
+
+    public List<LoadingOrderModel> findBySearch(String docNo, Date loadingDate, int status){
+        List<LoadingOrderModel> loadingOrderModelList = Utils.getEmptyList();
+
+        try{
+            Criteria criteria = getCriteria();
+            criteria.add(Restrictions.eq("statusModel.id", 1));
+            loadingOrderModelList = Utils.safetyList(criteria.list());
+        } catch (Exception e){
+            log.debug("Exception error findByStatusIs12 : ", e);
+        }
+        return loadingOrderModelList;
+    }
+
 }

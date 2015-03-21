@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -32,6 +33,10 @@ public class DomesticLoadService extends Service {
 
     public List<LoadingOrderModel> getList(){
         return loadingOrderDAO.findByStatusIs12();
+    }
+
+    public List<LoadingOrderModel> getSearch(String docNo, Date loadingDate, int status){
+        return loadingOrderDAO.findBySearch(docNo, loadingDate, status);
     }
 
     public void save(LoadingOrderModel loadingOrderModel){
