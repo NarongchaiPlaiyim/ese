@@ -60,7 +60,7 @@ public class ReportService extends Service{
             facesContext.renderResponse();
             log.debug("generatePDF completed.");
         } catch (Exception e) {
-            System.out.println();
+            log.debug("Exception e :", e);
         } finally {
             if (servletOutputStream != null)servletOutputStream.close();
 
