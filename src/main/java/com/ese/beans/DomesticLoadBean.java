@@ -60,11 +60,11 @@ public class DomesticLoadBean extends Bean {
     public void onClickButtonNew(){
         if (mode) {
             loadingOrderModel = new LoadingOrderModel();
+            loadingOrderModel.setDocNo(Utils.getDocumentDomesticLoad());
         }
     }
 
     public void onClickSaveLoadingOrderDialog(){
-        System.out.println(mode);
         if (mode) {
             domesticLoadService.save(loadingOrderModel);
             showDialogSaved();

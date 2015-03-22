@@ -19,7 +19,7 @@
                         <p:outputLabel value="Doc No."/>
                     </td>
                     <td>
-                        <p:inputText value="#{domesticLoadBean.loadingOrderModel.docNo}"/>
+                        <p:inputText readonly="#{true}" value="#{domesticLoadBean.loadingOrderModel.docNo}"/>
                     </td>
                 </tr>
                 <tr>
@@ -28,9 +28,7 @@
                     </td>
                     <td>
                         <p:calendar value="#{domesticLoadBean.loadingOrderModel.loadingDate}"
-                                    style="width: 100px; max-width: 100px; min-width: 100px"
-                                    pattern="dd/MM/yyyy"
-                                    showOn="button">
+                                    pattern="dd/MM/yyyy">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </p:calendar>
                     </td>

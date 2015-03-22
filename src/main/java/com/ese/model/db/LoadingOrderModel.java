@@ -33,5 +33,14 @@ public class LoadingOrderModel extends AbstractModel{
     @JoinColumn(name="status")
     private StatusModel statusModel;
 
-
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("id", id)
+                .append("docNo", docNo)
+                .append("loadingDate", loadingDate)
+                .append("remark", remark)
+                .append("statusModel", statusModel)
+                .toString();
+    }
 }
