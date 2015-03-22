@@ -28,6 +28,9 @@ public class PickingOrderShowItemService extends Service{
     @Resource private PickingOrderLineTransform pickingOrderLineTransform;
     @Resource private PickingOrderDAO pickingOrderDAO;
 
+    private int sumReservedOrder;
+    private int inventoryQty;
+
     private String message;
 
     public List<PickingOrderShowItemView> getPickingOrderLineByPickingOrderId(int pickingOrderId){
@@ -44,10 +47,11 @@ public class PickingOrderShowItemService extends Service{
 
     public String checkQty(int pickingOrderLineId){
         FIFOReservedView fifoReservedView = pickingOrderLineDAO.findQtyOnInventTran(pickingOrderLineId);
-        int sumReservedOrder = pickingOrderLineDAO.getSumReservedOrder(pickingOrderLineId);
-        log.debug("InvenQty : [{}], sumReservedOrder : [{}]", fifoReservedView.getInventtransQty(), sumReservedOrder);
+        inventoryQty = fifoReservedView.getInventtransQty();
+        sumReservedOrder = pickingOrderLineDAO.getSumReservedOrder(pickingOrderLineId);
+        log.debug("InvenQty : [{}], sumReservedOrder : [{}]", inventoryQty, sumReservedOrder);
 
-        if (fifoReservedView.getInventtransQty() > sumReservedOrder){
+        if (inventoryQty > sumReservedOrder){
             return "Success";
         }
 
@@ -147,32 +151,27 @@ public class PickingOrderShowItemService extends Service{
         return pickingOrderLineDAO.findByItemId(itemId, "", "", warehouseId, locationId, locationQtyId);
     }
 
-    public void saveManualReserved(LocationQtyView locationQtyId, int reservedQty, int pickingLineId){
+    public boolean saveManualReserved(LocationQtyView locationQtyId, int reservedQty, int pickingLineId){
         StatusModel statusModel = statusDAO.findByStatusSeqTablePickingOrder(TableValue.RESERVED_ORDER.getId());
-        message = "Fail";
-
+        log.debug("------- sumReservedOrder : {} , inventoryQty : {}", sumReservedOrder, inventoryQty);
         try {
-            PickingOrderLineModel pickingOrderLineModel = pickingOrderLineDAO.findByID(pickingLineId);
-            FIFOReservedView fifoReservedView = pickingOrderLineDAO.findQtyOnInventTran(pickingOrderLineModel.getId());
-//            int sumReservedOrder = pickingOrderLineDAO.getSumReservedOrder(pickingLineId);
-//            log.debug("InventtransQty [{}] : sumReservedOrder {[{}]", fifoReservedView.getInventtransQty(), sumReservedOrder);
-//
-//            if (fifoReservedView.getInventtransQty() > sumReservedOrder){
-            MSLocationModel msLocationModel = locationDAO.findByID(locationQtyId.getLocationId());
-            ReservedOrderModel reservedOrderModel = reservedOrderTransform.tramsformToModel(pickingOrderLineModel, msLocationModel, statusModel, reservedQty, locationQtyId.getBatchNo());
-            pickingOrderLineDAO.updateReservedQtyByLocaitonQtyId(locationQtyId.getId(), reservedQty);
-            reservedOrderDAO.persist(reservedOrderModel);
-            pickingOrderLineDAO.updateInventTransByUseFinish(fifoReservedView.getInventtransId());
 
-//                message = "Success";
-//            }
+            if (reservedQty + sumReservedOrder < inventoryQty){
+                PickingOrderLineModel pickingOrderLineModel = pickingOrderLineDAO.findByID(pickingLineId);
+                FIFOReservedView fifoReservedView = pickingOrderLineDAO.findQtyOnInventTran(pickingOrderLineModel.getId());
+                MSLocationModel msLocationModel = locationDAO.findByID(locationQtyId.getLocationId());
+                ReservedOrderModel reservedOrderModel = reservedOrderTransform.tramsformToModel(pickingOrderLineModel, msLocationModel, statusModel, reservedQty, locationQtyId.getBatchNo());
+                pickingOrderLineDAO.updateReservedQtyByLocaitonQtyId(locationQtyId.getId(), reservedQty);
+                reservedOrderDAO.persist(reservedOrderModel);
+                pickingOrderLineDAO.updateInventTransByUseFinish(fifoReservedView.getInventtransId());
 
-
+                return true;
+            }
         } catch (Exception e) {
             log.debug("Exception error saveManualReserved : ", e);
         }
 
-//        return message;
+        return false;
     }
 
     public void saveItemQty(int pickingLineId, int orderQty){
