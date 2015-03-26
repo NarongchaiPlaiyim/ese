@@ -94,6 +94,9 @@ public class AXCustomerConfirmTransModel {
     @Column(name="Cum")
     private BigDecimal cum;
 
+    @Column(name="inventtransid")
+    private String inventtransId;
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
@@ -121,6 +124,7 @@ public class AXCustomerConfirmTransModel {
                 .append("dSGPackingQty", dSGPackingQty)
                 .append("salesUnitTxt", salesUnitTxt)
                 .append("cum", cum)
+                .append("inventtransId", inventtransId)
                 .toString();
     }
 }

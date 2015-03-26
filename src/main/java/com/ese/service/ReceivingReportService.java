@@ -19,8 +19,10 @@ public class ReceivingReportService extends Service{
     @Resource private ReceivingReportDAO receivingReportDAO;
     @Resource private ReportService reportService;
     @Resource private CSVService csvService;
+
     @Value("#{config['report.receivingreport']}")
     private String pathreport;
+
     private final String  COMMA_DELIMITED = ",";
 
     public List<ReceivingReportView> getReceivingReportView(String startDate, String endDate){

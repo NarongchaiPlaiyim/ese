@@ -142,6 +142,7 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
         selectInventTrans.append(" LEFT JOIN ").append(getPrefix()).append(".ax_InventTrans");
         selectInventTrans.append(" ON ").append(getPrefix()).append(".picking_order.sales_order = ").append(getPrefix()).append(".ax_InventTrans.transrefid");
         selectInventTrans.append(" AND ").append(getPrefix()).append(".picking_order_line.ItemId = ").append(getPrefix()).append(".ax_InventTrans.itemid");
+        selectInventTrans.append(" AND ").append(getPrefix()).append(".picking_order_line.inventtransid = ").append(getPrefix()).append(".ax_InventTrans.inventtransid");
         selectInventTrans.append(" WHERE ").append(getPrefix()).append(".picking_order_line.id = " ).append(pickingOrderLineId);
         selectInventTrans.append(" GROUP BY ").append(getPrefix()).append(".picking_order_line.id, ").append(getPrefix()).append(".picking_order.sales_order, ");
         selectInventTrans.append(getPrefix()).append(".picking_order_line.ItemId, ").append(getPrefix()).append(".ax_InventTrans.id, ");

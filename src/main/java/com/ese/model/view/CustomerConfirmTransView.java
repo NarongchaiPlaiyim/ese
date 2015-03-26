@@ -27,6 +27,7 @@ public class CustomerConfirmTransView {
     private BigDecimal dSGPackingQty;
     private String salesUnitTxt;
     private BigDecimal cum;
+    private String inventransId;
 
     @Override
     public String toString() {
@@ -44,6 +45,7 @@ public class CustomerConfirmTransView {
                 .append("dSGPackingQty", dSGPackingQty)
                 .append("salesUnitTxt", salesUnitTxt)
                 .append("cum", cum)
+                .append("inventransId", inventransId)
                 .toString();
     }
 }

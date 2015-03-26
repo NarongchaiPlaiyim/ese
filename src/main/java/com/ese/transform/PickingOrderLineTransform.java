@@ -41,6 +41,7 @@ public class PickingOrderLineTransform extends Transform{
         pickingOrderLineModel.setDSGPackingQty(confirmTransModel.getDSGPackingQty());
         pickingOrderLineModel.setSalesUnitTxt(confirmTransModel.getSalesUnitTxt());
         pickingOrderLineModel.setCum(confirmTransModel.getCum());
+        pickingOrderLineModel.setInventtransId(confirmTransModel.getInventransId());
 
         return pickingOrderLineModel;
     }

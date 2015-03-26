@@ -111,7 +111,8 @@ public class AXCustomerConfirmTransDAO extends GenericDAO<AXCustomerConfirmTrans
         sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustConfirmTrans.Name AS NAME,");
         sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustConfirmTrans.DSG_PackingQty AS PACKING_QTY,");
         sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustConfirmTrans.salesUnitTxt AS SALE_UNIT_TXT,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustConfirmTrans.Cum AS CUM");
+        sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustConfirmTrans.Cum AS CUM,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustConfirmTrans.inventtransid AS INVENTRANS_ID");
         sqlBuilder.append(" FROM ").append(getPrefix()).append(".ax_CustConfirmTrans");
         sqlBuilder.append(" WHERE ").append(getPrefix()).append(".ax_CustConfirmTrans.SalesId = '").append(saleId).append("' ");
         sqlBuilder.append(" AND ").append(getPrefix()).append(".ax_CustConfirmTrans.ConfirmId = '").append(confirmId).append("' ");
@@ -133,7 +134,8 @@ public class AXCustomerConfirmTransDAO extends GenericDAO<AXCustomerConfirmTrans
                     .addScalar("NAME", StringType.INSTANCE)
                     .addScalar("PACKING_QTY", BigDecimalType.INSTANCE)
                     .addScalar("SALE_UNIT_TXT", StringType.INSTANCE)
-                    .addScalar("CUM", BigDecimalType.INSTANCE);
+                    .addScalar("CUM", BigDecimalType.INSTANCE)
+                    .addScalar("INVENTRANS_ID", StringType.INSTANCE);
             List<Object[]> objects = query.list();
 
             for (Object[] entity : objects) {
@@ -151,6 +153,7 @@ public class AXCustomerConfirmTransDAO extends GenericDAO<AXCustomerConfirmTrans
                 confirmTransView.setDSGPackingQty(Utils.parseBigDecimal(entity[10], BigDecimal.ZERO));
                 confirmTransView.setSalesUnitTxt(Utils.parseString(entity[11], ""));
                 confirmTransView.setCum(Utils.parseBigDecimal(entity[12], BigDecimal.ZERO));
+                confirmTransView.setInventransId(Utils.parseString(entity[13]));
                 confirmTransModelList.add(confirmTransView);
             }
         } catch (Exception e) {

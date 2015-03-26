@@ -36,6 +36,8 @@ public class ReportService extends Service{
         JRDataSource dataSource;
         JasperPrint print;
         ServletOutputStream servletOutputStream = null;
+
+        log.debug("fileName : {}", fileName);
         try {
             inputStream = FacesUtil.getFacesContext().getExternalContext().getResourceAsStream(fileName);
             jasperReport = JasperCompileManager.compileReport(inputStream);
