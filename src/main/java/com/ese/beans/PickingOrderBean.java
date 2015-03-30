@@ -154,7 +154,7 @@ public class PickingOrderBean extends Bean {
         }else if (pickingOrderModel.getStatus().getStatusSeq() == 2){
             pickingOrderService.cancel(pickingOrderModel);
             pickingOrderService.updateOnCancel(pickingOrderModel.getId());
-            showDialog("Cancel", "Cancel Suscess");
+            showDialog("Cancel", "Cancel Success");
         }else if (pickingOrderModel.getStatus().getStatusSeq() == 3){
             showDialog(MessageDialog.WARNING.getMessageHeader(), "This order has assign to pick. You can’t cancel this order now. You should wait for the picked data from picker");
             pickingOrderModel = new PickingOrderModel();

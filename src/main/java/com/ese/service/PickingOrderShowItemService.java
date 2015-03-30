@@ -191,7 +191,7 @@ public class PickingOrderShowItemService extends Service{
         log.debug("------- sumReservedOrder : {} , inventoryQty : {}", sumReservedOrder, inventoryQty);
         try {
 
-            if (reservedQty + sumReservedOrder < inventoryQty){
+            if (reservedQty + sumReservedOrder <= inventoryQty){
                 PickingOrderLineModel pickingOrderLineModel = pickingOrderLineDAO.findByID(pickingLineId);
                 FIFOReservedView fifoReservedView = pickingOrderLineDAO.findQtyOnInventTran(pickingOrderLineModel.getId());
                 MSLocationModel msLocationModel = locationDAO.findByID(locationQtyId.getLocationId());
