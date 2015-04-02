@@ -103,4 +103,46 @@ public class ReservedOrderDAO extends GenericDAO<ReservedOrderModel, Integer> {
 
         return reservedOrderModelList;
     }
+
+    public int reservedOrderQtyByPickingOrderLineId(int pickingOrderlineId){
+        List<ReservedOrderModel> reservedOrderModels = Utils.getEmptyList();
+        int reservedQty = 0;
+
+        try {
+            Criteria criteria = getCriteria();
+            criteria.add(Restrictions.eq("pickingOrderLineModel.id", pickingOrderlineId));
+            criteria.addOrder(Order.asc("id"));
+
+            reservedOrderModels = criteria.list();
+        } catch (Exception e) {
+            log.debug("Exception error findByPickingOrderLineId : ", e);
+        }
+
+        for (ReservedOrderModel model : reservedOrderModels){
+            reservedQty = reservedQty + model.getReservedQty();
+        }
+//
+//        StringBuilder sqlBuilder = new StringBuilder();
+//        sqlBuilder.append(" SELECT ").append(" SUM(").append(getPrefix()).append(".reserved_order.reserved_qty) AS RESERVED_QTY");
+//        sqlBuilder.append(" FROM ").append(getPrefix()).append(".reserved_order");
+//        sqlBuilder.append(" WHERE ").append(getPrefix()).append(".reserved_order.picking_order_line_id = " ).append(pickingOrderlineId);
+//
+//        log.debug("reservedOrderQtyByPickingOrderLineId : {}", sqlBuilder.toString());
+//
+//        try {
+//            SQLQuery query = getSession().createSQLQuery(sqlBuilder.toString())
+//                    .addScalar("RESERVED_QTY", IntegerType.INSTANCE);
+//            List<Object[]> objects = query.list();
+//
+//            for (Object[] entity : objects) {
+//                log.debug("-------- {}", Utils.parseInt(entity[0]));
+//                reservedQty = Utils.parseInt(entity[0]);
+//            }
+//        } catch (Exception e) {
+//            log.debug("Exception reservedOrderQty : {}", e);
+//        }
+
+        log.debug("------reservedQty :{}", reservedQty);
+        return reservedQty;
+    }
 }

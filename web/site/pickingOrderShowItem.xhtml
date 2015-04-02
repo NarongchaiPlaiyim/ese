@@ -34,8 +34,8 @@
                                              icon="ui-icon-print"
                                              styleClass="medium" />
                             <p:commandButton id="stiketWorkLoad"
-                                             value="Stiker Work Load"
-                                             style="width: 250px; max-width: 250px; min-width: 250px"
+                                             value="Sticker Work Load"
+                                             style="width: 260px; max-width: 260px; min-width: 260px"
                                              process="@this"
                                              update=":pickingOrderShowItemForm"
                                              action="#{pickingOrderShowItemBean.stikerWorkLoadReport()}"
@@ -257,7 +257,7 @@
                             <h:outputText value="#{pickingLine.description}"/>
                         </p:column>
                         <p:column headerText="Order Qty" style="width: 80px; text-align: center" styleClass="center">
-                            <h:outputText value="#{pickingLine.orderQty}">
+                            <h:outputText value="#{pickingLine.qty}">
                                 <f:convertNumber pattern="#,##0"  minFractionDigits="2" maxFractionDigits="2"/>
                             </h:outputText>
                         </p:column>
