@@ -15,8 +15,10 @@ public class TriggerModel {
     @Id
     private int id;
 
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "student_id_seq")
+    @SequenceGenerator(name = "student_id_seq",
+            sequenceName = "Student_seq",
+            allocationSize = 1)
     @Column(name="isvalid")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqid-gen")
-    @SequenceGenerator(name = "seqid-gen", sequenceName = "RTDS_ADSINPUT_SEQ", allocationSize = 1, initialValue = 0)
     private int isValid;
 }
