@@ -13,10 +13,10 @@ import javax.persistence.*;
 @Proxy(lazy=false)
 public class TriggerModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqid-gen")
-    @SequenceGenerator(name = "seqid-gen", sequenceName = "RTDS_ADSINPUT_SEQ", allocationSize = 1, initialValue = 0)
     private int id;
 
     @Column(name="isvalid")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqid-gen")
+    @SequenceGenerator(name = "seqid-gen", sequenceName = "RTDS_ADSINPUT_SEQ", allocationSize = 1, initialValue = 0)
     private int isValid;
 }
