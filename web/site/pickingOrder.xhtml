@@ -63,6 +63,14 @@
                                              action="#{pickingOrderBean.onCancel()}"
                                              update=":axConfirmOrderForm, :msgBoxSystemMessagePanel"
                                              styleClass="medium"/>
+                            <p:commandButton id="postBtn"
+                                             value="Post"
+                                             disabled="#{pickingOrderBean.flagBtnPost}"
+                                             process="@form"
+                                             action="#{pickingOrderBean.onSyncData}"
+                                             update=":axConfirmOrderForm"
+                                             oncomplete="PF('axConfirmOrderDlg').show()"
+                                             styleClass="medium"/>
                             <p:commandButton id="syncAX"
                                              value="Sync from AX"
                                              disabled="#{pickingOrderBean.flagSync}"
@@ -301,7 +309,7 @@
                                  style="width: 100%; max-width: 100%; min-width: 100%">
                         <p:ajax event="rowSelect" listener="#{pickingOrderBean.onClickTable}"
                                 update=":pickingOrderForm:showItem, :pickingOrderForm:confirmation, :pickingOrderForm:cancelPicking,
-                                        :pickingOrderForm:stiketWorkLoad, :pickingOrderForm:pickOrderWithBarcode"/>
+                                        :pickingOrderForm:stiketWorkLoad, :pickingOrderForm:pickOrderWithBarcode, :pickingOrderForm:postBtn"/>
                         <p:column headerText="No" style="width: 20px" styleClass="center">
                             <h:outputText value="#{rowIndex+1}"/>
                         </p:column>

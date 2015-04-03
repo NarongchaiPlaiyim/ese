@@ -36,6 +36,7 @@ public class PickingOrderBean extends Bean {
     private boolean flagBtnSync;
     private boolean flagBtnCancel;
     private boolean flagBtnPickingOrderWithItemBarcode;
+    private boolean flagBtnPost;
     private String selectType;
     private PickingOrderView pickingOrderView;
     private PickingOrderModel pickingOrderModel;
@@ -68,6 +69,7 @@ public class PickingOrderBean extends Bean {
         flagBtnShow = true;
         flagBtnPrint = true;
         flagBtnCancel = true;
+        flagBtnPost = true;
         flagBtnPickingOrderWithItemBarcode = true;
     }
 
@@ -95,6 +97,10 @@ public class PickingOrderBean extends Bean {
             flagBtnShow = false;
             flagBtnPrint = true;
             flagBtnCancel = false;
+        }
+
+        if (pickingOrderModel.getStatus().getStatusSeq() == 4){
+            flagBtnPost = false;
         }
 
         if (pickingOrderModel.getStatus().getStatusSeq() == 0){
@@ -150,7 +156,7 @@ public class PickingOrderBean extends Bean {
     public void onCancel(){
         if (pickingOrderModel.getStatus().getStatusSeq() == 1){
             pickingOrderService.updateOnCancel(pickingOrderModel.getId());
-            showDialog("Cancel", "Cancel Suscess");
+            showDialog("Cancel", "Cancel Success");
         }else if (pickingOrderModel.getStatus().getStatusSeq() == 2){
             pickingOrderService.cancel(pickingOrderModel);
             pickingOrderService.updateOnCancel(pickingOrderModel.getId());
@@ -163,7 +169,7 @@ public class PickingOrderBean extends Bean {
                 if (pickingOrderModel.getLoadingOrderModel().getStatusModel().getStatusSeq() <= 1){
                     pickingOrderService.cancel(pickingOrderModel);
                     pickingOrderService.updateOnCancel(pickingOrderModel.getId());
-                    showDialog("Cancel", "Cancel Suscess");
+                    showDialog("Cancel", "Cancel Success");
                 } else {
                     showDialog(MessageDialog.WARNING.getMessageHeader(), "This order has move to loading area please unpack first.");
                 }
@@ -171,5 +177,9 @@ public class PickingOrderBean extends Bean {
         }
 
         init();
+    }
+
+    public void onClickPost(){
+        pickingOrderService.checkPost(pickingOrderModel.getId());
     }
 }

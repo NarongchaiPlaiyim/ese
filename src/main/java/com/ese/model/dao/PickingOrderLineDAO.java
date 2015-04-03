@@ -2,6 +2,7 @@ package com.ese.model.dao;
 import com.ese.model.db.PickingOrderLineModel;
 import com.ese.model.view.FIFOReservedView;
 import com.ese.model.view.LocationQtyView;
+import com.ese.model.view.PickingOrderLinePostView;
 import com.ese.model.view.PickingOrderShowItemView;
 import com.ese.utils.Utils;
 import org.hibernate.Criteria;
@@ -460,5 +461,40 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
         log.debug("sumQty : {}", sumQty);
 
         return sumQty;
+    }
+
+    public List<PickingOrderLinePostView> findOnPostStatus(int pickingOrderId){
+        List<PickingOrderLinePostView> orderLinePostViewList = new ArrayList<PickingOrderLinePostView>();
+
+        StringBuilder selectLocationQty = new StringBuilder();
+
+        selectLocationQty.append(" SELECT ");
+        selectLocationQty.append(" ").append(getPrefix()).append(".picking_order_line.qty AS PICKING_QTY,");
+        selectLocationQty.append(" ").append(getPrefix()).append(".item_master.id AS ITEM_ID,");
+        selectLocationQty.append(" ").append(getPrefix()).append(".picking_order_line.picking_order_id AS PICKING_ID");
+        selectLocationQty.append(" FROM ").append(getPrefix()).append(".picking_order_line");
+        selectLocationQty.append(" WHERE ").append(getPrefix()).append(".picking_order_line.picking_order_id = " ).append(pickingOrderId);
+
+        log.debug("findOnPostStatus : {}", selectLocationQty.toString());
+
+        try {
+            SQLQuery query = getSession().createSQLQuery(selectLocationQty.toString())
+                    .addScalar("PICKING_QTY", IntegerType.INSTANCE)
+                    .addScalar("ITEM_ID", IntegerType.INSTANCE)
+                    .addScalar("PICKING_ID", IntegerType.INSTANCE);
+            List<Object[]> objects = query.list();
+
+            for (Object[] entity : objects) {
+                PickingOrderLinePostView pickingOrderLinePostView = new PickingOrderLinePostView();
+                pickingOrderLinePostView.setPickingId(Utils.parseInt(entity[0]));
+                pickingOrderLinePostView.setItemId(Utils.parseInt(entity[1]));
+                pickingOrderLinePostView.setPickingQty(Utils.parseInt(entity[2]));
+                orderLinePostViewList.add(pickingOrderLinePostView);
+            }
+        } catch (Exception e) {
+            log.debug("Exception findOnPostStatus SQL : {}", e);
+        }
+
+        return orderLinePostViewList;
     }
 }

@@ -12,6 +12,7 @@ import com.ese.transform.PickingOrderLineTransform;
 import com.ese.transform.PickingOrderTransform;
 import com.ese.utils.FacesUtil;
 import com.ese.utils.Utils;
+import org.omg.Dynamic.Parameter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -265,5 +266,22 @@ public class PickingOrderService extends Service {
         }
 
         return reportList;
+    }
+
+    public boolean checkPost(int pickingOrderId){
+        List<InvOnhandPostView> invOnhandViewList = invOnHandDAO.findCountInvOnhand(pickingOrderId);
+        List<PickingOrderLinePostView> pickingOrderLinePostViewList = pickingOrderLineDAO.findOnPostStatus(pickingOrderId);
+        Parameter onhand = new Parameter();
+
+        if (invOnhandViewList.size() == pickingOrderLinePostViewList.size()){
+
+            for (InvOnhandPostView onhandPostView : invOnhandViewList){
+                for (PickingOrderLinePostView pickingOrderLinePostView : pickingOrderLinePostViewList){
+//                    if (onhandPostView)
+                }
+            }
+        }
+
+        return false;
     }
 }
