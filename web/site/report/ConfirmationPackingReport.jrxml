@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ConfirmationPackingReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="992cfb14-9054-4df8-90ab-4eea38b7df6e">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="376"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="printDate" class="java.lang.String"/>
 	<parameter name="userPrint" class="java.lang.String"/>
 	<field name="customerName" class="java.lang.String"/>
@@ -219,7 +219,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="39" splitType="Stretch">
+		<band height="379" splitType="Stretch">
 			<staticText>
 				<reportElement uuid="bcae767d-360e-4c2c-8bdd-a361979d6ab1" x="0" y="0" width="555" height="32"/>
 				<box>
@@ -234,12 +234,8 @@
 				</textElement>
 				<text><![CDATA[บริษัท สวิซซ์-วัน คอร์ปอเรชั่น จำกัด]]></text>
 			</staticText>
-		</band>
-	</title>
-	<pageHeader>
-		<band height="335" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="92db8f69-a617-4589-9620-dd344fa86e19" x="0" y="52" width="250" height="20"/>
+				<reportElement uuid="92db8f69-a617-4589-9620-dd344fa86e19" x="0" y="95" width="250" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					<paragraph firstLineIndent="2"/>
@@ -247,7 +243,7 @@
 				<textFieldExpression><![CDATA[$F{customerName}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="efbb5f9f-575a-49ff-8b56-3ad4e89ee7b2" x="0" y="132" width="250" height="20"/>
+				<reportElement uuid="efbb5f9f-575a-49ff-8b56-3ad4e89ee7b2" x="0" y="175" width="250" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					<paragraph firstLineIndent="2"/>
@@ -255,7 +251,7 @@
 				<textFieldExpression><![CDATA[$F{customerAddess}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="7e32e8aa-4833-412a-9ecd-ea43a3e4dbe9" x="0" y="232" width="250" height="20"/>
+				<reportElement uuid="7e32e8aa-4833-412a-9ecd-ea43a3e4dbe9" x="0" y="275" width="250" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					<paragraph firstLineIndent="2"/>
@@ -263,7 +259,7 @@
 				<textFieldExpression><![CDATA[$F{bankAcc}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="f332d81e-d6ba-4c2e-8eba-24ed4c56b198" x="305" y="72" width="250" height="20"/>
+				<reportElement uuid="f332d81e-d6ba-4c2e-8eba-24ed4c56b198" x="305" y="115" width="250" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					<paragraph firstLineIndent="2"/>
@@ -271,7 +267,7 @@
 				<textFieldExpression><![CDATA["Number : " + $F{number}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
-				<reportElement uuid="489d32f1-783c-4430-90fa-0ebf97198ac3" x="305" y="92" width="250" height="20"/>
+				<reportElement uuid="489d32f1-783c-4430-90fa-0ebf97198ac3" x="305" y="135" width="250" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					<paragraph firstLineIndent="2"/>
@@ -279,7 +275,7 @@
 				<textFieldExpression><![CDATA["Date : " + $F{date}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="c5948e0f-2e3b-4768-8421-1e64c034072a" x="305" y="112" width="56" height="20"/>
+				<reportElement uuid="c5948e0f-2e3b-4768-8421-1e64c034072a" x="305" y="155" width="56" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					<paragraph firstLineIndent="2"/>
@@ -287,7 +283,7 @@
 				<textFieldExpression><![CDATA["Page : " + $V{PAGE_NUMBER} + " of "]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="3ed24733-48cc-4043-843a-14cf433d9b23" x="305" y="132" width="250" height="20"/>
+				<reportElement uuid="3ed24733-48cc-4043-843a-14cf433d9b23" x="305" y="175" width="250" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					<paragraph firstLineIndent="2"/>
@@ -295,7 +291,7 @@
 				<textFieldExpression><![CDATA["Sales order : " + $F{salesOrder}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="56ea7f07-5d67-46cd-9f41-59e30d446669" x="305" y="152" width="250" height="20"/>
+				<reportElement uuid="56ea7f07-5d67-46cd-9f41-59e30d446669" x="305" y="195" width="250" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					<paragraph firstLineIndent="2"/>
@@ -303,7 +299,7 @@
 				<textFieldExpression><![CDATA["Requisition : " + $F{requisition}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="12a048d1-0d3e-4d18-9b3b-fab03a9c1536" x="305" y="172" width="250" height="20"/>
+				<reportElement uuid="12a048d1-0d3e-4d18-9b3b-fab03a9c1536" x="305" y="215" width="250" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					<paragraph firstLineIndent="2"/>
@@ -311,7 +307,7 @@
 				<textFieldExpression><![CDATA["Our ref : " + $F{ourRef}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="4ad26358-afb7-472f-a735-8e9009be4cb9" x="305" y="192" width="250" height="20"/>
+				<reportElement uuid="4ad26358-afb7-472f-a735-8e9009be4cb9" x="305" y="235" width="250" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					<paragraph firstLineIndent="2"/>
@@ -319,7 +315,7 @@
 				<textFieldExpression><![CDATA["Payment : " + $F{paymentPicking}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="585b092b-8e12-40da-986e-6e1af85d08ab" x="305" y="212" width="250" height="20"/>
+				<reportElement uuid="585b092b-8e12-40da-986e-6e1af85d08ab" x="305" y="255" width="250" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					<paragraph firstLineIndent="2"/>
@@ -327,7 +323,7 @@
 				<textFieldExpression><![CDATA["Sales Man : " + $F{salesMan}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="5caf912e-0daf-4759-8dda-c9f1ac60d8f0" x="305" y="232" width="250" height="20"/>
+				<reportElement uuid="5caf912e-0daf-4759-8dda-c9f1ac60d8f0" x="305" y="275" width="250" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					<paragraph firstLineIndent="2"/>
@@ -335,7 +331,7 @@
 				<textFieldExpression><![CDATA["Mode of delivery : " + $F{modeOfDelivery}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="bb17826e-7423-4b79-b235-76af685ca219" x="305" y="252" width="250" height="20"/>
+				<reportElement uuid="bb17826e-7423-4b79-b235-76af685ca219" x="305" y="295" width="250" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					<paragraph firstLineIndent="2"/>
@@ -343,7 +339,7 @@
 				<textFieldExpression><![CDATA["Quotation : " + $F{quotation}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
-				<reportElement uuid="be772764-8926-4e5c-aef5-cb7f8af72fbd" x="305" y="272" width="250" height="20"/>
+				<reportElement uuid="be772764-8926-4e5c-aef5-cb7f8af72fbd" x="305" y="315" width="250" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					<paragraph firstLineIndent="2"/>
@@ -351,7 +347,7 @@
 				<textFieldExpression><![CDATA["PI Date : " + $F{piDate}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="5d6653e9-1fef-4928-99c0-2746b32986fc" x="305" y="292" width="250" height="20"/>
+				<reportElement uuid="5d6653e9-1fef-4928-99c0-2746b32986fc" x="305" y="335" width="250" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					<paragraph firstLineIndent="2"/>
@@ -359,7 +355,7 @@
 				<textFieldExpression><![CDATA["Delivery Term : " + $F{deliveryTerm}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="32380168-3007-4486-991b-2f02f9fa0403" x="305" y="312" width="250" height="20"/>
+				<reportElement uuid="32380168-3007-4486-991b-2f02f9fa0403" x="305" y="355" width="250" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					<paragraph firstLineIndent="2"/>
@@ -367,7 +363,7 @@
 				<textFieldExpression><![CDATA["Payment : " + $F{paymentTerm}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="eca6bee4-54a8-489c-a994-6d8382fd9805" x="305" y="0" width="250" height="29"/>
+				<reportElement uuid="eca6bee4-54a8-489c-a994-6d8382fd9805" x="305" y="43" width="250" height="29"/>
 				<box>
 					<pen lineWidth="0.0" lineColor="#FFFFFF"/>
 					<topPen lineWidth="0.0" lineColor="#FFFFFF"/>
@@ -381,7 +377,7 @@
 				<text><![CDATA[Confirmation Packing]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" evaluationTime="Report">
-				<reportElement uuid="ea0705e8-6f1a-4b22-a086-538e21285a35" x="361" y="112" width="194" height="20"/>
+				<reportElement uuid="ea0705e8-6f1a-4b22-a086-538e21285a35" x="361" y="155" width="194" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					<paragraph firstLineIndent="2"/>
@@ -389,7 +385,7 @@
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="155fc4d8-77ea-4904-9ffd-bb947f94d9b6" x="305" y="52" width="250" height="20"/>
+				<reportElement uuid="155fc4d8-77ea-4904-9ffd-bb947f94d9b6" x="305" y="95" width="250" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font pdfFontName="fonts/TAHOMA.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					<paragraph firstLineIndent="2"/>
@@ -397,12 +393,15 @@
 				<textFieldExpression><![CDATA["Document Number : " + $F{docno}]]></textFieldExpression>
 			</textField>
 			<componentElement>
-				<reportElement uuid="3bd088c8-0460-4d86-a03e-b4aeb737656d" x="305" y="29" width="250" height="23"/>
+				<reportElement uuid="3bd088c8-0460-4d86-a03e-b4aeb737656d" x="305" y="72" width="250" height="23"/>
 				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false">
 					<jr:codeExpression><![CDATA[$F{docno}]]></jr:codeExpression>
 				</jr:barbecue>
 			</componentElement>
 		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
 		<band splitType="Stretch"/>

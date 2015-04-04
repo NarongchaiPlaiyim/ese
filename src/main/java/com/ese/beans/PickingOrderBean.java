@@ -180,6 +180,20 @@ public class PickingOrderBean extends Bean {
     }
 
     public void onClickPost(){
-        pickingOrderService.checkPost(pickingOrderModel.getId());
+        if (pickingOrderService.checkPost(pickingOrderModel.getId())){
+            showDialog("Post", "Success");
+            init();
+        } else {
+            showDialog(MessageDialog.WARNING.getMessageHeader(), "This order not complete. Click Yes to check your post pick authorize.", "confirmUpdatePostDlg");
+        }
+    }
+
+    public void checkAuthoruze(){
+        if (pickingOrderService.authorize(userDetail.getId(), pickingOrderModel.getId())){
+            showDialog("Post", "Success");
+            init();
+        } else {
+            showDialog(MessageDialog.WARNING.getMessageHeader(), "You don’t have authorize");
+        }
     }
 }

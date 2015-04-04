@@ -60,7 +60,7 @@
                                 <p:column headerText="Available" colspan="2" style="min-width: 100px; width: 100px; max-width: 100px;" styleClass="left" filterMatchMode="contains"/>
                                 <p:column headerText="Reserved" colspan="2" style="min-width: 100px; width: 100px; max-width: 100px;" styleClass="left" filterMatchMode="contains"/>
                                 <p:column headerText="Pick" colspan="2" style="min-width: 100px; width: 100px; max-width: 100px;" styleClass="left"  filterMatchMode="contains"/>
-                                <p:column headerText="Pack" colspan="2" style="min-width: 100px; width: 100px; max-width: 100px;" styleClass="left"  filterMatchMode="contains"/>
+                                <!--<p:column headerText="Pack" colspan="2" style="min-width: 100px; width: 100px; max-width: 100px;" styleClass="left"  filterMatchMode="contains"/>-->
                                 <p:column headerText="Physical" colspan="2" style="min-width: 100px; width: 100px; max-width: 100px;" styleClass="left"  filterMatchMode="contains"/>
                             </p:row>
                             <p:row>
@@ -83,10 +83,10 @@
                                           style="min-width: 50px; width: 50px; max-width: 50px;"/>
                                 <!--********-->
                                 <!--  **** Pack ****  -->
-                                <p:column headerText="Qty" sortBy="#{inventoryOnhandReport.packView.qty}" filterBy="#{inventoryOnhandReport.packView.qty}"
-                                          style="min-width: 50px; width: 50px; max-width: 50px;"/>
-                                <p:column headerText="Amount" sortBy="#{inventoryOnhandReport.packView.amount}" filterBy="#{inventoryOnhandReport.packView.amount}"
-                                          style="min-width: 50px; width: 50px; max-width: 50px;"/>
+                                <!--<p:column headerText="Qty" sortBy="#{inventoryOnhandReport.packView.qty}" filterBy="#{inventoryOnhandReport.packView.qty}"-->
+                                          <!--style="min-width: 50px; width: 50px; max-width: 50px;"/>-->
+                                <!--<p:column headerText="Amount" sortBy="#{inventoryOnhandReport.packView.amount}" filterBy="#{inventoryOnhandReport.packView.amount}"-->
+                                          <!--style="min-width: 50px; width: 50px; max-width: 50px;"/>-->
                                 <!--********-->
                                 <!--  **** Physical ****  -->
                                 <p:column headerText="Qty" sortBy="#{inventoryOnhandReport.physicalView.qty}" filterBy="#{inventoryOnhandReport.physicalView.qty}"
@@ -137,12 +137,12 @@
                         </p:column>
                         <!--********-->
                         <!--  **** Pack ****  -->
-                        <p:column>
-                            <h:outputText value="#{inventoryOnhandReport.packView.qty}" style="min-width: 50px; width: 50px; max-width: 50px;"/>
-                        </p:column>
-                        <p:column>
-                            <h:outputText value="#{inventoryOnhandReport.packView.amount}" style="min-width: 50px; width: 50px; max-width: 50px;"/>
-                        </p:column>
+                        <!--<p:column>-->
+                            <!--<h:outputText value="#{inventoryOnhandReport.packView.qty}" style="min-width: 50px; width: 50px; max-width: 50px;"/>-->
+                        <!--</p:column>-->
+                        <!--<p:column>-->
+                            <!--<h:outputText value="#{inventoryOnhandReport.packView.amount}" style="min-width: 50px; width: 50px; max-width: 50px;"/>-->
+                        <!--</p:column>-->
                         <!--********-->
                         <!--  **** Physical ****  -->
                         <p:column>
@@ -168,8 +168,8 @@
                                 <p:column footerText="#{inventoryOnhandReportBean.sumPickAmount}"/>
                                 <!--********-->
                                 <!--  **** Pack ****  -->
-                                <p:column footerText="#{inventoryOnhandReportBean.sumPackQty}"/>
-                                <p:column footerText="#{inventoryOnhandReportBean.sumPackAmount}"/>
+                                <!--<p:column footerText="#{inventoryOnhandReportBean.sumPackQty}"/>-->
+                                <!--<p:column footerText="#{inventoryOnhandReportBean.sumPackAmount}"/>-->
                                 <!--********-->
                                 <!--  **** Physical ****  -->
                                 <p:column footerText="#{inventoryOnhandReportBean.sumPhysicalQty}"/>

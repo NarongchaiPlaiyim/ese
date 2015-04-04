@@ -39,8 +39,9 @@ public class InvOnHandDAO extends GenericDAO<InvOnHandModel, Integer>{
         sqlBuilder.append(" ").append(getPrefix()).append(".inv_onhand.item_id AS ITEM_ID,");
         sqlBuilder.append(" ").append(getPrefix()).append(".inv_onhand.picking_order_id AS PICKING_ID");
         sqlBuilder.append(" FROM ").append(getPrefix()).append(".inv_onhand");
-        sqlBuilder.append(" WHERE ").append(getPrefix()).append(".picking_order_id = " ).append(pickingOrderId);
-        sqlBuilder.append(" GROUP BY ").append(getPrefix()).append("inv_onhand.item_id, ").append(getPrefix()).append(".inv_onhand.picking_order_id ");
+        sqlBuilder.append(" WHERE ").append(getPrefix()).append(".inv_onhand.picking_order_id = " ).append(pickingOrderId);
+        sqlBuilder.append(" GROUP BY ").append(getPrefix()).append(".inv_onhand.item_id, ").append(getPrefix()).append(".inv_onhand.picking_order_id ");
+        sqlBuilder.append(" ORDER BY ").append(getPrefix()).append(".inv_onhand.item_id ASC");
 
         log.debug("findCountInvOnhand : {}", sqlBuilder.toString());
 

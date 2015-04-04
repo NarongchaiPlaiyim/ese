@@ -473,7 +473,10 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
         selectLocationQty.append(" ").append(getPrefix()).append(".item_master.id AS ITEM_ID,");
         selectLocationQty.append(" ").append(getPrefix()).append(".picking_order_line.picking_order_id AS PICKING_ID");
         selectLocationQty.append(" FROM ").append(getPrefix()).append(".picking_order_line");
+        selectLocationQty.append(" LEFT JOIN ").append(getPrefix()).append(".item_master");
+        selectLocationQty.append(" ON ").append(getPrefix()).append(".picking_order_line.ItemId = ").append(getPrefix()).append(".item_master.ItemId");
         selectLocationQty.append(" WHERE ").append(getPrefix()).append(".picking_order_line.picking_order_id = " ).append(pickingOrderId);
+        selectLocationQty.append(" ORDER BY ").append(getPrefix()).append(".item_master.id ASC" );
 
         log.debug("findOnPostStatus : {}", selectLocationQty.toString());
 
@@ -486,9 +489,9 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
 
             for (Object[] entity : objects) {
                 PickingOrderLinePostView pickingOrderLinePostView = new PickingOrderLinePostView();
-                pickingOrderLinePostView.setPickingId(Utils.parseInt(entity[0]));
+                pickingOrderLinePostView.setPickingQty(Utils.parseInt(entity[0]));
                 pickingOrderLinePostView.setItemId(Utils.parseInt(entity[1]));
-                pickingOrderLinePostView.setPickingQty(Utils.parseInt(entity[2]));
+                pickingOrderLinePostView.setPickingId(Utils.parseInt(entity[2]));
                 orderLinePostViewList.add(pickingOrderLinePostView);
             }
         } catch (Exception e) {

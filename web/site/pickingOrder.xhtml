@@ -65,12 +65,12 @@
                                              styleClass="medium"/>
                             <p:commandButton id="postBtn"
                                              value="Post"
-                                             disabled="#{pickingOrderBean.flagBtnPost}"
                                              process="@form"
-                                             action="#{pickingOrderBean.onSyncData}"
-                                             update=":axConfirmOrderForm"
-                                             oncomplete="PF('axConfirmOrderDlg').show()"
+                                             disabled="#{pickingOrderBean.flagBtnPost}"
+                                             action="#{pickingOrderBean.onClickPost}"
+                                             update=":pickingOrderForm, :msgBoxSystemMessagePanel, :confirmUpdatePostPanel"
                                              styleClass="medium"/>
+                            <!--disabled="#{pickingOrderBean.flagBtnPost}"-->
                             <p:commandButton id="syncAX"
                                              value="Sync from AX"
                                              disabled="#{pickingOrderBean.flagSync}"
@@ -391,6 +391,26 @@
                                      process="@this"
                                      update="pickingOrderForm"
                                      oncomplete="PF('msgBoxSystemMessageDlg2').hide(), PF('axConfirmOrderDlg').hide()"/>
+                </div>
+            </p:confirmDialog>
+        </p:panel>
+
+        <p:panel id="confirmUpdatePostPanel" style="border: 0">
+            <p:confirmDialog id="confirmUpdatePostDialog" widgetVar="confirmUpdatePostDlg" width="#{msg.get('dialog.message.size')}"
+                             header="#{pickingOrderBean.messageHeader}" message="#{pickingOrderBean.message}" >
+                <div style="text-align: right">
+                    <p:commandButton  action="#{pickingOrderBean.checkAuthoruze}"
+                                      value="#{msg.get('btn.name.ok')}"
+                                      styleClass="medium" style="#{msg.get('btn.size')}"
+                                      icon="ui-icon-check"
+                                      process="@this" update=":msgBoxSystemMessagePanel"
+                                      oncomplete="PF('confirmUpdatePostDlg').hide()"/>
+                    <p:commandButton value="#{msg.get('btn.name.cancel')}"
+                                     styleClass="medium" style="#{msg.get('btn.size')}"
+                                     icon="ui-icon-cancel"
+                                     process="@this"
+                                     update="pickingOrderForm"
+                                     oncomplete="PF('confirmUpdatePostDlg').hide()"/>
                 </div>
             </p:confirmDialog>
         </p:panel>

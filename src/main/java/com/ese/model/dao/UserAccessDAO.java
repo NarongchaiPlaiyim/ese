@@ -66,4 +66,20 @@ public class UserAccessDAO extends GenericDAO<UserAccessModel, Integer>{
         }
         return userAccessModels;
     }
+
+    public UserAccessModel findPostPickByPickingOrder(int staffId){
+        UserAccessModel userAccessModels = new UserAccessModel();
+        try {
+            Criteria criteria = getSession().createCriteria(UserAccessModel.class, "ua");
+            criteria.add(Restrictions.eq("staffModel.id", staffId));
+
+            criteria.createAlias("ua.menuObjectModel", "mo");
+            criteria.add(Restrictions.eq("mo.code", "031A"));
+            criteria.add(Restrictions.eq("isValid", 1));
+            userAccessModels = (UserAccessModel) criteria.uniqueResult();
+        } catch (Exception e) {
+            log.debug("Exception error findByPickingOrder : ", e);
+        }
+        return userAccessModels;
+    }
 }

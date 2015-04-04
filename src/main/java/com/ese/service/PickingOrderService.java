@@ -21,6 +21,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 @Transactional
@@ -85,7 +86,7 @@ public class PickingOrderService extends Service {
     public List<StatusModel> getStatusAll(){
         List<StatusModel> statusModelList = Utils.getEmptyList();
         try {
-            statusModelList = statusDAO.findByTablePickingOrder(TableValue.PICKING_LINE.getId());
+            statusModelList = statusDAO.findByTablePickingOrder(TableValue.PICKING_ORDER.getId());
         } catch (Exception e) {
             log.debug("Exception error getStatusAll", e);
         }
@@ -200,7 +201,7 @@ public class PickingOrderService extends Service {
     }
 
     public void updateOnCancel(int pickindId){
-        pickingOrderDAO.cancelByPickingOrder(pickindId);
+        pickingOrderDAO.updateStatus(pickindId, 6); //Status Cancle = 6 in mst_status on picking order
         pickingOrderLineDAO.cancelByPickingOrder(pickindId);
     }
 
@@ -271,17 +272,40 @@ public class PickingOrderService extends Service {
     public boolean checkPost(int pickingOrderId){
         List<InvOnhandPostView> invOnhandViewList = invOnHandDAO.findCountInvOnhand(pickingOrderId);
         List<PickingOrderLinePostView> pickingOrderLinePostViewList = pickingOrderLineDAO.findOnPostStatus(pickingOrderId);
-        Parameter onhand = new Parameter();
 
-        if (invOnhandViewList.size() == pickingOrderLinePostViewList.size()){
+        log.debug("invOnhandViewList size {}", invOnhandViewList.size());
+        log.debug("pickingOrderLinePostViewList size {}", pickingOrderLinePostViewList.size());
 
-            for (InvOnhandPostView onhandPostView : invOnhandViewList){
-                for (PickingOrderLinePostView pickingOrderLinePostView : pickingOrderLinePostViewList){
-//                    if (onhandPostView)
-                }
+        if (!Utils.isSafetyList(invOnhandViewList) || !Utils.isSafetyList(pickingOrderLinePostViewList)){
+            return false;
+        }
+
+        if (invOnhandViewList.size() != pickingOrderLinePostViewList.size()){
+            return false;
+        }
+
+        for (int i=0; i<invOnhandViewList.size(); i++){
+            if (invOnhandViewList.get(i).getItemId() == pickingOrderLinePostViewList.get(i).getItemId()
+                    && invOnhandViewList.get(i).getCountId() != pickingOrderLinePostViewList.get(i).getPickingQty()){
+                return false;
             }
         }
 
-        return false;
+        return updateStatusPost(pickingOrderId);
+    }
+
+    public boolean authorize(int userId, int pickingOrderId){
+        UserAccessModel userAccessModel = userAccessDAO.findPostPickByPickingOrder(Utils.parseInt(userId));
+
+        if (Utils.isNull(userAccessModel)){
+            return false;
+        }
+
+        return updateStatusPost(pickingOrderId);
+    }
+
+    public boolean updateStatusPost(int pickingOrderId){
+        pickingOrderDAO.updateStatus(pickingOrderId, 5); //Status Post = 5 in mst_status on picking order
+        return true;
     }
 }

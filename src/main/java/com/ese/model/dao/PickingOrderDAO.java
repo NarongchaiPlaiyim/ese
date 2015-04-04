@@ -201,9 +201,9 @@ public class PickingOrderDAO extends GenericDAO<PickingOrderModel, Integer> {
         }
     }
 
-    public void cancelByPickingOrder(int pickingId){
+    public void updateStatus(int pickingId, int status){
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(" UPDATE ").append(getPrefix()).append(".picking_order SET ").append(getPrefix()).append(".picking_order.status = 6 ");
+        stringBuilder.append(" UPDATE ").append(getPrefix()).append(".picking_order SET ").append(getPrefix()).append(".picking_order.status =  ").append(status);
         stringBuilder.append(" WHERE ").append(getPrefix()).append(".picking_order.id = ").append("'").append(pickingId).append("'");
 
         log.debug("SQL updateToWrap : {}", stringBuilder.toString());
