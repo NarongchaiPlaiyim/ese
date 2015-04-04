@@ -469,7 +469,7 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
         StringBuilder selectLocationQty = new StringBuilder();
 
         selectLocationQty.append(" SELECT ");
-        selectLocationQty.append(" ").append(getPrefix()).append(".picking_order_line.qty AS PICKING_QTY,");
+        selectLocationQty.append(" SUM(").append(getPrefix()).append(".picking_order_line.qty) AS PICKING_QTY,");
         selectLocationQty.append(" ").append(getPrefix()).append(".item_master.id AS ITEM_ID,");
         selectLocationQty.append(" ").append(getPrefix()).append(".picking_order_line.picking_order_id AS PICKING_ID");
         selectLocationQty.append(" FROM ").append(getPrefix()).append(".picking_order_line");
