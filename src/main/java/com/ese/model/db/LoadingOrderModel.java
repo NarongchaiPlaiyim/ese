@@ -22,6 +22,9 @@ public class LoadingOrderModel extends AbstractModel{
     @Column(name="docno")
     private String docNo;
 
+    @Column(name="category")
+    private String category;
+
     @Temporal(TemporalType.DATE)
     @Column(name = "loadingdate")
     private Date loadingDate;
@@ -38,6 +41,7 @@ public class LoadingOrderModel extends AbstractModel{
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("id", id)
                 .append("docNo", docNo)
+                .append("category", category)
                 .append("loadingDate", loadingDate)
                 .append("remark", remark)
                 .append("statusModel", statusModel)

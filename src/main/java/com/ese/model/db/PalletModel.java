@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.annotations.Proxy;
+import org.hibernate.annotations.Subselect;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -12,6 +13,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Entity
+@Subselect("select * from pallet")
 @Table(name = "pallet")
 @Proxy(lazy=false)
 public class PalletModel extends AbstractModel{

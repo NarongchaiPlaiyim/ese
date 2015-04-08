@@ -44,6 +44,7 @@ public class DomesticLoadService extends Service {
             int staffModel = (int) FacesUtil.getSession(false).getAttribute(AttributeName.STAFF.getName());
             loadingOrderModel.setCreateBy(staffModel);
             loadingOrderModel.setUpdateBy(staffModel);
+            loadingOrderModel.setCategory("D");
             loadingOrderModel.setCreateDate(Utils.currentDate());
             loadingOrderModel.setUpdateDate(Utils.currentDate());
             loadingOrderModel.setStatusModel(statusDAO.findByStatusId(12));

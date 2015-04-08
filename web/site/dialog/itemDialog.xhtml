@@ -121,6 +121,9 @@
                                    value="#{setup.msLocationItemsModelList}"
                                    rowKey="#{locationItem.id}">
                        <p:column selectionMode="multiple" style="width:16px;text-align:center; height: 20px"/>
+                           <p:column headerText="Item Code" style="width: 70px; height: 20px">
+                               <h:outputText value="#{locationItem.msItemModel.itemId}"/>
+                           </p:column>
                        <p:column headerText="Descritions" style="height: 20px">
                            <h:outputText value="#{locationItem.msItemModel.DSGThaiItemDescription}"/>
                        </p:column>

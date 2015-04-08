@@ -6,13 +6,12 @@ import com.ese.model.db.*;
 import com.ese.model.view.*;
 import com.ese.model.view.report.ConfirmationPackingViewModel;
 import com.ese.model.view.report.InventoryOnHandViewReport;
-import com.ese.model.view.report.StiketWorkLoadViewReport;
+import com.ese.model.view.report.SticketWorkLoadViewReport;
 import com.ese.service.security.UserDetail;
 import com.ese.transform.PickingOrderLineTransform;
 import com.ese.transform.PickingOrderTransform;
 import com.ese.utils.FacesUtil;
 import com.ese.utils.Utils;
-import org.omg.Dynamic.Parameter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +20,6 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Component
 @Transactional
@@ -171,7 +169,7 @@ public class PickingOrderService extends Service {
 
     public void getStikerWorkLoadReport(int pickingId, UserDetail user){
         String nameReport = Utils.genReportName("_StikerWorkLoad");
-        List<StiketWorkLoadViewReport> viewReports = axCustomerConfirmJourDAO.genStikerWorkLoadReport(pickingId);
+        List<SticketWorkLoadViewReport> viewReports = axCustomerConfirmJourDAO.genStikerWorkLoadReport(pickingId);
 
         HashMap map = new HashMap<String, Object>();
         map.put("userPrint", user.getUserName());

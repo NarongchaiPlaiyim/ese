@@ -4,7 +4,7 @@ import com.ese.model.db.AXCustomerConfirmJourModel;
 import com.ese.model.view.DataSyncConfirmOrderView;
 import com.ese.model.view.PickingOrderWithItemBarcodeReport;
 import com.ese.model.view.report.ConfirmationPackingViewModel;
-import com.ese.model.view.report.StiketWorkLoadViewReport;
+import com.ese.model.view.report.SticketWorkLoadViewReport;
 import com.ese.utils.Utils;
 import org.hibernate.SQLQuery;
 import org.hibernate.type.BigDecimalType;
@@ -172,8 +172,8 @@ public class AXCustomerConfirmJourDAO extends GenericDAO<AXCustomerConfirmJourMo
         }
     }
 
-    public List<StiketWorkLoadViewReport> genStikerWorkLoadReport(int pickingId){
-        List<StiketWorkLoadViewReport> viewReports = new ArrayList<StiketWorkLoadViewReport>();
+    public List<SticketWorkLoadViewReport> genStikerWorkLoadReport(int pickingId){
+        List<SticketWorkLoadViewReport> viewReports = new ArrayList<SticketWorkLoadViewReport>();
 
         StringBuilder sqlBuilder = new StringBuilder();
 
@@ -183,7 +183,7 @@ public class AXCustomerConfirmJourDAO extends GenericDAO<AXCustomerConfirmJourMo
         sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustTable.name AS CUSTOMER_NAME,");
         sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.ItemId AS ITEM_NUMBER,");
         sqlBuilder.append(" ").append(getPrefix()).append(".item_master.DSGThaiItemDescription AS THAI_ITEM_DESCRIPTION,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".reserved_order.picked_qty AS QUANTITY,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".reserved_order.reserved_qty AS QUANTITY,");
         sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.salesunit AS ORDER_UNIT,");
         sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.dsg_remark AS REMARK");
         sqlBuilder.append(" FROM ").append(getPrefix()).append(".picking_order");
@@ -215,7 +215,7 @@ public class AXCustomerConfirmJourDAO extends GenericDAO<AXCustomerConfirmJourMo
             log.debug("----------- {}", objects.size());
 
             for (Object[] entity : objects) {
-                StiketWorkLoadViewReport report = new StiketWorkLoadViewReport();
+                SticketWorkLoadViewReport report = new SticketWorkLoadViewReport();
                 report.setSalesId(Utils.parseString(entity[0], EMTPY));
                 report.setDocNo(Utils.parseString(entity[1], EMTPY));
                 report.setCustomerName(Utils.parseString(entity[2], EMTPY));
@@ -258,7 +258,7 @@ public class AXCustomerConfirmJourDAO extends GenericDAO<AXCustomerConfirmJourMo
         sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.DSG_SubGroupDescription AS SUB_GROUP,");
         sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.ItemId AS ITEM_ID,");
         sqlBuilder.append(" ").append(getPrefix()).append(".item_master.DSGThaiItemDescription AS THAI_DES,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.DSG_PackingQty AS PACKING_QTY,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.qty AS PACKING_QTY,");
         sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.salesunit AS SALES_UNIT,");
         sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.DSG_Ext_Item_NO AS ITEM_NO,");
         sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.Name AS LINE_NAME,");
@@ -413,7 +413,7 @@ public class AXCustomerConfirmJourDAO extends GenericDAO<AXCustomerConfirmJourMo
        sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.DSG_SubGroupDescription AS SUB_GROUP,");
        sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.ItemId AS ITEM_ID,");
        sqlBuilder.append(" ").append(getPrefix()).append(".item_master.DSGThaiItemDescription AS THAI_DES,");
-       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.DSG_PackingQty AS PACKING_QTY,");
+       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.qty AS PACKING_QTY,");
        sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.salesunit AS SALES_UNIT,");
        sqlBuilder.append(" ").append(getPrefix()).append(".ax_DataArea.name AS AREA_NAME,");
        sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.docno AS DOCNO");
