@@ -6,7 +6,7 @@ import com.ese.model.db.*;
 import com.ese.model.view.*;
 import com.ese.model.view.report.ConfirmationPackingViewModel;
 import com.ese.model.view.report.InventoryOnHandViewReport;
-import com.ese.model.view.report.SticketWorkLoadViewReport;
+import com.ese.model.view.report.StickerWorkLoadViewReport;
 import com.ese.service.security.UserDetail;
 import com.ese.transform.PickingOrderLineTransform;
 import com.ese.transform.PickingOrderTransform;
@@ -169,7 +169,7 @@ public class PickingOrderService extends Service {
 
     public void getStikerWorkLoadReport(int pickingId, UserDetail user){
         String nameReport = Utils.genReportName("_StikerWorkLoad");
-        List<SticketWorkLoadViewReport> viewReports = axCustomerConfirmJourDAO.genStikerWorkLoadReport(pickingId);
+        List<StickerWorkLoadViewReport> viewReports = axCustomerConfirmJourDAO.genStikerWorkLoadReport(pickingId);
 
         HashMap map = new HashMap<String, Object>();
         map.put("userPrint", user.getUserName());

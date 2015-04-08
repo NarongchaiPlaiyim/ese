@@ -4,7 +4,7 @@ import com.ese.model.db.AXCustomerConfirmJourModel;
 import com.ese.model.view.DataSyncConfirmOrderView;
 import com.ese.model.view.PickingOrderWithItemBarcodeReport;
 import com.ese.model.view.report.ConfirmationPackingViewModel;
-import com.ese.model.view.report.SticketWorkLoadViewReport;
+import com.ese.model.view.report.StickerWorkLoadViewReport;
 import com.ese.utils.Utils;
 import org.hibernate.SQLQuery;
 import org.hibernate.type.BigDecimalType;
@@ -172,8 +172,8 @@ public class AXCustomerConfirmJourDAO extends GenericDAO<AXCustomerConfirmJourMo
         }
     }
 
-    public List<SticketWorkLoadViewReport> genStikerWorkLoadReport(int pickingId){
-        List<SticketWorkLoadViewReport> viewReports = new ArrayList<SticketWorkLoadViewReport>();
+    public List<StickerWorkLoadViewReport> genStikerWorkLoadReport(int pickingId){
+        List<StickerWorkLoadViewReport> viewReports = new ArrayList<StickerWorkLoadViewReport>();
 
         StringBuilder sqlBuilder = new StringBuilder();
 
@@ -183,7 +183,7 @@ public class AXCustomerConfirmJourDAO extends GenericDAO<AXCustomerConfirmJourMo
         sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustTable.name AS CUSTOMER_NAME,");
         sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.ItemId AS ITEM_NUMBER,");
         sqlBuilder.append(" ").append(getPrefix()).append(".item_master.DSGThaiItemDescription AS THAI_ITEM_DESCRIPTION,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".reserved_order.reserved_qty AS QUANTITY,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.qty AS QUANTITY,");
         sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.salesunit AS ORDER_UNIT,");
         sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.dsg_remark AS REMARK");
         sqlBuilder.append(" FROM ").append(getPrefix()).append(".picking_order");
@@ -195,8 +195,8 @@ public class AXCustomerConfirmJourDAO extends GenericDAO<AXCustomerConfirmJourMo
         sqlBuilder.append(" ON ").append(getPrefix()).append(".picking_order.customer_code = ").append(getPrefix()).append(".ax_CustTable.AccountNum");
         sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".ax_SalesTable");
         sqlBuilder.append(" ON ").append(getPrefix()).append(".picking_order.sales_admin = ").append(getPrefix()).append(".ax_SalesTable.SalesId");
-        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".reserved_order");
-        sqlBuilder.append(" ON ").append(getPrefix()).append(".picking_order_line.id = ").append(getPrefix()).append(".reserved_order.picking_order_line_id");
+//        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".reserved_order");
+//        sqlBuilder.append(" ON ").append(getPrefix()).append(".picking_order_line.id = ").append(getPrefix()).append(".reserved_order.picking_order_line_id");
         sqlBuilder.append(" WHERE ").append(getPrefix()).append(".picking_order.id = " ).append(pickingId);
 
         log.debug("--SQL {}",sqlBuilder.toString());
@@ -215,7 +215,7 @@ public class AXCustomerConfirmJourDAO extends GenericDAO<AXCustomerConfirmJourMo
             log.debug("----------- {}", objects.size());
 
             for (Object[] entity : objects) {
-                SticketWorkLoadViewReport report = new SticketWorkLoadViewReport();
+                StickerWorkLoadViewReport report = new StickerWorkLoadViewReport();
                 report.setSalesId(Utils.parseString(entity[0], EMTPY));
                 report.setDocNo(Utils.parseString(entity[1], EMTPY));
                 report.setCustomerName(Utils.parseString(entity[2], EMTPY));

@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
-public class SticketWorkLoadViewReport {
+public class StickerWorkLoadViewReport {
 
     private String salesId;
     private String docNo;
