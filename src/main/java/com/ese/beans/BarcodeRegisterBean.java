@@ -210,7 +210,7 @@ public class BarcodeRegisterBean extends Bean{
         log.debug("-- onSave()");
         try {
             if(mandate()){
-                barcodeRegisterService.saveORupdate(barcodeRegisterView);
+                barcodeRegisterService.saveOrUpdate(barcodeRegisterView);
                 if (!Utils.isZero(barcodeRegisterView.getId())){
                     showDialogEdited();
                 } else {
