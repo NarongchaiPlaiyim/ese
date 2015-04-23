@@ -13,8 +13,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -93,17 +91,20 @@ public class BarcodeRegisterService extends Service{
         return barcodeRegisterView;
     }
 
-    public void saveORupdate(BarcodeRegisterView view){
+    public void saveOrUpdate(BarcodeRegisterView view){
         log.debug("-- save(BarcodeRegisterView.id[{}])", view.getId());
+        BarcodeRegisterModel model;
         try {
             view.setCost(barcodeRegisterDAO.getPrice(view.getMsItemModel().getItemId()));
+            model = barcodeRegisterTransform.transformToModel(view);
+            barcodeRegisterDAO.saveOrUpdate(model);
 
-            if (Utils.isZero(view.getId())){
+            /*if (Utils.isZero(view.getId())){
                 barcodeRegisterDAO.persist(barcodeRegisterTransform.transformToModel(view));
             } else {
                 BarcodeRegisterModel model = barcodeRegisterTransform.transformToModel(view);
                 barcodeRegisterDAO.update(model);
-            }
+            }*/
         } catch (Exception e) {
             log.error("{}",e);
         }
