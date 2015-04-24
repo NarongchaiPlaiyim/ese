@@ -1,0 +1,234 @@
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>#{msg.get('menu.barcode.title')}</title>
+    </h:head>
+    <h:body>
+        <p:layout fullPage="true" id="layoutPanel">
+            <p:layoutUnit id="layoutTop" position="north" size="180" header="#{msg.get('header.north')}" collapsible="true" style="border: 0">
+                <ui:insert name="header">
+                    <ui:include src="#{msg.get('include.header')}"/>
+                </ui:insert>
+            </p:layoutUnit>
+            <p:layoutUnit id="layoutLeft" position="west" size="#{msg.get('layoutLeft.size')}" header="#{msg.get('header.west')}" collapsible="true" style="border: 0">
+                <ui:include src="#{msg.get('include.menu')}"/>
+            </p:layoutUnit>
+
+            <p:layoutUnit id="layoutCenter" position="center" header="#{msg.get('menu.loading.title.sub.2')}" >
+                <h:form id="selectPickingListForm">
+                <table border="0" class="content_table_form">
+                    <tr >
+                        <td style="min-width: 180px; width: 180px; max-width: 180px;" class="left" />
+                        <td style="min-width: 320px; width: 320px; max-width: 320px;" class="left" />
+                        <td style="min-width: 180px; width: 180px; max-width: 180px;" class="left" />
+                        <td style="min-width: 320px; width: 320px; max-width: 320px;" class="left" />
+                        <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
+                        <td style="min-width: 320px; width: 320px; max-width: 320px;" class="left" />
+                        <td style="min-width: 80px; width: 80px; max-width: 80px;" class="left" />
+                        <td style="min-width: 320px; width: 320px; max-width: 320px;" class="left" />
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <h:outputText value="Confirm Id"/>
+                        </td>
+                        <td>
+                            <p:inputText
+                                    style="#{msg.get('fix.size.300')}"
+                                    value="#{selectPickingListBean.pickingOrderView.confirmId}"
+                                    />
+                        </td>
+                        <td>
+                            <h:outputText value="Purchase Order"/>
+                        </td>
+                        <td>
+                            <p:inputText
+
+                                    style="#{msg.get('fix.size.300')}"
+                                    value="#{selectPickingListBean.pickingOrderView.purchaseOrder}"
+                                    />
+                        </td>
+                        <td>
+                            <h:outputText value="Request Ship Date"/>
+                        </td>
+                        <td style="min-width: 50px; width: 50px; max-width: 50px;" class="left">
+                            <p:inputMask value="#{selectPickingListBean.pickingOrderView.requestShipDate}"
+                                         onkeydown="return onKeyDownNumber(event);"
+                                         onkeypress="return onKeyPressNumber(event);"
+                                         mask="99/99/9999"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <h:outputText value="Confirm Date"/>
+                        </td>
+                        <td>
+                            <p:inputMask value="#{selectPickingListBean.pickingOrderView.confirmDate}"
+                                         onkeydown="return onKeyDownNumber(event);"
+                                         onkeypress="return onKeyPressNumber(event);"
+                                         mask="99/99/9999"/>
+                        </td>
+                        <td>
+                            <h:outputText value="Sale Order"/>
+                        </td>
+                        <td>
+                            <p:inputText
+                                    style="#{msg.get('fix.size.300')}"
+                                    value="#{selectPickingListBean.pickingOrderView.saleOrder}"
+                                    />
+                        </td>
+                        <td>
+                            <h:outputText value="EDD Date"/>
+                        </td>
+                        <td>
+                            <p:inputMask value="#{selectPickingListBean.pickingOrderView.eddDate}"
+                                         onkeydown="return onKeyDownNumber(event);"
+                                         onkeypress="return onKeyPressNumber(event);"
+                                         mask="99/99/9999"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <h:outputText value="Customer Code"/>
+                        </td>
+                        <td>
+                            <p:inputText
+                                    style="#{msg.get('fix.size.300')}"
+                                    value="#{selectPickingListBean.pickingOrderView.customerCode}"
+                                    />
+                        </td>
+
+                        <td>
+                            <h:outputText value="Delivery Name"/>
+                        </td>
+                        <td>
+                            <p:inputText
+                                    style="#{msg.get('fix.size.300')}"
+                                    value="#{selectPickingListBean.pickingOrderView.deliveryName}"
+                                    />
+                        </td>
+
+                        <td>
+                            <h:outputText value="Available Date"/>
+                        </td>
+                        <td>
+                            <p:inputMask id="startLabel"
+                                         value="#{selectPickingListBean.pickingOrderView.availableDate}"
+                                         onkeydown="return onKeyDownNumber(event);"
+                                         onkeypress="return onKeyPressNumber(event);"
+                                         mask="99/99/9999"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <h:outputText value="Customer Name"/>
+                        </td>
+                        <td>
+                            <p:inputText
+                                    style="#{msg.get('fix.size.300')}"
+                                    value="#{selectPickingListBean.pickingOrderView.customerName}"
+                                    />
+                        </td>
+
+                        <td>
+                            <h:outputText value="Delivery Address"/>
+                        </td>
+                        <td>
+                            <p:inputText
+                                    style="#{msg.get('fix.size.300')}"
+                                    value="#{selectPickingListBean.pickingOrderView.deliveryAddress}"
+                                    />
+                        </td>
+
+                        <td>
+                            <h:outputText value=""/>
+                        </td>
+                        <td>
+                            <p:commandButton id="btnSearch" value="Search"
+                                             action="#{selectPickingListBean.onSearch}"
+                                             onstart="PF('bui').block()"
+                                             oncomplete="PF('bui').unblock()"
+                                             update=":selectPickingListForm:selectPickingOrderTable"/>
+                        </td>
+                    </tr>
+                </table>
+
+                <div style="text-align: right">
+                    <p:commandButton id="btnSelect" value="Select" style="width: 200px" disabled="#{selectPickingListBean.flagBtnSelect}"
+                                     action="#{selectPickingListBean.onSelectPickingList()}" process="@this" update=":msgBoxSystemMessagePanel"/>
+                    <p:commandButton id="btnClose" value="Close" style="width: 150px"
+                                     action="#{selectPickingListBean.onClickDialogConfirm()}" process="@this"/>
+                </div>
+
+
+                <p:dataTable id="selectPickingOrderTable" rowIndexVar="rowIndex"
+                                 value="#{selectPickingListBean.pickingOrderModelList}"
+                                 var="pickingOrderModel" styleClass="full_table"
+                                 scrollable="true" scrollHeight="450"
+                                 resizableColumns="true" rowKey="#{pickingOrderModel.id}"
+                                 selection="#{selectPickingListBean.selectPickingOrderModelList}"
+                                 style="width: 100%; max-width: 100%; min-width: 100%">
+                        <p:ajax event="rowSelect" listener="#{selectPickingListBean.onClickTablePickingList}"
+                                update=":selectPickingListForm:btnSelect"/>
+                        <p:ajax event="rowUnselectCheckbox" listener="#{selectPickingListBean.onClickTablePickingList}"
+                                update=":selectPickingListForm:btnSelect"/>
+                        <p:ajax event="rowSelectCheckbox" listener="#{selectPickingListBean.onClickTablePickingList}"
+                                update=":selectPickingListForm:btnSelect"/>
+                        <p:column selectionMode="multiple" style="width:16px;text-align:center;"/>
+                        <p:column headerText="Customer Code" style="width: 120px" styleClass="center">
+                            <h:outputText value="#{pickingOrderModel.customerCode.accountNum}"/>
+                        </p:column>
+                        <p:column headerText="Customer Name" style="width: 120px" styleClass="center">
+                            <h:outputText value="#{pickingOrderModel.customerCode.name}"/>
+                        </p:column>
+                        <p:column headerText="Confirm Id" style="width: 120px" styleClass="center">
+                            <h:outputText value="#{pickingOrderModel.confirmId}"/>
+                        </p:column>
+                        <p:column headerText="Confirm Date" style="width: 120px" styleClass="center">
+                            <h:outputText value="#{pickingOrderModel.confirmDate}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" locale="en-EN"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Purchase Order" style="width: 120px" styleClass="center">
+                            <h:outputText value="#{pickingOrderModel.purchaseOrder}"/>
+                        </p:column>
+                        <p:column headerText="Sale Order" style="width: 120px" styleClass="center">
+                            <h:outputText value="#{pickingOrderModel.salesOrder}"/>
+                        </p:column>
+                        <p:column headerText="Picking Slip No" style="width: 120px" styleClass="center">
+                            <h:outputText value="#{pickingOrderModel.purchaseOrder}"/>
+                        </p:column>
+                        <p:column headerText="Picking Date" style="width: 120px" styleClass="center">
+                            <h:outputText value="#{pickingOrderModel.requestShiftDate}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" locale="en-EN"/>
+                            </h:outputText>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </p:layoutUnit>
+        </p:layout>
+
+        <p:panel id="msgBoxSystemMessagePanel" style="border: 0">
+            <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="#{msg.get('dialog.message.size')}" closable="false"
+                             header="#{selectPickingListBean.messageHeader}" message="#{selectPickingListBean.message}" >
+                <div style="text-align: right">
+                    <p:commandButton value="#{msg.get('btn.name.ok')}"
+                                     process="@this"
+                                     update=":selectPickingListForm"
+                                     icon="ui-icon-check"
+                                     action="#{selectPickingListBean.onClickDialogConfirm}"
+                                     styleClass="medium" style="#{msg.get('btn.size')}"
+                                     oncomplete="PF('msgBoxSystemMessageDlg').hide();"/>
+                </div>
+            </p:confirmDialog>
+        </p:panel>
+    </h:body>
+</f:view>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:form id="containerForm">
+        <p:panel style="border: 0">
+            <div style="text-align: right">
+                <p:outputLabel id="lblMode" value="#{showPickingListBean.modeContainer}"/>
+                <p:commandButton id="btnNew" value="New"
+                                 action="#{showPickingListBean.onClickContainerDlg()}"
+                                 update=":containerForm" process="@form"/>
+                <p:commandButton id="btnSave" value="Save"
+                                 action="#{showPickingListBean.onSaveContainer}"
+                                 update=":msgBoxSystemMessagePanel, :containerForm" process="@form"/>
+                <p:commandButton id="btnDelete" value="Delete"
+                                 action="#{showPickingListBean.onConfirmDeleteContainer()}"
+                                 update=":confirmDeletePanel"/>
+            </div>
+        </p:panel>
+
+        <table border="0" class="content_table_form">
+            <tr>
+                <td style="min-width: 130px; width: 130px; max-width: 130px;" class="left" />
+                <td style="min-width: 250px; width: 250px; max-width: 250px;" class="left" />
+                <td style="min-width: 80px; width: 80px; max-width: 80px;" class="left" />
+                <td style="min-width: 250px; width: 250px; max-width: 250px;" class="left" />
+                <td style="min-width: 80px; width: 80px; max-width: 80px;" class="left" />
+                <td style="min-width: 250px; width: 250px; max-width: 250px;" class="left" />
+                <td style="min-width: 170px; width: 170px; max-width: 170px;" class="left" />
+            </tr>
+            <tr>
+                <td>
+                    <p:outputLabel value="Container No."/>
+                </td>
+                <td>
+                    <p:inputText id="txtConNo" value="#{showPickingListBean.containerView.containerNo}"/>
+                </td>
+                <td>
+                    <p:outputLabel value="Seal No."/>
+                </td>
+                <td>
+                    <p:inputText id="txtSealNo" value="#{showPickingListBean.containerView.sealNo}"/>
+                </td>
+                <td>
+                    <p:outputLabel value="Quantity"/>
+                </td>
+                <td>
+                    <p:inputText id="txtQty" value="#{showPickingListBean.containerView.quantity}"
+                                 onkeydown="return onKeyDownNumber(event);"
+                                 onkeypress="return onKeyPressNumber(event);"/>
+                </td>
+                <td>
+                    <p:commandButton value="Separate Item"/>
+                </td>
+            </tr>
+        </table>
+
+        <p:dataTable id="containerTable"
+                     scrollable="true" scrollHeight="450"
+                     var="containertModel"
+                     resizableColumns="true"
+                     value="#{showPickingListBean.containerModelList}"
+                     selectionMode="single"
+                     selection="#{showPickingListBean.containerModel}"
+                     rowKey="#{containertModel.id}"
+                     rowIndexVar="rowIndex">
+            <p:ajax event="rowSelect" listener="#{showPickingListBean.onClickTableContainer()}"
+                    update=":containerForm:txtConNo, :containerForm:txtSealNo, :containerForm:txtQty, :containerForm:lblMode"/>
+            <p:column headerText="No" style="min-width: 5px; width: 5px; max-width: 5px;">
+                <h:outputText value="#{rowIndex+1}" styleClass="center" />
+            </p:column>
+            <p:column headerText="Container No." sortBy="#{containertModel.containerNo}" filterBy="#{containertModel.containerNo}" filterMatchMode="contains" style="min-width: 50px; width: 50px; max-width: 50px;" styleClass="center">
+                <h:outputText value="#{containertModel.containerNo}"/>
+            </p:column>
+            <p:column headerText="Seal No." sortBy="#{containertModel.sealNo}" filterBy="#{containertModel.sealNo}" filterMatchMode="contains" style="min-width: 100px; width: 100px; max-width: 100px;" styleClass="center">
+                <h:outputText value="#{containertModel.sealNo}">
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:outputText>
+            </p:column>
+            <p:column headerText="Quantity" sortBy="#{containertModel.quantity}" filterBy="#{containertModel.quantity}" filterMatchMode="contains" style="min-width: 60px; width: 60px; max-width: 60px;" styleClass="center">
+                <h:outputText value="#{containertModel.quantity}" style="word-wrap:break-word;"/>
+            </p:column>
+            <p:column headerText="Loading Progress" sortBy="#{containertModel.loadingOrderModel}" filterBy="#{containertModel.loadingOrderModel}" filterMatchMode="contains" style="min-width: 60px; width: 60px; max-width: 60px;" styleClass="center">
+                <h:outputText value="#{containertModel.loadingOrderModel}"/>
+            </p:column>
+        </p:dataTable>
+
+        <div style="text-align: center">
+            <p:commandButton id="btnClose" value="Close" oncomplete="PF('containerDlg').hide()"/>
+        </div>
+    </h:form>
+</f:view>
+</html>

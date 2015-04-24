@@ -23,20 +23,20 @@
                 <h:form id="domesticForm">
                     <p:panel style="border: 0">
                         <div style="text-align: right;">
-
-                            <p:commandButton id="btnNE"
-                                    value="#{domesticLoadBean.btnName}"
-                                             action="#{domesticLoadBean.onClickButtonNew()}"
-                                             styleClass="medium"
-                                             oncomplete="PF('loadingOrderDlg').show()"
-                                             update=":loadingOrderDlgForm"
-                                             icon="ui-icon-plusthick"/>
-
-                            <p:commandButton id="btn2"
+                            <p:outputLabel id="labMode" value="#{domesticLoadBean.labMode}"/>
+                            <p:commandButton id="btnNew" value="New"
+                                             action="#{domesticLoadBean.onClickNew}"
+                                             update=":domesticForm:labMode, :domesticForm:txtDocno,
+                                                     :domesticForm:txtLoadingDate, :domesticForm:txtRemark, :domesticForm:loadingOrderTable"/>
+                            <p:commandButton id="brnSave" value="Save"
+                                             action="#{domesticLoadBean.onClickSaveLoadingOrder}"
+                                             process="@form"
+                                             update=":domesticForm, :msgBoxSystemMessagePanel"/>
+                            <p:commandButton id="btnReport"  disabled="#{domesticLoadBean.flagdBtnReport}"
                                              value="Print loading report"/>
 
-                            <p:commandButton id="btn3"
-                                             value="Show picking list"/>
+                            <p:commandButton id="btnShowPicking" value="Show picking list" disabled="#{domesticLoadBean.flagBtnShowPicking}"
+                                             action="#{domesticLoadBean.onClickShowPickingList}" process="@this"/>
                         </div>
 
                         <div class="left">
@@ -53,20 +53,28 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <h:outputText value="Doc No"/>
+                                        <p:outputLabel value="Doc No."/>
                                     </td>
                                     <td>
-                                        <p:inputText  style="min-width: 200px; width: 200px; max-width: 200px;" value="#{domesticLoadBean.docNo}"/>
+                                        <p:inputText id="txtDocno" readonly="#{true}" value="#{domesticLoadBean.loadingOrderView.docNo}"/>
                                     </td>
                                     <td>
-                                        <h:outputText value="Loading Date"/>
+                                        <p:outputLabel value="Loading Date"/>
                                     </td>
                                     <td>
-                                        <p:calendar value="#{domesticLoadBean.loadingDate}"
+                                        <p:calendar id="txtLoadingDate" value="#{domesticLoadBean.loadingOrderView.loadingDate}"
                                                     pattern="dd/MM/yyyy">
                                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                                         </p:calendar>
                                     </td>
+                                    <td>
+                                        <p:outputLabel value="Remark"/>
+                                    </td>
+                                    <td>
+                                        <p:inputTextarea id="txtRemark" value="#{domesticLoadBean.loadingOrderView.remark}"/>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td>
                                         <h:outputText value="Status"/>
                                     </td>
@@ -99,16 +107,8 @@
                     </p:panel>
 
                     <table border="0" class="content_table_form">
-                        <tr >
-                            <td class="fixMinMax100 left" />
-                            <td class="fixMinMax200 left" />
-                            <td class="fixMinMax100 center" />
-                            <td class="fixMinMax100 left" />
-                            <td class="fixMinMax200 left" />
-                            <td/>
-                        </tr>
                         <tr>
-                            <td colspan="6">
+                            <td>
                                 <p:dataTable id="loadingOrderTable"
                                              scrollable="true" scrollHeight="450"
                                              var="loadingOrderModel"
@@ -118,23 +118,25 @@
                                              selection="#{domesticLoadBean.loadingOrderModel}"
                                              rowKey="#{loadingOrderModel.id}"
                                              rowIndexVar="rowIndex">
-                                    <p:ajax event="rowSelect" update=":domesticForm:btnNE, :loadingOrderDlgForm"
-                                            listener="#{domesticLoadBean.onClickPalletTB}"/>
+                                    <p:ajax event="rowSelect"
+                                            update=":domesticForm:labMode, :domesticForm:txtDocno, :domesticForm:txtLoadingDate, :domesticForm:txtRemark
+                                                    :domesticForm:btnReport, :domesticForm:btnShowPicking"
+                                            listener="#{domesticLoadBean.onClickLoadingOrderTB}"/>
                                     <p:column headerText="No" style="min-width: 5px; width: 5px; max-width: 5px;">
                                         <h:outputText value="#{rowIndex+1}" styleClass="center" />
                                     </p:column>
-                                    <p:column headerText="Doc No" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
+                                    <p:column headerText="Doc No" sortBy="#{loadingOrderModel.docNo}" filterBy="#{loadingOrderModel.docNo}" filterMatchMode="contains" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
                                         <h:outputText value="#{loadingOrderModel.docNo}"/>
                                     </p:column>
-                                    <p:column headerText="Loading Date" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
+                                    <p:column headerText="Loading Date" sortBy="#{loadingOrderModel.loadingDate}" filterBy="#{loadingOrderModel.loadingDate}" filterMatchMode="contains" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
                                         <h:outputText value="#{loadingOrderModel.loadingDate}">
                                             <f:convertDateTime pattern="dd/MM/yyyy" />
                                         </h:outputText>
                                     </p:column>
-                                    <p:column headerText="Remark" style="min-width: 150px; width: 150px; max-width: 150px;" styleClass="center">
+                                    <p:column headerText="Remark" sortBy="#{loadingOrderModel.remark}" filterBy="#{loadingOrderModel.remark}" filterMatchMode="contains" style="min-width: 350px; width: 350px; max-width: 350px;" styleClass="center">
                                         <h:outputText value="#{loadingOrderModel.remark}" style="word-wrap:break-word;"/>
                                     </p:column>
-                                    <p:column headerText="Status" style="min-width: 30px; width: 30px; max-width: 30px;" styleClass="center">
+                                    <p:column headerText="Status" sortBy="#{loadingOrderModel.statusModel.caption}" filterBy="#{loadingOrderModel.statusModel.caption}" filterMatchMode="contains" style="min-width: 60px; width: 60px; max-width: 60px;" styleClass="center">
                                         <h:outputText value="#{loadingOrderModel.statusModel.caption}"/>
                                     </p:column>
                                 </p:dataTable>
@@ -154,16 +156,16 @@
                                      update=":domesticForm"
                                      icon="ui-icon-check"
                                      styleClass="medium" style="#{msg.get('btn.size')}"
-                                     oncomplete="PF('msgBoxSystemMessageDlg').hide(); PF('loadingOrderDlg').hide()"/>
+                                     oncomplete="PF('msgBoxSystemMessageDlg').hide();"/>
                 </div>
             </p:confirmDialog>
         </p:panel>
 
-        <p:dialog id="loadingOrderDialog" widgetVar="loadingOrderDlg" header="Loading order" closable="false"
-                  onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
-                  modal="true" width="500" height="300">
-            <ui:include src="../site/dialog/loadingOrderDialog.xhtml"/>
-        </p:dialog>
+        <!--<p:dialog id="loadingOrderDialog" widgetVar="loadingOrderDlg" header="Loading order" closable="false"-->
+                  <!--onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"-->
+                  <!--modal="true" width="500" height="300">-->
+            <!--<ui:include src="../site/dialog/loadingOrderDialog.xhtml"/>-->
+        <!--</p:dialog>-->
 
     </h:body>
 </f:view>

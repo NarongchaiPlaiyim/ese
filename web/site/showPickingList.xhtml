@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>#{msg.get('menu.barcode.title')}</title>
+    </h:head>
+    <h:body>
+        <p:layout fullPage="true" id="layoutPanel">
+            <p:layoutUnit id="layoutTop" position="north" size="180" header="#{msg.get('header.north')}" collapsible="true" style="border: 0">
+                <ui:insert name="header">
+                    <ui:include src="#{msg.get('include.header')}"/>
+                </ui:insert>
+            </p:layoutUnit>
+            <p:layoutUnit id="layoutLeft" position="west" size="#{msg.get('layoutLeft.size')}" header="#{msg.get('header.west')}" collapsible="true" style="border: 0">
+                <ui:include src="#{msg.get('include.menu')}"/>
+            </p:layoutUnit>
+
+            <p:layoutUnit id="layoutCenter" position="center" header="#{msg.get('menu.loading.title.sub.2')}" >
+                <h:form id="showPickingListForm">
+                    <p:panel style="border: 0">
+                        <div style="text-align: right;">
+                            <p:commandButton id="btnSelectPickingList" value="Select Picking List"
+                                             action="#{showPickingListBean.onSelectPickingList}"
+                                             update=":showPickingListForm"/>
+                            <p:commandButton id="brnContainer" value="Container"
+                                             action="#{showPickingListBean.onClickContainerDlg()}"
+                                             oncomplete="PF('containerDlg').show()" update=":containerForm, :showPickingListForm"/>
+                            <p:commandButton id="btnReport" value="Item Sequence"/>
+                            <p:commandButton id="btnClose" value="Close" action="#{showPickingListBean.onClose}"/>
+                        </div>
+                    </p:panel>
+
+                    <p:dataTable id="showPickingListTable"
+                                 scrollable="true" scrollHeight="450"
+                                 var="showPickingListModel"
+                                 resizableColumns="true"
+                                 value="#{showPickingListBean.pickingOrderModelList}"
+                                 selectionMode="single"
+                                 selection="#{showPickingListBean.pickingOrderModel}"
+                                 rowKey="#{showPickingListModel.id}"
+                                 rowIndexVar="rowIndex">
+                        <p:ajax event="rowSelect"/>
+                        <p:column headerText="No" style="min-width: 5px; width: 5px; max-width: 5px;">
+                            <h:outputText value="#{rowIndex+1}" styleClass="center" />
+                        </p:column>
+                        <p:column headerText="Customer Code" sortBy="#{showPickingListModel.customerCode.accountNum}" filterBy="#{showPickingListModel.customerCode.accountNum}" filterMatchMode="contains" style="min-width: 50px; width: 50px; max-width: 50px;" styleClass="center">
+                            <h:outputText value="#{showPickingListModel.customerCode.accountNum}"/>
+                        </p:column>
+                        <p:column headerText="Customer Name" sortBy="#{showPickingListModel.customerCode.name}" filterBy="#{showPickingListModel.customerCode.name}" filterMatchMode="contains" style="min-width: 100px; width: 100px; max-width: 100px;" styleClass="center">
+                            <h:outputText value="#{showPickingListModel.customerCode.name}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Confirm ID" sortBy="#{showPickingListModel.confirmId}" filterBy="#{showPickingListModel.confirmId}" filterMatchMode="contains" style="min-width: 60px; width: 60px; max-width: 60px;" styleClass="center">
+                            <h:outputText value="#{showPickingListModel.confirmId}" style="word-wrap:break-word;"/>
+                        </p:column>
+                        <p:column headerText="Confirm Date" sortBy="#{showPickingListModel.confirmDate}" filterBy="#{showPickingListModel.confirmDate}" filterMatchMode="contains" style="min-width: 60px; width: 60px; max-width: 60px;" styleClass="center">
+                            <h:outputText value="#{showPickingListModel.confirmDate}"/>
+                        </p:column>
+                        <p:column headerText="Purchase Order" sortBy="#{showPickingListModel.purchaseOrder}" filterBy="#{showPickingListModel.purchaseOrder}" filterMatchMode="contains" style="min-width: 60px; width: 60px; max-width: 60px;" styleClass="center">
+                            <h:outputText value="#{showPickingListModel.purchaseOrder}"/>
+                        </p:column>
+                        <p:column headerText="Sale Order" sortBy="#{showPickingListModel.salesOrder}" filterBy="#{showPickingListModel.salesOrder}" filterMatchMode="contains" style="min-width: 60px; width: 60px; max-width: 60px;" styleClass="center">
+                            <h:outputText value="#{showPickingListModel.salesOrder}"/>
+                        </p:column>
+                        <p:column headerText="Picking Slip No" sortBy="#{showPickingListModel.purchaseOrder}" filterBy="#{showPickingListModel.purchaseOrder}" filterMatchMode="contains" style="min-width: 60px; width: 60px; max-width: 60px;" styleClass="center">
+                            <h:outputText value="#{showPickingListModel.purchaseOrder}"/>
+                        </p:column>
+                        <p:column headerText="Picking Date" sortBy="#{showPickingListModel.requestShiftDate}" filterBy="#{showPickingListModel.requestShiftDate}" filterMatchMode="contains" style="min-width: 60px; width: 60px; max-width: 60px;" styleClass="center">
+                            <h:outputText value="#{showPickingListModel.requestShiftDate}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </p:layoutUnit>
+        </p:layout>
+
+        <p:panel id="msgBoxSystemMessagePanel" style="border: 0">
+            <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="#{msg.get('dialog.message.size')}" closable="false"
+                             header="#{showPickingListBean.messageHeader}" message="#{showPickingListBean.message}" >
+                <div style="text-align: right">
+                    <p:commandButton value="#{msg.get('btn.name.ok')}"
+                                     process="@this"
+                                     update=":showPickingListForm, :containerForm"
+                                     icon="ui-icon-check"
+                                     styleClass="medium" style="#{msg.get('btn.size')}"
+                                     oncomplete="PF('msgBoxSystemMessageDlg').hide();"/>
+                </div>
+            </p:confirmDialog>
+        </p:panel>
+
+        <p:dialog id="containerDialog" widgetVar="containerDlg" header="Container" closable="false"
+                  onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
+                  modal="true" width="1280">
+                  <ui:include src="../site/dialog/containerDlg.xhtml"/>
+        </p:dialog>
+
+        <p:panel id="confirmDeletePanel" style="border: 0">
+            <p:confirmDialog id="confirmDeleteDialog" widgetVar="confirmDeleteDlg" width="#{msg.get('dialog.message.size')}" closable="false"
+                             header="#{showPickingListBean.messageHeader}" message="#{showPickingListBean.message}" >
+                <div style="text-align: right">
+                    <p:commandButton value="#{msg.get('btn.name.yes')}"
+                                     process="@this"
+                                     update=":containerForm, :msgBoxSystemMessagePanel"
+                                     action="#{showPickingListBean.onDeleteContainer()}"
+                                     icon="ui-icon-check"
+                                     styleClass="medium" style="#{msg.get('btn.size')}"
+                                     oncomplete="PF('msgBoxSystemMessageDlg').show(); PF('confirmDeleteDlg').hide()"/>
+                    <p:commandButton value="#{msg.get('btn.name.cancel')}"
+                                     process="@this"
+                                     update=":containerForm"
+                                     icon="ui-icon-check"
+                                     styleClass="medium" style="#{msg.get('btn.size')}"
+                                     oncomplete="PF('confirmDeleteDlg').hide();"/>
+                </div>
+            </p:confirmDialog>
+        </p:panel>
+    </h:body>
+</f:view>
+</html>

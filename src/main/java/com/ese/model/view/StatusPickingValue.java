@@ -10,7 +10,8 @@ public enum StatusPickingValue {
     RESERVED(2, "Reserved"),
     ASSIGN_TO_PICK(3, "Assign to pick"),
     PICKING(4, "Picking"),
-    POST(5, "Post");
+    POST(5, "Post"),
+    PREPARE_LOAD(14, "Prepare Load");
 
     private int id;
     private String name;

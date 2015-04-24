@@ -2,7 +2,9 @@ package com.ese.beans;
 
 import com.ese.model.db.LoadingOrderModel;
 import com.ese.model.db.StatusModel;
+import com.ese.model.view.LoadingOrderView;
 import com.ese.service.DomesticLoadService;
+import com.ese.utils.FacesUtil;
 import com.ese.utils.Utils;
 import com.sun.istack.internal.NotNull;
 import lombok.Getter;
@@ -12,6 +14,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
 
@@ -24,16 +27,18 @@ public class DomesticLoadBean extends Bean {
     @ManagedProperty("#{domesticLoadService}") private DomesticLoadService domesticLoadService;
     @ManagedProperty("#{message['authorize.menu.loading.tab.1']}") private String key;
 
-    private String docNo;
-    private String loadingDate;
+//    private String docNo;
+//    private String loadingDate;
     private int status;
+    private boolean flagdBtnReport;
+    private boolean flagBtnShowPicking;
 
     @NotNull private LoadingOrderModel loadingOrderModel;
     @NotNull private List<LoadingOrderModel> loadingOrderModelList;
     @NotNull private List<StatusModel> statusValue;
-
-    private String btnName = "New loading order";
+    @NotNull private LoadingOrderView loadingOrderView;
     private boolean mode = Boolean.TRUE;
+    private String labMode;
 
 
     @PostConstruct
@@ -47,6 +52,11 @@ public class DomesticLoadBean extends Bean {
     private void init(){
         onLoadStatue();
         onLoadTable();
+        loadingOrderModel = new LoadingOrderModel();
+        loadingOrderView = new LoadingOrderView();
+        labMode = "Mode : New ";
+        flagdBtnReport = Boolean.TRUE;
+        flagBtnShowPicking = Boolean.TRUE;
     }
 
     private void onLoadTable(){
@@ -64,24 +74,41 @@ public class DomesticLoadBean extends Bean {
         }
     }
 
-    public void onClickSaveLoadingOrderDialog(){
+    public void onClickSaveLoadingOrder(){
         if (mode) {
-            domesticLoadService.save(loadingOrderModel);
+            domesticLoadService.save(loadingOrderView);
             showDialogSaved();
         } else {
-            domesticLoadService.edit(loadingOrderModel);
+            domesticLoadService.edit(loadingOrderView);
             showDialogEdited();
         }
+        mode = Boolean.TRUE;
         init();
     }
 
-    public void onClickPalletTB(){
-        btnName = "Edit loading order";
+    public void onClickLoadingOrderTB(){
         mode = Boolean.FALSE;
+        flagdBtnReport = Boolean.FALSE;
+        flagBtnShowPicking = Boolean.FALSE;
+        labMode = "Mode : Edit ";
+        loadingOrderView = domesticLoadService.transToView(loadingOrderModel);
     }
 
     public void onClickSearch(){
         log.debug("------- {}", status);
-        loadingOrderModelList = domesticLoadService.getSearch(docNo, loadingDate, status);
+        loadingOrderModelList = domesticLoadService.getSearch(status);
+    }
+
+    public void onClickNew(){
+        loadingOrderView = new LoadingOrderView();
+        labMode = "Mode : New ";
+        mode = Boolean.TRUE;
+        loadingOrderModel = new LoadingOrderModel();
+    }
+
+    public void onClickShowPickingList(){
+        HttpSession session = FacesUtil.getSession(true);
+        session.setAttribute("loadingOrderModel", loadingOrderModel);
+        FacesUtil.redirect("/site/showPickingList.xhtml");
     }
 }

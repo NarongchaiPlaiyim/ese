@@ -5,6 +5,8 @@ import com.ese.model.dao.LoadingOrderDAO;
 import com.ese.model.dao.StatusDAO;
 import com.ese.model.db.LoadingOrderModel;
 import com.ese.model.db.StatusModel;
+import com.ese.model.view.LoadingOrderView;
+import com.ese.model.view.StatusLoadingOrderView;
 import com.ese.utils.AttributeName;
 import com.ese.utils.FacesUtil;
 import com.ese.utils.Utils;
@@ -35,33 +37,57 @@ public class DomesticLoadService extends Service {
         return loadingOrderDAO.findByStatusIs12();
     }
 
-    public List<LoadingOrderModel> getSearch(String docNo, String loadingDate, int status){
-        return loadingOrderDAO.findBySearch(docNo, loadingDate, status);
+    public List<LoadingOrderModel> getSearch(int status){
+        return loadingOrderDAO.findBySearch(status);
     }
 
-    public void save(LoadingOrderModel loadingOrderModel){
+    public void save(LoadingOrderView loadingOrderView){
         try {
             int staffModel = (int) FacesUtil.getSession(false).getAttribute(AttributeName.STAFF.getName());
+            LoadingOrderModel loadingOrderModel = new LoadingOrderModel();
+            loadingOrderModel.setDocNo(loadingOrderView.getDocNo());
+            loadingOrderModel.setLoadingDate(loadingOrderView.getLoadingDate());
+            loadingOrderModel.setRemark(loadingOrderView.getRemark());
             loadingOrderModel.setCreateBy(staffModel);
             loadingOrderModel.setUpdateBy(staffModel);
-            loadingOrderModel.setCategory("D");
+            loadingOrderModel.setCategory(loadingOrderView.getCategory());
             loadingOrderModel.setCreateDate(Utils.currentDate());
             loadingOrderModel.setUpdateDate(Utils.currentDate());
-            loadingOrderModel.setStatusModel(statusDAO.findByStatusId(12));
+            loadingOrderModel.setStatusModel(statusDAO.findByStatusId(StatusLoadingOrderView.CREATE.getId()));
             loadingOrderDAO.persist(loadingOrderModel);
         } catch (Exception e) {
             log.debug("Exception error during save ", e);
         }
     }
 
-    public void edit(LoadingOrderModel loadingOrderModel){
+    public void edit(LoadingOrderView loadingOrderView){
         try {
             int staffModel = (int) FacesUtil.getSession(false).getAttribute(AttributeName.STAFF.getName());
+            LoadingOrderModel loadingOrderModel = new LoadingOrderModel();
+            loadingOrderModel.setId(loadingOrderView.getId());
+            loadingOrderModel.setDocNo(loadingOrderView.getDocNo());
+            loadingOrderModel.setLoadingDate(loadingOrderView.getLoadingDate());
+            loadingOrderModel.setRemark(loadingOrderView.getRemark());
+            loadingOrderModel.setStatusModel(loadingOrderView.getStatusModel());
+            loadingOrderModel.setCategory(loadingOrderView.getCategory());
+            loadingOrderModel.setCreateDate(loadingOrderView.getCreateDate());
+            loadingOrderModel.setCreateBy(loadingOrderView.getCreateBy());
             loadingOrderModel.setUpdateBy(staffModel);
             loadingOrderModel.setUpdateDate(Utils.currentDate());
             loadingOrderDAO.update(loadingOrderModel);
         } catch (Exception e) {
             log.debug("Exception error during save ", e);
         }
+    }
+
+    public LoadingOrderView transToView(LoadingOrderModel loadingOrderModel){
+        LoadingOrderView orderView = new LoadingOrderView();
+        orderView.setId(loadingOrderModel.getId());
+        orderView.setDocNo(loadingOrderModel.getDocNo());
+        orderView.setLoadingDate(loadingOrderModel.getLoadingDate());
+        orderView.setRemark(loadingOrderModel.getRemark());
+        orderView.setStatusModel(loadingOrderModel.getStatusModel());
+
+        return orderView;
     }
 }
