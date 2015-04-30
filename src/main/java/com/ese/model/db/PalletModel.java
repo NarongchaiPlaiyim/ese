@@ -13,7 +13,6 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Entity
-@Subselect("select * from pallet")
 @Table(name = "pallet")
 @Proxy(lazy=false)
 public class PalletModel extends AbstractModel{
