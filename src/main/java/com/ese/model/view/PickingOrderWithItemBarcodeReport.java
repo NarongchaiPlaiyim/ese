@@ -35,6 +35,7 @@ public class PickingOrderWithItemBarcodeReport {
     private String salesUnit;
     private String areaName;
     private String docno;
+    private String locationCode;
 
     @Override
     public String toString() {
@@ -62,6 +63,7 @@ public class PickingOrderWithItemBarcodeReport {
                 .append("salesUnit", salesUnit)
                 .append("areaName", areaName)
                 .append("docno", docno)
+                .append("locationCode", locationCode)
                 .toString();
     }
 }

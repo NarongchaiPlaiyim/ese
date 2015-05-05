@@ -143,7 +143,6 @@ public class PickingOrderBean extends Bean {
     }
 
     public void pickingOrderWithItemBarcode(){
-        log.debug("-------------------");
         pickingOrderService.getPickingOrderWithItemBarcodeReport(pickingOrderModel.getId(), userDetail);
     }
 

@@ -416,7 +416,8 @@ public class AXCustomerConfirmJourDAO extends GenericDAO<AXCustomerConfirmJourMo
        sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.qty AS PACKING_QTY,");
        sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.salesunit AS SALES_UNIT,");
        sqlBuilder.append(" ").append(getPrefix()).append(".ax_DataArea.name AS AREA_NAME,");
-       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.docno AS DOCNO");
+       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.docno AS DOCNO,");
+       sqlBuilder.append(" ").append(getPrefix()).append(".location.location_barcode AS LOCATION_CODE");
        sqlBuilder.append(" FROM ").append(getPrefix()).append(".picking_order");
        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".ax_CustTable");
        sqlBuilder.append(" ON ").append(getPrefix()).append(".picking_order.customer_code = ").append(getPrefix()).append(".ax_CustTable.AccountNum");
@@ -438,6 +439,10 @@ public class AXCustomerConfirmJourDAO extends GenericDAO<AXCustomerConfirmJourMo
        sqlBuilder.append(" ON ").append(getPrefix()).append(".item_master.DSGBandID = ").append(getPrefix()).append(".ax_DSGBrand.DSGBrandID");
        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".ax_DataArea");
        sqlBuilder.append(" ON ").append(getPrefix()).append(".item_master.DSG_PrimaryPlant = ").append(getPrefix()).append(".ax_DataArea.id");
+       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".location_items");
+       sqlBuilder.append(" ON ").append(getPrefix()).append(".item_master.id = ").append(getPrefix()).append(".location_items.item_id");
+       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".location");
+       sqlBuilder.append(" ON ").append(getPrefix()).append(".location_items.location_id = ").append(getPrefix()).append(".location.id");
        sqlBuilder.append(" WHERE ").append(getPrefix()).append(".picking_order.id = " ).append(pickingId);
 
        log.debug("--SQL {}",sqlBuilder.toString());
@@ -466,7 +471,8 @@ public class AXCustomerConfirmJourDAO extends GenericDAO<AXCustomerConfirmJourMo
                    .addScalar("PACKING_QTY", BigDecimalType.INSTANCE)
                    .addScalar("SALES_UNIT", StringType.INSTANCE)
                    .addScalar("AREA_NAME", StringType.INSTANCE)
-                   .addScalar("DOCNO", StringType.INSTANCE);
+                   .addScalar("DOCNO", StringType.INSTANCE)
+                   .addScalar("LOCATION_CODE", StringType.INSTANCE);
            List<Object[]> objects = query.list();
            log.debug("----------- {}", objects.size());
 
@@ -495,6 +501,7 @@ public class AXCustomerConfirmJourDAO extends GenericDAO<AXCustomerConfirmJourMo
                report.setSalesUnit(Utils.parseString(entity[20], EMTPY));
                report.setAreaName(Utils.parseString(entity[21], EMTPY));
                report.setDocno(Utils.parseString(entity[22], EMTPY));
+               report.setLocationCode(Utils.parseString(entity[23]));
                viewReports.add(report);
            }
        } catch (Exception e){
