@@ -2,18 +2,9 @@ package com.ese.service;
 
 import com.ese.model.StatusValue;
 import com.ese.model.TableValue;
-import com.ese.model.dao.ContainerDAO;
-import com.ese.model.dao.ContainerItemDAO;
-import com.ese.model.dao.LoadingOrderDAO;
-import com.ese.model.dao.PickingOrderDAO;
-import com.ese.model.db.ContainerItemModel;
-import com.ese.model.db.ContainerModel;
-import com.ese.model.db.LoadingOrderModel;
-import com.ese.model.db.PickingOrderModel;
-import com.ese.model.view.ContainerView;
-import com.ese.model.view.PickingOrderView;
-import com.ese.model.view.StatusLoadingOrderView;
-import com.ese.model.view.StatusPickingValue;
+import com.ese.model.dao.*;
+import com.ese.model.db.*;
+import com.ese.model.view.*;
 import com.ese.utils.AttributeName;
 import com.ese.utils.FacesUtil;
 import com.ese.utils.Utils;
@@ -31,6 +22,8 @@ public class ShowPickingListService extends Service {
     @Resource private LoadingOrderDAO loadingOrderDAO;
     @Resource private ContainerDAO containerDAO;
     @Resource private ContainerItemDAO containerItemDAO;
+    @Resource private ItemSequenceDAO itemSequenceDAO;
+    @Resource private ItemDAO itemDAO;
 
     public List<PickingOrderModel> getPickingByLoadingOrderId(int loadingOrderId){
         return pickingOrderDAO.findByLoadingOrder(loadingOrderId);
@@ -106,5 +99,49 @@ public class ShowPickingListService extends Service {
 
     public List<ContainerItemModel> getContainerItemByLoadingOrderId(int loadingOrderId){
         return containerItemDAO.findByLoadingOrderId(loadingOrderId);
+    }
+
+    public List<ItemSequenceModel> getItemSeq(int loadingOrderId){
+        List<ItemSequenceModel> itemSequenceModelList = itemSequenceDAO.findByLoadingOrderId(loadingOrderId);
+
+        if (Utils.isZero(itemSequenceModelList.size())){
+            List<ItemSequenceView> itemList = loadingOrderDAO.findByLoadingOrderId(loadingOrderId);
+            LoadingOrderModel loadingOrderModel = new LoadingOrderModel();
+            int staffModel = (int) FacesUtil.getSession(false).getAttribute(AttributeName.STAFF.getName());
+            try {
+                loadingOrderModel  = loadingOrderDAO.findByID(loadingOrderId);
+            } catch (Exception e) {
+                log.debug("Exception error find loading order by id: ", e);
+            }
+
+            for (ItemSequenceView item : itemList){
+                ItemSequenceModel itemSequenceModel = new ItemSequenceModel();
+                MSItemModel msItemModel = itemDAO.findByItemId(item.getItemName());
+                itemSequenceModel.setMsItemModel(msItemModel);
+                itemSequenceModel.setLoadingOrderModel(loadingOrderModel);
+                itemSequenceModel.setCreateBy(staffModel);
+                itemSequenceModel.setCreateDate(Utils.currentDate());
+                itemSequenceModel.setUpdateBy(staffModel);
+                itemSequenceModel.setUpdateDate(Utils.currentDate());
+                itemSequenceModelList.add(itemSequenceModel);
+
+                try {
+                    itemSequenceDAO.persist(itemSequenceModel);
+                } catch (Exception e) {
+                    log.debug("Exception error pirsist item sequence : ", e);
+                }
+            }
+        }
+
+        return itemSequenceModelList;
+    }
+
+    public void save(List<ItemSequenceModel> itemSequenceModelList) throws Exception {
+        int staffModel = (int) FacesUtil.getSession(false).getAttribute(AttributeName.STAFF.getName());
+        for (ItemSequenceModel itemSequenceModel : itemSequenceModelList){
+            itemSequenceModel.setUpdateBy(staffModel);
+            itemSequenceModel.setUpdateDate(Utils.currentDate());
+            itemSequenceDAO.update(itemSequenceModel);
+        }
     }
 }

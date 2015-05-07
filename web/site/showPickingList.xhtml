@@ -29,7 +29,11 @@
                             <p:commandButton id="brnContainer" value="Container"
                                              action="#{showPickingListBean.onClickContainerDlg()}"
                                              oncomplete="PF('containerDlg').show()" update=":containerForm, :showPickingListForm"/>
-                            <p:commandButton id="btnReport" value="Item Sequence"/>
+                            <p:commandButton id="btnItemSeq" value="Item Sequence"
+                                             action="#{showPickingListBean.onItemSeq()}"
+                                             process="@this"
+                                             update=":itemSeqForm"
+                                             oncomplete="PF('itemSeqDlg').show()"/>
                             <p:commandButton id="btnClose" value="Close" action="#{showPickingListBean.onClose}"/>
                         </div>
                     </p:panel>
@@ -84,10 +88,10 @@
                 <div style="text-align: right">
                     <p:commandButton value="#{msg.get('btn.name.ok')}"
                                      process="@this"
-                                     update=":showPickingListForm, :containerForm"
+                                     update=":showPickingListForm, :containerForm, :itemSeqForm"
                                      icon="ui-icon-check"
                                      styleClass="medium" style="#{msg.get('btn.size')}"
-                                     oncomplete="PF('msgBoxSystemMessageDlg').hide();"/>
+                                     oncomplete="PF('msgBoxSystemMessageDlg').hide(); PF('itemSeqDlg').hide()"/>
                 </div>
             </p:confirmDialog>
         </p:panel>
@@ -96,6 +100,12 @@
                   onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
                   modal="true" width="1280">
                   <ui:include src="../site/dialog/containerDlg.xhtml"/>
+        </p:dialog>
+
+        <p:dialog id="itemSeqDialog" widgetVar="itemSeqDlg" header="Item Sequence" closable="false"
+                  onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
+                  modal="true" width="1280">
+            <ui:include src="../site/dialog/itemSequenceDialog.xhtml"/>
         </p:dialog>
 
         <p:panel id="confirmDeletePanel" style="border: 0">
@@ -115,6 +125,21 @@
                                      icon="ui-icon-check"
                                      styleClass="medium" style="#{msg.get('btn.size')}"
                                      oncomplete="PF('confirmDeleteDlg').hide();"/>
+                </div>
+            </p:confirmDialog>
+        </p:panel>
+
+        <p:panel id="dupicateSeqPanel" style="border: 0">
+            <p:confirmDialog id="dupicateSeqDialog" widgetVar="dupicateSeqDlg" width="#{msg.get('dialog.message.size')}"
+                             closable="false"
+                             header="#{showPickingListBean.messageHeader}" message="#{showPickingListBean.message}" >
+                <div style="text-align: right">
+                    <p:commandButton value="#{msg.get('btn.name.ok')}"
+                                     styleClass="medium" style="#{msg.get('btn.size')}"
+                                     icon="ui-icon-check"
+                                     process="@this"
+                                     update=":itemSeqForm, :dupicateSeqPanel"
+                                     oncomplete="PF('dupicateSeqDlg').hide()"/>
                 </div>
             </p:confirmDialog>
         </p:panel>

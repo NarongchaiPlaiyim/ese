@@ -1,12 +1,10 @@
 package com.ese.beans;
 
-import com.ese.model.db.ContainerItemModel;
-import com.ese.model.db.ContainerModel;
-import com.ese.model.db.LoadingOrderModel;
-import com.ese.model.db.PickingOrderModel;
+import com.ese.model.db.*;
 import com.ese.model.view.ContainerView;
 import com.ese.model.view.LoadingOrderView;
 import com.ese.utils.FacesUtil;
+import com.ese.utils.MessageDialog;
 import com.ese.utils.Utils;
 import com.sun.istack.internal.NotNull;
 import lombok.Getter;
@@ -17,6 +15,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 
 @Getter
@@ -29,10 +28,12 @@ public class ShowPickingListBean extends Bean {
     private List<PickingOrderModel> pickingOrderModelList;
     private List<ContainerModel> containerModelList;
     private List<ContainerItemModel> containerItemModelList;
+    private List<ItemSequenceModel> itemSequenceModelList;
     @NotNull private ContainerModel containerModel;
     @NotNull private PickingOrderModel pickingOrderModel;
     @NotNull private LoadingOrderModel loadingOrderModel;
     @NotNull private ContainerView containerView;
+    @NotNull private ItemSequenceModel itemSequenceModel;
 
     private String modeContainer;
     private HttpSession session;
@@ -114,6 +115,37 @@ public class ShowPickingListBean extends Bean {
 
         if (!Utils.isZero(loadingOrderModel.getId())){
             containerItemModelList = showPickingListService.getContainerItemByLoadingOrderId(loadingOrderModel.getId());
+        }
+    }
+
+    public void onItemSeq(){
+        itemSequenceModelList = showPickingListService.getItemSeq(loadingOrderModel.getId());
+    }
+
+    public void onSaveItemSeq(){
+        HashMap<Integer, String> hashMap = new HashMap<>();
+        for (ItemSequenceModel model : itemSequenceModelList){
+            if (hashMap.containsKey(model.getSeq())){
+                showDialog(MessageDialog.WARNING.getMessageHeader(), "Seq dupicate.", "dupicateSeqDlg");
+                return;
+            } else if(model.getSeq() > itemSequenceModelList.size()){
+                showDialog(MessageDialog.WARNING.getMessageHeader(), "Seq > จำนวน record", "dupicateSeqDlg");
+                return;
+            } else {
+                hashMap.put(model.getSeq(), model.getMsItemModel().getItemId());
+            }
+        }
+
+        onSave();
+    }
+
+    private void onSave(){
+        try {
+            showPickingListService.save(itemSequenceModelList);
+            showDialogSaved();
+        } catch (Exception e) {
+            log.debug("Exception error on save item sequence : ", e);
+            showDialogError(e.getMessage());
         }
     }
 }

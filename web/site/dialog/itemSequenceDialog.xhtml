@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <p:panel id="itemSeqDlgPanel" styleClass="panel-dialog" style="border: 0">
+        <h:form id="itemSeqForm">
+            <p:dataTable id="itemSequenceTable" rowIndexVar="rowIndex"
+                         value="#{showPickingListBean.itemSequenceModelList}"
+                         var="itemSeq" styleClass="full_table"
+                         scrollable="true" scrollHeight="450"
+                         resizableColumns="true"
+                         editable="true" editMode="cell"
+                         style="width: 100%; max-width: 100%; min-width: 100%">
+                <p:column headerText="Seq" style="width: 20px" styleClass="center" sortBy="#{itemSeq.seq}">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{itemSeq.seq}" /></f:facet>
+                        <f:facet name="input">
+                            <p:inputText id="txtSeq" value="#{itemSeq.seq}"
+                                         onkeydown="return onKeyDownNumber(event);"
+                                         onkeypress="return onKeyPressNumber(event);">
+                                <p:ajax event="blur" update="txtSeq"/>
+                            </p:inputText>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Item Name" style="width: 120px" styleClass="center">
+                    <h:outputText value="#{itemSeq.msItemModel.itemId}"/>
+                </p:column>
+                <p:column headerText="Description" style="width: 450px" styleClass="center">
+                    <h:outputText value="#{itemSeq.msItemModel.DSGThaiItemDescription}"/>
+                </p:column>
+            </p:dataTable>
+
+            <div style="text-align: center">
+                <p:commandButton id = "btnSave" value="Save"
+                                 action="#{showPickingListBean.onSaveItemSeq()}"
+                                 process="@form" update=":showPickingListForm, :confirmDeletePanel, :dupicateSeqPanel, :msgBoxSystemMessagePanel"/>
+                <p:commandButton id = "btnCancel" value="Cancel" oncomplete="PF('itemSeqDlg').hide()"/>
+            </div>
+        </h:form>
+    </p:panel>
+</f:view>
+</html>
