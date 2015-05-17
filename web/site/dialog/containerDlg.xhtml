@@ -55,7 +55,10 @@
                                  onkeypress="return onKeyPressNumber(event);"/>
                 </td>
                 <td>
-                    <p:commandButton value="Separate Item"/>
+                    <p:commandButton value="Separate Item"
+                                     oncomplete="PF('containerDlg').hide()"
+                                     process="@this"
+                                     action="#{showPickingListBean.onClickSeparateItem}"/>
                 </td>
             </tr>
         </table>

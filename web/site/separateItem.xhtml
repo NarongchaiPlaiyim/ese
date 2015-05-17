@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>#{msg.get('menu.barcode.title')}</title>
+    </h:head>
+    <h:body>
+        <p:layout fullPage="true" id="layoutPanel">
+            <p:layoutUnit id="layoutTop" position="north" size="180" header="#{msg.get('header.north')}" collapsible="true" style="border: 0">
+                <ui:insert name="header">
+                    <ui:include src="#{msg.get('include.header')}"/>
+                </ui:insert>
+            </p:layoutUnit>
+            <p:layoutUnit id="layoutLeft" position="west" size="#{msg.get('layoutLeft.size')}" header="#{msg.get('header.west')}" collapsible="true" style="border: 0">
+                <ui:include src="#{msg.get('include.menu')}"/>
+            </p:layoutUnit>
+
+            <p:layoutUnit id="layoutCenter" position="center" header="#{msg.get('menu.loading.title.sub.2')}" >
+                <h:form id="separateItemForm">
+                    <p:panel style="border: 0">
+                        <div style="text-align: right;">
+                            <p:commandButton id="btnSave" value="Save"
+                                             action="#{separateItemBean.onSaveSeparateItem}"
+                                             update=":separateItemForm, :confirmClosePanel"/>
+                            <p:commandButton id="brnUnSeparate" value="Unsepate"
+                                             action="#{separateItemBean.preDelete()}"
+                                             process="@this"
+                                             update=":separateItemForm, :confirmDeletePanel"/>
+                        </div>
+                    </p:panel>
+
+                    <p:dataTable id="separateItemListTable"
+                                 scrollable="true" scrollHeight="450"
+                                 var="separateItemListModel"
+                                 resizableColumns="true"
+                                 editable="true" editMode="cell"
+                                 value="#{separateItemBean.separateItemViewList}"
+                                 rowKey="#{separateItemListModel.id}"
+                                 rowIndexVar="rowIndex">
+                        <p:columnGroup type="header">
+                            <p:row>
+                                <!--<p:column headerText="No" style="min-width: 50px; width: 50px; max-width: 50px;"/>-->
+                                <p:column headerText="Container" style="width: 47%"/>
+                                <p:column headerText="Qty" style="width: 47%"/>
+                                <p:column headerText=""/>
+                            </p:row>
+                        </p:columnGroup>
+                        <p:subTable var="item" value="#{separateItemListModel.containerItemViewList}">
+                            <f:facet name="header">
+                                <h:outputText value="#{separateItemListModel.headerSubName}"/>
+                            </f:facet>
+                            <p:column>
+                                <h:outputText value="#{item.containnerNo}" />
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="#{item.containerQty}" />
+                            </p:column>
+                            <p:column>
+                                <p:commandButton
+                                                 icon="ui-icon-pencil"
+                                                 update=":editQtyForm, :editDialog"
+                                                 action="#{separateItemBean.onEditContainerQty}">
+                                    <f:setPropertyActionListener value="#{item.containerItemId}" target="#{separateItemBean.containerItemId}"/>
+                                </p:commandButton>
+                            </p:column>
+
+                            <p:columnGroup type="footer">
+                                <p:row>
+                                    <!--<p:column footerText=""/>-->
+                                    <p:column footerText="Totals: " style="text-align:right"/>
+                                    <p:column footerText="#{separateItemListModel.sumQty}" />
+                                    <p:column footerText=""/>
+                                </p:row>
+                            </p:columnGroup>
+                        </p:subTable>
+                        <p:columnGroup type="footer">
+                            <p:row>
+                                <!--<p:column footerText=""/>-->
+                                <p:column footerText="Totals: " style="text-align:right"/>
+                                <p:column footerText="#{separateItemBean.grendTotal()}" style="text-align:left"/>
+                                <p:column footerText=""/>
+                            </p:row>
+                        </p:columnGroup>
+                    </p:dataTable>
+                </h:form>
+            </p:layoutUnit>
+        </p:layout>
+
+        <p:dialog id="editDialog" widgetVar="editDlg" header="Edit Qty"
+                  onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
+                  modal="true" width="400">
+            <ui:include src="../site/dialog/editContainerQtyDlg.xhtml"/>
+        </p:dialog>
+
+        <p:panel id="confirmClosePanel" style="border: 0">
+            <p:confirmDialog id="confirmCloseDialog" widgetVar="confirmCloseDlg" width="#{msg.get('dialog.message.size')}"
+                             header="#{separateItemBean.messageHeader}" message="#{separateItemBean.message}" >
+                <div style="text-align: right">
+                    <p:commandButton  value="#{msg.get('btn.name.ok')}"
+                                      styleClass="medium" style="#{msg.get('btn.size')}"
+                                      icon="ui-icon-check"
+                                      action="#{separateItemBean.redirect}"
+                                      process="@this" update=":separateItemForm"
+                                      oncomplete="PF('confirmClosePalletDlg').hide()"/>
+                    <p:commandButton value="#{msg.get('btn.name.cancel')}"
+                                     styleClass="medium" style="#{msg.get('btn.size')}"
+                                     icon="ui-icon-cancel"
+                                     process="@this"
+                                     update="separateItemForm"
+                                     oncomplete="PF('confirmClosePalletDlg').hide()"/>
+                </div>
+            </p:confirmDialog>
+        </p:panel>
+
+        <p:panel id="confirmDeletePanel" style="border: 0">
+            <p:confirmDialog id="confirmDeleteDialog" widgetVar="confirmDeletetDlg" width="#{msg.get('dialog.message.size')}"
+                             header="#{separateItemBean.messageHeader}" message="#{separateItemBean.message}" >
+                <div style="text-align: right">
+                    <p:commandButton  value="#{msg.get('btn.name.ok')}"
+                                      styleClass="medium" style="#{msg.get('btn.size')}"
+                                      icon="ui-icon-check"
+                                      action="#{separateItemBean.onUnSeparate}"
+                                      process="@this" update=":separateItemForm"
+                                      oncomplete="PF('confirmDeletetDlg').hide()"/>
+                    <p:commandButton value="#{msg.get('btn.name.cancel')}"
+                                     styleClass="medium" style="#{msg.get('btn.size')}"
+                                     icon="ui-icon-cancel"
+                                     process="@this"
+                                     update="separateItemForm"
+                                     oncomplete="PF('confirmDeletetDlg').hide()"/>
+                </div>
+            </p:confirmDialog>
+        </p:panel>
+
+    </h:body>
+</f:view>
+</html>

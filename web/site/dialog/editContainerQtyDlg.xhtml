@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<!--</html>-->
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:form id="editQtyForm">
+        <table  border="0">
+            <tr>
+                <td>
+                    <p:outputLabel value="Container : "/>
+                </td>
+                <td>
+                    <p:inputText value="#{separateItemBean.containerItemModel.containerModel.containerNo}" readonly="true"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p:outputLabel value="Qty : "/>
+                </td>
+                <td>
+                    <p:inputText id="txtQty" value="#{separateItemBean.containerItemModel.containerQty}"
+                                 onkeydown="return onKeyDownNumber(event);"
+                                 onkeypress="return onKeyPressNumber(event);">
+                        <p:ajax event="blur" update="txtQty"/>
+                     </p:inputText>
+                </td>
+            </tr>
+        </table>
+        <div style="text-align: center">
+            <p:commandButton value="Save" process="@this"
+                             action="#{separateItemBean.onSaveEdit}" update=":separateItemForm"
+                             oncomplete="PF('editDlg').hide()"/>
+            <p:commandButton value="Cancel" action="#{separateItemBean.onCancel}"
+                             oncomplete="PF('editDlg').hide()"/>
+        </div>
+    </h:form>
+</f:view>
+</html>

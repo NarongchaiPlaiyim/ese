@@ -3,6 +3,7 @@ package com.ese.beans;
 import com.ese.model.db.*;
 import com.ese.model.view.ContainerView;
 import com.ese.model.view.LoadingOrderView;
+import com.ese.service.ShowPickingListService;
 import com.ese.utils.FacesUtil;
 import com.ese.utils.MessageDialog;
 import com.ese.utils.Utils;
@@ -24,7 +25,7 @@ import java.util.List;
 @ManagedBean(name = "showPickingListBean")
 public class ShowPickingListBean extends Bean {
     private static final long serialVersionUID = 4112578634263394840L;
-    @ManagedProperty("#{showPickingListService}") private com.ese.service.ShowPickingListService showPickingListService;
+    @ManagedProperty("#{showPickingListService}") private ShowPickingListService showPickingListService;
     private List<PickingOrderModel> pickingOrderModelList;
     private List<ContainerModel> containerModelList;
     private List<ContainerItemModel> containerItemModelList;
@@ -147,5 +148,8 @@ public class ShowPickingListBean extends Bean {
             log.debug("Exception error on save item sequence : ", e);
             showDialogError(e.getMessage());
         }
+    }
+    public void onClickSeparateItem(){
+        FacesUtil.redirect("/site/separateItem.xhtml");
     }
 }
