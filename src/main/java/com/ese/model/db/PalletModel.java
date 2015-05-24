@@ -45,12 +45,15 @@ public class PalletModel extends AbstractModel{
     private Integer reservedQty;
 
     @OneToOne
-    @JoinColumn(name = "conveyor_line", nullable=false, columnDefinition="int default 0")
+    @JoinColumn(name = "working_area_id", nullable=false, columnDefinition="int default 0")
     private MSWorkingAreaModel msWorkingAreaModel;
 
     @OneToOne
     @JoinColumn(name = "shift_id")
     private MSShiftModel msShiftModel;
+
+    @Column(name = "seq", nullable=false, columnDefinition="int default 0")
+    private int seq;
 
     @OneToOne
     @JoinColumn(name = "warehouse_id")
@@ -82,8 +85,7 @@ public class PalletModel extends AbstractModel{
                 .append("version", version)
                 .append("capacity", capacity)
                 .append("reservedQty", reservedQty)
-                .append("msWorkingAreaModel", msWorkingAreaModel)
-                .append("msShiftModel", msShiftModel)
+                .append("seq", seq)
                 .append("msWarehouseModel", msWarehouseModel)
                 .append("msItemModel", msItemModel)
                 .append("msLocationModel", msLocationModel)

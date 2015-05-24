@@ -19,6 +19,8 @@ public class PalletManagemengModelReport {
     private String bathcgNo;
     private String workingName;
     private int countId;
+    private int seq;
+    private String itemId;
 
     @Override
     public String toString() {
@@ -32,6 +34,8 @@ public class PalletManagemengModelReport {
                 .append("bathcgNo", bathcgNo)
                 .append("workingName", workingName)
                 .append("countId", countId)
+                .append("seq", seq)
+                .append("itemId", itemId)
                 .toString();
     }
 }
