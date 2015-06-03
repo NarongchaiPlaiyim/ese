@@ -54,4 +54,20 @@ public class StatusDAO extends GenericDAO<StatusModel, Integer>{
 
         return modelList;
     }
+
+    public StatusModel findByTableIdAndStatus(int tableId, int status){
+        log.debug("+++++++ {} : ---------- {}", tableId, status);
+        StatusModel model = new StatusModel();
+        try {
+            Criteria criteria = getCriteria();
+            criteria.add(Restrictions.eq("tableId.id", tableId));
+            criteria.add(Restrictions.eq("statusSeq", status));
+
+            model = (StatusModel) criteria.uniqueResult();
+        } catch (Exception e) {
+            log.debug("Exception error findByTablePickingOrder : ", e);
+        }
+
+        return model;
+    }
 }

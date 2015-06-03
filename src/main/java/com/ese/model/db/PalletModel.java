@@ -73,6 +73,9 @@ public class PalletModel extends AbstractModel{
     @Column(name="foil", nullable=false, columnDefinition="int default 0")
     private int isFoil;
 
+    @Column(name="set_to_transfer", nullable=false, columnDefinition="int default 0")
+    private int setToTransfer;
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
@@ -85,12 +88,15 @@ public class PalletModel extends AbstractModel{
                 .append("version", version)
                 .append("capacity", capacity)
                 .append("reservedQty", reservedQty)
+                .append("msWorkingAreaModel", msWorkingAreaModel)
+                .append("msShiftModel", msShiftModel)
                 .append("seq", seq)
                 .append("msWarehouseModel", msWarehouseModel)
                 .append("msItemModel", msItemModel)
                 .append("msLocationModel", msLocationModel)
                 .append("isCombine", isCombine)
                 .append("isFoil", isFoil)
+                .append("setToTransfer", setToTransfer)
                 .toString();
     }
 }

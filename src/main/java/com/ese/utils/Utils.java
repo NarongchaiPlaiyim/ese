@@ -66,10 +66,6 @@ public enum Utils {
         return new SimpleDateFormat("yyyy-ww", Locale.ENGLISH).format(date);
     }
 
-    public static String getDocumentNo(){
-        return "i-"+new SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.ENGLISH).format(currentDate());
-    }
-
     public static String getDocumentDomesticLoad(){
         return "LOD-"+new SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.ENGLISH).format(currentDate());
     }
@@ -84,6 +80,10 @@ public enum Utils {
 
     public static String getDocumentDomesticOrder(){
         return "PKD-" + new SimpleDateFormat("yyyyMMddHHmmss", Locale.ENGLISH).format(currentDate());
+    }
+
+    public static String getDocumentNo(){
+        return "TR" + new SimpleDateFormat("ddMMyyyyHHmmssSSS", Locale.ENGLISH).format(currentDate());
     }
 
     public static boolean isTrue(int value) {

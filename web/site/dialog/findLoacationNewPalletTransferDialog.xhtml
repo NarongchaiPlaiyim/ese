@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <div>
+        <h:form id="findlocationForm">
+            <div style="text-align: right">
+                <p:commandButton id="btnFindLocation" value="#{msg.get('btn.name.select')}"
+                                 icon="ui-icon-folder-open"
+                                 styleClass="medium" style="#{msg.get('btn.size')}"
+                                 update=":findlocationForm:btnFindLocation, :msgBoxSystemMessagePanel, :palletTransferDlgForm"
+                                 action="#{showTransferPalletBean.OnChangeLocationToPallet}" process="@form"
+                                 oncomplete="PF('findLocationDlg').hide()" disabled="#{showTransferPalletBean.isCheckLocationDialog()}"/>
+            </div>
+            <table border="0">
+                <tr>
+                    <td>
+                        <p:dataTable id="searchLocationTable" rowKey="#{location.id}"
+                                     value="#{showTransferPalletBean.locationItemViewList}"
+                                     var="location" styleClass="full_table"
+                                     rows="7"
+                                     paginator="true"
+                                     selectionMode="single" rowIndexVar="rowIndex"
+                                     selection="#{showTransferPalletBean.locationItemViews}"
+                                     style="width: 100%; max-width: 100%; min-width: 100%">
+                            <p:ajax event="rowSelect" update=":findlocationForm:searchLocationTable,
+                            :findlocationForm:btnFindLocation" listener="#{showTransferPalletBean.onClickLocationTB}"/>
+                            <!--<p:column headerText="Select" selectionMode="multiple" style="height: 60px">-->
+                            <!--</p:column>-->
+                            <p:column headerText="No" style="width: 20px" styleClass="center">
+                                <h:outputText value="#{rowIndex+1}"/>
+                            </p:column>
+                            <p:column headerText="warehouse" style="width: 200px">
+                                <h:outputText value="#{location.warehouse}"/>
+                            </p:column>
+                            <p:column headerText="Location" style="width: 200px">
+                                <h:outputText value="#{location.location}"/>
+                            </p:column>
+                            <p:column headerText="Capacity" style="width: 100px">
+                                <h:outputText value="#{location.capacity}"/>
+                            </p:column>
+                            <p:column headerText="Avaliable" style="width: 100px">
+                                <h:outputText value="#{location.avaliable}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </td>
+                </tr>
+            </table>
+        </h:form>
+    </div>
+</f:view>
+</html>

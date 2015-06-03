@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+
+    <h:form id="palletTransferDlgForm">
+        <p:panel style="border: 0">
+            <div style="text-align: right;">
+                <p:commandButton id="btnFindLocation"
+                                 value="Find Location"
+                                 action="#{showTransferPalletBean.onFindLocation}"
+                                 oncomplete="PF('findLocationDlg').show()"
+                                 disabled="#{showTransferPalletBean.flagBtnFindLocation}"
+                                 update=":findlocationForm"
+                                 styleClass="medium" />
+                <p:commandButton id="btnPrint"
+                                 value="Print Tag"
+                                 disabled="#{showTransferPalletBean.flagBtnPrintTag}"
+                                 actionListener="#{showTransferPalletBean.onPrintTag('PrintTag')}"
+                                 update=":pnlDlg"
+                                 process="@form"
+                                 styleClass="medium" />
+            </div>
+        </p:panel>
+        <div style="text-align: center;">
+            <table>
+                <tr>
+                    <td style="width: 125px; max-width: 125px; min-width: 125px"/>
+                    <td style="width: 260px; max-width: 260px; min-width: 260px"/>
+                    <td style="width: 150px; max-width: 150px; min-width: 150px"/>
+                    <td style="width: 260px; max-width: 260px; min-width: 260px"/>
+                    <td style="width: 110px; max-width: 110px; min-width: 110px"/>
+                    <td style="width: 200px; max-width: 200px; min-width: 200px"/>
+                    <td style="width: 100px; max-width: 100px; min-width: 100px"/>
+                    <td style="width: 200px; max-width: 200px; min-width: 200px"/>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel value="Pallet Tag ID"/>
+                    </td>
+                    <td>
+                        <p:inputText value="#{showTransferPalletBean.palletTagID}"/>
+                    </td>
+                    <td>
+                        <p:outputLabel value="Item ID or Item"/>
+                    </td>
+                    <td>
+                        <p:inputText value="#{showTransferPalletBean.itemId}"/>
+                    </td>
+                    <td>
+                        <p:outputLabel value="Warehouse"/>
+                    </td>
+                    <td style="width: 100px">
+                        <p:selectOneMenu id="warehouseMenu" value="#{showTransferPalletBean.warehouseMode.id}"
+                                         style="#{msg.get('fix.size.200')} margin-top: 4px">
+                            <f:selectItem itemLabel="- Please Select -" itemValue=""/>
+                            <f:selectItems value="#{showTransferPalletBean.warehouseModelList}"
+                                           var="wareItem"
+                                           itemLabel="#{wareItem.warehouseCode}"
+                                           itemValue="#{wareItem.id}"/>
+                        </p:selectOneMenu>
+                    </td>
+                    <td style="width: 100px">
+                        <h:outputLabel value="Location :"/>
+                    </td>
+                    <td style="width: 100px">
+                        <p:selectOneMenu id="locationMenu" value="#{showTransferPalletBean.msLocationModel.id}"
+                                         style="#{msg.get('fix.size.200')} margin-top: 4px">
+                            <f:selectItem itemLabel="- Please Select -" itemValue=""/>
+                            <f:selectItems value="#{showTransferPalletBean.msLocationModelList}"
+                                           var="locationItem"
+                                           itemLabel="#{locationItem.locationBarcode}"
+                                           itemValue="#{locationItem.id}"/>
+                        </p:selectOneMenu>
+                    </td>
+                    <td>
+                        <p:commandButton id="btnSearch"
+                                         value="Search"
+                                         icon="ui-icon-search"
+                                         update=":palletTransferDlgForm"
+                                         action="#{showTransferPalletBean.onSearch}"
+                                         process="@form"
+                                         onstart="PF('bui').block()"
+                                         oncomplete="PF('bui').unblock()"
+                                         styleClass="medium" />
+                    </td>
+                </tr>
+            </table>
+            <table border="0" class="content_table_form">
+                <tr>
+                    <td>
+                        <p:dataTable id="newPalletTransferTable" rowIndexVar="rowIndex"
+                                     value="#{showTransferPalletBean.newPalletTranferDialogViewList}"
+                                     var="newPalletTransferView" styleClass="full_table"
+                                     scrollable="true" scrollHeight="450"
+                                     resizableColumns="true" selectionMode="single"
+                                     selection="#{showTransferPalletBean.selectPallet}"
+                                     rowKey="#{newPalletTransferView.id}"
+                                     style="width: 100%; max-width: 100%; min-width: 100%">
+                            <p:ajax event="rowSelect" update=":palletTransferDlgForm:btnFindLocation ,:palletTransferDlgForm:btnPrint"
+                                    listener="#{showTransferPalletBean.onClickTable}"/>
+                            <p:column headerText="No" style="width: 20px" styleClass="center">
+                                <h:outputText value="#{rowIndex+1}"/>
+                            </p:column>
+                            <p:column headerText="Warehouse" sortBy="#{newPalletTransferView.warehouseCode}" filterBy="#{newPalletTransferView.warehouseCode}" filterMatchMode="contains" style="width: 70px; max-width: 70px; min-width: 70px" styleClass="center">
+                                <h:outputText value="#{newPalletTransferView.warehouseCode}"/>
+                            </p:column>
+                            <p:column headerText="Item" sortBy="#{newPalletTransferView.itemId}" filterBy="#{newPalletTransferView.itemId}" filterMatchMode="contains" style="width: 80px; max-width: 80px; min-width: 80px" styleClass="center">
+                                <h:outputText value="#{newPalletTransferView.itemId}"/>
+                            </p:column>
+                            <p:column headerText="Description" sortBy="#{newPalletTransferView.itemDesc}" filterBy="#{newPalletTransferView.itemDesc}" filterMatchMode="contains" style="width: 115px; max-width: 115px; min-width: 115px" styleClass="center">
+                                <h:outputText value="#{newPalletTransferView.itemDesc}"/>
+                            </p:column>
+                            <p:column headerText="Pallet TAG ID" sortBy="#{newPalletTransferView.palletBarcode}" filterBy="#{newPalletTransferView.palletBarcode}" filterMatchMode="contains" style="width: 150px" styleClass="center">
+                                <h:outputText value="#{newPalletTransferView.palletBarcode}"/>
+                            </p:column>
+                            <p:column headerText="Datetime" sortBy="#{newPalletTransferView.createDate}" filterBy="#{newPalletTransferView.createDate}" filterMatchMode="contains" style="width: 100px" styleClass="center">
+                                <h:outputText value="#{newPalletTransferView.createDate}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" locale="en-EN"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Location" sortBy="#{newPalletTransferView.locationBarcode}" filterBy="#{newPalletTransferView.locationBarcode}" filterMatchMode="contains" style="width: 80px" styleClass="center">
+                                <h:outputText value="#{newPalletTransferView.locationBarcode}"/>
+                            </p:column>
+                            <p:column headerText="Capacity" sortBy="#{newPalletTransferView.capacity}" filterBy="#{newPalletTransferView.capacity}" filterMatchMode="contains" style="width: 60px; max-width: 60px; min-width: 60px" styleClass="center">
+                                <h:outputText value="#{newPalletTransferView.capacity}"/>
+                            </p:column>
+                            <p:column headerText="Qty" sortBy="#{newPalletTransferView.qty}" filterBy="#{newPalletTransferView.qty}" filterMatchMode="contains" style="width: 50px" styleClass="center">
+                                <h:outputText value="#{newPalletTransferView.qty}"/>
+                            </p:column>
+                            <p:column headerText="Combine" style="width: 50px; background-color: #{newPalletTransferView.isCombine == 1 ? 'green' : 'red'};">
+                                <h:outputText value=""/>
+                            </p:column>
+                            <p:column headerText="Foil" style="width: 50px; background-color: #{newPalletTransferView.isFoil == 1 ? 'green' : newPalletTransferView.isFoil == 2 ? 'yellow' : 'red'};">
+                                <h:outputText value=""/>
+                            </p:column>
+                            <p:column headerText="Set to Transfer" style="width: 50px; background-color: #{newPalletTransferView.toTransfer == 1 ? 'green' : 'red'};">
+                                <h:outputText value=""/>
+                            </p:column>
+                        </p:dataTable>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </h:form>
+</f:view>
+</html>

@@ -7,7 +7,8 @@ public enum  TableValue {
     PICKING_ORDER(1),
     RESERVED_ORDER(2),
     PICKING_LINE(3),
-    LOADING_ORDER(4);
+    LOADING_ORDER(4),
+    STOCK_IN_OUT(5);
 
     private int id;
 

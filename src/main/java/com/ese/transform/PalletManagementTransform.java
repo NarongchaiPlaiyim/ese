@@ -141,7 +141,7 @@ public class PalletManagementTransform extends Transform {
 
     public PalletModel transformToMode(PalletManagementView palletManagementView, String redirect){
         PalletModel palletModel = new PalletModel();
-
+        int staffModel = (int) FacesUtil.getSession(false).getAttribute(AttributeName.STAFF.getName());
         palletModel.setId(palletManagementView.getId());
         palletModel.setPalletBarcode(palletManagementView.getPalletBarcode());
         palletModel.setMsWarehouseModel(palletManagementView.getWarehouseModel());
@@ -169,7 +169,7 @@ public class PalletManagementTransform extends Transform {
 
         palletModel.setCreateBy(palletManagementView.getCreateBy());
         palletModel.setCreateDate(palletManagementView.getCreateDate());
-        palletModel.setUpdateBy(palletManagementView.getUpdateBy());
+        palletModel.setUpdateBy(staffModel);
         palletModel.setUpdateDate(new Date());
         palletModel.setIsValid(palletManagementView.getIsValid());
         palletModel.setVersion(palletManagementView.getVersion());
@@ -189,7 +189,7 @@ public class PalletManagementTransform extends Transform {
 
     public PalletModel transformToMode(PalletManagementView palletManagementView){
         PalletModel palletModel = new PalletModel();
-
+        int staffModel = (int) FacesUtil.getSession(false).getAttribute(AttributeName.STAFF.getName());
         palletModel.setId(palletManagementView.getId());
         palletModel.setPalletBarcode(palletManagementView.getPalletBarcode());
         palletModel.setMsWarehouseModel(palletManagementView.getWarehouseModel());
@@ -201,7 +201,7 @@ public class PalletManagementTransform extends Transform {
         palletModel.setStatus(transformStatusInt(palletManagementView.getStatus()));
         palletModel.setCreateBy(palletManagementView.getCreateBy());
         palletModel.setCreateDate(palletManagementView.getCreateDate());
-        palletModel.setUpdateBy(palletManagementView.getUpdateBy());
+        palletModel.setUpdateBy(staffModel);
         palletModel.setUpdateDate(new Date());
         palletModel.setIsValid(palletManagementView.getIsValid());
         palletModel.setVersion(palletManagementView.getVersion());

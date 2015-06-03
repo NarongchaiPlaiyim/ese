@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <p:panel id="stockTransferDlgPanel" styleClass="panel-dialog">
+        <h:form id="stockTransferDlgForm">
+            <table style="width: auto">
+                <tr>
+                    <td>
+                        <p:outputLabel value="Document No:"/>
+                    </td>
+                    <td>
+                        <p:inputText value="#{stockTransferBean.stockInOutModel.docNo}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel value="Document Date:"/>
+                    </td>
+                    <td>
+                        <p:calendar value="#{stockTransferBean.stockInOutModel.docDate}" readonly="true"
+                            pattern="dd/MM/yyyy">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:calendar>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel value="Document Note:"/>
+                    </td>
+                    <td>
+                        <p:selectOneMenu value="#{stockTransferBean.msStockInOutNoteModel.id}"
+                                         style="#{msg.get('fix.size.200')} margin-top: 4px">
+                            <f:selectItem itemLabel=" Please Select "/>
+                            <f:selectItems value="#{stockTransferBean.stockInOutNoteModelList}"
+                                           var="stockinoutnote"
+                                           itemLabel="#{stockinoutnote.inoutNote}"
+                                           itemValue="#{stockinoutnote.id}"/>
+                        </p:selectOneMenu>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel value="Remark:"/>
+                    </td>
+                    <td>
+                        <p:inputTextarea value="#{stockTransferBean.stockInOutModel.remark}"/>
+                    </td>
+                </tr>
+            </table>
+
+            <div style="text-align: center">
+                <p:commandButton id="btnSave"
+                                 value="Save"
+                                 process="@this"
+                                 styleClass="medium" />
+                <p:commandButton id="btnCancel"
+                                 value="Cancel"
+                                 oncomplete="PF('stockTransferDlg').hide()"
+                                 process="@this"
+                                 styleClass="medium" />
+            </div>
+        </h:form>
+    </p:panel>
+</f:view>
+</html>

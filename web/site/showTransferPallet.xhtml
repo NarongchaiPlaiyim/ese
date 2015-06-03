@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>#{msg.get('menu.stocktransfer.title.sub')}</title>
+</h:head>
+<h:body>
+<p:layout fullPage="true" id="layoutPanel">
+    <p:layoutUnit id="layoutTop" position="north" size="180" header="#{msg.get('header.north')}" collapsible="true" style="border: 0">
+        <ui:insert name="header">
+            <ui:include src="#{msg.get('include.header')}"/>
+        </ui:insert>
+    </p:layoutUnit>
+    <p:layoutUnit id="layoutLeft" position="west" size="#{msg.get('layoutLeft.size')}" header="#{msg.get('header.west')}" collapsible="true" style="border: 0">
+        <ui:include src="#{msg.get('include.menu')}"/>
+    </p:layoutUnit>
+
+    <p:layoutUnit id="layoutCenter" position="center" header="#{msg.get('menu.stocktransfer.title.sub')}" >
+        <h:form id="stockTransferPalletForm">
+            <p:panel style="border: 0">
+                <div style="text-align: right;">
+                    <p:commandButton id="btnNewTransferPallet"
+                                     value="New Pallet Transfer"
+                                     oncomplete="PF('palletTransDlg').show()"
+                                     action="#{showTransferPalletBean.onNewPalletTransfer}"
+                                     update=":palletTransferDlgForm"
+                                     process="@this"
+                                     styleClass="medium" />
+                    <p:commandButton id="btnClose"
+                                     value="Close"
+                                     action="#{showTransferPalletBean.onClose()}"
+                                     onstart="PF('bui').block()"
+                                     oncomplete="PF('bui').unblock()"
+                                     process="@this"
+                                     styleClass="medium" />
+                </div>
+            </p:panel>
+            <table border="0" class="content_table_form">
+                <tr>
+                    <td>
+                        <p:dataTable id="showPalletTransferTable" rowIndexVar="rowIndex"
+                                     value="#{showTransferPalletBean.palletTransferViewList}"
+                                     var="palletTransferView" styleClass="full_table"
+                                     scrollable="true" scrollHeight="450"
+                                     resizableColumns="true"
+                                     rowKey="#{palletTransferView.id}"
+                                     style="width: 100%; max-width: 100%; min-width: 100%">
+                            <p:column headerText="No" style="width: 20px" styleClass="center">
+                                <h:outputText value="#{rowIndex+1}"/>
+                            </p:column>
+                            <p:column headerText="Warehouse" sortBy="#{palletTransferView.warehouseCode}" filterBy="#{palletTransferView.warehouseCode}" filterMatchMode="contains" style="width: 70px; max-width: 70px; min-width: 70px" styleClass="center">
+                                <h:outputText value="#{palletTransferView.warehouseCode}"/>
+                            </p:column>
+                            <p:column headerText="Item" sortBy="#{palletTransferView.itemId}" filterBy="#{palletTransferView.itemId}" filterMatchMode="contains" style="width: 80px; max-width: 80px; min-width: 80px" styleClass="center">
+                                <h:outputText value="#{palletTransferView.itemId}"/>
+                            </p:column>
+                            <p:column headerText="Description" sortBy="#{palletTransferView.itemDesc}" filterBy="#{palletTransferView.itemDesc}" filterMatchMode="contains" style="width: 115px; max-width: 115px; min-width: 115px" styleClass="center">
+                                <h:outputText value="#{palletTransferView.itemDesc}"/>
+                            </p:column>
+                            <p:column headerText="Pallet TAG ID" sortBy="#{palletTransferView.palletBarcode}" filterBy="#{palletTransferView.palletBarcode}" filterMatchMode="contains" style="width: 150px" styleClass="center">
+                                <h:outputText value="#{palletTransferView.palletBarcode}"/>
+                            </p:column>
+                            <p:column headerText="Datetime" sortBy="#{palletTransferView.createDate}" filterBy="#{palletTransferView.createDate}" filterMatchMode="contains" style="width: 100px" styleClass="center">
+                                <h:outputText value="#{palletTransferView.createDate}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" locale="en-EN"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Location" sortBy="#{palletTransferView.locationBarcode}" filterBy="#{palletTransferView.locationBarcode}" filterMatchMode="contains" style="width: 80px" styleClass="center">
+                                <h:outputText value="#{palletTransferView.locationBarcode}"/>
+                            </p:column>
+                            <p:column headerText="Capacity" sortBy="#{palletTransferView.capacity}" filterBy="#{palletTransferView.capacity}" filterMatchMode="contains" style="width: 60px; max-width: 60px; min-width: 60px" styleClass="center">
+                                <h:outputText value="#{palletTransferView.capacity}"/>
+                            </p:column>
+                            <p:column headerText="Qty" sortBy="#{palletTransferView.qty}" filterBy="#{palletTransferView.qty}" filterMatchMode="contains" style="width: 50px" styleClass="center">
+                                <h:outputText value="#{palletTransferView.qty}"/>
+                            </p:column>
+                            <p:column headerText="Combine" style="width: 50px; background-color: #{palletTransferView.isCombine == 1 ? 'green' : 'red'};">
+                                <h:outputText value=""/>
+                            </p:column>
+                            <p:column headerText="Foil" style="width: 50px; background-color: #{palletTransferView.isFoil == 1 ? 'green' : palletTransferView.isFoil == 2 ? 'yellow' : 'red'};">
+                                <h:outputText value=""/>
+                            </p:column>
+                        </p:dataTable>
+                    </td>
+                </tr>
+            </table>
+        </h:form>
+    </p:layoutUnit>
+</p:layout>
+
+    <p:dialog id="findLocationDialog" widgetVar="findLocationDlg" header="Find Location for Item "
+              onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
+              modal="true" width="1000" height="450">
+        <ui:include src="../site/dialog/findLoacationNewPalletTransferDialog.xhtml"/>
+    </p:dialog>
+
+    <p:dialog id="palletTransDialog" widgetVar="palletTransDlg" header="New Pallet Transfer"
+              onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
+              modal="true" width="1800">
+        <ui:include src="../site/dialog/palletTransferDialog.xhtml"/>
+    </p:dialog>
+
+    <p:panel id="msgBoxSystemMessagePanel" style="border: 0">
+        <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="#{msg.get('dialog.message.size')}"
+                         closable="false"
+                         header="#{showTransferPalletBean.messageHeader}" message="#{showTransferPalletBean.message}" >
+            <div style="text-align: right">
+                <p:commandButton value="#{msg.get('btn.name.ok')}"
+                                 styleClass="medium" style="#{msg.get('btn.size')}"
+                                 icon="ui-icon-check"
+                                 process="@this"
+                                 update="stockTransferPalletForm"
+                                 oncomplete="PF('msgBoxSystemMessageDlg').hide()"/>
+            </div>
+        </p:confirmDialog>
+    </p:panel>
+
+    <p:panel id="pnlDlg" style="border: 0">
+        <p:confirmDialog id="msgBoxSystemMessageDialog2" widgetVar="msgBoxSystemMessageDlg2" width="#{msg.get('dialog.message.size')}"
+                         closable="false"
+                         header="#{showTransferPalletBean.messageHeader}" message="#{showTransferPalletBean.message}" >
+            <div style="text-align: right">
+                <h:form>
+                    <p:commandButton value="#{msg.get('btn.name.ok')}"
+                                     styleClass="medium" style="#{msg.get('btn.size')}"
+                                     process="@form"
+                                     update="palletForm"
+                                     action="#{showTransferPalletBean.callReport()}"
+                                     ajax="false"
+                                     onclick="PF('msgBoxSystemMessageDlg2').hide(); this.form.target='_blank'"/>
+                </h:form>
+            </div>
+        </p:confirmDialog>
+    </p:panel>
+</h:body>
+</f:view>
+</html>

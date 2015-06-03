@@ -1,6 +1,8 @@
 package com.ese.model.dao;
 
 import com.ese.model.db.PalletModel;
+import com.ese.model.view.PalletManagementView;
+import com.ese.model.view.PalletTransferView;
 import com.ese.model.view.report.PalletManagemengModelReport;
 import com.ese.model.view.report.PalletSubReport;
 import com.ese.utils.Utils;
@@ -9,9 +11,7 @@ import org.hibernate.SQLQuery;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.type.IntegerType;
-import org.hibernate.type.StringType;
-import org.hibernate.type.TimestampType;
+import org.hibernate.type.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -92,6 +92,22 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
         log.debug("updauePalletByChangeLocation().");
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(" UPDATE ").append(getPrefix()).append(".pallet SET ").append(getPrefix()).append(".pallet.location_id = ").append("'").append(locationId).append("'");
+        stringBuilder.append(" WHERE ").append(getPrefix()).append(".pallet.id = ").append("'").append(palletId).append("'");
+
+        log.debug("SQL Pallet : {}",stringBuilder.toString());
+        try {
+            SQLQuery q = getSession().createSQLQuery(stringBuilder.toString());
+            q.executeUpdate();
+        } catch (Exception e) {
+            log.debug("Exception : ", e);
+        }
+    }
+
+    public void updateNewPalletTransferByChangeLocation(int palletId, int locationId){
+        log.debug("updauePalletByChangeLocation().");
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(" UPDATE ").append(getPrefix()).append(".pallet SET ").append(getPrefix()).append(".pallet.location_id = ").append("'").append(locationId).append("', ");
+        stringBuilder.append(getPrefix()).append(".pallet.set_to_transfer = 1");
         stringBuilder.append(" WHERE ").append(getPrefix()).append(".pallet.id = ").append("'").append(palletId).append("'");
 
         log.debug("SQL Pallet : {}",stringBuilder.toString());
@@ -339,5 +355,182 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
         }
 
         return reportViews;
+    }
+
+    public List<PalletTransferView> findByStockInOutId(int stockInOutId){
+        List<PalletTransferView> palletViewList = new ArrayList<PalletTransferView>();
+        StringBuilder sqlBuilder = new StringBuilder();
+
+        sqlBuilder.append("SELECT ");
+        sqlBuilder.append(" ").append(getPrefix()).append(".pallet.id AS PALLET_ID,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".warehouse.warehouse_code AS WAREHOUSE_CODE,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".item_master.ItemId AS ITEM_ID,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".item_master.DSGThaiItemDescription AS ITEM_DESC,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".pallet.pallet_barcode AS PALLET_BARCODE,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".pallet.create_date AS PALLET_DATE,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".location.location_barcode AS LOCATION_BARCODE,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".pallet.capacity AS CAPACITY,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".pallet.qty AS QTY,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".pallet.combine AS COMBINE,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".pallet.foil AS FOIL,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".pallet.set_to_transfer AS TO_TRANSFER");
+        sqlBuilder.append(" FROM ").append(getPrefix()).append(".pallet");
+        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".item_master");
+        sqlBuilder.append(" ON  ").append(getPrefix()).append(".pallet.item_id = ").append(getPrefix()).append(".item_master.id");
+        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".location");
+        sqlBuilder.append(" ON  ").append(getPrefix()).append(".pallet.location_id = ").append(getPrefix()).append(".location.id");
+        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".warehouse");
+        sqlBuilder.append(" ON  ").append(getPrefix()).append(".pallet.warehouse_id = ").append(getPrefix()).append(".warehouse.id");
+        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".stock_inout_line");
+        sqlBuilder.append(" ON  ").append(getPrefix()).append(".pallet.id = ").append(getPrefix()).append(".stock_inout_line.pallet_id");
+        sqlBuilder.append(" WHERE ").append(getPrefix()).append(".stock_inout_line.stock_inout_id  = " + stockInOutId ).append(" and ").append(getPrefix()).append(".pallet.isvalid = 1");
+        sqlBuilder.append(" GROUP BY  ").append(getPrefix()).append(".pallet.id, ").append(getPrefix()).append(".warehouse.warehouse_code, ");
+        sqlBuilder.append(getPrefix()).append(".item_master.ItemId, ").append(getPrefix()).append(".item_master.DSGThaiItemDescription, ");
+        sqlBuilder.append(getPrefix()).append(".pallet.pallet_barcode, ").append(getPrefix()).append(".pallet.create_date,  ");
+        sqlBuilder.append(getPrefix()).append(".location.location_barcode, ").append(getPrefix()).append(".pallet.capacity, ");
+        sqlBuilder.append(getPrefix()).append(".pallet.qty, ").append(getPrefix()).append(".pallet.combine, ");
+        sqlBuilder.append(getPrefix()).append(".pallet.foil, ").append(getPrefix()).append(".pallet.set_to_transfer");
+
+        log.debug(sqlBuilder.toString());
+
+        try {
+            SQLQuery query = getSession().createSQLQuery(sqlBuilder.toString())
+                    .addScalar("PALLET_ID", IntegerType.INSTANCE)
+                    .addScalar("WAREHOUSE_CODE", StringType.INSTANCE)
+                    .addScalar("ITEM_ID", StringType.INSTANCE)
+                    .addScalar("ITEM_DESC", StringType.INSTANCE)
+                    .addScalar("PALLET_BARCODE", StringType.INSTANCE)
+                    .addScalar("PALLET_DATE", DateType.INSTANCE)
+                    .addScalar("LOCATION_BARCODE", StringType.INSTANCE)
+                    .addScalar("CAPACITY", BigDecimalType.INSTANCE)
+                    .addScalar("QTY", IntegerType.INSTANCE)
+                    .addScalar("COMBINE", IntegerType.INSTANCE)
+                    .addScalar("FOIL", IntegerType.INSTANCE)
+                    .addScalar("TO_TRANSFER", IntegerType.INSTANCE);
+            List<Object[]> objects = query.list();
+
+            for (Object[] entity : objects) {
+                PalletTransferView palletView = new PalletTransferView();
+                palletView.setId(Utils.parseInt(entity[0]));
+                palletView.setWarehouseCode(Utils.parseString(entity[1]));
+                palletView.setItemId(Utils.parseString(entity[2]));
+                palletView.setItemDesc(Utils.parseString(entity[3]));
+                palletView.setPalletBarcode(Utils.parseString(entity[4]));
+                palletView.setCreateDate(Utils.parseDate(entity[5], null));
+                palletView.setLocationBarcode(Utils.parseString(entity[6]));
+                palletView.setCapacity(Utils.parseBigDecimal(entity[7]));
+                palletView.setQty(Utils.parseInt(entity[8]));
+                palletView.setIsCombine(Utils.parseInt(entity[9]));
+                palletView.setIsFoil(Utils.parseInt(entity[10]));
+                palletView.setToTransfer(Utils.parseInt(entity[11]));
+                palletViewList.add(palletView);
+            }
+        } catch (Exception e) {
+            log.debug("Exception SQL : {}", e);
+        }
+
+        return palletViewList;
+    }
+
+    public List<PalletTransferView> findBySearch(String palletTag, String itemId, int locationId, int warehouseId){
+        List<PalletTransferView> palletViewList = new ArrayList<PalletTransferView>();
+        StringBuilder sql = new StringBuilder();
+
+        StringBuilder selectSql = new StringBuilder();
+        selectSql.append("SELECT ");
+        selectSql.append(" ").append(getPrefix()).append(".pallet.id AS PALLET_ID,");
+        selectSql.append(" ").append(getPrefix()).append(".warehouse.warehouse_code AS WAREHOUSE_CODE,");
+        selectSql.append(" ").append(getPrefix()).append(".item_master.ItemId AS ITEM_ID,");
+        selectSql.append(" ").append(getPrefix()).append(".item_master.DSGThaiItemDescription AS ITEM_DESC,");
+        selectSql.append(" ").append(getPrefix()).append(".pallet.pallet_barcode AS PALLET_BARCODE,");
+        selectSql.append(" ").append(getPrefix()).append(".pallet.create_date AS PALLET_DATE,");
+        selectSql.append(" ").append(getPrefix()).append(".location.location_barcode AS LOCATION_BARCODE,");
+        selectSql.append(" ").append(getPrefix()).append(".pallet.capacity AS CAPACITY,");
+        selectSql.append(" ").append(getPrefix()).append(".pallet.qty AS QTY,");
+        selectSql.append(" ").append(getPrefix()).append(".pallet.combine AS COMBINE,");
+        selectSql.append(" ").append(getPrefix()).append(".pallet.foil AS FOIL,");
+        selectSql.append(" ").append(getPrefix()).append(".pallet.set_to_transfer AS TO_TRANSFER, ");
+        selectSql.append(" ").append(getPrefix()).append(".item_master.id AS ITEM");
+        selectSql.append(" FROM ").append(getPrefix()).append(".pallet");
+        selectSql.append(" INNER JOIN ").append(getPrefix()).append(".item_master");
+        selectSql.append(" ON  ").append(getPrefix()).append(".pallet.item_id = ").append(getPrefix()).append(".item_master.id");
+        selectSql.append(" INNER JOIN ").append(getPrefix()).append(".location");
+        selectSql.append(" ON  ").append(getPrefix()).append(".pallet.location_id = ").append(getPrefix()).append(".location.id");
+        selectSql.append(" INNER JOIN ").append(getPrefix()).append(".warehouse");
+        selectSql.append(" ON  ").append(getPrefix()).append(".pallet.warehouse_id = ").append(getPrefix()).append(".warehouse.id");
+        selectSql.append(" INNER JOIN ").append(getPrefix()).append(".stock_inout_line");
+        selectSql.append(" ON  ").append(getPrefix()).append(".pallet.id = ").append(getPrefix()).append(".stock_inout_line.pallet_id");
+
+        StringBuilder whereSql = new StringBuilder();
+        whereSql.append(" WHERE ").append(getPrefix()).append(".pallet.isvalid = 1");
+        if (!Utils.isNull(palletTag) && !Utils.isZero(palletTag.length())){
+            whereSql.append(" AND ").append(getPrefix()).append(".pallet.pallet_barcode LIKE '%").append(palletTag).append("%'");
+        }
+
+        if (!Utils.isNull(itemId) && !Utils.isZero(itemId.length())){
+            whereSql.append(" AND ").append(getPrefix()).append(".item_master.ItemId LIKE '%").append(itemId).append("%'");
+            whereSql.append(" OR ").append(getPrefix()).append(".item_master.DSGThaiItemDescription LIKE '%").append(itemId).append("%'");
+        }
+
+        if (!Utils.isZero(locationId)){
+            whereSql.append(" AND ").append(getPrefix()).append(".pallet.location_id = ").append(locationId);
+        }
+
+        if (!Utils.isZero(warehouseId)){
+            whereSql.append(" AND ").append(getPrefix()).append(".pallet.warehouse_id = ").append(warehouseId);
+        }
+
+        StringBuilder groupSql = new StringBuilder();
+        groupSql.append(" GROUP BY  ").append(getPrefix()).append(".pallet.id, ").append(getPrefix()).append(".warehouse.warehouse_code, ");
+        groupSql.append(getPrefix()).append(".item_master.ItemId, ").append(getPrefix()).append(".item_master.DSGThaiItemDescription, ");
+        groupSql.append(getPrefix()).append(".pallet.pallet_barcode, ").append(getPrefix()).append(".pallet.create_date, ");
+        groupSql.append(getPrefix()).append(".location.location_barcode, ").append(getPrefix()).append(".pallet.capacity, ");
+        groupSql.append(getPrefix()).append(".pallet.qty, ").append(getPrefix()).append(".pallet.combine, ");
+        groupSql.append(getPrefix()).append(".pallet.foil, ").append(getPrefix()).append(".pallet.set_to_transfer, ");
+        groupSql.append(getPrefix()).append(".item_master.id");
+
+        sql.append(selectSql.toString()).append(whereSql.toString()).append(groupSql.toString());
+
+        log.debug(sql.toString());
+
+        try {
+            SQLQuery query = getSession().createSQLQuery(sql.toString())
+                    .addScalar("PALLET_ID", IntegerType.INSTANCE)
+                    .addScalar("WAREHOUSE_CODE", StringType.INSTANCE)
+                    .addScalar("ITEM_ID", StringType.INSTANCE)
+                    .addScalar("ITEM_DESC", StringType.INSTANCE)
+                    .addScalar("PALLET_BARCODE", StringType.INSTANCE)
+                    .addScalar("PALLET_DATE", DateType.INSTANCE)
+                    .addScalar("LOCATION_BARCODE", StringType.INSTANCE)
+                    .addScalar("CAPACITY", BigDecimalType.INSTANCE)
+                    .addScalar("QTY", IntegerType.INSTANCE)
+                    .addScalar("COMBINE", IntegerType.INSTANCE)
+                    .addScalar("FOIL", IntegerType.INSTANCE)
+                    .addScalar("TO_TRANSFER", IntegerType.INSTANCE)
+                    .addScalar("ITEM", IntegerType.INSTANCE);
+            List<Object[]> objects = query.list();
+
+            for (Object[] entity : objects) {
+                PalletTransferView palletView = new PalletTransferView();
+                palletView.setId(Utils.parseInt(entity[0]));
+                palletView.setWarehouseCode(Utils.parseString(entity[1]));
+                palletView.setItemId(Utils.parseString(entity[2]));
+                palletView.setItemDesc(Utils.parseString(entity[3]));
+                palletView.setPalletBarcode(Utils.parseString(entity[4]));
+                palletView.setCreateDate(Utils.parseDate(entity[5], null));
+                palletView.setLocationBarcode(Utils.parseString(entity[6]));
+                palletView.setCapacity(Utils.parseBigDecimal(entity[7]));
+                palletView.setQty(Utils.parseInt(entity[8]));
+                palletView.setIsCombine(Utils.parseInt(entity[9]));
+                palletView.setIsFoil(Utils.parseInt(entity[10]));
+                palletView.setToTransfer(Utils.parseInt(entity[11]));
+                palletView.setItem(Utils.parseInt(entity[12]));
+                palletViewList.add(palletView);
+            }
+        } catch (Exception e) {
+            log.debug("Exception SQL : {}", e);
+        }
+
+        return palletViewList;
     }
 }

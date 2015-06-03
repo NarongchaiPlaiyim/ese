@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -15,10 +16,15 @@ import javax.persistence.*;
 @Proxy(lazy=false)
 public class StockInOutModel extends AbstractModel{
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "docno")
     private String docNo;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "docdate")
+    private Date docDate;
 
     @Column(name = "do_no")
     private String doNo;
@@ -29,8 +35,12 @@ public class StockInOutModel extends AbstractModel{
     @Column(name = "so_no")
     private String soNo;
 
-    @Column(name = "status")
-    private Integer status;
+    @OneToOne
+    @JoinColumn(name = "status")
+    private StatusModel status;
+
+//    @Column(name = "status")
+//    private String status;
 
     @Column(name = "remark")
     private String remark;
@@ -58,16 +68,17 @@ public class StockInOutModel extends AbstractModel{
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("id", id)
                 .append("docNo", docNo)
-                .append("stockInOutNoteId", msStockInOutNoteModel)
+                .append("docDate", docDate)
                 .append("doNo", doNo)
                 .append("plNo", plNo)
                 .append("soNo", soNo)
-                .append("customerId", customerModel)
                 .append("status", status)
                 .append("remark", remark)
                 .append("isValid", isValid)
                 .append("version", version)
-                .append("workingAreaId", msWorkingAreaModel)
+                .append("msWorkingAreaModel", msWorkingAreaModel)
+                .append("customerModel", customerModel)
+                .append("msStockInOutNoteModel", msStockInOutNoteModel)
                 .toString();
     }
 }
