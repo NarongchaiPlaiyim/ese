@@ -92,7 +92,7 @@
                             <f:selectItem itemLabel=" Please Select "/>
                             <f:selectItems value="#{stockTransferBean.stockInOutNoteModelList}"
                                            var="stockinoutnote"
-                                           itemLabel="#{stockinoutnote.inoutNote}"
+                                           itemLabel="#{stockinoutnote.inoutCode}"
                                            itemValue="#{stockinoutnote.id}"/>
                             <p:ajax event="change"
                                     update=":stockTransferForm:docNote"/>
@@ -152,7 +152,7 @@
                     <f:selectItem itemLabel=" Please Select "/>
                     <f:selectItems value="#{stockTransferBean.stockInOutNoteModelList}"
                                    var="stockinoutnote"
-                                   itemLabel="#{stockinoutnote.inoutNote}"
+                                   itemLabel="#{stockinoutnote.inoutCode}"
                                    itemValue="#{stockinoutnote.id}"/>
                 </p:selectOneMenu>
             </td>
@@ -197,7 +197,7 @@
                         </h:outputText>
                     </p:column>
                     <p:column headerText="Document Note" sortBy="#{stockTransferModel.msStockInOutNoteModel.inoutCode}" filterBy="#{stockTransferModel.msStockInOutNoteModel.inoutCode}" filterMatchMode="contains" style="min-width: 120px; width: 120px; max-width: 120px;" styleClass="center">
-                        <h:outputText value="#{stockTransferModel.msStockInOutNoteModel.inoutNote}"/>
+                        <h:outputText value="#{stockTransferModel.msStockInOutNoteModel.inoutCode}"/>
                     </p:column>
                     <p:column headerText="Remark" sortBy="#{stockTransferModel.remark}" filterBy="#{stockTransferModel.remark}" filterMatchMode="contains" style="min-width: 250px; width: 250px; max-width: 250px;" styleClass="center">
                         <h:outputText value="#{stockTransferModel.remark}"/>
