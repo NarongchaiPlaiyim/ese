@@ -316,30 +316,30 @@
                                         <tr>
                                             <td style="width: 30px" class="top" colspan="4">
 
-                                                <table border="0" style="width: 100%">
+                                                <table border="1" style="width: 100%">
                                                     <tr >
                                                         <td style="min-width: 100px; width: 100px; max-width: 100px;" class="left" />
-                                                        <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
-                                                        <td style="min-width: 100px; width: 100px; max-width: 100px;" class="center" />
-                                                        <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
-                                                        <td/>
+                                                        <td style="min-width: 250px; width: 250px; max-width: 250px;" class="left" />
+                                                        <td style="min-width: 50px; width: 50px; max-width: 50px;" class="center" />
+                                                        <td style="min-width: 80px; width: 80px; max-width: 80px;" class="left" />
                                                     </tr>
                                                     <tr>
                                                         <td >
                                                             <h:outputText value="Type"/>
                                                         </td>
-                                                        <td >
+                                                        <td colspan="2">
                                                             <p:selectOneRadio id="typeRadio" styleClass="radio_table" style="background-origin: border-box"
                                                                               value="#{setup.stockInOutNoteView.type}"
                                                                               required="#{not empty param[addStockInOutNote.clientId]}">
                                                                 <f:selectItem itemLabel="Receiving" itemValue="i"/>
                                                                 <f:selectItem itemLabel="Issuing" itemValue="o"/>
+                                                                <f:selectItem itemLabel="Transfer" itemValue="t"/>
                                                             </p:selectOneRadio>
                                                         </td>
                                                         <td >
                                                             <h:outputText value="Remark"/>
                                                         </td>
-                                                        <td colspan="2">
+                                                        <td colspan="1">
                                                             <p:inputTextarea id="remark" style="width: 200px; max-width: 200px;min-width: 200px; height: 50px;"
                                                                              value="#{setup.stockInOutNoteView.remark}"/>
                                                         </td>
