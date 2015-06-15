@@ -38,13 +38,14 @@ public class ShowPickingListBean extends Bean {
 
     private String modeContainer;
     private HttpSession session;
+    private String type;
 
     @PostConstruct
     private void onCreation(){
         log.debug("onCreation()");
         session = FacesUtil.getSession(true);
         loadingOrderModel = (LoadingOrderModel) session.getAttribute("loadingOrderModel");
-
+        type = (String) session.getAttribute("pageType");
         if(preLoad()) {//&& isAuthorize(key)){
             init();
         }
@@ -59,13 +60,26 @@ public class ShowPickingListBean extends Bean {
     }
 
     public void onClose(){
-        FacesUtil.redirect("/site/domesticLoad.xhtml");
+
+
+        if ("O".equals(type)){
+            FacesUtil.redirect("/site/overSeaLoad.xhtml");
+        } else if ("D".equals(type)){
+            FacesUtil.redirect("/site/domesticLoad.xhtml");
+        }
+
+        session.removeAttribute("pageType");
         session.removeAttribute("loadingOrderModel");
     }
 
     public void onSelectPickingList(){
-        pickingOrderModel = new PickingOrderModel();
-        FacesUtil.redirect("/site/selectPickingList.xhtml");
+
+        if ("O".equals(type)){
+            FacesUtil.redirect("/site/axSelectPickingList.xhtml");
+        } else if ("D".equals(type)){
+            pickingOrderModel = new PickingOrderModel();
+            FacesUtil.redirect("/site/selectPickingList.xhtml");
+        }
     }
 
     public void onClickContainerDlg(){

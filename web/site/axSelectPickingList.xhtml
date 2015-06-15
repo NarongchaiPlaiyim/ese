@@ -1,0 +1,215 @@
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>#{msg.get('menu.axselectpicking')}</title>
+</h:head>
+<h:body>
+<p:layout fullPage="true" id="layoutPanel">
+<p:layoutUnit id="layoutTop" position="north" size="180" header="#{msg.get('header.north')}" collapsible="true" style="border: 0">
+    <ui:insert name="header">
+        <ui:include src="#{msg.get('include.header')}"/>
+    </ui:insert>
+</p:layoutUnit>
+<p:layoutUnit id="layoutLeft" position="west" size="#{msg.get('layoutLeft.size')}" header="#{msg.get('header.west')}" collapsible="true" style="border: 0">
+    <ui:include src="#{msg.get('include.menu')}"/>
+</p:layoutUnit>
+
+<p:layoutUnit id="layoutCenter" position="center" header="#{msg.get('menu.axselectpicking')}" >
+    <h:form id="axSelectPickingListForm">
+        <table border="0" class="content_table_form">
+            <tr >
+                <td style="min-width: 180px; width: 180px; max-width: 180px;" class="left" />
+                <td style="min-width: 320px; width: 320px; max-width: 320px;" class="left" />
+                <td style="min-width: 180px; width: 180px; max-width: 180px;" class="left" />
+                <td style="min-width: 320px; width: 320px; max-width: 320px;" class="left" />
+                <td style="min-width: 200px; width: 200px; max-width: 200px;" class="left" />
+                <td style="min-width: 320px; width: 320px; max-width: 320px;" class="left" />
+                <td style="min-width: 80px; width: 80px; max-width: 80px;" class="left" />
+                <td style="min-width: 320px; width: 320px; max-width: 320px;" class="left" />
+            </tr>
+
+            <tr>
+                <td>
+                    <h:outputText value="Pick List Id"/>
+                </td>
+                <td>
+                    <p:inputText
+                            style="#{msg.get('fix.size.300')}"
+                            value="#{axSelectPickingListBean.axInventPickingListJourView.pickingListId}"
+                            />
+                </td>
+                <td>
+                    <h:outputText value="Customer"/>
+                </td>
+                <td>
+                    <p:inputText
+                            style="#{msg.get('fix.size.300')}"
+                            value="#{axSelectPickingListBean.axInventPickingListJourView.customer}"
+                            />
+                </td>
+                <td>
+                    <h:outputText value="Sales Order Id"/>
+                </td>
+                <td>
+                    <p:inputText
+                            style="#{msg.get('fix.size.300')}"
+                            value="#{axSelectPickingListBean.axInventPickingListJourView.saleOrderId}"
+                            />
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <h:outputText value="Loading Date"/>
+                </td>
+                <td>
+                    <p:inputMask value="#{axSelectPickingListBean.axInventPickingListJourView.loadingDate}"
+                                 onkeydown="return onKeyDownNumber(event);"
+                                 onkeypress="return onKeyPressNumber(event);"
+                                 mask="99/99/9999"/>
+                </td>
+                <td>
+                    <h:outputText value="ETD"/>
+                </td>
+                <td>
+                    <p:inputMask value="#{axSelectPickingListBean.axInventPickingListJourView.etd}"
+                                 onkeydown="return onKeyDownNumber(event);"
+                                 onkeypress="return onKeyPressNumber(event);"
+                                 mask="99/99/9999"/>
+                </td>
+                <td>
+                    <h:outputText value="Agent"/>
+                </td>
+                <td>
+                    <p:inputText
+                            style="#{msg.get('fix.size.300')}"
+                            value="#{axSelectPickingListBean.axInventPickingListJourView.agent}"
+                            />
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <h:outputText value="Inv No."/>
+                </td>
+                <td>
+                    <p:inputText
+                            style="#{msg.get('fix.size.300')}"
+                            value="#{axSelectPickingListBean.axInventPickingListJourView.invNo}"
+                            />
+                </td>
+
+                <td>
+                    <h:outputText value="P/I No."/>
+                </td>
+                <td>
+                    <p:inputText
+                            style="#{msg.get('fix.size.300')}"
+                            value="#{axSelectPickingListBean.axInventPickingListJourView.piNo}"
+                            />
+                </td>
+
+                <td>
+                    <h:outputText value="Truck Agent"/>
+                </td>
+                <td>
+                    <p:inputText
+                            style="#{msg.get('fix.size.300')}"
+                            value="#{axSelectPickingListBean.axInventPickingListJourView.truckAgent}"
+                            />
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <p:commandButton id="btnSearch" value="Search"
+                                     action="#{axSelectPickingListBean.onSearch}"
+                                     onstart="PF('bui').block()"
+                                     oncomplete="PF('bui').unblock()"
+                                     update=":axSelectPickingListForm:selectPickingOrderTable"/>
+                </td>
+            </tr>
+        </table>
+
+        <div style="text-align: right">
+            <p:commandButton id="btnSelect" value="Select" style="width: 200px" disabled="#{axSelectPickingListBean.flagBtnSelect}"
+                             action="#{axSelectPickingListBean.onSelectPickingList()}" process="@this" update=":msgBoxSystemMessagePanel"/>
+            <p:commandButton id="btnClose" value="Close" style="width: 150px"
+                             action="#{axSelectPickingListBean.onClickDialogConfirm()}" process="@this"/>
+        </div>
+
+
+        <p:dataTable id="selectPickingOrderTable" rowIndexVar="rowIndex"
+                     value="#{axSelectPickingListBean.axInventPickingListJourModelList}"
+                     var="axPickingOrderModel" styleClass="full_table"
+                     scrollable="true" scrollHeight="450"
+                     resizableColumns="true" rowKey="#{axPickingOrderModel.pickingListId}"
+                     selection="#{axSelectPickingListBean.selectaxInventPickingListJourModelList}"
+                     style="width: 100%; max-width: 100%; min-width: 100%">
+            <p:ajax event="rowSelect" listener="#{axSelectPickingListBean.onClickTablePickingList}"
+                    update=":axSelectPickingListForm:btnSelect"/>
+            <p:ajax event="rowUnselectCheckbox" listener="#{axSelectPickingListBean.onClickTablePickingList}"
+                    update=":axSelectPickingListForm:btnSelect"/>
+            <p:ajax event="rowSelectCheckbox" listener="#{axSelectPickingListBean.onClickTablePickingList}"
+                    update=":axSelectPickingListForm:btnSelect"/>
+            <p:column selectionMode="multiple" style="width:16px;text-align:center;"/>
+            <p:column headerText="Pick List Id" style="width: 120px" styleClass="center">
+                <h:outputText value="#{axPickingOrderModel.pickingListId}"/>
+            </p:column>
+            <p:column headerText="Loading Date" style="width: 120px" styleClass="center">
+                <h:outputText value="#{axPickingOrderModel.WContainerDate}">
+                    <f:convertDateTime pattern="dd/MM/yyyy" locale="en-EN"/>
+                </h:outputText>
+            </p:column>
+            <p:column headerText="Agent" style="width: 120px" styleClass="center">
+                <h:outputText value="#{axPickingOrderModel.WAgent}"/>
+            </p:column>
+            <p:column headerText="Truck Agent" style="width: 120px" styleClass="center">
+                <h:outputText value="#{axPickingOrderModel.WTrucking}"/>
+            </p:column>
+            <p:column headerText="Inv No." style="width: 120px" styleClass="center">
+                <h:outputText value="#{axPickingOrderModel.INV}"/>
+            </p:column>
+            <p:column headerText="P/I No." style="width: 120px" styleClass="center">
+                <h:outputText value="#{axPickingOrderModel.refNo}"/>
+            </p:column>
+            <p:column headerText="ETD" style="width: 120px" styleClass="center">
+                <h:outputText value="#{axPickingOrderModel.WETDDate}">
+                    <f:convertDateTime pattern="dd/MM/yyyy" locale="en-EN"/>
+                </h:outputText>
+            </p:column>
+            <p:column headerText="Sales Order" style="width: 120px" styleClass="center">
+                <h:outputText value="#{axPickingOrderModel.orderId}"/>
+            </p:column>
+            <p:column headerText="Customer" style="width: 120px" styleClass="center">
+                <h:outputText value="#{axPickingOrderModel.custAccount}"/>
+            </p:column>
+            <p:column headerText="Status" style="width: 120px" styleClass="center">
+                <h:outputText value="#{axPickingOrderModel.syncStatus}"/>
+            </p:column>
+        </p:dataTable>
+    </h:form>
+</p:layoutUnit>
+</p:layout>
+
+<p:panel id="msgBoxSystemMessagePanel" style="border: 0">
+    <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="#{msg.get('dialog.message.size')}" closable="false"
+                     header="#{axSelectPickingListBean.messageHeader}" message="#{axSelectPickingListBean.message}" >
+        <div style="text-align: right">
+            <p:commandButton value="#{msg.get('btn.name.ok')}"
+                             process="@this"
+                             update=":axSelectPickingListForm"
+                             icon="ui-icon-check"
+                             action="#{axSelectPickingListBean.onClickDialogConfirm}"
+                             styleClass="medium" style="#{msg.get('btn.size')}"
+                             oncomplete="PF('msgBoxSystemMessageDlg').hide();"/>
+        </div>
+    </p:confirmDialog>
+</p:panel>
+</h:body>
+</f:view>
+</html>

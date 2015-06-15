@@ -2,11 +2,13 @@ package com.ese.model.dao;
 
 import com.ese.model.db.LoadingOrderModel;
 import com.ese.model.view.ItemSequenceView;
+import com.ese.model.view.LoadingOrderView;
 import com.ese.utils.Utils;
 import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.type.DateType;
 import org.hibernate.type.IntegerType;
 import org.hibernate.type.StringType;
 import org.springframework.stereotype.Repository;
@@ -18,7 +20,7 @@ import java.util.List;
 @Repository
 public class LoadingOrderDAO extends GenericDAO<LoadingOrderModel, Integer>{
 
-    public List<LoadingOrderModel> findByStatusIs12(){
+    public List<LoadingOrderModel> findDomesticByStatusIs12(){
         List<LoadingOrderModel> loadingOrderModelList = Utils.getEmptyList();
 
         try{
@@ -33,7 +35,66 @@ public class LoadingOrderDAO extends GenericDAO<LoadingOrderModel, Integer>{
         return loadingOrderModelList;
     }
 
-    public List<LoadingOrderModel> findBySearch(int status){
+    public List<LoadingOrderView> findOverSeaByStatusIs12(){
+        List<LoadingOrderView> loadingOrderModelList = new ArrayList<LoadingOrderView>();
+
+        StringBuilder sqlBuilder = new StringBuilder();
+
+        sqlBuilder.append(" SELECT ");
+        sqlBuilder.append(" ").append(getPrefix()).append(".loading_order.id AS ID,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".loading_order.create_by AS CREATE_BY,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".loading_order.create_date AS CREATE_DATE,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".loading_order.update_by AS UPDATE_BY,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".loading_order.update_date AS UPDATE_DATE,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".loading_order.docno AS DOCNO,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".loading_order.loadingdate AS LOADING_DATE,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".loading_order.remark AS REMARK,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".loading_order.status AS STATUS_ID,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".loading_order.category AS CATEGORY");
+        sqlBuilder.append(" FROM ").append(getPrefix()).append(".loading_order");
+        sqlBuilder.append(" WHERE ").append(getPrefix()).append(".loading_order.status = 12 ");
+        sqlBuilder.append(" AND ").append(getPrefix()).append(".loading_order.category = 'O' ");
+        sqlBuilder.append(" AND CONVERT(VARCHAR, ").append(getPrefix()).append(".loading_order.loadingdate, 110) = CONVERT(VARCHAR, GETDATE(), 110)");
+        sqlBuilder.append(" ORDER BY ").append(getPrefix()).append(".loading_order.create_date");
+
+        log.debug(sqlBuilder.toString());
+
+        try {
+            SQLQuery query = getSession().createSQLQuery(sqlBuilder.toString())
+                    .addScalar("ID", IntegerType.INSTANCE)
+                    .addScalar("CREATE_BY", IntegerType.INSTANCE)
+                    .addScalar("CREATE_DATE", DateType.INSTANCE)
+                    .addScalar("UPDATE_BY", IntegerType.INSTANCE)
+                    .addScalar("UPDATE_DATE", DateType.INSTANCE)
+                    .addScalar("DOCNO", StringType.INSTANCE)
+                    .addScalar("LOADING_DATE", DateType.INSTANCE)
+                    .addScalar("REMARK", StringType.INSTANCE)
+                    .addScalar("STATUS_ID", IntegerType.INSTANCE)
+                    .addScalar("CATEGORY", StringType.INSTANCE);
+            List<Object[]> objects = query.list();
+
+            for (Object[] entity : objects) {
+                LoadingOrderView loadingOrderModel = new LoadingOrderView();
+                loadingOrderModel.setId(Utils.parseInt(entity[0]));
+                loadingOrderModel.setCreateBy(Utils.parseInt(entity[1]));
+                loadingOrderModel.setCreateDate(Utils.parseDate(entity[2], null));
+                loadingOrderModel.setUpdateBy(Utils.parseInt(entity[3]));
+                loadingOrderModel.setUpdateDate(Utils.parseDate(entity[4], null));
+                loadingOrderModel.setDocNo(Utils.parseString(entity[5]));
+                loadingOrderModel.setLoadingDate(Utils.parseDate(entity[6], null));
+                loadingOrderModel.setRemark(Utils.parseString(entity[7]));
+                loadingOrderModel.setStatus(Utils.parseInt(entity[8]));
+                loadingOrderModel.setCategory(Utils.parseString(entity[9]));
+                loadingOrderModelList.add(loadingOrderModel);
+            }
+        } catch (Exception e) {
+            log.debug("Exception SQL findOverSeaByStatusIs12 : {}", e);
+        }
+
+        return loadingOrderModelList;
+    }
+
+    public List<LoadingOrderModel> findDomesticBySearch(int status){
         List<LoadingOrderModel> loadingOrderModelList = Utils.getEmptyList();
 //        log.debug("docNo : {[]}, loadingDate : {[]}, status : {[]}", docNo.trim().length(), loadingDate.trim().length(), status);
 
@@ -53,6 +114,40 @@ public class LoadingOrderDAO extends GenericDAO<LoadingOrderModel, Integer>{
             } else {
                 criteria.add(Restrictions.eq("statusModel.id", 12));
             }
+
+            criteria.add(Restrictions.eq("category", "D"));
+            criteria.addOrder(Order.desc("createDate"));
+
+            loadingOrderModelList = Utils.safetyList(criteria.list());
+        } catch (Exception e){
+            log.debug("Exception error findByStatusIs12 : ", e);
+        }
+        return loadingOrderModelList;
+    }
+
+    public List<LoadingOrderModel> findOverSeaBySearch(int status){
+        List<LoadingOrderModel> loadingOrderModelList = Utils.getEmptyList();
+//        log.debug("docNo : {[]}, loadingDate : {[]}, status : {[]}", docNo.trim().length(), loadingDate.trim().length(), status);
+
+        try{
+            Criteria criteria = getCriteria();
+//
+//            if (!Utils.isZero(docNo.trim().length())){
+//                criteria.add(Restrictions.like("docNo", "%" + docNo + "%"));
+//            }
+//
+//            if (!Utils.isZero(loadingDate.trim().length())){
+//                criteria.add(Restrictions.like("loadingDate", "%" + loadingDate + "%"));
+//            }
+
+            if (!Utils.isZero(status)){
+                criteria.add(Restrictions.eq("statusModel.id", status));
+            } else {
+                criteria.add(Restrictions.eq("statusModel.id", 12));
+            }
+
+            criteria.add(Restrictions.eq("category", "O"));
+            criteria.addOrder(Order.desc("createDate"));
 
             loadingOrderModelList = Utils.safetyList(criteria.list());
         } catch (Exception e){

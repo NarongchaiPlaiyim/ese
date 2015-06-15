@@ -14,14 +14,16 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
 @Transactional
-public class DomesticLoadService extends Service {
+public class OverSeaLoadService extends Service{
+
     private static final long serialVersionUID = 4112578634263394999L;
-    @Resource private StatusDAO statusDAO;
+    @Resource
+    private StatusDAO statusDAO;
     @Resource private LoadingOrderDAO loadingOrderDAO;
 
     public List<StatusModel> getStatusAll(){
@@ -35,11 +37,18 @@ public class DomesticLoadService extends Service {
     }
 
     public List<LoadingOrderModel> getList(){
-        return loadingOrderDAO.findDomesticByStatusIs12();
+        List<LoadingOrderView> loadingOrderViewList =  loadingOrderDAO.findOverSeaByStatusIs12();
+        List<LoadingOrderModel> loadingOrderModelList = new ArrayList<LoadingOrderModel>();
+
+
+        for (LoadingOrderView loadingOrderView : loadingOrderViewList){
+            loadingOrderModelList.add(transformToModel(loadingOrderView));
+        }
+        return loadingOrderModelList;
     }
 
     public List<LoadingOrderModel> getSearch(int status){
-        return loadingOrderDAO.findDomesticBySearch(status);
+        return loadingOrderDAO.findOverSeaBySearch(status);
     }
 
     public void save(LoadingOrderView loadingOrderView){
@@ -51,7 +60,7 @@ public class DomesticLoadService extends Service {
             loadingOrderModel.setRemark(loadingOrderView.getRemark());
             loadingOrderModel.setCreateBy(staffModel);
             loadingOrderModel.setUpdateBy(staffModel);
-            loadingOrderModel.setCategory("D");
+            loadingOrderModel.setCategory("O");
             loadingOrderModel.setCreateDate(Utils.currentDate());
             loadingOrderModel.setUpdateDate(Utils.currentDate());
             loadingOrderModel.setStatusModel(statusDAO.findByStatusId(StatusLoadingOrderView.CREATE.getId()));
@@ -95,5 +104,22 @@ public class DomesticLoadService extends Service {
         orderView.setCreateDate(loadingOrderModel.getCreateDate());
 
         return orderView;
+    }
+
+    public LoadingOrderModel transformToModel(LoadingOrderView loadingOrderView){
+        LoadingOrderModel loadingOrderModel = new LoadingOrderModel();
+
+        loadingOrderModel.setId(loadingOrderView.getId());
+        loadingOrderModel.setDocNo(loadingOrderView.getDocNo());
+        loadingOrderModel.setLoadingDate(loadingOrderView.getLoadingDate());
+        loadingOrderModel.setRemark(loadingOrderView.getRemark());
+        loadingOrderModel.setStatusModel(statusDAO.findByStatusId(loadingOrderView.getStatus()));
+        loadingOrderModel.setCategory(loadingOrderView.getCategory());
+        loadingOrderModel.setUpdateBy(loadingOrderView.getUpdateBy());
+        loadingOrderModel.setUpdateDate(loadingOrderView.getUpdateDate());
+        loadingOrderModel.setCreateBy(loadingOrderView.getCreateBy());
+        loadingOrderModel.setCreateDate(loadingOrderView.getCreateDate());
+
+        return loadingOrderModel;
     }
 }

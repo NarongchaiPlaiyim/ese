@@ -6,7 +6,7 @@
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>#{msg.get('menu.loading.title.sub.2')}</title>
+        <title>#{msg.get('menu.loading.title.sub.1')}</title>
     </h:head>
     <h:body>
         <p:layout fullPage="true" id="layoutPanel">
@@ -19,24 +19,24 @@
                 <ui:include src="#{msg.get('include.menu')}"/>
             </p:layoutUnit>
 
-            <p:layoutUnit id="layoutCenter" position="center" header="#{msg.get('menu.loading.title.sub.2')}" >
-                <h:form id="domesticForm">
+            <p:layoutUnit id="layoutCenter" position="center" header="#{msg.get('menu.loading.title.sub.1')}" >
+                <h:form id="overSeaForm">
                     <p:panel style="border: 0">
                         <div style="text-align: right;">
-                            <p:outputLabel id="labMode" value="#{domesticLoadBean.labMode}"/>
+                            <p:outputLabel id="labMode" value="#{overSeaLoadBean.labMode}"/>
                             <p:commandButton id="btnNew" value="New"
-                                             action="#{domesticLoadBean.onClickNew}"
-                                             update=":domesticForm:labMode, :domesticForm:txtDocno,
-                                                     :domesticForm:txtLoadingDate, :domesticForm:txtRemark, :domesticForm:loadingOrderTable"/>
+                                             action="#{overSeaLoadBean.onClickNew}"
+                                             update=":overSeaForm:labMode, :overSeaForm:txtDocno,
+                                                     :overSeaForm:txtLoadingDate, :overSeaForm:txtRemark, :overSeaForm:loadingOrderTable"/>
                             <p:commandButton id="brnSave" value="Save"
-                                             action="#{domesticLoadBean.onClickSaveLoadingOrder}"
+                                             action="#{overSeaLoadBean.onClickSaveLoadingOrder}"
                                              process="@form"
-                                             update=":domesticForm, :msgBoxSystemMessagePanel"/>
-                            <p:commandButton id="btnReport"  disabled="#{domesticLoadBean.flagdBtnReport}"
+                                             update=":overSeaForm, :msgBoxSystemMessagePanel"/>
+                            <p:commandButton id="btnReport"  disabled="#{overSeaLoadBean.flagdBtnReport}"
                                              value="Print loading report"/>
 
-                            <p:commandButton id="btnShowPicking" value="Show picking list" disabled="#{domesticLoadBean.flagBtnShowPicking}"
-                                             action="#{domesticLoadBean.onClickShowPickingList}" process="@this"/>
+                            <p:commandButton id="btnShowPicking" value="Show AX Picking List" disabled="#{overSeaLoadBean.flagBtnShowPicking}"
+                                             action="#{overSeaLoadBean.onClickShowPickingList}" process="@this"/>
                         </div>
 
                         <div class="left">
@@ -56,13 +56,13 @@
                                         <p:outputLabel value="Doc No."/>
                                     </td>
                                     <td>
-                                        <p:inputText id="txtDocno" readonly="#{true}" value="#{domesticLoadBean.loadingOrderView.docNo}"/>
+                                        <p:inputText id="txtDocno" readonly="#{true}" value="#{overSeaLoadBean.loadingOrderView.docNo}"/>
                                     </td>
                                     <td>
                                         <p:outputLabel value="Loading Date"/>
                                     </td>
                                     <td>
-                                        <p:calendar id="txtLoadingDate" value="#{domesticLoadBean.loadingOrderView.loadingDate}"
+                                        <p:calendar id="txtLoadingDate" value="#{overSeaLoadBean.loadingOrderView.loadingDate}"
                                                     pattern="dd/MM/yyyy">
                                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                                         </p:calendar>
@@ -71,7 +71,7 @@
                                         <p:outputLabel value="Remark"/>
                                     </td>
                                     <td>
-                                        <p:inputTextarea id="txtRemark" value="#{domesticLoadBean.loadingOrderView.remark}"/>
+                                        <p:inputTextarea id="txtRemark" value="#{overSeaLoadBean.loadingOrderView.remark}"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -79,10 +79,10 @@
                                         <h:outputText value="Status"/>
                                     </td>
                                     <td>
-                                        <p:selectOneMenu value="#{domesticLoadBean.status}"
+                                        <p:selectOneMenu value="#{overSeaLoadBean.status}"
                                                          style="#{msg.get('fix.size.200')} margin-top: 4px">
                                             <f:selectItem itemLabel="- Please Select -" itemValue=""/>
-                                            <f:selectItems value="#{domesticLoadBean.statusValue}"
+                                            <f:selectItems value="#{overSeaLoadBean.statusValue}"
                                                            var="statusItem"
                                                            itemLabel="#{statusItem.caption}"
                                                            itemValue="#{statusItem.id}"/>
@@ -95,8 +95,8 @@
                                                          onstart="PF('bui').block()"
                                                          oncomplete="PF('bui').unblock()"
                                                          process="@form"
-                                                         action="#{domesticLoadBean.onClickSearch}"
-                                                         update=":domesticForm:loadingOrderTable"/>
+                                                         action="#{overSeaLoadBean.onClickSearch}"
+                                                         update=":overSeaForm:loadingOrderTable"/>
                                     </td>
 
                                 </tr>
@@ -113,15 +113,15 @@
                                              scrollable="true" scrollHeight="450"
                                              var="loadingOrderModel"
                                              resizableColumns="true"
-                                             value="#{domesticLoadBean.loadingOrderModelList}"
+                                             value="#{overSeaLoadBean.loadingOrderModelList}"
                                              selectionMode="single"
-                                             selection="#{domesticLoadBean.loadingOrderModel}"
+                                             selection="#{overSeaLoadBean.loadingOrderModel}"
                                              rowKey="#{loadingOrderModel.id}"
                                              rowIndexVar="rowIndex">
                                     <p:ajax event="rowSelect"
-                                            update=":domesticForm:labMode, :domesticForm:txtDocno, :domesticForm:txtLoadingDate, :domesticForm:txtRemark
-                                                    :domesticForm:btnReport, :domesticForm:btnShowPicking"
-                                            listener="#{domesticLoadBean.onClickLoadingOrderTB}"/>
+                                            update=":overSeaForm:labMode, :overSeaForm:txtDocno, :overSeaForm:txtLoadingDate, :overSeaForm:txtRemark
+                                                    :overSeaForm:btnReport, :overSeaForm:btnShowPicking"
+                                            listener="#{overSeaLoadBean.onClickLoadingOrderTB}"/>
                                     <p:column headerText="No" style="min-width: 5px; width: 5px; max-width: 5px;">
                                         <h:outputText value="#{rowIndex+1}" styleClass="center" />
                                     </p:column>
@@ -149,11 +149,11 @@
 
         <p:panel id="msgBoxSystemMessagePanel" style="border: 0">
             <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="#{msg.get('dialog.message.size')}" closable="false"
-                             header="#{domesticLoadBean.messageHeader}" message="#{domesticLoadBean.message}" >
+                             header="#{overSeaLoadBean.messageHeader}" message="#{overSeaLoadBean.message}" >
                 <div style="text-align: right">
                     <p:commandButton value="#{msg.get('btn.name.ok')}"
                                      process="@this"
-                                     update=":domesticForm"
+                                     update=":overSeaForm"
                                      icon="ui-icon-check"
                                      styleClass="medium" style="#{msg.get('btn.size')}"
                                      oncomplete="PF('msgBoxSystemMessageDlg').hide();"/>
@@ -162,9 +162,9 @@
         </p:panel>
 
         <!--<p:dialog id="loadingOrderDialog" widgetVar="loadingOrderDlg" header="Loading order" closable="false"-->
-                  <!--onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"-->
-                  <!--modal="true" width="500" height="300">-->
-            <!--<ui:include src="../site/dialog/loadingOrderDialog.xhtml"/>-->
+        <!--onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"-->
+        <!--modal="true" width="500" height="300">-->
+        <!--<ui:include src="../site/dialog/loadingOrderDialog.xhtml"/>-->
         <!--</p:dialog>-->
 
     </h:body>

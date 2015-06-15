@@ -23,13 +23,14 @@ public class LoadingOrderView {
     private Integer updateBy;
     private Date updateDate;
 
+    private int status;
+
     public LoadingOrderView() {
         id = 0;
         docNo = Utils.getDocumentDomesticLoad();
         loadingDate = Utils.currentDate();
         remark = "";
         statusModel = new StatusModel();
-        category = "D";
     }
 
     @Override

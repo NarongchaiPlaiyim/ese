@@ -6,7 +6,7 @@
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>#{msg.get('menu.barcode.title')}</title>
+        <title>#{msg.get('menu.showpicking')}</title>
     </h:head>
     <h:body>
         <p:layout fullPage="true" id="layoutPanel">
@@ -19,7 +19,7 @@
                 <ui:include src="#{msg.get('include.menu')}"/>
             </p:layoutUnit>
 
-            <p:layoutUnit id="layoutCenter" position="center" header="#{msg.get('menu.loading.title.sub.2')}" >
+            <p:layoutUnit id="layoutCenter" position="center" header="#{msg.get('menu.showpicking')}" >
                 <h:form id="showPickingListForm">
                     <p:panel style="border: 0">
                         <div style="text-align: right;">

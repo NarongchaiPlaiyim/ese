@@ -229,7 +229,46 @@ public class PickingOrderDAO extends GenericDAO<PickingOrderModel, Integer> {
 
 
 
-        log.debug("SQL updateToWrap : {}", stringBuilder.toString());
+        log.debug("SQL updateStatus : {}", stringBuilder.toString());
+
+        try {
+            SQLQuery q = getSession().createSQLQuery(stringBuilder.toString());
+            q.executeUpdate();
+        } catch (Exception e) {
+            log.debug("Exception error updateStatus: ", e);
+        }
+    }
+
+    public void updateStatus(String axPickingId, int status, int loadingOrderId){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(" UPDATE ").append(getPrefix()).append(".picking_order SET ").append(getPrefix()).append(".picking_order.status =  ").append(status);
+
+        if (!Utils.isZero(loadingOrderId)){
+            stringBuilder.append(", ").append(getPrefix()).append(".picking_order.loading_order_id = ").append(loadingOrderId);
+        }
+
+        if (!Utils.isNull(axPickingId) && !Utils.isZero(axPickingId.trim())){
+            stringBuilder.append("WHERE ").append(getPrefix()).append(".picking_order.docno = '").append(axPickingId).append("'");
+        }
+
+
+
+        log.debug("SQL updateStatus : {}", stringBuilder.toString());
+
+        try {
+            SQLQuery q = getSession().createSQLQuery(stringBuilder.toString());
+            q.executeUpdate();
+        } catch (Exception e) {
+            log.debug("Exception error updateStatus: ", e);
+        }
+    }
+
+    public void updateAxPickingListStatus(String axPickingListId){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(" UPDATE ").append(getPrefix()).append(".ax_inventpickinglisttrans SET ").append(getPrefix()).append(".ax_inventpickinglisttrans.sync_status =  ").append(1);
+        stringBuilder.append(" WHERE ").append(getPrefix()).append(".ax_inventpickinglisttrans.PickingListId = ").append("'").append(axPickingListId).append("'");
+
+        log.debug("SQL updateAxPickingListStatus : {}", stringBuilder.toString());
 
         try {
             SQLQuery q = getSession().createSQLQuery(stringBuilder.toString());

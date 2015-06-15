@@ -3,7 +3,7 @@ package com.ese.beans;
 import com.ese.model.db.LoadingOrderModel;
 import com.ese.model.db.StatusModel;
 import com.ese.model.view.LoadingOrderView;
-import com.ese.service.DomesticLoadService;
+import com.ese.service.OverSeaLoadService;
 import com.ese.utils.FacesUtil;
 import com.ese.utils.Utils;
 import com.sun.istack.internal.NotNull;
@@ -15,25 +15,26 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.servlet.http.HttpSession;
-import java.util.Date;
 import java.util.List;
 
 @Getter
 @Setter
 @ViewScoped
-@ManagedBean(name = "domesticLoadBean")
-public class DomesticLoadBean extends Bean {
+@ManagedBean(name = "overSeaLoadBean")
+public class OverseaLoadBean extends Bean{
+
     private static final long serialVersionUID = 4112578634263394840L;
-    @ManagedProperty("#{domesticLoadService}") private DomesticLoadService domesticLoadService;
+    @ManagedProperty("#{overSeaLoadService}") private OverSeaLoadService overSeaLoadService;
     @ManagedProperty("#{message['authorize.menu.loading.tab.1']}") private String key;
 
-//    private String docNo;
+    //    private String docNo;
 //    private String loadingDate;
     private int status;
     private boolean flagdBtnReport;
     private boolean flagBtnShowPicking;
 
-    @NotNull private LoadingOrderModel loadingOrderModel;
+    @NotNull
+    private LoadingOrderModel loadingOrderModel;
     @NotNull private List<LoadingOrderModel> loadingOrderModelList;
     @NotNull private List<StatusModel> statusValue;
     @NotNull private LoadingOrderView loadingOrderView;
@@ -44,9 +45,9 @@ public class DomesticLoadBean extends Bean {
     @PostConstruct
     private void onCreation(){
         log.debug("onCreation()");
-       if(preLoad()) {//&& isAuthorize(key)){
+        if(preLoad()) {//&& isAuthorize(key)){
             init();
-       }
+        }
     }
 
     private void init(){
@@ -60,26 +61,26 @@ public class DomesticLoadBean extends Bean {
     }
 
     private void onLoadTable(){
-        loadingOrderModelList = domesticLoadService.getList();
+        loadingOrderModelList = overSeaLoadService.getList();
     }
 
     private void onLoadStatue(){
-        statusValue = domesticLoadService.getStatusAll();
+        statusValue = overSeaLoadService.getStatusAll();
     }
 
     public void onClickButtonNew(){
         if (mode) {
             loadingOrderModel = new LoadingOrderModel();
-            loadingOrderModel.setDocNo(Utils.getDocumentDomesticLoad());
+            loadingOrderModel.setDocNo(Utils.getDocumentOverSeaLoad());
         }
     }
 
     public void onClickSaveLoadingOrder(){
         if (mode) {
-            domesticLoadService.save(loadingOrderView);
+            overSeaLoadService.save(loadingOrderView);
             showDialogSaved();
         } else {
-            domesticLoadService.edit(loadingOrderView);
+            overSeaLoadService.edit(loadingOrderView);
             showDialogEdited();
         }
         mode = Boolean.TRUE;
@@ -91,11 +92,11 @@ public class DomesticLoadBean extends Bean {
         flagdBtnReport = Boolean.FALSE;
         flagBtnShowPicking = Boolean.FALSE;
         labMode = "Mode : Edit ";
-        loadingOrderView = domesticLoadService.transToView(loadingOrderModel);
+        loadingOrderView = overSeaLoadService.transToView(loadingOrderModel);
     }
 
     public void onClickSearch(){
-        loadingOrderModelList = domesticLoadService.getSearch(status);
+        loadingOrderModelList = overSeaLoadService.getSearch(status);
     }
 
     public void onClickNew(){
@@ -108,7 +109,7 @@ public class DomesticLoadBean extends Bean {
     public void onClickShowPickingList(){
         HttpSession session = FacesUtil.getSession(true);
         session.setAttribute("loadingOrderModel", loadingOrderModel);
-        session.setAttribute("pageType", "D");
+        session.setAttribute("pageType", "O");
         FacesUtil.redirect("/site/showPickingList.xhtml");
     }
 }

@@ -24,9 +24,14 @@ public class ShowPickingListService extends Service {
     @Resource private ContainerItemDAO containerItemDAO;
     @Resource private ItemSequenceDAO itemSequenceDAO;
     @Resource private ItemDAO itemDAO;
+    @Resource private AxInventPickingListJourDAO axInventPickingListJourDAO;
 
     public List<PickingOrderModel> getPickingByLoadingOrderId(int loadingOrderId){
         return pickingOrderDAO.findByLoadingOrder(loadingOrderId);
+    }
+
+    public List<AxInventPickingListJourModel> getAxPickingList(){
+        return axInventPickingListJourDAO.findByStatus();
     }
 
 
@@ -38,10 +43,22 @@ public class ShowPickingListService extends Service {
         return pickingOrderDAO.findBySearchStatusPost(pickingOrderView);
     }
 
+    public List<AxInventPickingListJourModel> getAxPickingBySearchStatusPostPick(AxInventPickingListJourView axInventPickingListJourView){
+        return axInventPickingListJourDAO.findBySearchStatusPost(axInventPickingListJourView);
+    }
+
     public void select(int loadingOrderId, List<PickingOrderModel> pickingOrderModelList){
         for (PickingOrderModel pickingOrderModel : pickingOrderModelList){
             pickingOrderDAO.updateStatus(pickingOrderModel.getId(), StatusPickingValue.PREPARE_LOAD.getId(), loadingOrderId);
             loadingOrderDAO.updateStatus(loadingOrderId, StatusLoadingOrderView.SELECT_PICKING_LIST.getId());
+        }
+    }
+
+    public void axSelect(int loadingOrderId, List<AxInventPickingListJourModel> axInventPickingListJourModelList){
+        for (AxInventPickingListJourModel axInventPickingListJourModel : axInventPickingListJourModelList){
+            loadingOrderDAO.updateStatus(loadingOrderId, StatusLoadingOrderView.SELECT_PICKING_LIST.getId());
+            axInventPickingListJourDAO.updateAxPickingListStatus(axInventPickingListJourModel.getPickingListId());
+            pickingOrderDAO.updateStatus(axInventPickingListJourModel.getPickingListId(), StatusPickingValue.PREPARE_LOAD.getId(), loadingOrderId);
         }
     }
 
