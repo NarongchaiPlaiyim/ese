@@ -66,6 +66,10 @@ public enum Utils {
         return new SimpleDateFormat("yyyy-ww", Locale.ENGLISH).format(date);
     }
 
+    public static String getDocumentIn(){
+        return "IN"+new SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.ENGLISH).format(currentDate());
+    }
+
     public static String getDocumentDomesticLoad(){
         return "LOD-"+new SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.ENGLISH).format(currentDate());
     }

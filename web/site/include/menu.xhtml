@@ -17,12 +17,14 @@
 
             <p:submenu icon="ui-icon-cart" label="#{msg.get('menu.picking.title')}">
                 <p:menuitem value="#{msg.get('menu.picking.title.sub.1')}" outcome="#{msg.get('menu.picking.sub.url.1')}"/>
+                <p:separator/>
                 <p:menuitem value="#{msg.get('menu.picking.title.sub.2')}" outcome="#{msg.get('menu.picking.sub.url.2')}"/>
             </p:submenu>
 
             <p:separator/>
             <p:submenu label="#{msg.get('menu.loading.title')}" icon="ui-icon-gear">
                 <p:menuitem value="#{msg.get('menu.loading.title.sub.1')}" outcome="#{msg.get('menu.loading.title.sub.url.1')}"/>
+                <p:separator/>
                 <p:menuitem value="#{msg.get('menu.loading.title.sub.2')}" outcome="#{msg.get('menu.loading.title.sub.url.2')}"/>
             </p:submenu>
 
@@ -30,7 +32,11 @@
             <p:menuitem value="#{msg.get('menu.stocktransfer.title')}" icon="ui-icon-gear" outcome="#{msg.get('menu.stocktransfer.url')}"/>
 
             <p:separator/>
-            <p:menuitem value="#{msg.get('menu.stockmovement.title')}" icon="ui-icon-gear"/>
+            <p:submenu label="#{msg.get('menu.stockmovement.title')}" icon="ui-icon-gear">
+                <p:menuitem value="#{msg.get('menu.stockmovement.title.sub.1')}" outcome="#{msg.get('menu.stockmovement.title.sub.url.1')}"/>
+                <p:separator/>
+                <p:menuitem value="#{msg.get('menu.stockmovement.title.sub.2')}" outcome="#{msg.get('menu.stockmovement.title.sub.url.2')}"/>
+            </p:submenu>
 
             <p:separator/>
             <p:menuitem value="#{msg.get('menu.stocktaking.title')}" icon="ui-icon-gear"/>
@@ -38,15 +44,15 @@
             <p:separator/>
             <p:submenu icon="ui-icon-cart" label="#{msg.get('menu.report.title')}">
                 <p:menuitem value="#{msg.get('menu.report.title.sub.1')}" outcome="#{msg.get('menu.report.sub.url.1')}"/>
+                <p:separator/>
                 <p:menuitem value="#{msg.get('menu.report.title.sub.2')}" outcome="#{msg.get('menu.report.sub.url.2')}"/>
             </p:submenu>
 
-            <p:separator
-                    rendered="#{loginBean.isRendered(msg.get('authorize.menu.setup'))}"/>
+            <p:separator rendered="#{loginBean.isRendered(msg.get('authorize.menu.setup'))}"/>
             <p:menuitem value="#{msg.get('menu.setup.title')}" icon="ui-icon-gear" outcome="#{msg.get('menu.setup.url')}"
                         rendered="#{loginBean.isRendered(msg.get('authorize.menu.setup'))}"/>
-            <p:separator
-                    rendered="#{loginBean.isRendered(msg.get('authorize.menu.setup'))}"/>
+
+            <p:separator rendered="#{loginBean.isRendered(msg.get('authorize.menu.setup'))}"/>
             <p:menuitem value="#{msg.get('menu.user.title')}" icon="ui-icon-person" outcome="#{msg.get('menu.user.url')}"
                         rendered="#{loginBean.isRendered(msg.get('authorize.menu.user'))}"/>
 

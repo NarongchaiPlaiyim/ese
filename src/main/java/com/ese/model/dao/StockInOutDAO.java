@@ -1,7 +1,7 @@
 package com.ese.model.dao;
 
 import com.ese.model.db.StockInOutModel;
-
+import com.ese.model.view.IncomingView;
 import com.ese.model.view.StockTransferView;
 import com.ese.utils.Utils;
 import org.hibernate.Criteria;
@@ -9,10 +9,8 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.logging.SimpleFormatter;
+import java.util.Date;
+import java.util.List;
 
 @Repository
 public class StockInOutDAO extends GenericDAO<StockInOutModel, Integer> {
@@ -28,6 +26,21 @@ public class StockInOutDAO extends GenericDAO<StockInOutModel, Integer> {
             stockInOutModelList = criteria.list();
         } catch (Exception e) {
             log.debug("Exception error findByDocnoAndCurrentDate : ", e);
+        }
+        return stockInOutModelList;
+    }
+
+    public List<StockInOutModel> findByDocNoINAndCurrentDate(){
+        List<StockInOutModel> stockInOutModelList = Utils.getEmptyList();
+        try {
+            Criteria criteria = getCriteria();
+            criteria.add(Restrictions.like("docNo", "IN%"));
+            criteria.add(Restrictions.eq("docDate", Utils.currentDate()));
+            criteria.add(Restrictions.eq("isValid", 1));
+            criteria.addOrder(Order.desc("updateDate"));
+            stockInOutModelList = criteria.list();
+        } catch (Exception e) {
+            log.debug("Exception error findByDocNoINAndCurrentDate : ", e);
         }
         return stockInOutModelList;
     }
@@ -49,6 +62,25 @@ public class StockInOutDAO extends GenericDAO<StockInOutModel, Integer> {
 
             criteria.add(Restrictions.ge("docDate", stockTransferView.getFormDate()));
             criteria.add(Restrictions.lt("docDate", stockTransferView.getToDate()));
+            criteria.add(Restrictions.eq("isValid", 1));
+            criteria.addOrder(Order.desc("updateDate"));
+            stockInOutModelList = criteria.list();
+        } catch (Exception e) {
+            log.debug("Exception error findBySearch : ", e);
+        }
+        return stockInOutModelList;
+    }
+
+    public List<StockInOutModel> findBySearch(IncomingView incomingView){
+        List<StockInOutModel> stockInOutModelList = Utils.getEmptyList();
+        try {
+            Criteria criteria = getCriteria();
+            criteria.add(Restrictions.like("docNo", "IN%"));
+            if (!Utils.isZero(incomingView.getDocNoteId())){
+                criteria.add(Restrictions.eq("msStockInOutNoteModel.id", incomingView.getDocNoteId()));
+            }
+            criteria.add(Restrictions.ge("docDate", incomingView.getFormDate()));
+            criteria.add(Restrictions.le("docDate", incomingView.getToDate()));
             criteria.add(Restrictions.eq("isValid", 1));
             criteria.addOrder(Order.desc("updateDate"));
             stockInOutModelList = criteria.list();
