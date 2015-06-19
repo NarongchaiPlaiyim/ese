@@ -4,6 +4,7 @@ import com.ese.model.db.MSStockInOutNoteModel;
 import com.ese.model.db.StockInOutModel;
 import com.ese.model.view.IncomingView;
 import com.ese.service.IncomingService;
+import com.ese.utils.FacesUtil;
 import com.sun.istack.internal.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Getter
@@ -32,7 +34,7 @@ public class IncomingBean extends Bean {
     private boolean flagBtnPrint;
     private String mode;
     private boolean modeFlag;
-
+    private boolean flagBtnShow;
     @PostConstruct
     private void onCreation(){
         log.debug("onCreation()");
@@ -51,6 +53,7 @@ public class IncomingBean extends Bean {
         stockInOutModel = new StockInOutModel();
         flagBtnPrint = Boolean.TRUE;
         modeFlag = Boolean.TRUE;
+        flagBtnShow = Boolean.TRUE;
     }
 
     private void onLoadDocumentNote(){
@@ -70,6 +73,13 @@ public class IncomingBean extends Bean {
         incomingView.setRemark(stockInOutModel.getRemark());
         incomingView.setMsStockInOutNoteModel(stockInOutModel.getMsStockInOutNoteModel());
         modeFlag = Boolean.FALSE;
+        flagBtnShow = Boolean.FALSE;
+    }
+
+    public void onClickShowItem(){
+        HttpSession session = FacesUtil.getSession(true);
+        session.setAttribute("stockInOutModel", stockInOutModel);
+        FacesUtil.redirect("/site/incomingShowItem.xhtml");
     }
 
     public void onClickNew(){

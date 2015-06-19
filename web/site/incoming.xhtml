@@ -99,12 +99,12 @@
                     <div style="text-align: right;">
                         <p:commandButton id="showItem"
                                          value="Show items"
-                                         disabled="#{pickingOrderBean.flagBtnShow}"
+                                         disabled="#{incomingBean.flagBtnShow}"
                                          process="@form"
                                          update=":incomingForm"
                                          onstart="PF('bui').block()"
                                          oncomplete="PF('bui').unblock()"
-                                         action="#{pickingOrderBean.onAddtoPickingOrderShowItem()}"
+                                         action="#{incomingBean.onClickShowItem()}"
                                          icon="ui-icon-print"
                                          styleClass="medium" />
                     </div>
@@ -179,7 +179,9 @@
                                                  rowKey="#{stockTransferModel.id}"
                                                  rowIndexVar="rowIndex">
                                         <p:ajax event="rowSelect" listener="#{incomingBean.onClickTable}"
-                                                update=":incomingForm:txtMode, :incomingForm:txtDocno, :incomingForm:txtDocDate, :incomingForm:docNote, :incomingForm:txtRemark"/>
+                                                update=":incomingForm:txtMode, :incomingForm:txtDocno, :incomingForm:txtDocDate, :incomingForm:docNote, :incomingForm:txtRemark
+                                                        , :incomingForm:showItem"
+                                                />
                                         <p:column headerText="No" style="min-width: 5px; width: 5px; max-width: 5px;">
                                             <h:outputText value="#{rowIndex+1}" styleClass="center" />
                                         </p:column>

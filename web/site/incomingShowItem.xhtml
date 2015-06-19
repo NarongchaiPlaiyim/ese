@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>#{msg.get('menu.stockmovement.title.show.item')}</title>
+    </h:head>
+    <h:body>
+        <p:layout fullPage="true" id="layoutPanel">
+            <p:layoutUnit id="layoutTop" position="north" size="180" header="#{msg.get('header.north')}" collapsible="true" style="border: 0">
+                <ui:insert name="header">
+                    <ui:include src="#{msg.get('include.header')}"/>
+                </ui:insert>
+            </p:layoutUnit>
+            <p:layoutUnit id="layoutLeft" position="west" size="#{msg.get('layoutLeft.size')}" header="#{msg.get('header.west')}" collapsible="true" style="border: 0">
+                <ui:include src="#{msg.get('include.menu')}"/>
+            </p:layoutUnit>
+
+            <p:layoutUnit id="layoutCenter" position="center" header="#{msg.get('menu.stockmovement.title.show.item')}" >
+                <h:form id="issuingForm">
+                    <p:panel style="border: 0">
+                        <div style="text-align: right;">
+
+                        </div>
+                        <div class="left">
+                            <table  border="0" class="content_table_form">
+                                <tr>
+                                    <td style="min-width: 90px; width: 90px; max-width: 90px;" class="left" />
+                                    <td style="min-width: 150px; width: 150px; max-width: 150px;" class="left" />
+                                    <td style="min-width: 90px; width: 90px; max-width: 90px;" class="left" />
+                                    <td style="min-width: 150px; width: 150px; max-width: 150px;" class="left" />
+                                    <td style="min-width: 90px; width: 90px; max-width: 90px;" class="left" />
+                                    <td style="min-width: 150px; width: 150px; max-width: 150px;" class="left" />
+                                    <td style="min-width: 90px; width: 90px; max-width: 90px;" class="left" />
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p:outputLabel value="Doc No."/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </p:panel>
+
+
+                </h:form>
+            </p:layoutUnit>
+        </p:layout>
+
+    </h:body>
+</f:view>
+</html>
