@@ -80,6 +80,7 @@ public class IncomingBean extends Bean {
         HttpSession session = FacesUtil.getSession(true);
         session.setAttribute("stockInOutModel", stockInOutModel);
         FacesUtil.redirect("/site/incomingShowItem.xhtml");
+//        FacesUtil.redirect("/site/issuing.xhtml");
     }
 
     public void onClickNew(){

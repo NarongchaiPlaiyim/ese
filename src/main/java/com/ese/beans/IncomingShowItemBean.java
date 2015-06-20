@@ -53,9 +53,9 @@ public class IncomingShowItemBean extends Bean{
         HttpSession session = FacesUtil.getSession(false);
         stockInOutModel = (StockInOutModel) session.getAttribute("stockInOutModel");
         log.debug("onCreation().");
-        if(preLoad()){// && isAuthorize(key)){
+        //if(preLoad()){// && isAuthorize(key)){
             init();
-        }
+       //}
     }
 
     private void init(){

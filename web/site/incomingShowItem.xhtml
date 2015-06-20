@@ -97,12 +97,12 @@
                                                  value="#{incomingShowItemBean.barcodeRegisterView.msItemModel.DSGThaiItemDescription}"/>
                             </td>
                             <td>
-                                <p:commandButton value="#{msg.get('btn.name.select')}"
+                                <!-- p:commandButton value="#{msg.get('btn.name.select')}"
                                                  icon="ui-icon-folder-open"
                                                  styleClass="medium" style="width: 100px"
                                                  action="#{incomingShowItemBean.onInitSearch()}"
                                                  update=":frmFindProduct"
-                                                 oncomplete="PF('findProductDlg').show()"/>
+                                                 oncomplete="PF('findProductDlg').show()"/ -->
                             </td>
                             <td>
                                 <h:outputLabel value="Qty*"/>
@@ -304,14 +304,6 @@
                 </h:form>
             </p:layoutUnit>
         </p:layout>
-
-        <p:panel id="findProductPanel" styleClass="panel">
-            <p:dialog id="findProductDialog" widgetVar="findProductDlg" header="Find Product"
-                      onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
-                      modal="true" width="1000" height="450">
-                <ui:include src="../site/dialog/findProductDialog.xhtml"/>
-            </p:dialog>
-        </p:panel>
 
         <p:panel id="msgBoxSystemMessagePanel" style="border: 0">
             <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="#{msg.get('dialog.message.size')}" closable="false"
