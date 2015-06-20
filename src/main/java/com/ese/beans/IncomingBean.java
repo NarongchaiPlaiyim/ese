@@ -49,7 +49,7 @@ public class IncomingBean extends Bean {
     private void init(){
         onLoadTable();
         onLoadDocumentNote();
-        mode = "Mode:New  ";
+        mode = "Mode(New)";
         incomingView = new IncomingView();
         msStockInOutNoteModel = new MSStockInOutNoteModel();
 
@@ -69,7 +69,7 @@ public class IncomingBean extends Bean {
     }
 
     public void onClickTable(){
-        mode = "Mode:Edit  ";
+        mode = "Mode(Edit)";
         incomingView = new IncomingView();
         incomingView.setId(stockInOutModel.getId());
         incomingView.setDocNo(stockInOutModel.getDocNo());
@@ -87,7 +87,7 @@ public class IncomingBean extends Bean {
     }
 
     public void onClickNew(){
-        mode = "Mode:New  ";
+        mode = "Mode(New)";
         incomingView = new IncomingView();
         msStockInOutNoteModel = new MSStockInOutNoteModel();
         stockInOutModel = new StockInOutModel();
@@ -97,7 +97,7 @@ public class IncomingBean extends Bean {
     public void onClickSave(){
 
         if (Utils.isZero(incomingView.getMsStockInOutNoteModel().getId())){
-            showDialog(MessageDialog.WARNING.getMessageHeader(), "�?รุณาเลือ�? Document Note");
+            showDialog(MessageDialog.WARNING.getMessageHeader(), "Document Note should not be empty");
         } else {
             if (modeFlag) {
                 incomingService.save(incomingView);

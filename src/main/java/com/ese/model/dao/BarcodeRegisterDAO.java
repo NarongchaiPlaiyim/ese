@@ -25,7 +25,10 @@ public class BarcodeRegisterDAO extends GenericDAO<BarcodeRegisterModel, Integer
     }
 
     public List<BarcodeRegisterModel> findByStockInOut(String stockInout) throws Exception {
-        Criteria criteria = getCriteria().add(Restrictions.eq("isValid", 1)).add(Restrictions.eq("status", StatusBarcodeRegiterValue.INPROCESS)).addOrder(Order.desc("updateDate"));
+        Criteria criteria = getCriteria()
+                            .add(Restrictions.eq("isValid", 1))
+                            .add(Restrictions.eq("status", StatusBarcodeRegiterValue.INPROCESS))
+                            .addOrder(Order.desc("updateDate"));
 
         if (!Utils.isNull(stockInout) && !Utils.isZero(stockInout.trim().length())){
             criteria.add(Restrictions.eq("docNo", stockInout));

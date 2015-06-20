@@ -24,14 +24,27 @@
                     <p:panel style="border: 0">
                         <div style="text-align: right;">
                             <p:outputLabel id="labMode" value="#{domesticLoadBean.labMode}"/>
-                            <p:commandButton id="btnNew" value="New"
+
+                            <p:commandButton value="#{msg.get('btn.name.new')}"
+                                             onstart="PF('bui').block()"
+                                             process="@form"
+                                             oncomplete="PF('bui').unblock()"
                                              action="#{domesticLoadBean.onClickNew}"
                                              update=":domesticForm:labMode, :domesticForm:txtDocno,
-                                                     :domesticForm:txtLoadingDate, :domesticForm:txtRemark, :domesticForm:loadingOrderTable"/>
-                            <p:commandButton id="brnSave" value="Save"
+                                                     :domesticForm:txtLoadingDate, :domesticForm:txtRemark, :domesticForm:loadingOrderTable"
+                                             styleClass="medium" style="#{msg.get('btn.size')}"
+                                             icon="ui-icon-plusthick"/>
+
+                            <p:commandButton value="#{msg.get('btn.name.save')}"
+                                             id="btnSave"
+                                             styleClass="medium" style="#{msg.get('btn.size')}"
+                                             onstart="PF('bui').block()"
                                              action="#{domesticLoadBean.onClickSaveLoadingOrder}"
+                                             oncomplete="PF('bui').unblock()"
                                              process="@form"
-                                             update=":domesticForm, :msgBoxSystemMessagePanel"/>
+                                             update=":domesticForm, :msgBoxSystemMessagePanel"
+                                             icon="ui-icon-check"/>
+
                             <p:commandButton id="btnReport"  disabled="#{domesticLoadBean.flagdBtnReport}"
                                              value="Print loading report"/>
 

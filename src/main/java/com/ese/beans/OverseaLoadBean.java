@@ -55,7 +55,7 @@ public class OverseaLoadBean extends Bean{
         onLoadTable();
         loadingOrderModel = new LoadingOrderModel();
         loadingOrderView = new LoadingOrderView();
-        labMode = "Mode : New ";
+        labMode = "Mode(New)";
         flagdBtnReport = Boolean.TRUE;
         flagBtnShowPicking = Boolean.TRUE;
     }
@@ -91,7 +91,7 @@ public class OverseaLoadBean extends Bean{
         mode = Boolean.FALSE;
         flagdBtnReport = Boolean.FALSE;
         flagBtnShowPicking = Boolean.FALSE;
-        labMode = "Mode : Edit ";
+        labMode = "Mode(Edit)";
         loadingOrderView = overSeaLoadService.transToView(loadingOrderModel);
     }
 
@@ -101,7 +101,7 @@ public class OverseaLoadBean extends Bean{
 
     public void onClickNew(){
         loadingOrderView = new LoadingOrderView();
-        labMode = "Mode : New ";
+        labMode = "Mode(New)";
         mode = Boolean.TRUE;
         loadingOrderModel = new LoadingOrderModel();
     }

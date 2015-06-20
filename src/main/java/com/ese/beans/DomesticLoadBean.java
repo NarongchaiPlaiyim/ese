@@ -15,7 +15,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.servlet.http.HttpSession;
-import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -54,7 +53,7 @@ public class DomesticLoadBean extends Bean {
         onLoadTable();
         loadingOrderModel = new LoadingOrderModel();
         loadingOrderView = new LoadingOrderView();
-        labMode = "Mode : New ";
+        labMode = "Mode(New)";
         flagdBtnReport = Boolean.TRUE;
         flagBtnShowPicking = Boolean.TRUE;
     }
@@ -90,7 +89,7 @@ public class DomesticLoadBean extends Bean {
         mode = Boolean.FALSE;
         flagdBtnReport = Boolean.FALSE;
         flagBtnShowPicking = Boolean.FALSE;
-        labMode = "Mode : Edit ";
+        labMode = "Mode(Edit)";
         loadingOrderView = domesticLoadService.transToView(loadingOrderModel);
     }
 
@@ -100,7 +99,7 @@ public class DomesticLoadBean extends Bean {
 
     public void onClickNew(){
         loadingOrderView = new LoadingOrderView();
-        labMode = "Mode : New ";
+        labMode = "Mode(New)";
         mode = Boolean.TRUE;
         loadingOrderModel = new LoadingOrderModel();
     }

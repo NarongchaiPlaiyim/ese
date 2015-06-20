@@ -227,6 +227,7 @@ public class IncomingShowItemBean extends Bean{
         log.debug("-- onSave()");
         try {
             if(mandate()){
+                barcodeRegisterView.setDocumentNo(stockInOutModel.getDocNo());
                 barcodeRegisterService.saveOrUpdate(barcodeRegisterView);
                 if (!Utils.isZero(barcodeRegisterView.getId())){
                     showDialogEdited();

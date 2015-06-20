@@ -24,16 +24,26 @@
                     <p:panel style="border: 0">
                         <div style="text-align: right;">
                             <p:outputLabel id="txtMode" value="#{incomingBean.mode}"/>
-                            <p:commandButton id="btnNew"
-                                             value="New"
-                                             process="@this"
+
+                            <p:commandButton value="#{msg.get('btn.name.new')}"
+                                             onstart="PF('bui').block()"
+                                             oncomplete="PF('bui').unblock()"
                                              action = "#{incomingBean.onClickNew()}"
+                                             process="@this"
                                              update=":incomingForm, :msgBoxSystemMessagePanel"
-                                             styleClass="medium" />
-                            <p:commandButton id="brnSave" value="Save"
-                                             action="#{incomingBean.onClickSave}"
+                                             styleClass="medium" style="#{msg.get('btn.size')}"
+                                             icon="ui-icon-plusthick"/>
+
+                            <p:commandButton value="#{msg.get('btn.name.save')}"
+                                             id="btnSave"
+                                             styleClass="medium" style="#{msg.get('btn.size')}"
+                                             onstart="PF('bui').block()"
                                              process="@form"
-                                             update=":incomingForm, :msgBoxSystemMessagePanel"/>
+                                             action="#{incomingBean.onClickSave}"
+                                             oncomplete="PF('bui').unblock()"
+                                             update=":incomingForm, :msgBoxSystemMessagePanel"
+                                             icon="ui-icon-check"/>
+
                             <p:commandButton id="btnPrint"
                                              value="Print"
                                              process="@this"
@@ -53,6 +63,7 @@
                                              icon="ui-icon-print"
                                              styleClass="medium" />
                         </div>
+                    </p:panel>
                         <div class="left">
                             <table  border="0" class="content_table_form">
                                 <tr>
@@ -92,8 +103,6 @@
                                                            var="stockinoutnote"
                                                            itemLabel="#{stockinoutnote.inoutCode} #{stockinoutnote.inoutNote}"
                                                            itemValue="#{stockinoutnote.id}"/>
-                                            <!--p:ajax event="change"
-                                                    update=":stockTransferForm:docNote"/-->
                                         </p:selectOneMenu>
                                     </td>
                                     <td>
@@ -105,8 +114,7 @@
                                 </tr>
                             </table>
                         </div>
-                    </p:panel>
-                    <p:panel style="border: 0">
+
                         <table  border="0" class="content_table_form">
                             <tr>
                                 <td style="width: 150px; max-width: 150px; min-width: 150px" class="left"/>
@@ -162,9 +170,7 @@
                                 </td>
                             </tr>
                         </table>
-                    </p:panel>
 
-                    <p:panel style="border: 0">
                         <table border="0" class="content_table_form">
                             <tr>
                                 <td>
@@ -205,7 +211,7 @@
                                 </td>
                             </tr>
                         </table>
-                    </p:panel>
+
                 </h:form>
             </p:layoutUnit>
         </p:layout>

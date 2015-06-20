@@ -24,14 +24,27 @@
                     <p:panel style="border: 0">
                         <div style="text-align: right;">
                             <p:outputLabel id="labMode" value="#{overSeaLoadBean.labMode}"/>
-                            <p:commandButton id="btnNew" value="New"
-                                             action="#{overSeaLoadBean.onClickNew}"
-                                             update=":overSeaForm:labMode, :overSeaForm:txtDocno,
-                                                     :overSeaForm:txtLoadingDate, :overSeaForm:txtRemark, :overSeaForm:loadingOrderTable"/>
-                            <p:commandButton id="brnSave" value="Save"
-                                             action="#{overSeaLoadBean.onClickSaveLoadingOrder}"
+
+                            <p:commandButton value="#{msg.get('btn.name.new')}"
+                                             onstart="PF('bui').block()"
+                                             oncomplete="PF('bui').unblock()"
+                                             action="#{overSeaLoadBean.onClickNew()}"
                                              process="@form"
-                                             update=":overSeaForm, :msgBoxSystemMessagePanel"/>
+                                             update=":overSeaForm:labMode, :overSeaForm:txtDocno,
+                                                     :overSeaForm:txtLoadingDate, :overSeaForm:txtRemark, :overSeaForm:loadingOrderTable"
+                                             styleClass="medium" style="#{msg.get('btn.size')}"
+                                             icon="ui-icon-plusthick"/>
+
+                            <p:commandButton value="#{msg.get('btn.name.save')}"
+                                             id="btnSave"
+                                             styleClass="medium" style="#{msg.get('btn.size')}"
+                                             onstart="PF('bui').block()"
+                                             process="@form"
+                                             action="#{overSeaLoadBean.onClickSaveLoadingOrder}"
+                                             oncomplete="PF('bui').unblock()"
+                                             update=":overSeaForm, :msgBoxSystemMessagePanel"
+                                             icon="ui-icon-check"/>
+
                             <p:commandButton id="btnReport"  disabled="#{overSeaLoadBean.flagdBtnReport}"
                                              value="Print loading report"/>
 
