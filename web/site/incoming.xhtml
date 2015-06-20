@@ -28,7 +28,7 @@
                                              value="New"
                                              process="@this"
                                              action = "#{incomingBean.onClickNew()}"
-                                             update=":incomingForm"
+                                             update=":incomingForm, :msgBoxSystemMessagePanel"
                                              styleClass="medium" />
                             <p:commandButton id="brnSave" value="Save"
                                              action="#{incomingBean.onClickSave}"
@@ -133,8 +133,9 @@
                                     <p:outputLabel value="to"/>
                                 </td>
                                 <td>
-                                    <p:calendar id="toDate" value="#{incomingBean.incomingView.toDate}" pattern="dd/MM/yyyy" readonly="true">
+                                    <p:calendar id="toDate" value="#{incomingBean.incomingView.toDate}" pattern="dd/MM/yyyy">
                                         <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                        <p:ajax event="change" update="toDate"/>
                                     </p:calendar>
                                 </td>
                                 <td>
@@ -144,9 +145,9 @@
                                     <p:selectOneMenu value="#{incomingBean.incomingView.docNoteId}"
                                                      style="#{msg.get('fix.size.200')} margin-top: 4px">
                                         <f:selectItem itemLabel=" Please Select "/>
-                                        <f:selectItems value="#{stockTransferBean.stockInOutNoteModelList}"
+                                        <f:selectItems value="#{incomingBean.stockInOutNoteModelListTV}"
                                                        var="stockinoutnote"
-                                                       itemLabel="#{stockinoutnote.inoutCode}"
+                                                       itemLabel="#{stockinoutnote.inoutCode} #{stockinoutnote.inoutNote}"
                                                        itemValue="#{stockinoutnote.id}"/>
                                     </p:selectOneMenu>
                                 </td>
@@ -194,7 +195,7 @@
                                             </h:outputText>
                                         </p:column>
                                         <p:column headerText="Document Note" sortBy="#{stockTransferModel.msStockInOutNoteModel.inoutCode}" filterBy="#{stockTransferModel.msStockInOutNoteModel.inoutCode}" filterMatchMode="contains" style="min-width: 120px; width: 120px; max-width: 120px;" styleClass="center">
-                                            <h:outputText value="#{stockTransferModel.msStockInOutNoteModel.inoutCode}"/>
+                                            <h:outputText value="#{stockTransferModel.msStockInOutNoteModel.inoutCode} #{stockTransferModel.msStockInOutNoteModel.inoutNote}"/>
                                         </p:column>
                                         <p:column headerText="Remark" sortBy="#{stockTransferModel.remark}" filterBy="#{stockTransferModel.remark}" filterMatchMode="contains" style="min-width: 250px; width: 250px; max-width: 250px;" styleClass="center">
                                             <h:outputText value="#{stockTransferModel.remark}"/>

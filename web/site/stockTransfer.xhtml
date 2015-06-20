@@ -139,8 +139,9 @@
                 <p:outputLabel value="and"/>
             </td>
             <td>
-                <p:calendar id="toDate" value="#{stockTransferBean.stockTransferView.toDate}" pattern="dd/MM/yyyy" readonly="true">
+                <p:calendar id="toDate" value="#{stockTransferBean.stockTransferView.toDate}" pattern="dd/MM/yyyy">
                     <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    <p:ajax event="change" update="toDate"/>
                 </p:calendar>
             </td>
             <td>

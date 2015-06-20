@@ -79,6 +79,8 @@ public class StockInOutDAO extends GenericDAO<StockInOutModel, Integer> {
             if (!Utils.isZero(incomingView.getDocNoteId())){
                 criteria.add(Restrictions.eq("msStockInOutNoteModel.id", incomingView.getDocNoteId()));
             }
+            log.debug("FormDate {}", incomingView.getFormDate());
+            log.debug("ToDate {}", incomingView.getToDate());
             criteria.add(Restrictions.ge("docDate", incomingView.getFormDate()));
             criteria.add(Restrictions.le("docDate", incomingView.getToDate()));
             criteria.add(Restrictions.eq("isValid", 1));

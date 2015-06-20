@@ -5,6 +5,8 @@ import com.ese.model.db.StockInOutModel;
 import com.ese.model.view.IncomingView;
 import com.ese.service.IncomingService;
 import com.ese.utils.FacesUtil;
+import com.ese.utils.MessageDialog;
+import com.ese.utils.Utils;
 import com.sun.istack.internal.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,6 +28,7 @@ public class IncomingBean extends Bean {
     @ManagedProperty("#{incomingService}") private IncomingService incomingService;
 
     private List<MSStockInOutNoteModel> stockInOutNoteModelList;
+    private List<MSStockInOutNoteModel> stockInOutNoteModelListTV;
     @NotNull private IncomingView incomingView;
     @NotNull private MSStockInOutNoteModel msStockInOutNoteModel;
 
@@ -58,6 +61,7 @@ public class IncomingBean extends Bean {
 
     private void onLoadDocumentNote(){
         stockInOutNoteModelList = incomingService.getAllStockInOutNote();
+        stockInOutNoteModelListTV = incomingService.getAllStockInOutNote();
     }
 
     private void onLoadTable(){
@@ -91,14 +95,19 @@ public class IncomingBean extends Bean {
     }
 
     public void onClickSave(){
-        if (modeFlag) {
-            incomingService.save(incomingView);
-            showDialogSaved();
+
+        if (Utils.isZero(incomingView.getMsStockInOutNoteModel().getId())){
+            showDialog(MessageDialog.WARNING.getMessageHeader(), "กรุณาเลือก Document Note");
         } else {
-            incomingService.edit(incomingView);
-            showDialogEdited();
+            if (modeFlag) {
+                incomingService.save(incomingView);
+                showDialogSaved();
+            } else {
+                incomingService.edit(incomingView);
+                showDialogEdited();
+            }
+            init();
         }
-        init();
     }
 
     public void onSearch(){
