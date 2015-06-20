@@ -80,7 +80,7 @@
                                             <f:selectItem itemLabel=" Please Select "/>
                                             <f:selectItems value="#{incomingBean.stockInOutNoteModelList}"
                                                            var="stockinoutnote"
-                                                           itemLabel="#{stockinoutnote.inoutCode}"
+                                                           itemLabel="#{stockinoutnote.inoutCode} #{stockinoutnote.inoutNote}"
                                                            itemValue="#{stockinoutnote.id}"/>
                                             <!--p:ajax event="change"
                                                     update=":stockTransferForm:docNote"/-->
@@ -111,9 +111,9 @@
                     <p:panel style="border: 0">
                         <table  border="0" class="content_table_form">
                             <tr>
-                                <td style="width: 130px; max-width: 130px; min-width: 130px" class="left"/>
-                                <td style="width: 265px; max-width: 265px; min-width: 265px" class="left"/>
                                 <td style="width: 150px; max-width: 150px; min-width: 150px" class="left"/>
+                                <td style="width: 265px; max-width: 265px; min-width: 265px" class="left"/>
+                                <td style="width: 30px; max-width: 30px; min-width: 30px" class="left"/>
                                 <td style="width: 265px; max-width: 265px; min-width: 265px" class="left"/>
                                 <td style="width: 145px; max-width: 145px; min-width: 145px" class="left"/>
                                 <td style="width: 210px; max-width: 210px; min-width: 210px" class="left"/>

@@ -49,4 +49,20 @@ public class StockInOutNoteDAO extends GenericDAO<MSStockInOutNoteModel, Integer
         }
         return msStockInOutNoteModelList;
     }
+
+    public List<MSStockInOutNoteModel> getStockInOutNoteOrderByTypeI(){
+        log.debug("getStockInOutNoteOrderByUpdateDate().");
+        List<MSStockInOutNoteModel> msStockInOutNoteModelList = Utils.getEmptyList();
+        try {
+            Criteria criteria = getCriteria();
+            criteria.add(Restrictions.eq("type", "I"));
+            criteria.add(Restrictions.eq("isValid", 1));
+            criteria.addOrder(Order.desc("updateDate"));
+            msStockInOutNoteModelList = Utils.safetyList(criteria.list());
+            log.debug("msStockInOutNoteModels Size : {}", msStockInOutNoteModelList.size());
+        } catch (Exception e) {
+            log.debug("Exception Error getStockInOutNoteOrderByUpdateDate : ", e);
+        }
+        return msStockInOutNoteModelList;
+    }
 }
