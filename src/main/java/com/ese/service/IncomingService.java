@@ -23,7 +23,7 @@ public class IncomingService extends Service {
     @Resource private StockInOutNoteDAO stockInOutNoteDAO;
 
     public List<MSStockInOutNoteModel> getAllStockInOutNote(){
-        return stockInOutNoteDAO.getStockInOutNoteOrderByTypeT();
+        return stockInOutNoteDAO.getStockInOutNoteOrderByTypeI();
     }
 
     public List<StockInOutModel> getOnLoad(){

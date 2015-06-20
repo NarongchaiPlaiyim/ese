@@ -87,6 +87,7 @@ public class IncomingBean extends Bean {
         mode = "Mode:New  ";
         incomingView = new IncomingView();
         msStockInOutNoteModel = new MSStockInOutNoteModel();
+        stockInOutModel = new StockInOutModel();
         modeFlag = Boolean.TRUE;
     }
 
