@@ -75,6 +75,43 @@
                                              oncomplete="PF('bui').unblock()"/>
                         </div>
                     </p:panel>
+                    <table  border="0" class="content_table_form">
+                        <tr>
+                            <td style="width: 130px; max-width: 130px; min-width: 130px" class="left"/>
+                            <td style="width: 265px; max-width: 265px; min-width: 265px" class="left"/>
+                            <td style="width: 150px; max-width: 150px; min-width: 150px" class="left"/>
+                            <td style="width: 265px; max-width: 265px; min-width: 265px" class="left"/>
+                            <td style="width: 145px; max-width: 145px; min-width: 145px" class="left"/>
+                            <td style="width: 210px; max-width: 210px; min-width: 210px" class="left"/>
+                            <td style="width: 85px; max-width: 85px; min-width: 85px" class="left"/>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p:outputLabel value="Doc No."/>
+                            </td>
+                            <td>
+                                <p:inputText  id="txtDocno" readonly="#{true}" value="#{incomingShowItemBean.incomingView.docNo}"/>
+                            </td>
+                            <td>
+                                <p:outputLabel value="Document Date"/>
+                            </td>
+                            <td>
+                                <p:inputText  id="txtDocDate" readonly="#{true}" value="#{incomingShowItemBean.incomingView.docDate}"/>
+                            </td>
+                            <td>
+                                <p:outputLabel value="Document Note"/>
+                            </td>
+                            <td>
+                                <p:inputText  id="docNote" readonly="#{true}" value="#{incomingShowItemBean.incomingView.msStockInOutNoteModel.inoutCode}"/>
+                            </td>
+                            <td>
+                                <p:outputLabel value="Remark"/>
+                            </td>
+                            <td>
+                                <p:inputTextarea id="txtRemark" value="#{incomingBean.incomingView.remark}"/>
+                            </td>
+                        </tr>
+                    </table>
                     <table border="0" class="content_table_form">
                         <tr >
                             <td style="min-width: 150px; width: 150px; max-width: 150px;" class="left" />
@@ -97,12 +134,12 @@
                                                  value="#{incomingShowItemBean.barcodeRegisterView.msItemModel.DSGThaiItemDescription}"/>
                             </td>
                             <td>
-                                <!-- p:commandButton value="#{msg.get('btn.name.select')}"
+                                <p:commandButton value="#{msg.get('btn.name.select')}"
                                                  icon="ui-icon-folder-open"
                                                  styleClass="medium" style="width: 100px"
                                                  action="#{incomingShowItemBean.onInitSearch()}"
                                                  update=":frmFindProduct"
-                                                 oncomplete="PF('findProductDlg').show()"/ -->
+                                                 oncomplete="PF('findProductDlg').show()"/>
                             </td>
                             <td>
                                 <h:outputLabel value="Qty*"/>
@@ -304,6 +341,14 @@
                 </h:form>
             </p:layoutUnit>
         </p:layout>
+
+        <p:panel id="findProductPanel" styleClass="panel">
+            <p:dialog id="findProductDialog" widgetVar="findProductDlg" header="Find Product"
+                      onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
+                      modal="true" width="1000" height="450">
+                <ui:include src="../site/dialog/findProductIncomingShowItemDialog.xhtml"/>
+            </p:dialog>
+        </p:panel>
 
         <p:panel id="msgBoxSystemMessagePanel" style="border: 0">
             <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="#{msg.get('dialog.message.size')}" closable="false"

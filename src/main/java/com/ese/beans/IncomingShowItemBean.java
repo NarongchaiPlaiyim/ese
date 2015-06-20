@@ -4,6 +4,7 @@ import com.ese.model.db.BarcodeRegisterModel;
 import com.ese.model.db.MSItemModel;
 import com.ese.model.db.StockInOutModel;
 import com.ese.model.view.BarcodeRegisterView;
+import com.ese.model.view.IncomingView;
 import com.ese.service.BarcodeRegisterService;
 import com.ese.utils.FacesUtil;
 import com.ese.utils.MessageDialog;
@@ -28,6 +29,7 @@ public class IncomingShowItemBean extends Bean{
     @ManagedProperty("#{message['authorize.menu.barcode']}") private String key;
 
     private BarcodeRegisterView barcodeRegisterView;
+    private IncomingView incomingView;
     private List<MSItemModel> msItemModelList;
     private List<BarcodeRegisterModel> barcodeRegisterModelList;
     private BarcodeRegisterModel barcodeRegisterModel;
@@ -52,6 +54,11 @@ public class IncomingShowItemBean extends Bean{
     public void onCreation(){
         HttpSession session = FacesUtil.getSession(false);
         stockInOutModel = (StockInOutModel) session.getAttribute("stockInOutModel");
+        incomingView = new IncomingView();
+        incomingView.setDocDate(stockInOutModel.getDocDate());
+        incomingView.setDocNo(stockInOutModel.getDocNo());
+        incomingView.setMsStockInOutNoteModel(stockInOutModel.getMsStockInOutNoteModel());
+        incomingView.setRemark(stockInOutModel.getRemark());
         log.debug("onCreation().");
         //if(preLoad()){// && isAuthorize(key)){
             init();

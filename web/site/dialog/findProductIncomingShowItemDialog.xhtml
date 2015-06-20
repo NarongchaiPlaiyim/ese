@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<!--</html>-->
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui">
+        <h:form id="frmFindProduct">
+            <table  border="0">
+                <tr>
+                    <td style="width: 200px">
+                        <p:selectOneMenu
+                                value="#{incomingShowItemBean.selectType}"
+                                style="#{msg.get('fix.size.200')} margin-top: 4px">
+                            <f:selectItem itemLabel="Item Description" itemValue="3"/>
+                            <f:selectItem itemLabel="Item Name" itemValue="1"/>
+                            <f:selectItem itemLabel="Item Code" itemValue="2"/>
+                        </p:selectOneMenu>
+                    </td>
+                    <td>
+                        <p:inputText
+                                style="#{msg.get('fix.size.200')}  margin-top: 4px"
+                                value="#{incomingShowItemBean.productSearch}"
+                                />
+                        <p:commandButton value="#{msg.get('btn.name.search')}"
+                                         styleClass="medium" style="#{msg.get('btn.size')}"
+                                         icon="ui-icon-search"
+                                         onstart="PF('bui').block()"
+                                         action="#{incomingShowItemBean.onSubmitSearch()}"
+                                         update=":frmFindProduct:productTable"
+                                         oncomplete="PF('bui').unblock()"
+                                />
+                    </td>
+                    <td class="right">
+                        <p:commandButton
+                                id="btnSelectDialog"
+                                value="#{msg.get('btn.name.select')}"
+                                icon="ui-icon-folder-open"
+                                disabled="#{incomingShowItemBean.flagBtnSelect}"
+                                styleClass="medium" style="#{configurationSize.btnSize}"
+                                action="#{incomingShowItemBean.onClickSelectOnDialog()}"
+                                oncomplete="PF('findProductDlg').hide()"
+                                update=":setupForm:itemLabel"
+                                />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <p:dataTable id="productTable"
+                                     rows="7"
+                                     paginator="true"
+                                     var="itemModel"
+                                     selectionMode="single"
+                                     rowKey="#{itemModel.id}"
+                                     selection="#{incomingShowItemBean.barcodeRegisterView.msItemModel}"
+                                     value="#{incomingShowItemBean.msItemModelList}"
+                                     rowIndexVar="rowIndex">
+                            <p:ajax event="rowSelect" update=":frmFindProduct:productTable, :frmFindProduct:btnSelectDialog"
+                                    listener="#{incomingShowItemBean.onClickTableDialog()}"/>
+                            <p:column headerText="No" style="min-width: 25px; width: 25px; max-width: 25px;">
+                                <h:outputText value="#{rowIndex+1}" style="text-align: right;"/>
+                            </p:column>
+                            <p:column headerText="Item Code" style="min-width: 100px; width: 100px; max-width: 100px;" styleClass="center">
+                                <h:outputText value="#{itemModel.itemId}"/>
+                            </p:column>
+                            <p:column headerText="Item Name" style="min-width: 150px; width: 150px; max-width: 150px;">
+                                <h:outputText value="#{itemModel.itemName}"/>
+                            </p:column>
+                            <p:column headerText="Item Description" style="min-width: 250px; width: 250px; max-width: 250px;">
+                                <h:outputText value="#{itemModel.DSGThaiItemDescription}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </td>
+                </tr>
+            </table>
+        </h:form>
+</f:view>
+</html>
