@@ -42,6 +42,16 @@
                                              ajax="false"
                                              icon="ui-icon-print"
                                              styleClass="medium" />
+                            <p:commandButton id="showItem"
+                                             value="Show items"
+                                             disabled="#{incomingBean.flagBtnShow}"
+                                             process="@form"
+                                             update=":incomingForm"
+                                             onstart="PF('bui').block()"
+                                             oncomplete="PF('bui').unblock()"
+                                             action="#{incomingBean.onClickShowItem()}"
+                                             icon="ui-icon-print"
+                                             styleClass="medium" />
                         </div>
                         <div class="left">
                             <table  border="0" class="content_table_form">
@@ -96,18 +106,6 @@
                             </table>
                         </div>
                     </p:panel>
-                    <div style="text-align: right;">
-                        <p:commandButton id="showItem"
-                                         value="Show items"
-                                         disabled="#{incomingBean.flagBtnShow}"
-                                         process="@form"
-                                         update=":incomingForm"
-                                         onstart="PF('bui').block()"
-                                         oncomplete="PF('bui').unblock()"
-                                         action="#{incomingBean.onClickShowItem()}"
-                                         icon="ui-icon-print"
-                                         styleClass="medium" />
-                    </div>
                     <p:panel style="border: 0">
                         <table  border="0" class="content_table_form">
                             <tr>

@@ -73,6 +73,14 @@
                                             :setupForm:barcodeRegisterTable,
                                             :confirmClosePalletPanel"
                                              oncomplete="PF('bui').unblock()"/>
+                            <p:commandButton id="Close"
+                                             styleClass="medium" style="#{msg.get('btn.size')}"
+                                             value="Close"
+                                             process="@form"
+                                             update=":setupForm"
+                                             action="#{incomingShowItemBean.onClose}"
+                                             onstart="PF('bui').block()"
+                                             oncomplete="PF('bui').unblock()"/>
                         </div>
                     </p:panel>
                     <table  border="0" class="content_table_form">
@@ -144,7 +152,7 @@
                             <td>
                                 <h:outputLabel value="Qty*"/>
                             </td>
-                            <td colspan="2">
+                            <td >
                                 <p:inputText style="min-width: 80px; width: 80px; max-width: 80px;"
                                              id="otyLabel"
                                              styleClass="right"

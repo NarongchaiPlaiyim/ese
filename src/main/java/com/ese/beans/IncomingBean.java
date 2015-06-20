@@ -81,7 +81,7 @@ public class IncomingBean extends Bean {
     }
 
     public void onClickShowItem(){
-        HttpSession session = FacesUtil.getSession(true);
+        HttpSession session = FacesUtil.getSession(false);
         session.setAttribute("stockInOutModel", stockInOutModel);
         FacesUtil.redirect("/site/incomingShowItem.xhtml");
     }
@@ -97,7 +97,7 @@ public class IncomingBean extends Bean {
     public void onClickSave(){
 
         if (Utils.isZero(incomingView.getMsStockInOutNoteModel().getId())){
-            showDialog(MessageDialog.WARNING.getMessageHeader(), "กรุณาเลือก Document Note");
+            showDialog(MessageDialog.WARNING.getMessageHeader(), "�?รุณาเลือ�? Document Note");
         } else {
             if (modeFlag) {
                 incomingService.save(incomingView);

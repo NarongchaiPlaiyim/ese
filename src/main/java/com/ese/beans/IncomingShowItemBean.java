@@ -8,6 +8,7 @@ import com.ese.model.view.IncomingView;
 import com.ese.service.BarcodeRegisterService;
 import com.ese.utils.FacesUtil;
 import com.ese.utils.MessageDialog;
+import com.ese.utils.NamesUtil;
 import com.ese.utils.Utils;
 import lombok.Getter;
 import lombok.Setter;
@@ -54,15 +55,19 @@ public class IncomingShowItemBean extends Bean{
     public void onCreation(){
         HttpSession session = FacesUtil.getSession(false);
         stockInOutModel = (StockInOutModel) session.getAttribute("stockInOutModel");
-        incomingView = new IncomingView();
-        incomingView.setDocDate(stockInOutModel.getDocDate());
-        incomingView.setDocNo(stockInOutModel.getDocNo());
-        incomingView.setMsStockInOutNoteModel(stockInOutModel.getMsStockInOutNoteModel());
-        incomingView.setRemark(stockInOutModel.getRemark());
-        log.debug("onCreation().");
-        //if(preLoad()){// && isAuthorize(key)){
-            init();
-       //}
+        if (stockInOutModel != null) {
+            incomingView = new IncomingView();
+            incomingView.setDocDate(stockInOutModel.getDocDate());
+            incomingView.setDocNo(stockInOutModel.getDocNo());
+            incomingView.setMsStockInOutNoteModel(stockInOutModel.getMsStockInOutNoteModel());
+            incomingView.setRemark(stockInOutModel.getRemark());
+            log.debug("onCreation().");
+            if(preLoad()){// && isAuthorize(key)){
+                init();
+            }
+        } else {
+            FacesUtil.redirect(NamesUtil.LOGIN_PAGE.getName());
+        }
     }
 
     private void init(){
@@ -267,5 +272,11 @@ public class IncomingShowItemBean extends Bean{
         log.debug("--- {}", barcodeRegisterView.getDocumentDate());
         barcodeRegisterView.setBatchNo(Utils.getBatchNo(barcodeRegisterView.getDocumentDate()));
         log.debug("------- {}", Utils.getBatchNo(barcodeRegisterView.getDocumentDate()));
+    }
+
+    public void onClose(){
+        HttpSession session = FacesUtil.getSession(false);
+        session.removeAttribute("stockInOutModel");
+        FacesUtil.redirect("/site/incoming.xhtml");
     }
 }
