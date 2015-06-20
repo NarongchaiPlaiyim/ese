@@ -209,7 +209,7 @@ public class IncomingShowItemBean extends Bean{
     public void onDelete(){
         log.debug("-- onDelete()");
         try {
-            barcodeRegisterService.delete(barcodeRegisterModel);
+            barcodeRegisterService.deleteFormSetValid(barcodeRegisterModel);
             showDialogDeleted();
             init();
         } catch (Exception e) {

@@ -91,6 +91,16 @@ public class BarcodeRegisterService extends Service{
         }
     }
 
+    public void deleteFormSetValid(BarcodeRegisterModel model){
+        log.debug("-- delete(id : {})", model.getId());
+        try {
+            model.setIsValid(0);
+            barcodeRegisterDAO.update(model);
+        } catch (Exception e) {
+            log.error("{}",e);
+        }
+    }
+
     public BarcodeRegisterView convertToView(BarcodeRegisterModel model){
         log.debug("-- convertToView(BarcodeRegisterModel.id[{}])", model.getId());
         BarcodeRegisterView barcodeRegisterView = new BarcodeRegisterView();
