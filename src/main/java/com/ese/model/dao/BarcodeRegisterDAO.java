@@ -1,5 +1,6 @@
 package com.ese.model.dao;
 
+import com.ese.model.StatusBarcodeRegiterValue;
 import com.ese.model.db.BarcodeRegisterModel;
 import com.ese.model.view.report.BarcodeRegisterModelReport;
 import com.ese.utils.Utils;
@@ -20,6 +21,15 @@ import java.util.List;
 public class BarcodeRegisterDAO extends GenericDAO<BarcodeRegisterModel, Integer> {
     public List<BarcodeRegisterModel> findByIsValid() throws Exception {
         Criteria criteria = getCriteria().add(Restrictions.eq("isValid", 1)).addOrder(Order.desc("updateDate"));
+        return Utils.safetyList(criteria.list());
+    }
+
+    public List<BarcodeRegisterModel> findByStockInOut(String stockInout) throws Exception {
+        Criteria criteria = getCriteria().add(Restrictions.eq("isValid", 1)).add(Restrictions.eq("status", StatusBarcodeRegiterValue.INPROCESS)).addOrder(Order.desc("updateDate"));
+
+        if (!Utils.isNull(stockInout) && !Utils.isZero(stockInout.trim().length())){
+            criteria.add(Restrictions.eq("docNo", stockInout));
+        }
         return Utils.safetyList(criteria.list());
     }
 

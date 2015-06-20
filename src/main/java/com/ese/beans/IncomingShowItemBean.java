@@ -96,7 +96,7 @@ public class IncomingShowItemBean extends Bean{
     }
 
     private void onLoadDataBarcode(){
-        barcodeRegisterModelList = barcodeRegisterService.getByIsValid();
+        barcodeRegisterModelList = barcodeRegisterService.getByStockInOut(stockInOutModel.getDocNo());
     }
 
     public void onClickButtonNew(){

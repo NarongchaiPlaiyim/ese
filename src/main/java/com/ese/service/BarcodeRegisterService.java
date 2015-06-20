@@ -71,6 +71,17 @@ public class BarcodeRegisterService extends Service{
         return barcodeRegisterModelList;
     }
 
+    public List<BarcodeRegisterModel> getByStockInOut(String stockInout){
+        log.debug("-- getByIsValid()");
+        List<BarcodeRegisterModel> barcodeRegisterModelList = Utils.getEmptyList();
+        try {
+            barcodeRegisterModelList = barcodeRegisterDAO.findByStockInOut(stockInout);
+        } catch (Exception e) {
+            log.error("{}",e);
+        }
+        return barcodeRegisterModelList;
+    }
+
     public void delete(BarcodeRegisterModel model){
         log.debug("-- delete(id : {})", model.getId());
         try {

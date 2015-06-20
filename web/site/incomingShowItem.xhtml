@@ -161,16 +161,16 @@
                         </tr>
 
                         <tr>
-                            <td style="min-width: 200px; max-width: 200px;">
-                                <h:outputLabel value="Document No"
-                                               style="min-width: 200px; max-width: 200px;"/>
-                            </td>
-                            <td colspan="2" style="min-width: 200px; max-width: 200px;">
-                                <p:inputText style="min-width: 200px; width: 200px; max-width: 200px;"
-                                             id = "documentNoLabel"
-                                             readonly="#{true}"
-                                             value="#{incomingShowItemBean.barcodeRegisterView.documentNo}"/>
-                            </td>
+                            <!--<td style="min-width: 200px; max-width: 200px;">-->
+                                <!--<h:outputLabel value="Document No"-->
+                                               <!--style="min-width: 200px; max-width: 200px;"/>-->
+                            <!--</td>-->
+                            <!--<td colspan="2" style="min-width: 200px; max-width: 200px;">-->
+                                <!--<p:inputText style="min-width: 200px; width: 200px; max-width: 200px;"-->
+                                             <!--id = "documentNoLabel"-->
+                                             <!--readonly="#{true}"-->
+                                             <!--value="#{incomingShowItemBean.barcodeRegisterView.documentNo}"/>-->
+                            <!--</td>-->
                             <td>
                                 <h:outputLabel value="Start Barcode*"/>
                             </td>
@@ -191,20 +191,20 @@
                         </tr>
 
                         <tr>
-                            <td style="min-width: 200px; max-width: 200px;">
-                                <h:outputLabel value="Document Date*"
-                                               style="min-width: 200px; max-width: 200px;"/>
-                            </td>
-                            <td colspan="2">
-                                <p:calendar value="#{incomingShowItemBean.barcodeRegisterView.documentDate}"
-                                            id="docDateLabel"
-                                            pattern="dd/MM/yyyy"
-                                            showOn="button">
-                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
-                                    <p:ajax event="dateSelect" update=":setupForm:batchNoLabel, docDateLabel"
-                                            listener="#{incomingShowItemBean.onChangeDocumentDate()}"/>
-                                </p:calendar>
-                            </td>
+                            <!--<td style="min-width: 200px; max-width: 200px;">-->
+                                <!--<h:outputLabel value="Document Date*"-->
+                                               <!--style="min-width: 200px; max-width: 200px;"/>-->
+                            <!--</td>-->
+                            <!--<td colspan="2">-->
+                                <!--<p:calendar value="#{incomingShowItemBean.barcodeRegisterView.documentDate}"-->
+                                            <!--id="docDateLabel"-->
+                                            <!--pattern="dd/MM/yyyy"-->
+                                            <!--showOn="button">-->
+                                    <!--<f:convertDateTime pattern="dd/MM/yyyy"/>-->
+                                    <!--<p:ajax event="dateSelect" update=":setupForm:batchNoLabel, docDateLabel"-->
+                                            <!--listener="#{incomingShowItemBean.onChangeDocumentDate()}"/>-->
+                                <!--</p:calendar>-->
+                            <!--</td>-->
                             <td>
                                 <h:outputLabel value="Finish Barcode*"/>
                             </td>
@@ -217,15 +217,15 @@
                         </tr>
 
                         <tr>
-                            <td style="min-width: 200px; max-width: 200px;">
-                                <h:outputLabel value="Batch No*"
-                                               style="min-width: 200px; max-width: 200px;"/>
-                            </td>
-                            <td colspan="2">
-                                <p:inputText styleClass="fixMinMax200"
-                                             id="batchNoLabel"
-                                             value="#{incomingShowItemBean.barcodeRegisterView.batchNo}"/>
-                            </td>
+                            <!--<td style="min-width: 200px; max-width: 200px;">-->
+                                <!--<h:outputLabel value="Batch No*"-->
+                                               <!--style="min-width: 200px; max-width: 200px;"/>-->
+                            <!--</td>-->
+                            <!--<td colspan="2">-->
+                                <!--<p:inputText styleClass="fixMinMax200"-->
+                                             <!--id="batchNoLabel"-->
+                                             <!--value="#{incomingShowItemBean.barcodeRegisterView.batchNo}"/>-->
+                            <!--</td>-->
                             <td>
                                 <h:outputLabel value="Remark"/>
                             </td>
@@ -237,34 +237,34 @@
                         </tr>
 
                     </table>
-                    <table  border="0">
-                        <tr>
-                            <td style="width: 200px">
-                                <p:selectOneMenu
-                                        value="#{incomingShowItemBean.barcodeSelectType}"
-                                        style="#{msg.get('fix.size.200')} margin-top: 4px">
-                                    <f:selectItem itemLabel="Item Description" itemValue="3"/>
-                                    <f:selectItem itemLabel="Batch No" itemValue="2"/>
-                                    <f:selectItem itemLabel="Barcode" itemValue="1"/>
-                                </p:selectOneMenu>
-                            </td>
-                            <td>
-                                <p:inputText
-                                        style="#{msg.get('fix.size.200')}  margin-top: 4px"
-                                        value="#{incomingShowItemBean.barcodeSearch}"
-                                        />
-                                <p:commandButton value="#{msg.get('btn.name.search')}"
-                                                 id="btnSearchMainPage"
-                                                 styleClass="medium" style="#{msg.get('btn.size')}"
-                                                 icon="ui-icon-search"
-                                                 onstart="PF('bui').block()"
-                                                 action="#{incomingShowItemBean.onSubmitSearchBarcode()}"
-                                                 update=":setupForm:barcodeRegisterTable"
-                                                 oncomplete="PF('bui').unblock()"
-                                        />
-                            </td>
-                        </tr>
-                    </table>
+                    <!--<table  border="0">-->
+                        <!--<tr>-->
+                            <!--<td style="width: 200px">-->
+                                <!--<p:selectOneMenu-->
+                                        <!--value="#{incomingShowItemBean.barcodeSelectType}"-->
+                                        <!--style="#{msg.get('fix.size.200')} margin-top: 4px">-->
+                                    <!--<f:selectItem itemLabel="Item Description" itemValue="3"/>-->
+                                    <!--<f:selectItem itemLabel="Batch No" itemValue="2"/>-->
+                                    <!--<f:selectItem itemLabel="Barcode" itemValue="1"/>-->
+                                <!--</p:selectOneMenu>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                                <!--<p:inputText-->
+                                        <!--style="#{msg.get('fix.size.200')}  margin-top: 4px"-->
+                                        <!--value="#{incomingShowItemBean.barcodeSearch}"-->
+                                        <!--/>-->
+                                <!--<p:commandButton value="#{msg.get('btn.name.search')}"-->
+                                                 <!--id="btnSearchMainPage"-->
+                                                 <!--styleClass="medium" style="#{msg.get('btn.size')}"-->
+                                                 <!--icon="ui-icon-search"-->
+                                                 <!--onstart="PF('bui').block()"-->
+                                                 <!--action="#{incomingShowItemBean.onSubmitSearchBarcode()}"-->
+                                                 <!--update=":setupForm:barcodeRegisterTable"-->
+                                                 <!--oncomplete="PF('bui').unblock()"-->
+                                        <!--/>-->
+                            <!--</td>-->
+                        <!--</tr>-->
+                    <!--</table>-->
                     <table border="0" class="content_table_form">
                         <tr >
                             <td class="fixMinMax100 left" />
@@ -291,11 +291,8 @@
                                                     :setupForm:modeBarcode,
                                                     :setupForm:itemLabel
                                                     :setupForm:otyLabel
-                                                    :setupForm:documentNoLabel
                                                     :setupForm:startLabel
-                                                    :setupForm:docDateLabel
                                                     :setupForm:labelFinishBarcode
-                                                    :setupForm:batchNoLabel
                                                     :setupForm:remarkLabel"
                                             listener="#{incomingShowItemBean.onClickTable()}"/>
                                     <p:column headerText="No" style="min-width: 5px; width: 5px; max-width: 5px;">
