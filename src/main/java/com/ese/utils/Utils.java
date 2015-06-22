@@ -70,6 +70,10 @@ public enum Utils {
         return "IN"+new SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.ENGLISH).format(currentDate());
     }
 
+    public static String getDocumentIou(){
+        return "IOU"+new SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.ENGLISH).format(currentDate());
+    }
+
     public static String getDocumentDomesticLoad(){
         return "LOD-"+new SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.ENGLISH).format(currentDate());
     }

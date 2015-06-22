@@ -23,7 +23,7 @@ public class WarehouseService extends Service{
         log.debug("getALl().");
         List<MSWarehouseModel> msWarehouseModels = Utils.getEmptyList();
         try {
-            msWarehouseModels = warehouseDAO.getLocationOrderByUpdateDate();
+            msWarehouseModels = warehouseDAO.getWarehouseOrderByUpdateDate();
         } catch (Exception e){
             log.debug("Exception getAll Warehouse : ", e);
         }

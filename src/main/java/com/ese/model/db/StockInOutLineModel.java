@@ -53,20 +53,24 @@ public class StockInOutLineModel extends AbstractModel{
     @JoinColumn(name = "location_id")
     private MSLocationModel msLocationModel;
 
+    @Column(name="batchno")
+    private String batchNo;
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("id", id)
-                .append("stockInOutId", stockInOutModel)
-                .append("itemId", msItemModel)
                 .append("grade", grade)
                 .append("barcode", barcode)
                 .append("qty", qty)
-                .append("palletId", palletModel)
-                .append("locationId", msLocationModel)
                 .append("remark", remark)
                 .append("isValid", isValid)
                 .append("version", version)
+                .append("stockInOutModel", stockInOutModel)
+                .append("msItemModel", msItemModel)
+                .append("palletModel", palletModel)
+                .append("msLocationModel", msLocationModel)
+                .append("batchNo", batchNo)
                 .toString();
     }
 }

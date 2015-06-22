@@ -35,7 +35,7 @@ public class StockInOutNoteDAO extends GenericDAO<MSStockInOutNoteModel, Integer
     }
 
     public List<MSStockInOutNoteModel> getStockInOutNoteOrderByTypeT(){
-        log.debug("getStockInOutNoteOrderByUpdateDate().");
+        log.debug("getStockInOutNoteOrderByTypeT().");
         List<MSStockInOutNoteModel> msStockInOutNoteModelList = Utils.getEmptyList();
         try {
             Criteria criteria = getCriteria();
@@ -45,13 +45,13 @@ public class StockInOutNoteDAO extends GenericDAO<MSStockInOutNoteModel, Integer
             msStockInOutNoteModelList = Utils.safetyList(criteria.list());
             log.debug("msStockInOutNoteModels Size : {}", msStockInOutNoteModelList.size());
         } catch (Exception e) {
-            log.debug("Exception Error getStockInOutNoteOrderByUpdateDate : ", e);
+            log.debug("Exception Error getStockInOutNoteOrderByTypeT : ", e);
         }
         return msStockInOutNoteModelList;
     }
 
     public List<MSStockInOutNoteModel> getStockInOutNoteOrderByTypeI(){
-        log.debug("getStockInOutNoteOrderByUpdateDate().");
+        log.debug("getStockInOutNoteOrderByTypeI().");
         List<MSStockInOutNoteModel> msStockInOutNoteModelList = Utils.getEmptyList();
         try {
             Criteria criteria = getCriteria();
@@ -61,7 +61,23 @@ public class StockInOutNoteDAO extends GenericDAO<MSStockInOutNoteModel, Integer
             msStockInOutNoteModelList = Utils.safetyList(criteria.list());
             log.debug("msStockInOutNoteModels Size : {}", msStockInOutNoteModelList.size());
         } catch (Exception e) {
-            log.debug("Exception Error getStockInOutNoteOrderByUpdateDate : ", e);
+            log.debug("Exception Error getStockInOutNoteOrderByTypeI : ", e);
+        }
+        return msStockInOutNoteModelList;
+    }
+
+    public List<MSStockInOutNoteModel> getStockInOutNoteOrderByTypeO(){
+        log.debug("getStockInOutNoteOrderByTypeO().");
+        List<MSStockInOutNoteModel> msStockInOutNoteModelList = Utils.getEmptyList();
+        try {
+            Criteria criteria = getCriteria();
+            criteria.add(Restrictions.eq("type", "o"));
+            criteria.add(Restrictions.eq("isValid", 1));
+            criteria.addOrder(Order.desc("updateDate"));
+            msStockInOutNoteModelList = Utils.safetyList(criteria.list());
+            log.debug("msStockInOutNoteModels Size : {}", msStockInOutNoteModelList.size());
+        } catch (Exception e) {
+            log.debug("Exception Error getStockInOutNoteOrderByTypeO : ", e);
         }
         return msStockInOutNoteModelList;
     }

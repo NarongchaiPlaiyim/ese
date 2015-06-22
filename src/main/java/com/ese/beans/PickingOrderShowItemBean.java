@@ -124,36 +124,36 @@ public class PickingOrderShowItemBean extends Bean {
             for (PickingOrderShowItemView view : selectPickingLine){
                 String flagReserved = pickingOrderShowItemService.checkQty(view.getId());
 
-                if ("Success".equals(flagReserved)){
-                    if (view.getStatusID() < 3){
-                        if (selectPickingLine.size() > 1){
-                            flagItem = true;
-                            flagManualReserved = true;
-                        } else {
-                            flagItem = false;
-                            flagManualReserved = false;
-                        }
-                        flagFIFOReserved = false;
-                        flagPeriodReserved = false;
-                        flagPoil = false;
-                        flagShowStatus = false;
-                        flagPrint = false;
+//                if ("Success".equals(flagReserved)){
+                if (view.getStatusID() < 3){
+                    if (selectPickingLine.size() > 1){
+                        flagItem = true;
+                        flagManualReserved = true;
+                    } else {
+                        flagItem = false;
+                        flagManualReserved = false;
                     }
-                } else {
-                    if (view.getStatusID() < 3){
-                        if (selectPickingLine.size() > 1){
-                            flagItem = true;
-                        } else {
-                            flagItem = false;
-                        }
-                    }
-
-                    flagPrint = false;
+                    flagFIFOReserved = false;
+                    flagPeriodReserved = false;
+                    flagPoil = false;
                     flagShowStatus = false;
-                    flagFIFOReserved = true;
-                    flagPeriodReserved = true;
-                    flagManualReserved = true;
+                    flagPrint = false;
                 }
+//                } else {
+//                    if (view.getStatusID() < 3){
+//                        if (selectPickingLine.size() > 1){
+//                            flagItem = true;
+//                        } else {
+//                            flagItem = false;
+//                        }
+//                    }
+//
+//                    flagPrint = false;
+//                    flagShowStatus = false;
+//                    flagFIFOReserved = true;
+//                    flagPeriodReserved = true;
+//                    flagManualReserved = true;
+//                }
             }
         } else {
             btnOnload();

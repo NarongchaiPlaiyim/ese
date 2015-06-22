@@ -31,7 +31,7 @@ public class IncomingService extends Service {
     }
 
     public List<StockInOutModel> search(IncomingView incomingView){
-        return stockInOutDAO.findBySearch(incomingView);
+        return stockInOutDAO.findBySearchIN(incomingView);
     }
 
     public void save(IncomingView incomingView){

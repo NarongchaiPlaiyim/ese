@@ -2,6 +2,8 @@ package com.ese.model.dao;
 
 import com.ese.model.db.InvOnHandModel;
 import com.ese.model.view.InvOnhandPostView;
+import com.ese.model.view.SearchItemView;
+import com.ese.model.view.ShowSNView;
 import com.ese.utils.Utils;
 import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
@@ -64,5 +66,130 @@ public class InvOnHandDAO extends GenericDAO<InvOnHandModel, Integer>{
         }
 
         return invOnhandPostViewList;
+    }
+
+    public List<ShowSNView> findByStockInOutLineId(int stockInOutLineId){
+        List<ShowSNView> showSNViewList = new ArrayList<ShowSNView>();
+        StringBuilder sqlBuilder = new StringBuilder();
+
+        sqlBuilder.append(" SELECT ");
+        sqlBuilder.append(" ").append(getPrefix()).append(".inv_onhand.id AS ID,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".inv_onhand.batchno AS BATCH,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".warehouse.warehouse_name AS WAREHOUSE,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".location.location_name AS LOCATION,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".pallet.pallet_barcode AS PALLET,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".inv_onhand.sn_barcode AS SN");
+        sqlBuilder.append(" FROM ").append(getPrefix()).append(".inv_onhand");
+        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".pallet");
+        sqlBuilder.append(" ON ").append(getPrefix()).append(".inv_onhand.pallet_id = ").append(getPrefix()).append(".pallet.id");
+        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".warehouse");
+        sqlBuilder.append(" ON ").append(getPrefix()).append(".pallet.warehouse_id = ").append(getPrefix()).append(".warehouse.id");
+        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".location");
+        sqlBuilder.append(" ON ").append(getPrefix()).append(".pallet.location_id = ").append(getPrefix()).append(".location.id");
+        sqlBuilder.append(" WHERE ").append(getPrefix()).append(".inv_onhand.stock_inout_line_id = " ).append(stockInOutLineId);
+
+        log.debug("findByStockInOutLineId : {}", sqlBuilder.toString());
+
+        try {
+            SQLQuery query = getSession().createSQLQuery(sqlBuilder.toString())
+                    .addScalar("ID", IntegerType.INSTANCE)
+                    .addScalar("BATCH", StringType.INSTANCE)
+                    .addScalar("WAREHOUSE", StringType.INSTANCE)
+                    .addScalar("LOCATION", StringType.INSTANCE)
+                    .addScalar("PALLET", StringType.INSTANCE)
+                    .addScalar("SN", StringType.INSTANCE);
+            List<Object[]> objects = query.list();
+
+            for (Object[] entity : objects) {
+                ShowSNView showSNView = new ShowSNView();
+                showSNView.setId(Utils.parseInt(entity[0]));
+                showSNView.setBatch(Utils.parseString(entity[1]));
+                showSNView.setWarehouse(Utils.parseString(entity[2]));
+                showSNView.setLocation(Utils.parseString(entity[3]));
+                showSNView.setPallet(Utils.parseString(entity[4]));
+                showSNViewList.add(showSNView);
+            }
+        } catch (Exception e) {
+            log.debug("Exception SQL findByStockInOutLineId : {}", e);
+        }
+
+        return showSNViewList;
+    }
+
+    public List<ShowSNView> findBySearch(SearchItemView searchItemView){
+        log.debug("---------- {}", searchItemView);
+        List<ShowSNView> showSNViewList = new ArrayList<ShowSNView>();
+        StringBuilder sqlBuilder = new StringBuilder();
+
+        sqlBuilder.append(" SELECT ");
+        sqlBuilder.append(" ").append(getPrefix()).append(".inv_onhand.id AS ID,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".inv_onhand.batchno AS BATCH,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".warehouse.warehouse_name AS WAREHOUSE,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".location.location_name AS LOCATION,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".pallet.pallet_barcode AS PALLET,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".inv_onhand.sn_barcode AS SN");
+        sqlBuilder.append(" FROM ").append(getPrefix()).append(".inv_onhand");
+        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".pallet");
+        sqlBuilder.append(" ON ").append(getPrefix()).append(".inv_onhand.pallet_id = ").append(getPrefix()).append(".pallet.id");
+        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".warehouse");
+        sqlBuilder.append(" ON ").append(getPrefix()).append(".pallet.warehouse_id = ").append(getPrefix()).append(".warehouse.id");
+        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".location");
+        sqlBuilder.append(" ON ").append(getPrefix()).append(".pallet.location_id = ").append(getPrefix()).append(".location.id");
+        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".item_master");
+        sqlBuilder.append(" ON ").append(getPrefix()).append(".pallet.item_id = ").append(getPrefix()).append(".item_master.id");
+        sqlBuilder.append(" WHERE ").append(getPrefix()).append(".inv_onhand.stock_inout_line_id is null" );
+
+        if (!Utils.isNull(searchItemView)){
+            if (!Utils.isNull(searchItemView.getItemCode()) && !Utils.isZero(searchItemView.getItemCode().trim().length())){
+                sqlBuilder.append(" AND ").append(getPrefix()).append(".item_master.itemId like '%" ).append(searchItemView.getItemCode().trim()).append("%'");
+            }
+
+            if (!Utils.isNull(searchItemView.getItemDesc()) && !Utils.isZero(searchItemView.getItemDesc().trim().length())){
+                sqlBuilder.append(" AND ").append(getPrefix()).append(".item_master.DSGThaiItemDescription like '%" ).append(searchItemView.getItemDesc().trim()).append("%'");
+            }
+
+            if (!Utils.isNull(searchItemView.getBatchNo()) && !Utils.isZero(searchItemView.getBatchNo().trim().length())){
+                sqlBuilder.append(" AND ").append(getPrefix()).append(".inv_onhand.batchno like '%" ).append(searchItemView.getBatchNo().trim()).append("%'");
+            }
+
+            if (!Utils.isNull(searchItemView.getSN()) && !Utils.isZero(searchItemView.getSN().trim().length())){
+                sqlBuilder.append(" AND ").append(getPrefix()).append(".inv_onhand.sn_barcode like '%" ).append(searchItemView.getBatchNo().trim()).append("%'");
+            }
+
+            if (!Utils.isZero(searchItemView.getWarehouseId())){
+                sqlBuilder.append(" AND ").append(getPrefix()).append(".warehouse.id = " ).append(searchItemView.getWarehouseId());
+            }
+
+            if (!Utils.isZero(searchItemView.getLocationId())){
+                sqlBuilder.append(" AND ").append(getPrefix()).append(".location.id = " ).append(searchItemView.getLocationId());
+            }
+        }
+
+        log.debug("findBySearch : {}", sqlBuilder.toString());
+
+        try {
+            SQLQuery query = getSession().createSQLQuery(sqlBuilder.toString())
+                    .addScalar("ID", IntegerType.INSTANCE)
+                    .addScalar("BATCH", StringType.INSTANCE)
+                    .addScalar("WAREHOUSE", StringType.INSTANCE)
+                    .addScalar("LOCATION", StringType.INSTANCE)
+                    .addScalar("PALLET", StringType.INSTANCE)
+                    .addScalar("SN", StringType.INSTANCE);
+            List<Object[]> objects = query.list();
+
+            for (Object[] entity : objects) {
+                ShowSNView showSNView = new ShowSNView();
+                showSNView.setId(Utils.parseInt(entity[0]));
+                showSNView.setBatch(Utils.parseString(entity[1]));
+                showSNView.setWarehouse(Utils.parseString(entity[2]));
+                showSNView.setLocation(Utils.parseString(entity[3]));
+                showSNView.setPallet(Utils.parseString(entity[4]));
+                showSNViewList.add(showSNView);
+            }
+        } catch (Exception e) {
+            log.debug("Exception SQL findBySearch : {}", e);
+        }
+
+        return showSNViewList;
     }
 }

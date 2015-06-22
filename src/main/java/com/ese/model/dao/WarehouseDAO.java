@@ -19,7 +19,7 @@ public class WarehouseDAO extends GenericDAO<MSWarehouseModel, Integer>{
         update(model);
     }
 
-    public List<MSWarehouseModel> getLocationOrderByUpdateDate(){
+    public List<MSWarehouseModel> getWarehouseOrderByUpdateDate(){
         log.debug("getLocationOrderByUpdateDate().");
         List<MSWarehouseModel> locationModels = Utils.getEmptyList();
         try{

@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public class LocationDAO extends GenericDAO<MSLocationModel, Integer>{
 
-    public List<MSLocationModel> getLocationOrderByUpdateDate() throws Exception{
+    public List<MSLocationModel> getLocationOrderByUpdateDate() {
         log.debug("getLocationOrderByUpdateDate().");
         List<MSLocationModel> locationModelList = Utils.getEmptyList();
         try{

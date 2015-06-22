@@ -111,7 +111,7 @@ public class BarcodeRegisterBean extends Bean{
 
     private boolean mandate(){
         if(mandateQty()){
-            setMessage("Qtr should be greater than 0.");
+            setMessage("Qty should be greater than 0.");
             return false;
         } else if(mandateItem()){
             setMessage("Item should not be empty.");

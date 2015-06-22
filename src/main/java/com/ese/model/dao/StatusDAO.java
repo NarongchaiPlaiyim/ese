@@ -56,7 +56,6 @@ public class StatusDAO extends GenericDAO<StatusModel, Integer>{
     }
 
     public StatusModel findByTableIdAndStatus(int tableId, int status){
-        log.debug("+++++++ {} : ---------- {}", tableId, status);
         StatusModel model = new StatusModel();
         try {
             Criteria criteria = getCriteria();
