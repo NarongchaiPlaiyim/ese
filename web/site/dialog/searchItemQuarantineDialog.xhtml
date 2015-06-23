@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:form id="searchItemQuarantineForm">
+        <div style="text-align: right">
+            <p:commandButton id="btnSelect"
+                             value="Select"
+                             onstart="PF('bui').block()"
+                             oncomplete="PF('bui').unblock()"
+                             process="@form"
+                             action="#{quarantineItemBean.onSelect}"
+                             disabled="#{quarantineItemBean.flagBtnSelect}"
+                             update=":searchItemQuarantineForm, :msgBoxSystemMessagePanel"
+                             styleClass="medium" style="#{msg.get('btn.size.150')}"
+                             icon="ui-icon-plusthick"/>
+        </div>
+
+        <div class="left">
+            <table  border="0" class="content_table_form">
+                <tr>
+                    <td style="width: 100px; max-width: 100px; min-width: 100px" class="left"/>
+                    <td style="width: 265px; max-width: 265px; min-width: 265px" class="left"/>
+                    <td style="width: 150px; max-width: 150px; min-width: 150px" class="left"/>
+                    <td style="width: 265px; max-width: 265px; min-width: 265px" class="left"/>
+                    <td style="width: 60px; max-width: 60px; min-width: 60px" class="left"/>
+                    <td style="width: 265px; max-width: 265px; min-width: 265px" class="left"/>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel value="Item Code"/>
+                    </td>
+                    <td>
+                        <p:inputText id="txtItemCode" value="#{quarantineItemBean.searchItemView.itemCode}"/>
+                    </td>
+                    <td>
+                        <p:outputLabel value="Item Description"/>
+                    </td>
+                    <td>
+                        <p:inputText id="txtItemDesc" value="#{quarantineItemBean.searchItemView.itemDesc}"/>
+                    </td>
+                    <td>
+                        <p:outputLabel value="Batch"/>
+                    </td>
+                    <td>
+                        <p:inputText id="txtBatch" value="#{quarantineItemBean.searchItemView.batchNo}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel value="Warehouse"/>
+                    </td>
+                    <td>
+                        <p:selectOneMenu id="warehouse" value="#{quarantineItemBean.searchItemView.warehouseId}"
+                                         style="#{msg.get('fix.size.200')} margin-top: 4px">
+                            <f:selectItem itemLabel=" Please Select "/>
+                            <f:selectItems value="#{quarantineItemBean.msWarehouseModelList}"
+                                           var="warehouse"
+                                           itemLabel="#{warehouse.warehouseCode}"
+                                           itemValue="#{warehouse.id}"/>
+                            <p:ajax event="change" listener="#{quarantineItemBean.onChangeWarehouse}" update=":searchItemQuarantineForm:location"/>
+                        </p:selectOneMenu>
+                    </td>
+                    <td>
+                        <p:outputLabel value="Location"/>
+                    </td>
+                    <td>
+                        <p:selectOneMenu id="location" value="#{quarantineItemBean.searchItemView.locationId}"
+                                         style="#{msg.get('fix.size.200')} margin-top: 4px">
+                            <f:selectItem itemLabel=" Please Select "/>
+                            <f:selectItems value="#{quarantineItemBean.msLocationModelList}"
+                                           var="location"
+                                           itemLabel="#{location.locationBarcode}"
+                                           itemValue="#{location.id}"/>
+                        </p:selectOneMenu>
+                    </td>
+                    <td>
+                        <p:outputLabel value="SN"/>
+                    </td>
+                    <td>
+                        <p:inputText id="txtSN" value="#{quarantineItemBean.searchItemView.SN}"/>
+                    </td>
+                    <td>
+                        <p:commandButton id="btnSearch"
+                                         value="Search"
+                                         onstart="PF('bui').block()"
+                                         oncomplete="PF('bui').unblock()"
+                                         process="@form"
+                                         action="#{quarantineItemBean.onSearchItemDialog}"
+                                         update=":searchItemQuarantineForm:searchItemTable"
+                                         styleClass="medium" style="#{msg.get('btn.size.150')}"
+                                         icon="ui-icon-search"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <table border="0" class="content_table_form">
+            <tr>
+                <td>
+                    <p:dataTable id="searchItemTable"
+                                 scrollable="true" scrollHeight="450"
+                                 var="searchItem"
+                                 resizableColumns="true"
+                                 value="#{quarantineItemBean.searchItemViewList}"
+                                 selection="#{quarantineItemBean.selectSearchItemViewList}"
+                                 rowKey="#{searchItem.id}"
+                                 rowIndexVar="rowIndex">
+                        <p:ajax event="rowSelectCheckbox"
+                                listener="#{quarantineItemBean.onClickTabkeSearchItemDailog()}"
+                                update=":searchItemQuarantineForm:btnSelect"/>
+                        <p:ajax event="rowSelect"
+                                listener="#{quarantineItemBean.onClickTabkeSearchItemDailog()}"
+                                update=":searchItemQuarantineForm:btnSelect"/>
+                        <p:ajax event="rowUnselectCheckbox"
+                                listener="#{quarantineItemBean.onClickTabkeSearchItemDailog()}"
+                                update=":searchItemQuarantineForm:btnSelect"/>
+                        <p:column selectionMode="multiple" style="width:16px;text-align:center;"/>
+                        <p:column headerText="Warehouse" sortBy="#{searchItem.warehouse}" filterBy="#{searchItem.warehouse}" filterMatchMode="contains" style="min-width: 100px; width: 100px; max-width: 100px;" styleClass="center">
+                            <h:outputText value="#{searchItem.warehouse}"/>
+                        </p:column>
+                        <p:column headerText="Location" sortBy="#{searchItem.location}" filterBy="#{searchItem.location}" filterMatchMode="contains" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
+                            <h:outputText value="#{searchItem.location}"/>
+                        </p:column>
+                        <p:column headerText="Batch" sortBy="#{searchItem.batch}" filterBy="#{searchItem.batch}" filterMatchMode="contains" style="min-width: 120px; width: 120px; max-width: 120px;" styleClass="center">
+                            <h:outputText value="#{searchItem.batch}"/>
+                        </p:column>
+                        <p:column headerText="Pallet" sortBy="#{searchItem.pallet}" filterBy="#{searchItem.pallet}" filterMatchMode="contains" style="min-width: 250px; width: 250px; max-width: 250px;" styleClass="center">
+                            <h:outputText value="#{searchItem.pallet}"/>
+                        </p:column>
+                        <p:column headerText="SN" sortBy="#{searchItem.SN}" filterBy="#{searchItem.SN}" filterMatchMode="contains" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
+                            <h:outputText value="#{searchItem.SN}"/>
+                        </p:column>
+                    </p:dataTable>
+                </td>
+            </tr>
+        </table>
+    </h:form>
+</f:view>
+</html>

@@ -77,6 +77,8 @@ public class IssuingBean extends Bean {
         issuingView = new IssuingView();
         msStockInOutNoteModel = new MSStockInOutNoteModel();
         stockInOutModel = new StockInOutModel();
+        flagBtnPrint = Boolean.TRUE;
+        flagBtnShow = Boolean.TRUE;
         modeFlag = Boolean.TRUE;
     }
 
@@ -121,6 +123,7 @@ public class IssuingBean extends Bean {
     }
 
     public void onClickPost(){
+        issuingService.post(issuingView);
         showDialogEdited();
         init();
     }

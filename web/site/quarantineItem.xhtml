@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>#{msg.get('menu.quarantineItem.title')}</title>
+    </h:head>
+    <h:body>
+        <p:layout fullPage="true" id="layoutPanel">
+            <p:layoutUnit id="layoutTop" position="north" size="180" header="#{msg.get('header.north')}" collapsible="true" style="border: 0">
+                <ui:insert name="header">
+                    <ui:include src="#{msg.get('include.header')}"/>
+                </ui:insert>
+            </p:layoutUnit>
+            <p:layoutUnit id="layoutLeft" position="west" size="#{msg.get('layoutLeft.size')}" header="#{msg.get('header.west')}" collapsible="true" style="border: 0">
+                <ui:include src="#{msg.get('include.menu')}"/>
+            </p:layoutUnit>
+
+            <p:layoutUnit id="layoutCenter" position="center" header="#{msg.get('menu.quarantineItem.title')}" >
+                <h:form id="quarantineItemForm">
+                    <p:panel style="border: 0">
+                        <div style="text-align: right;">
+                            <p:commandButton id="btnShowSN"
+                                             value="Show SN"
+                                             oncomplete="PF('showSNDlg').show()"
+                                             process="@this"
+                                             action="#{quarantineItemBean.onClickShowSN}"
+                                             disabled="#{quarantineItemBean.flagBtnShowSN}"
+                                             update=":showSNForm"
+                                             styleClass="medium" style="#{msg.get('btn.size.150')}"
+                                             icon="ui-icon-plusthick"/>
+
+                            <p:commandButton id="btnSearchItem"
+                                             value="Search Item"
+                                             styleClass="medium" style="#{msg.get('btn.size.150')}"
+                                             process="@this"
+                                             disabled="#{quarantineItemBean.flagBtnSearchItem}"
+                                             action="#{quarantineItemBean.onLoadSearchItem}"
+                                             oncomplete="PF('searchItemDlg').show()"
+                                             update=":searchItemQuarantineForm"
+                                             icon="ui-icon-search"/>
+                        </div>
+                    </p:panel>
+
+                    <table border="0" class="content_table_form">
+                        <tr>
+                            <td>
+                                <p:dataTable id="quarantineItemTable"
+                                             scrollable="true" scrollHeight="450"
+                                             var="quarantineItemModel"
+                                             resizableColumns="true"
+                                             selectionMode="single"
+                                             value="#{quarantineItemBean.stockInOutLineModelList}"
+                                             selection="#{quarantineItemBean.stockInOutLineModel}"
+                                             rowKey="#{quarantineItemModel.id}"
+                                             rowIndexVar="rowIndex">
+                                    <p:ajax event="rowSelect" listener="#{quarantineItemBean.onClickTable}" update=":quarantineItemForm:btnShowSN,:quarantineItemForm:btnSearchItem"/>
+                                    <p:column headerText="No" style="min-width: 5px; width: 5px; max-width: 5px;">
+                                        <h:outputText value="#{rowIndex+1}" styleClass="center" />
+                                    </p:column>
+                                    <p:column headerText="Item" sortBy="#{quarantineItemModel.msItemModel.itemId}" filterBy="#{quarantineItemModel.msItemModel.itemId}" filterMatchMode="contains" style="min-width: 100px; width: 100px; max-width: 100px;" styleClass="center">
+                                        <h:outputText value="#{quarantineItemModel.msItemModel.itemId}"/>
+                                    </p:column>
+                                    <p:column headerText="Description" sortBy="#{quarantineItemModel.msItemModel.DSGThaiItemDescription}" filterBy="#{quarantineItemModel.msItemModel.DSGThaiItemDescription}" filterMatchMode="contains" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
+                                        <h:outputText value="#{quarantineItemModel.msItemModel.DSGThaiItemDescription}"/>
+                                    </p:column>
+                                    <p:column headerText="Warehouse" sortBy="#{quarantineItemModel.palletModel.msWarehouseModel.warehouseName}" filterBy="#{quarantineItemModel.palletModel.msWarehouseModel.warehouseName}" filterMatchMode="contains" style="min-width: 120px; width: 120px; max-width: 120px;" styleClass="center">
+                                        <h:outputText value="#{quarantineItemModel.palletModel.msWarehouseModel.warehouseName}"/>
+                                    </p:column>
+                                    <p:column headerText="Location" sortBy="#{quarantineItemModel.msLocationModel.locationName}" filterBy="#{quarantineItemModel.msLocationModel.locationName}" filterMatchMode="contains" style="min-width: 250px; width: 250px; max-width: 250px;" styleClass="center">
+                                        <h:outputText value="#{quarantineItemModel.msLocationModel.locationName}"/>
+                                    </p:column>
+                                    <p:column headerText="Batch No" sortBy="#{quarantineItemModel.batchNo}" filterBy="#{quarantineItemModel.batchNo}" filterMatchMode="contains" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
+                                        <h:outputText value="#{quarantineItemModel.batchNo}"/>
+                                    </p:column>
+                                    <p:column headerText="Pallet" sortBy="#{quarantineItemModel.palletModel.palletBarcode}" filterBy="#{quarantineItemModel.palletModel.palletBarcode}" filterMatchMode="contains" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
+                                        <h:outputText value="#{quarantineItemModel.palletModel.palletBarcode}"/>
+                                    </p:column>
+                                    <p:column headerText="Qty" sortBy="#{quarantineItemModel.qty}" filterBy="#{quarantineItemModel.qty}" filterMatchMode="contains" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
+                                        <h:outputText value="#{quarantineItemModel.qty}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </td>
+                        </tr>
+                    </table>
+
+                </h:form>
+            </p:layoutUnit>
+        </p:layout>
+
+        <p:panel id="msgBoxSystemMessagePanel" style="border: 0">
+            <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="#{msg.get('dialog.message.size')}" closable="false"
+                             header="#{quarantineItemBean.messageHeader}" message="#{quarantineItemBean.message}" >
+                <div style="text-align: right">
+                    <p:commandButton value="#{msg.get('btn.name.ok')}"
+                                     process="@this"
+                                     update=":quarantineItemForm"
+                                     icon="ui-icon-check"
+                                     styleClass="medium" style="#{msg.get('btn.size')}"
+                                     oncomplete="PF('msgBoxSystemMessageDlg').hide();"/>
+                </div>
+            </p:confirmDialog>
+        </p:panel>
+
+        <p:dialog id="showSNDialog" widgetVar="showSNDlg" header="Show SN"
+                  onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
+                  modal="true" width="1200">
+            <ui:include src="../site/dialog/showSNQuarantineDialog.xhtml"/>
+        </p:dialog>
+
+        <p:dialog id="searchItemDialog" widgetVar="searchItemDlg" header="Search Item"
+                  onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
+                  modal="true" width="1280">
+            <ui:include src="../site/dialog/searchItemQuarantineDialog.xhtml"/>
+        </p:dialog>
+
+    </h:body>
+</f:view>
+</html>

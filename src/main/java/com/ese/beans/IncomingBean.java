@@ -78,6 +78,7 @@ public class IncomingBean extends Bean {
         incomingView.setMsStockInOutNoteModel(stockInOutModel.getMsStockInOutNoteModel());
         modeFlag = Boolean.FALSE;
         flagBtnShow = Boolean.FALSE;
+        flagBtnPrint = Boolean.FALSE;
     }
 
     public void onClickShowItem(){
@@ -91,6 +92,8 @@ public class IncomingBean extends Bean {
         incomingView = new IncomingView();
         msStockInOutNoteModel = new MSStockInOutNoteModel();
         stockInOutModel = new StockInOutModel();
+        flagBtnPrint = Boolean.TRUE;
+        flagBtnShow = Boolean.TRUE;
         modeFlag = Boolean.TRUE;
     }
 

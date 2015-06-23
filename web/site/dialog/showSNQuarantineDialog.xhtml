@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:form id="showSNForm">
+        <div style="text-align: right">
+            <p:commandButton id="btnRemove"
+                             value="Remove"
+                             onstart="PF('bui').block()"
+                             oncomplete="PF('bui').unblock()"
+                             process="@this"
+                             action="#{quarantineItemBean.onClickRemove}"
+                             disabled="#{quarantineItemBean.flagBtnRemove}"
+                             update=":showSNForm, :msgBoxSystemMessagePanel"
+                             styleClass="medium" style="#{msg.get('btn.size.150')}"
+                             icon="ui-icon-plusthick"/>
+        </div>
+
+        <table border="0" class="content_table_form">
+            <tr>
+                <td>
+                    <p:dataTable id="showSNTable"
+                                 scrollable="true" scrollHeight="450"
+                                 var="showSN"
+                                 resizableColumns="true"
+                                 selectionMode="single"
+                                 value="#{quarantineItemBean.showSNViewList}"
+                                 selection="#{quarantineItemBean.showSNView}"
+                                 rowKey="#{showSN.id}"
+                                 rowIndexVar="rowIndex">
+                        <p:ajax event="rowSelect" listener="#{quarantineItemBean.onClickTableShowSNDialg()}" update=":showSNForm:btnRemove"/>
+                        <p:column headerText="No" style="min-width: 5px; width: 5px; max-width: 5px;">
+                            <h:outputText value="#{rowIndex+1}" styleClass="center" />
+                        </p:column>
+                        <p:column headerText="Warehouse" sortBy="#{showSN.warehouse}" filterBy="#{showSN.warehouse}" filterMatchMode="contains" style="min-width: 100px; width: 100px; max-width: 100px;" styleClass="center">
+                            <h:outputText value="#{showSN.warehouse}"/>
+                        </p:column>
+                        <p:column headerText="Location" sortBy="#{showSN.location}" filterBy="#{showSN.location}" filterMatchMode="contains" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
+                            <h:outputText value="#{showSN.location}"/>
+                        </p:column>
+                        <p:column headerText="Batch" sortBy="#{showSN.batch}" filterBy="#{showSN.batch}" filterMatchMode="contains" style="min-width: 120px; width: 120px; max-width: 120px;" styleClass="center">
+                            <h:outputText value="#{showSN.batch}"/>
+                        </p:column>
+                        <p:column headerText="Pallet" sortBy="#{showSN.pallet}" filterBy="#{showSN.pallet}" filterMatchMode="contains" style="min-width: 250px; width: 250px; max-width: 250px;" styleClass="center">
+                            <h:outputText value="#{showSN.pallet}"/>
+                        </p:column>
+                        <p:column headerText="SN" sortBy="#{showSN.SN}" filterBy="#{showSN.SN}" filterMatchMode="contains" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
+                            <h:outputText value="#{showSN.SN}"/>
+                        </p:column>
+                    </p:dataTable>
+                </td>
+            </tr>
+        </table>
+    </h:form>
+</f:view>
+</html>

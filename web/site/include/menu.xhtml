@@ -39,6 +39,11 @@
             </p:submenu>
 
             <p:separator/>
+
+            <p:separator rendered="#{loginBean.isRendered(msg.get('authorize.menu.quarantine'))}"/>
+            <p:menuitem value="#{msg.get('menu.quarantine.title')}" icon="ui-icon-gear" outcome="#{msg.get('menu.quarantine.url')}"
+                        rendered="#{loginBean.isRendered(msg.get('authorize.menu.quarantine'))}"/>
+
             <p:menuitem value="#{msg.get('menu.stocktaking.title')}" icon="ui-icon-gear"/>
 
             <p:separator/>

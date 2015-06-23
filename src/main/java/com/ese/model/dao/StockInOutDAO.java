@@ -3,6 +3,7 @@ package com.ese.model.dao;
 import com.ese.model.db.StockInOutModel;
 import com.ese.model.view.IncomingView;
 import com.ese.model.view.IssuingView;
+import com.ese.model.view.QuarantineView;
 import com.ese.model.view.StockTransferView;
 import com.ese.utils.Utils;
 import org.hibernate.Criteria;
@@ -51,6 +52,21 @@ public class StockInOutDAO extends GenericDAO<StockInOutModel, Integer> {
         try {
             Criteria criteria = getCriteria();
             criteria.add(Restrictions.like("docNo", "IOU%"));
+            criteria.add(Restrictions.eq("docDate", Utils.currentDate()));
+            criteria.add(Restrictions.eq("isValid", 1));
+            criteria.addOrder(Order.desc("updateDate"));
+            stockInOutModelList = criteria.list();
+        } catch (Exception e) {
+            log.debug("Exception error findByDocNoINAndCurrentDate : ", e);
+        }
+        return stockInOutModelList;
+    }
+
+    public List<StockInOutModel> findByDocNoQRndCurrentDate(){
+        List<StockInOutModel> stockInOutModelList = Utils.getEmptyList();
+        try {
+            Criteria criteria = getCriteria();
+            criteria.add(Restrictions.like("docNo", "QR%"));
             criteria.add(Restrictions.eq("docDate", Utils.currentDate()));
             criteria.add(Restrictions.eq("isValid", 1));
             criteria.addOrder(Order.desc("updateDate"));
@@ -120,6 +136,22 @@ public class StockInOutDAO extends GenericDAO<StockInOutModel, Integer> {
             log.debug("ToDate {}", issuingView.getToDate());
             criteria.add(Restrictions.ge("docDate", issuingView.getFormDate()));
             criteria.add(Restrictions.le("docDate", issuingView.getToDate()));
+            criteria.add(Restrictions.eq("isValid", 1));
+            criteria.addOrder(Order.desc("updateDate"));
+            stockInOutModelList = criteria.list();
+        } catch (Exception e) {
+            log.debug("Exception error findBySearch : ", e);
+        }
+        return stockInOutModelList;
+    }
+
+    public List<StockInOutModel> findBySearchQR(QuarantineView quarantineView){
+        List<StockInOutModel> stockInOutModelList = Utils.getEmptyList();
+        try {
+            Criteria criteria = getCriteria();
+            criteria.add(Restrictions.like("docNo", "QR%"));
+            criteria.add(Restrictions.ge("docDate", quarantineView.getFormDate()));
+            criteria.add(Restrictions.le("docDate", quarantineView.getToDate()));
             criteria.add(Restrictions.eq("isValid", 1));
             criteria.addOrder(Order.desc("updateDate"));
             stockInOutModelList = criteria.list();
