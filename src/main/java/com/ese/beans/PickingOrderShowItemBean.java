@@ -120,25 +120,32 @@ public class PickingOrderShowItemBean extends Bean {
     public void onClickTable(){
 
         if (Utils.isSafetyList(selectPickingLine)){
-            btnOnload();
-            for (PickingOrderShowItemView view : selectPickingLine){
-                String flagReserved = pickingOrderShowItemService.checkQty(view.getId());
+            if (selectPickingLine.size() == 1){
+                for (PickingOrderShowItemView view : selectPickingLine){
+                    if (view.getReservedQty() != view.getQty() && !Utils.isZero(view.getReservedQty())) {
+                        if (view.getStatusID() < 3){
+                            if (selectPickingLine.size() > 1){
+                                flagItem = true;
+                                flagManualReserved = true;
+                            } else {
+                                flagItem = false;
+                                flagManualReserved = false;
+                            }
+                            flagFIFOReserved = false;
+                            flagPeriodReserved = false;
+                            flagPoil = false;
+                            flagShowStatus = false;
+                            flagPrint = false;
+                        }
+                    } else {
+                        flagFIFOReserved = true;
+                        flagPeriodReserved = true;
+                        flagManualReserved = true;
+                    }
+//                String flagReserved = pickingOrderShowItemService.checkQty(view.getId());
 
 //                if ("Success".equals(flagReserved)){
-                if (view.getStatusID() < 3){
-                    if (selectPickingLine.size() > 1){
-                        flagItem = true;
-                        flagManualReserved = true;
-                    } else {
-                        flagItem = false;
-                        flagManualReserved = false;
-                    }
-                    flagFIFOReserved = false;
-                    flagPeriodReserved = false;
-                    flagPoil = false;
-                    flagShowStatus = false;
-                    flagPrint = false;
-                }
+
 //                } else {
 //                    if (view.getStatusID() < 3){
 //                        if (selectPickingLine.size() > 1){
@@ -154,6 +161,11 @@ public class PickingOrderShowItemBean extends Bean {
 //                    flagPeriodReserved = true;
 //                    flagManualReserved = true;
 //                }
+                }
+            } else {
+                flagFIFOReserved = true;
+                flagPeriodReserved = true;
+                flagManualReserved = true;
             }
         } else {
             btnOnload();
@@ -374,5 +386,9 @@ public class PickingOrderShowItemBean extends Bean {
 
     public void confirmationPackingReport(){
         pickingOrderService.getConfirmationPackingReport(pickingOrderModel.getId(), userDetail);
+    }
+
+    public void onCloseShowStatusDialog(){
+        init();
     }
 }

@@ -178,6 +178,19 @@
                     <h:outputText value="#{showItemStatus.pickedQty}"/>
                 </p:column>
             </p:dataTable>
+
+            <p:panel style="border: 0">
+                <div style="text-align: center;">
+                    <p:commandButton value="Close" id="closeBtn"
+                                     action="#{pickingOrderShowItemBean.onCloseShowStatusDialog}"
+                                     update=":pickingOrderShowItemForm"
+                                     styleClass="medium" style="#{msg.get('fix.size.200')}"
+                                     onstart="PF('bui').block()"
+                                     oncomplete="PF('bui').unblock(); PF('showItemStatusDlg').hide()"
+                                     process="@form"/>
+
+                </div>
+            </p:panel>
         </h:form>
     </p:panel>
 </f:view>
