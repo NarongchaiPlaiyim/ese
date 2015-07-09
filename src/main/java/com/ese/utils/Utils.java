@@ -133,6 +133,40 @@ public enum Utils {
         return parseInt(input, 0);
     }
 
+    public static int multiply(int value, int multiplier){
+        if (value == 0 || multiplier == 0){
+            return 0;
+        }
+
+        try{
+            return value * multiplier;
+        } catch (Exception e){
+            return 0;
+        }
+    }
+
+    public static BigDecimal multiply(BigDecimal value, int multiplier){
+        if(value == null)
+            return null;
+
+        try {
+            return value.multiply(BigDecimal.valueOf(multiplier));
+        } catch (Exception e){
+            return null;
+        }
+    }
+
+    public static BigDecimal multiply(BigDecimal value, BigDecimal multiplier){
+        if(value == null || multiplier == null)
+            return null;
+
+        try {
+            return value.multiply(multiplier);
+        } catch (Exception e){
+            return null;
+        }
+    }
+
     public static BigDecimal parseBigDecimal(Object input, BigDecimal defaultValue){
         if(input == null)
             return defaultValue;
