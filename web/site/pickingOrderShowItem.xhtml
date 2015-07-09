@@ -191,15 +191,14 @@
                                              process="@form"
                                              update=":periodForm"
                                              disabled="#{pickingOrderShowItemBean.flagPeriodReserved}"
-                                             oncomplete="PF('periodDlg').show()">
+                                             action="#{pickingOrderShowItemBean.onClickPeriodReserve}">
                                 <p:resetInput target=":periodForm" />
                             </p:commandButton>
                             <p:commandButton value="Manual Reserve" id="manualBtn"
                                              styleClass="medium" style="#{msg.get('fix.size.300')}"
                                              action="#{pickingOrderShowItemBean.preManualReserved()}"
                                              update=":manualReserveForm, :msgBoxSystemMessagePanel"
-                                             disabled="#{pickingOrderShowItemBean.flagManualReserved}"
-                                             oncomplete="PF('manualDlg').show()">
+                                             disabled="#{pickingOrderShowItemBean.flagManualReserved}">
                                 <p:resetInput target=":manualReserveForm" />
                             </p:commandButton>
                             <p:commandButton value="Foil" id="poilBtn"

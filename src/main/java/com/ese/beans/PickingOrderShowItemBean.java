@@ -122,7 +122,7 @@ public class PickingOrderShowItemBean extends Bean {
         if (Utils.isSafetyList(selectPickingLine)){
             if (selectPickingLine.size() == 1){
                 for (PickingOrderShowItemView view : selectPickingLine){
-                    if (view.getReservedQty() != view.getQty() && !Utils.isZero(view.getReservedQty())) {
+                    if (view.getReservedQty() != view.getQty()) {
                         if (view.getStatusID() < 3){
                             if (selectPickingLine.size() > 1){
                                 flagItem = true;
@@ -189,10 +189,34 @@ public class PickingOrderShowItemBean extends Bean {
     public void FIFOReserved(){
 
         for (PickingOrderShowItemView view : selectPickingLine){
-            pickingOrderShowItemService.onReserved(view.getId(), "", "");
-            pickingOrderShowItemService.setStatusPickingOrder(pickingOrderModel.getId());
-            showDialog(MessageDialog.SAVE.getMessageHeader(), "Success.", "msgBoxSystemMessageDlg");
-            init();
+            if (!Utils.isZero(view.getReservedQty())){
+                pickingOrderShowItemService.onReserved(view.getId(), "", "");
+                pickingOrderShowItemService.setStatusPickingOrder(pickingOrderModel.getId());
+                showDialog(MessageDialog.SAVE.getMessageHeader(), "Success.", "msgBoxSystemMessageDlg");
+                init();
+            } else {
+                showDialog(MessageDialog.WARNING.getMessageHeader(), "no item in warehouse", "msgBoxSystemMessageDlg");
+            }
+        }
+    }
+
+    public void onClickPeriodReserve(){
+        for (PickingOrderShowItemView view : selectPickingLine){
+            if (!Utils.isZero(view.getReservedQty())){
+                showDialog("", "", "periodDlg");
+            } else {
+                showDialog(MessageDialog.WARNING.getMessageHeader(), "no item in warehouse", "msgBoxSystemMessageDlg");
+            }
+        }
+    }
+
+    public void onClickManualReserve(){
+        for (PickingOrderShowItemView view : selectPickingLine){
+            if (!Utils.isZero(view.getReservedQty())){
+                showDialog("", "", "periodDlg");
+            } else {
+                showDialog(MessageDialog.WARNING.getMessageHeader(), "no item in warehouse", "msgBoxSystemMessageDlg");
+            }
         }
     }
 
@@ -231,11 +255,17 @@ public class PickingOrderShowItemBean extends Bean {
     private void onLoadManualReserved(){
         log.debug("selectPickingLine Size : {}", selectPickingLine.size());
         for (PickingOrderShowItemView view : selectPickingLine){
-            locationQtyViewList = pickingOrderShowItemService.onManualReserved(view.getId(), "", 0, 0);
-            pickingLineId = view.getId();
-            itemView = view;
-            msWarehouseModelList = pickingOrderShowItemService.getWarehouseAll();
-            log.debug("msLocationModelList Size : {}", msWarehouseModelList.size());
+            if (!Utils.isZero(view.getReservedQty())){
+                locationQtyViewList = pickingOrderShowItemService.onManualReserved(view.getId(), "", 0, 0);
+                pickingLineId = view.getId();
+                itemView = view;
+                msWarehouseModelList = pickingOrderShowItemService.getWarehouseAll();
+                showDialog("", "", "manualDlg");
+                log.debug("msLocationModelList Size : {}", msWarehouseModelList.size());
+            } else {
+                showDialog(MessageDialog.WARNING.getMessageHeader(), "no item in warehouse", "msgBoxSystemMessageDlg");
+            }
+
         }
     }
 
