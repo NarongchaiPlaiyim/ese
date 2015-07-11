@@ -26,11 +26,11 @@ public class PickingOrderModel extends AbstractModel{
     @Column(name = "doc_date")
     private Date docDate;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "customer_code", nullable=false)
     private AXCustomerTableModel customerCode;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="loading_order_id")
     private LoadingOrderModel loadingOrderModel;
 
@@ -84,7 +84,7 @@ public class PickingOrderModel extends AbstractModel{
     @Column(name = "quotation_date")
     private Date quotationDate;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "status", nullable=false, columnDefinition="int default 0")
     private StatusModel status;
 

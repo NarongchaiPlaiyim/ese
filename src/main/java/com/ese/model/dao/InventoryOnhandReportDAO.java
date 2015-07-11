@@ -18,7 +18,7 @@ public class InventoryOnhandReportDAO extends GenericDAO<InventoryOnhandReportVi
         List<InventoryOnhandReportView> reportViewList = new ArrayList<InventoryOnhandReportView>();
         StringBuilder sqlReport = new StringBuilder();
 
-        sqlReport.append(" SELECT ");
+        sqlReport.append(" SELECT DISTINCT");
         sqlReport.append(" ").append(getPrefix()).append(".item_master.ItemId AS ITEM_CODE,");
         sqlReport.append(" ").append(getPrefix()).append(".location_qty.batchno AS BATCH_NO,");
         sqlReport.append(" ").append(getPrefix()).append(".location.location_barcode AS LOCATION,");
@@ -34,13 +34,16 @@ public class InventoryOnhandReportDAO extends GenericDAO<InventoryOnhandReportVi
         sqlReport.append(" (CASE WHEN ").append(getPrefix()).append(".location_qty.picked_qty IS NULL THEN 0 ELSE ")
                 .append(getPrefix()).append(".location_qty.picked_qty END) AS PICKED_QTY,");
 
-        sqlReport.append(" (CASE WHEN (SELECT DISTINCT ").append(getPrefix()).append(".inv_onhand.cost FROM ")
-                .append(getPrefix()).append(".inv_onhand ").append(" WHERE ").append(getPrefix()).append(".inv_onhand.location_id = ")
-                .append(getPrefix()).append(".location_qty.location_id AND ").append(getPrefix())
-                .append(".inv_onhand.batchno = ").append(getPrefix()).append(".location_qty.batchno) IS NULL THEN 0 ELSE (SELECT DISTINCT ")
-                .append(getPrefix()).append(".inv_onhand.cost FROM ").append(getPrefix()).append(".inv_onhand WHERE ")
-                .append(getPrefix()).append(".inv_onhand.location_id = ").append(getPrefix()).append(".location_qty.location_id AND ")
-                .append(getPrefix()).append(".inv_onhand.batchno = ").append(getPrefix()).append(".location_qty.batchno) END) AS COST ");
+        sqlReport.append(" (CASE WHEN ").append(getPrefix()).append(".inv_onhand.cost IS NULL THEN 0 ELSE ")
+                .append(getPrefix()).append(".inv_onhand.cost END) AS COST");
+
+//        sqlReport.append(" (CASE WHEN (SELECT DISTINCT ").append(getPrefix()).append(".inv_onhand.cost FROM ")
+//                .append(getPrefix()).append(".inv_onhand ").append(" WHERE ").append(getPrefix()).append(".inv_onhand.location_id = ")
+//                .append(getPrefix()).append(".location_qty.location_id AND ").append(getPrefix())
+//                .append(".inv_onhand.batchno = ").append(getPrefix()).append(".location_qty.batchno) IS NULL THEN 0 ELSE (SELECT DISTINCT ")
+//                .append(getPrefix()).append(".inv_onhand.cost FROM ").append(getPrefix()).append(".inv_onhand WHERE ")
+//                .append(getPrefix()).append(".inv_onhand.location_id = ").append(getPrefix()).append(".location_qty.location_id AND ")
+//                .append(getPrefix()).append(".inv_onhand.batchno = ").append(getPrefix()).append(".location_qty.batchno) END) AS COST ");
 
         sqlReport.append(" FROM ").append(getPrefix()).append(".location_qty");
         sqlReport.append(" LEFT JOIN ").append(getPrefix()).append(".item_master");
@@ -51,10 +54,13 @@ public class InventoryOnhandReportDAO extends GenericDAO<InventoryOnhandReportVi
         sqlReport.append(" ON ").append(getPrefix()).append(".location_items.location_id = ").append(getPrefix()).append(".location.id");
         sqlReport.append(" LEFT JOIN ").append(getPrefix()).append(".warehouse");
         sqlReport.append(" ON ").append(getPrefix()).append(".location.warehouse_id = ").append(getPrefix()).append(".warehouse.id");
+        sqlReport.append(" LEFT JOIN ").append(getPrefix()).append(".inv_onhand");
+        sqlReport.append(" ON ").append(getPrefix()).append(".inv_onhand.location_id = ").append(getPrefix()).append(".location_qty.location_id ");
+        sqlReport.append(" AND ").append(getPrefix()).append(".inv_onhand.batchno = ").append(getPrefix()).append(".location_qty.batchno ");
         sqlReport.append(" GROUP BY ").append(getPrefix()).append(".item_master.ItemId, ").append(getPrefix()).append(".location_qty.batchno, ");
         sqlReport.append(getPrefix()).append(".location.location_barcode, ").append(getPrefix()).append(".warehouse.warehouse_code, ");
         sqlReport.append(getPrefix()).append(".location_qty.reserved_qty, ").append(getPrefix()).append(".location_qty.picked_qty, ");
-        sqlReport.append(getPrefix()).append(".location_qty.qty, ").append(getPrefix()).append(".location_qty.location_id");
+        sqlReport.append(getPrefix()).append(".location_qty.qty, ").append(getPrefix()).append(".inv_onhand.cost");
 
         log.debug(sqlReport.toString());
 

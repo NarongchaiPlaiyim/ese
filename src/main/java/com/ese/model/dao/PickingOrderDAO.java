@@ -11,6 +11,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -177,7 +178,24 @@ public class PickingOrderDAO extends GenericDAO<PickingOrderModel, Integer> {
             Criteria criteria = getCriteria();
             criteria.add(Restrictions.eq("customerCode.accountNum", customerCode));
 
-            model = (PickingOrderModel) criteria.uniqueResult();
+            model = (PickingOrderModel) criteria.list().iterator().next();
+
+            log.debug("PickingOrderModel : {}", model);
+        } catch (Exception e) {
+            log.debug("Exception error  findByCustomerCode : ", e);
+        }
+
+        return model;
+    }
+
+    public List<PickingOrderModel> findByCustomerCode2(String customerCode){
+        List<PickingOrderModel> model = new ArrayList<>();
+
+        try {
+            Criteria criteria = getCriteria();
+            criteria.add(Restrictions.eq("customerCode.accountNum", customerCode));
+
+            model = criteria.list();
 
             log.debug("PickingOrderModel : {}", model);
         } catch (Exception e) {
