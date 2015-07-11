@@ -57,4 +57,19 @@ public class ItemDAO extends GenericDAO<MSItemModel, Integer>{
 
         return msItemModel;
     }
+
+    public MSItemModel findByItemName(String itemName){
+        MSItemModel msItemModel = new MSItemModel();
+
+        try {
+            Criteria criteria = getCriteria();
+            criteria.add(Restrictions.eq("itemName", itemName));
+
+            msItemModel = (MSItemModel) criteria.uniqueResult();
+        } catch (Exception e) {
+            log.debug("Exception error findByItemName : ", e);
+        }
+
+        return msItemModel;
+    }
 }

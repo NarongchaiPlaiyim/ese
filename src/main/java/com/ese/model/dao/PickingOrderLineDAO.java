@@ -500,4 +500,38 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
 
         return orderLinePostViewList;
     }
+
+    public List<LocationQtyView> findOnHand(int itemId){
+        List<LocationQtyView> locationQtyViewList = new ArrayList<LocationQtyView>();
+
+        StringBuilder selectLocationQty = new StringBuilder();
+
+        selectLocationQty.append(" SELECT ");
+        selectLocationQty.append(" ").append(getPrefix()).append(".location_qty.id AS ID,");
+        selectLocationQty.append(" ").append(getPrefix()).append(".location_qty.qty -");
+        selectLocationQty.append(" ").append(getPrefix()).append(".location_qty.reserved_qty -");
+        selectLocationQty.append(" ").append(getPrefix()).append(".location_qty.picked_qty AS ONHAND");
+        selectLocationQty.append(" FROM ").append(getPrefix()).append(".location_qty");
+        selectLocationQty.append(" WHERE ").append(getPrefix()).append(".location_qty.item_master_id =" ).append(itemId);
+
+        log.debug("findOnPostStatus : {}", selectLocationQty.toString());
+
+        try {
+            SQLQuery query = getSession().createSQLQuery(selectLocationQty.toString())
+                    .addScalar("ID", IntegerType.INSTANCE)
+                    .addScalar("ONHAND", IntegerType.INSTANCE);
+            List<Object[]> objects = query.list();
+
+            for (Object[] entity : objects) {
+                LocationQtyView locationQtyView = new LocationQtyView();
+                locationQtyView.setId(Utils.parseInt(entity[0]));
+                locationQtyView.setQty(Utils.parseInt(entity[1]));
+                locationQtyViewList.add(locationQtyView);
+            }
+        } catch (Exception e) {
+            log.debug("Exception findOnHand SQL : {}", e);
+        }
+
+        return locationQtyViewList;
+    }
 }

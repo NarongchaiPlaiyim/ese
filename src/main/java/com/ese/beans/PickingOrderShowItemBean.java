@@ -141,6 +141,8 @@ public class PickingOrderShowItemBean extends Bean {
                         flagFIFOReserved = true;
                         flagPeriodReserved = true;
                         flagManualReserved = true;
+                        flagPoil = false;
+                        flagShowStatus = false;
                     }
 //                String flagReserved = pickingOrderShowItemService.checkQty(view.getId());
 
@@ -163,6 +165,8 @@ public class PickingOrderShowItemBean extends Bean {
 //                }
                 }
             } else {
+                flagPoil = false;
+                flagShowStatus = false;
                 flagFIFOReserved = true;
                 flagPeriodReserved = true;
                 flagManualReserved = true;
@@ -189,7 +193,7 @@ public class PickingOrderShowItemBean extends Bean {
     public void FIFOReserved(){
 
         for (PickingOrderShowItemView view : selectPickingLine){
-            if (!Utils.isZero(view.getReservedQty())){
+            if (pickingOrderShowItemService.checkReserve(view.getItem())){
                 pickingOrderShowItemService.onReserved(view.getId(), "", "");
                 pickingOrderShowItemService.setStatusPickingOrder(pickingOrderModel.getId());
                 showDialog(MessageDialog.SAVE.getMessageHeader(), "Success.", "msgBoxSystemMessageDlg");
@@ -202,7 +206,7 @@ public class PickingOrderShowItemBean extends Bean {
 
     public void onClickPeriodReserve(){
         for (PickingOrderShowItemView view : selectPickingLine){
-            if (!Utils.isZero(view.getReservedQty())){
+            if (pickingOrderShowItemService.checkReserve(view.getItem())){
                 showDialog("", "", "periodDlg");
             } else {
                 showDialog(MessageDialog.WARNING.getMessageHeader(), "no item in warehouse", "msgBoxSystemMessageDlg");
@@ -255,7 +259,7 @@ public class PickingOrderShowItemBean extends Bean {
     private void onLoadManualReserved(){
         log.debug("selectPickingLine Size : {}", selectPickingLine.size());
         for (PickingOrderShowItemView view : selectPickingLine){
-            if (!Utils.isZero(view.getReservedQty())){
+            if (pickingOrderShowItemService.checkReserve(view.getItem())){
                 locationQtyViewList = pickingOrderShowItemService.onManualReserved(view.getId(), "", 0, 0);
                 pickingLineId = view.getId();
                 itemView = view;

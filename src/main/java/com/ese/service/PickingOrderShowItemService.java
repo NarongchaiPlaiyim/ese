@@ -258,4 +258,16 @@ public class PickingOrderShowItemService extends Service{
         pickingOrderLineDAO.updateLocationQtyByRemoveShowItem(locationQtyView.getId(), locationQtyView.getReservedQty() - reservedQty);
 
     }
+
+    public boolean checkReserve(String itemName){
+        int itemId = itemDAO.findByItemId(itemName).getId();
+        List<LocationQtyView> locationQtyViewList = pickingOrderLineDAO.findOnHand(itemId);
+
+        for (LocationQtyView qtyView : locationQtyViewList){
+            if (qtyView.getQty() > 0){
+                return Boolean.TRUE;
+            }
+        }
+        return Boolean.FALSE;
+    }
 }

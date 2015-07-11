@@ -189,7 +189,7 @@
                             <p:commandButton value="Period Reserve" id="periodBtn"
                                              styleClass="medium" style="#{msg.get('fix.size.200')}"
                                              process="@form"
-                                             update=":periodForm"
+                                             update=":periodForm, :msgBoxSystemMessagePanel"
                                              disabled="#{pickingOrderShowItemBean.flagPeriodReserved}"
                                              action="#{pickingOrderShowItemBean.onClickPeriodReserve}">
                                 <p:resetInput target=":periodForm" />

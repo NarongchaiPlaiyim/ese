@@ -452,17 +452,18 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
         selectSql.append(" ").append(getPrefix()).append(".pallet.set_to_transfer AS TO_TRANSFER, ");
         selectSql.append(" ").append(getPrefix()).append(".item_master.id AS ITEM");
         selectSql.append(" FROM ").append(getPrefix()).append(".pallet");
-        selectSql.append(" INNER JOIN ").append(getPrefix()).append(".item_master");
+        selectSql.append(" LEFT JOIN ").append(getPrefix()).append(".item_master");
         selectSql.append(" ON  ").append(getPrefix()).append(".pallet.item_id = ").append(getPrefix()).append(".item_master.id");
-        selectSql.append(" INNER JOIN ").append(getPrefix()).append(".location");
+        selectSql.append(" LEFT JOIN ").append(getPrefix()).append(".location");
         selectSql.append(" ON  ").append(getPrefix()).append(".pallet.location_id = ").append(getPrefix()).append(".location.id");
-        selectSql.append(" INNER JOIN ").append(getPrefix()).append(".warehouse");
+        selectSql.append(" LEFT JOIN ").append(getPrefix()).append(".warehouse");
         selectSql.append(" ON  ").append(getPrefix()).append(".pallet.warehouse_id = ").append(getPrefix()).append(".warehouse.id");
-        selectSql.append(" INNER JOIN ").append(getPrefix()).append(".stock_inout_line");
+        selectSql.append(" LEFT JOIN ").append(getPrefix()).append(".stock_inout_line");
         selectSql.append(" ON  ").append(getPrefix()).append(".pallet.id = ").append(getPrefix()).append(".stock_inout_line.pallet_id");
 
         StringBuilder whereSql = new StringBuilder();
         whereSql.append(" WHERE ").append(getPrefix()).append(".pallet.isvalid = 1");
+        whereSql.append(" AND ").append(getPrefix()).append(".pallet.status = 4");
         if (!Utils.isNull(palletTag) && !Utils.isZero(palletTag.length())){
             whereSql.append(" AND ").append(getPrefix()).append(".pallet.pallet_barcode LIKE '%").append(palletTag).append("%'");
         }
