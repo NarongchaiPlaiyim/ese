@@ -4,11 +4,13 @@ import com.ese.model.db.InvOnHandModel;
 import com.ese.model.view.InvOnhandPostView;
 import com.ese.model.view.SearchItemView;
 import com.ese.model.view.ShowSNView;
+import com.ese.model.view.report.SubPickingOrderWithBarcodeViewReport;
 import com.ese.utils.Utils;
 import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.type.BigDecimalType;
+import org.hibernate.type.DateType;
 import org.hibernate.type.IntegerType;
 import org.hibernate.type.StringType;
 import org.springframework.stereotype.Repository;
@@ -30,6 +32,98 @@ public class InvOnHandDAO extends GenericDAO<InvOnHandModel, Integer>{
         }
 
         return invOnHandModels;
+    }
+
+    public List<SubPickingOrderWithBarcodeViewReport> findByPickingIdOnReport(int pickingId){
+        List<SubPickingOrderWithBarcodeViewReport> subPickingOrderWithBarcodeViewReportArrayList = new ArrayList<SubPickingOrderWithBarcodeViewReport>();
+        StringBuilder sqlBuilder = new StringBuilder();
+
+        sqlBuilder.append(" SELECT ");
+        sqlBuilder.append(" ").append(getPrefix()).append(".pallet.id AS PALLET_ID,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".warehouse.warehouse_code AS WAREHOUSE_CODE,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".item_master.ItemId AS ITEM_ID,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".item_master.DSGThaiItemDescription AS ITEM_DESC,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".pallet.pallet_barcode AS PALLET_BARCODE,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".pallet.create_date AS PALLET_DATE,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".location.location_barcode AS LOCATION_BARCODE,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".pallet.capacity AS CAPACITY,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".pallet.qty AS QTY,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".pallet.combine AS COMBINE,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".pallet.foil AS FOIL,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".pallet.set_to_transfer AS TO_TRANSFER,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".item_master.id AS ITEM,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".inv_onhand.batchno AS BATCHNO,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.salesunit AS UNIT");
+        sqlBuilder.append(" FROM ").append(getPrefix()).append(".pallet");
+        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".item_master");
+        sqlBuilder.append(" ON ").append(getPrefix()).append(".pallet.item_id = ").append(getPrefix()).append(".item_master.id");
+        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".location");
+        sqlBuilder.append(" ON ").append(getPrefix()).append(".pallet.location_id = ").append(getPrefix()).append(".location.id");
+        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".warehouse");
+        sqlBuilder.append(" ON ").append(getPrefix()).append(".pallet.warehouse_id = ").append(getPrefix()).append(".warehouse.id");
+        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".stock_inout_line");
+        sqlBuilder.append(" ON ").append(getPrefix()).append(".pallet.id = ").append(getPrefix()).append(".stock_inout_line.pallet_id");
+        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".inv_onhand");
+        sqlBuilder.append(" ON ").append(getPrefix()).append(".pallet.id = ").append(getPrefix()).append(".inv_onhand.pallet_id, ");
+        sqlBuilder.append(getPrefix()).append(".ax_Unit ");
+        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".picking_order_line");
+        sqlBuilder.append(" ON ").append(getPrefix()).append(".ax_Unit.UnitId = ").append(getPrefix()).append(".picking_order_line.salesunit");
+        sqlBuilder.append(" WHERE ").append(getPrefix()).append(".pallet.isvalid = 1 ");
+        sqlBuilder.append(" AND ").append(getPrefix()).append(".picking_order_line.picking_order_id = ").append(pickingId);
+        sqlBuilder.append(" GROUP BY ").append(getPrefix()).append(".pallet.id, ").append(getPrefix()).append(".warehouse.warehouse_code, ");
+        sqlBuilder.append(getPrefix()).append(".item_master.ItemId, ").append(getPrefix()).append(".item_master.DSGThaiItemDescription, ");
+        sqlBuilder.append(getPrefix()).append(".pallet.pallet_barcode, ").append(getPrefix()).append(".pallet.create_date, ");
+        sqlBuilder.append(getPrefix()).append(".location.location_barcode, ").append(getPrefix()).append(".pallet.capacity, ");
+        sqlBuilder.append(getPrefix()).append(".pallet.qty, ").append(getPrefix()).append(".pallet.combine, ");
+        sqlBuilder.append(getPrefix()).append(".pallet.foil, ").append(getPrefix()).append(".pallet.set_to_transfer, ");
+        sqlBuilder.append(getPrefix()).append(".item_master.id, ").append(getPrefix()).append(".inv_onhand.batchno, ");
+        sqlBuilder.append(getPrefix()).append(".picking_order_line.salesunit");
+
+        log.debug("findByPickingIdOnReport : {}", sqlBuilder.toString());
+
+        try {
+            SQLQuery query = getSession().createSQLQuery(sqlBuilder.toString())
+                    .addScalar("PALLET_ID", IntegerType.INSTANCE)
+                    .addScalar("WAREHOUSE_CODE", StringType.INSTANCE)
+                    .addScalar("ITEM_ID", StringType.INSTANCE)
+                    .addScalar("ITEM_DESC", StringType.INSTANCE)
+                    .addScalar("PALLET_BARCODE", StringType.INSTANCE)
+                    .addScalar("PALLET_DATE", DateType.INSTANCE)
+                    .addScalar("LOCATION_BARCODE", StringType.INSTANCE)
+                    .addScalar("CAPACITY", BigDecimalType.INSTANCE)
+                    .addScalar("QTY", IntegerType.INSTANCE)
+                    .addScalar("COMBINE", IntegerType.INSTANCE)
+                    .addScalar("FOIL", IntegerType.INSTANCE)
+                    .addScalar("TO_TRANSFER", IntegerType.INSTANCE)
+                    .addScalar("ITEM", IntegerType.INSTANCE)
+                    .addScalar("BATCHNO", StringType.INSTANCE)
+                    .addScalar("UNIT", StringType.INSTANCE);
+            List<Object[]> objects = query.list();
+
+            for (Object[] entity : objects) {
+                SubPickingOrderWithBarcodeViewReport subPickingOrderWithBarcodeViewReport = new SubPickingOrderWithBarcodeViewReport();
+                subPickingOrderWithBarcodeViewReport.setPalletId(Utils.parseInt(entity[0]));
+                subPickingOrderWithBarcodeViewReport.setWarehoseCode(Utils.parseString(entity[1]));
+                subPickingOrderWithBarcodeViewReport.setItemId(Utils.parseString(entity[2]));
+                subPickingOrderWithBarcodeViewReport.setItemDesc(Utils.parseString(entity[3]));
+                subPickingOrderWithBarcodeViewReport.setPalletBarcode(Utils.parseString(entity[4]));
+                subPickingOrderWithBarcodeViewReport.setPalletDate(Utils.parseDate(entity[5], null));
+                subPickingOrderWithBarcodeViewReport.setLocationBarcode(Utils.parseString(entity[6]));
+                subPickingOrderWithBarcodeViewReport.setCapacity(Utils.parseBigDecimal(entity[7]));
+                subPickingOrderWithBarcodeViewReport.setQty(Utils.parseInt(entity[8]));
+                subPickingOrderWithBarcodeViewReport.setCombine(Utils.parseInt(entity[9]));
+                subPickingOrderWithBarcodeViewReport.setFoil(Utils.parseInt(entity[10]));
+                subPickingOrderWithBarcodeViewReport.setToTransfer(Utils.parseInt(entity[11]));
+                subPickingOrderWithBarcodeViewReport.setItem(Utils.parseInt(entity[12]));
+                subPickingOrderWithBarcodeViewReport.setBatchNo(Utils.parseString(entity[13]));
+                subPickingOrderWithBarcodeViewReport.setUnit(Utils.parseString(entity[14]));
+                subPickingOrderWithBarcodeViewReportArrayList.add(subPickingOrderWithBarcodeViewReport);
+            }
+        } catch (Exception e) {
+            log.debug("Exception SQL findByStockInOutLineId : {}", e);
+        }
+
+        return subPickingOrderWithBarcodeViewReportArrayList;
     }
 
     public List<InvOnhandPostView> findCountInvOnhand(int pickingOrderId){

@@ -201,7 +201,7 @@ GROUP BY
 				<textFieldExpression><![CDATA[$F{seq}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="e11837a7-a130-482c-b2e1-bc15470cead3" x="0" y="345" width="274" height="112"/>
+				<reportElement uuid="e11837a7-a130-482c-b2e1-bc15470cead3" x="0" y="345" width="274" height="55"/>
 				<box>
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -216,6 +216,24 @@ GROUP BY
 			</textField>
 			<staticText>
 				<reportElement uuid="a2f6c169-8ff2-4892-b98d-e4520a3f79f3" x="0" y="154" width="810" height="190"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement uuid="fd042f75-5c51-4e4a-b0bd-6badb07efb5d" mode="Opaque" x="9" y="407" width="257" height="42" forecolor="#000000" backcolor="#FFFFFF"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false" barHeight="100">
+					<jr:codeExpression><![CDATA[$F{palletBarcode}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<staticText>
+				<reportElement uuid="bb486e58-fff4-442d-bfa6-b56607b5c1ea" x="0" y="400" width="274" height="57"/>
 				<box>
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>

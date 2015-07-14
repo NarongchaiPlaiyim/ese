@@ -42,6 +42,12 @@
                          oncomplete="PF('searchItemDlg').show()"
                          update=":searchItemIssuingForm"
                          icon="ui-icon-search"/>
+        <p:commandButton id="btnClose"
+                         value="Close"
+                         styleClass="medium" style="#{msg.get('btn.size.150')}"
+                         process="@this"
+                         action="#{stockMoveItemBean.onClose()}"
+                         icon="ui-icon-search"/>
     </div>
 </p:panel>
 <div class="left">

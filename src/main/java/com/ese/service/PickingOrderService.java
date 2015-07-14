@@ -7,6 +7,7 @@ import com.ese.model.view.*;
 import com.ese.model.view.report.ConfirmationPackingViewModel;
 import com.ese.model.view.report.InventoryOnHandViewReport;
 import com.ese.model.view.report.StickerWorkLoadViewReport;
+import com.ese.model.view.report.SubPickingOrderWithBarcodeViewReport;
 import com.ese.service.security.UserDetail;
 import com.ese.transform.PickingOrderLineTransform;
 import com.ese.transform.PickingOrderTransform;
@@ -244,27 +245,27 @@ public class PickingOrderService extends Service {
         }
     }
 
-    private List<InventoryOnHandViewReport> getBySubReport(int pickingId){
-        List<InvOnHandModel> invOnHandModelList = invOnHandDAO.findByPickingId(pickingId);
-        List<InventoryOnHandViewReport> reportList = new ArrayList<InventoryOnHandViewReport>();
-        int i = 1;
+    private List<SubPickingOrderWithBarcodeViewReport> getBySubReport(int pickingId){
+//        List<InvOnHandModel> invOnHandModelList = invOnHandDAO.findByPickingId(pickingId);
+//        List<InventoryOnHandViewReport> reportList = new ArrayList<InventoryOnHandViewReport>();
+//        int i = 1;
+//
+//        for (InvOnHandModel model : invOnHandModelList){
+//            InventoryOnHandViewReport report = new InventoryOnHandViewReport();
+//            report.setNo(i);
+//
+//            if (!Utils.isNull(model.getPalletModel()) && !Utils.isZero(model.getPalletModel().getPalletBarcode().length())){
+//                report.setPalletBarcode(model.getPalletModel().getPalletBarcode());
+//            } else {
+//                report.setPalletBarcode("");
+//            }
+//
+//            report.setSnBarcode(model.getSnBarcode());
+//            i++;
+//            reportList.add(report);
+//        }
 
-        for (InvOnHandModel model : invOnHandModelList){
-            InventoryOnHandViewReport report = new InventoryOnHandViewReport();
-            report.setNo(i);
-
-            if (!Utils.isNull(model.getPalletModel()) && !Utils.isZero(model.getPalletModel().getPalletBarcode().length())){
-                report.setPalletBarcode(model.getPalletModel().getPalletBarcode());
-            } else {
-                report.setPalletBarcode("");
-            }
-
-            report.setSnBarcode(model.getSnBarcode());
-            i++;
-            reportList.add(report);
-        }
-
-        return reportList;
+        return invOnHandDAO.findByPickingIdOnReport(pickingId);
     }
 
     public boolean checkPost(int pickingOrderId){

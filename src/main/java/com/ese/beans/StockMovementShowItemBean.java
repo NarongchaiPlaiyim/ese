@@ -132,4 +132,10 @@ public class StockMovementShowItemBean extends Bean{
         showDialogEdited();
         onSearchItemDialog();
     }
+
+    public void onClose(){
+        HttpSession session = FacesUtil.getSession(false);
+        session.removeAttribute("stockInOutModel");
+        FacesUtil.redirect("/site/issuing.xhtml");
+    }
 }

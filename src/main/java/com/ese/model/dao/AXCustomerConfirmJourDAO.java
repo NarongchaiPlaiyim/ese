@@ -393,115 +393,92 @@ public class AXCustomerConfirmJourDAO extends GenericDAO<AXCustomerConfirmJourMo
 
        StringBuilder sqlBuilder = new StringBuilder();
 
+       //Query Old
+//       sqlBuilder.append(" SELECT ");
+//       sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustTable.name AS CUST_NAME,");
+//       sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustTable.Address AS CUST_ADDESS,");
+//       sqlBuilder.append(" ").append(getPrefix()).append(".ax_SalesQuantationTable.BankAcc AS BANKACC,");
+//       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.confirm_docno AS NUMBER,");
+//       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.confirm_date AS DATE,");
+//       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.sales_order AS SALES_ORDER,");
+//       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.purchase_order AS REQUISITION,");
+//       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.sales_admin AS OUR_REF,");
+//       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.payment_condition AS PAYMENT_PICKING,");
+//       sqlBuilder.append(" ").append(getPrefix()).append(".ax_CommissionSalesGroup.Name AS SALES_MAN,");
+//       sqlBuilder.append(" ").append(getPrefix()).append(".ax_DlvMode.Txt AS MODE_OF_DELIVERY,");
+//       sqlBuilder.append(" ").append(getPrefix()).append(".ax_SalesTable.QuotationId AS QUOTATION,");
+//       sqlBuilder.append(" ").append(getPrefix()).append(".ax_SalesQuantationTable.CreatedDate AS PI_DATE,");
+//       sqlBuilder.append(" ").append(getPrefix()).append(".ax_SalesQuantationTable.DlvTerm AS DELIVERY_TERM,");
+//       sqlBuilder.append(" ").append(getPrefix()).append(".ax_PaymTerm.Description AS PAYMENT_TERM,");
+//       sqlBuilder.append(" ").append(getPrefix()).append(".ax_DSGBrand.DSGBrandName AS BRAND_NAME,");
+//       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.DSG_SubGroupDescription AS SUB_GROUP,");
+//       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.ItemId AS ITEM_ID,");
+//       sqlBuilder.append(" ").append(getPrefix()).append(".item_master.DSGThaiItemDescription AS THAI_DES,");
+//       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.qty AS PACKING_QTY,");
+//       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.salesunit AS SALES_UNIT,");
+//       sqlBuilder.append(" ").append(getPrefix()).append(".ax_DataArea.name AS AREA_NAME,");
+//       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.docno AS DOCNO,");
+//       sqlBuilder.append(" ").append(getPrefix()).append(".location.location_barcode AS LOCATION_CODE");
+//       sqlBuilder.append(" FROM ").append(getPrefix()).append(".picking_order");
+//       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".ax_CustTable");
+//       sqlBuilder.append(" ON ").append(getPrefix()).append(".picking_order.customer_code = ").append(getPrefix()).append(".ax_CustTable.AccountNum");
+//       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".ax_SalesQuantationTable");
+//       sqlBuilder.append(" ON ").append(getPrefix()).append(".picking_order.quotation = ").append(getPrefix()).append(".ax_SalesQuantationTable.QuantationId");
+//       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".ax_DlvMode");
+//       sqlBuilder.append(" ON ").append(getPrefix()).append(".picking_order.mode_delivery = ").append(getPrefix()).append(".ax_DlvMode.Txt");
+//       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".ax_CommissionSalesGroup");
+//       sqlBuilder.append(" ON ").append(getPrefix()).append(".ax_CustTable.SalesGroup = ").append(getPrefix()).append(".ax_CommissionSalesGroup.GroupId");
+//       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".ax_SalesTable");
+//       sqlBuilder.append(" ON ").append(getPrefix()).append(".picking_order.sales_order = ").append(getPrefix()).append(".ax_SalesTable.SalesId");
+//       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".ax_PaymTerm");
+//       sqlBuilder.append(" ON ").append(getPrefix()).append(".ax_CustTable.PaymTermId = ").append(getPrefix()).append(".ax_PaymTerm.PaymTermId");
+//       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".picking_order_line");
+//       sqlBuilder.append(" ON ").append(getPrefix()).append(".picking_order.id = ").append(getPrefix()).append(".picking_order_line.picking_order_id");
+//       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".item_master");
+//       sqlBuilder.append(" ON ").append(getPrefix()).append(".picking_order_line.ItemId = ").append(getPrefix()).append(".item_master.ItemId");
+//       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".ax_DSGBrand");
+//       sqlBuilder.append(" ON ").append(getPrefix()).append(".item_master.DSGBandID = ").append(getPrefix()).append(".ax_DSGBrand.DSGBrandID");
+//       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".ax_DataArea");
+//       sqlBuilder.append(" ON ").append(getPrefix()).append(".item_master.DSG_PrimaryPlant = ").append(getPrefix()).append(".ax_DataArea.id");
+//       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".location_items");
+//       sqlBuilder.append(" ON ").append(getPrefix()).append(".item_master.id = ").append(getPrefix()).append(".location_items.item_id");
+//       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".location");
+//       sqlBuilder.append(" ON ").append(getPrefix()).append(".location_items.location_id = ").append(getPrefix()).append(".location.id");
+//       sqlBuilder.append(" WHERE ").append(getPrefix()).append(".picking_order.id = " ).append(pickingId);
+
+
        sqlBuilder.append(" SELECT ");
-       sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustTable.name AS CUST_NAME,");
-       sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustTable.Address AS CUST_ADDESS,");
-       sqlBuilder.append(" ").append(getPrefix()).append(".ax_SalesQuantationTable.BankAcc AS BANKACC,");
-       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.confirm_docno AS NUMBER,");
-       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.confirm_date AS DATE,");
+       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.docno AS PICKING_DOCNO,");
+       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.confirm_docno AS CONFIRM_DOCNO,");
        sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.sales_order AS SALES_ORDER,");
-       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.purchase_order AS REQUISITION,");
-       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.sales_admin AS OUR_REF,");
-       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.payment_condition AS PAYMENT_PICKING,");
-       sqlBuilder.append(" ").append(getPrefix()).append(".ax_CommissionSalesGroup.Name AS SALES_MAN,");
-       sqlBuilder.append(" ").append(getPrefix()).append(".ax_DlvMode.Txt AS MODE_OF_DELIVERY,");
-       sqlBuilder.append(" ").append(getPrefix()).append(".ax_SalesTable.QuotationId AS QUOTATION,");
-       sqlBuilder.append(" ").append(getPrefix()).append(".ax_SalesQuantationTable.CreatedDate AS PI_DATE,");
-       sqlBuilder.append(" ").append(getPrefix()).append(".ax_SalesQuantationTable.DlvTerm AS DELIVERY_TERM,");
-       sqlBuilder.append(" ").append(getPrefix()).append(".ax_PaymTerm.Description AS PAYMENT_TERM,");
-       sqlBuilder.append(" ").append(getPrefix()).append(".ax_DSGBrand.DSGBrandName AS BRAND_NAME,");
-       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.DSG_SubGroupDescription AS SUB_GROUP,");
-       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.ItemId AS ITEM_ID,");
-       sqlBuilder.append(" ").append(getPrefix()).append(".item_master.DSGThaiItemDescription AS THAI_DES,");
-       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.qty AS PACKING_QTY,");
-       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.salesunit AS SALES_UNIT,");
-       sqlBuilder.append(" ").append(getPrefix()).append(".ax_DataArea.name AS AREA_NAME,");
-       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.docno AS DOCNO,");
-       sqlBuilder.append(" ").append(getPrefix()).append(".location.location_barcode AS LOCATION_CODE");
+       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.create_date AS CREATE_DATE,");
+       sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustTable.Name AS NAME,");
+       sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustTable.Address AS ADDRESS");
        sqlBuilder.append(" FROM ").append(getPrefix()).append(".picking_order");
-       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".ax_CustTable");
-       sqlBuilder.append(" ON ").append(getPrefix()).append(".picking_order.customer_code = ").append(getPrefix()).append(".ax_CustTable.AccountNum");
-       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".ax_SalesQuantationTable");
-       sqlBuilder.append(" ON ").append(getPrefix()).append(".picking_order.quotation = ").append(getPrefix()).append(".ax_SalesQuantationTable.QuantationId");
-       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".ax_DlvMode");
-       sqlBuilder.append(" ON ").append(getPrefix()).append(".picking_order.mode_delivery = ").append(getPrefix()).append(".ax_DlvMode.Txt");
-       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".ax_CommissionSalesGroup");
-       sqlBuilder.append(" ON ").append(getPrefix()).append(".ax_CustTable.SalesGroup = ").append(getPrefix()).append(".ax_CommissionSalesGroup.GroupId");
-       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".ax_SalesTable");
-       sqlBuilder.append(" ON ").append(getPrefix()).append(".picking_order.sales_order = ").append(getPrefix()).append(".ax_SalesTable.SalesId");
-       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".ax_PaymTerm");
-       sqlBuilder.append(" ON ").append(getPrefix()).append(".ax_CustTable.PaymTermId = ").append(getPrefix()).append(".ax_PaymTerm.PaymTermId");
-       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".picking_order_line");
-       sqlBuilder.append(" ON ").append(getPrefix()).append(".picking_order.id = ").append(getPrefix()).append(".picking_order_line.picking_order_id");
-       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".item_master");
-       sqlBuilder.append(" ON ").append(getPrefix()).append(".picking_order_line.ItemId = ").append(getPrefix()).append(".item_master.ItemId");
-       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".ax_DSGBrand");
-       sqlBuilder.append(" ON ").append(getPrefix()).append(".item_master.DSGBandID = ").append(getPrefix()).append(".ax_DSGBrand.DSGBrandID");
-       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".ax_DataArea");
-       sqlBuilder.append(" ON ").append(getPrefix()).append(".item_master.DSG_PrimaryPlant = ").append(getPrefix()).append(".ax_DataArea.id");
-       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".location_items");
-       sqlBuilder.append(" ON ").append(getPrefix()).append(".item_master.id = ").append(getPrefix()).append(".location_items.item_id");
-       sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".location");
-       sqlBuilder.append(" ON ").append(getPrefix()).append(".location_items.location_id = ").append(getPrefix()).append(".location.id");
+       sqlBuilder.append(" CROSS JOIN ").append(getPrefix()).append(".ax_CustTable");
        sqlBuilder.append(" WHERE ").append(getPrefix()).append(".picking_order.id = " ).append(pickingId);
 
        log.debug("--SQL {}",sqlBuilder.toString());
 
        try {
            SQLQuery query = getSession().createSQLQuery(sqlBuilder.toString())
-                   .addScalar("CUST_NAME", StringType.INSTANCE)
-                   .addScalar("CUST_ADDESS", StringType.INSTANCE)
-                   .addScalar("BANKACC", StringType.INSTANCE)
-                   .addScalar("NUMBER", StringType.INSTANCE)
-                   .addScalar("DATE", DateType.INSTANCE)
+                   .addScalar("PICKING_DOCNO", StringType.INSTANCE)
+                   .addScalar("CONFIRM_DOCNO", StringType.INSTANCE)
                    .addScalar("SALES_ORDER", StringType.INSTANCE)
-                   .addScalar("REQUISITION", StringType.INSTANCE)
-                   .addScalar("OUR_REF", StringType.INSTANCE)
-                   .addScalar("PAYMENT_PICKING", StringType.INSTANCE)
-                   .addScalar("SALES_MAN", StringType.INSTANCE)
-                   .addScalar("MODE_OF_DELIVERY", StringType.INSTANCE)
-                   .addScalar("QUOTATION", StringType.INSTANCE)
-                   .addScalar("PI_DATE", DateType.INSTANCE)
-                   .addScalar("DELIVERY_TERM", StringType.INSTANCE)
-                   .addScalar("PAYMENT_TERM", StringType.INSTANCE)
-                   .addScalar("BRAND_NAME", StringType.INSTANCE)
-                   .addScalar("SUB_GROUP", StringType.INSTANCE)
-                   .addScalar("ITEM_ID", StringType.INSTANCE)
-                   .addScalar("THAI_DES", StringType.INSTANCE)
-                   .addScalar("PACKING_QTY", BigDecimalType.INSTANCE)
-                   .addScalar("SALES_UNIT", StringType.INSTANCE)
-                   .addScalar("AREA_NAME", StringType.INSTANCE)
-                   .addScalar("DOCNO", StringType.INSTANCE)
-                   .addScalar("LOCATION_CODE", StringType.INSTANCE);
+                   .addScalar("CREATE_DATE", DateType.INSTANCE)
+                   .addScalar("NAME", StringType.INSTANCE)
+                   .addScalar("ADDRESS", StringType.INSTANCE);
            List<Object[]> objects = query.list();
            log.debug("----------- {}", objects.size());
 
            for (Object[] entity : objects) {
                PickingOrderWithItemBarcodeReport report = new PickingOrderWithItemBarcodeReport();
-               report.setCustomerName(Utils.parseString(entity[0], EMTPY));
-               report.setCustomerAddess(Utils.parseString(entity[1], EMTPY));
-               report.setBankAcc(Utils.parseString(entity[2], EMTPY));
-               report.setNumber(Utils.parseString(entity[3], EMTPY));
-               report.setDate(Utils.parseDate(entity[4], null));
-               report.setSalesOrder(Utils.parseString(entity[5], EMTPY));
-               report.setRequisition(Utils.parseString(entity[6], EMTPY));
-               report.setOurRef(Utils.parseString(entity[7], EMTPY));
-               report.setPaymentPicking(Utils.parseString(entity[8], EMTPY));
-               report.setSalesMan(Utils.parseString(entity[9], EMTPY));
-               report.setModeOfDelivery(Utils.parseString(entity[10], EMTPY));
-               report.setQuotation(Utils.parseString(entity[11], EMTPY));
-               report.setPiDate(Utils.parseDate(entity[12], null));
-               report.setDeliveryTerm(Utils.parseString(entity[13], EMTPY));
-               report.setPaymentTerm(Utils.parseString(entity[14], EMTPY));
-               report.setBrandName(Utils.parseString(entity[15], EMTPY));
-               report.setSubGroup(Utils.parseString(entity[16], EMTPY));
-               report.setItemId(Utils.parseString(entity[17], EMTPY));
-               report.setThaiDes(Utils.parseString(entity[18], EMTPY));
-               report.setPackingQty(Utils.parseBigDecimal(entity[19], BigDecimal.ZERO));
-               report.setSalesUnit(Utils.parseString(entity[20], EMTPY));
-               report.setAreaName(Utils.parseString(entity[21], EMTPY));
-               report.setDocno(Utils.parseString(entity[22], EMTPY));
-               report.setLocationCode(Utils.parseString(entity[23]));
+               report.setPickingDocno(Utils.parseString(entity[0]));
+               report.setConfirmDocno(Utils.parseString(entity[1]));
+               report.setSaleOrder(Utils.parseString(entity[2]));
+               report.setCreateDate(Utils.parseDate(entity[3], null));
+               report.setName(Utils.parseString(entity[4]));
+               report.setAddress(Utils.parseString(entity[5]));
                viewReports.add(report);
            }
        } catch (Exception e){
