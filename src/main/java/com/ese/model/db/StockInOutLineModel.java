@@ -25,13 +25,13 @@ public class StockInOutLineModel extends AbstractModel{
     @Column(name = "barcode")
     private String barcode;
 
-    @Column(name = "qty", columnDefinition="int default 0")
+    @Column(name = "qty", nullable=false, columnDefinition="int default 0")
     private int qty;
 
     @Column(name = "remark")
     private String remark;
 
-    @Column(name = "isvalid", columnDefinition="int default 1")
+    @Column(name = "isvalid", nullable=false, columnDefinition="int default 1")
     private Integer isValid;
 
     @Column(name = "version")
