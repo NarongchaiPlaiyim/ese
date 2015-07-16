@@ -27,4 +27,20 @@ public class StockInOutLineDAO extends GenericDAO<StockInOutLineModel, Integer> 
         }
         return stockInOutLineModelList;
     }
+
+    public StockInOutLineModel findByPalletIdAndStockInOutId(int palletId, int stockInOtId){
+        log.debug("findByPalletIdAndStockInOutId(). {}", palletId);
+        StockInOutLineModel stockInOutLineModel = new StockInOutLineModel();
+        try {
+            Criteria criteria = getCriteria();
+            criteria.add(Restrictions.eq("palletModel.id", palletId));
+            criteria.add(Restrictions.eq("stockInOutModel.id", stockInOtId));
+            criteria.add(Restrictions.eq("isValid", 1));
+            criteria.addOrder(Order.desc("updateDate"));
+            stockInOutLineModel = (StockInOutLineModel) criteria.uniqueResult();
+        } catch (Exception e) {
+            log.debug("Exception Error findByStockInOutId : ", e);
+        }
+        return stockInOutLineModel;
+    }
 }

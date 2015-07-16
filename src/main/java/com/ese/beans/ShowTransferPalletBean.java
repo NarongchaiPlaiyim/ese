@@ -93,9 +93,10 @@ public class ShowTransferPalletBean extends Bean{
 
     public void OnChangeLocationToPallet(){
         log.debug("OnChangeLocationToPallet().");
-        showTransPalletService.changeLocation(selectPallet, locationItemViews);
+        showTransPalletService.changeLocation(selectPallet, locationItemViews, stockInOutModel.getId());
         showDialogUpdated();
         onSearch();
+        onLoad();
         selectPallet = new PalletTransferView();
     }
 

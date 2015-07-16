@@ -11,7 +11,7 @@
                 <p:commandButton id="btnFindLocation" value="#{msg.get('btn.name.select')}"
                                  icon="ui-icon-folder-open"
                                  styleClass="medium" style="#{msg.get('btn.size')}"
-                                 update=":findlocationForm:btnFindLocation, :msgBoxSystemMessagePanel, :palletTransferDlgForm"
+                                 update=":findlocationForm:btnFindLocation, :msgBoxSystemMessagePanel, :palletTransferDlgForm, :stockTransferPalletForm"
                                  action="#{showTransferPalletBean.OnChangeLocationToPallet}" process="@form"
                                  oncomplete="PF('findLocationDlg').hide()" disabled="#{showTransferPalletBean.isCheckLocationDialog()}"/>
             </div>

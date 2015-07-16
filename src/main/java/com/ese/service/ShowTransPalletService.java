@@ -2,8 +2,11 @@ package com.ese.service;
 
 import com.ese.model.dao.LocationDAO;
 import com.ese.model.dao.PalletDAO;
+import com.ese.model.dao.StockInOutDAO;
+import com.ese.model.dao.StockInOutLineDAO;
 import com.ese.model.db.MSLocationModel;
 import com.ese.model.db.PalletModel;
+import com.ese.model.db.StockInOutLineModel;
 import com.ese.model.view.LocationItemView;
 import com.ese.model.view.PalletManagementView;
 import com.ese.model.view.PalletTransferView;
@@ -30,6 +33,8 @@ public class ShowTransPalletService extends Service{
     @Resource private PalletManagementTransform palletManagementTransform;
     @Resource private ReportService reportService;
     @Resource private LocationDAO locationDAO;
+    @Resource private StockInOutDAO stockInOutDAO;
+    @Resource private StockInOutLineDAO stockInOutLineDAO;
     @Value("#{config['report.printtag']}")
     private String pathPrintTagReport;
     @Value("#{config['report.printtagv2']}")
@@ -97,7 +102,7 @@ public class ShowTransPalletService extends Service{
         return palletDAO.findBySearch(palletTag, itemId, locationId, warehouseId);
     }
 
-    public void changeLocation(PalletTransferView palletManagementView, LocationItemView locationItemView){
+    public void changeLocation(PalletTransferView palletManagementView, LocationItemView locationItemView, int stockInOutId){
         log.debug("changeLocation().");
         try {
             MSLocationModel model = locationDAO.findByID(locationItemView.getId());
@@ -115,8 +120,48 @@ public class ShowTransPalletService extends Service{
             palletDAO.updateLocationByOld(model.getId());
 //            palletDAO.updateLocationByNew(palletModel.getMsLocationModel().getId());
 
+            saveOrUpdateStockInOutLine(palletModel, stockInOutId);
+
         } catch (Exception e) {
             log.debug("Exception : {}", e);
         }
+    }
+
+    private void saveOrUpdateStockInOutLine(PalletModel palletModel, int stockInOutId ){
+
+        StockInOutLineModel stockInOutLineModel = null;
+
+        stockInOutLineModel = stockInOutLineDAO.findByPalletIdAndStockInOutId(palletModel.getId(), stockInOutId);
+        int staffModel = (int) FacesUtil.getSession(false).getAttribute(AttributeName.STAFF.getName());
+
+       try{
+           if (!Utils.isNull(stockInOutLineModel) && !Utils.isZero(stockInOutLineModel.getId())){
+               log.debug("Update Stock In Out Line");
+               stockInOutLineModel.setUpdateBy(staffModel);
+               stockInOutLineModel.setUpdateDate(Utils.currentDate());
+               stockInOutLineModel.setMsItemModel(palletModel.getMsItemModel());
+               stockInOutLineModel.setPalletModel(palletModel);
+               stockInOutLineModel.setMsLocationModel(palletModel.getMsLocationModel());
+               stockInOutLineModel.setBarcode(palletModel.getPalletBarcode());
+               stockInOutLineDAO.update(stockInOutLineModel);
+           } else {
+               log.debug("Prsist Stock In Out Line");
+               stockInOutLineModel = new StockInOutLineModel();
+
+               stockInOutLineModel.setCreateBy(staffModel);
+               stockInOutLineModel.setCreateDate(Utils.currentDate());
+               stockInOutLineModel.setUpdateBy(staffModel);
+               stockInOutLineModel.setUpdateDate(Utils.currentDate());
+               stockInOutLineModel.setMsItemModel(palletModel.getMsItemModel());
+               stockInOutLineModel.setPalletModel(palletModel);
+               stockInOutLineModel.setMsLocationModel(palletModel.getMsLocationModel());
+               stockInOutLineModel.setBarcode(palletModel.getPalletBarcode());
+               stockInOutLineModel.setStockInOutModel(stockInOutDAO.findByID(stockInOutId));
+//               stockInOutLineModel.setQty(0);
+               stockInOutLineDAO.persist(stockInOutLineModel);
+           }
+       } catch (Exception e){
+           log.debug("Exception error saveOrUpdateStockInOutLine : ", e);
+       }
     }
 }
