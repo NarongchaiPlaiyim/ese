@@ -157,6 +157,8 @@ public class ShowTransPalletService extends Service{
                stockInOutLineModel.setMsLocationModel(palletModel.getMsLocationModel());
                stockInOutLineModel.setBarcode(palletModel.getPalletBarcode());
                stockInOutLineModel.setStockInOutModel(stockInOutDAO.findByID(stockInOutId));
+               stockInOutLineModel.setIsValid(1);
+               stockInOutLineModel.setVersion(1);
 //               stockInOutLineModel.setQty(0);
                stockInOutLineDAO.persist(stockInOutLineModel);
            }
