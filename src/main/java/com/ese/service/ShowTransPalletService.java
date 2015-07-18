@@ -111,8 +111,10 @@ public class ShowTransPalletService extends Service{
             palletDAO.updateNewPalletTransferByChangeLocation(palletModel.getId(), model.getId());
 
             if (palletModel.getStatus() == 3){
+                //Print Tag
                 palletDAO.updateLocationByStatusPrinted(palletModel.getMsLocationModel().getId());
             } else {
+                //Find Location
                 palletDAO.updateLocationByStatusLocated(model.getId());
             }
 
