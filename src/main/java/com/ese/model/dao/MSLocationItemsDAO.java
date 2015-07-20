@@ -30,6 +30,7 @@ public class MSLocationItemsDAO extends GenericDAO<MSLocationItemsModel, Integer
         stringBuilder.append(" AND ").append(getPrefix()).append(".location.capacity - ").append(getPrefix()).append(".location.qty - ").append(getPrefix()).append(".location.reserved_qty > 0");
         stringBuilder.append(" ORDER BY (").append(getPrefix()).append(".location.capacity - ").append(getPrefix()).append(".location.qty - ").append(getPrefix()).append(".location.reserved_qty), ").append(getPrefix()).append(".location.ismix");
 
+        log.debug("{}", stringBuilder.toString());
         SQLQuery q = getSession().createSQLQuery(stringBuilder.toString());
         List<Object[]> objects = q.list();
         List<LocationItemView> locationItemViewList = new ArrayList<LocationItemView>();
