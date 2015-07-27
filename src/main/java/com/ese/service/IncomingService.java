@@ -70,4 +70,8 @@ public class IncomingService extends Service {
             log.debug("Exception error during edit ", e);
         }
     }
+
+    public void printReport(){
+
+    }
 }

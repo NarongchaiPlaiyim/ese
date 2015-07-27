@@ -118,4 +118,7 @@ public class IncomingBean extends Bean {
         stockInOutModelList = incomingService.search(incomingView);
     }
 
+    public void onPrint(){
+        incomingService.printReport();
+    }
 }

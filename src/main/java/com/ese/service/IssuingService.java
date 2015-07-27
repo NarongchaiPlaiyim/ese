@@ -91,4 +91,8 @@ public class IssuingService extends Service {
             log.debug("Exception error during edit ", e);
         }
     }
+
+    public void printReport(){
+
+    }
 }

@@ -127,4 +127,8 @@ public class IssuingBean extends Bean {
         showDialogEdited();
         init();
     }
+
+    public void onPrint(){
+        issuingService.printReport();
+    }
 }

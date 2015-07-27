@@ -44,14 +44,30 @@
                                  update=":issuingForm, :msgBoxSystemMessagePanel"
                                  icon="ui-icon-check"/>
 
+                <!--<p:commandButton id="btnPrint"-->
+                                 <!--value="Print"-->
+                                 <!--process="@this"-->
+                                 <!--disabled="#{issuingBean.flagBtnPrint}"-->
+                                 <!--onclick="this.form.target='_blank'"-->
+                                 <!--ajax="false"-->
+                                 <!--icon="ui-icon-print"-->
+                                 <!--styleClass="medium" />-->
+
                 <p:commandButton id="btnPrint"
-                                 value="Print"
-                                 process="@this"
+                                 value="#{msg.get('btn.name.print')}"
+
+                                 process="@form"
+                                 onstart="PF('bui').block()"
+                                 oncomplete="PF('bui').unblock()"
+                                 action="#{issuingBean.onPrint()}"
                                  disabled="#{issuingBean.flagBtnPrint}"
                                  onclick="this.form.target='_blank'"
                                  ajax="false"
                                  icon="ui-icon-print"
-                                 styleClass="medium" />
+                                 styleClass="medium" style="#{msg.get('btn.size')}"/>
+
+                <!--rendered="#{loginBean.isRendered(msg.get('authorize.menu.user.tab.1.report'))}"-->
+
                 <p:commandButton id="showItem"
                                  value="Show items"
                                  disabled="#{issuingBean.flagBtnShow}"

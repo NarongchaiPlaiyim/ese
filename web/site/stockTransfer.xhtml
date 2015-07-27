@@ -44,14 +44,30 @@
                              oncomplete="PF('bui').unblock()"
                              process="@this"
                              styleClass="medium" />
+
             <p:commandButton id="btnPrint"
-                             value="Print"
-                             process="@this"
+                             value="#{msg.get('btn.name.print')}"
+
+                             process="@form"
+                             onstart="PF('bui').block()"
+                             oncomplete="PF('bui').unblock()"
+                             action="#{stockTransferBean.onPrint()}"
                              disabled="#{stockTransferBean.flagBtnPrint}"
                              onclick="this.form.target='_blank'"
                              ajax="false"
                              icon="ui-icon-print"
-                             styleClass="medium" />
+                             styleClass="medium" style="#{msg.get('btn.size')}"/>
+
+            <!--rendered="#{loginBean.isRendered(msg.get('authorize.menu.user.tab.1.report'))}"-->
+
+            <!--<p:commandButton id="btnPrint"-->
+                             <!--value="Print"-->
+                             <!--process="@this"-->
+                             <!--disabled="#{stockTransferBean.flagBtnPrint}"-->
+                             <!--onclick="this.form.target='_blank'"-->
+                             <!--ajax="false"-->
+                             <!--icon="ui-icon-print"-->
+                             <!--styleClass="medium" />-->
         </div>
         <div id="formView">
             <table style="width: auto" id="tabeView">

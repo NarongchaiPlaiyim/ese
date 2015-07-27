@@ -59,4 +59,8 @@ public class StockTransferService extends Service{
     public List<StockInOutModel> search(StockTransferView stockTransferView){
         return stockInOutDAO.findBySearch(stockTransferView);
     }
+
+    public void printReport(){
+
+    }
 }

@@ -107,4 +107,8 @@ public class StockTransferBean extends Bean{
         session.setAttribute("stockInOutModel", stockInOutModel);
         FacesUtil.redirect("/site/showTransferPallet.xhtml");
     }
+
+    public void onPrint(){
+        stockTransferService.printReport();
+    }
 }
