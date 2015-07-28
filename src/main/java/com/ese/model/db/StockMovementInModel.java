@@ -25,7 +25,7 @@ public class StockMovementInModel extends AbstractModel{
     @JoinColumn(name = "stock_inout_id")
     private StockInOutModel stockInOutModel;
 
-    @JoinColumn(name="pallet_barcode")
+    @Column(name="pallet_barcode")
     private String palletBarcode;
 
     @Column(name="sn_barcode")
