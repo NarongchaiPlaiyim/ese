@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "stock_movement_in")
 @Proxy(lazy=false)
-public class StockMovementIn extends AbstractModel{
+public class StockMovementInModel extends AbstractModel{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,12 +22,11 @@ public class StockMovementIn extends AbstractModel{
     private int status;
 
     @OneToOne
-    @JoinColumn(name = "stockInOutModel_id")
+    @JoinColumn(name = "stock_inout_id")
     private StockInOutModel stockInOutModel;
 
-    @OneToOne
     @JoinColumn(name="pallet_barcode")
-    private PalletModel palletModel;
+    private String palletBarcode;
 
     @Column(name="sn_barcode")
     private String snBarcode;
@@ -35,4 +34,6 @@ public class StockMovementIn extends AbstractModel{
     @Column(name="batchno")
     private String batchNo;
 
+    @Column(name = "isvalid" , columnDefinition="int default 1")
+    private Integer isValid;
 }
