@@ -27,6 +27,7 @@
                                 id="btnSelectDialog"
                                 value="#{msg.get('btn.name.select')}"
                                 icon="ui-icon-folder-open"
+                                process="@this"
                                 update=":setupForm, :msgBoxSystemMessagePanel"
                                 disabled="#{incomingShowItemBean.flagBtnSelect}"
                                 styleClass="medium" style="#{configurationSize.btnSize}"
