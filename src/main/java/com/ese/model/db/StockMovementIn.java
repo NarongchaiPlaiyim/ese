@@ -24,4 +24,15 @@ public class StockMovementIn extends AbstractModel{
     @OneToOne
     @JoinColumn(name = "stockInOutModel_id")
     private StockInOutModel stockInOutModel;
+
+    @OneToOne
+    @JoinColumn(name="pallet_barcode")
+    private PalletModel palletModel;
+
+    @Column(name="sn_barcode")
+    private String snBarcode;
+
+    @Column(name="batchno")
+    private String batchNo;
+
 }
