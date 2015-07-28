@@ -34,6 +34,24 @@ public class InvOnHandDAO extends GenericDAO<InvOnHandModel, Integer>{
         return invOnHandModels;
     }
 
+    public List<InvOnHandModel> findByPalletId(int palletId){
+        List<InvOnHandModel> invOnHandModels = Utils.getEmptyList();
+        try {
+            Criteria criteria = getCriteria();
+            criteria.add(Restrictions.eq("palletModel.id", palletId));
+            invOnHandModels = criteria.list();
+        } catch (Exception e) {
+            log.debug("Exception error findByPickingId : ", e);
+        }
+
+        return invOnHandModels;
+    }
+
+    public List<InvOnHandModel> findByLikeSnBarcode(String snBarcode) throws Exception {
+        Criteria criteria = getCriteria().add(Restrictions.like("snBarcode", snBarcode));
+        return criteria.list();
+    }
+
     public List<SubPickingOrderWithBarcodeViewReport> findByPickingIdOnReport(int pickingId){
         List<SubPickingOrderWithBarcodeViewReport> subPickingOrderWithBarcodeViewReportArrayList = new ArrayList<SubPickingOrderWithBarcodeViewReport>();
         StringBuilder sqlBuilder = new StringBuilder();
@@ -125,6 +143,7 @@ public class InvOnHandDAO extends GenericDAO<InvOnHandModel, Integer>{
 
         return subPickingOrderWithBarcodeViewReportArrayList;
     }
+
 
     public List<InvOnhandPostView> findCountInvOnhand(int pickingOrderId){
         List<InvOnhandPostView> invOnhandPostViewList = new ArrayList<InvOnhandPostView>();

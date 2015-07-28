@@ -3,9 +3,7 @@ package com.ese.model.dao;
 import com.ese.model.db.AXCustomerConfirmTransModel;
 import com.ese.model.view.CustomerConfirmTransView;
 import com.ese.utils.Utils;
-import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
-import org.hibernate.criterion.Restrictions;
 import org.hibernate.type.BigDecimalType;
 import org.hibernate.type.DateType;
 import org.hibernate.type.IntegerType;
@@ -138,9 +136,11 @@ public class AXCustomerConfirmTransDAO extends GenericDAO<AXCustomerConfirmTrans
                     .addScalar("INVENTRANS_ID", StringType.INSTANCE);
             List<Object[]> objects = query.list();
 
+            int index;
             for (Object[] entity : objects) {
+                index = -1;
                 CustomerConfirmTransView confirmTransView = new CustomerConfirmTransView();
-                confirmTransView.setLineNum(Utils.parseBigDecimal(entity[0], BigDecimal.ZERO));
+                confirmTransView.setLineNum(Utils.parseBigDecimal(entity[index++], BigDecimal.ZERO));
                 confirmTransView.setItemId(Utils.parseString(entity[1], ""));
                 confirmTransView.setOrigSaleId(Utils.parseString(entity[2], ""));
                 confirmTransView.setQty(Utils.parseInt(entity[3], 0));

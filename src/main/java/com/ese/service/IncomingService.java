@@ -1,10 +1,10 @@
 package com.ese.service;
 
+import com.ese.model.dao.InvOnHandDAO;
+import com.ese.model.dao.PalletDAO;
 import com.ese.model.dao.StockInOutDAO;
 import com.ese.model.dao.StockInOutNoteDAO;
-import com.ese.model.db.MSStockInOutNoteModel;
-import com.ese.model.db.StatusModel;
-import com.ese.model.db.StockInOutModel;
+import com.ese.model.db.*;
 import com.ese.model.view.IncomingView;
 import com.ese.utils.AttributeName;
 import com.ese.utils.FacesUtil;
@@ -21,6 +21,8 @@ public class IncomingService extends Service {
     private static final long serialVersionUID = 4112578634029876045L;
     @Resource private StockInOutDAO stockInOutDAO;
     @Resource private StockInOutNoteDAO stockInOutNoteDAO;
+    @Resource private InvOnHandDAO invOnHandDAO;
+    @Resource private PalletDAO palletDAO;
 
     public List<MSStockInOutNoteModel> getAllStockInOutNote(){
         return stockInOutNoteDAO.getStockInOutNoteOrderByTypeI();
@@ -71,6 +73,39 @@ public class IncomingService extends Service {
         }
     }
 
+    public List<InvOnHandModel> findInvOnHand(String barcode){
+        List<InvOnHandModel> invOnHandModelList = Utils.getEmptyList();
+        try {
+            //pallet barcode PL or SN T
+            //
+            log.debug("findInvOnHand(barcode : {})", barcode);
+            if (barcode.contains("PL")) {
+                log.debug("PL");
+                List<PalletModel> palletModelList = palletDAO.findByLikePalletBarcode(barcode);
+                for (PalletModel model : palletModelList) {
+                    invOnHandModelList.addAll(invOnHandDAO.findByPalletId(model.getId()));
+                }
+            } else if (barcode.contains("T")) {
+                log.debug("T");
+                invOnHandModelList = invOnHandDAO.findByLikeSnBarcode(barcode);
+            }
+            log.debug("invOnHandModelList.size().[{}}", invOnHandModelList.size());
+//            if ("PL".equalsIgnoreCase(barcode)) {
+//                List<PalletModel> palletModelList = palletDAO.findByLikePalletBarcode(barcode);
+//                for (PalletModel model : palletModelList) {
+//                    invOnHandModelList.addAll(invOnHandDAO.findByPalletId(model.getId()));
+//                }
+//            }
+//            //SN T
+//            if ("T".equalsIgnoreCase(barcode)) {
+//                invOnHandDAO.findByLikeSnBarcode(barcode);
+//            }
+            invOnHandModelList = invOnHandDAO.findAll();
+        } catch (Exception e) {
+            log.debug("Exception during findInvOnHand ", e);
+        }
+        return invOnHandModelList;
+    }
     public void printReport(){
 
     }

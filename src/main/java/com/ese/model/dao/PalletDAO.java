@@ -1,7 +1,6 @@
 package com.ese.model.dao;
 
 import com.ese.model.db.PalletModel;
-import com.ese.model.view.PalletManagementView;
 import com.ese.model.view.PalletTransferView;
 import com.ese.model.view.report.PalletManagemengModelReport;
 import com.ese.model.view.report.PalletSubReport;
@@ -32,6 +31,11 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
             log.debug("Exception : {}", e);
         }
         return palletModelList;
+    }
+
+    public List<PalletModel> findByLikePalletBarcode(String palletBarcode) throws Exception {
+        Criteria criteria = getCriteria().add(Restrictions.like("palletBarcode", palletBarcode));
+        return criteria.list();
     }
 
     public List<PalletModel> findChang(int statusId, int warehouse, int conveyorLine, int location, String keyItemDescription, int combine, int foil){

@@ -8,15 +8,6 @@
         <h:form id="frmFindProduct">
             <table  border="0">
                 <tr>
-                    <td style="width: 200px">
-                        <p:selectOneMenu
-                                value="#{incomingShowItemBean.selectType}"
-                                style="#{msg.get('fix.size.200')} margin-top: 4px">
-                            <f:selectItem itemLabel="Item Description" itemValue="3"/>
-                            <f:selectItem itemLabel="Item Name" itemValue="1"/>
-                            <f:selectItem itemLabel="Item Code" itemValue="2"/>
-                        </p:selectOneMenu>
-                    </td>
                     <td>
                         <p:inputText
                                 style="#{msg.get('fix.size.200')}  margin-top: 4px"
@@ -40,8 +31,8 @@
                                 styleClass="medium" style="#{configurationSize.btnSize}"
                                 action="#{incomingShowItemBean.onClickSelectOnDialog()}"
                                 oncomplete="PF('findProductDlg').hide()"
-                                update=":setupForm:itemLabel"
                                 />
+                        <!--update=":setupForm:itemLabel"-->
                     </td>
                 </tr>
                 <tr>
@@ -52,8 +43,8 @@
                                      var="itemModel"
                                      selectionMode="single"
                                      rowKey="#{itemModel.id}"
-                                     selection="#{incomingShowItemBean.barcodeRegisterView.msItemModel}"
-                                     value="#{incomingShowItemBean.msItemModelList}"
+                                     selection="#{incomingShowItemBean.barcodeRegisterView.invOnHandModel}"
+                                     value="#{incomingShowItemBean.invOnHandModelList}"
                                      rowIndexVar="rowIndex">
                             <p:ajax event="rowSelect" update=":frmFindProduct:productTable, :frmFindProduct:btnSelectDialog"
                                     listener="#{incomingShowItemBean.onClickTableDialog()}"/>
@@ -61,14 +52,15 @@
                                 <h:outputText value="#{rowIndex+1}" style="text-align: right;"/>
                             </p:column>
                             <p:column headerText="Item Code" style="min-width: 100px; width: 100px; max-width: 100px;" styleClass="center">
-                                <h:outputText value="#{itemModel.itemId}"/>
-                            </p:column>
-                            <p:column headerText="Item Name" style="min-width: 150px; width: 150px; max-width: 150px;">
-                                <h:outputText value="#{itemModel.itemName}"/>
+                                <h:outputText value="#{itemModel.snBarcode}"/>
                             </p:column>
                             <p:column headerText="Item Description" style="min-width: 250px; width: 250px; max-width: 250px;">
-                                <h:outputText value="#{itemModel.DSGThaiItemDescription}"/>
+                                <h:outputText value="#{itemModel.barcode}"/>
                             </p:column>
+                            <p:column headerText="Item Name" style="min-width: 150px; width: 150px; max-width: 150px;">
+                                <h:outputText value="#{itemModel.barcode}"/>
+                            </p:column>
+
                         </p:dataTable>
                     </td>
                 </tr>

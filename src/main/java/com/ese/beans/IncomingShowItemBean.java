@@ -1,15 +1,17 @@
 package com.ese.beans;
 
 import com.ese.model.db.BarcodeRegisterModel;
-import com.ese.model.db.MSItemModel;
+import com.ese.model.db.InvOnHandModel;
 import com.ese.model.db.StockInOutModel;
 import com.ese.model.view.BarcodeRegisterView;
 import com.ese.model.view.IncomingView;
 import com.ese.service.BarcodeRegisterService;
+import com.ese.service.IncomingService;
 import com.ese.utils.FacesUtil;
 import com.ese.utils.MessageDialog;
 import com.ese.utils.NamesUtil;
 import com.ese.utils.Utils;
+import com.sun.istack.internal.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,11 +29,17 @@ import java.util.List;
 public class IncomingShowItemBean extends Bean{
     private static final long serialVersionUID = 4112578634029874840L;
     @ManagedProperty("#{barcodeRegisterService}") private BarcodeRegisterService barcodeRegisterService;
+    @ManagedProperty("#{incomingService}") private IncomingService incomingService;
     @ManagedProperty("#{message['authorize.menu.barcode']}") private String key;
 
     private BarcodeRegisterView barcodeRegisterView;
     private IncomingView incomingView;
-    private List<MSItemModel> msItemModelList;
+
+//    private List<MSItemModel> msItemModelList;
+
+    @NotNull
+    private List<InvOnHandModel> invOnHandModelList;
+
     private List<BarcodeRegisterModel> barcodeRegisterModelList;
     private BarcodeRegisterModel barcodeRegisterModel;
     private String selectType;
@@ -72,7 +80,7 @@ public class IncomingShowItemBean extends Bean{
 
     private void init(){
         barcodeRegisterView = new BarcodeRegisterView();
-        msItemModelList = Utils.getEmptyList();
+//        msItemModelList = Utils.getEmptyList();
         barcodeRegisterModelList = Utils.getEmptyList();
         initBtn();
         initField();
@@ -162,7 +170,7 @@ public class IncomingShowItemBean extends Bean{
     }
 
     private boolean mandateItem(){
-        flagItem = Utils.isZero(barcodeRegisterView.getMsItemModel().getId()) ? true : false ;
+//        flagItem = Utils.isZero(barcodeRegisterView.getMsItemModel().getId()) ? true : false ;
         return flagItem;
     }
 
@@ -170,7 +178,7 @@ public class IncomingShowItemBean extends Bean{
         log.debug("-- onInitSearch()");
         selectType = "3";
         productSearch = "";
-        msItemModelList = Utils.getEmptyList();
+        invOnHandModelList = Utils.getEmptyList();
     }
 
     public void onSubmitSearchBarcode(){
@@ -185,7 +193,8 @@ public class IncomingShowItemBean extends Bean{
 
     public void onSubmitSearch(){
         log.debug("-- onSubmitSearch()");
-        msItemModelList = barcodeRegisterService.findByCondition(selectType, productSearch);
+        invOnHandModelList = incomingService.findInvOnHand(productSearch);
+        //msItemModelList = barcodeRegisterService.findByCondition(selectType, productSearch);
     }
 
     public void onClickTableDialog(){
@@ -200,6 +209,10 @@ public class IncomingShowItemBean extends Bean{
         flagBtnEdit = false;
         flagBtnPrint = false;
         barcodeRegisterView = barcodeRegisterService.convertToView(barcodeRegisterModel);
+
+        //if stock_movement_in.status = 1; delete button should be enable.
+
+
         modeBarcode = "Mode(Edit)     ";
     }
 

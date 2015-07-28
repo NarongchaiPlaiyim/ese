@@ -6,14 +6,12 @@ import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 
-
 @Getter
 @Setter
 @Entity
 @Table(name = "stock_movement_in")
 @Proxy(lazy=false)
 public class StockMovementInModel extends AbstractModel{
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

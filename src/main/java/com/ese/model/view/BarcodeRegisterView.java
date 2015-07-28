@@ -1,6 +1,7 @@
 package com.ese.model.view;
 
 import com.ese.model.StatusBarcodeRegiterValue;
+import com.ese.model.db.InvOnHandModel;
 import com.ese.model.db.MSItemModel;
 import com.ese.utils.Utils;
 import lombok.Getter;
@@ -9,7 +10,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.math.BigDecimal;
-import java.util.Calendar;
 import java.util.Date;
 
 @Getter
@@ -17,6 +17,7 @@ import java.util.Date;
 public class BarcodeRegisterView extends View{
     private int id;
     private MSItemModel msItemModel;
+    private InvOnHandModel invOnHandModel;
     private String documentNo;
     private Date documentDate;
     private String batchNo;
@@ -37,6 +38,7 @@ public class BarcodeRegisterView extends View{
 
     private void init(){
         msItemModel = new MSItemModel();
+        invOnHandModel = new InvOnHandModel();
         documentNo = Utils.getDocumentNo();
         documentDate = Utils.currentDate();
         batchNo = Utils.getBatchNo();
@@ -49,7 +51,7 @@ public class BarcodeRegisterView extends View{
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("id", id)
-                .append("msItemModel", msItemModel)
+                .append("invOnHandModel", invOnHandModel)
                 .append("documentNo", documentNo)
                 .append("documentDate", documentDate)
                 .append("batchNo", batchNo)
