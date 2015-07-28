@@ -48,8 +48,16 @@ public class InvOnHandDAO extends GenericDAO<InvOnHandModel, Integer>{
     }
 
     public List<InvOnHandModel> findByLikeSnBarcode(String snBarcode) throws Exception {
-        Criteria criteria = getCriteria().add(Restrictions.like("snBarcode", snBarcode));
-        return criteria.list();
+        List<InvOnHandModel> invOnHandModels = Utils.getEmptyList();
+        try {
+            Criteria criteria = getCriteria();
+            criteria.add(Restrictions.like("snBarcode","%"+snBarcode+"%"));
+            invOnHandModels = criteria.list();
+        } catch (Exception e) {
+            log.debug("Exception error findByLikeSnBarcode : ", e);
+        }
+
+        return invOnHandModels;
     }
 
     public List<SubPickingOrderWithBarcodeViewReport> findByPickingIdOnReport(int pickingId){

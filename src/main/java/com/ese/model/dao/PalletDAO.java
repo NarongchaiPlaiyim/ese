@@ -34,8 +34,18 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
     }
 
     public List<PalletModel> findByLikePalletBarcode(String palletBarcode) throws Exception {
-        Criteria criteria = getCriteria().add(Restrictions.like("palletBarcode", palletBarcode));
-        return criteria.list();
+        log.debug("findByLikePalletBarcode(). {}", palletBarcode);
+        List<PalletModel> palletModelList = Utils.getEmptyList();
+        try {
+            Criteria criteria = getSession().createCriteria(PalletModel.class, "p");
+//            Criteria criteria = getCriteria();
+            criteria.add(Restrictions.like("p.palletBarcode","%" + palletBarcode.trim() + "%"));
+            palletModelList = Utils.safetyList(criteria.list());
+            log.debug("findByLikePalletBarcode Size : {}", palletModelList.size());
+        } catch (Exception e){
+            log.debug("Exception : {}", e);
+        }
+        return palletModelList;
     }
 
     public List<PalletModel> findChang(int statusId, int warehouse, int conveyorLine, int location, String keyItemDescription, int combine, int foil){

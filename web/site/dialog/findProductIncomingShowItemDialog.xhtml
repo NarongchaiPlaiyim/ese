@@ -27,10 +27,10 @@
                                 id="btnSelectDialog"
                                 value="#{msg.get('btn.name.select')}"
                                 icon="ui-icon-folder-open"
+                                update=":setupForm, :msgBoxSystemMessagePanel"
                                 disabled="#{incomingShowItemBean.flagBtnSelect}"
                                 styleClass="medium" style="#{configurationSize.btnSize}"
                                 action="#{incomingShowItemBean.onClickSelectOnDialog()}"
-                                oncomplete="PF('findProductDlg').hide()"
                                 />
                         <!--update=":setupForm:itemLabel"-->
                     </td>
@@ -43,7 +43,7 @@
                                      var="itemModel"
                                      selectionMode="single"
                                      rowKey="#{itemModel.id}"
-                                     selection="#{incomingShowItemBean.barcodeRegisterView.invOnHandModel}"
+                                     selection="#{incomingShowItemBean.select}"
                                      value="#{incomingShowItemBean.invOnHandModelList}"
                                      rowIndexVar="rowIndex">
                             <p:ajax event="rowSelect" update=":frmFindProduct:productTable, :frmFindProduct:btnSelectDialog"
@@ -65,6 +65,16 @@
                     </td>
                 </tr>
             </table>
+            <div style="text-align: center">
+                <p:commandButton
+                        id="btnClose"
+                        value="Close"
+                        update=":setupForm"
+                        styleClass="medium" style="#{configurationSize.btnSize}"
+                        action="#{incomingShowItemBean.onCloseDialog()}"
+                        oncomplete="PF('findProductDlg').hide()"
+                        />
+            </div>
         </h:form>
 </f:view>
 </html>

@@ -1,11 +1,9 @@
 package com.ese.service;
 
-import com.ese.model.dao.InvOnHandDAO;
-import com.ese.model.dao.PalletDAO;
-import com.ese.model.dao.StockInOutDAO;
-import com.ese.model.dao.StockInOutNoteDAO;
+import com.ese.model.dao.*;
 import com.ese.model.db.*;
 import com.ese.model.view.IncomingView;
+import com.ese.model.view.StockMovementInView;
 import com.ese.utils.AttributeName;
 import com.ese.utils.FacesUtil;
 import com.ese.utils.Utils;
@@ -23,6 +21,11 @@ public class IncomingService extends Service {
     @Resource private StockInOutNoteDAO stockInOutNoteDAO;
     @Resource private InvOnHandDAO invOnHandDAO;
     @Resource private PalletDAO palletDAO;
+    @Resource private StockMovementInDAO stockMovementInDAO;
+
+    public List<StockMovementInView> getStockMoveInByStockInOutId(int stockInoutId){
+        return  stockMovementInDAO.findstockMovementOutByStockInOutId(stockInoutId);
+    }
 
     public List<MSStockInOutNoteModel> getAllStockInOutNote(){
         return stockInOutNoteDAO.getStockInOutNoteOrderByTypeI();
@@ -76,17 +79,21 @@ public class IncomingService extends Service {
     public List<InvOnHandModel> findInvOnHand(String barcode){
         List<InvOnHandModel> invOnHandModelList = Utils.getEmptyList();
         try {
+            log.debug("All {}", palletDAO.findAll().size());
+            log.debug("-------- {}", palletDAO.findAll().toString());
             //pallet barcode PL or SN T
             //
             log.debug("findInvOnHand(barcode : {})", barcode);
             if (barcode.contains("PL")) {
                 log.debug("PL");
                 List<PalletModel> palletModelList = palletDAO.findByLikePalletBarcode(barcode);
+                log.debug("palletModelList Size: {}", palletModelList.size());
                 for (PalletModel model : palletModelList) {
-                    invOnHandModelList.addAll(invOnHandDAO.findByPalletId(model.getId()));
+                    invOnHandModelList = invOnHandDAO.findByPalletId(model.getId());
                 }
             } else if (barcode.contains("T")) {
                 log.debug("T");
+                log.debug("----- {}", invOnHandDAO.findAll().toString());
                 invOnHandModelList = invOnHandDAO.findByLikeSnBarcode(barcode);
             }
             log.debug("invOnHandModelList.size().[{}}", invOnHandModelList.size());
@@ -100,7 +107,7 @@ public class IncomingService extends Service {
 //            if ("T".equalsIgnoreCase(barcode)) {
 //                invOnHandDAO.findByLikeSnBarcode(barcode);
 //            }
-            invOnHandModelList = invOnHandDAO.findAll();
+//            invOnHandModelList = invOnHandDAO.findAll();
         } catch (Exception e) {
             log.debug("Exception during findInvOnHand ", e);
         }
@@ -108,5 +115,39 @@ public class IncomingService extends Service {
     }
     public void printReport(){
 
+    }
+
+    public void delete(int stockMoveInId){
+        try {
+            stockMovementInDAO.delete(stockMovementInDAO.findByID(stockMoveInId));
+        } catch (Exception e) {
+            log.debug("Exception error e : ", e);
+        }
+    }
+
+    public void save(String productSearch, List<InvOnHandModel> invOnHandModelList, int stockInoutId){
+
+        StockMovementInModel stockMovementInModel;
+        int staffModel = (int) FacesUtil.getSession(false).getAttribute(AttributeName.STAFF.getName());
+        try{
+            for (InvOnHandModel invOnHandModel : invOnHandModelList){
+                stockMovementInModel = new StockMovementInModel();
+
+                if (productSearch.contains("PL")) {
+                    stockMovementInModel.setSnBarcode(invOnHandModel.getSnBarcode());
+                }
+
+                stockMovementInModel.setStatus(1);
+                stockMovementInModel.setStockInOutModel(stockInOutDAO.findByID(stockInoutId));
+                stockMovementInModel.setBatchNo(invOnHandModel.getBatchNo());
+                stockMovementInModel.setIsValid(0);
+                stockMovementInModel.setCreateBy(staffModel);
+                stockMovementInModel.setCreateDate(Utils.currentDate());
+                stockMovementInModel.setUpdateBy(staffModel);
+                stockMovementInModel.setUpdateDate(Utils.currentDate());
+            }
+        } catch (Exception e){
+            log.debug("Exception error save : ", e);
+        }
     }
 }

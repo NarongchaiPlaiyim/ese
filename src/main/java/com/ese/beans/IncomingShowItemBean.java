@@ -5,6 +5,7 @@ import com.ese.model.db.InvOnHandModel;
 import com.ese.model.db.StockInOutModel;
 import com.ese.model.view.BarcodeRegisterView;
 import com.ese.model.view.IncomingView;
+import com.ese.model.view.StockMovementInView;
 import com.ese.service.BarcodeRegisterService;
 import com.ese.service.IncomingService;
 import com.ese.utils.FacesUtil;
@@ -39,9 +40,12 @@ public class IncomingShowItemBean extends Bean{
 
     @NotNull
     private List<InvOnHandModel> invOnHandModelList;
+    private List<InvOnHandModel> select;
 
-    private List<BarcodeRegisterModel> barcodeRegisterModelList;
-    private BarcodeRegisterModel barcodeRegisterModel;
+//    private List<BarcodeRegisterModel> barcodeRegisterModelList;
+    private List<StockMovementInView> stockMovementInViewList;
+//    private BarcodeRegisterModel barcodeRegisterModel;
+    private StockMovementInView stockMovementInView;
     private String selectType;
     private String productSearch;
     private String barcodeSearch;
@@ -81,7 +85,7 @@ public class IncomingShowItemBean extends Bean{
     private void init(){
         barcodeRegisterView = new BarcodeRegisterView();
 //        msItemModelList = Utils.getEmptyList();
-        barcodeRegisterModelList = Utils.getEmptyList();
+//        barcodeRegisterModelList = Utils.getEmptyList();
         initBtn();
         initField();
         onLoadDataTable();
@@ -104,12 +108,14 @@ public class IncomingShowItemBean extends Bean{
 
     private void onLoadDataTable(){
         onLoadDataBarcode();
-        log.debug("-- onLoadDataTable() returned size = {}", barcodeRegisterModelList.size());
-        barcodeRegisterModel = new BarcodeRegisterModel();
+//        log.debug("-- onLoadDataTable() returned size = {}", barcodeRegisterModelList.size());
+//        barcodeRegisterModel = new BarcodeRegisterModel();
+        stockMovementInView = new StockMovementInView();
     }
 
     private void onLoadDataBarcode(){
-        barcodeRegisterModelList = barcodeRegisterService.getByStockInOut(stockInOutModel.getDocNo());
+//        barcodeRegisterModelList = barcodeRegisterService.getByStockInOut(stockInOutModel.getDocNo());
+        stockMovementInViewList = incomingService.getStockMoveInByStockInOutId(stockInOutModel.getId());
     }
 
     public void onClickButtonNew(){
@@ -119,7 +125,8 @@ public class IncomingShowItemBean extends Bean{
         flagBtnSave = false;
         flagBtnEdit = true;
         flagBtnPrint = true;
-        barcodeRegisterModel = new BarcodeRegisterModel();
+//        barcodeRegisterModel = new BarcodeRegisterModel();
+        stockMovementInView = new StockMovementInView();
         modeBarcode = "Mode(New)     ";
     }
 
@@ -184,7 +191,7 @@ public class IncomingShowItemBean extends Bean{
     public void onSubmitSearchBarcode(){
         log.debug("-- onSubmitSearch()");
         if(!Utils.isZero(barcodeSearch.length())){
-            barcodeRegisterModelList = barcodeRegisterService.findBarcodeByCondition(barcodeSelectType, barcodeSearch);
+//            barcodeRegisterModelList = barcodeRegisterService.findBarcodeByCondition(barcodeSelectType, barcodeSearch);
         } else {
             onLoadDataBarcode();
         }
@@ -203,22 +210,43 @@ public class IncomingShowItemBean extends Bean{
     }
 
     public void onClickTable(){
-        log.debug("-- onClickTable() {}", barcodeRegisterModel);
-        flagBtnSave = true;
-        flagBtnDelete = false;
-        flagBtnEdit = false;
-        flagBtnPrint = false;
-        barcodeRegisterView = barcodeRegisterService.convertToView(barcodeRegisterModel);
+        log.debug("-- onClickTable() {}", stockMovementInView);
+//        flagBtnSave = true;
+//
+//        flagBtnEdit = false;
+//        flagBtnPrint = false;
+//        barcodeRegisterView = barcodeRegisterService.convertToView(barcodeRegisterModel);
 
         //if stock_movement_in.status = 1; delete button should be enable.
 
+        if (!Utils.isNull(stockMovementInView)){
+            if (stockMovementInView.getStatus() == 1){
+                flagBtnDelete = Boolean.FALSE;
+            }
+        }
 
-        modeBarcode = "Mode(Edit)     ";
+
+//        modeBarcode = "Mode(Edit)     ";
     }
 
     public void onClickSelectOnDialog(){
         log.debug("-- onClickSelectOnDialog()");
-        flagBtnSelect = true;
+        incomingService.save(productSearch, select, stockInOutModel.getId());
+
+        initBtn();
+        initField();
+        onLoadDataTable();
+        onClickButtonNew();
+
+        showDialog("Select", "Select success.", "msgBoxSystemMessageDlg");
+//        flagBtnSelect = true;
+    }
+
+    public void onCloseDialog(){
+        initBtn();
+        initField();
+        onLoadDataTable();
+        onClickButtonNew();
     }
 
     public void preDelete(){
@@ -227,7 +255,8 @@ public class IncomingShowItemBean extends Bean{
     public void onDelete(){
         log.debug("-- onDelete()");
         try {
-            barcodeRegisterService.deleteFormSetValid(barcodeRegisterModel);
+//            barcodeRegisterService.deleteFormSetValid(barcodeRegisterModel);
+            incomingService.delete(stockMovementInView.getId());
             showDialogDeleted();
             init();
         } catch (Exception e) {
@@ -275,7 +304,7 @@ public class IncomingShowItemBean extends Bean{
     }
 
     public void onPrint(){
-        barcodeRegisterService.onPrintBarcode(barcodeRegisterModel.getId());
+//        barcodeRegisterService.onPrintBarcode(barcodeRegisterModel.getId());
     }
 
     private String replaceFormat(String startBarcode){
