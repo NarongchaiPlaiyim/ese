@@ -4,9 +4,11 @@ import com.ese.model.db.*;
 import com.ese.model.view.IssuingView;
 import com.ese.model.view.SearchItemView;
 import com.ese.model.view.ShowSNView;
+import com.ese.model.view.StockMovementOutView;
 import com.ese.service.IssuingService;
 import com.ese.service.StockMovementShowItemService;
 import com.ese.utils.FacesUtil;
+import com.ese.utils.MessageDialog;
 import com.ese.utils.Utils;
 import com.sun.istack.internal.NotNull;
 import lombok.Getter;
@@ -29,9 +31,10 @@ public class StockMovementShowItemBean extends Bean{
     @ManagedProperty("#{stockMovementShowItemService}") private StockMovementShowItemService stockMovementShowItemService;
 
     @NotNull private StockInOutModel stockInOutModel;
-    @NotNull private StockInOutLineModel stockInOutLineModel;
+//    @NotNull private StockInOutLineModel stockInOutLineModel;
     @NotNull private ShowSNView showSNView;
     @NotNull private SearchItemView searchItemView;
+    @NotNull private StockMovementOutView stockMovementOutView;
 
     private List<StockInOutLineModel> stockInOutLineModelList;
     private List<ShowSNView> showSNViewList;
@@ -39,9 +42,11 @@ public class StockMovementShowItemBean extends Bean{
     private List<MSWarehouseModel> msWarehouseModelList;
     private List<ShowSNView> searchItemViewList;
     private List<ShowSNView> selectSearchItemViewList;
+    private List<StockMovementOutView> stockMovementOutViewList;
 
     private Boolean flagBtnShowSN;
     private Boolean flagBtnSearchItem;
+    private Boolean flagBtnDelete;
 
     //ShowSN Dialog
     private Boolean flagBtnRemove;
@@ -60,44 +65,62 @@ public class StockMovementShowItemBean extends Bean{
     }
 
     private void init(){
-        stockInOutLineModel = new StockInOutLineModel();
+//        stockInOutLineModel = new StockInOutLineModel();
+        stockMovementOutView = new StockMovementOutView();
         showSNView = new ShowSNView();
         searchItemView = new SearchItemView();
         flagBtnShowSN = Boolean.TRUE;
-        flagBtnSearchItem = Boolean.TRUE;
+//        flagBtnSearchItem = Boolean.TRUE;
+        flagBtnDelete = Boolean.TRUE;
 
         onLoadTable();
     }
 
     private void onLoadTable(){
-        stockInOutLineModelList = stockMovementShowItemService.getByStockInOutId(stockInOutModel.getId());
+//        stockInOutLineModelList = stockMovementShowItemService.getByStockInOutId(stockInOutModel.getId());
+        stockMovementOutViewList = stockMovementShowItemService.getStockMovementOutByStockInOutId(stockInOutModel.getId());
     }
 
     public void onClickTable(){
-        flagBtnShowSN = Boolean.FALSE;
+//        flagBtnShowSN = Boolean.FALSE;
 
-        if (stockInOutModel.getStatus().getId() < 19){ //Status 19 = status_seq 3(Close)
-            flagBtnSearchItem = Boolean.FALSE;
+//        if (stockInOutModel.getStatus().getId() < 19){ //Status 19 = status_seq 3(Close)
+//            flagBtnSearchItem = Boolean.FALSE;
+//        }
+
+        if (!Utils.isNull(stockMovementOutView)){
+            if (stockMovementOutView.getStatus() == 1){
+                flagBtnDelete = Boolean.FALSE;
+            }
         }
     }
 
-    public void onClickShowSN(){
-        flagBtnRemove = Boolean.TRUE;
-        showSNViewList = stockMovementShowItemService.getInvOnhandByStockInOutLineId(stockInOutLineModel.getId());
+//    public void onClickShowSN(){
+//        flagBtnRemove = Boolean.TRUE;
+//        showSNViewList = stockMovementShowItemService.getInvOnhandByStockInOutLineId(stockInOutLineModel.getId());
+//
+//    }
 
+    public void onDelete(){
+        if (!Utils.isNull(stockMovementOutView)){
+            stockMovementShowItemService.delete(stockMovementOutView.getId());
+            showDialog("Delete", "Delete success.", "msgBoxSystemMessageDlg");
+            onLoadTable();
+            flagBtnDelete = Boolean.TRUE;
+        }
     }
 
     public void onClickRemove(){
         stockMovementShowItemService.remove(showSNView);
         showDialogEdited();
-        onLoadShowSN();
+//        onLoadShowSN();
     }
 
-    private void onLoadShowSN(){
-        showSNView = new ShowSNView();
-        flagBtnRemove = Boolean.TRUE;
-        showSNViewList = stockMovementShowItemService.getInvOnhandByStockInOutLineId(stockInOutLineModel.getId());
-    }
+//    private void onLoadShowSN(){
+//        showSNView = new ShowSNView();
+//        flagBtnRemove = Boolean.TRUE;
+//        showSNViewList = stockMovementShowItemService.getInvOnhandByStockInOutLineId(stockInOutLineModel.getId());
+//    }
 
     public void onClickTableShowSNDialg(){
         flagBtnRemove = Boolean.FALSE;
@@ -128,7 +151,7 @@ public class StockMovementShowItemBean extends Bean{
     }
 
     public void onSelect(){
-        stockMovementShowItemService.select(selectSearchItemViewList, stockInOutLineModel);
+        stockMovementShowItemService.select(selectSearchItemViewList, stockInOutModel.getId());
         showDialogEdited();
         onSearchItemDialog();
     }
@@ -137,5 +160,16 @@ public class StockMovementShowItemBean extends Bean{
         HttpSession session = FacesUtil.getSession(false);
         session.removeAttribute("stockInOutModel");
         FacesUtil.redirect("/site/issuing.xhtml");
+    }
+
+    public void onCloseDialog(){
+        stockMovementOutView = new StockMovementOutView();
+        showSNView = new ShowSNView();
+        searchItemView = new SearchItemView();
+        flagBtnShowSN = Boolean.TRUE;
+//        flagBtnSearchItem = Boolean.TRUE;
+        flagBtnDelete = Boolean.TRUE;
+
+        onLoadTable();
     }
 }

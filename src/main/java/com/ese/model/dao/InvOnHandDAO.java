@@ -297,6 +297,7 @@ public class InvOnHandDAO extends GenericDAO<InvOnHandModel, Integer>{
                 showSNView.setWarehouse(Utils.parseString(entity[2]));
                 showSNView.setLocation(Utils.parseString(entity[3]));
                 showSNView.setPallet(Utils.parseString(entity[4]));
+                showSNView.setSN(Utils.parseString(entity[5]));
                 showSNViewList.add(showSNView);
             }
         } catch (Exception e) {

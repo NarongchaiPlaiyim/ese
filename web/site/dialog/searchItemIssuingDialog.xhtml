@@ -140,6 +140,18 @@
                 </td>
             </tr>
         </table>
+
+        <div style="text-align: center">
+            <p:commandButton id="btnClose"
+                             value="Close"
+                             process="@form"
+                             action="#{stockMoveItemBean.onCloseDialog}"
+                             oncomplete="PF('searchItemDlg').hide()"
+                             update=":stockMoveItemForm"
+                             styleClass="medium" style="#{msg.get('btn.size.150')}"
+                             icon="ui-icon-plusthick"/>
+        </div>
+
     </h:form>
 </f:view>
 </html>

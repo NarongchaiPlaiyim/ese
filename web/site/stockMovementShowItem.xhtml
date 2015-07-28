@@ -23,25 +23,32 @@
 <h:form id="stockMoveItemForm">
 <p:panel style="border: 0">
     <div style="text-align: right;">
-        <p:commandButton id="btnShowSN"
-                         value="Show SN"
-                         oncomplete="PF('showSNDlg').show()"
-                         process="@this"
-                         action="#{stockMoveItemBean.onClickShowSN}"
-                         disabled="#{stockMoveItemBean.flagBtnShowSN}"
-                         update=":showSNForm"
-                         styleClass="medium" style="#{msg.get('btn.size.150')}"
-                         icon="ui-icon-plusthick"/>
+        <!--<p:commandButton id="btnShowSN"-->
+                         <!--value="Show SN"-->
+                         <!--oncomplete="PF('showSNDlg').show()"-->
+                         <!--process="@this"-->
+                         <!--action="#{stockMoveItemBean.onClickShowSN}"-->
+                         <!--disabled="#{stockMoveItemBean.flagBtnShowSN}"-->
+                         <!--update=":showSNForm"-->
+                         <!--styleClass="medium" style="#{msg.get('btn.size.150')}"-->
+                         <!--icon="ui-icon-plusthick"/>-->
 
         <p:commandButton id="btnSearchItem"
                          value="Search Item"
                          styleClass="medium" style="#{msg.get('btn.size.150')}"
                          process="@this"
                          action="#{stockMoveItemBean.onLoadSearchItem}"
-                         disabled="#{stockMoveItemBean.flagBtnSearchItem}"
                          oncomplete="PF('searchItemDlg').show()"
                          update=":searchItemIssuingForm"
                          icon="ui-icon-search"/>
+        <p:commandButton id="btnDelete"
+                         value="Delete"
+                         process="@this"
+                         oncomplete="PF('confirmDeleteDlg').show()"
+                         disabled="#{stockMoveItemBean.flagBtnDelete}"
+                         update=":stockMoveItemForm, :msgBoxSystemMessagePanel"
+                         styleClass="medium" style="#{msg.get('btn.size.150')}"
+                         icon="ui-icon-plusthick"/>
         <p:commandButton id="btnClose"
                          value="Close"
                          styleClass="medium" style="#{msg.get('btn.size.150')}"
@@ -101,34 +108,31 @@
                          var="stockMoveItemModel"
                          resizableColumns="true"
                          selectionMode="single"
-                         value="#{stockMoveItemBean.stockInOutLineModelList}"
-                         selection="#{stockMoveItemBean.stockInOutLineModel}"
+                         value="#{stockMoveItemBean.stockMovementOutViewList}"
+                         selection="#{stockMoveItemBean.stockMovementOutView}"
                          rowKey="#{stockMoveItemModel.id}"
                          rowIndexVar="rowIndex">
-                <p:ajax event="rowSelect" listener="#{stockMoveItemBean.onClickTable}" update=":stockMoveItemForm:btnShowSN,:stockMoveItemForm:btnSearchItem"/>
+                <p:ajax event="rowSelect" listener="#{stockMoveItemBean.onClickTable}" update=":stockMoveItemForm:btnDelete,:stockMoveItemForm:btnSearchItem"/>
                 <p:column headerText="No" style="min-width: 5px; width: 5px; max-width: 5px;">
                     <h:outputText value="#{rowIndex+1}" styleClass="center" />
                 </p:column>
-                <p:column headerText="Item" sortBy="#{stockMoveItemModel.msItemModel.itemId}" filterBy="#{stockMoveItemModel.msItemModel.itemId}" filterMatchMode="contains" style="min-width: 100px; width: 100px; max-width: 100px;" styleClass="center">
-                    <h:outputText value="#{stockMoveItemModel.msItemModel.itemId}"/>
+                <p:column headerText="Item" sortBy="#{stockMoveItemModel.warehouse}" filterBy="#{stockMoveItemModel.warehouse}" filterMatchMode="contains" style="min-width: 100px; width: 100px; max-width: 100px;" styleClass="center">
+                    <h:outputText value="#{stockMoveItemModel.warehouse}"/>
                 </p:column>
-                <p:column headerText="Description" sortBy="#{stockMoveItemModel.msItemModel.DSGThaiItemDescription}" filterBy="#{stockMoveItemModel.msItemModel.DSGThaiItemDescription}" filterMatchMode="contains" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
-                    <h:outputText value="#{stockMoveItemModel.msItemModel.DSGThaiItemDescription}"/>
+                <p:column headerText="Description" sortBy="#{stockMoveItemModel.location}" filterBy="#{stockMoveItemModel.location}" filterMatchMode="contains" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
+                    <h:outputText value="#{stockMoveItemModel.location}"/>
                 </p:column>
-                <p:column headerText="Warehouse" sortBy="#{stockMoveItemModel.palletModel.msWarehouseModel.warehouseName}" filterBy="#{stockMoveItemModel.palletModel.msWarehouseModel.warehouseName}" filterMatchMode="contains" style="min-width: 120px; width: 120px; max-width: 120px;" styleClass="center">
-                    <h:outputText value="#{stockMoveItemModel.palletModel.msWarehouseModel.warehouseName}"/>
-                </p:column>
-                <p:column headerText="Location" sortBy="#{stockMoveItemModel.msLocationModel.locationName}" filterBy="#{stockMoveItemModel.msLocationModel.locationName}" filterMatchMode="contains" style="min-width: 250px; width: 250px; max-width: 250px;" styleClass="center">
-                    <h:outputText value="#{stockMoveItemModel.msLocationModel.locationName}"/>
-                </p:column>
-                <p:column headerText="Batch No" sortBy="#{stockMoveItemModel.batchNo}" filterBy="#{stockMoveItemModel.batchNo}" filterMatchMode="contains" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
+                <p:column headerText="Warehouse" sortBy="#{stockMoveItemModel.batchNo}" filterBy="#{stockMoveItemModel.batchNo}" filterMatchMode="contains" style="min-width: 120px; width: 120px; max-width: 120px;" styleClass="center">
                     <h:outputText value="#{stockMoveItemModel.batchNo}"/>
                 </p:column>
-                <p:column headerText="Pallet" sortBy="#{stockMoveItemModel.palletModel.palletBarcode}" filterBy="#{stockMoveItemModel.palletModel.palletBarcode}" filterMatchMode="contains" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
-                    <h:outputText value="#{stockMoveItemModel.palletModel.palletBarcode}"/>
+                <p:column headerText="Location" sortBy="#{stockMoveItemModel.pallet}" filterBy="#{stockMoveItemModel.pallet}" filterMatchMode="contains" style="min-width: 250px; width: 250px; max-width: 250px;" styleClass="center">
+                    <h:outputText value="#{stockMoveItemModel.pallet}"/>
                 </p:column>
-                <p:column headerText="Qty" sortBy="#{stockMoveItemModel.qty}" filterBy="#{stockMoveItemModel.qty}" filterMatchMode="contains" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
-                    <h:outputText value="#{stockMoveItemModel.qty}"/>
+                <p:column headerText="Batch No" sortBy="#{stockMoveItemModel.snBarcode}" filterBy="#{stockMoveItemModel.snBarcode}" filterMatchMode="contains" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
+                    <h:outputText value="#{stockMoveItemModel.snBarcode}"/>
+                </p:column>
+                <p:column headerText="Pallet" sortBy="#{stockMoveItemModel.status}" filterBy="#{stockMoveItemModel.status}" filterMatchMode="contains" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
+                    <h:outputText value="#{stockMoveItemModel.status == 1 ? 'Create' : 'Scan'}"/>
                 </p:column>
             </p:dataTable>
         </td>
@@ -153,13 +157,33 @@
     </p:confirmDialog>
 </p:panel>
 
-    <p:dialog id="showSNDialog" widgetVar="showSNDlg" header="Show SN"
-              onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
-              modal="true" width="1200">
-        <ui:include src="../site/dialog/showSNDialog.xhtml"/>
-    </p:dialog>
+    <p:panel id="confirmDeletePanel" style="border: 0">
+        <p:confirmDialog id="confirmDeleteDialog" widgetVar="confirmDeleteDlg" width="#{msg.get('dialog.message.size')}"
+                         header="Delete" message="Confirm Delete?" >
+            <div style="text-align: right">
+                <p:commandButton action="#{stockMoveItemBean.onDelete}"
+                                  value="#{msg.get('btn.name.ok')}"
+                                  styleClass="medium" style="#{msg.get('btn.size')}"
+                                  icon="ui-icon-check"
+                                  process="@this" update=":stockMoveItemForm, :msgBoxSystemMessagePanel"
+                                  oncomplete="PF('confirmDeleteDlg').hide()"/>
+                <p:commandButton value="#{msg.get('btn.name.cancel')}"
+                                 styleClass="medium" style="#{msg.get('btn.size')}"
+                                 icon="ui-icon-cancel"
+                                 process="@this"
+                                 update=":stockMoveItemForm"
+                                 oncomplete="PF('confirmDeleteDlg').hide()"/>
+            </div>
+        </p:confirmDialog>
+    </p:panel>
 
-    <p:dialog id="searchItemDialog" widgetVar="searchItemDlg" header="Search Item"
+    <!--<p:dialog id="showSNDialog" widgetVar="showSNDlg" header="Show SN"-->
+              <!--onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"-->
+              <!--modal="true" width="1200">-->
+        <!--<ui:include src="../site/dialog/showSNDialog.xhtml"/>-->
+    <!--</p:dialog>-->
+
+    <p:dialog id="searchItemDialog" widgetVar="searchItemDlg" header="Search Item" closable="false"
               onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
               modal="true" width="1280">
         <ui:include src="../site/dialog/searchItemIssuingDialog.xhtml"/>
