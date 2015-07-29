@@ -29,39 +29,32 @@
                                 icon="ui-icon-folder-open"
                                 process="@this"
                                 update=":setupForm, :msgBoxSystemMessagePanel"
-                                disabled="#{incomingShowItemBean.flagBtnSelect}"
                                 styleClass="medium" style="#{configurationSize.btnSize}"
                                 action="#{incomingShowItemBean.onClickSelectOnDialog()}"
                                 />
+                        <!--disabled="#{incomingShowItemBean.flagBtnSelect}"-->
                         <!--update=":setupForm:itemLabel"-->
                     </td>
                 </tr>
                 <tr>
                     <td colspan="3">
-                        <p:dataTable id="productTable"
-                                     rows="7"
-                                     paginator="true"
-                                     var="itemModel"
-                                     selectionMode="single"
-                                     rowKey="#{itemModel.id}"
-                                     selection="#{incomingShowItemBean.select}"
+                        <p:dataTable id="productTable" rowIndexVar="rowIndex"
+                                     styleClass="full_table"
+                                     rows="7" paginator="true"
                                      value="#{incomingShowItemBean.invOnHandModelList}"
-                                     rowIndexVar="rowIndex">
-                            <p:ajax event="rowSelect" update=":frmFindProduct:productTable, :frmFindProduct:btnSelectDialog"
-                                    listener="#{incomingShowItemBean.onClickTableDialog()}"/>
-                            <p:column headerText="No" style="min-width: 25px; width: 25px; max-width: 25px;">
-                                <h:outputText value="#{rowIndex+1}" style="text-align: right;"/>
+                                     selection="#{incomingShowItemBean.select}" rowKey="#{data.id}"
+                                     var="data"
+                                     style="width: 100%; max-width: 100%; min-width: 100%">
+                            <p:column selectionMode="multiple" style="width:16px;text-align:center; height: 20px"/>
+                            <p:column headerText="Item Code" style="width: 60px; max-width: 60px; min-width: 60px" styleClass="center">
+                                <h:outputText value="#{data.snBarcode}" />
                             </p:column>
-                            <p:column headerText="Item Code" style="min-width: 100px; width: 100px; max-width: 100px;" styleClass="center">
-                                <h:outputText value="#{itemModel.snBarcode}"/>
+                            <p:column headerText="Item Description" style="width: 80px; max-width: 80px; min-width: 80px" styleClass="center">
+                                <h:outputText value="#{data.snBarcode}"/>
                             </p:column>
-                            <p:column headerText="Item Description" style="min-width: 250px; width: 250px; max-width: 250px;">
-                                <h:outputText value="#{itemModel.barcode}"/>
+                            <p:column headerText="Item Name" style="width: 60px; max-width: 60px; min-width: 60px" styleClass="center">
+                                <h:outputText value="#{data.snBarcode}"/>
                             </p:column>
-                            <p:column headerText="Item Name" style="min-width: 150px; width: 150px; max-width: 150px;">
-                                <h:outputText value="#{itemModel.barcode}"/>
-                            </p:column>
-
                         </p:dataTable>
                     </td>
                 </tr>

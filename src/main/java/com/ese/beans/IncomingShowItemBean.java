@@ -1,6 +1,5 @@
 package com.ese.beans;
 
-import com.ese.model.db.BarcodeRegisterModel;
 import com.ese.model.db.InvOnHandModel;
 import com.ese.model.db.StockInOutModel;
 import com.ese.model.view.BarcodeRegisterView;
@@ -21,6 +20,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -40,6 +40,7 @@ public class IncomingShowItemBean extends Bean{
 
     @NotNull
     private List<InvOnHandModel> invOnHandModelList;
+    @NotNull
     private List<InvOnHandModel> select;
 
 //    private List<BarcodeRegisterModel> barcodeRegisterModelList;
@@ -202,6 +203,15 @@ public class IncomingShowItemBean extends Bean{
         log.debug("-- onSubmitSearch()");
         invOnHandModelList = incomingService.findInvOnHand(productSearch);
         //msItemModelList = barcodeRegisterService.findByCondition(selectType, productSearch);
+
+        invOnHandModelList = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            InvOnHandModel invOnHandModel = new InvOnHandModel();
+            invOnHandModel.setId(i);
+            invOnHandModel.setSnBarcode(""+i);
+            invOnHandModelList.add(invOnHandModel);
+        }
+
     }
 
     public void onClickTableDialog(){
@@ -230,8 +240,8 @@ public class IncomingShowItemBean extends Bean{
     }
 
     public void onClickSelectOnDialog(){
-        log.debug("-- onClickSelectOnDialog()");
-        incomingService.save(productSearch, select, stockInOutModel.getId());
+        log.debug("-- onClickSelectOnDialog() {}", select);
+        //incomingService.save(productSearch, select, stockInOutModel.getId());
 
         initBtn();
         initField();
