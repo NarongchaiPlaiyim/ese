@@ -216,7 +216,9 @@ public class IncomingShowItemBean extends Bean{
 
     public void onClickTableDialog(){
         log.debug("-- onClickTable()");
-        flagBtnSelect = false;
+        if (select.size() > 0) {
+            flagBtnSelect = false;
+        }
     }
 
     public void onClickTable(){
@@ -239,17 +241,26 @@ public class IncomingShowItemBean extends Bean{
 //        modeBarcode = "Mode(Edit)     ";
     }
 
+    //TODO
     public void onClickSelectOnDialog(){
         log.debug("-- onClickSelectOnDialog() {}", select);
+        if (select.size() > 0) {
+            initBtn();
+            initField();
+            onLoadDataTable();
+            onClickButtonNew();
+
+
+            //save
+            incomingService.saveStockMovement(select, productSearch.contains("PL"));
+            //
+            showDialog("Select", "Select success.", "msgBoxSystemMessageDlg");
+            flagBtnSelect = true;
+        }
+
         //incomingService.save(productSearch, select, stockInOutModel.getId());
 
-        initBtn();
-        initField();
-        onLoadDataTable();
-        onClickButtonNew();
 
-        showDialog("Select", "Select success.", "msgBoxSystemMessageDlg");
-//        flagBtnSelect = true;
     }
 
     public void onCloseDialog(){

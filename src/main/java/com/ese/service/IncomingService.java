@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -22,6 +23,7 @@ public class IncomingService extends Service {
     @Resource private InvOnHandDAO invOnHandDAO;
     @Resource private PalletDAO palletDAO;
     @Resource private StockMovementInDAO stockMovementInDAO;
+    @Resource private StockMovementOutDAO stockMovementOutDAO;
 
     public List<StockMovementInView> getStockMoveInByStockInOutId(int stockInoutId){
         return  stockMovementInDAO.findstockMovementOutByStockInOutId(stockInoutId);
@@ -148,6 +150,22 @@ public class IncomingService extends Service {
             }
         } catch (Exception e){
             log.debug("Exception error save : ", e);
+        }
+    }
+
+    public void saveStockMovement(List<InvOnHandModel> invOnHandModelList, boolean isPalletBarcode){
+        int staffModel = (int) FacesUtil.getSession(false).getAttribute(AttributeName.STAFF.getName());
+
+        StockMovementOutModel stockMovementOutModel;
+        try{
+            Date currentDate = Utils.currentDate();
+            for (InvOnHandModel invOnHandModel : invOnHandModelList){
+                stockMovementOutModel = new StockMovementOutModel();
+                //TODO
+                stockMovementOutDAO.persist(stockMovementOutModel);
+            }
+        } catch (Exception e){
+            log.debug("Exception error saveStockMovement : ", e);
         }
     }
 }

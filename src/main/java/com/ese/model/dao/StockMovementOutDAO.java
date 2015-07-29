@@ -1,7 +1,5 @@
 package com.ese.model.dao;
 
-
-import com.ese.model.db.StockInOutLineModel;
 import com.ese.model.db.StockMovementOutModel;
 import com.ese.model.view.StockMovementOutView;
 import com.ese.utils.Utils;
