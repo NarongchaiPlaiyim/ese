@@ -20,6 +20,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -235,8 +236,6 @@ public class IncomingShowItemBean extends Bean{
                 flagBtnDelete = Boolean.FALSE;
             }
         }
-
-
 //        modeBarcode = "Mode(Edit)     ";
     }
 
@@ -244,13 +243,10 @@ public class IncomingShowItemBean extends Bean{
     public void onClickSelectOnDialog(){
         log.debug("-- onClickSelectOnDialog() {}", select);
         if (select.size() > 0) {
-            initBtn();
-            initField();
-            onLoadDataTable();
-            onClickButtonNew();
             incomingService.save(productSearch, select, stockInOutModel.getId());
             showDialog("Select", "Select success.", "msgBoxSystemMessageDlg");
             flagBtnSelect = true;
+            select = new ArrayList<>();
         }
     }
 

@@ -126,7 +126,7 @@ public class IncomingService extends Service {
     }
 
     public void save(String productSearch, List<InvOnHandModel> invOnHandModelList, int stockInoutId){
-
+        log.debug("save : productSearch ({}), invOnHandModelList size ({}), stockInoutId ({})", productSearch, invOnHandModelList.size(), stockInoutId);
         StockMovementInModel stockMovementInModel;
         int staffModel = (int) FacesUtil.getSession(false).getAttribute(AttributeName.STAFF.getName());
         try{
@@ -140,11 +140,18 @@ public class IncomingService extends Service {
                 stockMovementInModel.setStatus(1);
                 stockMovementInModel.setStockInOutModel(stockInOutDAO.findByID(stockInoutId));
                 stockMovementInModel.setBatchNo(invOnHandModel.getBatchNo());
+
+                if (!Utils.isNull(invOnHandModel.getPalletModel()) && !Utils.isNull(invOnHandModel.getPalletModel().getPalletBarcode()) && !Utils.isEmpty(invOnHandModel.getPalletModel().getPalletBarcode())){
+                    stockMovementInModel.setPalletBarcode(invOnHandModel.getPalletModel().getPalletBarcode());
+                }
+
                 stockMovementInModel.setIsValid(0);
                 stockMovementInModel.setCreateBy(staffModel);
                 stockMovementInModel.setCreateDate(Utils.currentDate());
                 stockMovementInModel.setUpdateBy(staffModel);
                 stockMovementInModel.setUpdateDate(Utils.currentDate());
+
+                stockMovementInDAO.persist(stockMovementInModel);
             }
         } catch (Exception e){
             log.debug("Exception error save : ", e);
