@@ -135,7 +135,13 @@ public class StockMovementShowItemBean extends Bean{
     }
 
     public void onChangeWarehouse(){
-        msLocationModelList = stockMovementShowItemService.getByWarehouseId(searchItemView.getWarehouseId());
+
+        if (!Utils.isZero(searchItemView.getWarehouseId())){
+            msLocationModelList = stockMovementShowItemService.getByWarehouseId(searchItemView.getWarehouseId());
+        } else {
+            msLocationModelList = stockMovementShowItemService.findLocationAll();
+        }
+
     }
 
     public void onSearchItemDialog(){

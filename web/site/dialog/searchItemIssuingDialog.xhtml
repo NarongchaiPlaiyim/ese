@@ -61,7 +61,7 @@
                             <f:selectItem itemLabel=" Please Select "/>
                             <f:selectItems value="#{stockMoveItemBean.msWarehouseModelList}"
                                            var="warehouse"
-                                           itemLabel="#{warehouse.warehouseCode}"
+                                           itemLabel="#{warehouse.warehouseName}"
                                            itemValue="#{warehouse.id}"/>
                             <p:ajax event="change" listener="#{stockMoveItemBean.onChangeWarehouse}" update=":searchItemIssuingForm:location"/>
                         </p:selectOneMenu>
@@ -75,7 +75,7 @@
                             <f:selectItem itemLabel=" Please Select "/>
                             <f:selectItems value="#{stockMoveItemBean.msLocationModelList}"
                                            var="location"
-                                           itemLabel="#{location.locationBarcode}"
+                                           itemLabel="#{location.locationName}"
                                            itemValue="#{location.id}"/>
                         </p:selectOneMenu>
                     </td>

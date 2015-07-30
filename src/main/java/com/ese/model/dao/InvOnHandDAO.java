@@ -258,32 +258,86 @@ public class InvOnHandDAO extends GenericDAO<InvOnHandModel, Integer>{
         sqlBuilder.append(" ON ").append(getPrefix()).append(".pallet.location_id = ").append(getPrefix()).append(".location.id");
         sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".item_master");
         sqlBuilder.append(" ON ").append(getPrefix()).append(".pallet.item_id = ").append(getPrefix()).append(".item_master.id");
-        sqlBuilder.append(" WHERE ").append(getPrefix()).append(".inv_onhand.stock_inout_line_id is null" );
+//        sqlBuilder.append(" WHERE ").append(getPrefix()).append(".inv_onhand.stock_inout_line_id is null" );
 
         if (!Utils.isNull(searchItemView)){
             if (!Utils.isNull(searchItemView.getItemCode()) && !Utils.isZero(searchItemView.getItemCode().trim().length())){
-                sqlBuilder.append(" AND ").append(getPrefix()).append(".item_master.itemId like '%" ).append(searchItemView.getItemCode().trim()).append("%'");
+                sqlBuilder.append(" WHERE ").append(getPrefix()).append(".item_master.itemId like '%" ).append(searchItemView.getItemCode().trim()).append("%'");
+
+                if (!Utils.isNull(searchItemView.getItemDesc()) && !Utils.isZero(searchItemView.getItemDesc().trim().length())){
+                    sqlBuilder.append(" AND ").append(getPrefix()).append(".item_master.DSGThaiItemDescription like '%" ).append(searchItemView.getItemDesc().trim()).append("%'");
+                }
+
+                if (!Utils.isNull(searchItemView.getBatchNo()) && !Utils.isZero(searchItemView.getBatchNo().trim().length())){
+                    sqlBuilder.append(" AND ").append(getPrefix()).append(".inv_onhand.batchno like '%" ).append(searchItemView.getBatchNo().trim()).append("%'");
+                }
+
+                if (!Utils.isNull(searchItemView.getSN()) && !Utils.isZero(searchItemView.getSN().trim().length())){
+                    sqlBuilder.append(" AND ").append(getPrefix()).append(".inv_onhand.sn_barcode like '%" ).append(searchItemView.getBatchNo().trim()).append("%'");
+                }
+
+                if (!Utils.isZero(searchItemView.getWarehouseId())){
+                    sqlBuilder.append(" AND ").append(getPrefix()).append(".warehouse.id = " ).append(searchItemView.getWarehouseId());
+                }
+
+                if (!Utils.isZero(searchItemView.getLocationId())){
+                    sqlBuilder.append(" AND ").append(getPrefix()).append(".location.id = " ).append(searchItemView.getLocationId());
+                }
+            } else  if (!Utils.isNull(searchItemView.getItemDesc()) && !Utils.isZero(searchItemView.getItemDesc().trim().length())){
+                sqlBuilder.append(" WHERE ").append(getPrefix()).append(".item_master.DSGThaiItemDescription like '%" ).append(searchItemView.getItemDesc().trim()).append("%'");
+
+                if (!Utils.isNull(searchItemView.getBatchNo()) && !Utils.isZero(searchItemView.getBatchNo().trim().length())){
+                    sqlBuilder.append(" AND ").append(getPrefix()).append(".inv_onhand.batchno like '%" ).append(searchItemView.getBatchNo().trim()).append("%'");
+                }
+
+                if (!Utils.isNull(searchItemView.getSN()) && !Utils.isZero(searchItemView.getSN().trim().length())){
+                    sqlBuilder.append(" AND ").append(getPrefix()).append(".inv_onhand.sn_barcode like '%" ).append(searchItemView.getBatchNo().trim()).append("%'");
+                }
+
+                if (!Utils.isZero(searchItemView.getWarehouseId())){
+                    sqlBuilder.append(" AND ").append(getPrefix()).append(".warehouse.id = " ).append(searchItemView.getWarehouseId());
+                }
+
+                if (!Utils.isZero(searchItemView.getLocationId())){
+                    sqlBuilder.append(" AND ").append(getPrefix()).append(".location.id = " ).append(searchItemView.getLocationId());
+                }
+            } else  if (!Utils.isNull(searchItemView.getBatchNo()) && !Utils.isZero(searchItemView.getBatchNo().trim().length())){
+                sqlBuilder.append(" WHERE ").append(getPrefix()).append(".inv_onhand.batchno like '%" ).append(searchItemView.getBatchNo().trim()).append("%'");
+
+                if (!Utils.isNull(searchItemView.getSN()) && !Utils.isZero(searchItemView.getSN().trim().length())){
+                    sqlBuilder.append(" AND ").append(getPrefix()).append(".inv_onhand.sn_barcode like '%" ).append(searchItemView.getBatchNo().trim()).append("%'");
+                }
+
+                if (!Utils.isZero(searchItemView.getWarehouseId())){
+                    sqlBuilder.append(" AND ").append(getPrefix()).append(".warehouse.id = " ).append(searchItemView.getWarehouseId());
+                }
+
+                if (!Utils.isZero(searchItemView.getLocationId())){
+                    sqlBuilder.append(" AND ").append(getPrefix()).append(".location.id = " ).append(searchItemView.getLocationId());
+                }
+            } else if (!Utils.isNull(searchItemView.getSN()) && !Utils.isZero(searchItemView.getSN().trim().length())){
+                sqlBuilder.append(" WHERE ").append(getPrefix()).append(".inv_onhand.sn_barcode like '%" ).append(searchItemView.getBatchNo().trim()).append("%'");
+
+                if (!Utils.isZero(searchItemView.getWarehouseId())){
+                    sqlBuilder.append(" AND ").append(getPrefix()).append(".warehouse.id = " ).append(searchItemView.getWarehouseId());
+                }
+
+                if (!Utils.isZero(searchItemView.getLocationId())){
+                    sqlBuilder.append(" AND ").append(getPrefix()).append(".location.id = " ).append(searchItemView.getLocationId());
+                }
+            } else if (!Utils.isZero(searchItemView.getWarehouseId())){
+                sqlBuilder.append(" WHERE ").append(getPrefix()).append(".warehouse.id = " ).append(searchItemView.getWarehouseId());
+
+                if (!Utils.isZero(searchItemView.getLocationId())){
+                    sqlBuilder.append(" AND ").append(getPrefix()).append(".location.id = " ).append(searchItemView.getLocationId());
+                }
+            } else {
+                if (!Utils.isZero(searchItemView.getLocationId())){
+                    sqlBuilder.append(" WHERE ").append(getPrefix()).append(".location.id = " ).append(searchItemView.getLocationId());
+                }
             }
 
-            if (!Utils.isNull(searchItemView.getItemDesc()) && !Utils.isZero(searchItemView.getItemDesc().trim().length())){
-                sqlBuilder.append(" AND ").append(getPrefix()).append(".item_master.DSGThaiItemDescription like '%" ).append(searchItemView.getItemDesc().trim()).append("%'");
-            }
 
-            if (!Utils.isNull(searchItemView.getBatchNo()) && !Utils.isZero(searchItemView.getBatchNo().trim().length())){
-                sqlBuilder.append(" AND ").append(getPrefix()).append(".inv_onhand.batchno like '%" ).append(searchItemView.getBatchNo().trim()).append("%'");
-            }
-
-            if (!Utils.isNull(searchItemView.getSN()) && !Utils.isZero(searchItemView.getSN().trim().length())){
-                sqlBuilder.append(" AND ").append(getPrefix()).append(".inv_onhand.sn_barcode like '%" ).append(searchItemView.getBatchNo().trim()).append("%'");
-            }
-
-            if (!Utils.isZero(searchItemView.getWarehouseId())){
-                sqlBuilder.append(" AND ").append(getPrefix()).append(".warehouse.id = " ).append(searchItemView.getWarehouseId());
-            }
-
-            if (!Utils.isZero(searchItemView.getLocationId())){
-                sqlBuilder.append(" AND ").append(getPrefix()).append(".location.id = " ).append(searchItemView.getLocationId());
-            }
         }
 
         log.debug("findBySearch : {}", sqlBuilder.toString());
