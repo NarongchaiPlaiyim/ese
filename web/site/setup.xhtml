@@ -392,7 +392,7 @@
                                                         <h:outputText value="#{rowIndex2+1}"/>
                                                     </p:column>
                                                     <p:column headerText="Type" style="width: 200px" styleClass="center">
-                                                        <h:outputText value="#{stockInOutNote.type == 'i' ? 'Receiving' : 'Issuing'}"/>
+                                                        <h:outputText value="#{stockInOutNote.type == 'i' ? 'Receiving' : stockInOutNote.type == 't' ? 'Transfer' : 'Issuing'}"/>
                                                     </p:column>
                                                     <p:column headerText="Code" style="width: 200px" styleClass="center">
                                                         <h:outputText value="#{stockInOutNote.inoutCode}"/>
