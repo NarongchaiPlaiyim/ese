@@ -119,6 +119,7 @@ public class IssuingBean extends Bean {
         modeFlag = Boolean.FALSE;
         flagBtnShow = Boolean.FALSE;
         flagBtnPost = Boolean.FALSE;
+        flagBtnPrint = Boolean.FALSE;
     }
 
     public void onClickPost(){

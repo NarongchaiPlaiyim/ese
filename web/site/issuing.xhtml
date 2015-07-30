@@ -210,7 +210,7 @@
                                  rowIndexVar="rowIndex">
                         <p:ajax event="rowSelect" listener="#{issuingBean.onClickTable}"
                                 update=":issuingForm:txtMode, :issuingForm:txtDocno, :issuingForm:txtDocDate, :issuingForm:docNote, :issuingForm:txtRemark
-                                                        , :issuingForm:showItem, :issuingForm:post"
+                                                        , :issuingForm:showItem, :issuingForm:post, :issuingForm:btnPrint"
                                 />
                         <p:column headerText="No" style="min-width: 5px; width: 5px; max-width: 5px;">
                             <h:outputText value="#{rowIndex+1}" styleClass="center" />
