@@ -27,9 +27,9 @@ public class IncomingService extends Service {
     @Resource private StockMovementInDAO stockMovementInDAO;
     @Resource private ReportService reportService;
     @Value("#{config['report.incoming']}")
-    private String pathPrintInconing;
+    private String pathPrintIncoming;
     @Value("#{config['report.incoming.sub']}")
-    private String pathPrintInconingSub;
+    private String pathPrintIncomingSub;
 
     public List<StockMovementInView> getStockMoveInByStockInOutId(int stockInoutId){
         return  stockMovementInDAO.findstockMovementOutByStockInOutId(stockInoutId);
@@ -123,19 +123,18 @@ public class IncomingService extends Service {
     }
     public void printReport(int stockInoutId){
         String reportName = Utils.genReportName("_Incoming");
-        PalletModel palletModel = null;
         List<IncomingViewReport> reportViews = stockInOutDAO.findReportByStickInoutId(stockInoutId);
-        HashMap map = new HashMap<String, Object>();
+        HashMap map = new HashMap();
 
         try {
-                map.put("path", FacesUtil.getRealPath(pathPrintInconingSub));
+                map.put("path", FacesUtil.getRealPath(pathPrintIncomingSub));
                 map.put("subReport", stockMovementInDAO.findSubReportByStickInoutId(stockInoutId));
         } catch (Exception e) {
             log.debug("Exception error onPrintTag : ", e);
         }
 
         try {
-            reportService.exportPDF(pathPrintInconing, map, reportName, reportViews);
+            reportService.exportPDF(pathPrintIncoming, map, reportName, reportViews);
         } catch (Exception e) {
             log.debug("Exception Report : ", e);
         }
