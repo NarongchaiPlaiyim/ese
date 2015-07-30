@@ -119,6 +119,6 @@ public class IncomingBean extends Bean {
     }
 
     public void onPrint(){
-        incomingService.printReport();
+        incomingService.printReport(stockInOutModel.getId());
     }
 }

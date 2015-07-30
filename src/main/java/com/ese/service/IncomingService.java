@@ -4,13 +4,16 @@ import com.ese.model.dao.*;
 import com.ese.model.db.*;
 import com.ese.model.view.IncomingView;
 import com.ese.model.view.StockMovementInView;
+import com.ese.model.view.report.IncomingViewReport;
 import com.ese.utils.AttributeName;
 import com.ese.utils.FacesUtil;
 import com.ese.utils.Utils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 
 @Component
@@ -22,6 +25,11 @@ public class IncomingService extends Service {
     @Resource private InvOnHandDAO invOnHandDAO;
     @Resource private PalletDAO palletDAO;
     @Resource private StockMovementInDAO stockMovementInDAO;
+    @Resource private ReportService reportService;
+    @Value("#{config['report.incoming']}")
+    private String pathPrintInconing;
+    @Value("#{config['report.incoming.sub']}")
+    private String pathPrintInconingSub;
 
     public List<StockMovementInView> getStockMoveInByStockInOutId(int stockInoutId){
         return  stockMovementInDAO.findstockMovementOutByStockInOutId(stockInoutId);
@@ -113,8 +121,24 @@ public class IncomingService extends Service {
         }
         return invOnHandModelList;
     }
-    public void printReport(){
+    public void printReport(int stockInoutId){
+        String reportName = Utils.genReportName("_Incoming");
+        PalletModel palletModel = null;
+        List<IncomingViewReport> reportViews = stockInOutDAO.findReportByStickInoutId(stockInoutId);
+        HashMap map = new HashMap<String, Object>();
 
+        try {
+                map.put("path", FacesUtil.getRealPath(pathPrintInconingSub));
+                map.put("subReport", stockMovementInDAO.findSubReportByStickInoutId(stockInoutId));
+        } catch (Exception e) {
+            log.debug("Exception error onPrintTag : ", e);
+        }
+
+        try {
+            reportService.exportPDF(pathPrintInconing, map, reportName, reportViews);
+        } catch (Exception e) {
+            log.debug("Exception Report : ", e);
+        }
     }
 
     public void delete(int stockMoveInId){
