@@ -35,6 +35,10 @@ public class FacesUtil implements Serializable {
         return (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(createNewSession);
     }
 
+    public static HttpSession getSession() {
+        return getSession(Boolean.FALSE);
+    }
+
     public static ExternalContext getExternalContext() {
         return FacesContext.getCurrentInstance().getExternalContext();
     }

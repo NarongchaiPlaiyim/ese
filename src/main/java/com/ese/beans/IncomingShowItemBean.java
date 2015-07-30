@@ -20,7 +20,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -203,14 +202,14 @@ public class IncomingShowItemBean extends Bean{
         log.debug("-- onSubmitSearch()");
         invOnHandModelList = incomingService.findInvOnHand(productSearch);
         //msItemModelList = barcodeRegisterService.findByCondition(selectType, productSearch);
-
-        invOnHandModelList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            InvOnHandModel invOnHandModel = new InvOnHandModel();
-            invOnHandModel.setId(i);
-            invOnHandModel.setSnBarcode(""+i);
-            invOnHandModelList.add(invOnHandModel);
-        }
+//
+//        invOnHandModelList = new ArrayList<>();
+//        for (int i = 0; i < 10; i++) {
+//            InvOnHandModel invOnHandModel = new InvOnHandModel();
+//            invOnHandModel.setId(i);
+//            invOnHandModel.setSnBarcode(""+i);
+//            invOnHandModelList.add(invOnHandModel);
+//        }
 
     }
 
@@ -249,18 +248,10 @@ public class IncomingShowItemBean extends Bean{
             initField();
             onLoadDataTable();
             onClickButtonNew();
-
-
-            //save
-            incomingService.saveStockMovement(select, productSearch.contains("PL"));
-            //
+            incomingService.save(productSearch, select, stockInOutModel.getId());
             showDialog("Select", "Select success.", "msgBoxSystemMessageDlg");
             flagBtnSelect = true;
         }
-
-        //incomingService.save(productSearch, select, stockInOutModel.getId());
-
-
     }
 
     public void onCloseDialog(){

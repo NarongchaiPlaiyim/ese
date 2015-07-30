@@ -5,7 +5,6 @@ import com.ese.model.dao.*;
 import com.ese.model.db.*;
 import com.ese.model.view.*;
 import com.ese.model.view.report.ConfirmationPackingViewModel;
-import com.ese.model.view.report.InventoryOnHandViewReport;
 import com.ese.model.view.report.StickerWorkLoadViewReport;
 import com.ese.model.view.report.SubPickingOrderWithBarcodeViewReport;
 import com.ese.service.security.UserDetail;
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -172,7 +170,7 @@ public class PickingOrderService extends Service {
         String nameReport = Utils.genReportName("_StikerWorkLoad");
         List<StickerWorkLoadViewReport> viewReports = axCustomerConfirmJourDAO.genStikerWorkLoadReport(pickingId);
 
-        HashMap map = new HashMap<String, Object>();
+        HashMap map = new HashMap();
         map.put("userPrint", user.getUserName());
         map.put("printDate", Utils.convertCurrentDateToStringDDMMYYYY());
 

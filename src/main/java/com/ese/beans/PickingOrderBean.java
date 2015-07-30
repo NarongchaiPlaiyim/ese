@@ -1,6 +1,5 @@
 package com.ese.beans;
 
-import com.ese.model.db.LoadingOrderModel;
 import com.ese.model.db.PickingOrderModel;
 import com.ese.model.db.StatusModel;
 import com.ese.model.view.DataSyncConfirmOrderView;
@@ -59,7 +58,7 @@ public class PickingOrderBean extends Bean {
     private void init(){
         initBtn();
         pickingOrderView = new PickingOrderView();
-        pickingOrderModelList = new ArrayList<PickingOrderModel>();
+        pickingOrderModelList = new ArrayList<>();
         onLoadTable();
         onLoadStatue();
     }
