@@ -4,6 +4,7 @@ import com.ese.model.TableValue;
 import com.ese.model.dao.StatusDAO;
 import com.ese.model.dao.StockInOutDAO;
 import com.ese.model.dao.StockInOutNoteDAO;
+import com.ese.model.dao.StockMovementOutDAO;
 import com.ese.model.db.MSStockInOutNoteModel;
 import com.ese.model.db.StatusModel;
 import com.ese.model.db.StockInOutModel;
@@ -28,6 +29,7 @@ public class IssuingService extends Service {
     @Resource private StockInOutNoteDAO stockInOutNoteDAO;
     @Resource private StatusDAO statusDAO;
     @Resource private ReportService reportService;
+    @Resource private StockMovementOutDAO stockMovementOutDAO;
     @Value("#{config['report.issuing']}")
     private String pathPrintIssuing;
     @Value("#{config['report.issuing.sub']}")
@@ -105,7 +107,7 @@ public class IssuingService extends Service {
 
         try {
             map.put("path", FacesUtil.getRealPath(pathPrintIssuingSub));
-//            map.put("subReport", stockMovementInDAO.findSubReportByStickInoutId(stockInoutId));
+            map.put("subReport", stockMovementOutDAO.findSubReportByStickInoutId(stockInoutId));
         } catch (Exception e) {
             log.debug("Exception error onPrintTag : ", e);
         }

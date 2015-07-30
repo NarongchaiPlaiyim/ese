@@ -2,7 +2,6 @@ package com.ese.beans;
 
 import com.ese.model.db.MSStockInOutNoteModel;
 import com.ese.model.db.StockInOutModel;
-import com.ese.model.view.IncomingView;
 import com.ese.model.view.IssuingView;
 import com.ese.service.IssuingService;
 import com.ese.utils.FacesUtil;
@@ -129,6 +128,6 @@ public class IssuingBean extends Bean {
     }
 
     public void onPrint(){
-        issuingService.printReport();
+        issuingService.printReport(stockInOutModel.getId());
     }
 }
