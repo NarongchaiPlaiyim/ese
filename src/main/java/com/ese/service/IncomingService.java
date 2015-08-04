@@ -101,7 +101,6 @@ public class IncomingService extends Service {
                 }
             } else if (barcode.contains("T")) {
                 log.debug("T");
-                log.debug("----- {}", invOnHandDAO.findAll().toString());
                 invOnHandModelList = invOnHandDAO.findByLikeSnBarcode(barcode);
             }
             log.debug("invOnHandModelList.size().[{}}", invOnHandModelList.size());
@@ -157,16 +156,17 @@ public class IncomingService extends Service {
                 stockMovementInModel = new StockMovementInModel();
 
                 if (productSearch.contains("PL")) {
-                    stockMovementInModel.setSnBarcode(invOnHandModel.getSnBarcode());
+                    if (!Utils.isNull(invOnHandModel.getPalletModel()) && !Utils.isNull(invOnHandModel.getPalletModel().getPalletBarcode()) && !Utils.isEmpty(invOnHandModel.getPalletModel().getPalletBarcode())){
+                        stockMovementInModel.setPalletBarcode(invOnHandModel.getPalletModel().getPalletBarcode());
+                    }
+
                 }
 
+                stockMovementInModel.setSnBarcode(invOnHandModel.getSnBarcode());
                 stockMovementInModel.setStatus(1);
                 stockMovementInModel.setStockInOutModel(stockInOutDAO.findByID(stockInoutId));
                 stockMovementInModel.setBatchNo(invOnHandModel.getBatchNo());
 
-                if (!Utils.isNull(invOnHandModel.getPalletModel()) && !Utils.isNull(invOnHandModel.getPalletModel().getPalletBarcode()) && !Utils.isEmpty(invOnHandModel.getPalletModel().getPalletBarcode())){
-                    stockMovementInModel.setPalletBarcode(invOnHandModel.getPalletModel().getPalletBarcode());
-                }
 
                 stockMovementInModel.setIsValid(0);
                 stockMovementInModel.setCreateBy(staffModel);

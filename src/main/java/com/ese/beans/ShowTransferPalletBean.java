@@ -82,6 +82,10 @@ public class ShowTransferPalletBean extends Bean{
     }
 
     public void onNewPalletTransfer(){
+        palletTagID = "";
+        itemId = "";
+        warehouseMode = new MSWarehouseModel();
+        msLocationModel = new MSLocationModel();
         warehouseModelList = warehouseService.getWarehouseAll();
         msLocationModelList = locationService.getLocationAll();
     }
@@ -122,10 +126,20 @@ public class ShowTransferPalletBean extends Bean{
     }
 
     public void  onClickTable(){
+        if (selectPallet.getToTransfer() == 1){
+            flagBtnPrintTag = Boolean.FALSE;
+        }
+    }
+
+    public void  onClickTableDialog(){
         flagBtnFindLocation = Boolean.FALSE;
 
         if (selectPallet.getToTransfer() == 1){
             flagBtnPrintTag = Boolean.FALSE;
         }
+    }
+
+    public void onCloseDialog(){
+        selectPallet = new PalletTransferView();
     }
 }

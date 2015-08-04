@@ -119,19 +119,19 @@
                 <p:column headerText="Item" sortBy="#{stockMoveItemModel.warehouse}" filterBy="#{stockMoveItemModel.warehouse}" filterMatchMode="contains" style="min-width: 100px; width: 100px; max-width: 100px;" styleClass="center">
                     <h:outputText value="#{stockMoveItemModel.warehouse}"/>
                 </p:column>
-                <p:column headerText="Description" sortBy="#{stockMoveItemModel.location}" filterBy="#{stockMoveItemModel.location}" filterMatchMode="contains" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
+                <p:column headerText="Location" sortBy="#{stockMoveItemModel.location}" filterBy="#{stockMoveItemModel.location}" filterMatchMode="contains" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
                     <h:outputText value="#{stockMoveItemModel.location}"/>
                 </p:column>
-                <p:column headerText="Warehouse" sortBy="#{stockMoveItemModel.batchNo}" filterBy="#{stockMoveItemModel.batchNo}" filterMatchMode="contains" style="min-width: 120px; width: 120px; max-width: 120px;" styleClass="center">
+                <p:column headerText="Batch No" sortBy="#{stockMoveItemModel.batchNo}" filterBy="#{stockMoveItemModel.batchNo}" filterMatchMode="contains" style="min-width: 120px; width: 120px; max-width: 120px;" styleClass="center">
                     <h:outputText value="#{stockMoveItemModel.batchNo}"/>
                 </p:column>
-                <p:column headerText="Location" sortBy="#{stockMoveItemModel.pallet}" filterBy="#{stockMoveItemModel.pallet}" filterMatchMode="contains" style="min-width: 250px; width: 250px; max-width: 250px;" styleClass="center">
+                <p:column headerText="Pallet" sortBy="#{stockMoveItemModel.pallet}" filterBy="#{stockMoveItemModel.pallet}" filterMatchMode="contains" style="min-width: 250px; width: 250px; max-width: 250px;" styleClass="center">
                     <h:outputText value="#{stockMoveItemModel.pallet}"/>
                 </p:column>
-                <p:column headerText="Batch No" sortBy="#{stockMoveItemModel.snBarcode}" filterBy="#{stockMoveItemModel.snBarcode}" filterMatchMode="contains" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
+                <p:column headerText="SN" sortBy="#{stockMoveItemModel.snBarcode}" filterBy="#{stockMoveItemModel.snBarcode}" filterMatchMode="contains" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
                     <h:outputText value="#{stockMoveItemModel.snBarcode}"/>
                 </p:column>
-                <p:column headerText="Pallet" sortBy="#{stockMoveItemModel.status}" filterBy="#{stockMoveItemModel.status}" filterMatchMode="contains" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
+                <p:column headerText="Status" sortBy="#{stockMoveItemModel.status}" filterBy="#{stockMoveItemModel.status}" filterMatchMode="contains" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
                     <h:outputText value="#{stockMoveItemModel.status == 1 ? 'Create' : 'Scan'}"/>
                 </p:column>
             </p:dataTable>

@@ -37,6 +37,13 @@
                                      oncomplete="PF('bui').unblock()"
                                      process="@this"
                                      styleClass="medium" />
+                    <p:commandButton id="btnPrint"
+                                     value="Print Tag"
+                                     disabled="#{showTransferPalletBean.flagBtnPrintTag}"
+                                     actionListener="#{showTransferPalletBean.onPrintTag('PrintTag')}"
+                                     update=":pnlDlg"
+                                     process="@form"
+                                     styleClass="medium" />
                 </div>
             </p:panel>
             <table border="0" class="content_table_form">
@@ -47,8 +54,12 @@
                                      var="palletTransferView" styleClass="full_table"
                                      scrollable="true" scrollHeight="450"
                                      resizableColumns="true"
+                                     selectionMode="single"
                                      rowKey="#{palletTransferView.id}"
+                                     selection="#{showTransferPalletBean.selectPallet}"
                                      style="width: 100%; max-width: 100%; min-width: 100%">
+                            <p:ajax event="rowSelect" update=":stockTransferPalletForm:btnPrint"
+                                    listener="#{showTransferPalletBean.onClickTable()}"/>
                             <p:column headerText="No" style="width: 20px" styleClass="center">
                                 <h:outputText value="#{rowIndex+1}"/>
                             </p:column>
@@ -98,7 +109,7 @@
         <ui:include src="../site/dialog/findLoacationNewPalletTransferDialog.xhtml"/>
     </p:dialog>
 
-    <p:dialog id="palletTransDialog" widgetVar="palletTransDlg" header="New Pallet Transfer"
+    <p:dialog id="palletTransDialog" widgetVar="palletTransDlg" header="New Pallet Transfer" closable="false"
               onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
               modal="true" width="1800">
         <ui:include src="../site/dialog/palletTransferDialog.xhtml"/>

@@ -18,13 +18,13 @@
                                  disabled="#{showTransferPalletBean.flagBtnFindLocation}"
                                  update=":findlocationForm"
                                  styleClass="medium" />
-                <p:commandButton id="btnPrint"
-                                 value="Print Tag"
-                                 disabled="#{showTransferPalletBean.flagBtnPrintTag}"
-                                 actionListener="#{showTransferPalletBean.onPrintTag('PrintTag')}"
-                                 update=":pnlDlg"
-                                 process="@form"
-                                 styleClass="medium" />
+                <!--<p:commandButton id="btnPrint"-->
+                                 <!--value="Print Tag"-->
+                                 <!--disabled="#{showTransferPalletBean.flagBtnPrintTag}"-->
+                                 <!--actionListener="#{showTransferPalletBean.onPrintTag('PrintTag')}"-->
+                                 <!--update=":pnlDlg"-->
+                                 <!--process="@form"-->
+                                 <!--styleClass="medium" />-->
             </div>
         </p:panel>
         <div style="text-align: center;">
@@ -102,8 +102,8 @@
                                      selection="#{showTransferPalletBean.selectPallet}"
                                      rowKey="#{newPalletTransferView.id}"
                                      style="width: 100%; max-width: 100%; min-width: 100%">
-                            <p:ajax event="rowSelect" update=":palletTransferDlgForm:btnFindLocation ,:palletTransferDlgForm:btnPrint"
-                                    listener="#{showTransferPalletBean.onClickTable}"/>
+                            <p:ajax event="rowSelect" update=":palletTransferDlgForm:btnFindLocation"
+                                    listener="#{showTransferPalletBean.onClickTableDialog}"/>
                             <p:column headerText="No" style="width: 20px" styleClass="center">
                                 <h:outputText value="#{rowIndex+1}"/>
                             </p:column>
@@ -146,6 +146,16 @@
                     </td>
                 </tr>
             </table>
+        </div>
+        <div style="text-align: center">
+            <p:commandButton
+                    id="btnClose"
+                    value="Close"
+                    update=":stockTransferPalletForm"
+                    styleClass="medium"
+                    action="#{showTransferPalletBean.onCloseDialog()}"
+                    oncomplete="PF('palletTransDlg').hide()"
+                    />
         </div>
     </h:form>
 </f:view>
