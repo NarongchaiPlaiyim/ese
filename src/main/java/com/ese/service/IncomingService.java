@@ -4,7 +4,7 @@ import com.ese.model.dao.*;
 import com.ese.model.db.*;
 import com.ese.model.view.IncomingView;
 import com.ese.model.view.StockMovementInView;
-import com.ese.model.view.report.IncomingViewReport;
+import com.ese.model.view.report.StockViewReport;
 import com.ese.utils.AttributeName;
 import com.ese.utils.FacesUtil;
 import com.ese.utils.Utils;
@@ -122,7 +122,7 @@ public class IncomingService extends Service {
     }
     public void printReport(int stockInoutId){
         String reportName = Utils.genReportName("_Incoming");
-        List<IncomingViewReport> reportViews = stockInOutDAO.findReportByStickInoutId(stockInoutId);
+        List<StockViewReport> reportViews = stockInOutDAO.findReportByStickInoutId(stockInoutId);
         HashMap map = new HashMap();
 
         try {

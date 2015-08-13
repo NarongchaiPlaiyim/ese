@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Stock_Transfer_Report_SubDetail" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="203f4cc4-d96a-4dbd-8d7a-435da2ddb9ad">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="Stock_inout_id" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[705]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="itemId" class="java.lang.String"/>
+	<field name="itemDesc" class="java.lang.String"/>
+	<field name="palletBarcode" class="java.lang.String"/>
+	<field name="previousLocationId" class="java.lang.Integer"/>
+	<field name="locationBarcode" class="java.lang.String"/>
+	<field name="qty" class="java.lang.Integer"/>
+	<field name="stockInOutId" class="java.lang.Integer"/>
+	<variable name="Sum" class="java.lang.Integer" resetType="Group" resetGroup="Sum_Total_Qty_all" calculation="Sum">
+		<variableExpression><![CDATA[$F{qty}]]></variableExpression>
+	</variable>
+	<variable name="Sum2" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{qty}]]></variableExpression>
+	</variable>
+	<group name="Sum_Total_Qty_all">
+		<groupExpression><![CDATA[$F{itemId}]]></groupExpression>
+		<groupHeader>
+			<band height="40">
+				<staticText>
+					<reportElement uuid="15262868-97d6-4037-aa85-ed3ce3b083e2" x="36" y="20" width="180" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="11" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Pallet_barcode]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="3cdd0136-7a88-408c-835d-89e5ac3ae660" x="216" y="20" width="72" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="11" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[From Location]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="dec1ed3a-917e-4574-8c4b-d204264b79c7" x="288" y="20" width="72" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="11" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[To Location]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="f4eb44c0-e96b-4a23-a264-d1d92aba095e" x="360" y="21" width="72" height="19"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="11" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Qty]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="450bb31b-203e-4690-bd13-a7ba8520234e" x="432" y="21" width="72" height="19"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="11" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Unit]]></text>
+				</staticText>
+				<line>
+					<reportElement uuid="f7dee62a-20ec-4ccc-b543-02cce61075d4" x="0" y="21" width="504" height="1"/>
+					<graphicElement>
+						<pen lineWidth="1.5"/>
+					</graphicElement>
+				</line>
+				<textField>
+					<reportElement uuid="8561029a-1332-489a-8c97-5568121231a1" x="136" y="0" width="368" height="20"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma" size="11" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{itemDesc}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="5a175b54-d863-4832-9692-22f5554a8d4b" x="36" y="0" width="100" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="11" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{itemId}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="21">
+				<staticText>
+					<reportElement uuid="13c8f71a-8612-403f-a651-66bb031e7562" x="36" y="0" width="100" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="11" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Total qty]]></text>
+				</staticText>
+				<line>
+					<reportElement uuid="522341e3-dc09-4ebd-a9da-696fabefd9dd" x="0" y="0" width="504" height="1"/>
+					<graphicElement>
+						<pen lineWidth="1.5"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement uuid="a96864a2-e09d-4ecb-b7ce-f531e98a20ef" x="0" y="20" width="504" height="1"/>
+					<graphicElement>
+						<pen lineWidth="1.5"/>
+					</graphicElement>
+				</line>
+				<textField>
+					<reportElement uuid="f8b735ee-2d24-4530-86d8-0a3247efbe53" x="136" y="1" width="80" height="20"/>
+					<textElement>
+						<font fontName="Tahoma" size="11" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Sum}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="a831f001-702d-4644-a2ab-f0db858600ed" x="288" y="0" width="72" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="11" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{locationBarcode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="bd81e36a-ac48-445e-9a74-6312a7c1f855" x="36" y="0" width="180" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="11" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{palletBarcode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="adda1b03-f635-4b93-9d0b-832ec90a84e0" x="216" y="0" width="72" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="11" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{previousLocationId}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f7d18a54-d172-4238-887c-8038756f794e" x="360" y="0" width="72" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="11" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{qty}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="50">
+			<staticText>
+				<reportElement uuid="61eadbe3-d8fa-4b55-9e1d-b57e1433ae48" x="36" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="11" isBold="false" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Grand Total qty]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="4ed08e69-ca7c-417b-b519-a6af50466d70" x="0" y="20" width="504" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.5"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement uuid="f620d002-b3f4-4b35-b18e-7aef491f80fd" x="136" y="1" width="80" height="20"/>
+				<textElement>
+					<font fontName="Tahoma" size="11" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Sum2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

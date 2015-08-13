@@ -5,7 +5,7 @@ import com.ese.model.view.IncomingView;
 import com.ese.model.view.IssuingView;
 import com.ese.model.view.QuarantineView;
 import com.ese.model.view.StockTransferView;
-import com.ese.model.view.report.IncomingViewReport;
+import com.ese.model.view.report.StockViewReport;
 import com.ese.utils.Utils;
 import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
@@ -167,9 +167,9 @@ public class StockInOutDAO extends GenericDAO<StockInOutModel, Integer> {
         return stockInOutModelList;
     }
 
-    public List<IncomingViewReport> findReportByStickInoutId(int stockInOutId){
+    public List<StockViewReport> findReportByStickInoutId(int stockInOutId){
         log.debug("findReportByStickInoutId(). {}", stockInOutId);
-        List<IncomingViewReport> viewReportList = new ArrayList<IncomingViewReport>();
+        List<StockViewReport> viewReportList = new ArrayList<StockViewReport>();
         StringBuilder sqlBuilder = new StringBuilder();
 
         sqlBuilder.append("SELECT ");
@@ -197,7 +197,7 @@ public class StockInOutDAO extends GenericDAO<StockInOutModel, Integer> {
             int i = 1;
 
             for (Object[] entity : objects) {
-                IncomingViewReport viewReport = new IncomingViewReport();
+                StockViewReport viewReport = new StockViewReport();
                 viewReport.setId(Utils.parseInt(entity[0]));
                 viewReport.setDocNo(Utils.parseString(entity[1]));
                 viewReport.setDocDate(Utils.parseDate(entity[2], null));

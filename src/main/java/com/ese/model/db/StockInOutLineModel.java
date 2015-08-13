@@ -56,6 +56,9 @@ public class StockInOutLineModel extends AbstractModel{
     @Column(name="batchno")
     private String batchNo;
 
+    @Column(name="previous_location_id")
+    private String previousLocationId;
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
@@ -71,6 +74,7 @@ public class StockInOutLineModel extends AbstractModel{
                 .append("palletModel", palletModel)
                 .append("msLocationModel", msLocationModel)
                 .append("batchNo", batchNo)
+                .append("previousLocationId", previousLocationId)
                 .toString();
     }
 }

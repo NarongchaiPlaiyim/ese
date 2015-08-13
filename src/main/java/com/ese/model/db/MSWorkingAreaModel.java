@@ -6,10 +6,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.annotations.Proxy;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -25,6 +22,10 @@ public class MSWorkingAreaModel {
 
     @Column(name = "version")
     private Integer version;
+
+    @OneToOne
+    @JoinColumn(name = "warehouse_id")
+    private MSWarehouseModel msWarehouseModel;
 
     @Override
     public String toString() {

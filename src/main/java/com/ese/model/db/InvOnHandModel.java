@@ -69,24 +69,30 @@ public class InvOnHandModel extends AbstractModel{
     @JoinColumn(name="picking_order_id")
     private PickingOrderModel pickingOrderModel;
 
+    @OneToOne
+    @JoinColumn(name = "shift_id")
+    private MSShiftModel msShiftModel;
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("id", id)
-                .append("msItemModel", msItemModel)
                 .append("snBarcode", snBarcode)
                 .append("batchNo", batchNo)
                 .append("grade", grade)
-                .append("palletModel", palletModel)
-                .append("msLocationModel", msLocationModel)
                 .append("cost", cost)
                 .append("status", status)
                 .append("isValid", isValid)
                 .append("version", version)
                 .append("barcode", barcode)
                 .append("isFoil", isFoil)
+                .append("msItemModel", msItemModel)
+                .append("palletModel", palletModel)
+                .append("msLocationModel", msLocationModel)
                 .append("stockInOutLineModel", stockInOutLineModel)
                 .append("msWorkingAreaModel", msWorkingAreaModel)
+                .append("pickingOrderModel", pickingOrderModel)
+                .append("msShiftModel", msShiftModel)
                 .toString();
     }
 }

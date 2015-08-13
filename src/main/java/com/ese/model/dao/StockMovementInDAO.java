@@ -2,7 +2,6 @@ package com.ese.model.dao;
 
 import com.ese.model.db.StockMovementInModel;
 import com.ese.model.view.StockMovementInView;
-import com.ese.model.view.report.IncomingViewReport;
 import com.ese.model.view.report.SubIncomingViewReport;
 import com.ese.utils.Utils;
 import org.hibernate.SQLQuery;

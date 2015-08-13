@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class IncomingViewReport {
+public class StockViewReport {
     private int id;
     private String docNo;
     private Date docDate;

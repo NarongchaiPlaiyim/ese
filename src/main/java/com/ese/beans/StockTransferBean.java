@@ -109,6 +109,6 @@ public class StockTransferBean extends Bean{
     }
 
     public void onPrint(){
-        stockTransferService.printReport();
+        stockTransferService.printReport(stockInOutModel.getId());
     }
 }

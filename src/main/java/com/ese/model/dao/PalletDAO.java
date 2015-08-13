@@ -4,6 +4,7 @@ import com.ese.model.db.PalletModel;
 import com.ese.model.view.PalletTransferView;
 import com.ese.model.view.report.PalletManagemengModelReport;
 import com.ese.model.view.report.PalletSubReport;
+import com.ese.model.view.report.StockInOutDetailViewReport;
 import com.ese.utils.Utils;
 import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
@@ -547,5 +548,60 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
         }
 
         return palletViewList;
+    }
+
+    public List<StockInOutDetailViewReport> findByStokInOutId(int stockInOutId){
+        List<StockInOutDetailViewReport> detailViewReportList = new ArrayList<StockInOutDetailViewReport>();
+        StringBuilder sql = new StringBuilder();
+
+        StringBuilder selectSql = new StringBuilder();
+        selectSql.append("SELECT ");
+        selectSql.append(" ").append("it.ItemId AS ITEM_ID,");
+        selectSql.append(" ").append("it.DSGThaiItemDescription AS ITEM_DESC,");
+        selectSql.append(" ").append("p.pallet_barcode AS PALLET_BARCODE,");
+        selectSql.append(" ").append("stl.previous_location_id AS PREVIOUS_LOCATION,");
+        selectSql.append(" ").append("L1.location_barcode AS LOCATION_BARCODE,");
+        selectSql.append(" ").append("p.qty AS QTY,");
+        selectSql.append(" ").append("stl.stock_inout_id AS STOCK_INOUT_ID");
+        selectSql.append(" FROM ").append(getPrefix()).append(".pallet p");
+        selectSql.append(" JOIN ").append(getPrefix()).append(".item_master it");
+        selectSql.append(" ON ").append("p.item_id = it.id");
+        selectSql.append(" JOIN ").append(getPrefix()).append(".location L1");
+        selectSql.append(" ON ").append("p.location_id = L1.id");
+        selectSql.append(" JOIN ").append(getPrefix()).append(".stock_inout_line stl");
+        selectSql.append(" ON ").append("p.id = stl.pallet_id ");
+        selectSql.append(" JOIN ").append(getPrefix()).append(".location L2");
+        selectSql.append(" ON ").append("stl.location_id = L2.id ");
+        selectSql.append(" WHERE ").append("stl.stock_inout_id = ").append(stockInOutId);
+
+        log.debug(selectSql.toString());
+
+        try {
+            SQLQuery query = getSession().createSQLQuery(selectSql.toString())
+                    .addScalar("ITEM_ID", StringType.INSTANCE)
+                    .addScalar("ITEM_DESC", StringType.INSTANCE)
+                    .addScalar("PALLET_BARCODE", StringType.INSTANCE)
+                    .addScalar("PREVIOUS_LOCATION", IntegerType.INSTANCE)
+                    .addScalar("LOCATION_BARCODE", StringType.INSTANCE)
+                    .addScalar("QTY", IntegerType.INSTANCE)
+                    .addScalar("STOCK_INOUT_ID", IntegerType.INSTANCE);
+            List<Object[]> objects = query.list();
+
+            for (Object[] entity : objects) {
+                StockInOutDetailViewReport detailViewReport = new StockInOutDetailViewReport();
+                detailViewReport.setItemId(Utils.parseString(entity[0]));
+                detailViewReport.setItemDesc(Utils.parseString(entity[1]));
+                detailViewReport.setPalletBarcode(Utils.parseString(entity[2]));
+                detailViewReport.setPreviousLocationId(Utils.parseInt(entity[3]));
+                detailViewReport.setLocationBarcode(Utils.parseString(entity[4]));
+                detailViewReport.setQty(Utils.parseInt(entity[5]));
+                detailViewReport.setStockInOutId(Utils.parseInt(entity[6]));
+                detailViewReportList.add(detailViewReport);
+            }
+        } catch (Exception e) {
+            log.debug("Exception SQL : {}", e);
+        }
+
+        return detailViewReportList;
     }
 }
