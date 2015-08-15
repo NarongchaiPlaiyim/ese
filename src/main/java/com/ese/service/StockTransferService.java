@@ -45,10 +45,11 @@ public class StockTransferService extends Service{
     }
 
     public void saveOrupdate(StockInOutModel stockInOutModel, int stockInOutMNoteId){
+        log.debug("stockInOutModel {}", stockInOutModel.getRemark());
         try {
             MSStockInOutNoteModel outNoteModel = stockInOutNoteDAO.findByID(stockInOutMNoteId);
             int staffModel = (int) FacesUtil.getSession(false).getAttribute(AttributeName.STAFF.getName());
-            if (Utils.isZero(stockInOutModel.getId())){
+            if (Utils.isNull(stockInOutModel)){
                 stockInOutModel.setStatus(statusDAO.findByTableIdAndStatus(TableValue.STOCK_IN_OUT.getId(), StatusValue.CREATE.getId()));
                 stockInOutModel.setCreateBy(staffModel);
                 stockInOutModel.setCreateDate(Utils.currentDate());
@@ -58,7 +59,6 @@ public class StockTransferService extends Service{
                 stockInOutModel.setUpdateBy(staffModel);
                 stockInOutModel.setUpdateDate(Utils.currentDate());
             }
-
             stockInOutModel.setIsValid(1);
             stockInOutModel.setMsStockInOutNoteModel(outNoteModel);
             stockInOutDAO.saveOrUpdate(stockInOutModel);

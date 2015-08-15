@@ -79,7 +79,7 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
                 criteria.createAlias("p.msItemModel", "c");
                 Criterion itemDes = Restrictions.like("c.dSGThaiItemDescription", "%" + keyItemDescription.trim() + "%");
                 criteria.createAlias("p.msLocationModel", "d");
-                Criterion locationBarcode = Restrictions.like("d.locationBarcode", "%"+keyItemDescription.trim()+"%");
+                    Criterion locationBarcode = Restrictions.like("d.locationBarcode", "%"+keyItemDescription.trim()+"%");
                 criteria.add(Restrictions.or(itemDes,locationBarcode));
             }
 

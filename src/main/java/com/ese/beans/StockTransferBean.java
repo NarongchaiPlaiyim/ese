@@ -52,7 +52,6 @@ public class StockTransferBean extends Bean{
         flagBtnShowTransferPallet = Boolean.TRUE;
         flagBtnPrint = Boolean.TRUE;
         flagDocNo = Boolean.FALSE;
-        stockInOutModel = new StockInOutModel();
         msStockInOutNoteModel = new MSStockInOutNoteModel();
         stockTransferView = new StockTransferView();
         stockInOutNoteModelList = stockTransferService.getAllStockInOutNote();
@@ -60,6 +59,7 @@ public class StockTransferBean extends Bean{
     }
 
     private void onLoadFromView(){
+        stockInOutModel = new StockInOutModel();
         stockInOutModel.setDocNo(Utils.getDocumentNo());
         stockInOutModel.setDocDate(Utils.currentDate());
     }

@@ -118,7 +118,9 @@
                         <p:outputLabel value="Remark"/>
                     </td>
                     <td>
-                        <p:inputTextarea id="remark" value="#{stockTransferBean.stockInOutModel.remark}"/>
+                        <p:inputTextarea id="remark" value="#{stockTransferBean.stockInOutModel.remark}">
+                            <p:ajax update="remark" event="blur"/>
+                        </p:inputTextarea>
                     </td>
                 </tr>
             </table>

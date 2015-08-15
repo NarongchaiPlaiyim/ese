@@ -56,7 +56,7 @@ public class StockInOutLineModel extends AbstractModel{
     @Column(name="batchno")
     private String batchNo;
 
-    @Column(name="previous_location_id")
+    @Column(name="previous_location_id", nullable=false, columnDefinition="int default 0")
     private int previousLocationId;
 
     @Override

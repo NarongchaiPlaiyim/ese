@@ -62,6 +62,7 @@ public abstract class GenericDAO<T, ID extends Serializable> implements Serializ
     }
 
     public T findByID(ID id) throws Exception {
+        log.debug("findByID : {}", id);
         return (T) getSession().load(getEntityClass(), id);
     }
 
