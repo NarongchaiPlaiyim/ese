@@ -68,7 +68,8 @@ public class BarcodeRegisterDAO extends GenericDAO<BarcodeRegisterModel, Integer
     }
 
     public BigDecimal getPrice(String iTemId) throws Exception {
-        final String sql = "SELECT a.Price FROM ppwms03.dbo.ax_InventtableModule a WHERE a.ItemId = '"+iTemId+"' AND a.ModuleType = 0";
+        final String sql = "SELECT a.Price FROM "+ getPrefix() + ".ax_InventtableModule a WHERE a.ItemId = '"+iTemId+"' AND a.ModuleType = 0";
+
         return Utils.parseBigDecimal(getSession().createSQLQuery(sql).uniqueResult(), BigDecimal.ZERO);
     }
 
