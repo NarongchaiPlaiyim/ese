@@ -122,14 +122,14 @@ public class ShowTransPalletService extends Service{
             palletDAO.updateLocationByOld(model.getId());
 //            palletDAO.updateLocationByNew(palletModel.getMsLocationModel().getId());
 
-            saveOrUpdateStockInOutLine(palletModel, stockInOutId);
+            saveOrUpdateStockInOutLine(palletModel, stockInOutId, model.getId());
 
         } catch (Exception e) {
             log.debug("Exception : {}", e);
         }
     }
 
-    private void saveOrUpdateStockInOutLine(PalletModel palletModel, int stockInOutId ){
+    private void saveOrUpdateStockInOutLine(PalletModel palletModel, int stockInOutId, int previousLocationId){
 
         StockInOutLineModel stockInOutLineModel = null;
 
@@ -145,6 +145,7 @@ public class ShowTransPalletService extends Service{
                stockInOutLineModel.setPalletModel(palletModel);
                stockInOutLineModel.setMsLocationModel(palletModel.getMsLocationModel());
                stockInOutLineModel.setBarcode(palletModel.getPalletBarcode());
+               stockInOutLineModel.setPreviousLocationId(previousLocationId);
                stockInOutLineDAO.update(stockInOutLineModel);
            } else {
                log.debug("Prsist Stock In Out Line");
@@ -159,6 +160,7 @@ public class ShowTransPalletService extends Service{
                stockInOutLineModel.setMsLocationModel(palletModel.getMsLocationModel());
                stockInOutLineModel.setBarcode(palletModel.getPalletBarcode());
                stockInOutLineModel.setStockInOutModel(stockInOutDAO.findByID(stockInOutId));
+               stockInOutLineModel.setPreviousLocationId(previousLocationId);
                stockInOutLineModel.setIsValid(1);
                stockInOutLineModel.setVersion(1);
 //               stockInOutLineModel.setQty(0);

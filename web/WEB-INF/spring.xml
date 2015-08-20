@@ -46,8 +46,8 @@
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
                 <prop key="hibernate.default_schema">dbo</prop>
                 <!--<prop key="hibernate.default_catalog">ppwms03</prop>-->
-                <prop key="hibernate.default_catalog">ppwms04</prop>
-                <!--<prop key="hibernate.default_catalog">ppwms03latin</prop>-->
+                <!--<prop key="hibernate.default_catalog">ppwms04</prop>-->
+                <prop key="hibernate.default_catalog">ppwms03latin</prop>
                 <prop key="current_session_context_class">thread</prop>
             </props>
         </property>
