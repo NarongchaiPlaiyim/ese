@@ -93,10 +93,13 @@
                         <p:outputLabel value="Document Date"/>
                     </td>
                     <td>
-                        <p:calendar id="docDate" value="#{stockTransferBean.stockInOutModel.docDate}"
-                                    pattern="dd/MM/yyyy">
-                            <f:convertDateTime pattern="dd/MM/yyyy"/>
-                        </p:calendar>
+                        <p:inputText id="docDate" value="#{stockTransferBean.stockInOutModel.docDate}" readonly="true">
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </p:inputText>
+                        <!--<p:calendar id="docDate" value="#{stockTransferBean.stockInOutModel.docDate}" readonly="true"-->
+                                    <!--pattern="dd/MM/yyyy">-->
+                            <!--<f:convertDateTime pattern="dd/MM/yyyy"/>-->
+                        <!--</p:calendar>-->
                     </td>
                     <td>
                         <p:outputLabel value="Document Note"/>

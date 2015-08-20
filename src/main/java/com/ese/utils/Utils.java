@@ -71,7 +71,7 @@ public enum Utils {
     }
 
     public static String getDocumentIou(){
-        return "IOU"+new SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.ENGLISH).format(currentDate());
+        return "OU"+new SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.ENGLISH).format(currentDate());
     }
 
     public static String getDocumentQr(){

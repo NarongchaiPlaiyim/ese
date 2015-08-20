@@ -178,9 +178,17 @@ public class BarcodeRegisterBean extends Bean{
 
     public void onClickTable(){
         log.debug("-- onClickTable() {}", barcodeRegisterModel);
-        flagBtnSave = true;
-        flagBtnDelete = false;
-        flagBtnEdit = false;
+
+        if (barcodeRegisterModel.getStatus().getId() > 1){
+            flagBtnSave = true;
+            flagBtnDelete = true;
+            flagBtnEdit = true;
+        } else {
+            flagBtnSave = false;
+            flagBtnDelete = false;
+            flagBtnEdit = false;
+        }
+
         flagBtnPrint = false;
         barcodeRegisterView = barcodeRegisterService.convertToView(barcodeRegisterModel);
         modeBarcode = "Mode(Edit)     ";

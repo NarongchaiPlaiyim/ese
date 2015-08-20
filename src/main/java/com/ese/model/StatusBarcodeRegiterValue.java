@@ -6,8 +6,9 @@ import lombok.Getter;
 public enum StatusBarcodeRegiterValue {
 
     CANCEL(0, "Cancel"),
-    INPROCESS(1, "In Process"),
-    COMPLETED(2, "Completed"),
+    CREATE(1, "Create"),
+    INPROCESS(2, "In Process"),
+//    COMPLETED(3, "Completed"),
     HOLD(3, "Hold"),
     CLOSE(4, "Close");
 

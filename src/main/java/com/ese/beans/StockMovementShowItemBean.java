@@ -70,7 +70,13 @@ public class StockMovementShowItemBean extends Bean{
         showSNView = new ShowSNView();
         searchItemView = new SearchItemView();
         flagBtnShowSN = Boolean.TRUE;
-//        flagBtnSearchItem = Boolean.TRUE;
+
+        if (stockInOutModel.getStatus().getStatusSeq() == 1 || stockInOutModel.getStatus().getStatusSeq() == 2){
+            flagBtnSearchItem = Boolean.FALSE;
+        } else {
+            flagBtnSearchItem = Boolean.TRUE;
+        }
+
         flagBtnDelete = Boolean.TRUE;
 
         onLoadTable();
@@ -88,8 +94,11 @@ public class StockMovementShowItemBean extends Bean{
 //            flagBtnSearchItem = Boolean.FALSE;
 //        }
 
-        if (!Utils.isNull(stockMovementOutView)){
-            if (stockMovementOutView.getStatus() == 1){
+        if (!Utils.isNull(stockInOutModel)){
+//            if (stockMovementOutView.getStatus() == 1){
+//                flagBtnDelete = Boolean.FALSE;
+//            }
+            if (stockInOutModel.getStatus().getStatusSeq() == 1){
                 flagBtnDelete = Boolean.FALSE;
             }
         }
@@ -173,7 +182,13 @@ public class StockMovementShowItemBean extends Bean{
         showSNView = new ShowSNView();
         searchItemView = new SearchItemView();
         flagBtnShowSN = Boolean.TRUE;
-//        flagBtnSearchItem = Boolean.TRUE;
+
+        if (stockInOutModel.getStatus().getStatusSeq() == 1 || stockInOutModel.getStatus().getStatusSeq() == 2){
+            flagBtnSearchItem = Boolean.FALSE;
+        } else {
+            flagBtnSearchItem = Boolean.TRUE;
+        }
+
         flagBtnDelete = Boolean.TRUE;
 
         onLoadTable();

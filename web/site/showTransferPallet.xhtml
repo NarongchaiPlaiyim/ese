@@ -95,6 +95,9 @@
                             <p:column headerText="Foil" style="width: 50px; background-color: #{palletTransferView.isFoil == 1 ? 'green' : palletTransferView.isFoil == 2 ? 'yellow' : 'red'};">
                                 <h:outputText value=""/>
                             </p:column>
+                            <p:column headerText="Set to Transfer" style="width: 50px; background-color: #{palletTransferView.toTransfer == 1 ? 'green' : 'red'};">
+                                <h:outputText value=""/>
+                            </p:column>
                         </p:dataTable>
                     </td>
                 </tr>

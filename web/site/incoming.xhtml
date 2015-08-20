@@ -77,6 +77,17 @@
                                              action="#{incomingBean.onClickShowItem()}"
                                              icon="ui-icon-print"
                                              styleClass="medium" />
+
+                            <p:commandButton id="post"
+                                             value="Post"
+                                             disabled="#{incomingBean.flagBtnPost}"
+                                             process="@form"
+                                             update=":incomingForm, :msgBoxSystemMessagePanel"
+                                             onstart="PF('bui').block()"
+                                             oncomplete="PF('bui').unblock()"
+                                             action="#{incomingBean.onClickPost()}"
+                                             icon="ui-icon-print"
+                                             styleClass="medium" />
                         </div>
                     </p:panel>
                         <div class="left">
@@ -200,7 +211,7 @@
                                                  rowIndexVar="rowIndex">
                                         <p:ajax event="rowSelect" listener="#{incomingBean.onClickTable}"
                                                 update=":incomingForm:txtMode, :incomingForm:txtDocno, :incomingForm:txtDocDate, :incomingForm:docNote, :incomingForm:txtRemark
-                                                        , :incomingForm:showItem, :incomingForm:btnPrint"
+                                                        , :incomingForm:showItem, :incomingForm:btnPrint, :incomingForm:post"
                                                 />
                                         <p:column headerText="No" style="min-width: 5px; width: 5px; max-width: 5px;">
                                             <h:outputText value="#{rowIndex+1}" styleClass="center" />

@@ -55,6 +55,7 @@
                                              styleClass="medium" style="#{msg.get('btn.size')}"
                                              onstart="PF('bui').block()"
                                              action="#{barcodeRegisterBean.onSave()}"
+                                             disabled="#{barcodeRegisterBean.flagBtnSave}"
                                              oncomplete="PF('bui').unblock()"
                                              update="@this,
                                             :setupForm:btnDelete,
@@ -270,14 +271,15 @@
                                             update=":setupForm:btnDelete,
                                                     :setupForm:#{msg.get('btn.name.print')},
                                                     :setupForm:modeBarcode,
-                                                    :setupForm:itemLabel
-                                                    :setupForm:otyLabel
-                                                    :setupForm:documentNoLabel
-                                                    :setupForm:startLabel
-                                                    :setupForm:docDateLabel
-                                                    :setupForm:labelFinishBarcode
-                                                    :setupForm:batchNoLabel
-                                                    :setupForm:remarkLabel"
+                                                    :setupForm:itemLabel,
+                                                    :setupForm:otyLabel,
+                                                    :setupForm:documentNoLabel,
+                                                    :setupForm:startLabel,
+                                                    :setupForm:docDateLabel,
+                                                    :setupForm:labelFinishBarcode,
+                                                    :setupForm:batchNoLabel,
+                                                    :setupForm:remarkLabel,
+                                                    :setupForm:btnSave"
                                             listener="#{barcodeRegisterBean.onClickTable()}"/>
                                     <p:column headerText="No" style="min-width: 5px; width: 5px; max-width: 5px;">
                                         <h:outputText value="#{rowIndex+1}" styleClass="center" />

@@ -38,6 +38,7 @@ public class IncomingBean extends Bean {
     private String mode;
     private boolean modeFlag;
     private boolean flagBtnShow;
+    private boolean flagBtnPost;
     @PostConstruct
     private void onCreation(){
         log.debug("onCreation()");
@@ -56,6 +57,7 @@ public class IncomingBean extends Bean {
         stockInOutModel = new StockInOutModel();
         flagBtnPrint = Boolean.TRUE;
         modeFlag = Boolean.TRUE;
+        flagBtnPost = Boolean.TRUE;
         flagBtnShow = Boolean.TRUE;
     }
 
@@ -78,6 +80,7 @@ public class IncomingBean extends Bean {
         incomingView.setMsStockInOutNoteModel(stockInOutModel.getMsStockInOutNoteModel());
         modeFlag = Boolean.FALSE;
         flagBtnShow = Boolean.FALSE;
+        flagBtnPost = Boolean.FALSE;
         flagBtnPrint = Boolean.FALSE;
     }
 
@@ -121,4 +124,11 @@ public class IncomingBean extends Bean {
     public void onPrint(){
         incomingService.printReport(stockInOutModel.getId());
     }
+
+    public void onClickPost(){
+        incomingService.post(incomingView);
+        showDialogEdited();
+        init();
+    }
+
 }

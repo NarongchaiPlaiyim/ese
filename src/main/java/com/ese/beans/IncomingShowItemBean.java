@@ -56,6 +56,7 @@ public class IncomingShowItemBean extends Bean{
     private boolean flagBtnSave;
     private boolean flagBtnPrint;
     private boolean flagBtnEdit;
+    private boolean flagBtnNewItem;
 
     private boolean flagItem;
     private boolean flagQty;
@@ -122,10 +123,18 @@ public class IncomingShowItemBean extends Bean{
     public void onClickButtonNew(){
         log.debug("-- onClickButtonNew()");
         barcodeRegisterView = new BarcodeRegisterView();
-        flagBtnDelete = true;
+
         flagBtnSave = false;
         flagBtnEdit = true;
         flagBtnPrint = true;
+
+        if (stockInOutModel.getStatus().getStatusSeq() == 1 || stockInOutModel.getStatus().getStatusSeq() == 2){
+            flagBtnNewItem = Boolean.FALSE;
+            flagBtnDelete = Boolean.FALSE;
+        } else {
+            flagBtnNewItem = Boolean.TRUE;
+            flagBtnDelete = Boolean.TRUE;
+        }
 //        barcodeRegisterModel = new BarcodeRegisterModel();
         stockMovementInView = new StockMovementInView();
         modeBarcode = "Mode(New)     ";
@@ -231,8 +240,8 @@ public class IncomingShowItemBean extends Bean{
 
         //if stock_movement_in.status = 1; delete button should be enable.
 
-        if (!Utils.isNull(stockMovementInView)){
-            if (stockMovementInView.getStatus() == 1){
+        if (!Utils.isNull(stockInOutModel)){
+            if (stockInOutModel.getStatus().getStatusSeq() == 1){
                 flagBtnDelete = Boolean.FALSE;
             }
         }

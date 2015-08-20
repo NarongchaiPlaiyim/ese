@@ -1,5 +1,6 @@
 package com.ese.service;
 
+import com.ese.model.TableValue;
 import com.ese.model.dao.*;
 import com.ese.model.db.*;
 import com.ese.model.view.IncomingView;
@@ -24,6 +25,7 @@ public class IncomingService extends Service {
     @Resource private StockInOutNoteDAO stockInOutNoteDAO;
     @Resource private InvOnHandDAO invOnHandDAO;
     @Resource private PalletDAO palletDAO;
+    @Resource private StatusDAO statusDAO;
     @Resource private StockMovementInDAO stockMovementInDAO;
     @Resource private ReportService reportService;
     @Value("#{config['report.incoming']}")
@@ -178,6 +180,22 @@ public class IncomingService extends Service {
             }
         } catch (Exception e){
             log.debug("Exception error save : ", e);
+        }
+    }
+
+    public void post(IncomingView incomingView){
+        try {
+            int staffModel = (int) FacesUtil.getSession(false).getAttribute(AttributeName.STAFF.getName());
+            StockInOutModel stockInOutModel = stockInOutDAO.findByID(incomingView.getId());
+            stockInOutModel.setDocDate(incomingView.getDocDate());
+            stockInOutModel.setMsStockInOutNoteModel(incomingView.getMsStockInOutNoteModel());
+            stockInOutModel.setRemark(incomingView.getRemark());
+            stockInOutModel.setStatus(statusDAO.findByTableIdAndStatus(TableValue.STOCK_IN_OUT.getId(), 3));
+            stockInOutModel.setUpdateDate(Utils.currentDate());
+            stockInOutModel.setUpdateBy(staffModel);
+            stockInOutDAO.update(stockInOutModel);
+        } catch (Exception e) {
+            log.debug("Exception error during edit ", e);
         }
     }
 }

@@ -37,6 +37,7 @@
                          value="Search Item"
                          styleClass="medium" style="#{msg.get('btn.size.150')}"
                          process="@this"
+                         disabled="#{stockMoveItemBean.flagBtnSearchItem}"
                          action="#{stockMoveItemBean.onLoadSearchItem}"
                          oncomplete="PF('searchItemDlg').show()"
                          update=":searchItemIssuingForm"

@@ -48,10 +48,11 @@
                                              <!--styleClass="medium" style="#{msg.get('btn.size')}"-->
                                              <!--icon="ui-icon-plusthick"/>-->
 
-                            <p:commandButton value="New Item"
+                            <p:commandButton id="btnNewItem" value="New Item"
                                             icon="ui-icon-folder-open"
                                             styleClass="medium" style="width: 180px"
                                             action="#{incomingShowItemBean.onInitSearch()}"
+                                            disabled="#{incomingShowItemBean.flagBtnNewItem}"
                                             update=":frmFindProduct"
                                             oncomplete="PF('findProductDlg').show()"/>
 

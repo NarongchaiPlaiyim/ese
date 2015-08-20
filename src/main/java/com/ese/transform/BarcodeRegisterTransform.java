@@ -55,7 +55,7 @@ public class BarcodeRegisterTransform {
         model.setUpdateDate(Utils.currentDate());
         model.setUpdateBy(view.getUpdateBy());
         model.setIsValid(view.getIsValid());
-        model.setStatus(view.getStatus());
+//        model.setStatus(view.getStatus());
         model.setFinishBarcodeText(view.getFinishBarcodeText());
         model.setStartBarcodeText(view.getStartBarcodeText());
         model.setCost(view.getCost());
@@ -70,7 +70,7 @@ public class BarcodeRegisterTransform {
             model.setUpdateBy(staffModel);
             model.setIsValid(1);
             model.setVersion(1);
-            model.setStatus(StatusBarcodeRegiterValue.INPROCESS);
+            model.setStatus(StatusBarcodeRegiterValue.CREATE);
         }
         return model;
     }
