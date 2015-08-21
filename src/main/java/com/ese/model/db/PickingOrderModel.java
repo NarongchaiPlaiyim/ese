@@ -27,7 +27,7 @@ public class PickingOrderModel extends AbstractModel{
     private Date docDate;
 
     @OneToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "customer_code", nullable=false)
+    @JoinColumn(name = "customer_code")
     private AXCustomerTableModel customerCode;
 
     @OneToOne(cascade = {CascadeType.ALL})

@@ -136,11 +136,9 @@ public class AXCustomerConfirmTransDAO extends GenericDAO<AXCustomerConfirmTrans
                     .addScalar("INVENTRANS_ID", StringType.INSTANCE);
             List<Object[]> objects = query.list();
 
-            int index;
             for (Object[] entity : objects) {
-                index = -1;
                 CustomerConfirmTransView confirmTransView = new CustomerConfirmTransView();
-                confirmTransView.setLineNum(Utils.parseBigDecimal(entity[index++], BigDecimal.ZERO));
+                confirmTransView.setLineNum(Utils.parseBigDecimal(entity[0], BigDecimal.ZERO));
                 confirmTransView.setItemId(Utils.parseString(entity[1], ""));
                 confirmTransView.setOrigSaleId(Utils.parseString(entity[2], ""));
                 confirmTransView.setQty(Utils.parseInt(entity[3], 0));

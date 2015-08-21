@@ -159,6 +159,7 @@ public class PickingOrderService extends Service {
             log.debug("-----------axCustomerConfirmTransModel : {}", axCustomerConfirmTransModel.getItemId());
             pickingOrderLineModel = pickingOrderLineTransform.transformToModel(axCustomerConfirmTransModel, model, statusModel, userDetail);
             try {
+                log.debug("---pickingOrderLineModel {}", pickingOrderLineModel.toString());
                 pickingOrderLineDAO.persist(pickingOrderLineModel);
             } catch (Exception e) {
                 log.debug("Exception error onSavePickingOrderLine : ", e);

@@ -177,6 +177,7 @@ public class PickingOrderDAO extends GenericDAO<PickingOrderModel, Integer> {
         try {
             Criteria criteria = getCriteria();
             criteria.add(Restrictions.eq("customerCode.accountNum", customerCode));
+            criteria.addOrder(Order.desc("updateDate"));
 
             model = (PickingOrderModel) criteria.list().iterator().next();
 

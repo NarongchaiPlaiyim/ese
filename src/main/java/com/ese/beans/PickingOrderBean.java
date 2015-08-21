@@ -58,6 +58,7 @@ public class PickingOrderBean extends Bean {
     private void init(){
         initBtn();
         pickingOrderView = new PickingOrderView();
+        pickingOrderView.setStatus(1);
         pickingOrderModelList = new ArrayList<>();
         onLoadTable();
         onLoadStatue();
