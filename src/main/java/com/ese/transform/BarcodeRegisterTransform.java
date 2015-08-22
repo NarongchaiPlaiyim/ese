@@ -42,6 +42,17 @@ public class BarcodeRegisterTransform {
         BarcodeRegisterModel model = null;
         int staffModel = (int) FacesUtil.getSession(false).getAttribute(AttributeName.STAFF.getName());
         model = new BarcodeRegisterModel();
+
+        if(Utils.isZero(view.getId())){
+            model.setCreateDate(Utils.currentDate());
+            model.setCreateBy(staffModel);
+            model.setUpdateDate(Utils.currentDate());
+            model.setUpdateBy(staffModel);
+            model.setIsValid(1);
+            model.setVersion(1);
+            model.setStatus(StatusBarcodeRegiterValue.CREATE);
+        }
+
         model.setId(view.getId());
         model.setStartBarcode(Utils.parseInt(view.getStartBarcode(), 0));
         model.setFinishBarcode(Utils.parseInt(view.getFinishBarcode(), 0));
@@ -55,7 +66,7 @@ public class BarcodeRegisterTransform {
         model.setUpdateDate(Utils.currentDate());
         model.setUpdateBy(view.getUpdateBy());
         model.setIsValid(view.getIsValid());
-//        model.setStatus(view.getStatus());
+        model.setStatus(view.getStatus());
         model.setFinishBarcodeText(view.getFinishBarcodeText());
         model.setStartBarcodeText(view.getStartBarcodeText());
         model.setCost(view.getCost());
@@ -63,15 +74,6 @@ public class BarcodeRegisterTransform {
         model.setMsItemModel(view.getMsItemModel());
         model.setDocNo(view.getDocumentNo());
 
-        if(Utils.isZero(view.getId())){
-            model.setCreateDate(Utils.currentDate());
-            model.setCreateBy(staffModel);
-            model.setUpdateDate(Utils.currentDate());
-            model.setUpdateBy(staffModel);
-            model.setIsValid(1);
-            model.setVersion(1);
-            model.setStatus(StatusBarcodeRegiterValue.CREATE);
-        }
         return model;
     }
 }
