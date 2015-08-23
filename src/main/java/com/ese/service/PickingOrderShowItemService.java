@@ -188,13 +188,15 @@ public class PickingOrderShowItemService extends Service{
 
     public boolean saveManualReserved(LocationQtyView locationQtyId, int reservedQty, int pickingLineId){
         StatusModel statusModel = statusDAO.findByStatusSeqTablePickingOrder(TableValue.RESERVED_ORDER.getId());
+        FIFOReservedView fifoReservedView = pickingOrderLineDAO.findQtyOnInventTran(pickingLineId);
+        inventoryQty = fifoReservedView.getInventtransQty();
+        sumReservedOrder = pickingOrderLineDAO.getSumReservedOrder(pickingLineId);
         log.debug("------- sumReservedOrder : {} , inventoryQty : {}", sumReservedOrder, inventoryQty);
         try {
+            PickingOrderLineModel pickingOrderLineModel = pickingOrderLineDAO.findByID(pickingLineId);
+            MSLocationModel msLocationModel = locationDAO.findByID(locationQtyId.getLocationId());
 
             if (reservedQty + sumReservedOrder <= inventoryQty){
-                PickingOrderLineModel pickingOrderLineModel = pickingOrderLineDAO.findByID(pickingLineId);
-                FIFOReservedView fifoReservedView = pickingOrderLineDAO.findQtyOnInventTran(pickingOrderLineModel.getId());
-                MSLocationModel msLocationModel = locationDAO.findByID(locationQtyId.getLocationId());
                 ReservedOrderModel reservedOrderModel = reservedOrderTransform.tramsformToModel(pickingOrderLineModel, msLocationModel, statusModel, reservedQty, locationQtyId.getBatchNo());
                 pickingOrderLineDAO.updateReservedQtyByLocaitonQtyId(locationQtyId.getId(), reservedQty);
                 reservedOrderDAO.persist(reservedOrderModel);

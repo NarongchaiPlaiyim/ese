@@ -291,29 +291,35 @@ public class PickingOrderShowItemBean extends Bean {
     }
 
     public void ManualReserved(){
+        log.debug("reservedManualQty [{}]", reservedManualQty);
         if (reservedManualQty > selectLocationQtyView.getAvailable()){
+            log.debug("1");
             showDialog(MessageDialog.WARNING.getMessageHeader(), "Reserved Qty > Avaliable Qty.", "msgBoxSystemMessageDlg");
-//            onLoadManualReserved();
-//            return;
-        } else if (Utils.isZero(reservedManualQty)){
+        }
+        else if (Utils.isZero(reservedManualQty)){
+            log.debug("2");
             showDialog(MessageDialog.WARNING.getMessageHeader(), "กรุณาใส่จำนวน Reserved Qty.", "msgBoxSystemMessageDlg");
-//            onLoadManualReserved();
-//            return;
         } else  if (reservedManualQty <= selectLocationQtyView.getAvailable()){
+            log.debug("3");
             boolean flagMessage = pickingOrderShowItemService.saveManualReserved(selectLocationQtyView, reservedManualQty, itemView.getId());
-
+            log.debug("flagMessage [{}]", flagMessage);
             if (flagMessage){
+                log.debug("3.1");
                 pickingOrderShowItemService.setStatusPickingOrder(pickingOrderModel.getId());
                 showDialog(MessageDialog.SAVE.getMessageHeader(), "Success.", "msgBoxSystemMessageDlg");
                 init();
             } else {
+                log.debug("3.2");
                 showDialog(MessageDialog.WARNING.getMessageHeader(), "can't  reserve", "msgBoxSystemMessageDlg");
             }
         }
         reservedManualQty = 0;
-        locationQtyViewList = pickingOrderShowItemService.getLocationQtyBySearch(itemView.getItem(), warehouseId, locationId, locationQtyId);
+//        locationQtyViewList = pickingOrderShowItemService.onManualReserved(itemView.getId(), "", 0, 0);
+//        locationQtyViewList = pickingOrderShowItemService.getLocationQtyBySearch(itemView.getItem(), warehouseId, locationId, locationQtyId);
+//        orderLineModelList = pickingOrderShowItemService.getPickingOrderLineByPickingOrderId(pickingOrderModel.getId());
         onLoadTable();
-        onLoadManualReserved();
+//        onLoadManualReserved();
+        log.debug("itemView [{}]", itemView.toString());
     }
 
     public void onAddEditItem(){
