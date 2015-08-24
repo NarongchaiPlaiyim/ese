@@ -57,7 +57,7 @@ public class StockInOutDAO extends GenericDAO<StockInOutModel, Integer> {
         List<StockInOutModel> stockInOutModelList = Utils.getEmptyList();
         try {
             Criteria criteria = getCriteria();
-            criteria.add(Restrictions.like("docNo", "IOU%"));
+            criteria.add(Restrictions.like("docNo", "OU%"));
             criteria.add(Restrictions.eq("docDate", Utils.currentDate()));
             criteria.add(Restrictions.eq("isValid", 1));
             criteria.addOrder(Order.desc("updateDate"));
@@ -135,7 +135,7 @@ public class StockInOutDAO extends GenericDAO<StockInOutModel, Integer> {
         List<StockInOutModel> stockInOutModelList = Utils.getEmptyList();
         try {
             Criteria criteria = getCriteria();
-            criteria.add(Restrictions.like("docNo", "IOU%"));
+            criteria.add(Restrictions.like("docNo", "OU%"));
             if (!Utils.isZero(issuingView.getDocNoteId())){
                 criteria.add(Restrictions.eq("msStockInOutNoteModel.id", issuingView.getDocNoteId()));
             }

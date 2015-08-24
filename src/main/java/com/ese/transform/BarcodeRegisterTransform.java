@@ -51,6 +51,13 @@ public class BarcodeRegisterTransform {
             model.setIsValid(1);
             model.setVersion(1);
             model.setStatus(StatusBarcodeRegiterValue.CREATE);
+        }  else {
+            model.setStatus(view.getStatus());
+            model.setCreateDate(view.getCreateDate());
+            model.setCreateBy(view.getCreateBy());
+            model.setUpdateDate(Utils.currentDate());
+            model.setUpdateBy(view.getUpdateBy());
+            model.setIsValid(view.getIsValid());
         }
 
         model.setId(view.getId());
@@ -61,12 +68,6 @@ public class BarcodeRegisterTransform {
         model.setMsItemModel(view.getMsItemModel());
         model.setQty(view.getQty());
         model.setRemark(view.getRemark());
-        model.setCreateDate(view.getCreateDate());
-        model.setCreateBy(view.getCreateBy());
-        model.setUpdateDate(Utils.currentDate());
-        model.setUpdateBy(view.getUpdateBy());
-        model.setIsValid(view.getIsValid());
-        model.setStatus(view.getStatus());
         model.setFinishBarcodeText(view.getFinishBarcodeText());
         model.setStartBarcodeText(view.getStartBarcodeText());
         model.setCost(view.getCost());
