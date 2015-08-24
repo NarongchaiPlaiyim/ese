@@ -3,6 +3,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -47,6 +48,58 @@ public enum Utils {
             return id == 0;
         } catch (NullPointerException e) {
             return false;
+        }
+    }
+
+    public static boolean isZero(BigDecimal id){
+        try {
+            return id == BigDecimal.ZERO;
+        } catch (NullPointerException e) {
+            return false;
+        }
+    }
+
+    public static BigDecimal divide(BigDecimal value, BigDecimal divisor) {
+        if (value == null || divisor == null)
+            return null;
+
+        if (BigDecimal.ZERO.compareTo(divisor) == 0) {
+            return BigDecimal.ZERO;
+        }
+
+        try {
+            return value.divide(divisor, 4, RoundingMode.HALF_UP);
+        } catch (Exception e) {
+            return BigDecimal.ZERO;
+        }
+    }
+
+    public static BigDecimal divide(BigDecimal value, BigDecimal divisor, int round) {
+        if (value == null || divisor == null)
+            return null;
+
+        if (BigDecimal.ZERO.compareTo(divisor) == 0) {
+            return BigDecimal.ZERO;
+        }
+
+        try {
+            return value.divide(divisor, round, RoundingMode.HALF_UP);
+        } catch (Exception e) {
+            return BigDecimal.ZERO;
+        }
+    }
+
+    public static BigDecimal divide(BigDecimal value, int divisor) {
+        if (value == null)
+            return null;
+
+        if (divisor == 0) {
+            return BigDecimal.ZERO;
+        }
+        try {
+            return value.divide(BigDecimal.valueOf(divisor), 4, RoundingMode.HALF_UP);
+        } catch (Exception e) {
+            return BigDecimal.ZERO;
         }
     }
 

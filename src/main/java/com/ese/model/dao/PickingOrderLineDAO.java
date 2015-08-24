@@ -13,6 +13,7 @@ import org.hibernate.type.IntegerType;
 import org.hibernate.type.StringType;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,12 +29,15 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
         sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.ItemId AS ITEM,");
         sqlBuilder.append(" ").append(getPrefix()).append(".item_master.DSGThaiItemDescription AS DESCRIPTION,");
         sqlBuilder.append(" SUM(").append(getPrefix()).append(".picking_order_line.qty) AS ORDER_QTY,");
-        sqlBuilder.append(" SUM(").append(getPrefix()).append(".reserved_order.reserved_qty) AS RESERVED_QTY,");
-        sqlBuilder.append(" (CASE WHEN SUM(").append(getPrefix()).append(".reserved_order.picked_qty) = 0 THEN 0 ELSE ");
-        sqlBuilder.append(" (CASE WHEN SUM(").append(getPrefix()).append(".reserved_order.reserved_qty) = 0 THEN 0 ELSE ");
-        sqlBuilder.append(" SUM(").append(getPrefix()).append(".reserved_order.reserved_qty) END) / ");
-        sqlBuilder.append(" (CASE WHEN SUM(").append(getPrefix()).append(".reserved_order.picked_qty) IS NULL THEN 0 ELSE");
-        sqlBuilder.append(" SUM(").append(getPrefix()).append(".reserved_order.picked_qty) END) *  100 END) AS PER_PICKED,");
+        sqlBuilder.append(" CASE WHEN SUM(").append(getPrefix()).append(".reserved_order.reserved_qty) IS NULL THEN 0 ELSE");
+        sqlBuilder.append(" ").append(getPrefix()).append(".reserved_order.reserved_qty end AS RESERVED_QTY,");
+        sqlBuilder.append(" CASE WHEN SUM(").append(getPrefix()).append(".reserved_order.picked_qty) IS NULL THEN 0 ELSE");
+        sqlBuilder.append(" ").append(getPrefix()).append(".reserved_order.picked_qty end AS PICKING_QTY,");
+//        sqlBuilder.append(" (CASE WHEN SUM(").append(getPrefix()).append(".reserved_order.picked_qty) = 0 THEN 0 ELSE ");
+//        sqlBuilder.append(" (CASE WHEN SUM(").append(getPrefix()).append(".reserved_order.reserved_qty) = 0 THEN 0 ELSE ");
+//        sqlBuilder.append(" SUM(").append(getPrefix()).append(".reserved_order.reserved_qty) END) / ");
+//        sqlBuilder.append(" (CASE WHEN SUM(").append(getPrefix()).append(".reserved_order.picked_qty) IS NULL THEN 0 ELSE");
+//        sqlBuilder.append(" SUM(").append(getPrefix()).append(".reserved_order.picked_qty) END) *  100 END) AS PER_PICKED,");
         sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.isfoil AS FOIL,");
         sqlBuilder.append(" CASE WHEN SUM(").append(getPrefix()).append(".reserved_order.foil_qty) IS NULL THEN 0 ELSE");
         sqlBuilder.append(" SUM(").append(getPrefix()).append(".reserved_order.foil_qty) END AS FOIL_QTY,");
@@ -53,7 +57,8 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
         sqlBuilder.append(" GROUP BY ").append(getPrefix()).append(".picking_order_line.id, ").append(getPrefix()).append(".picking_order_line.ItemId, ");
         sqlBuilder.append(getPrefix()).append(".item_master.DSGThaiItemDescription, ").append(getPrefix()).append(".picking_order_line.isfoil, ");
         sqlBuilder.append(getPrefix()).append(".mst_status.caption, ").append(getPrefix()).append(".mst_status.status_seq, ");
-        sqlBuilder.append(getPrefix()).append(".picking_order_line.qty, ").append(getPrefix()).append(".item_master.ItemName");
+        sqlBuilder.append(getPrefix()).append(".picking_order_line.qty, ").append(getPrefix()).append(".item_master.ItemName, ");
+        sqlBuilder.append(getPrefix()).append(".reserved_order.picked_qty, ").append(getPrefix()).append(".reserved_order.reserved_qty");
 
         log.debug("findByPickingOrderId : {}", sqlBuilder.toString());
 
@@ -64,7 +69,7 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
                     .addScalar("DESCRIPTION", StringType.INSTANCE)
                     .addScalar("ORDER_QTY", IntegerType.INSTANCE)
                     .addScalar("RESERVED_QTY", IntegerType.INSTANCE)
-                    .addScalar("PER_PICKED", BigDecimalType.INSTANCE)
+                    .addScalar("PICKING_QTY", BigDecimalType.INSTANCE)
                     .addScalar("FOIL", IntegerType.INSTANCE)
                     .addScalar("FOIL_QTY", BigDecimalType.INSTANCE)
                     .addScalar("STATUS", StringType.INSTANCE)
@@ -73,6 +78,10 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
                     .addScalar("ITEM_NAME", StringType.INSTANCE);
             List<Object[]> objects = query.list();
 
+            BigDecimal perPickingQty;
+            int hundred = 100;
+            int pickingQty;
+
             for (Object[] entity : objects) {
                 PickingOrderShowItemView pickingOrderShowItemView = new PickingOrderShowItemView();
                 pickingOrderShowItemView.setId(Utils.parseInt(entity[0]));
@@ -80,7 +89,15 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
                 pickingOrderShowItemView.setDescription(Utils.parseString(entity[2]));
                 pickingOrderShowItemView.setOrderQty(Utils.parseInt(entity[3]));
                 pickingOrderShowItemView.setReservedQty(Utils.parseInt(entity[4]));
-                pickingOrderShowItemView.setPerPicked(Utils.parseBigDecimal(entity[5]));
+
+                perPickingQty = BigDecimal.ZERO;
+
+                if (!Utils.isZero(Utils.parseInt(entity[4])) && !Utils.isZero(Utils.parseBigDecimal(entity[5])) ){
+                    pickingQty = Utils.multiply(Utils.parseInt(entity[4]), hundred);
+                    perPickingQty = Utils.divide(new BigDecimal(pickingQty), Utils.parseBigDecimal(entity[5]));
+                }
+
+                pickingOrderShowItemView.setPerPicked(perPickingQty);
                 pickingOrderShowItemView.setFoil(Utils.parseInt(entity[6]));
                 pickingOrderShowItemView.setFoilQty(Utils.parseBigDecimal(entity[7]));
                 pickingOrderShowItemView.setStatus(Utils.parseString(entity[8]));
