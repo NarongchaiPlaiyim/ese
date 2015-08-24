@@ -493,6 +493,7 @@ public class PickingOrderLineDAO extends GenericDAO<PickingOrderLineModel, Integ
         selectLocationQty.append(" LEFT JOIN ").append(getPrefix()).append(".item_master");
         selectLocationQty.append(" ON ").append(getPrefix()).append(".picking_order_line.ItemId = ").append(getPrefix()).append(".item_master.ItemId");
         selectLocationQty.append(" WHERE ").append(getPrefix()).append(".picking_order_line.picking_order_id = " ).append(pickingOrderId);
+        selectLocationQty.append(" GROUP BY ").append(getPrefix()).append(".picking_order_line.qty, ").append(getPrefix()).append(".item_master.id, ").append(getPrefix()).append(".picking_order_line.picking_order_id");
         selectLocationQty.append(" ORDER BY ").append(getPrefix()).append(".item_master.id ASC" );
 
         log.debug("findOnPostStatus : {}", selectLocationQty.toString());
