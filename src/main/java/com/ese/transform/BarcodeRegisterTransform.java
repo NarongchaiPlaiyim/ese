@@ -35,6 +35,7 @@ public class BarcodeRegisterTransform {
         view.setVersion(model.getVersion());
         view.setDocumentNo(model.getDocNo());
         view.setStatus(model.getStatus());
+        view.setReceivedQty(model.getReceivedQty());
         return view;
     }
 
@@ -58,6 +59,7 @@ public class BarcodeRegisterTransform {
             model.setUpdateDate(Utils.currentDate());
             model.setUpdateBy(view.getUpdateBy());
             model.setIsValid(view.getIsValid());
+            model.setReceivedQty(view.getReceivedQty());
         }
 
         model.setId(view.getId());

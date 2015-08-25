@@ -31,6 +31,7 @@ public class BarcodeRegisterView extends View{
     private int isValid;
     private int version;
     private BigDecimal cost;
+    private int receivedQty;
 
     public BarcodeRegisterView() {
         init();
@@ -51,6 +52,7 @@ public class BarcodeRegisterView extends View{
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("id", id)
+                .append("msItemModel", msItemModel)
                 .append("invOnHandModel", invOnHandModel)
                 .append("documentNo", documentNo)
                 .append("documentDate", documentDate)
@@ -58,7 +60,14 @@ public class BarcodeRegisterView extends View{
                 .append("qty", qty)
                 .append("startBarcode", startBarcode)
                 .append("finishBarcode", finishBarcode)
+                .append("startBarcodeText", startBarcodeText)
+                .append("finishBarcodeText", finishBarcodeText)
                 .append("remark", remark)
+                .append("status", status)
+                .append("isValid", isValid)
+                .append("version", version)
+                .append("cost", cost)
+                .append("receivedQty", receivedQty)
                 .toString();
     }
 }

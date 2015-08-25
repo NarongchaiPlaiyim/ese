@@ -65,6 +65,9 @@ public class BarcodeRegisterModel extends AbstractModel {
     @Column(name = "cost")
     private BigDecimal cost;
 
+    @Column(name = "received_qty", nullable=false, columnDefinition="int default 0")
+    private int receivedQty;
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
@@ -83,6 +86,7 @@ public class BarcodeRegisterModel extends AbstractModel {
                 .append("isValid", isValid)
                 .append("version", version)
                 .append("cost", cost)
+                .append("receivedQty", receivedQty)
                 .toString();
     }
 }
