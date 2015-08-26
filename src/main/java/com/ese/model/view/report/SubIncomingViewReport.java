@@ -13,4 +13,5 @@ public class SubIncomingViewReport {
     private String itemNo;
     private String itemDesc;
     private int no;
+    private String itemInternal;
 }

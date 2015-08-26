@@ -73,7 +73,8 @@ public class StockMovementInDAO extends GenericDAO<StockMovementInModel, Integer
         sqlBuilder.append(" ").append(getPrefix()).append(".stock_movement_in.sn_barcode AS SN_BARCODE,");
         sqlBuilder.append(" ").append(getPrefix()).append(".stock_movement_in.batchno AS BATCH_NO,");
         sqlBuilder.append(" ").append(getPrefix()).append(".item_master.ItemId AS ITEM_ID,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".item_master.DSGThaiItemDescription AS ITEM_DESC");
+        sqlBuilder.append(" ").append(getPrefix()).append(".item_master.DSGThaiItemDescription AS ITEM_DESC,");
+        sqlBuilder.append(" coalesce(").append(getPrefix()).append(".item_master.DSG_InternalItemId,'') AS ITEM_INTERNAL");
         sqlBuilder.append(" FROM ").append(getPrefix()).append(".stock_movement_in");
         sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".inv_onhand");
         sqlBuilder.append(" ON  ").append(getPrefix()).append(".stock_movement_in.sn_barcode = ").append(getPrefix()).append(".inv_onhand.sn_barcode");
@@ -90,7 +91,8 @@ public class StockMovementInDAO extends GenericDAO<StockMovementInModel, Integer
                     .addScalar("SN_BARCODE", StringType.INSTANCE)
                     .addScalar("BATCH_NO", StringType.INSTANCE)
                     .addScalar("ITEM_ID", StringType.INSTANCE)
-                    .addScalar("ITEM_DESC", StringType.INSTANCE);
+                    .addScalar("ITEM_DESC", StringType.INSTANCE)
+                    .addScalar("ITEM_INTERNAL", StringType.INSTANCE);
             List<Object[]> objects = query.list();
 
             int i = 1;
@@ -104,6 +106,7 @@ public class StockMovementInDAO extends GenericDAO<StockMovementInModel, Integer
                 subIncomingViewReport.setBatchNo(Utils.parseString(entity[3]));
                 subIncomingViewReport.setItemNo(Utils.parseString(entity[4]));
                 subIncomingViewReport.setItemDesc(Utils.parseString(entity[5]));
+                subIncomingViewReport.setItemInternal(Utils.parseString(entity[6]));
                 subIncomingViewReportsList.add(subIncomingViewReport);
                 i++;
             }

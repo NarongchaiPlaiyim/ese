@@ -10,7 +10,6 @@
 	<field name="itemDesc" class="java.lang.String"/>
 	<field name="no" class="java.lang.Integer"/>
 	<field name="stockInoutId" class="java.lang.Integer"/>
-	<field name="itemInternal" class="java.lang.String"/>
 	<group name="ItemId">
 		<groupExpression><![CDATA[$F{itemNo}]]></groupExpression>
 	</group>
@@ -32,7 +31,7 @@
 					<textElement>
 						<font fontName="Tahoma" size="12" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA["   "+$F{itemInternal} +"   "+$F{itemNo} +"   "+ $F{itemDesc}]]></textFieldExpression>
+					<textFieldExpression><![CDATA["   "+$F{itemNo} +"   "+ $F{itemDesc}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement uuid="f57a4c24-4678-4df4-afe7-fe6bb11181bb" x="42" y="20" width="191" height="22"/>
