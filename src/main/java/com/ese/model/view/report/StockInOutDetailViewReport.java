@@ -15,6 +15,10 @@ public class StockInOutDetailViewReport {
     private String locationBarcode;
     private int qty;
     private int stockInOutId;
+    private String itemInternal;
+    private String toWh;
+    private String fromWh;
+    private String batchNo;
 
     @Override
     public String toString() {
@@ -26,6 +30,10 @@ public class StockInOutDetailViewReport {
                 .append("locationBarcode", locationBarcode)
                 .append("qty", qty)
                 .append("stockInOutId", stockInOutId)
+                .append("itemInternal", itemInternal)
+                .append("toWh", toWh)
+                .append("fromWh", fromWh)
+                .append("batchNo", batchNo)
                 .toString();
     }
 }

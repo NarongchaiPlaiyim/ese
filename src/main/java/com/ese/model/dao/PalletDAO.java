@@ -562,7 +562,12 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
         selectSql.append(" ").append("stl.previous_location_id AS PREVIOUS_LOCATION,");
         selectSql.append(" ").append("L1.location_barcode AS LOCATION_BARCODE,");
         selectSql.append(" ").append("p.qty AS QTY,");
-        selectSql.append(" ").append("stl.stock_inout_id AS STOCK_INOUT_ID");
+        selectSql.append(" ").append("stl.stock_inout_id AS STOCK_INOUT_ID,");
+        selectSql.append(" coalesce(").append("it.DSG_InternalItemId, '') AS ITEM_INTERNAL,");
+        selectSql.append(" ").append("wh1.warehouse_code AS TO_WH,");
+        selectSql.append(" ").append("wh2.warehouse_code as FROM_WH,");
+        selectSql.append(" (select TOP 1 ").append("inv_onhand.batchno ");
+        selectSql.append(" FROM ").append(getPrefix()).append(".inv_onhand WHERE ").append(getPrefix()).append(".inv_onhand.pallet_id = p.id) AS BATCH_NO");
         selectSql.append(" FROM ").append(getPrefix()).append(".pallet p");
         selectSql.append(" JOIN ").append(getPrefix()).append(".item_master it");
         selectSql.append(" ON ").append("p.item_id = it.id");
@@ -572,6 +577,10 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
         selectSql.append(" ON ").append("p.id = stl.pallet_id ");
         selectSql.append(" JOIN ").append(getPrefix()).append(".location L2");
         selectSql.append(" ON ").append("stl.location_id = L2.id ");
+        selectSql.append(" LEFT JOIN ").append(getPrefix()).append(".warehouse wh1");
+        selectSql.append(" ON ").append("wh1.id = L1.warehouse_id ");
+        selectSql.append(" LEFT JOIN ").append(getPrefix()).append(".warehouse wh2");
+        selectSql.append(" ON ").append("wh2.id = L2.warehouse_id ");
         selectSql.append(" WHERE ").append("stl.stock_inout_id = ").append(stockInOutId);
 
         log.debug(selectSql.toString());
@@ -584,7 +593,11 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
                     .addScalar("PREVIOUS_LOCATION", IntegerType.INSTANCE)
                     .addScalar("LOCATION_BARCODE", StringType.INSTANCE)
                     .addScalar("QTY", IntegerType.INSTANCE)
-                    .addScalar("STOCK_INOUT_ID", IntegerType.INSTANCE);
+                    .addScalar("STOCK_INOUT_ID", IntegerType.INSTANCE)
+                    .addScalar("ITEM_INTERNAL", StringType.INSTANCE)
+                    .addScalar("TO_WH", StringType.INSTANCE)
+                    .addScalar("FROM_WH", StringType.INSTANCE)
+                    .addScalar("BATCH_NO", StringType.INSTANCE);
             List<Object[]> objects = query.list();
 
             for (Object[] entity : objects) {
@@ -596,6 +609,10 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
                 detailViewReport.setLocationBarcode(Utils.parseString(entity[4]));
                 detailViewReport.setQty(Utils.parseInt(entity[5]));
                 detailViewReport.setStockInOutId(Utils.parseInt(entity[6]));
+                detailViewReport.setItemInternal(Utils.parseString(entity[7]));
+                detailViewReport.setToWh(Utils.parseString(entity[8]));
+                detailViewReport.setFromWh(Utils.parseString(entity[9]));
+                detailViewReport.setBatchNo(Utils.parseString(entity[10]));
                 detailViewReportList.add(detailViewReport);
             }
         } catch (Exception e) {
