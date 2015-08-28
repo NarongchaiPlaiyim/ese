@@ -9,7 +9,6 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 @Getter
 @Setter
@@ -34,6 +33,7 @@ public class PalletManagementView {
     private MSShiftModel shift;
     private int isCombine;
     private int isFoil;
+    private int setToTransfer;
 
     @Override
     public String toString() {
@@ -58,6 +58,7 @@ public class PalletManagementView {
                 .append("shift", shift)
                 .append("isCombine", isCombine)
                 .append("isFoil", isFoil)
+                .append("setToTransfer", setToTransfer)
                 .toString();
     }
 }

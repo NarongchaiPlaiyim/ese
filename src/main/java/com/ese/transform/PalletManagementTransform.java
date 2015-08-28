@@ -1,9 +1,7 @@
 package com.ese.transform;
 
 import com.ese.model.StatusValue;
-import com.ese.model.db.MSLocationModel;
 import com.ese.model.db.PalletModel;
-import com.ese.model.db.StaffModel;
 import com.ese.model.view.PalletManagementView;
 import com.ese.model.view.report.PalletListReport;
 import com.ese.model.view.report.PalletManagemengModelReport;
@@ -117,6 +115,7 @@ public class PalletManagementTransform extends Transform {
 //            palletMeanegementView.setIsCombine("green");
 //        }
 
+        palletMeanegementView.setSetToTransfer(palletModel.getSetToTransfer());
         return palletMeanegementView;
     }
 
@@ -184,6 +183,7 @@ public class PalletManagementTransform extends Transform {
 //            palletModel.setIsCombine(1);
 //        }
 
+        palletModel.setSetToTransfer(palletManagementView.getSetToTransfer());
         return palletModel;
     }
 
