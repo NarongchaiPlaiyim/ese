@@ -35,6 +35,7 @@ public class PalletManagementView {
     private int isCombine;
     private int isFoil;
     private int setToTransfer;
+    private int seq;
 
     @Override
     public String toString() {
@@ -60,6 +61,7 @@ public class PalletManagementView {
                 .append("isCombine", isCombine)
                 .append("isFoil", isFoil)
                 .append("setToTransfer", setToTransfer)
+                .append("seq", seq)
                 .toString();
     }
 }
