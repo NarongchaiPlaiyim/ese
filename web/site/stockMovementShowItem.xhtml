@@ -33,15 +33,15 @@
                          <!--styleClass="medium" style="#{msg.get('btn.size.150')}"-->
                          <!--icon="ui-icon-plusthick"/>-->
 
-        <p:commandButton id="btnSearchItem"
-                         value="Search Item"
-                         styleClass="medium" style="#{msg.get('btn.size.150')}"
-                         process="@this"
-                         disabled="#{stockMoveItemBean.flagBtnSearchItem}"
-                         action="#{stockMoveItemBean.onLoadSearchItem}"
-                         oncomplete="PF('searchItemDlg').show()"
-                         update=":searchItemIssuingForm"
-                         icon="ui-icon-search"/>
+        <!--<p:commandButton id="btnSearchItem"-->
+                         <!--value="Search Item"-->
+                         <!--styleClass="medium" style="#{msg.get('btn.size.150')}"-->
+                         <!--process="@this"-->
+                         <!--disabled="#{stockMoveItemBean.flagBtnSearchItem}"-->
+                         <!--action="#{stockMoveItemBean.onLoadSearchItem}"-->
+                         <!--oncomplete="PF('searchItemDlg').show()"-->
+                         <!--update=":searchItemIssuingForm"-->
+                         <!--icon="ui-icon-search"/>-->
         <p:commandButton id="btnDelete"
                          value="Delete"
                          process="@this"
@@ -113,7 +113,7 @@
                          selection="#{stockMoveItemBean.stockMovementOutView}"
                          rowKey="#{stockMoveItemModel.id}"
                          rowIndexVar="rowIndex">
-                <p:ajax event="rowSelect" listener="#{stockMoveItemBean.onClickTable}" update=":stockMoveItemForm:btnDelete,:stockMoveItemForm:btnSearchItem"/>
+                <p:ajax event="rowSelect" listener="#{stockMoveItemBean.onClickTable}" update=":stockMoveItemForm:btnDelete"/>
                 <p:column headerText="No" style="min-width: 5px; width: 5px; max-width: 5px;">
                     <h:outputText value="#{rowIndex+1}" styleClass="center" />
                 </p:column>

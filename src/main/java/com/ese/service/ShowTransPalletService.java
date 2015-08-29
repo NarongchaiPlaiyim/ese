@@ -105,8 +105,8 @@ public class ShowTransPalletService extends Service{
     public void changeLocation(PalletTransferView palletManagementView, LocationItemView locationItemView, int stockInOutId){
         log.debug("changeLocation().");
         try {
-            MSLocationModel model = locationDAO.findByID(locationItemView.getId());
-            PalletModel palletModel = palletDAO.findByID(palletManagementView.getId());
+            MSLocationModel model = locationDAO.findByID(locationItemView.getId());//toLocation
+            PalletModel palletModel = palletDAO.findByID(palletManagementView.getId());//fromPallet
 
             palletDAO.updateNewPalletTransferByChangeLocation(palletModel.getId(), model.getId());
 
@@ -118,56 +118,56 @@ public class ShowTransPalletService extends Service{
                 palletDAO.updateLocationByStatusLocated(model.getId());
             }
 
-            //บวกของใหม่  ลบของเก่า
+            //บวกของใหม่  ลบของเก่า 
             palletDAO.updateLocationByOld(model.getId());
 //            palletDAO.updateLocationByNew(palletModel.getMsLocationModel().getId());
 
-            saveOrUpdateStockInOutLine(palletModel, stockInOutId, model.getId());
+            saveOrUpdateStockInOutLine(palletModel, stockInOutId, model);
 
         } catch (Exception e) {
             log.debug("Exception : {}", e);
         }
     }
 
-    private void saveOrUpdateStockInOutLine(PalletModel palletModel, int stockInOutId, int previousLocationId){
-
+    private void saveOrUpdateStockInOutLine(PalletModel palletModel, int stockInOutId, MSLocationModel toLocationId){
+        //jowjo
         StockInOutLineModel stockInOutLineModel = null;
 
         stockInOutLineModel = stockInOutLineDAO.findByPalletIdAndStockInOutId(palletModel.getId(), stockInOutId);
         int staffModel = (int) FacesUtil.getSession(false).getAttribute(AttributeName.STAFF.getName());
 
-       try{
-           if (!Utils.isNull(stockInOutLineModel) && !Utils.isZero(stockInOutLineModel.getId())){
-               log.debug("Update Stock In Out Line");
-               stockInOutLineModel.setUpdateBy(staffModel);
-               stockInOutLineModel.setUpdateDate(Utils.currentDate());
-               stockInOutLineModel.setMsItemModel(palletModel.getMsItemModel());
-               stockInOutLineModel.setPalletModel(palletModel);
-               stockInOutLineModel.setMsLocationModel(palletModel.getMsLocationModel());
-               stockInOutLineModel.setBarcode(palletModel.getPalletBarcode());
-               stockInOutLineModel.setPreviousLocationId(previousLocationId);
-               stockInOutLineDAO.update(stockInOutLineModel);
-           } else {
-               log.debug("Prsist Stock In Out Line");
-               stockInOutLineModel = new StockInOutLineModel();
+        try{
+            if (!Utils.isNull(stockInOutLineModel) && !Utils.isZero(stockInOutLineModel.getId())){
+                log.debug("Update Stock In Out Line");
+                stockInOutLineModel.setUpdateBy(staffModel);
+                stockInOutLineModel.setUpdateDate(Utils.currentDate());
+                stockInOutLineModel.setMsItemModel(palletModel.getMsItemModel());
+                stockInOutLineModel.setPalletModel(palletModel);
+                stockInOutLineModel.setMsLocationModel(toLocationId);
+                stockInOutLineModel.setBarcode(palletModel.getPalletBarcode());
+                stockInOutLineModel.setPreviousLocationId(palletModel.getMsLocationModel().getId());
+                stockInOutLineDAO.update(stockInOutLineModel);
+            } else {
+                log.debug("Prsist Stock In Out Line");
+                stockInOutLineModel = new StockInOutLineModel();
 
-               stockInOutLineModel.setCreateBy(staffModel);
-               stockInOutLineModel.setCreateDate(Utils.currentDate());
-               stockInOutLineModel.setUpdateBy(staffModel);
-               stockInOutLineModel.setUpdateDate(Utils.currentDate());
-               stockInOutLineModel.setMsItemModel(palletModel.getMsItemModel());
-               stockInOutLineModel.setPalletModel(palletModel);
-               stockInOutLineModel.setMsLocationModel(palletModel.getMsLocationModel());
-               stockInOutLineModel.setBarcode(palletModel.getPalletBarcode());
-               stockInOutLineModel.setStockInOutModel(stockInOutDAO.findByID(stockInOutId));
-               stockInOutLineModel.setPreviousLocationId(previousLocationId);
-               stockInOutLineModel.setIsValid(1);
-               stockInOutLineModel.setVersion(1);
+                stockInOutLineModel.setCreateBy(staffModel);
+                stockInOutLineModel.setCreateDate(Utils.currentDate());
+                stockInOutLineModel.setUpdateBy(staffModel);
+                stockInOutLineModel.setUpdateDate(Utils.currentDate());
+                stockInOutLineModel.setMsItemModel(palletModel.getMsItemModel());
+                stockInOutLineModel.setPalletModel(palletModel);
+                stockInOutLineModel.setMsLocationModel(toLocationId);
+                stockInOutLineModel.setBarcode(palletModel.getPalletBarcode());
+                stockInOutLineModel.setStockInOutModel(stockInOutDAO.findByID(stockInOutId));
+                stockInOutLineModel.setPreviousLocationId(palletModel.getMsLocationModel().getId());
+                stockInOutLineModel.setIsValid(1);
+                stockInOutLineModel.setVersion(1);
 //               stockInOutLineModel.setQty(0);
-               stockInOutLineDAO.persist(stockInOutLineModel);
-           }
-       } catch (Exception e){
-           log.debug("Exception error saveOrUpdateStockInOutLine : ", e);
-       }
+                stockInOutLineDAO.persist(stockInOutLineModel);
+            }
+        } catch (Exception e){
+            log.debug("Exception error saveOrUpdateStockInOutLine : ", e);
+        }
     }
 }

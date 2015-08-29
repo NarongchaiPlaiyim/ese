@@ -224,6 +224,9 @@
                     <p:column headerText="Remark" sortBy="#{stockTransferModel.remark}" filterBy="#{stockTransferModel.remark}" filterMatchMode="contains" style="min-width: 250px; width: 250px; max-width: 250px;" styleClass="center">
                         <h:outputText value="#{stockTransferModel.remark}"/>
                     </p:column>
+                    <p:column headerText="Status" sortBy="#{stockTransferModel.status.caption}" filterBy="#{stockTransferModel.status.caption}" filterMatchMode="contains" style="min-width: 250px; width: 250px; max-width: 250px;" styleClass="center">
+                        <h:outputText value="#{stockTransferModel.status.caption}"/>
+                    </p:column>
                 </p:dataTable>
             </td>
         </tr>
