@@ -74,12 +74,29 @@ public class StockMovementInDAO extends GenericDAO<StockMovementInModel, Integer
         sqlBuilder.append(" ").append(getPrefix()).append(".stock_movement_in.batchno AS BATCH_NO,");
         sqlBuilder.append(" ").append(getPrefix()).append(".item_master.ItemId AS ITEM_ID,");
         sqlBuilder.append(" ").append(getPrefix()).append(".item_master.DSGThaiItemDescription AS ITEM_DESC,");
-        sqlBuilder.append(" coalesce(").append(getPrefix()).append(".item_master.DSG_InternalItemId,'') AS ITEM_INTERNAL");
+        sqlBuilder.append(" coalesce(").append(getPrefix()).append(".item_master.DSG_InternalItemId,'') AS ITEM_INTERNAL ,");
+
+        sqlBuilder.append(" ").append(getPrefix()).append(".warehouse.warehouse_code AS WAREHOUSE_CODE,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".location.location_barcode AS LOCATION_BARCODE,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".pallet.qty AS QTY");
+
+
         sqlBuilder.append(" FROM ").append(getPrefix()).append(".stock_movement_in");
         sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".inv_onhand");
         sqlBuilder.append(" ON  ").append(getPrefix()).append(".stock_movement_in.sn_barcode = ").append(getPrefix()).append(".inv_onhand.sn_barcode");
         sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".item_master");
         sqlBuilder.append(" ON  ").append(getPrefix()).append(".item_master.id = ").append(getPrefix()).append(".inv_onhand.item_id");
+
+        //pongwisit<
+        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".pallet");
+        sqlBuilder.append(" ON  ").append(getPrefix()).append(".pallet.id = ").append(getPrefix()).append(".inv_onhand.pallet_id");
+        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".warehouse");
+        sqlBuilder.append(" ON  ").append(getPrefix()).append(".warehouse.id = ").append(getPrefix()).append(".pallet.warehouse_id");
+        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".location");
+        sqlBuilder.append(" ON  ").append(getPrefix()).append(".location.id = ").append(getPrefix()).append(".pallet.location_id");
+
+        //>pongwisit
+
         sqlBuilder.append(" WHERE ").append(getPrefix()).append(".stock_movement_in.stock_inout_id = ").append(stockInOutId);
 
         log.debug(sqlBuilder.toString());
@@ -92,7 +109,10 @@ public class StockMovementInDAO extends GenericDAO<StockMovementInModel, Integer
                     .addScalar("BATCH_NO", StringType.INSTANCE)
                     .addScalar("ITEM_ID", StringType.INSTANCE)
                     .addScalar("ITEM_DESC", StringType.INSTANCE)
-                    .addScalar("ITEM_INTERNAL", StringType.INSTANCE);
+                    .addScalar("ITEM_INTERNAL", StringType.INSTANCE)
+                    .addScalar("WAREHOUSE_CODE", StringType.INSTANCE)
+                    .addScalar("LOCATION_BARCODE", StringType.INSTANCE)
+                    .addScalar("QTY", IntegerType.INSTANCE);
             List<Object[]> objects = query.list();
 
             int i = 1;
@@ -107,6 +127,9 @@ public class StockMovementInDAO extends GenericDAO<StockMovementInModel, Integer
                 subIncomingViewReport.setItemNo(Utils.parseString(entity[4]));
                 subIncomingViewReport.setItemDesc(Utils.parseString(entity[5]));
                 subIncomingViewReport.setItemInternal(Utils.parseString(entity[6]));
+                subIncomingViewReport.setWarehouseBarcode(Utils.parseString(entity[7]));
+                subIncomingViewReport.setLocationBarcode(Utils.parseString(entity[8]));
+                subIncomingViewReport.setQty(Utils.parseInt(entity[9]));
                 subIncomingViewReportsList.add(subIncomingViewReport);
                 i++;
             }
