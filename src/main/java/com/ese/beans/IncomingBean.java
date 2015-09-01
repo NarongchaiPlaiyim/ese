@@ -60,7 +60,7 @@ public class IncomingBean extends Bean {
         modeFlag = Boolean.TRUE;
         flagBtnPost = Boolean.TRUE;
         flagBtnShow = Boolean.TRUE;
-        flagBtnSave = Boolean.TRUE;
+//        flagBtnSave = Boolean.TRUE;
     }
 
     private void onLoadDocumentNote(){
@@ -107,6 +107,7 @@ public class IncomingBean extends Bean {
         stockInOutModel = new StockInOutModel();
         flagBtnPrint = Boolean.TRUE;
         flagBtnShow = Boolean.TRUE;
+        flagBtnSave = Boolean.FALSE;
         modeFlag = Boolean.TRUE;
     }
 

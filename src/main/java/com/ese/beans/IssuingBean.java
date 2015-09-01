@@ -58,7 +58,7 @@ public class IssuingBean extends Bean {
         flagBtnShow = Boolean.TRUE;
         modeFlag = Boolean.TRUE;
         flagBtnPost = Boolean.TRUE;
-        flagBtnSave = Boolean.TRUE;
+//        flagBtnSave = Boolean.TRUE;
         mode = "Mode(New)";
         issuingView = new IssuingView();
         msStockInOutNoteModel = new MSStockInOutNoteModel();
@@ -80,6 +80,7 @@ public class IssuingBean extends Bean {
         stockInOutModel = new StockInOutModel();
         flagBtnPrint = Boolean.TRUE;
         flagBtnShow = Boolean.TRUE;
+        flagBtnSave = Boolean.FALSE;
         modeFlag = Boolean.TRUE;
     }
 
