@@ -69,16 +69,22 @@ public class StockMovementInDAO extends GenericDAO<StockMovementInModel, Integer
 
         sqlBuilder.append("SELECT ");
         sqlBuilder.append(" ").append(getPrefix()).append(".stock_movement_in.stock_inout_id AS STOCK_INOUT_ID,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".stock_movement_in.pallet_barcode AS PALLET_BARCODE,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".stock_movement_in.sn_barcode AS SN_BARCODE,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".stock_movement_in.batchno AS BATCH_NO,");
+
+        sqlBuilder.append(" coalesce(").append(getPrefix()).append(".stock_movement_in.pallet_barcode,'') AS PALLET_BARCODE,");
+        sqlBuilder.append(" coalesce(").append(getPrefix()).append(".stock_movement_in.sn_barcode,'') AS SN_BARCODE,");
+        sqlBuilder.append(" coalesce(").append(getPrefix()).append(".inv_onhand.batchno,'') AS BATCH_NO,");
+
+
+        //sqlBuilder.append(" ").append(getPrefix()).append(".stock_movement_in.pallet_barcode AS PALLET_BARCODE,");
+        //sqlBuilder.append(" ").append(getPrefix()).append(".stock_movement_in.sn_barcode AS SN_BARCODE,");
+        //sqlBuilder.append(" ").append(getPrefix()).append(".stock_movement_in.batchno AS BATCH_NO,");
         sqlBuilder.append(" ").append(getPrefix()).append(".item_master.ItemId AS ITEM_ID,");
         sqlBuilder.append(" ").append(getPrefix()).append(".item_master.DSGThaiItemDescription AS ITEM_DESC,");
         sqlBuilder.append(" coalesce(").append(getPrefix()).append(".item_master.DSG_InternalItemId,'') AS ITEM_INTERNAL ,");
 
         sqlBuilder.append(" ").append(getPrefix()).append(".warehouse.warehouse_code AS WAREHOUSE_CODE,");
         sqlBuilder.append(" ").append(getPrefix()).append(".location.location_barcode AS LOCATION_BARCODE,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".pallet.qty AS QTY");
+        sqlBuilder.append(" coalesce(").append("p2.qty,1) AS QTY");
 
 
         sqlBuilder.append(" FROM ").append(getPrefix()).append(".stock_movement_in");
@@ -94,6 +100,8 @@ public class StockMovementInDAO extends GenericDAO<StockMovementInModel, Integer
         sqlBuilder.append(" ON  ").append(getPrefix()).append(".warehouse.id = ").append(getPrefix()).append(".pallet.warehouse_id");
         sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".location");
         sqlBuilder.append(" ON  ").append(getPrefix()).append(".location.id = ").append(getPrefix()).append(".pallet.location_id");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".pallet p2");
+        sqlBuilder.append(" ON  ").append("p2.pallet_barcode = ").append(getPrefix()).append(".stock_movement_in.pallet_barcode");
 
         //>pongwisit
 

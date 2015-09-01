@@ -5,218 +5,219 @@
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <title>#{msg.get('menu.stockmovement.title.show.item')}</title>
-    </h:head>
-    <h:body>
-        <p:layout fullPage="true" id="layoutPanel">
-            <p:layoutUnit id="layoutTop" position="north" size="180" header="#{msg.get('header.north')}" collapsible="true" style="border: 0">
-                <ui:insert name="header">
-                    <ui:include src="#{msg.get('include.header')}"/>
-                </ui:insert>
-            </p:layoutUnit>
-            <p:layoutUnit id="layoutLeft" position="west" size="#{msg.get('layoutLeft.size')}" header="#{msg.get('header.west')}" collapsible="true" style="border: 0">
-                <ui:include src="#{msg.get('include.menu')}"/>
-            </p:layoutUnit>
+<h:head>
+    <title>#{msg.get('menu.stockmovement.title.show.item')}</title>
+</h:head>
+<h:body>
+<p:layout fullPage="true" id="layoutPanel">
+    <p:layoutUnit id="layoutTop" position="north" size="180" header="#{msg.get('header.north')}" collapsible="true" style="border: 0">
+        <ui:insert name="header">
+            <ui:include src="#{msg.get('include.header')}"/>
+        </ui:insert>
+    </p:layoutUnit>
+    <p:layoutUnit id="layoutLeft" position="west" size="#{msg.get('layoutLeft.size')}" header="#{msg.get('header.west')}" collapsible="true" style="border: 0">
+        <ui:include src="#{msg.get('include.menu')}"/>
+    </p:layoutUnit>
 
-            <p:layoutUnit id="layoutCenter" position="center" header="#{msg.get('menu.stockmovement.title.show.item')}" >
-                <h:form id="setupForm">
-                    <p:panel style="border: 0">
-                        <div style="text-align: right;">
-                            <!--<h:outputText id="modeBarcode"-->
-                                          <!--styleClass="medium"-->
-                                          <!--value="#{incomingShowItemBean.modeBarcode}"/>-->
+    <p:layoutUnit id="layoutCenter" position="center" header="#{msg.get('menu.stockmovement.title.show.item')}" >
+        <h:form id="setupForm">
+            <p:panel style="border: 0">
+                <div style="text-align: right;">
+                    <!--<h:outputText id="modeBarcode"-->
+                    <!--styleClass="medium"-->
+                    <!--value="#{incomingShowItemBean.modeBarcode}"/>-->
 
-                            <!--<p:commandButton id="#{msg.get('btn.name.print')}"-->
-                                             <!--value="#{msg.get('btn.name.print')}"-->
-                                             <!--process="@form"-->
-                                             <!--update=":setupForm"-->
-                                             <!--disabled="#{incomingShowItemBean.flagBtnPrint}"-->
-                                             <!--onstart="PF('bui').block()"-->
-                                             <!--action="#{incomingShowItemBean.onPrint}"-->
-                                             <!--oncomplete="PF('bui').unblock()"-->
-                                             <!--onclick="this.form.target='_blank'"-->
-                                             <!--ajax="false"-->
-                                             <!--icon="ui-icon-print"-->
-                                             <!--styleClass="medium" style="#{msg.get('btn.size')}"/>-->
+                    <!--<p:commandButton id="#{msg.get('btn.name.print')}"-->
+                    <!--value="#{msg.get('btn.name.print')}"-->
+                    <!--process="@form"-->
+                    <!--update=":setupForm"-->
+                    <!--disabled="#{incomingShowItemBean.flagBtnPrint}"-->
+                    <!--onstart="PF('bui').block()"-->
+                    <!--action="#{incomingShowItemBean.onPrint}"-->
+                    <!--oncomplete="PF('bui').unblock()"-->
+                    <!--onclick="this.form.target='_blank'"-->
+                    <!--ajax="false"-->
+                    <!--icon="ui-icon-print"-->
+                    <!--styleClass="medium" style="#{msg.get('btn.size')}"/>-->
 
-                            <!--<p:commandButton value="#{msg.get('btn.name.new')}"-->
-                                             <!--onstart="PF('bui').block()"-->
-                                             <!--oncomplete="PF('bui').unblock()"-->
-                                             <!--action="#{incomingShowItemBean.onClickButtonNew()}"-->
-                                             <!--update="@form, :setupForm:barcodeRegisterTable"-->
-                                             <!--styleClass="medium" style="#{msg.get('btn.size')}"-->
-                                             <!--icon="ui-icon-plusthick"/>-->
+                    <!--<p:commandButton value="#{msg.get('btn.name.new')}"-->
+                    <!--onstart="PF('bui').block()"-->
+                    <!--oncomplete="PF('bui').unblock()"-->
+                    <!--action="#{incomingShowItemBean.onClickButtonNew()}"-->
+                    <!--update="@form, :setupForm:barcodeRegisterTable"-->
+                    <!--styleClass="medium" style="#{msg.get('btn.size')}"-->
+                    <!--icon="ui-icon-plusthick"/>-->
 
-                            <!--<p:commandButton id="btnNewItem" value="New Item"-->
-                                            <!--icon="ui-icon-folder-open"-->
-                                            <!--styleClass="medium" style="width: 180px"-->
-                                            <!--action="#{incomingShowItemBean.onInitSearch()}"-->
-                                            <!--disabled="#{incomingShowItemBean.flagBtnNewItem}"-->
-                                            <!--update=":frmFindProduct"-->
-                                            <!--oncomplete="PF('findProductDlg').show()"/>-->
+                    <!--<p:commandButton id="btnNewItem" value="New Item"-->
+                    <!--icon="ui-icon-folder-open"-->
+                    <!--styleClass="medium" style="width: 180px"-->
+                    <!--action="#{incomingShowItemBean.onInitSearch()}"-->
+                    <!--disabled="#{incomingShowItemBean.flagBtnNewItem}"-->
+                    <!--update=":frmFindProduct"-->
+                    <!--oncomplete="PF('findProductDlg').show()"/>-->
 
-                            <!--<p:commandButton value="#{msg.get('btn.name.save')}"-->
-                                             <!--id="btnSave"-->
-                                             <!--styleClass="medium" style="#{msg.get('btn.size')}"-->
-                                             <!--onstart="PF('bui').block()"-->
-                                             <!--action="#{incomingShowItemBean.onSave()}"-->
-                                             <!--oncomplete="PF('bui').unblock()"-->
-                                             <!--update="@this,-->
-                                            <!--:setupForm:btnDelete,-->
-                                            <!--:setupForm:barcodeRegisterTable,-->
-                                            <!--:msgBoxSystemMessagePanel"-->
-                                             <!--icon="ui-icon-check"/>-->
+                    <!--<p:commandButton value="#{msg.get('btn.name.save')}"-->
+                                     <!--id="btnSave"-->
+                                     <!--disabled="#{incomingShowItemBean.flagBtnSave}"-->
+                                     <!--styleClass="medium" style="#{msg.get('btn.size')}"-->
+                                     <!--onstart="PF('bui').block()"-->
+                                     <!--action="#{incomingShowItemBean.onSave()}"-->
+                                     <!--oncomplete="PF('bui').unblock()"-->
+                                     <!--update="@this,-->
+                                             <!--:setupForm:btnDelete,-->
+                                             <!--:setupForm:barcodeRegisterTable,-->
+                                             <!--:msgBoxSystemMessagePanel"-->
+                                     <!--icon="ui-icon-check"/>-->
 
-                            <p:commandButton value="#{msg.get('btn.name.delete')}"
-                                             id="btnDelete"
-                                             disabled="#{incomingShowItemBean.flagBtnDelete}"
-                                             styleClass="medium" style="#{msg.get('btn.size')}"
-                                             icon="ui-icon-trash"
-                                             onstart="PF('bui').block()"
-                                             action="#{incomingShowItemBean.preDelete()}"
-                                             update=":setupForm:barcodeRegisterTable,
+                    <p:commandButton value="#{msg.get('btn.name.delete')}"
+                                     id="btnDelete"
+                                     disabled="#{incomingShowItemBean.flagBtnDelete}"
+                                     styleClass="medium" style="#{msg.get('btn.size')}"
+                                     icon="ui-icon-trash"
+                                     onstart="PF('bui').block()"
+                                     action="#{incomingShowItemBean.preDelete()}"
+                                     update=":setupForm:barcodeRegisterTable,
                                             :setupForm:btnDelete,
                                             :msgBoxSystemMessagePanel,
                                             :setupForm:barcodeRegisterTable,
                                             :confirmClosePalletPanel"
-                                             oncomplete="PF('bui').unblock()"/>
+                                     oncomplete="PF('bui').unblock()"/>
 
-                            <p:commandButton id="Close"
-                                             styleClass="medium" style="#{msg.get('btn.size')}"
-                                             value="Close"
-                                             process="@form"
-                                             update=":setupForm"
-                                             action="#{incomingShowItemBean.onClose}"
-                                             onstart="PF('bui').block()"
-                                             oncomplete="PF('bui').unblock()"/>
-                        </div>
-                    </p:panel>
-                    <table  border="0" class="content_table_form">
-                        <tr>
-                            <td style="width: 130px; max-width: 130px; min-width: 130px" class="left"/>
-                            <td style="width: 265px; max-width: 265px; min-width: 265px" class="left"/>
-                            <td style="width: 150px; max-width: 150px; min-width: 150px" class="left"/>
-                            <td style="width: 265px; max-width: 265px; min-width: 265px" class="left"/>
-                            <td style="width: 145px; max-width: 145px; min-width: 145px" class="left"/>
-                            <td style="width: 210px; max-width: 210px; min-width: 210px" class="left"/>
-                            <td style="width: 85px; max-width: 85px; min-width: 85px" class="left"/>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p:outputLabel value="Doc No."/>
-                            </td>
-                            <td>
-                                <p:inputText  id="txtDocno" readonly="#{true}" value="#{incomingShowItemBean.incomingView.docNo}"/>
-                            </td>
-                            <td>
-                                <p:outputLabel value="Document Date"/>
-                            </td>
-                            <td>
-                                <p:inputText  id="txtDocDate" readonly="#{true}" value="#{incomingShowItemBean.incomingView.docDate}"/>
-                            </td>
-                            <td>
-                                <p:outputLabel value="Document Note"/>
-                            </td>
-                            <td>
-                                <p:inputText  id="docNote" readonly="#{true}" value="#{incomingShowItemBean.incomingView.msStockInOutNoteModel.inoutCode}"/>
-                            </td>
-                            <td>
-                                <p:outputLabel value="Remark"/>
-                            </td>
-                            <td>
-                                <p:inputTextarea id="txtRemark" value="#{incomingBean.incomingView.remark}" readonly="true"/>
-                            </td>
-                        </tr>
-                    </table>
-                    <table border="0" class="content_table_form">
-                        <tr >
-                            <td class="fixMinMax100 left" />
-                            <td class="fixMinMax200 left" />
-                            <td class="fixMinMax100 center" />
-                            <td class="fixMinMax100 left" />
-                            <td class="fixMinMax200 left" />
-                            <td/>
-                        </tr>
-                        <tr>
-                            <td colspan="6">
-                                <p:dataTable id="barcodeRegisterTable"
-                                             scrollable="true" scrollHeight="450"
-                                             var="barcodeModel"
-                                             resizableColumns="true"
-                                             value="#{incomingShowItemBean.stockMovementInViewList}"
-                                             selectionMode="single"
-                                             selection="#{incomingShowItemBean.stockMovementInView}"
-                                             rowKey="#{barcodeModel.id}"
-                                             rowIndexVar="rowIndex">
-                                    <p:ajax event="rowSelect"
-                                            update=":setupForm:btnDelete,"
-                                            listener="#{incomingShowItemBean.onClickTable()}"/>
-                                    <p:column headerText="No" style="min-width: 5px; width: 5px; max-width: 5px;">
-                                        <h:outputText value="#{rowIndex+1}" styleClass="center" />
-                                    </p:column>
-                                    <p:column headerText="Item Code" style="min-width: 60px; width: 60px; max-width: 60px;" styleClass="center">
-                                        <h:outputText value="#{barcodeModel.itemId}"/>
-                                    </p:column>
-                                    <p:column headerText="Item Description" style="min-width: 250px; width: 250px; max-width: 250px;" styleClass="left">
-                                        <h:outputText value="#{barcodeModel.itemDesc}"/>
-                                    </p:column>
-                                    <p:column headerText="Barcode" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
-                                        <h:outputText value="#{barcodeModel.barcode}"/>
-                                    </p:column>
-                                    <p:column headerText="Status" style="min-width: 30px; width: 30px; max-width: 30px;" styleClass="center">
-                                        <h:outputText value="#{barcodeModel.status == 1 ? 'Create' : 'Scan'}"/>
-                                    </p:column>
-                                </p:dataTable>
-                            </td>
-                        </tr>
-                    </table>
-
-                </h:form>
-            </p:layoutUnit>
-        </p:layout>
-
-        <p:panel id="findProductPanel" styleClass="panel">
-            <p:dialog id="findProductDialog" widgetVar="findProductDlg"   closable="flase"
-                      header="Search item SN barcode or pallet barcode."
-                      onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
-                      modal="true" width="1000" height="450">
-                <ui:include src="../site/dialog/findProductIncomingShowItemDialog.xhtml"/>
-            </p:dialog>
-        </p:panel>
-
-        <p:panel id="msgBoxSystemMessagePanel" style="border: 0">
-            <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="#{msg.get('dialog.message.size')}" closable="false"
-                             header="#{incomingShowItemBean.messageHeader}" message="#{incomingShowItemBean.message}" >
-                <div style="text-align: right">
-                    <p:commandButton value="#{msg.get('btn.name.ok')}"
-                                     process="@this"
-                                     update="setupForm"
-                                     icon="ui-icon-check"
+                    <p:commandButton id="Close"
                                      styleClass="medium" style="#{msg.get('btn.size')}"
-                                     oncomplete="PF('msgBoxSystemMessageDlg').hide()"/>
-                </div>
-            </p:confirmDialog>
-        </p:panel>
-        <p:panel id="confirmClosePalletPanel" style="border: 0">
-            <p:confirmDialog id="confirmClosePalletDialog" widgetVar="confirmClosePalletDlg" width="#{msg.get('dialog.message.size')}"
-                             closable="false"
-                             header="#{incomingShowItemBean.messageHeader}" message="#{incomingShowItemBean.message}" >
-                <div style="text-align: right">
-                    <p:commandButton value="#{msg.get('btn.name.ok')}" action="#{incomingShowItemBean.onDelete()}"
-                                     process="@this" update=":setupForm, :msgBoxSystemMessagePanel"
-                                     styleClass="medium" style="#{msg.get('btn.size')}"
-                                     icon="ui-icon-check"
-                                     oncomplete="PF('confirmClosePalletDlg').hide()"/>
-                    <p:commandButton value="#{msg.get('btn.name.cancel')}"
-                                     process="@this"
+                                     value="Close"
+                                     process="@form"
                                      update=":setupForm"
-                                     styleClass="medium" style="#{msg.get('btn.size')}"
-                                     icon="ui-icon-cancel"
-                                     oncomplete="PF('confirmClosePalletDlg').hide()"/>
+                                     action="#{incomingShowItemBean.onClose}"
+                                     onstart="PF('bui').block()"
+                                     oncomplete="PF('bui').unblock()"/>
                 </div>
-            </p:confirmDialog>
-        </p:panel>
-    </h:body>
+            </p:panel>
+            <table  border="0" class="content_table_form">
+                <tr>
+                    <td style="width: 130px; max-width: 130px; min-width: 130px" class="left"/>
+                    <td style="width: 265px; max-width: 265px; min-width: 265px" class="left"/>
+                    <td style="width: 150px; max-width: 150px; min-width: 150px" class="left"/>
+                    <td style="width: 265px; max-width: 265px; min-width: 265px" class="left"/>
+                    <td style="width: 145px; max-width: 145px; min-width: 145px" class="left"/>
+                    <td style="width: 210px; max-width: 210px; min-width: 210px" class="left"/>
+                    <td style="width: 85px; max-width: 85px; min-width: 85px" class="left"/>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel value="Doc No."/>
+                    </td>
+                    <td>
+                        <p:inputText  id="txtDocno" readonly="#{true}" value="#{incomingShowItemBean.incomingView.docNo}"/>
+                    </td>
+                    <td>
+                        <p:outputLabel value="Document Date"/>
+                    </td>
+                    <td>
+                        <p:inputText  id="txtDocDate" readonly="#{true}" value="#{incomingShowItemBean.incomingView.docDate}"/>
+                    </td>
+                    <td>
+                        <p:outputLabel value="Document Note"/>
+                    </td>
+                    <td>
+                        <p:inputText  id="docNote" readonly="#{true}" value="#{incomingShowItemBean.incomingView.msStockInOutNoteModel.inoutCode}"/>
+                    </td>
+                    <td>
+                        <p:outputLabel value="Remark"/>
+                    </td>
+                    <td>
+                        <p:inputTextarea id="txtRemark" value="#{incomingBean.incomingView.remark}" readonly="true"/>
+                    </td>
+                </tr>
+            </table>
+            <table border="0" class="content_table_form">
+                <tr >
+                    <td class="fixMinMax100 left" />
+                    <td class="fixMinMax200 left" />
+                    <td class="fixMinMax100 center" />
+                    <td class="fixMinMax100 left" />
+                    <td class="fixMinMax200 left" />
+                    <td/>
+                </tr>
+                <tr>
+                    <td colspan="6">
+                        <p:dataTable id="barcodeRegisterTable"
+                                     scrollable="true" scrollHeight="450"
+                                     var="barcodeModel"
+                                     resizableColumns="true"
+                                     value="#{incomingShowItemBean.stockMovementInViewList}"
+                                     selectionMode="single"
+                                     selection="#{incomingShowItemBean.stockMovementInView}"
+                                     rowKey="#{barcodeModel.id}"
+                                     rowIndexVar="rowIndex">
+                            <p:ajax event="rowSelect"
+                                    update=":setupForm:btnDelete"
+                                    listener="#{incomingShowItemBean.onClickTable()}"/>
+                            <p:column headerText="No" style="min-width: 5px; width: 5px; max-width: 5px;">
+                                <h:outputText value="#{rowIndex+1}" styleClass="center" />
+                            </p:column>
+                            <p:column headerText="Item Code" style="min-width: 60px; width: 60px; max-width: 60px;" styleClass="center">
+                                <h:outputText value="#{barcodeModel.itemId}"/>
+                            </p:column>
+                            <p:column headerText="Item Description" style="min-width: 250px; width: 250px; max-width: 250px;" styleClass="left">
+                                <h:outputText value="#{barcodeModel.itemDesc}"/>
+                            </p:column>
+                            <p:column headerText="Barcode" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
+                                <h:outputText value="#{barcodeModel.barcode}"/>
+                            </p:column>
+                            <p:column headerText="Status" style="min-width: 30px; width: 30px; max-width: 30px;" styleClass="center">
+                                <h:outputText value="#{barcodeModel.status == 1 ? 'Create' : 'Scan'}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </td>
+                </tr>
+            </table>
+
+        </h:form>
+    </p:layoutUnit>
+</p:layout>
+
+<p:panel id="findProductPanel" styleClass="panel">
+    <p:dialog id="findProductDialog" widgetVar="findProductDlg"   closable="flase"
+              header="Search item SN barcode or pallet barcode."
+              onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
+              modal="true" width="1000" height="450">
+        <ui:include src="../site/dialog/findProductIncomingShowItemDialog.xhtml"/>
+    </p:dialog>
+</p:panel>
+
+<p:panel id="msgBoxSystemMessagePanel" style="border: 0">
+    <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="#{msg.get('dialog.message.size')}" closable="false"
+                     header="#{incomingShowItemBean.messageHeader}" message="#{incomingShowItemBean.message}" >
+        <div style="text-align: right">
+            <p:commandButton value="#{msg.get('btn.name.ok')}"
+                             process="@this"
+                             update="setupForm"
+                             icon="ui-icon-check"
+                             styleClass="medium" style="#{msg.get('btn.size')}"
+                             oncomplete="PF('msgBoxSystemMessageDlg').hide()"/>
+        </div>
+    </p:confirmDialog>
+</p:panel>
+<p:panel id="confirmClosePalletPanel" style="border: 0">
+    <p:confirmDialog id="confirmClosePalletDialog" widgetVar="confirmClosePalletDlg" width="#{msg.get('dialog.message.size')}"
+                     closable="false"
+                     header="#{incomingShowItemBean.messageHeader}" message="#{incomingShowItemBean.message}" >
+        <div style="text-align: right">
+            <p:commandButton value="#{msg.get('btn.name.ok')}" action="#{incomingShowItemBean.onDelete()}"
+                             process="@this" update=":setupForm, :msgBoxSystemMessagePanel"
+                             styleClass="medium" style="#{msg.get('btn.size')}"
+                             icon="ui-icon-check"
+                             oncomplete="PF('confirmClosePalletDlg').hide()"/>
+            <p:commandButton value="#{msg.get('btn.name.cancel')}"
+                             process="@this"
+                             update=":setupForm"
+                             styleClass="medium" style="#{msg.get('btn.size')}"
+                             icon="ui-icon-cancel"
+                             oncomplete="PF('confirmClosePalletDlg').hide()"/>
+        </div>
+    </p:confirmDialog>
+</p:panel>
+</h:body>
 </f:view>
 </html>

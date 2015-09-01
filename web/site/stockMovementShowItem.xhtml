@@ -5,191 +5,191 @@
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:p="http://primefaces.org/ui">
-<h:head>
-    <title>#{msg.get('menu.stockmovementitem.title')}</title>
-</h:head>
-<h:body>
-<p:layout fullPage="true" id="layoutPanel">
-<p:layoutUnit id="layoutTop" position="north" size="180" header="#{msg.get('header.north')}" collapsible="true" style="border: 0">
-    <ui:insert name="header">
-        <ui:include src="#{msg.get('include.header')}"/>
-    </ui:insert>
-</p:layoutUnit>
-<p:layoutUnit id="layoutLeft" position="west" size="#{msg.get('layoutLeft.size')}" header="#{msg.get('header.west')}" collapsible="true" style="border: 0">
-    <ui:include src="#{msg.get('include.menu')}"/>
-</p:layoutUnit>
+    <h:head>
+        <title>#{msg.get('menu.stockmovementitem.title')}</title>
+    </h:head>
+    <h:body>
+        <p:layout fullPage="true" id="layoutPanel">
+            <p:layoutUnit id="layoutTop" position="north" size="180" header="#{msg.get('header.north')}" collapsible="true" style="border: 0">
+                <ui:insert name="header">
+                    <ui:include src="#{msg.get('include.header')}"/>
+                </ui:insert>
+            </p:layoutUnit>
+            <p:layoutUnit id="layoutLeft" position="west" size="#{msg.get('layoutLeft.size')}" header="#{msg.get('header.west')}" collapsible="true" style="border: 0">
+                <ui:include src="#{msg.get('include.menu')}"/>
+            </p:layoutUnit>
 
-<p:layoutUnit id="layoutCenter" position="center" header="#{msg.get('menu.stockmovementitem.title')}" >
-<h:form id="stockMoveItemForm">
-<p:panel style="border: 0">
-    <div style="text-align: right;">
-        <!--<p:commandButton id="btnShowSN"-->
-                         <!--value="Show SN"-->
-                         <!--oncomplete="PF('showSNDlg').show()"-->
-                         <!--process="@this"-->
-                         <!--action="#{stockMoveItemBean.onClickShowSN}"-->
-                         <!--disabled="#{stockMoveItemBean.flagBtnShowSN}"-->
-                         <!--update=":showSNForm"-->
-                         <!--styleClass="medium" style="#{msg.get('btn.size.150')}"-->
-                         <!--icon="ui-icon-plusthick"/>-->
+            <p:layoutUnit id="layoutCenter" position="center" header="#{msg.get('menu.stockmovementitem.title')}" >
+                <h:form id="stockMoveItemForm">
+                    <p:panel style="border: 0">
+                        <div style="text-align: right;">
+                            <!--<p:commandButton id="btnShowSN"-->
+                            <!--value="Show SN"-->
+                            <!--oncomplete="PF('showSNDlg').show()"-->
+                            <!--process="@this"-->
+                            <!--action="#{stockMoveItemBean.onClickShowSN}"-->
+                            <!--disabled="#{stockMoveItemBean.flagBtnShowSN}"-->
+                            <!--update=":showSNForm"-->
+                            <!--styleClass="medium" style="#{msg.get('btn.size.150')}"-->
+                            <!--icon="ui-icon-plusthick"/>-->
 
-        <!--<p:commandButton id="btnSearchItem"-->
-                         <!--value="Search Item"-->
-                         <!--styleClass="medium" style="#{msg.get('btn.size.150')}"-->
-                         <!--process="@this"-->
-                         <!--disabled="#{stockMoveItemBean.flagBtnSearchItem}"-->
-                         <!--action="#{stockMoveItemBean.onLoadSearchItem}"-->
-                         <!--oncomplete="PF('searchItemDlg').show()"-->
-                         <!--update=":searchItemIssuingForm"-->
-                         <!--icon="ui-icon-search"/>-->
-        <p:commandButton id="btnDelete"
-                         value="Delete"
-                         process="@this"
-                         oncomplete="PF('confirmDeleteDlg').show()"
-                         disabled="#{stockMoveItemBean.flagBtnDelete}"
-                         update=":stockMoveItemForm, :msgBoxSystemMessagePanel"
-                         styleClass="medium" style="#{msg.get('btn.size.150')}"
-                         icon="ui-icon-plusthick"/>
-        <p:commandButton id="btnClose"
-                         value="Close"
-                         styleClass="medium" style="#{msg.get('btn.size.150')}"
-                         process="@this"
-                         action="#{stockMoveItemBean.onClose()}"
-                         icon="ui-icon-search"/>
-    </div>
-</p:panel>
-<div class="left">
-    <table  border="0" class="content_table_form">
-        <tr>
-            <td style="width: 130px; max-width: 130px; min-width: 130px" class="left"/>
-            <td style="width: 265px; max-width: 265px; min-width: 265px" class="left"/>
-            <td style="width: 150px; max-width: 150px; min-width: 150px" class="left"/>
-            <td style="width: 265px; max-width: 265px; min-width: 265px" class="left"/>
-            <td style="width: 145px; max-width: 145px; min-width: 145px" class="left"/>
-            <td style="width: 210px; max-width: 210px; min-width: 210px" class="left"/>
-            <td style="width: 85px; max-width: 85px; min-width: 85px" class="left"/>
-        </tr>
-        <tr>
-            <td>
-                <p:outputLabel value="Doc No."/>
-            </td>
-            <td>
-                <p:inputText id="txtDocno" readonly="#{true}" value="#{stockMoveItemBean.stockInOutModel.docNo}"/>
-            </td>
-            <td>
-                <p:outputLabel value="Document Date"/>
-            </td>
-            <td>
-                <p:inputText id="txtDocDate" readonly="#{true}" value="#{stockMoveItemBean.stockInOutModel.docDate}">
-                    <f:convertDateTime pattern="dd/MM/yyyy"/>
-                </p:inputText>
-            </td>
-            <td>
-                <p:outputLabel value="Document Note"/>
-                <p:outputLabel value="*" style="color: #ff0000"/>
-            </td>
-            <td>
-                <p:inputText id="txtDocNote" readonly="#{true}" value="#{stockMoveItemBean.stockInOutModel.msStockInOutNoteModel.inoutCode}"/>
-            </td>
-            <td>
-                <p:outputLabel value="Remark"/>
-            </td>
-            <td>
-                <p:inputTextarea id="txtRemark" value="#{stockMoveItemBean.stockInOutModel.remark}" readonly="#{true}"/>
-            </td>
-        </tr>
-    </table>
-</div>
+                            <!--<p:commandButton id="btnSearchItem"-->
+                            <!--value="Search Item"-->
+                            <!--styleClass="medium" style="#{msg.get('btn.size.150')}"-->
+                            <!--process="@this"-->
+                            <!--disabled="#{stockMoveItemBean.flagBtnSearchItem}"-->
+                            <!--action="#{stockMoveItemBean.onLoadSearchItem}"-->
+                            <!--oncomplete="PF('searchItemDlg').show()"-->
+                            <!--update=":searchItemIssuingForm"-->
+                            <!--icon="ui-icon-search"/>-->
+                            <p:commandButton id="btnDelete"
+                                             value="Delete"
+                                             process="@this"
+                                             oncomplete="PF('confirmDeleteDlg').show()"
+                                             disabled="#{stockMoveItemBean.flagBtnDelete}"
+                                             update=":stockMoveItemForm:btnDelete, :msgBoxSystemMessagePanel"
+                                             styleClass="medium" style="#{msg.get('btn.size.150')}"
+                                             icon="ui-icon-plusthick"/>
+                            <p:commandButton id="btnClose"
+                                             value="Close"
+                                             styleClass="medium" style="#{msg.get('btn.size.150')}"
+                                             process="@this"
+                                             action="#{stockMoveItemBean.onClose()}"
+                                             icon="ui-icon-search"/>
+                        </div>
+                    </p:panel>
+                    <div class="left">
+                        <table  border="0" class="content_table_form">
+                            <tr>
+                                <td style="width: 130px; max-width: 130px; min-width: 130px" class="left"/>
+                                <td style="width: 265px; max-width: 265px; min-width: 265px" class="left"/>
+                                <td style="width: 150px; max-width: 150px; min-width: 150px" class="left"/>
+                                <td style="width: 265px; max-width: 265px; min-width: 265px" class="left"/>
+                                <td style="width: 145px; max-width: 145px; min-width: 145px" class="left"/>
+                                <td style="width: 210px; max-width: 210px; min-width: 210px" class="left"/>
+                                <td style="width: 85px; max-width: 85px; min-width: 85px" class="left"/>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p:outputLabel value="Doc No."/>
+                                </td>
+                                <td>
+                                    <p:inputText id="txtDocno" readonly="#{true}" value="#{stockMoveItemBean.stockInOutModel.docNo}"/>
+                                </td>
+                                <td>
+                                    <p:outputLabel value="Document Date"/>
+                                </td>
+                                <td>
+                                    <p:inputText id="txtDocDate" readonly="#{true}" value="#{stockMoveItemBean.stockInOutModel.docDate}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </p:inputText>
+                                </td>
+                                <td>
+                                    <p:outputLabel value="Document Note"/>
+                                    <p:outputLabel value="*" style="color: #ff0000"/>
+                                </td>
+                                <td>
+                                    <p:inputText id="txtDocNote" readonly="#{true}" value="#{stockMoveItemBean.stockInOutModel.msStockInOutNoteModel.inoutCode}"/>
+                                </td>
+                                <td>
+                                    <p:outputLabel value="Remark"/>
+                                </td>
+                                <td>
+                                    <p:inputTextarea id="txtRemark" value="#{stockMoveItemBean.stockInOutModel.remark}" readonly="#{true}"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
 
-<table border="0" class="content_table_form">
-    <tr>
-        <td>
-            <p:dataTable id="incomingTable"
-                         scrollable="true" scrollHeight="450"
-                         var="stockMoveItemModel"
-                         resizableColumns="true"
-                         selectionMode="single"
-                         value="#{stockMoveItemBean.stockMovementOutViewList}"
-                         selection="#{stockMoveItemBean.stockMovementOutView}"
-                         rowKey="#{stockMoveItemModel.id}"
-                         rowIndexVar="rowIndex">
-                <p:ajax event="rowSelect" listener="#{stockMoveItemBean.onClickTable}" update=":stockMoveItemForm:btnDelete"/>
-                <p:column headerText="No" style="min-width: 5px; width: 5px; max-width: 5px;">
-                    <h:outputText value="#{rowIndex+1}" styleClass="center" />
-                </p:column>
-                <p:column headerText="Item" sortBy="#{stockMoveItemModel.warehouse}" filterBy="#{stockMoveItemModel.warehouse}" filterMatchMode="contains" style="min-width: 100px; width: 100px; max-width: 100px;" styleClass="center">
-                    <h:outputText value="#{stockMoveItemModel.warehouse}"/>
-                </p:column>
-                <p:column headerText="Location" sortBy="#{stockMoveItemModel.location}" filterBy="#{stockMoveItemModel.location}" filterMatchMode="contains" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
-                    <h:outputText value="#{stockMoveItemModel.location}"/>
-                </p:column>
-                <p:column headerText="Batch No" sortBy="#{stockMoveItemModel.batchNo}" filterBy="#{stockMoveItemModel.batchNo}" filterMatchMode="contains" style="min-width: 120px; width: 120px; max-width: 120px;" styleClass="center">
-                    <h:outputText value="#{stockMoveItemModel.batchNo}"/>
-                </p:column>
-                <p:column headerText="Pallet" sortBy="#{stockMoveItemModel.pallet}" filterBy="#{stockMoveItemModel.pallet}" filterMatchMode="contains" style="min-width: 250px; width: 250px; max-width: 250px;" styleClass="center">
-                    <h:outputText value="#{stockMoveItemModel.pallet}"/>
-                </p:column>
-                <p:column headerText="SN" sortBy="#{stockMoveItemModel.snBarcode}" filterBy="#{stockMoveItemModel.snBarcode}" filterMatchMode="contains" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
-                    <h:outputText value="#{stockMoveItemModel.snBarcode}"/>
-                </p:column>
-                <p:column headerText="Status" sortBy="#{stockMoveItemModel.status}" filterBy="#{stockMoveItemModel.status}" filterMatchMode="contains" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
-                    <h:outputText value="#{stockMoveItemModel.status == 1 ? 'Create' : 'Scan'}"/>
-                </p:column>
-            </p:dataTable>
-        </td>
-    </tr>
-</table>
+                    <table border="0" class="content_table_form">
+                        <tr>
+                            <td>
+                                <p:dataTable id="incomingTable"
+                                             scrollable="true" scrollHeight="450"
+                                             var="stockMoveItemModel"
+                                             resizableColumns="true"
+                                             selectionMode="single"
+                                             value="#{stockMoveItemBean.stockMovementOutViewList}"
+                                             selection="#{stockMoveItemBean.stockMovementOutView}"
+                                             rowKey="#{stockMoveItemModel.id}"
+                                             rowIndexVar="rowIndex">
+                                    <p:ajax event="rowSelect" listener="#{stockMoveItemBean.onClickTable}" update=":stockMoveItemForm:btnDelete"/>
+                                    <p:column headerText="No" style="min-width: 5px; width: 5px; max-width: 5px;">
+                                        <h:outputText value="#{rowIndex+1}" styleClass="center" />
+                                    </p:column>
+                                    <p:column headerText="Item" sortBy="#{stockMoveItemModel.warehouse}" filterBy="#{stockMoveItemModel.warehouse}" filterMatchMode="contains" style="min-width: 100px; width: 100px; max-width: 100px;" styleClass="center">
+                                        <h:outputText value="#{stockMoveItemModel.warehouse}"/>
+                                    </p:column>
+                                    <p:column headerText="Location" sortBy="#{stockMoveItemModel.location}" filterBy="#{stockMoveItemModel.location}" filterMatchMode="contains" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
+                                        <h:outputText value="#{stockMoveItemModel.location}"/>
+                                    </p:column>
+                                    <p:column headerText="Batch No" sortBy="#{stockMoveItemModel.batchNo}" filterBy="#{stockMoveItemModel.batchNo}" filterMatchMode="contains" style="min-width: 120px; width: 120px; max-width: 120px;" styleClass="center">
+                                        <h:outputText value="#{stockMoveItemModel.batchNo}"/>
+                                    </p:column>
+                                    <p:column headerText="Pallet" sortBy="#{stockMoveItemModel.pallet}" filterBy="#{stockMoveItemModel.pallet}" filterMatchMode="contains" style="min-width: 250px; width: 250px; max-width: 250px;" styleClass="center">
+                                        <h:outputText value="#{stockMoveItemModel.pallet}"/>
+                                    </p:column>
+                                    <p:column headerText="SN" sortBy="#{stockMoveItemModel.snBarcode}" filterBy="#{stockMoveItemModel.snBarcode}" filterMatchMode="contains" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
+                                        <h:outputText value="#{stockMoveItemModel.snBarcode}"/>
+                                    </p:column>
+                                    <p:column headerText="Status" sortBy="#{stockMoveItemModel.status}" filterBy="#{stockMoveItemModel.status}" filterMatchMode="contains" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
+                                        <h:outputText value="#{stockMoveItemModel.status == 1 ? 'Create' : 'Scan'}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </td>
+                        </tr>
+                    </table>
 
-</h:form>
-</p:layoutUnit>
-</p:layout>
+                </h:form>
+            </p:layoutUnit>
+        </p:layout>
 
-<p:panel id="msgBoxSystemMessagePanel" style="border: 0">
-    <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="#{msg.get('dialog.message.size')}" closable="false"
-                     header="#{stockMoveItemBean.messageHeader}" message="#{stockMoveItemBean.message}" >
-        <div style="text-align: right">
-            <p:commandButton value="#{msg.get('btn.name.ok')}"
-                             process="@this"
-                             update=":stockMoveItemForm"
-                             icon="ui-icon-check"
-                             styleClass="medium" style="#{msg.get('btn.size')}"
-                             oncomplete="PF('msgBoxSystemMessageDlg').hide();"/>
-        </div>
-    </p:confirmDialog>
-</p:panel>
+        <p:panel id="msgBoxSystemMessagePanel" style="border: 0">
+            <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="#{msg.get('dialog.message.size')}" closable="false"
+                             header="#{stockMoveItemBean.messageHeader}" message="#{stockMoveItemBean.message}" >
+                <div style="text-align: right">
+                    <p:commandButton value="#{msg.get('btn.name.ok')}"
+                                     process="@this"
+                                     update=":stockMoveItemForm"
+                                     icon="ui-icon-check"
+                                     styleClass="medium" style="#{msg.get('btn.size')}"
+                                     oncomplete="PF('msgBoxSystemMessageDlg').hide();"/>
+                </div>
+            </p:confirmDialog>
+        </p:panel>
 
-    <p:panel id="confirmDeletePanel" style="border: 0">
-        <p:confirmDialog id="confirmDeleteDialog" widgetVar="confirmDeleteDlg" width="#{msg.get('dialog.message.size')}"
-                         header="Delete" message="Confirm Delete?" >
-            <div style="text-align: right">
-                <p:commandButton action="#{stockMoveItemBean.onDelete}"
-                                  value="#{msg.get('btn.name.ok')}"
-                                  styleClass="medium" style="#{msg.get('btn.size')}"
-                                  icon="ui-icon-check"
-                                  process="@this" update=":stockMoveItemForm, :msgBoxSystemMessagePanel"
-                                  oncomplete="PF('confirmDeleteDlg').hide()"/>
-                <p:commandButton value="#{msg.get('btn.name.cancel')}"
-                                 styleClass="medium" style="#{msg.get('btn.size')}"
-                                 icon="ui-icon-cancel"
-                                 process="@this"
-                                 update=":stockMoveItemForm"
-                                 oncomplete="PF('confirmDeleteDlg').hide()"/>
-            </div>
-        </p:confirmDialog>
-    </p:panel>
+        <p:panel id="confirmDeletePanel" style="border: 0">
+            <p:confirmDialog id="confirmDeleteDialog" widgetVar="confirmDeleteDlg" width="#{msg.get('dialog.message.size')}"
+                             header="Delete" message="Confirm Delete?" >
+                <div style="text-align: right">
+                    <p:commandButton action="#{stockMoveItemBean.onDelete}"
+                                     value="#{msg.get('btn.name.ok')}"
+                                     styleClass="medium" style="#{msg.get('btn.size')}"
+                                     icon="ui-icon-check"
+                                     process="@this" update=":stockMoveItemForm, :msgBoxSystemMessagePanel"
+                                     oncomplete="PF('confirmDeleteDlg').hide()"/>
+                    <p:commandButton value="#{msg.get('btn.name.cancel')}"
+                                     styleClass="medium" style="#{msg.get('btn.size')}"
+                                     icon="ui-icon-cancel"
+                                     process="@this"
+                                     update=":stockMoveItemForm"
+                                     oncomplete="PF('confirmDeleteDlg').hide()"/>
+                </div>
+            </p:confirmDialog>
+        </p:panel>
 
-    <!--<p:dialog id="showSNDialog" widgetVar="showSNDlg" header="Show SN"-->
-              <!--onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"-->
-              <!--modal="true" width="1200">-->
+        <!--<p:dialog id="showSNDialog" widgetVar="showSNDlg" header="Show SN"-->
+        <!--onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"-->
+        <!--modal="true" width="1200">-->
         <!--<ui:include src="../site/dialog/showSNDialog.xhtml"/>-->
-    <!--</p:dialog>-->
+        <!--</p:dialog>-->
 
-    <p:dialog id="searchItemDialog" widgetVar="searchItemDlg" header="Search Item" closable="false"
-              onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
-              modal="true" width="1280">
-        <ui:include src="../site/dialog/searchItemIssuingDialog.xhtml"/>
-    </p:dialog>
+        <p:dialog id="searchItemDialog" widgetVar="searchItemDlg" header="Search Item" closable="false"
+                  onShow="hideWindowsScrollBar()" onHide="showWindowsScrollBar()" resizable="false"
+                  modal="true" width="1280">
+            <ui:include src="../site/dialog/searchItemIssuingDialog.xhtml"/>
+        </p:dialog>
 
-</h:body>
+    </h:body>
 </f:view>
 </html>
