@@ -90,7 +90,7 @@ public class StockInOutDAO extends GenericDAO<StockInOutModel, Integer> {
             Criteria criteria = getCriteria();
 
             if (!Utils.isNull(stockTransferView.getDocNo()) || !Utils.isZero(stockTransferView.getDocNo().length())){
-                criteria.add(Restrictions.ilike("docNo", "%" + stockTransferView.getDocNo() + "%"));
+                criteria.add(Restrictions.ilike("docNo", "TR%" + stockTransferView.getDocNo() + "%"));
             } else {
                 criteria.add(Restrictions.ilike("docNo", "TR%"));
             }

@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-08-28T04:52:09 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Stock_Transfer_Report" pageWidth="595" pageHeight="842" columnWidth="539" leftMargin="28" rightMargin="28" topMargin="28" bottomMargin="28" uuid="49dae77a-8157-487c-9083-548f46208cb5">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
@@ -18,14 +16,14 @@
 	<columnHeader>
 		<band height="184" splitType="Stretch">
 			<staticText>
-				<reportElement x="213" y="64" width="126" height="21" uuid="8cc224cb-5249-43e0-92ae-ac1d41a5befc"/>
+				<reportElement uuid="8cc224cb-5249-43e0-92ae-ac1d41a5befc" x="213" y="64" width="126" height="21"/>
 				<textElement>
 					<font fontName="Tahoma" size="14" isBold="true" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Document No :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="1" y="0" width="538" height="39" uuid="447fbaaa-719d-40b6-9ae3-6bdc69bb6e35"/>
+				<reportElement uuid="447fbaaa-719d-40b6-9ae3-6bdc69bb6e35" x="1" y="0" width="538" height="39"/>
 				<box>
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -39,56 +37,56 @@
 				<text><![CDATA[บริษัท   สวิซซ์-วัน   คอร์ปอเรชัน   จำกัด]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="213" y="40" width="326" height="24" uuid="d897726d-7335-45a8-8240-1534a9f26146"/>
+				<reportElement uuid="d897726d-7335-45a8-8240-1534a9f26146" x="213" y="40" width="326" height="24"/>
 				<textElement>
 					<font fontName="Tahoma" size="16" isBold="true" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Stock Transfer Report (ใบเคลื่อนย้าย)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="134" width="84" height="18" uuid="4f99dc76-7045-41c8-8a00-3db40187746e"/>
+				<reportElement uuid="4f99dc76-7045-41c8-8a00-3db40187746e" x="0" y="134" width="84" height="18"/>
 				<textElement>
 					<font fontName="Tahoma" size="12" isBold="true" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Remark :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="213" y="105" width="126" height="20" uuid="946e1547-845f-455b-a75f-3c669820a5eb"/>
+				<reportElement uuid="946e1547-845f-455b-a75f-3c669820a5eb" x="213" y="105" width="126" height="20"/>
 				<textElement>
 					<font fontName="Tahoma" size="14" isBold="true" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Document Date :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="213" y="85" width="126" height="20" uuid="8c884270-d6a1-44dd-bb0b-cf23189d7950"/>
+				<reportElement uuid="8c884270-d6a1-44dd-bb0b-cf23189d7950" x="213" y="85" width="126" height="20"/>
 				<textElement>
 					<font fontName="Tahoma" size="14" isBold="true" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Document Note :]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="340" y="64" width="199" height="21" uuid="ceea7999-a067-4608-b788-01870dff617e"/>
+				<reportElement uuid="ceea7999-a067-4608-b788-01870dff617e" x="340" y="64" width="199" height="21"/>
 				<textElement>
 					<font fontName="Tahoma" size="14" isBold="false" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{docNo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="340" y="85" width="199" height="20" uuid="ac5a7c27-db85-4e16-a8b1-26bafe1a5eb5"/>
+				<reportElement uuid="ac5a7c27-db85-4e16-a8b1-26bafe1a5eb5" x="340" y="85" width="199" height="20"/>
 				<textElement>
 					<font fontName="Tahoma" size="14" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{inoutCode}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="340" y="105" width="199" height="20" uuid="5c2a0c08-2ef7-4a4b-ac3e-03eca7131572"/>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement uuid="5c2a0c08-2ef7-4a4b-ac3e-03eca7131572" x="340" y="105" width="199" height="20"/>
 				<textElement>
 					<font fontName="Tahoma" size="14" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{docDate}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="0" y="152" width="539" height="32" uuid="bf0fe243-33bf-4c8f-927e-b38d4eca0381"/>
+				<reportElement uuid="bf0fe243-33bf-4c8f-927e-b38d4eca0381" x="0" y="152" width="539" height="32"/>
 				<textElement>
 					<font fontName="Tahoma" size="12" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -99,7 +97,7 @@
 	<detail>
 		<band height="53" splitType="Stretch">
 			<subreport>
-				<reportElement x="1" y="0" width="539" height="53" uuid="da50ec62-93d4-47bf-b242-300c7ab296f9"/>
+				<reportElement uuid="da50ec62-93d4-47bf-b242-300c7ab296f9" x="1" y="0" width="539" height="53"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{subReport})]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$P{path}]]></subreportExpression>
 			</subreport>
