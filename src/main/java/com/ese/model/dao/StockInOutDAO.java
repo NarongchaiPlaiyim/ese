@@ -14,9 +14,11 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.type.DateType;
 import org.hibernate.type.IntegerType;
 import org.hibernate.type.StringType;
+import org.hibernate.type.TimestampType;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -25,10 +27,12 @@ public class StockInOutDAO extends GenericDAO<StockInOutModel, Integer> {
 
     public List<StockInOutModel> findByDocnoAndCurrentDate(){
         List<StockInOutModel> stockInOutModelList = Utils.getEmptyList();
+
         try {
             Criteria criteria = getCriteria();
             criteria.add(Restrictions.ilike("docNo", "TR%"));
-            criteria.add(Restrictions.eq("docDate", new Date()));
+            criteria.add(Restrictions.ge("docDate", Utils.minDateTime()));
+            criteria.add(Restrictions.le("docDate", Utils.maxDateTime()));
             criteria.add(Restrictions.eq("isValid", 1));
             criteria.addOrder(Order.desc("updateDate"));
             stockInOutModelList = criteria.list();
@@ -43,7 +47,8 @@ public class StockInOutDAO extends GenericDAO<StockInOutModel, Integer> {
         try {
             Criteria criteria = getCriteria();
             criteria.add(Restrictions.like("docNo", "IN%"));
-            criteria.add(Restrictions.eq("docDate", Utils.currentDate()));
+            criteria.add(Restrictions.ge("docDate", Utils.minDateTime()));
+            criteria.add(Restrictions.le("docDate", Utils.maxDateTime()));
             criteria.add(Restrictions.eq("isValid", 1));
             criteria.addOrder(Order.desc("updateDate"));
             stockInOutModelList = criteria.list();
@@ -58,7 +63,8 @@ public class StockInOutDAO extends GenericDAO<StockInOutModel, Integer> {
         try {
             Criteria criteria = getCriteria();
             criteria.add(Restrictions.like("docNo", "OU%"));
-            criteria.add(Restrictions.eq("docDate", Utils.currentDate()));
+            criteria.add(Restrictions.ge("docDate", Utils.minDateTime()));
+            criteria.add(Restrictions.le("docDate", Utils.maxDateTime()));
             criteria.add(Restrictions.eq("isValid", 1));
             criteria.addOrder(Order.desc("updateDate"));
             stockInOutModelList = criteria.list();
@@ -73,7 +79,8 @@ public class StockInOutDAO extends GenericDAO<StockInOutModel, Integer> {
         try {
             Criteria criteria = getCriteria();
             criteria.add(Restrictions.like("docNo", "QR%"));
-            criteria.add(Restrictions.eq("docDate", Utils.currentDate()));
+            criteria.add(Restrictions.ge("docDate", Utils.minDateTime()));
+            criteria.add(Restrictions.le("docDate", Utils.maxDateTime()));
             criteria.add(Restrictions.eq("isValid", 1));
             criteria.addOrder(Order.desc("updateDate"));
             stockInOutModelList = criteria.list();
@@ -190,7 +197,7 @@ public class StockInOutDAO extends GenericDAO<StockInOutModel, Integer> {
             SQLQuery query = getSession().createSQLQuery(sqlBuilder.toString())
                     .addScalar("ID", IntegerType.INSTANCE)
                     .addScalar("DOC_NO", StringType.INSTANCE)
-                    .addScalar("DOC_DATE", DateType.INSTANCE)
+                    .addScalar("DOC_DATE", TimestampType.INSTANCE)
                     .addScalar("INOUT_CODE", StringType.INSTANCE)
                     .addScalar("REMARK", StringType.INSTANCE);
             List<Object[]> objects = query.list();

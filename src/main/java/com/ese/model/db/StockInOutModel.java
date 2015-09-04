@@ -22,7 +22,7 @@ public class StockInOutModel extends AbstractModel{
     @Column(name = "docno")
     private String docNo;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "docdate")
     private Date docDate;
 

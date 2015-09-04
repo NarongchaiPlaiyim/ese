@@ -49,7 +49,7 @@ public class StockTransferService extends Service{
         try {
             MSStockInOutNoteModel outNoteModel = stockInOutNoteDAO.findByID(stockInOutMNoteId);
             int staffModel = (int) FacesUtil.getSession(false).getAttribute(AttributeName.STAFF.getName());
-            if (Utils.isNull(stockInOutModel)){
+            if (Utils.isZero(stockInOutModel.getId())){
                 stockInOutModel.setStatus(statusDAO.findByTableIdAndStatus(TableValue.STOCK_IN_OUT.getId(), StatusValue.CREATE.getId()));
                 stockInOutModel.setCreateBy(staffModel);
                 stockInOutModel.setCreateDate(Utils.currentDate());

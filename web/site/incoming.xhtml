@@ -114,8 +114,8 @@
             </td>
             <td>
                 <p:calendar id="txtDocDate" value="#{incomingBean.incomingView.docDate}"
-                            pattern="dd/MM/yyyy">
-                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            pattern="dd/MM/yyyy HH:mm">
+                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
                 </p:calendar>
             </td>
             <td>
@@ -222,7 +222,7 @@
                 </p:column>
                 <p:column headerText="Document Date" sortBy="#{stockTransferModel.docDate}" filterBy="#{stockTransferModel.docDate}" filterMatchMode="contains" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
                     <h:outputText value="#{stockTransferModel.docDate}">
-                        <f:convertDateTime pattern="dd/MM/yyyy" locale="en-EN"/>
+                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="en-EN"/>
                     </h:outputText>
                 </p:column>
                 <p:column headerText="Document Note" sortBy="#{stockTransferModel.msStockInOutNoteModel.inoutCode}" filterBy="#{stockTransferModel.msStockInOutNoteModel.inoutCode}" filterMatchMode="contains" style="min-width: 120px; width: 120px; max-width: 120px;" styleClass="center">
