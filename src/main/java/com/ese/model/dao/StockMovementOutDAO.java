@@ -25,8 +25,8 @@ public class StockMovementOutDAO extends GenericDAO<StockMovementOutModel, Integ
         sqlBuilder.append(" ").append(getPrefix()).append(".item_master.itemid AS ITEM,");
         sqlBuilder.append(" ").append(getPrefix()).append(".item_master.DSGThaiItemDescription AS ITEM_DESC,");
         sqlBuilder.append(" ").append(getPrefix()).append(".warehouse.warehouse_name AS WAREHOUSE, ");
-        sqlBuilder.append(" ").append(getPrefix()).append(".location.location_name AS LOCATION,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".stock_movement_out.batchno AS BATCH_NO,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".location.location_barcode AS LOCATION,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".inv_onhand.batchno AS BATCH_NO,");
         sqlBuilder.append(" ").append(getPrefix()).append(".pallet.pallet_barcode AS PALLET_BARCODE,");
         sqlBuilder.append(" ").append(getPrefix()).append(".stock_movement_out.sn_barcode AS SN_BARCODE,");
         sqlBuilder.append(" ").append(getPrefix()).append(".stock_movement_out.status AS STATUS");

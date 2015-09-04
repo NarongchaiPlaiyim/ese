@@ -71,7 +71,7 @@ public class InvOnHandDAO extends GenericDAO<InvOnHandModel, Integer>{
         sqlBuilder.append(" ").append(getPrefix()).append(".warehouse.warehouse_code AS WAREHOUSE_CODE,");
         sqlBuilder.append(" ").append(getPrefix()).append(".location.location_barcode AS LOCATION_BARCODE,");
         sqlBuilder.append(" ").append(getPrefix()).append(".reserved_order.batchno AS BATCHNO,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.qty AS QTY,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".reserved_order.reserved_qty AS QTY,");
         sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.salesunit AS UNIT");
         sqlBuilder.append(" FROM ").append(getPrefix()).append(".picking_order");
 

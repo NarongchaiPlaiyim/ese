@@ -117,8 +117,8 @@
                                     <p:column headerText="No" style="min-width: 5px; width: 5px; max-width: 5px;">
                                         <h:outputText value="#{rowIndex+1}" styleClass="center" />
                                     </p:column>
-                                    <p:column headerText="Item" sortBy="#{stockMoveItemModel.warehouse}" filterBy="#{stockMoveItemModel.warehouse}" filterMatchMode="contains" style="min-width: 100px; width: 100px; max-width: 100px;" styleClass="center">
-                                        <h:outputText value="#{stockMoveItemModel.warehouse}"/>
+                                    <p:column headerText="Item" sortBy="#{stockMoveItemModel.itemId}" filterBy="#{stockMoveItemModel.itemId}" filterMatchMode="contains" style="min-width: 100px; width: 100px; max-width: 100px;" styleClass="center">
+                                        <h:outputText value="#{stockMoveItemModel.itemId}"/>
                                     </p:column>
                                     <p:column headerText="Location" sortBy="#{stockMoveItemModel.location}" filterBy="#{stockMoveItemModel.location}" filterMatchMode="contains" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
                                         <h:outputText value="#{stockMoveItemModel.location}"/>
