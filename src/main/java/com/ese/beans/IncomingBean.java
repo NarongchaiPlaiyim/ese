@@ -81,12 +81,14 @@ public class IncomingBean extends Bean {
         incomingView.setRemark(stockInOutModel.getRemark());
         incomingView.setMsStockInOutNoteModel(stockInOutModel.getMsStockInOutNoteModel());
         if (stockInOutModel.getStatus().getStatusSeq() == 3){
+            flagBtnPost = Boolean.FALSE;
+            flagBtnSave = Boolean.TRUE;
+        }else if(stockInOutModel.getStatus().getStatusSeq() == 1){
+            flagBtnPost = Boolean.TRUE;
+            flagBtnSave = Boolean.FALSE;
+        }else{
             flagBtnPost = Boolean.TRUE;
             flagBtnSave = Boolean.TRUE;
-        }
-        else{
-            flagBtnPost = Boolean.FALSE;
-            flagBtnSave = Boolean.FALSE;
         }
         modeFlag = Boolean.FALSE;
         flagBtnShow = Boolean.FALSE;
