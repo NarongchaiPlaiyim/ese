@@ -98,10 +98,10 @@ public class StockMovementShowItemBean extends Bean{
 //            if (stockMovementOutView.getStatus() == 1){
 //                flagBtnDelete = Boolean.FALSE;
 //            }
-            if (stockInOutModel.getStatus().getStatusSeq() == 3){
+            if (stockInOutModel.getStatus().getStatusSeq() == 4){
                 flagBtnDelete = Boolean.TRUE;
             }else flagBtnDelete = Boolean.FALSE;
-        }else flagBtnDelete = Boolean.FALSE;
+        }else flagBtnDelete = Boolean.TRUE;
     }
 
 //    public void onClickShowSN(){

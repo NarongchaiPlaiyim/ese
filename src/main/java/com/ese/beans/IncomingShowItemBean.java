@@ -241,10 +241,10 @@ public class IncomingShowItemBean extends Bean{
         //if stock_movement_in.status = 1; delete button should be enable.
 
         if (!Utils.isNull(stockInOutModel)){
-            if (stockInOutModel.getStatus().getStatusSeq() == 3){
+            if (stockInOutModel.getStatus().getStatusSeq() == 4){
                 flagBtnDelete = Boolean.TRUE;
-            }else flagBtnDelete = Boolean.FALSE;//jowjo
-        }else flagBtnDelete = Boolean.FALSE;
+            }else flagBtnDelete = Boolean.FALSE;
+        }else flagBtnDelete = Boolean.TRUE;
 //        modeBarcode = "Mode(Edit)     ";
     }
 
