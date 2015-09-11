@@ -137,7 +137,7 @@ public class IssuingBean extends Bean {
 
     public void onClickPost(){
         issuingService.post(issuingView);
-        showDialogEdited();
+        showDialogClosed();
         init();
     }
 

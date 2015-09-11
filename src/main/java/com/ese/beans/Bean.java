@@ -49,6 +49,9 @@ public abstract class Bean implements Serializable {
     protected void showDialogCreated(){
         showDialog(MessageDialog.CREATE.getMessageHeader(), MessageDialog.CREATE.getMessage());
     }
+    protected void showDialogClosed(){
+        showDialog(MessageDialog.POST.getMessageHeader(), MessageDialog.POST.getMessage());
+    }
 
     protected void showDialogDeleted(){
         showDialog(MessageDialog.DELETE.getMessageHeader(), MessageDialog.DELETE.getMessage());

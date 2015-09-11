@@ -411,4 +411,59 @@ public enum Utils {
         calendar.set(Calendar.MILLISECOND,0);
         return calendar.getTime();
     }
+
+    public static Date minDateTime(Date date){
+        Calendar calendar = Calendar.getInstance();
+        String strDate = convertDateToStringDDMYYYY(date);
+        String[] sp = strDate.split("/");
+        calendar.set(Calendar.DATE, Integer.parseInt(sp[0]));
+        calendar.set(Calendar.MONTH,Integer.parseInt(sp[1])-1);
+        calendar.set(Calendar.YEAR,Integer.parseInt(sp[2]));
+        calendar.set(Calendar.HOUR_OF_DAY,0);
+        calendar.set(Calendar.MINUTE,0);
+        calendar.set(Calendar.SECOND,0);
+        calendar.set(Calendar.MILLISECOND,0);
+//        System.out.println("form "+calendar.getTime());
+        return calendar.getTime();
+    }
+
+    public static Date maxDateTime(Date date){
+        Calendar calendar = Calendar.getInstance();
+        String strDate = convertDateToStringDDMYYYY(date);
+        String[] sp = strDate.split("/");
+        calendar.set(Calendar.DATE, Integer.parseInt(sp[0]));
+        calendar.set(Calendar.MONTH,Integer.parseInt(sp[1])-1);
+        calendar.set(Calendar.YEAR,Integer.parseInt(sp[2]));
+        calendar.set(Calendar.HOUR_OF_DAY,23);
+        calendar.set(Calendar.MINUTE,59);
+        calendar.set(Calendar.SECOND,59);
+        calendar.set(Calendar.MILLISECOND,0);
+//        System.out.println("to "+calendar.getTime());
+        return calendar.getTime();
+    }
+
+    public static String convertDateToStringDDMYYYY(Date date){
+//        System.out.println(date);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/M/yyyy", Locale.ENGLISH);
+        if (Utils.isNull(date)){
+            return "";
+        } else {
+            String dateString = simpleDateFormat.format(date);
+            return dateString;
+        }
+    }
+
+    public static void main(String[] args) {
+        Calendar calendar = Calendar.getInstance();
+        String strDate = convertDateToStringDDMYYYY(new Date());
+        String[] sp = strDate.split("/");
+        calendar.set(Calendar.DATE, Integer.parseInt(sp[0]));
+        calendar.set(Calendar.MONTH,Integer.parseInt(sp[1])-1);
+        calendar.set(Calendar.YEAR,Integer.parseInt(sp[2]));
+        calendar.set(Calendar.HOUR_OF_DAY,23);
+        calendar.set(Calendar.MINUTE,59);
+        calendar.set(Calendar.SECOND,59);
+        calendar.set(Calendar.MILLISECOND,0);
+        System.out.println(calendar.getTime());
+    }
 }

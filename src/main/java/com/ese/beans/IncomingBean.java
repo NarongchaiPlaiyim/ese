@@ -140,7 +140,7 @@ public class IncomingBean extends Bean {
 
     public void onClickPost(){
         incomingService.post(incomingView);
-        showDialogEdited();
+        showDialogClosed();
         init();
     }
 

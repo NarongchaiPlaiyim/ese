@@ -10,6 +10,7 @@ public enum MessageDialog {
     DELETE("Delete", "Successfully deleted."),
     UPDATE("Update", "Successfully updated."),
     WARNING("Warning", ""),
+    POST("Post", "Successfully Closed"),
     SAVE("Save", "Successfully saved.");
     private String messageHeader;
     private String message;

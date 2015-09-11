@@ -274,9 +274,9 @@ public class PalletManagementTransform extends Transform {
                 workingName = model.getWorkingName();
             }
 
-            if (!bathcgNo.equalsIgnoreCase(model.getBathcgNo()) && countId != model.getCountId()){
-                palletListReport.setBathcgNo(model.getBathcgNo());
-                palletListReport.setCountId(model.getCountId());
+            if (!bathcgNo.equalsIgnoreCase(model.getBathcgNo1()) && countId != model.getCountId1()){
+                palletListReport.setBathcgNo(model.getBathcgNo1());
+                palletListReport.setCountId(model.getCountId1());
                 palletListReports.add(palletListReport);
             }
             palletManagementViewReport.setPalletListReports(palletListReports);

@@ -71,6 +71,22 @@ public class StockTransferService extends Service{
         return stockInOutDAO.findBySearch(stockTransferView);
     }
 
+    public void post(StockInOutModel stockInOutModel){
+        try {
+            int staffModel = (int) FacesUtil.getSession(false).getAttribute(AttributeName.STAFF.getName());
+            stockInOutModel = stockInOutDAO.findByID(stockInOutModel.getId());
+            stockInOutModel.setDocDate(stockInOutModel.getDocDate());
+            stockInOutModel.setMsStockInOutNoteModel(stockInOutModel.getMsStockInOutNoteModel());
+            stockInOutModel.setRemark(stockInOutModel.getRemark());
+            stockInOutModel.setStatus(statusDAO.findByTableIdAndStatus(TableValue.STOCK_IN_OUT.getId(), 4));
+            stockInOutModel.setUpdateDate(Utils.currentDate());
+            stockInOutModel.setUpdateBy(staffModel);
+            stockInOutDAO.update(stockInOutModel);
+        } catch (Exception e) {
+            log.debug("Exception error during edit ", e);
+        }
+    }
+
     public void printReport(int stockInoutId){
         String reportName = Utils.genReportName("_Incoming");
         List<StockViewReport> reportViews = stockInOutDAO.findReportByStickInoutId(stockInoutId);

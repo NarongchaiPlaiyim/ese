@@ -278,20 +278,46 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
                     .addScalar("ITEM_ID", StringType.INSTANCE);
             List<Object[]> objects = query.list();
 
+            int i = 1 ;
+            PalletManagemengModelReport report = null;
+
             for (Object[] entity : objects) {
-                PalletManagemengModelReport report = new PalletManagemengModelReport();
-                report.setCountId(Utils.parseInt(entity[0]));
-                report.setDSGThaiItemDescription(Utils.parseString(entity[1]));
-                report.setWarehouseCode(Utils.parseString(entity[2]));
-                report.setPalletBarcode(Utils.parseString(entity[3]));
-                report.setLocationBarcode(Utils.parseString(entity[4]));
-                report.setCreateDate(Utils.convertToStringDDMMYYYY(Utils.parseDate(entity[5], null)));
-                report.setGrade(Utils.parseString(entity[6]));
-                report.setBathcgNo(Utils.parseString(entity[7]));
-                report.setWorkingName(Utils.parseString(entity[8]));
-                report.setSeq(Utils.parseInt(entity[9]));
-                report.setItemId(Utils.parseString(entity[10]));
-                reportViews.add(report);
+
+                if (i == 1){
+                    report = new PalletManagemengModelReport();
+                    report.setCountId1(Utils.parseInt(entity[0]));
+                    report.setDSGThaiItemDescription(Utils.parseString(entity[1]));
+                    report.setWarehouseCode(Utils.parseString(entity[2]));
+                    report.setPalletBarcode(Utils.parseString(entity[3]));
+                    report.setLocationBarcode(Utils.parseString(entity[4]));
+                    report.setCreateDate(Utils.convertToStringDDMMYYYY(Utils.parseDate(entity[5], null)));
+                    report.setGrade(Utils.parseString(entity[6]));
+                    report.setBathcgNo1(Utils.parseString(entity[7]));
+                    report.setWorkingName(Utils.parseString(entity[8]));
+                    report.setSeq(Utils.parseInt(entity[9]));
+                    report.setItemId(Utils.parseString(entity[10]));
+                }
+
+                if (i == 2){
+                    report.setCountId2(Utils.parseInt(entity[0]));
+                    report.setBathcgNo2(Utils.parseString(entity[7]));
+                }
+
+                if (i == 3){
+                    report.setCountId3(Utils.parseInt(entity[0]));
+                    report.setBathcgNo3(Utils.parseString(entity[7]));
+                }
+
+                if (i == 4){
+                    report.setCountId4(Utils.parseInt(entity[0]));
+                    report.setBathcgNo4(Utils.parseString(entity[7]));
+                }
+
+                if (objects.size() == i){
+                    reportViews.add(report);
+                }
+
+                i++;
             }
         } catch (Exception e) {
             log.debug("Exception SQL : {}", e);

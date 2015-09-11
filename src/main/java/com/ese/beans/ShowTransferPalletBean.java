@@ -52,7 +52,8 @@ public class ShowTransferPalletBean extends Bean{
 
     private boolean flagBtnFindLocation = Boolean.TRUE;
     private boolean flagBtnPrintTag = Boolean.TRUE;
-    private boolean isCheckLocationDialog = Boolean.TRUE;;
+    private boolean isCheckLocationDialog = Boolean.TRUE;
+    private boolean flagBtnNewTransferPallet = Boolean.TRUE;
     private int pmvId;
 
     @PostConstruct
@@ -74,6 +75,9 @@ public class ShowTransferPalletBean extends Bean{
 
     private void onLoad(){
         palletTransferViewList = showTransPalletService.getPalletByStockID(stockInOutModel.getId());
+        if (stockInOutModel.getStatus().getStatusSeq()==4) {
+            flagBtnNewTransferPallet = Boolean.TRUE ;
+        }else flagBtnNewTransferPallet = Boolean.FALSE;
     }
 
     public void onClose(){
@@ -129,6 +133,7 @@ public class ShowTransferPalletBean extends Bean{
         if (selectPallet.getToTransfer() == 1){
             flagBtnPrintTag = Boolean.FALSE;
         }
+
     }
 
     public void  onClickTableDialog(){
