@@ -96,13 +96,14 @@ public class StockInOutDAO extends GenericDAO<StockInOutModel, Integer> {
         try {
             Criteria criteria = getCriteria();
 
-            if (!Utils.isNull(stockTransferView.getDocNo()) || !Utils.isZero(stockTransferView.getDocNo().length())){
-                criteria.add(Restrictions.ilike("docNo", "TR%" + stockTransferView.getDocNo() + "%"));
+            if (!Utils.isNull(stockTransferView.getDocNo()) && !Utils.isZero(stockTransferView.getDocNo().length())){
+                criteria.add(Restrictions.ilike("docNo", "%" + stockTransferView.getDocNo() + "%"));
             } else {
                 criteria.add(Restrictions.ilike("docNo", "TR%"));
             }
 
             if (!Utils.isZero(stockTransferView.getDocNoteId())){
+                log.debug("---------- {}", stockTransferView.getDocNoteId());
                 criteria.add(Restrictions.eq("msStockInOutNoteModel.id", stockTransferView.getDocNoteId()));
             }
             criteria.add(Restrictions.between("docDate", Utils.minDateTime(stockTransferView.getFormDate()), Utils.maxDateTime(stockTransferView.getToDate())));

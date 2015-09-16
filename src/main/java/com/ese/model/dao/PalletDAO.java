@@ -67,13 +67,20 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
                 criteria.add(Restrictions.eq("msLocationModel.id", location));
             }
 
-            criteria.add(Restrictions.eq("isCombine", combine));
+            if (combine == 1 && statusId == 1){
+                criteria.add(Restrictions.eq("isCombine", combine));
+            }
 
-            if (foil == 1){
-                criteria.add(Restrictions.gt("isFoil", 0));
-            } else {
+            if (foil != 0 && statusId == 1){
                 criteria.add(Restrictions.eq("isFoil", foil));
             }
+
+
+//            if (foil == 1){
+//                criteria.add(Restrictions.gt("isFoil", 0));
+//            } else {
+//                criteria.add(Restrictions.eq("isFoil", foil));
+//            }
 
             if (!Utils.isNull(keyItemDescription) && !"".equalsIgnoreCase(keyItemDescription)){
                 criteria.createAlias("p.msItemModel", "c");
