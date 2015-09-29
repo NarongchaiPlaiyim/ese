@@ -40,6 +40,7 @@ public class IssuingBean extends Bean {
     private boolean flagBtnPrint;
     private boolean flagBtnShow;
     private boolean flagBtnPost;
+    private boolean flagBtnSave;
 
     @PostConstruct
     private void onCreation(){
@@ -57,6 +58,7 @@ public class IssuingBean extends Bean {
         flagBtnShow = Boolean.TRUE;
         modeFlag = Boolean.TRUE;
         flagBtnPost = Boolean.TRUE;
+//        flagBtnSave = Boolean.TRUE;
         mode = "Mode(New)";
         issuingView = new IssuingView();
         msStockInOutNoteModel = new MSStockInOutNoteModel();
@@ -78,6 +80,7 @@ public class IssuingBean extends Bean {
         stockInOutModel = new StockInOutModel();
         flagBtnPrint = Boolean.TRUE;
         flagBtnShow = Boolean.TRUE;
+        flagBtnSave = Boolean.FALSE;
         modeFlag = Boolean.TRUE;
     }
 
@@ -116,15 +119,25 @@ public class IssuingBean extends Bean {
         issuingView.setDocDate(stockInOutModel.getDocDate());
         issuingView.setRemark(stockInOutModel.getRemark());
         issuingView.setMsStockInOutNoteModel(stockInOutModel.getMsStockInOutNoteModel());
+        if(stockInOutModel.getStatus().getStatusSeq() == 3){
+            flagBtnPost = Boolean.FALSE;
+            flagBtnSave = Boolean.TRUE;
+        }else if(stockInOutModel.getStatus().getStatusSeq() == 1){
+            flagBtnPost = Boolean.TRUE;
+            flagBtnSave = Boolean.FALSE;
+        }else{
+            flagBtnPost = Boolean.TRUE;
+            flagBtnSave = Boolean.TRUE;
+        }
         modeFlag = Boolean.FALSE;
         flagBtnShow = Boolean.FALSE;
-        flagBtnPost = Boolean.FALSE;
+        //flagBtnPost = Boolean.FALSE;
         flagBtnPrint = Boolean.FALSE;
     }
 
     public void onClickPost(){
         issuingService.post(issuingView);
-        showDialogEdited();
+        showDialogClosed();
         init();
     }
 

@@ -37,6 +37,8 @@ public class StockTransferBean extends Bean{
     private boolean flagDocNo;
     private boolean flagBtnShowTransferPallet;
     private boolean flagBtnPrint;
+    private boolean flagBtnPost;
+    private boolean flagBtnSave;
 
     @PostConstruct
     private void onCreation(){
@@ -52,6 +54,7 @@ public class StockTransferBean extends Bean{
         flagBtnShowTransferPallet = Boolean.TRUE;
         flagBtnPrint = Boolean.TRUE;
         flagDocNo = Boolean.FALSE;
+        flagBtnPost = Boolean.TRUE;
         msStockInOutNoteModel = new MSStockInOutNoteModel();
         stockTransferView = new StockTransferView();
         stockInOutNoteModelList = stockTransferService.getAllStockInOutNote();
@@ -74,6 +77,13 @@ public class StockTransferBean extends Bean{
         flagBtnPrint = Boolean.FALSE;
         flagDocNo = Boolean.TRUE;
         msStockInOutNoteModel = stockInOutModel.getMsStockInOutNoteModel();
+        if(stockInOutModel.getStatus().getStatusSeq()==4){
+            flagBtnPost = Boolean.TRUE;
+            flagBtnSave = Boolean.TRUE;
+        }else{
+            flagBtnPost = Boolean.FALSE;
+            flagBtnSave = Boolean.FALSE;
+        }
     }
 
     public void onClickNew(){
@@ -94,6 +104,12 @@ public class StockTransferBean extends Bean{
             stockTransferService.saveOrupdate(stockInOutModel, msStockInOutNoteModel.getId());
             showDialog(MessageDialog.SAVE.getMessageHeader(), MessageDialog.SAVE.getMessage());
         }
+        init();
+    }
+    public void onClickPost(){
+        stockTransferService.post(stockInOutModel);
+        showDialogClosed();
+
         init();
     }
 

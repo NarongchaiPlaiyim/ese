@@ -128,8 +128,8 @@ public class IncomingService extends Service {
         HashMap map = new HashMap();
 
         try {
-                map.put("path", FacesUtil.getRealPath(pathPrintIncomingSub));
-                map.put("subReport", stockMovementInDAO.findSubReportByStickInoutId(stockInoutId));
+            map.put("path", FacesUtil.getRealPath(pathPrintIncomingSub));
+            map.put("subReport", stockMovementInDAO.findSubReportByStickInoutId(stockInoutId));
         } catch (Exception e) {
             log.debug("Exception error onPrintTag : ", e);
         }
@@ -190,7 +190,7 @@ public class IncomingService extends Service {
             stockInOutModel.setDocDate(incomingView.getDocDate());
             stockInOutModel.setMsStockInOutNoteModel(incomingView.getMsStockInOutNoteModel());
             stockInOutModel.setRemark(incomingView.getRemark());
-            stockInOutModel.setStatus(statusDAO.findByTableIdAndStatus(TableValue.STOCK_IN_OUT.getId(), 3));
+            stockInOutModel.setStatus(statusDAO.findByTableIdAndStatus(TableValue.STOCK_IN_OUT.getId(), 4));
             stockInOutModel.setUpdateDate(Utils.currentDate());
             stockInOutModel.setUpdateBy(staffModel);
             stockInOutDAO.update(stockInOutModel);

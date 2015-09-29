@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PickItemBarcode" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8fa98275-57da-4098-9305-ce46e174c6a8">
+	<property name="ireport.zoom" value="1.0000000000000009"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Administrator\\Desktop\\Deestone\\PickItemBarcode\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="path" class="java.lang.String"/>
+	<parameter name="subreport" class="java.util.Collection"/>
+	<queryString>
+		<![CDATA[SELECT     picking_order.docno, picking_order.confirm_docno, picking_order.sales_order, picking_order.create_date, ax_CustTable.Name, ax_CustTable.Address
+FROM         picking_order CROSS JOIN
+                      ax_CustTable]]>
+	</queryString>
+	<field name="pickingDocno" class="java.lang.String"/>
+	<field name="confirmDocno" class="java.lang.String"/>
+	<field name="saleOrder" class="java.lang.String"/>
+	<field name="createDate" class="java.util.Date"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="address" class="java.lang.String"/>
+	<columnHeader>
+		<band height="185" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="dec6e5ff-c95d-4ec2-af3a-4090111cf685" x="297" y="102" width="100" height="15"/>
+				<textElement>
+					<font fontName="Tahoma" size="11" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Document Number :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7a9a6263-a371-492b-ae35-5f6b8ae00e56" x="297" y="132" width="46" height="15"/>
+				<textElement>
+					<font fontName="Tahoma" size="11" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Date :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="460f7658-888f-4ba8-8d45-2d5c8f140e18" x="297" y="41" width="258" height="26"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="16" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Picking Order]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="cd6882b3-d860-4050-b4b3-057541e225b1" x="297" y="117" width="46" height="15"/>
+				<textElement>
+					<font fontName="Tahoma" size="11" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Number :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5c021fe5-bc67-4da2-b9e5-1a38f1f01e0f" x="0" y="0" width="555" height="39"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="24" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[บริษัท สวิซซ์-วัน คอร์ปอเรชั่น จำกัด]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="897c2a41-9c9f-4b03-812b-2c63c610b579" x="2" y="82" width="253" height="20"/>
+				<textElement>
+					<font fontName="Tahoma" size="12" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="2a781301-5711-4538-ba9e-acf2e232e10b" x="2" y="102" width="253" height="45"/>
+				<textElement>
+					<font fontName="Tahoma" size="12" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{address}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="12acf3dc-a536-47a1-94a3-c92d53b4d297" x="397" y="102" width="158" height="15"/>
+				<textElement>
+					<font fontName="Tahoma" size="11" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pickingDocno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5d2106a6-e0c1-496c-8614-ea1b3e24babf" x="343" y="117" width="212" height="15"/>
+				<textElement>
+					<font fontName="Tahoma" size="11" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{confirmDocno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="96049b28-4aee-485e-b3d5-81661f987e1c" x="343" y="132" width="212" height="15"/>
+				<textElement>
+					<font fontName="Tahoma" size="11" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{createDate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="b3ff0c8a-9ff5-46f8-931f-cc6de31ddd1d" x="297" y="147" width="61" height="15"/>
+				<textElement>
+					<font fontName="Tahoma" size="11" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Sale Order :]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="9f3f4cc7-9a8e-4f91-a3bf-46d3a6b77246" x="358" y="147" width="197" height="15"/>
+				<textElement>
+					<font fontName="Tahoma" size="11" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saleOrder}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement uuid="c0154a3d-105b-4cf5-8278-31d0ff7aff55" x="297" y="67" width="258" height="35"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false" barWidth="0" barHeight="0">
+					<jr:codeExpression><![CDATA[$F{pickingDocno}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="558" splitType="Stretch">
+			<subreport>
+				<reportElement uuid="3bf94fe6-415b-4ce4-b9bc-0b33fa54e0f1" x="2" y="0" width="553" height="558"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{subreport})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{path}]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="59" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="5e1a2754-68c4-4208-8eae-6a9d660fa6a7" x="200" y="2" width="154" height="57"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="11" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[..............................................
+ผจก.ฝ่ายควบคุมสินค้าคงคลัง
+วันที่ ....../....../......]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="599d612f-7027-4e76-a94a-cafac5d95686" x="402" y="2" width="154" height="57"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="11" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[..............................................
+หัวหน้าส่วนคลังสินค้า
+วันที่ ....../....../......]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c225546e-798b-4ffd-849a-f3078b982d55" x="2" y="2" width="154" height="57"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="11" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[..............................................
+เจ้าหน้าที่ควบคุมสินค้าคงคลัง
+วันที่ ....../....../......]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+</jasperReport>

@@ -203,4 +203,9 @@ public class PalletManagementBean extends Bean {
         showDialogUpdated();
         onCreation();
     }
+
+    public void filterConveyorLine(){
+        workingAreaModelList = palletService.getByWarehouseId(warehouseMode.getId());
+        workingAreaModel.setId(0);
+    }
 }

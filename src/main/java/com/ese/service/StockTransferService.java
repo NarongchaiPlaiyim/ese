@@ -49,7 +49,7 @@ public class StockTransferService extends Service{
         try {
             MSStockInOutNoteModel outNoteModel = stockInOutNoteDAO.findByID(stockInOutMNoteId);
             int staffModel = (int) FacesUtil.getSession(false).getAttribute(AttributeName.STAFF.getName());
-            if (Utils.isNull(stockInOutModel)){
+            if (Utils.isZero(stockInOutModel.getId())){
                 stockInOutModel.setStatus(statusDAO.findByTableIdAndStatus(TableValue.STOCK_IN_OUT.getId(), StatusValue.CREATE.getId()));
                 stockInOutModel.setCreateBy(staffModel);
                 stockInOutModel.setCreateDate(Utils.currentDate());
@@ -69,6 +69,22 @@ public class StockTransferService extends Service{
 
     public List<StockInOutModel> search(StockTransferView stockTransferView){
         return stockInOutDAO.findBySearch(stockTransferView);
+    }
+
+    public void post(StockInOutModel stockInOutModel){
+        try {
+            int staffModel = (int) FacesUtil.getSession(false).getAttribute(AttributeName.STAFF.getName());
+            stockInOutModel = stockInOutDAO.findByID(stockInOutModel.getId());
+            stockInOutModel.setDocDate(stockInOutModel.getDocDate());
+            stockInOutModel.setMsStockInOutNoteModel(stockInOutModel.getMsStockInOutNoteModel());
+            stockInOutModel.setRemark(stockInOutModel.getRemark());
+            stockInOutModel.setStatus(statusDAO.findByTableIdAndStatus(TableValue.STOCK_IN_OUT.getId(), 4));
+            stockInOutModel.setUpdateDate(Utils.currentDate());
+            stockInOutModel.setUpdateBy(staffModel);
+            stockInOutDAO.update(stockInOutModel);
+        } catch (Exception e) {
+            log.debug("Exception error during edit ", e);
+        }
     }
 
     public void printReport(int stockInoutId){

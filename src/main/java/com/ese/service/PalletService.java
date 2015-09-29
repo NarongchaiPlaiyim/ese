@@ -2,7 +2,9 @@ package com.ese.service;
 
 import com.ese.model.dao.LocationDAO;
 import com.ese.model.dao.MSLocationItemsDAO;
+import com.ese.model.dao.WorkingAreaDAO;
 import com.ese.model.db.MSLocationModel;
+import com.ese.model.db.MSWorkingAreaModel;
 import com.ese.model.db.PalletModel;
 import com.ese.model.dao.PalletDAO;
 import com.ese.model.view.LocationItemView;
@@ -36,6 +38,7 @@ public class PalletService extends Service{
     private String pathPrintTagV2Report;
     @Value("#{config['report.subpallet']}")
     private String pathSubReport;
+    @Resource private WorkingAreaDAO workingAreaDAO;
 
     public void test(){
         int i = 58;
@@ -148,5 +151,16 @@ public class PalletService extends Service{
         } catch (Exception e) {
             log.debug("Exception error unFoil : ", e);
         }
+    }
+
+    public List<MSWorkingAreaModel> getByWarehouseId(int warehouseId){
+        if (warehouseId == 0){
+            try {
+                return workingAreaDAO.findAll();
+            } catch (Exception e) {
+                log.debug("Exception error getByWarehouseId : ", e);
+            }
+        }
+        return workingAreaDAO.findByWarehouseId(warehouseId);
     }
 }

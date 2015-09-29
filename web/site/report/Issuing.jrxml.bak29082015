@@ -41,7 +41,7 @@
 				<textElement>
 					<font fontName="Tahoma" size="16" isBold="true" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[Stock Movement Incoming (ใบรับ)]]></text>
+				<text><![CDATA[Stock Movement Issuing]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="6be705da-eaef-446a-bd2b-cba38bdee4f9" x="2" y="135" width="85" height="18"/>
@@ -78,7 +78,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{inoutCode}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy h.mm a">
+			<textField>
 				<reportElement uuid="746cf01c-c5d7-4288-83db-39919b9052f6" x="339" y="106" width="200" height="20"/>
 				<textElement>
 					<font fontName="Tahoma" size="14" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
@@ -97,7 +97,7 @@
 	<detail>
 		<band height="101" splitType="Stretch">
 			<subreport>
-				<reportElement uuid="4941519d-2b77-40db-b44d-206198fd8749" x="0" y="0" width="538" height="100"/>
+				<reportElement uuid="4fe5f72d-4d2f-4ad9-843d-510e410218f3" x="0" y="0" width="538" height="100"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{subReport})]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$P{path}]]></subreportExpression>
 			</subreport>

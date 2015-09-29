@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2015-09-08T05:02:24 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PalletManagementV2" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="77dfb070-baf9-47ee-ae8e-6dfd900bc771">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
@@ -21,7 +23,7 @@
 	<detail>
 		<band height="160" splitType="Stretch">
 			<textField>
-				<reportElement uuid="966ba45f-1514-492e-bb96-4211eb79bede" x="0" y="79" width="278" height="79"/>
+				<reportElement x="0" y="79" width="278" height="79" uuid="966ba45f-1514-492e-bb96-4211eb79bede"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -34,7 +36,7 @@
 				<textFieldExpression><![CDATA[$P{MainPallet}.getMsLocationModel().getLocationBarcode()]]></textFieldExpression>
 			</textField>
 			<textField pattern="yyyy-mm-dd hh:mm:ss">
-				<reportElement uuid="1b834c06-c167-46c2-bf88-d04033cbe460" x="278" y="79" width="277" height="79"/>
+				<reportElement x="278" y="79" width="277" height="79" uuid="1b834c06-c167-46c2-bf88-d04033cbe460"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -47,9 +49,9 @@
 				<textFieldExpression><![CDATA[$P{MainPallet}.getCreateDate()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="3c07fa6c-4b1f-4401-ad54-811b9050a6a4" x="278" y="0" width="277" height="79"/>
+				<reportElement x="278" y="50" width="277" height="29" uuid="3c07fa6c-4b1f-4401-ad54-811b9050a6a4"/>
 				<box>
-					<topPen lineWidth="1.0"/>
+					<topPen lineWidth="0.0"/>
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
@@ -60,7 +62,7 @@
 				<textFieldExpression><![CDATA[$P{MainPallet}.getPalletBarcode()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="62c56983-7ed4-4ce8-b373-bffb35ee4945" x="0" y="0" width="278" height="79"/>
+				<reportElement x="0" y="0" width="278" height="79" uuid="62c56983-7ed4-4ce8-b373-bffb35ee4945"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -72,20 +74,58 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$P{MainPallet}.getMsWorkingAreaModel().getName()]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="278" y="0" width="277" height="50" uuid="6519065f-9b6a-43e8-ad46-ba0b14949663"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="286" y="5" width="265" height="47" uuid="ae3f0810-e630-4b97-96bc-f2a9ebee1bb9">
+					<property name="com.jaspersoft.studio.unit.barHeight" value="pixel"/>
+				</reportElement>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false" barHeight="100">
+					<jr:codeExpression><![CDATA[$P{MainPallet}.getPalletBarcode()]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
 		</band>
-		<band height="46">
+		<band height="47">
 			<subreport>
-				<reportElement uuid="884694c0-2e61-4ec2-98f1-c846e0549d74" x="0" y="0" width="555" height="46"/>
+				<reportElement x="0" y="1" width="555" height="46" uuid="884694c0-2e61-4ec2-98f1-c846e0549d74"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{SubPallet})]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$P{path}]]></subreportExpression>
 			</subreport>
+		</band>
+		<band height="40">
+			<staticText>
+				<reportElement x="430" y="-2" width="124" height="42" uuid="6f90a28f-e9f9-4fe9-a38d-aedd51ce76b9"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="438" y="3" width="109" height="34" uuid="3896e913-b22b-4441-8a21-52446ee177e0">
+					<property name="com.jaspersoft.studio.unit.barHeight" value="pixel"/>
+				</reportElement>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false" barHeight="100">
+					<jr:codeExpression><![CDATA[$P{MainPallet}.getPalletBarcode()]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
 		</band>
 	</detail>
 	<columnFooter>
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band splitType="Stretch"/>
+		<band height="30" splitType="Stretch"/>
 	</pageFooter>
 	<summary>
 		<band splitType="Stretch"/>

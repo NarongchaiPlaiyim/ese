@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-09-03T17:11:51 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SubPickingBarCode" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3ff53922-db2a-4e36-a1e4-a646f29e2bad">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
@@ -48,13 +46,20 @@ GROUP BY
      inv_onhand.batchno,
      picking_order_line.salesunit]]>
 	</queryString>
-	<field name="itemInternal" class="java.lang.String"/>
+	<field name="palletId" class="java.lang.Integer"/>
+	<field name="warehoseCode" class="java.lang.String"/>
 	<field name="itemId" class="java.lang.String"/>
 	<field name="itemDesc" class="java.lang.String"/>
-	<field name="warehoseCode" class="java.lang.String"/>
+	<field name="palletBarcode" class="java.lang.String"/>
+	<field name="palletDate" class="java.util.Date"/>
 	<field name="locationBarcode" class="java.lang.String"/>
-	<field name="batchNo" class="java.lang.String"/>
+	<field name="capacity" class="java.math.BigDecimal"/>
 	<field name="qty" class="java.lang.Integer"/>
+	<field name="combine" class="java.lang.Integer"/>
+	<field name="foil" class="java.lang.Integer"/>
+	<field name="toTransfer" class="java.lang.Integer"/>
+	<field name="item" class="java.math.BigDecimal"/>
+	<field name="batchNo" class="java.lang.String"/>
 	<field name="unit" class="java.lang.String"/>
 	<variable name="SUM" class="java.lang.Integer" resetType="Group" resetGroup="ITEM_DESC" calculation="Sum">
 		<variableExpression><![CDATA[$F{qty}]]></variableExpression>
@@ -68,13 +73,13 @@ GROUP BY
 		<groupHeader>
 			<band height="39">
 				<staticText>
-					<reportElement x="0" y="24" width="154" height="15" uuid="946ed2e0-4d2c-4304-89ae-563d397b8782"/>
+					<reportElement uuid="946ed2e0-4d2c-4304-89ae-563d397b8782" x="0" y="24" width="154" height="15"/>
 					<box>
 						<pen lineWidth="1.0"/>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
 					</box>
 					<textElement textAlignment="Center">
 						<font fontName="Tahoma" size="11" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
@@ -82,13 +87,13 @@ GROUP BY
 					<text><![CDATA[Warehouse]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="154" y="24" width="119" height="15" uuid="8f6239af-de3f-4a59-97ed-472a59139789"/>
+					<reportElement uuid="8f6239af-de3f-4a59-97ed-472a59139789" x="154" y="24" width="119" height="15"/>
 					<box>
 						<pen lineWidth="1.0"/>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
 					</box>
 					<textElement textAlignment="Center">
 						<font fontName="Tahoma" size="11" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
@@ -96,13 +101,13 @@ GROUP BY
 					<text><![CDATA[Location]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="273" y="24" width="100" height="15" uuid="96e3a03c-ba9d-48c5-93f1-d0da95201e7c"/>
+					<reportElement uuid="96e3a03c-ba9d-48c5-93f1-d0da95201e7c" x="273" y="24" width="100" height="15"/>
 					<box>
 						<pen lineWidth="1.0"/>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
 					</box>
 					<textElement textAlignment="Center">
 						<font fontName="Tahoma" size="11" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
@@ -110,13 +115,13 @@ GROUP BY
 					<text><![CDATA[Batch]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="373" y="24" width="100" height="15" uuid="317d6838-53c2-44ce-90a0-6332dcad644e"/>
+					<reportElement uuid="317d6838-53c2-44ce-90a0-6332dcad644e" x="373" y="24" width="100" height="15"/>
 					<box>
 						<pen lineWidth="1.0"/>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
 					</box>
 					<textElement textAlignment="Center">
 						<font fontName="Tahoma" size="11" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
@@ -124,13 +129,13 @@ GROUP BY
 					<text><![CDATA[Qty]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="473" y="24" width="82" height="15" uuid="c033b8e4-bf48-4fd5-9559-69e6585e4847"/>
+					<reportElement uuid="c033b8e4-bf48-4fd5-9559-69e6585e4847" x="473" y="24" width="82" height="15"/>
 					<box>
 						<pen lineWidth="1.0"/>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
 					</box>
 					<textElement textAlignment="Center">
 						<font fontName="Tahoma" size="11" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
@@ -138,26 +143,23 @@ GROUP BY
 					<text><![CDATA[Unit]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="2" y="4" width="553" height="20" uuid="ba7b2c9f-031e-420a-a492-85ec787fc02f"/>
+					<reportElement uuid="ba7b2c9f-031e-420a-a492-85ec787fc02f" x="2" y="4" width="553" height="20"/>
 					<textElement>
 						<font fontName="Tahoma" size="12" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA["     "+$F{itemInternal}+"     "+$F{itemId}+"     "+$F{itemDesc}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{itemDesc}]]></textFieldExpression>
 				</textField>
-				<line>
-					<reportElement x="1" y="21" width="553" height="1" uuid="8db15faf-73ff-4907-bd08-47457e0cca7e"/>
-				</line>
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="18">
+			<band height="22">
 				<textField pattern="" isBlankWhenNull="true">
-					<reportElement x="373" y="3" width="100" height="15" uuid="15742928-cdee-438d-943a-a91d27b28148"/>
+					<reportElement uuid="15742928-cdee-438d-943a-a91d27b28148" x="154" y="0" width="100" height="15"/>
 					<textElement textAlignment="Center"/>
 					<textFieldExpression><![CDATA[$V{SUM}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="2" y="3" width="152" height="15" uuid="38df5d6d-b279-4a2f-8dfc-08045cfbc40e"/>
+					<reportElement uuid="38df5d6d-b279-4a2f-8dfc-08045cfbc40e" x="2" y="0" width="152" height="15"/>
 					<box>
 						<pen lineWidth="0.0"/>
 						<topPen lineWidth="0.0"/>
@@ -171,51 +173,43 @@ GROUP BY
 					<text><![CDATA[Total Qty]]></text>
 				</staticText>
 				<line>
-					<reportElement x="2" y="17" width="553" height="1" uuid="d6df268d-7c28-4717-ab6f-1d3eed508416"/>
+					<reportElement uuid="d6df268d-7c28-4717-ab6f-1d3eed508416" x="2" y="20" width="553" height="1"/>
 				</line>
-				<line>
-					<reportElement x="3" y="1" width="553" height="1" uuid="1128167d-a906-4bfc-a51b-26342ac6d9d1"/>
-				</line>
-				<textField>
-					<reportElement x="472" y="3" width="82" height="15" uuid="f6b48015-b87d-40ce-8081-9b19e85325f0"/>
-					<textElement textAlignment="Center"/>
-					<textFieldExpression><![CDATA[$F{unit}]]></textFieldExpression>
-				</textField>
 			</band>
 		</groupFooter>
 	</group>
 	<detail>
 		<band height="15" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="154" height="15" uuid="a10ab1e4-f4fd-4b50-a153-f5db24751790"/>
+				<reportElement uuid="a10ab1e4-f4fd-4b50-a153-f5db24751790" x="0" y="0" width="154" height="15"/>
 				<textElement textAlignment="Center">
 					<font fontName="Tahoma" size="11" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{warehoseCode}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="154" y="0" width="119" height="15" uuid="854ad3a6-2a48-4285-83bd-00af1f2e0005"/>
+				<reportElement uuid="854ad3a6-2a48-4285-83bd-00af1f2e0005" x="154" y="0" width="119" height="15"/>
 				<textElement textAlignment="Center">
 					<font fontName="Tahoma" size="11" pdfFontName="Tahoma" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{locationBarcode}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="273" y="0" width="100" height="15" uuid="feeaeae5-8771-4a75-8084-64c75dfd7446"/>
+				<reportElement uuid="feeaeae5-8771-4a75-8084-64c75dfd7446" x="273" y="0" width="100" height="15"/>
 				<textElement textAlignment="Center">
 					<font fontName="Tahoma" size="11" pdfFontName="Tahoma" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{batchNo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="373" y="0" width="100" height="15" uuid="e3df9a7a-1482-4304-a042-7d6d778215e4"/>
+				<reportElement uuid="e3df9a7a-1482-4304-a042-7d6d778215e4" x="373" y="0" width="100" height="15"/>
 				<textElement textAlignment="Center">
 					<font fontName="Tahoma" size="11" pdfFontName="Tahoma" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{qty}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="473" y="0" width="82" height="15" uuid="65441b35-54b1-4b71-85e9-9d5b1e360f96"/>
+				<reportElement uuid="65441b35-54b1-4b71-85e9-9d5b1e360f96" x="473" y="0" width="82" height="15"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{unit}]]></textFieldExpression>
 			</textField>
@@ -224,7 +218,7 @@ GROUP BY
 	<columnFooter>
 		<band height="18">
 			<staticText>
-				<reportElement x="2" y="3" width="152" height="15" uuid="e55380e2-31da-4357-bdcf-1148e0222a80"/>
+				<reportElement uuid="e55380e2-31da-4357-bdcf-1148e0222a80" x="2" y="3" width="152" height="15"/>
 				<box>
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -238,16 +232,9 @@ GROUP BY
 				<text><![CDATA[Grand Total Qty]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="373" y="3" width="100" height="15" uuid="49748fc2-9e35-4a68-87ac-e063ee040ef7"/>
+				<reportElement uuid="49748fc2-9e35-4a68-87ac-e063ee040ef7" x="154" y="3" width="100" height="15"/>
+				<textElement/>
 				<textFieldExpression><![CDATA[$V{SUMTOTAL}]]></textFieldExpression>
-			</textField>
-			<line>
-				<reportElement x="2" y="16" width="553" height="1" uuid="16f570f6-0120-48b4-814e-f5f068ad3c6b"/>
-			</line>
-			<textField>
-				<reportElement x="473" y="2" width="82" height="15" uuid="f42e4149-a0fe-4da3-b123-12ac557d44b5"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{unit}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnFooter>

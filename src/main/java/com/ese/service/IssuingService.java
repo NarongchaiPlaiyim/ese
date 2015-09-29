@@ -91,7 +91,7 @@ public class IssuingService extends Service {
             stockInOutModel.setDocDate(issuingView.getDocDate());
             stockInOutModel.setMsStockInOutNoteModel(issuingView.getMsStockInOutNoteModel());
             stockInOutModel.setRemark(issuingView.getRemark());
-            stockInOutModel.setStatus(statusDAO.findByTableIdAndStatus(TableValue.STOCK_IN_OUT.getId(), 3));
+            stockInOutModel.setStatus(statusDAO.findByTableIdAndStatus(TableValue.STOCK_IN_OUT.getId(), 4));
             stockInOutModel.setUpdateDate(Utils.currentDate());
             stockInOutModel.setUpdateBy(staffModel);
             stockInOutDAO.update(stockInOutModel);

@@ -20,27 +20,39 @@ public class StockMovementOutDAO extends GenericDAO<StockMovementOutModel, Integ
         List<StockMovementOutView> stockMovementOutViewViews = new ArrayList<StockMovementOutView>();
         StringBuilder sqlBuilder = new StringBuilder();
 
-        sqlBuilder.append("SELECT ");
+        sqlBuilder.append("SELECT DISTINCT");
         sqlBuilder.append(" ").append(getPrefix()).append(".stock_movement_out.id AS ID,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".item_master.itemid AS ITEM,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".item_master.DSGThaiItemDescription AS ITEM_DESC,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".warehouse.warehouse_name AS WAREHOUSE, ");
-        sqlBuilder.append(" ").append(getPrefix()).append(".location.location_name AS LOCATION,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".stock_movement_out.batchno AS BATCH_NO,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".pallet.pallet_barcode AS PALLET_BARCODE,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".stock_movement_out.sn_barcode AS SN_BARCODE,");
+        sqlBuilder.append(" COALESCE(").append(getPrefix()).append(".item_master.ItemId,i2.ItemId) AS ITEM,");
+        sqlBuilder.append(" COALESCE(").append(getPrefix()).append(".item_master.DSGThaiItemDescription,i2.DSGThaiItemDescription) AS ITEM_DESC,");
+        sqlBuilder.append(" COALESCE(").append(getPrefix()).append(".warehouse.warehouse_name,w2.warehouse_name) AS WAREHOUSE,");
+        sqlBuilder.append(" COALESCE(").append(getPrefix()).append(".location.location_barcode,l2.location_barcode) AS LOCATION,");
+        sqlBuilder.append(" COALESCE(").append(getPrefix()).append(".inv_onhand.batchno,inv2.batchno) AS BATCH_NO,");
+        sqlBuilder.append(" COALESCE(").append(getPrefix()).append(".stock_movement_out.pallet_barcode,").append(getPrefix()).append(".pallet.pallet_barcode) AS PALLET_BARCODE,");
+        sqlBuilder.append(" COALESCE(").append(getPrefix()).append(".stock_movement_out.sn_barcode,'') AS SN_BARCODE,");
         sqlBuilder.append(" ").append(getPrefix()).append(".stock_movement_out.status AS STATUS");
+
         sqlBuilder.append(" FROM ").append(getPrefix()).append(".stock_movement_out");
-        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".inv_onhand");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".inv_onhand");
         sqlBuilder.append(" ON  ").append(getPrefix()).append(".stock_movement_out.sn_barcode = ").append(getPrefix()).append(".inv_onhand.sn_barcode");
-        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".item_master");
-        sqlBuilder.append(" ON  ").append(getPrefix()).append(".inv_onhand.item_id = ").append(getPrefix()).append(".item_master.id");
-        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".pallet");
-        sqlBuilder.append(" ON  ").append(getPrefix()).append(".inv_onhand.pallet_id = ").append(getPrefix()).append(".pallet.id");
-        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".location");
-        sqlBuilder.append(" ON  ").append(getPrefix()).append(".pallet.location_id = ").append(getPrefix()).append(".location.id");
-        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".warehouse");
-        sqlBuilder.append(" ON  ").append(getPrefix()).append(".pallet.warehouse_id = ").append(getPrefix()).append(".warehouse.id");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".item_master");
+        sqlBuilder.append(" ON  ").append(getPrefix()).append(".item_master.id = ").append(getPrefix()).append(".inv_onhand.item_id");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".pallet");
+        sqlBuilder.append(" ON  ").append(getPrefix()).append(".pallet.id = ").append(getPrefix()).append(".inv_onhand.pallet_id");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".warehouse");
+        sqlBuilder.append(" ON  ").append(getPrefix()).append(".warehouse.id = ").append(getPrefix()).append(".pallet.warehouse_id");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".location");
+        sqlBuilder.append(" ON  ").append(getPrefix()).append(".location.id = ").append(getPrefix()).append(".pallet.location_id");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".pallet p2");
+        sqlBuilder.append(" ON  ").append("p2.pallet_barcode = ").append(getPrefix()).append(".stock_movement_out.pallet_barcode");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".inv_onhand inv2");
+        sqlBuilder.append(" ON  ").append("inv2.pallet_id = ").append("p2.id");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".warehouse w2");
+        sqlBuilder.append(" ON  ").append("w2.id = ").append("p2.warehouse_id");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".location l2");
+        sqlBuilder.append(" ON  ").append("l2.id = ").append("p2.location_id");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".item_master i2");
+        sqlBuilder.append(" ON  ").append("i2.id = ").append("inv2.item_id");
+
         sqlBuilder.append(" WHERE ").append(getPrefix()).append(".stock_movement_out.stock_inout_id = ").append(stockInOutId);
 
         log.debug(sqlBuilder.toString());
@@ -87,18 +99,47 @@ public class StockMovementOutDAO extends GenericDAO<StockMovementOutModel, Integ
 
         sqlBuilder.append("SELECT ");
         sqlBuilder.append(" ").append(getPrefix()).append(".stock_movement_out.stock_inout_id AS STOCK_INOUT_ID,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".stock_movement_out.pallet_barcode AS PALLET_BARCODE,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".stock_movement_out.sn_barcode AS SN_BARCODE,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".stock_movement_out.batchno AS BATCH_NO,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".item_master.ItemId AS ITEM_ID,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".item_master.DSGThaiItemDescription AS ITEM_DESC,");
-        sqlBuilder.append(" coalesce(").append(getPrefix()).append(".item_master.DSG_InternalItemId,'') AS ITEM_INTERNAL");
+        sqlBuilder.append(" COALESCE(").append(getPrefix()).append(".stock_movement_out.pallet_barcode,").append(getPrefix()).append(".pallet.pallet_barcode) AS PALLET_BARCODE,");
+        sqlBuilder.append(" COALESCE(").append(getPrefix()).append(".stock_movement_out.sn_barcode,'') AS SN_BARCODE,");
+        sqlBuilder.append(" COALESCE(").append(getPrefix()).append(".inv_onhand.batchno,inv2.batchno) AS BATCH_NO,");
+        sqlBuilder.append(" COALESCE(").append(getPrefix()).append(".item_master.ItemId,i2.ItemId) AS ITEM_ID,");
+        sqlBuilder.append(" COALESCE(").append(getPrefix()).append(".item_master.DSGThaiItemDescription,i2.DSGThaiItemDescription) AS ITEM_DESC,");
+        sqlBuilder.append(" COALESCE(").append(getPrefix()).append(".item_master.DSG_InternalItemId,i2.DSG_InternalItemId) AS ITEM_INTERNAL,");
+        sqlBuilder.append(" COALESCE(").append(getPrefix()).append(".warehouse.warehouse_code,w2.warehouse_code) AS WAREHOUSE_CODE,");
+        sqlBuilder.append(" COALESCE(").append(getPrefix()).append(".location.location_barcode,l2.location_barcode) AS LOCATION_BARCODE,");
+        sqlBuilder.append(" CASE(COUNT(inv2.batchno)) WHEN 0 THEN 1 ELSE COUNT(inv2.batchno) END AS QTY");
         sqlBuilder.append(" FROM ").append(getPrefix()).append(".stock_movement_out");
-        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".inv_onhand");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".inv_onhand");
         sqlBuilder.append(" ON  ").append(getPrefix()).append(".stock_movement_out.sn_barcode = ").append(getPrefix()).append(".inv_onhand.sn_barcode");
-        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".item_master");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".item_master");
         sqlBuilder.append(" ON  ").append(getPrefix()).append(".item_master.id = ").append(getPrefix()).append(".inv_onhand.item_id");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".pallet");
+        sqlBuilder.append(" ON  ").append(getPrefix()).append(".pallet.id = ").append(getPrefix()).append(".inv_onhand.pallet_id");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".warehouse");
+        sqlBuilder.append(" ON  ").append(getPrefix()).append(".warehouse.id = ").append(getPrefix()).append(".pallet.warehouse_id");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".location");
+        sqlBuilder.append(" ON  ").append(getPrefix()).append(".location.id = ").append(getPrefix()).append(".pallet.location_id");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".pallet p2");
+        sqlBuilder.append(" ON  ").append("p2.pallet_barcode = ").append(getPrefix()).append(".stock_movement_out.pallet_barcode");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".inv_onhand inv2");
+        sqlBuilder.append(" ON  ").append("inv2.pallet_id = ").append("p2.id");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".warehouse w2");
+        sqlBuilder.append(" ON  ").append("w2.id = ").append("p2.warehouse_id");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".location l2");
+        sqlBuilder.append(" ON  ").append("l2.id = ").append("p2.location_id");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".item_master i2");
+        sqlBuilder.append(" ON  ").append("i2.id = ").append("inv2.item_id");
         sqlBuilder.append(" WHERE ").append(getPrefix()).append(".stock_movement_out.stock_inout_id = ").append(stockInOutId);
+        sqlBuilder.append(" GROUP BY ").append(getPrefix()).append(".stock_movement_out.stock_inout_id ,");
+        sqlBuilder.append(getPrefix()).append(".item_master.ItemId ,");
+        sqlBuilder.append(" COALESCE(").append(getPrefix()).append(".stock_movement_out.pallet_barcode,").append(getPrefix()).append(".pallet.pallet_barcode),");
+        sqlBuilder.append(" COALESCE(").append(getPrefix()).append(".stock_movement_out.sn_barcode,''),");
+        sqlBuilder.append(" COALESCE(").append(getPrefix()).append(".inv_onhand.batchno,inv2.batchno),");
+        sqlBuilder.append(" COALESCE(").append(getPrefix()).append(".item_master.ItemId,i2.ItemId),");
+        sqlBuilder.append(" COALESCE(").append(getPrefix()).append(".item_master.DSGThaiItemDescription,i2.DSGThaiItemDescription),");
+        sqlBuilder.append(" COALESCE(").append(getPrefix()).append(".item_master.DSG_InternalItemId,i2.DSG_InternalItemId) ,");
+        sqlBuilder.append(" COALESCE(").append(getPrefix()).append(".warehouse.warehouse_code,w2.warehouse_code),");
+        sqlBuilder.append(" COALESCE(").append(getPrefix()).append(".location.location_barcode,l2.location_barcode)");
 
         log.debug(sqlBuilder.toString());
 
@@ -110,7 +151,10 @@ public class StockMovementOutDAO extends GenericDAO<StockMovementOutModel, Integ
                     .addScalar("BATCH_NO", StringType.INSTANCE)
                     .addScalar("ITEM_ID", StringType.INSTANCE)
                     .addScalar("ITEM_DESC", StringType.INSTANCE)
-                    .addScalar("ITEM_INTERNAL", StringType.INSTANCE);;
+                    .addScalar("ITEM_INTERNAL", StringType.INSTANCE)
+                    .addScalar("WAREHOUSE_CODE", StringType.INSTANCE)
+                    .addScalar("LOCATION_BARCODE", StringType.INSTANCE)
+                    .addScalar("QTY", IntegerType.INSTANCE);
             List<Object[]> objects = query.list();
 
             int i = 1;
@@ -125,6 +169,9 @@ public class StockMovementOutDAO extends GenericDAO<StockMovementOutModel, Integ
                 subIncomingViewReport.setItemNo(Utils.parseString(entity[4]));
                 subIncomingViewReport.setItemDesc(Utils.parseString(entity[5]));
                 subIncomingViewReport.setItemInternal(Utils.parseString(entity[6]));
+                subIncomingViewReport.setWarehouseBarcode(Utils.parseString(entity[7]));
+                subIncomingViewReport.setLocationBarcode(Utils.parseString(entity[8]));
+                subIncomingViewReport.setQty(Utils.parseInt(entity[9]));
                 subIncomingViewReportsList.add(subIncomingViewReport);
                 i++;
             }

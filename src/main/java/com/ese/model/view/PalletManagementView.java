@@ -9,6 +9,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -34,6 +35,7 @@ public class PalletManagementView {
     private int isCombine;
     private int isFoil;
     private int setToTransfer;
+    private int seq;
 
     @Override
     public String toString() {
@@ -59,6 +61,7 @@ public class PalletManagementView {
                 .append("isCombine", isCombine)
                 .append("isFoil", isFoil)
                 .append("setToTransfer", setToTransfer)
+                .append("seq", seq)
                 .toString();
     }
 }

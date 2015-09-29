@@ -388,12 +388,12 @@ public class AXCustomerConfirmJourDAO extends GenericDAO<AXCustomerConfirmJourMo
         return viewReports;
     }
 
-   public List<PickingOrderWithItemBarcodeReport> getPcikingOrderWithItemBarcodeReport(int pickingId){
-       List<PickingOrderWithItemBarcodeReport> viewReports = new ArrayList<PickingOrderWithItemBarcodeReport>();
+    public List<PickingOrderWithItemBarcodeReport> getPcikingOrderWithItemBarcodeReport(int pickingId){
+        List<PickingOrderWithItemBarcodeReport> viewReports = new ArrayList<PickingOrderWithItemBarcodeReport>();
 
-       StringBuilder sqlBuilder = new StringBuilder();
+        StringBuilder sqlBuilder = new StringBuilder();
 
-       //Query Old
+        //Query Old
 //       sqlBuilder.append(" SELECT ");
 //       sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustTable.name AS CUST_NAME,");
 //       sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustTable.Address AS CUST_ADDESS,");
@@ -447,44 +447,43 @@ public class AXCustomerConfirmJourDAO extends GenericDAO<AXCustomerConfirmJourMo
 //       sqlBuilder.append(" WHERE ").append(getPrefix()).append(".picking_order.id = " ).append(pickingId);
 
 
-       sqlBuilder.append(" SELECT ");
-       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.docno AS PICKING_DOCNO,");
-       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.confirm_docno AS CONFIRM_DOCNO,");
-       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.sales_order AS SALES_ORDER,");
-       sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.create_date AS CREATE_DATE,");
-       sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustTable.Name AS NAME,");
-       sqlBuilder.append(" ").append(getPrefix()).append(".ax_CustTable.Address AS ADDRESS");
-       sqlBuilder.append(" FROM ").append(getPrefix()).append(".picking_order");
-       sqlBuilder.append(" CROSS JOIN ").append(getPrefix()).append(".ax_CustTable");
-       sqlBuilder.append(" WHERE ").append(getPrefix()).append(".picking_order.id = " ).append(pickingId);
+        sqlBuilder.append(" SELECT ");
+        sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.docno AS PICKING_DOCNO,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.confirm_docno AS CONFIRM_DOCNO,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.sales_order AS SALES_ORDER,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.confirm_date AS CREATE_DATE,");//CONFIRM DATE OR CREATE DATE ???
+        sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.delivery_name AS NAME,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".picking_order.delivery_address AS ADDRESS");
+        sqlBuilder.append(" FROM ").append(getPrefix()).append(".picking_order");
+        sqlBuilder.append(" WHERE ").append(getPrefix()).append(".picking_order.id = " ).append(pickingId);
 
-       log.debug("--SQL {}",sqlBuilder.toString());
+        log.debug("--SQL {}",sqlBuilder.toString());
 
-       try {
-           SQLQuery query = getSession().createSQLQuery(sqlBuilder.toString())
-                   .addScalar("PICKING_DOCNO", StringType.INSTANCE)
-                   .addScalar("CONFIRM_DOCNO", StringType.INSTANCE)
-                   .addScalar("SALES_ORDER", StringType.INSTANCE)
-                   .addScalar("CREATE_DATE", DateType.INSTANCE)
-                   .addScalar("NAME", StringType.INSTANCE)
-                   .addScalar("ADDRESS", StringType.INSTANCE);
-           List<Object[]> objects = query.list();
-           log.debug("----------- {}", objects.size());
+        try {
+            SQLQuery query = getSession().createSQLQuery(sqlBuilder.toString())
+                    .addScalar("PICKING_DOCNO", StringType.INSTANCE)
+                    .addScalar("CONFIRM_DOCNO", StringType.INSTANCE)
+                    .addScalar("SALES_ORDER", StringType.INSTANCE)
+                    .addScalar("CREATE_DATE", DateType.INSTANCE)
+                    .addScalar("NAME", StringType.INSTANCE)
+                    .addScalar("ADDRESS", StringType.INSTANCE);
+            List<Object[]> objects = query.list();
+            log.debug("----------- {}", objects.size());
 
-           for (Object[] entity : objects) {
-               PickingOrderWithItemBarcodeReport report = new PickingOrderWithItemBarcodeReport();
-               report.setPickingDocno(Utils.parseString(entity[0]));
-               report.setConfirmDocno(Utils.parseString(entity[1]));
-               report.setSaleOrder(Utils.parseString(entity[2]));
-               report.setCreateDate(Utils.parseDate(entity[3], null));
-               report.setName(Utils.parseString(entity[4]));
-               report.setAddress(Utils.parseString(entity[5]));
-               viewReports.add(report);
-           }
-       } catch (Exception e){
-           log.debug("Exception error getPcikingOrderWithItemBarcodeReport : ", e);
-       }
+            for (Object[] entity : objects) {
+                PickingOrderWithItemBarcodeReport report = new PickingOrderWithItemBarcodeReport();
+                report.setPickingDocno(Utils.parseString(entity[0]));
+                report.setConfirmDocno(Utils.parseString(entity[1]));
+                report.setSaleOrder(Utils.parseString(entity[2]));
+                report.setCreateDate(Utils.parseDate(entity[3], null));
+                report.setName(Utils.parseString(entity[4]));
+                report.setAddress(Utils.parseString(entity[5]));
+                viewReports.add(report);
+            }
+        } catch (Exception e){
+            log.debug("Exception error getPcikingOrderWithItemBarcodeReport : ", e);
+        }
 
-       return viewReports;
-   }
+        return viewReports;
+    }
 }

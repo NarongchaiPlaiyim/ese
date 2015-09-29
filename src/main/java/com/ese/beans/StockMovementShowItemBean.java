@@ -31,7 +31,7 @@ public class StockMovementShowItemBean extends Bean{
     @ManagedProperty("#{stockMovementShowItemService}") private StockMovementShowItemService stockMovementShowItemService;
 
     @NotNull private StockInOutModel stockInOutModel;
-//    @NotNull private StockInOutLineModel stockInOutLineModel;
+    //    @NotNull private StockInOutLineModel stockInOutLineModel;
     @NotNull private ShowSNView showSNView;
     @NotNull private SearchItemView searchItemView;
     @NotNull private StockMovementOutView stockMovementOutView;
@@ -93,15 +93,15 @@ public class StockMovementShowItemBean extends Bean{
 //        if (stockInOutModel.getStatus().getId() < 19){ //Status 19 = status_seq 3(Close)
 //            flagBtnSearchItem = Boolean.FALSE;
 //        }
-
+        // = Boolean.TRUE;//jow
         if (!Utils.isNull(stockInOutModel)){
 //            if (stockMovementOutView.getStatus() == 1){
 //                flagBtnDelete = Boolean.FALSE;
 //            }
-            if (stockInOutModel.getStatus().getStatusSeq() == 1){
-                flagBtnDelete = Boolean.FALSE;
-            }
-        }
+            if (stockInOutModel.getStatus().getStatusSeq() == 4){
+                flagBtnDelete = Boolean.TRUE;
+            }else flagBtnDelete = Boolean.FALSE;
+        }else flagBtnDelete = Boolean.TRUE;
     }
 
 //    public void onClickShowSN(){

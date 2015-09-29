@@ -39,6 +39,7 @@ public class IncomingBean extends Bean {
     private boolean modeFlag;
     private boolean flagBtnShow;
     private boolean flagBtnPost;
+    private boolean flagBtnSave;
     @PostConstruct
     private void onCreation(){
         log.debug("onCreation()");
@@ -59,6 +60,7 @@ public class IncomingBean extends Bean {
         modeFlag = Boolean.TRUE;
         flagBtnPost = Boolean.TRUE;
         flagBtnShow = Boolean.TRUE;
+//        flagBtnSave = Boolean.TRUE;
     }
 
     private void onLoadDocumentNote(){
@@ -78,9 +80,19 @@ public class IncomingBean extends Bean {
         incomingView.setDocDate(stockInOutModel.getDocDate());
         incomingView.setRemark(stockInOutModel.getRemark());
         incomingView.setMsStockInOutNoteModel(stockInOutModel.getMsStockInOutNoteModel());
+        if (stockInOutModel.getStatus().getStatusSeq() == 3){
+            flagBtnPost = Boolean.FALSE;
+            flagBtnSave = Boolean.TRUE;
+        }else if(stockInOutModel.getStatus().getStatusSeq() == 1){
+            flagBtnPost = Boolean.TRUE;
+            flagBtnSave = Boolean.FALSE;
+        }else{
+            flagBtnPost = Boolean.TRUE;
+            flagBtnSave = Boolean.TRUE;
+        }
         modeFlag = Boolean.FALSE;
         flagBtnShow = Boolean.FALSE;
-        flagBtnPost = Boolean.FALSE;
+        //flagBtnPost = Boolean.FALSE;
         flagBtnPrint = Boolean.FALSE;
     }
 
@@ -97,6 +109,7 @@ public class IncomingBean extends Bean {
         stockInOutModel = new StockInOutModel();
         flagBtnPrint = Boolean.TRUE;
         flagBtnShow = Boolean.TRUE;
+        flagBtnSave = Boolean.FALSE;
         modeFlag = Boolean.TRUE;
     }
 
@@ -127,7 +140,7 @@ public class IncomingBean extends Bean {
 
     public void onClickPost(){
         incomingService.post(incomingView);
-        showDialogEdited();
+        showDialogClosed();
         init();
     }
 

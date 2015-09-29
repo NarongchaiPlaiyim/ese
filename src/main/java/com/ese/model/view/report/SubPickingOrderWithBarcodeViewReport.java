@@ -11,39 +11,26 @@ import java.util.Date;
 @Getter
 @Setter
 public class SubPickingOrderWithBarcodeViewReport {
-    private int palletId;
-    private String warehoseCode;
+    private String itemInternal;
     private String itemId;
     private String itemDesc;
-    private String palletBarcode;
-    private Date palletDate;
+    private String warehoseCode;
     private String locationBarcode;
-    private BigDecimal capacity;
-    private int qty;
-    private int combine;
-    private int foil;
-    private int toTransfer;
-    private int item;
     private String batchNo;
+    private int qty;
     private String unit;
+
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("palletId", palletId)
-                .append("warehoseCode", warehoseCode)
+                .append("itemInternal",itemInternal)
                 .append("itemId", itemId)
                 .append("itemDesc", itemDesc)
-                .append("palletBarcode", palletBarcode)
-                .append("palletDate", palletDate)
+                .append("warehoseCode", warehoseCode)
                 .append("locationBarcode", locationBarcode)
-                .append("capacity", capacity)
-                .append("qty", qty)
-                .append("combine", combine)
-                .append("foil", foil)
-                .append("toTransfer", toTransfer)
-                .append("item", item)
                 .append("batchNo", batchNo)
+                .append("qty", qty)
                 .append("unit", unit)
                 .toString();
     }

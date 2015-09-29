@@ -21,231 +21,247 @@
 
 <p:layoutUnit id="layoutCenter" position="center" header="#{msg.get('menu.stocktransfer.title')}" >
 <h:form id="stockTransferForm">
-    <p:panel style="border: 0">
-        <div style="text-align: right;">
-            <p:outputLabel id="txtMode" value="#{stockTransferBean.mode}"/>
-            <p:commandButton id="btnNew"
-                             value="New"
-                             process="@this"
-                             action = "#{stockTransferBean.onClickNew()}"
-                             update=":stockTransferForm"
-                             styleClass="medium" />
-            <p:commandButton id="btnSave"
-                             value="Save"
-                             action="#{stockTransferBean.onSave}"
-                             update=":stockTransferForm, :msgBoxSystemMessagePanel"
-                             process="@this"
-                             styleClass="medium" />
-            <p:commandButton id="btnShowTransfer"
-                             value="Show Transfer Pallet"
-                             disabled="#{stockTransferBean.flagBtnShowTransferPallet}"
-                             action="#{stockTransferBean.onShowTransferPallet}"
-                             onstart="PF('bui').block()"
-                             oncomplete="PF('bui').unblock()"
-                             process="@this"
-                             styleClass="medium" />
+<p:panel style="border: 0">
+    <div style="text-align: right;">
+        <p:outputLabel id="txtMode" value="#{stockTransferBean.mode}"/>
+        <p:commandButton id="btnNew"
+                         value="New"
+                         process="@this"
+                         action = "#{stockTransferBean.onClickNew()}"
+                         update=":stockTransferForm"
+                         styleClass="medium" />
+        <p:commandButton id="btnSave"
+                         value="Save"
+                         action="#{stockTransferBean.onSave}"
+                         disabled="#{stockTransferBean.flagBtnSave}"
+                         update=":stockTransferForm, :msgBoxSystemMessagePanel"
+                         process="@this"
+                         styleClass="medium" />
+        <p:commandButton id="btnShowTransfer"
+                         value="Show Transfer Pallet"
+                         disabled="#{stockTransferBean.flagBtnShowTransferPallet}"
+                         action="#{stockTransferBean.onShowTransferPallet}"
+                         onstart="PF('bui').block()"
+                         oncomplete="PF('bui').unblock()"
+                         process="@this"
+                         styleClass="medium" />
 
-            <p:commandButton id="btnPrint"
-                             value="#{msg.get('btn.name.print')}"
+        <p:commandButton id="btnPrint"
+                         value="#{msg.get('btn.name.print')}"
 
+                         process="@form"
+                         onstart="PF('bui').block()"
+                         oncomplete="PF('bui').unblock()"
+                         action="#{stockTransferBean.onPrint()}"
+                         disabled="#{stockTransferBean.flagBtnPrint}"
+                         onclick="this.form.target='_blank'"
+                         ajax="false"
+                         icon="ui-icon-print"
+                         styleClass="medium" style="#{msg.get('btn.size')}"/>
+
+
+        <p:commandButton id="btnPost"
+                         value="Post"
+                         action="#{stockTransferBean.onClickPost()}"
+                         onstart="PF('bui').block()"
+                         oncomplete="PF('bui').unblock()"
+                         disabled="#{stockTransferBean.flagBtnPost}"
+                         update=":stockTransferForm, :msgBoxSystemMessagePanel"
+                         process="@this"
+                         icon="ui-icon-print"
+                         styleClass="medium"/>
+
+        <!--rendered="#{loginBean.isRendered(msg.get('authorize.menu.user.tab.1.report'))}"-->
+
+        <!--<p:commandButton id="btnPrint"-->
+        <!--value="Print"-->
+        <!--process="@this"-->
+        <!--disabled="#{stockTransferBean.flagBtnPrint}"-->
+        <!--onclick="this.form.target='_blank'"-->
+        <!--ajax="false"-->
+        <!--icon="ui-icon-print"-->
+        <!--styleClass="medium" />-->
+    </div>
+    <div id="formView">
+        <table style="width: auto" id="tabeView">
+            <tr>
+                <td style="width: 130px; max-width: 130px; min-width: 130px"/>
+                <td style="width: 265px; max-width: 265px; min-width: 265px"/>
+                <td style="width: 150px; max-width: 150px; min-width: 150px"/>
+                <td style="width: 265px; max-width: 265px; min-width: 265px"/>
+                <td style="width: 145px; max-width: 145px; min-width: 145px"/>
+                <td style="width: 210px; max-width: 210px; min-width: 210px"/>
+                <td style="width: 85px; max-width: 85px; min-width: 85px"/>
+            </tr>
+            <tr>
+                <td>
+                    <p:outputLabel value="Document No"/>
+                </td>
+                <td>
+                    <p:inputText id="docNo" value="#{stockTransferBean.stockInOutModel.docNo}" readonly="#{stockTransferBean.flagDocNo}">
+                        <p:ajax event="blur" update=":stockTransferForm:docNo"/>
+                    </p:inputText>
+                </td>
+                <td>
+                    <p:outputLabel value="Document Date"/>
+                </td>
+                <td>
+                    <p:inputText id="docDate" value="#{stockTransferBean.stockInOutModel.docDate}" readonly="true">
+                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+                    </p:inputText>
+                    <!--<p:calendar id="docDate" value="#{stockTransferBean.stockInOutModel.docDate}" readonly="true"-->
+                    <!--pattern="dd/MM/yyyy">-->
+                    <!--<f:convertDateTime pattern="dd/MM/yyyy"/>-->
+                    <!--</p:calendar>-->
+                </td>
+                <td>
+                    <p:outputLabel value="Document Note"/>
+                    <p:outputLabel value="*" style="color: #ff0000"/>
+                </td>
+                <td>
+                    <p:selectOneMenu id="docNote" value="#{stockTransferBean.msStockInOutNoteModel.id}"
+                                     style="#{msg.get('fix.size.200')} margin-top: 4px">
+                        <f:selectItem itemLabel=" Please Select "/>
+                        <f:selectItems value="#{stockTransferBean.stockInOutNoteModelList}"
+                                       var="stockinoutnote"
+                                       itemLabel="#{stockinoutnote.inoutCode}"
+                                       itemValue="#{stockinoutnote.id}"/>
+                        <p:ajax event="change"
+                                update=":stockTransferForm:docNote"/>
+                    </p:selectOneMenu>
+                </td>
+                <td>
+                    <p:outputLabel value="Remark"/>
+                </td>
+                <td>
+                    <p:inputTextarea id="remark" value="#{stockTransferBean.stockInOutModel.remark}">
+                        <p:ajax update="remark" event="blur"/>
+                    </p:inputTextarea>
+                </td>
+            </tr>
+        </table>
+    </div>
+</p:panel>
+<table style="width: auto">
+    <tr>
+        <td style="width: 130px; max-width: 130px; min-width: 130px"/>
+        <td style="width: 265px; max-width: 265px; min-width: 265px"/>
+        <td style="width: 225px; max-width: 225px; min-width: 225px"/>
+        <td style="width: 265px; max-width: 265px; min-width: 265px"/>
+        <td style="width: 45px; max-width: 45px; min-width: 45px"/>
+        <td style="width: 265px; max-width: 265px; min-width: 265px"/>
+        <td style="width: 145px; max-width: 145px; min-width: 145px"/>
+        <td style="width: 220px; max-width: 220px; min-width: 220px"/>
+    </tr>
+    <tr>
+        <td>
+            <p:outputLabel value="Document No"/>
+        </td>
+        <td>
+            <p:inputText value="#{stockTransferBean.stockTransferView.docNo}"/>
+        </td>
+        <td>
+            <p:outputLabel value="Document Date between"/>
+        </td>
+        <td>
+            <p:calendar id="formDate" value="#{stockTransferBean.stockTransferView.formDate}" pattern="dd/MM/yyyy">
+                <f:convertDateTime pattern="dd/MM/yyyy" showOn="button"/>
+                <p:ajax event="change" update="formDate"/>
+            </p:calendar>
+        </td>
+        <td>
+            <p:outputLabel value="and"/>
+        </td>
+        <td>
+            <p:calendar id="toDate" value="#{stockTransferBean.stockTransferView.toDate}" pattern="dd/MM/yyyy">
+                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                <p:ajax event="change" update="toDate"/>
+            </p:calendar>
+        </td>
+        <td>
+            <p:outputLabel value="Document Note"/>
+        </td>
+        <td>
+            <p:selectOneMenu value="#{stockTransferBean.stockTransferView.docNoteId}"
+                             style="#{msg.get('fix.size.200')} margin-top: 4px">
+                <f:selectItem itemLabel=" Please Select "/>
+                <f:selectItems value="#{stockTransferBean.stockInOutNoteModelList}"
+                               var="stockinoutnote"
+                               itemLabel="#{stockinoutnote.inoutCode}"
+                               itemValue="#{stockinoutnote.id}"/>
+            </p:selectOneMenu>
+        </td>
+        <td>
+            <p:commandButton id="btnSearch"
+                             value="Search"
+                             action="#{stockTransferBean.onSearch()}"
+                             update=":stockTransferForm:stockTransferTable"
+                             icon="ui-icon-search"
                              process="@form"
                              onstart="PF('bui').block()"
                              oncomplete="PF('bui').unblock()"
-                             action="#{stockTransferBean.onPrint()}"
-                             disabled="#{stockTransferBean.flagBtnPrint}"
-                             onclick="this.form.target='_blank'"
-                             ajax="false"
-                             icon="ui-icon-print"
-                             styleClass="medium" style="#{msg.get('btn.size')}"/>
+                             styleClass="medium" />
+        </td>
+    </tr>
+</table>
 
-            <!--rendered="#{loginBean.isRendered(msg.get('authorize.menu.user.tab.1.report'))}"-->
-
-            <!--<p:commandButton id="btnPrint"-->
-                             <!--value="Print"-->
-                             <!--process="@this"-->
-                             <!--disabled="#{stockTransferBean.flagBtnPrint}"-->
-                             <!--onclick="this.form.target='_blank'"-->
-                             <!--ajax="false"-->
-                             <!--icon="ui-icon-print"-->
-                             <!--styleClass="medium" />-->
-        </div>
-        <div id="formView">
-            <table style="width: auto" id="tabeView">
-                <tr>
-                    <td style="width: 130px; max-width: 130px; min-width: 130px"/>
-                    <td style="width: 265px; max-width: 265px; min-width: 265px"/>
-                    <td style="width: 150px; max-width: 150px; min-width: 150px"/>
-                    <td style="width: 265px; max-width: 265px; min-width: 265px"/>
-                    <td style="width: 145px; max-width: 145px; min-width: 145px"/>
-                    <td style="width: 210px; max-width: 210px; min-width: 210px"/>
-                    <td style="width: 85px; max-width: 85px; min-width: 85px"/>
-                </tr>
-                <tr>
-                    <td>
-                        <p:outputLabel value="Document No"/>
-                    </td>
-                    <td>
-                        <p:inputText id="docNo" value="#{stockTransferBean.stockInOutModel.docNo}" readonly="#{stockTransferBean.flagDocNo}">
-                            <p:ajax event="blur" update=":stockTransferForm:docNo"/>
-                        </p:inputText>
-                    </td>
-                    <td>
-                        <p:outputLabel value="Document Date"/>
-                    </td>
-                    <td>
-                        <p:inputText id="docDate" value="#{stockTransferBean.stockInOutModel.docDate}" readonly="true">
-                            <f:convertDateTime pattern="dd/MM/yyyy" />
-                        </p:inputText>
-                        <!--<p:calendar id="docDate" value="#{stockTransferBean.stockInOutModel.docDate}" readonly="true"-->
-                                    <!--pattern="dd/MM/yyyy">-->
-                            <!--<f:convertDateTime pattern="dd/MM/yyyy"/>-->
-                        <!--</p:calendar>-->
-                    </td>
-                    <td>
-                        <p:outputLabel value="Document Note"/>
-                        <p:outputLabel value="*" style="color: #ff0000"/>
-                    </td>
-                    <td>
-                        <p:selectOneMenu id="docNote" value="#{stockTransferBean.msStockInOutNoteModel.id}"
-                                         style="#{msg.get('fix.size.200')} margin-top: 4px">
-                            <f:selectItem itemLabel=" Please Select "/>
-                            <f:selectItems value="#{stockTransferBean.stockInOutNoteModelList}"
-                                           var="stockinoutnote"
-                                           itemLabel="#{stockinoutnote.inoutCode}"
-                                           itemValue="#{stockinoutnote.id}"/>
-                            <p:ajax event="change"
-                                    update=":stockTransferForm:docNote"/>
-                        </p:selectOneMenu>
-                    </td>
-                    <td>
-                        <p:outputLabel value="Remark"/>
-                    </td>
-                    <td>
-                        <p:inputTextarea id="remark" value="#{stockTransferBean.stockInOutModel.remark}">
-                            <p:ajax update="remark" event="blur"/>
-                        </p:inputTextarea>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </p:panel>
-    <table style="width: auto">
-        <tr>
-            <td style="width: 130px; max-width: 130px; min-width: 130px"/>
-            <td style="width: 265px; max-width: 265px; min-width: 265px"/>
-            <td style="width: 225px; max-width: 225px; min-width: 225px"/>
-            <td style="width: 265px; max-width: 265px; min-width: 265px"/>
-            <td style="width: 45px; max-width: 45px; min-width: 45px"/>
-            <td style="width: 265px; max-width: 265px; min-width: 265px"/>
-            <td style="width: 145px; max-width: 145px; min-width: 145px"/>
-            <td style="width: 220px; max-width: 220px; min-width: 220px"/>
-        </tr>
-        <tr>
-            <td>
-                <p:outputLabel value="Document No"/>
-            </td>
-            <td>
-                <p:inputText value="#{stockTransferBean.stockTransferView.docNo}"/>
-            </td>
-            <td>
-                <p:outputLabel value="Document Date between"/>
-            </td>
-            <td>
-                <p:calendar id="formDate" value="#{stockTransferBean.stockTransferView.formDate}" pattern="dd/MM/yyyy">
-                    <f:convertDateTime pattern="dd/MM/yyyy" showOn="button"/>
-                    <p:ajax event="change" update="formDate"/>
-                </p:calendar>
-            </td>
-            <td>
-                <p:outputLabel value="and"/>
-            </td>
-            <td>
-                <p:calendar id="toDate" value="#{stockTransferBean.stockTransferView.toDate}" pattern="dd/MM/yyyy">
-                    <f:convertDateTime pattern="dd/MM/yyyy"/>
-                    <p:ajax event="change" update="toDate"/>
-                </p:calendar>
-            </td>
-            <td>
-                <p:outputLabel value="Document Note"/>
-            </td>
-            <td>
-                <p:selectOneMenu value="#{stockTransferBean.stockTransferView.docNoteId}"
-                                 style="#{msg.get('fix.size.200')} margin-top: 4px">
-                    <f:selectItem itemLabel=" Please Select "/>
-                    <f:selectItems value="#{stockTransferBean.stockInOutNoteModelList}"
-                                   var="stockinoutnote"
-                                   itemLabel="#{stockinoutnote.inoutCode}"
-                                   itemValue="#{stockinoutnote.id}"/>
-                </p:selectOneMenu>
-            </td>
-            <td>
-                <p:commandButton id="btnSearch"
-                                 value="Search"
-                                 action="#{stockTransferBean.onSearch()}"
-                                 update=":stockTransferForm:stockTransferTable"
-                                 icon="ui-icon-search"
-                                 process="@form"
-                                 onstart="PF('bui').block()"
-                                 oncomplete="PF('bui').unblock()"
-                                 styleClass="medium" />
-            </td>
-        </tr>
-    </table>
-
-    <table border="0" class="content_table_form">
-        <tr>
-            <td>
-                <p:dataTable id="stockTransferTable"
-                             scrollable="true" scrollHeight="450"
-                             var="stockTransferModel"
-                             resizableColumns="true"
-                             selectionMode="single"
-                             value="#{stockTransferBean.stockInOutModelList}"
-                             selection="#{stockTransferBean.stockInOutModel}"
-                             rowKey="#{stockTransferModel.id}"
-                             rowIndexVar="rowIndex">
-                    <p:ajax event="rowSelect" listener="#{stockTransferBean.onClickTable}"
-                            update=":stockTransferForm:docNo, :stockTransferForm:docDate, :stockTransferForm:docNote, :stockTransferForm:remark, :stockTransferForm:txtMode
-                                    :stockTransferForm:btnShowTransfer, :stockTransferForm:btnPrint"/>
-                    <p:column headerText="No" style="min-width: 5px; width: 5px; max-width: 5px;">
-                        <h:outputText value="#{rowIndex+1}" styleClass="center" />
-                    </p:column>
-                    <p:column headerText="Document No" sortBy="#{stockTransferModel.docNo}" filterBy="#{stockTransferModel.docNo}" filterMatchMode="contains" style="min-width: 100px; width: 100px; max-width: 100px;" styleClass="center">
-                        <h:outputText value="#{stockTransferModel.docNo}"/>
-                    </p:column>
-                    <p:column headerText="Document Date" sortBy="#{stockTransferModel.docDate}" filterBy="#{stockTransferModel.docDate}" filterMatchMode="contains" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
-                        <h:outputText value="#{stockTransferModel.docDate}">
-                            <f:convertDateTime pattern="dd/MM/yyyy" locale="en-EN"/>
-                        </h:outputText>
-                    </p:column>
-                    <p:column headerText="Document Note" sortBy="#{stockTransferModel.msStockInOutNoteModel.inoutCode}" filterBy="#{stockTransferModel.msStockInOutNoteModel.inoutCode}" filterMatchMode="contains" style="min-width: 120px; width: 120px; max-width: 120px;" styleClass="center">
-                        <h:outputText value="#{stockTransferModel.msStockInOutNoteModel.inoutCode}"/>
-                    </p:column>
-                    <p:column headerText="Remark" sortBy="#{stockTransferModel.remark}" filterBy="#{stockTransferModel.remark}" filterMatchMode="contains" style="min-width: 250px; width: 250px; max-width: 250px;" styleClass="center">
-                        <h:outputText value="#{stockTransferModel.remark}"/>
-                    </p:column>
-                </p:dataTable>
-            </td>
-        </tr>
-    </table>
+<table border="0" class="content_table_form">
+    <tr>
+        <td>
+            <p:dataTable id="stockTransferTable"
+                         scrollable="true" scrollHeight="450"
+                         var="stockTransferModel"
+                         resizableColumns="true"
+                         selectionMode="single"
+                         value="#{stockTransferBean.stockInOutModelList}"
+                         selection="#{stockTransferBean.stockInOutModel}"
+                         rowKey="#{stockTransferModel.id}"
+                         rowIndexVar="rowIndex">
+                <p:ajax event="rowSelect" listener="#{stockTransferBean.onClickTable}"
+                        update=":stockTransferForm:docNo, :stockTransferForm:docDate, :stockTransferForm:docNote, :stockTransferForm:remark, :stockTransferForm:txtMode
+                                    :stockTransferForm:btnShowTransfer, :stockTransferForm:btnPrint, :stockTransferForm:btnSave, :stockTransferForm:btnPost"/>
+                <p:column headerText="No" style="min-width: 5px; width: 5px; max-width: 5px;">
+                    <h:outputText value="#{rowIndex+1}" styleClass="center" />
+                </p:column>
+                <p:column headerText="Document No" sortBy="#{stockTransferModel.docNo}" filterBy="#{stockTransferModel.docNo}" filterMatchMode="contains" style="min-width: 100px; width: 100px; max-width: 100px;" styleClass="center">
+                    <h:outputText value="#{stockTransferModel.docNo}"/>
+                </p:column>
+                <p:column headerText="Document Date" sortBy="#{stockTransferModel.docDate}" filterBy="#{stockTransferModel.docDate}" filterMatchMode="contains" style="min-width: 80px; width: 80px; max-width: 80px;" styleClass="center">
+                    <h:outputText value="#{stockTransferModel.docDate}">
+                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="en-EN"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Document Note" sortBy="#{stockTransferModel.msStockInOutNoteModel.inoutCode}" filterBy="#{stockTransferModel.msStockInOutNoteModel.inoutCode}" filterMatchMode="contains" style="min-width: 120px; width: 120px; max-width: 120px;" styleClass="center">
+                    <h:outputText value="#{stockTransferModel.msStockInOutNoteModel.inoutCode}"/>
+                </p:column>
+                <p:column headerText="Remark" sortBy="#{stockTransferModel.remark}" filterBy="#{stockTransferModel.remark}" filterMatchMode="contains" style="min-width: 250px; width: 250px; max-width: 250px;" styleClass="center">
+                    <h:outputText value="#{stockTransferModel.remark}"/>
+                </p:column>
+                <p:column headerText="Status" sortBy="#{stockTransferModel.status.caption}" filterBy="#{stockTransferModel.status.caption}" filterMatchMode="contains" style="min-width: 250px; width: 250px; max-width: 250px;" styleClass="center">
+                    <h:outputText value="#{stockTransferModel.status.caption}"/>
+                </p:column>
+            </p:dataTable>
+        </td>
+    </tr>
+</table>
 </h:form>
 </p:layoutUnit>
 </p:layout>
 
-    <p:panel id="msgBoxSystemMessagePanel" style="border: 0">
-        <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="#{msg.get('dialog.message.size')}"
-                         closable="false"
-                         header="#{stockTransferBean.messageHeader}" message="#{stockTransferBean.message}" >
-            <div style="text-align: right">
-                <p:commandButton value="#{msg.get('btn.name.ok')}"
-                                 styleClass="medium" style="#{msg.get('btn.size')}"
-                                 icon="ui-icon-check"
-                                 process="@this"
-                                 update="stockTransferForm"
-                                 oncomplete="PF('msgBoxSystemMessageDlg').hide()"/>
-            </div>
-        </p:confirmDialog>
-    </p:panel>
+<p:panel id="msgBoxSystemMessagePanel" style="border: 0">
+    <p:confirmDialog id="msgBoxSystemMessageDialog" widgetVar="msgBoxSystemMessageDlg" width="#{msg.get('dialog.message.size')}"
+                     closable="false"
+                     header="#{stockTransferBean.messageHeader}" message="#{stockTransferBean.message}" >
+        <div style="text-align: right">
+            <p:commandButton value="#{msg.get('btn.name.ok')}"
+                             styleClass="medium" style="#{msg.get('btn.size')}"
+                             icon="ui-icon-check"
+                             process="@this"
+                             update="stockTransferForm"
+                             oncomplete="PF('msgBoxSystemMessageDlg').hide()"/>
+        </div>
+    </p:confirmDialog>
+</p:panel>
 </h:body>
 </f:view>
 </html>

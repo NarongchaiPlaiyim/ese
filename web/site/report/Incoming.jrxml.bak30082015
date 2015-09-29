@@ -41,7 +41,7 @@
 				<textElement>
 					<font fontName="Tahoma" size="16" isBold="true" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[Stock Movement Incoming (ใบรับ)]]></text>
+				<text><![CDATA[Stock Movement Incoming]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="6be705da-eaef-446a-bd2b-cba38bdee4f9" x="2" y="135" width="85" height="18"/>
@@ -78,7 +78,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{inoutCode}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy h.mm a">
+			<textField>
 				<reportElement uuid="746cf01c-c5d7-4288-83db-39919b9052f6" x="339" y="106" width="200" height="20"/>
 				<textElement>
 					<font fontName="Tahoma" size="14" pdfFontName="Tahoma" pdfEncoding="Identity-H" isPdfEmbedded="true"/>

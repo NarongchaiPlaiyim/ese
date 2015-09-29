@@ -44,11 +44,17 @@ GROUP BY
 	<field name="locationBarcode" class="java.lang.String"/>
 	<field name="createDate" class="java.lang.String"/>
 	<field name="grade" class="java.lang.String"/>
-	<field name="bathcgNo" class="java.lang.String"/>
+	<field name="bathcgNo1" class="java.lang.String"/>
 	<field name="workingName" class="java.lang.String"/>
-	<field name="countId" class="java.lang.Integer"/>
+	<field name="countId1" class="java.lang.Integer"/>
 	<field name="seq" class="java.lang.Integer"/>
 	<field name="itemId" class="java.lang.String"/>
+	<field name="countId2" class="java.lang.Integer"/>
+	<field name="bathcgNo2" class="java.lang.String"/>
+	<field name="countId3" class="java.lang.Integer"/>
+	<field name="bathcgNo3" class="java.lang.String"/>
+	<field name="countId4" class="java.lang.Integer"/>
+	<field name="bathcgNo4" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -159,34 +165,6 @@ GROUP BY
 				<textFieldExpression><![CDATA[$F{workingName}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="4af79fd1-29b8-4d8c-a97a-7113fdd1855d" x="274" y="457" width="257" height="98"/>
-				<box>
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center">
-					<font fontName="Tahoma" size="30"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{bathcgNo}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="9c208388-75d5-4916-ae6d-0e3d044111cb" x="531" y="457" width="279" height="98"/>
-				<box>
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center">
-					<font fontName="Tahoma" size="30"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{countId}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
 				<reportElement uuid="8c983676-b77d-4b22-9b7f-b6ad7e4a1970" x="531" y="345" width="279" height="112"/>
 				<box>
 					<pen lineWidth="1.0"/>
@@ -244,6 +222,118 @@ GROUP BY
 				<textElement/>
 				<text><![CDATA[]]></text>
 			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="2f39bf61-de90-4139-9d4b-e326dadd3c18" x="399" y="508" width="132" height="47"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="18" pdfFontName="tahoma.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bathcgNo4}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="f51ce767-4223-4c6e-afc3-3e521a9dd212" x="274" y="457" width="125" height="51"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="18" pdfFontName="tahoma.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bathcgNo1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="2a0bd4cd-c04a-4842-a1e7-cbbb2c09b173" x="399" y="457" width="132" height="51"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="18" pdfFontName="tahoma.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bathcgNo2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="01f2ba07-a127-48f2-b7c4-33c9eca8bc5a" x="274" y="508" width="125" height="47"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="18" pdfFontName="tahoma.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bathcgNo3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="30d71f69-f6ff-47dc-8335-26913b8f7cf0" x="531" y="508" width="147" height="47"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="18" pdfFontName="tahoma.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{countId3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="15ca8248-eae4-4328-929c-c39576d9410d" x="531" y="457" width="147" height="51"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="18" pdfFontName="tahoma.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{countId1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="f7c8677f-2f12-46cb-925d-6136f2787f1f" x="678" y="508" width="132" height="47"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="18" pdfFontName="tahoma.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{countId4}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="0a8688b6-864e-4830-8b15-c901eeeb58d6" x="678" y="457" width="132" height="51"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="18" pdfFontName="tahoma.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{countId2}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>

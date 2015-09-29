@@ -43,9 +43,9 @@ public class IncomingShowItemBean extends Bean{
     @NotNull
     private List<InvOnHandModel> select;
 
-//    private List<BarcodeRegisterModel> barcodeRegisterModelList;
+    //    private List<BarcodeRegisterModel> barcodeRegisterModelList;
     private List<StockMovementInView> stockMovementInViewList;
-//    private BarcodeRegisterModel barcodeRegisterModel;
+    //    private BarcodeRegisterModel barcodeRegisterModel;
     private StockMovementInView stockMovementInView;
     private String selectType;
     private String productSearch;
@@ -241,10 +241,10 @@ public class IncomingShowItemBean extends Bean{
         //if stock_movement_in.status = 1; delete button should be enable.
 
         if (!Utils.isNull(stockInOutModel)){
-            if (stockInOutModel.getStatus().getStatusSeq() == 1){
-                flagBtnDelete = Boolean.FALSE;
-            }
-        }
+            if (stockInOutModel.getStatus().getStatusSeq() == 4){
+                flagBtnDelete = Boolean.TRUE;
+            }else flagBtnDelete = Boolean.FALSE;
+        }else flagBtnDelete = Boolean.TRUE;
 //        modeBarcode = "Mode(Edit)     ";
     }
 

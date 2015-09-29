@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-09-03T17:11:51 -->
+<!-- 2015-09-03T02:48:12 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SubPickingBarCode" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3ff53922-db2a-4e36-a1e4-a646f29e2bad">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
@@ -152,7 +152,7 @@ GROUP BY
 		<groupFooter>
 			<band height="18">
 				<textField pattern="" isBlankWhenNull="true">
-					<reportElement x="373" y="3" width="100" height="15" uuid="15742928-cdee-438d-943a-a91d27b28148"/>
+					<reportElement x="154" y="3" width="100" height="15" uuid="15742928-cdee-438d-943a-a91d27b28148"/>
 					<textElement textAlignment="Center"/>
 					<textFieldExpression><![CDATA[$V{SUM}]]></textFieldExpression>
 				</textField>
@@ -176,11 +176,6 @@ GROUP BY
 				<line>
 					<reportElement x="3" y="1" width="553" height="1" uuid="1128167d-a906-4bfc-a51b-26342ac6d9d1"/>
 				</line>
-				<textField>
-					<reportElement x="472" y="3" width="82" height="15" uuid="f6b48015-b87d-40ce-8081-9b19e85325f0"/>
-					<textElement textAlignment="Center"/>
-					<textFieldExpression><![CDATA[$F{unit}]]></textFieldExpression>
-				</textField>
 			</band>
 		</groupFooter>
 	</group>
@@ -238,17 +233,12 @@ GROUP BY
 				<text><![CDATA[Grand Total Qty]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="373" y="3" width="100" height="15" uuid="49748fc2-9e35-4a68-87ac-e063ee040ef7"/>
+				<reportElement x="154" y="3" width="100" height="15" uuid="49748fc2-9e35-4a68-87ac-e063ee040ef7"/>
 				<textFieldExpression><![CDATA[$V{SUMTOTAL}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="2" y="16" width="553" height="1" uuid="16f570f6-0120-48b4-814e-f5f068ad3c6b"/>
 			</line>
-			<textField>
-				<reportElement x="473" y="2" width="82" height="15" uuid="f42e4149-a0fe-4da3-b123-12ac557d44b5"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{unit}]]></textFieldExpression>
-			</textField>
 		</band>
 	</columnFooter>
 </jasperReport>

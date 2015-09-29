@@ -108,6 +108,8 @@ public class PalletManagementTransform extends Transform {
         palletMeanegementView.setShift(palletModel.getMsShiftModel());
         palletMeanegementView.setIsCombine(palletModel.getIsCombine());
         palletMeanegementView.setIsFoil(palletModel.getIsFoil());
+        palletMeanegementView.setSetToTransfer(palletModel.getSetToTransfer());
+        palletMeanegementView.setSeq(palletModel.getSeq());
 
 //        if (Utils.isZero(palletModel.getIsCombine())){
 //            palletMeanegementView.setIsCombine("red");
@@ -176,6 +178,9 @@ public class PalletManagementTransform extends Transform {
         palletModel.setMsWorkingAreaModel(palletManagementView.getConvetorLine());
         palletModel.setMsShiftModel(palletManagementView.getShift());
         palletModel.setIsCombine(palletManagementView.getIsCombine());
+        palletModel.setSetToTransfer(palletManagementView.getSetToTransfer());
+        palletModel.setSeq(palletManagementView.getSeq());
+        palletModel.setIsFoil(palletManagementView.getIsFoil());
 
 //        if ("red".equalsIgnoreCase(palletManagementView.getIsCombine())){
 //            palletModel.setIsCombine(0);
@@ -209,6 +214,8 @@ public class PalletManagementTransform extends Transform {
         palletModel.setMsWorkingAreaModel(palletManagementView.getConvetorLine());
         palletModel.setMsShiftModel(palletManagementView.getShift());
         palletModel.setIsCombine(palletManagementView.getIsCombine());
+        palletModel.setSetToTransfer(palletManagementView.getSetToTransfer());
+        palletModel.setSeq(palletManagementView.getSeq());
         palletModel.setIsFoil(2);
         return palletModel;
     }
@@ -267,9 +274,9 @@ public class PalletManagementTransform extends Transform {
                 workingName = model.getWorkingName();
             }
 
-            if (!bathcgNo.equalsIgnoreCase(model.getBathcgNo()) && countId != model.getCountId()){
-                palletListReport.setBathcgNo(model.getBathcgNo());
-                palletListReport.setCountId(model.getCountId());
+            if (!bathcgNo.equalsIgnoreCase(model.getBathcgNo1()) && countId != model.getCountId1()){
+                palletListReport.setBathcgNo(model.getBathcgNo1());
+                palletListReport.setCountId(model.getCountId1());
                 palletListReports.add(palletListReport);
             }
             palletManagementViewReport.setPalletListReports(palletListReports);

@@ -14,4 +14,7 @@ public class SubIncomingViewReport {
     private String itemDesc;
     private int no;
     private String itemInternal;
+    private String warehouseBarcode;
+    private String locationBarcode;
+    private int qty;
 }

@@ -19,6 +19,7 @@ public class StockInOutDetailViewReport {
     private String toWh;
     private String fromWh;
     private String batchNo;
+    private String previousLocationBarcode;
 
     @Override
     public String toString() {
@@ -34,6 +35,7 @@ public class StockInOutDetailViewReport {
                 .append("toWh", toWh)
                 .append("fromWh", fromWh)
                 .append("batchNo", batchNo)
+                .append("previousLocationBarcode", previousLocationBarcode)
                 .toString();
     }
 }

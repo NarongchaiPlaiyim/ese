@@ -65,84 +65,53 @@ public class InvOnHandDAO extends GenericDAO<InvOnHandModel, Integer>{
         StringBuilder sqlBuilder = new StringBuilder();
 
         sqlBuilder.append(" SELECT ");
-        sqlBuilder.append(" ").append(getPrefix()).append(".pallet.id AS PALLET_ID,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".warehouse.warehouse_code AS WAREHOUSE_CODE,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".item_master.DSG_InternalItemId AS ITEM_INTERNAL,");
         sqlBuilder.append(" ").append(getPrefix()).append(".item_master.ItemId AS ITEM_ID,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".item_master.DSGThaiItemDescription AS ITEM_DESC,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".pallet.pallet_barcode AS PALLET_BARCODE,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".pallet.create_date AS PALLET_DATE,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".item_master.DSGThaiItemDescription ITEM_DESC,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".warehouse.warehouse_code AS WAREHOUSE_CODE,");
         sqlBuilder.append(" ").append(getPrefix()).append(".location.location_barcode AS LOCATION_BARCODE,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".pallet.capacity AS CAPACITY,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".pallet.qty AS QTY,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".pallet.combine AS COMBINE,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".pallet.foil AS FOIL,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".pallet.set_to_transfer AS TO_TRANSFER,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".item_master.id AS ITEM,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".inv_onhand.batchno AS BATCHNO,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".reserved_order.batchno AS BATCHNO,");
+        sqlBuilder.append(" ").append(getPrefix()).append(".reserved_order.reserved_qty AS QTY,");
         sqlBuilder.append(" ").append(getPrefix()).append(".picking_order_line.salesunit AS UNIT");
-        sqlBuilder.append(" FROM ").append(getPrefix()).append(".pallet");
-        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".item_master");
-        sqlBuilder.append(" ON ").append(getPrefix()).append(".pallet.item_id = ").append(getPrefix()).append(".item_master.id");
-        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".location");
-        sqlBuilder.append(" ON ").append(getPrefix()).append(".pallet.location_id = ").append(getPrefix()).append(".location.id");
-        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".warehouse");
-        sqlBuilder.append(" ON ").append(getPrefix()).append(".pallet.warehouse_id = ").append(getPrefix()).append(".warehouse.id");
-        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".stock_inout_line");
-        sqlBuilder.append(" ON ").append(getPrefix()).append(".pallet.id = ").append(getPrefix()).append(".stock_inout_line.pallet_id");
-        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".inv_onhand");
-        sqlBuilder.append(" ON ").append(getPrefix()).append(".pallet.id = ").append(getPrefix()).append(".inv_onhand.pallet_id, ");
-        sqlBuilder.append(getPrefix()).append(".ax_Unit ");
+        sqlBuilder.append(" FROM ").append(getPrefix()).append(".picking_order");
+
         sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".picking_order_line");
-        sqlBuilder.append(" ON ").append(getPrefix()).append(".ax_Unit.UnitId = ").append(getPrefix()).append(".picking_order_line.salesunit");
-        sqlBuilder.append(" WHERE ").append(getPrefix()).append(".pallet.isvalid = 1 ");
-        sqlBuilder.append(" AND ").append(getPrefix()).append(".picking_order_line.picking_order_id = ").append(pickingId);
-        sqlBuilder.append(" GROUP BY ").append(getPrefix()).append(".pallet.id, ").append(getPrefix()).append(".warehouse.warehouse_code, ");
-        sqlBuilder.append(getPrefix()).append(".item_master.ItemId, ").append(getPrefix()).append(".item_master.DSGThaiItemDescription, ");
-        sqlBuilder.append(getPrefix()).append(".pallet.pallet_barcode, ").append(getPrefix()).append(".pallet.create_date, ");
-        sqlBuilder.append(getPrefix()).append(".location.location_barcode, ").append(getPrefix()).append(".pallet.capacity, ");
-        sqlBuilder.append(getPrefix()).append(".pallet.qty, ").append(getPrefix()).append(".pallet.combine, ");
-        sqlBuilder.append(getPrefix()).append(".pallet.foil, ").append(getPrefix()).append(".pallet.set_to_transfer, ");
-        sqlBuilder.append(getPrefix()).append(".item_master.id, ").append(getPrefix()).append(".inv_onhand.batchno, ");
-        sqlBuilder.append(getPrefix()).append(".picking_order_line.salesunit");
+        sqlBuilder.append(" ON ").append(getPrefix()).append(".picking_order.id = ").append(getPrefix()).append(".picking_order_line.picking_order_id");
+        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".item_master");
+        sqlBuilder.append(" ON ").append(getPrefix()).append(".picking_order_line.ItemId = ").append(getPrefix()).append(".item_master.ItemId");
+        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".reserved_order");
+        sqlBuilder.append(" ON ").append(getPrefix()).append(".picking_order_line.id = ").append(getPrefix()).append(".reserved_order.picking_order_line_id");
+        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".location");
+        sqlBuilder.append(" ON ").append(getPrefix()).append(".reserved_order.location_barcode = ").append(getPrefix()).append(".location.location_barcode");
+        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".warehouse");
+        sqlBuilder.append(" ON ").append(getPrefix()).append(".location.warehouse_id = ").append(getPrefix()).append(".warehouse.id");
+
+        sqlBuilder.append(" WHERE ").append(getPrefix()).append(".picking_order.id = ").append(pickingId);
 
         log.debug("findByPickingIdOnReport : {}", sqlBuilder.toString());
 
         try {
             SQLQuery query = getSession().createSQLQuery(sqlBuilder.toString())
-                    .addScalar("PALLET_ID", IntegerType.INSTANCE)
-                    .addScalar("WAREHOUSE_CODE", StringType.INSTANCE)
+                    .addScalar("ITEM_INTERNAL", StringType.INSTANCE)
                     .addScalar("ITEM_ID", StringType.INSTANCE)
                     .addScalar("ITEM_DESC", StringType.INSTANCE)
-                    .addScalar("PALLET_BARCODE", StringType.INSTANCE)
-                    .addScalar("PALLET_DATE", DateType.INSTANCE)
+                    .addScalar("WAREHOUSE_CODE", StringType.INSTANCE)
                     .addScalar("LOCATION_BARCODE", StringType.INSTANCE)
-                    .addScalar("CAPACITY", BigDecimalType.INSTANCE)
-                    .addScalar("QTY", IntegerType.INSTANCE)
-                    .addScalar("COMBINE", IntegerType.INSTANCE)
-                    .addScalar("FOIL", IntegerType.INSTANCE)
-                    .addScalar("TO_TRANSFER", IntegerType.INSTANCE)
-                    .addScalar("ITEM", IntegerType.INSTANCE)
                     .addScalar("BATCHNO", StringType.INSTANCE)
+                    .addScalar("QTY", IntegerType.INSTANCE)
                     .addScalar("UNIT", StringType.INSTANCE);
             List<Object[]> objects = query.list();
 
             for (Object[] entity : objects) {
                 SubPickingOrderWithBarcodeViewReport subPickingOrderWithBarcodeViewReport = new SubPickingOrderWithBarcodeViewReport();
-                subPickingOrderWithBarcodeViewReport.setPalletId(Utils.parseInt(entity[0]));
-                subPickingOrderWithBarcodeViewReport.setWarehoseCode(Utils.parseString(entity[1]));
-                subPickingOrderWithBarcodeViewReport.setItemId(Utils.parseString(entity[2]));
-                subPickingOrderWithBarcodeViewReport.setItemDesc(Utils.parseString(entity[3]));
-                subPickingOrderWithBarcodeViewReport.setPalletBarcode(Utils.parseString(entity[4]));
-                subPickingOrderWithBarcodeViewReport.setPalletDate(Utils.parseDate(entity[5], null));
-                subPickingOrderWithBarcodeViewReport.setLocationBarcode(Utils.parseString(entity[6]));
-                subPickingOrderWithBarcodeViewReport.setCapacity(Utils.parseBigDecimal(entity[7]));
-                subPickingOrderWithBarcodeViewReport.setQty(Utils.parseInt(entity[8]));
-                subPickingOrderWithBarcodeViewReport.setCombine(Utils.parseInt(entity[9]));
-                subPickingOrderWithBarcodeViewReport.setFoil(Utils.parseInt(entity[10]));
-                subPickingOrderWithBarcodeViewReport.setToTransfer(Utils.parseInt(entity[11]));
-                subPickingOrderWithBarcodeViewReport.setItem(Utils.parseInt(entity[12]));
-                subPickingOrderWithBarcodeViewReport.setBatchNo(Utils.parseString(entity[13]));
-                subPickingOrderWithBarcodeViewReport.setUnit(Utils.parseString(entity[14]));
+                subPickingOrderWithBarcodeViewReport.setItemInternal(Utils.parseString(entity[0]));
+                subPickingOrderWithBarcodeViewReport.setItemId(Utils.parseString(entity[1]));
+                subPickingOrderWithBarcodeViewReport.setItemDesc(Utils.parseString(entity[2]));
+                subPickingOrderWithBarcodeViewReport.setWarehoseCode(Utils.parseString(entity[3]));
+                subPickingOrderWithBarcodeViewReport.setLocationBarcode(Utils.parseString(entity[4]));
+                subPickingOrderWithBarcodeViewReport.setBatchNo(Utils.parseString(entity[5]));
+                subPickingOrderWithBarcodeViewReport.setQty(Utils.parseInt(entity[6]));
+                subPickingOrderWithBarcodeViewReport.setUnit(Utils.parseString(entity[7]));
                 subPickingOrderWithBarcodeViewReportArrayList.add(subPickingOrderWithBarcodeViewReport);
             }
         } catch (Exception e) {

@@ -18,6 +18,8 @@
         http://www.springframework.org/schema/security/spring-security-3.2.xsd
         ">
 
+    <context:property-placeholder location="classpath:config.properties"/>
+
     <util:properties id="config" location="classpath:config.properties"/>
     <util:properties id="message" location="classpath:message.properties"/>
 
@@ -44,10 +46,8 @@
                 <prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
-                <prop key="hibernate.default_schema">dbo</prop>
-                <!--<prop key="hibernate.default_catalog">ppwms03</prop>-->
-                <!--<prop key="hibernate.default_catalog">ppwms04</prop>-->
-                <prop key="hibernate.default_catalog">ppwms03latin</prop>
+                <prop key="hibernate.default_schema">${schema}</prop>
+                <prop key="hibernate.default_catalog">${catalog}</prop>
                 <prop key="current_session_context_class">thread</prop>
             </props>
         </property>
