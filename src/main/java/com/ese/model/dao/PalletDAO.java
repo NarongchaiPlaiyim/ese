@@ -262,6 +262,7 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
         sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".inv_onhand");
         sqlBuilder.append(" ON ").append(getPrefix()).append(".pallet.id = ").append(getPrefix()).append(".inv_onhand.pallet_id");
         sqlBuilder.append(" WHERE ").append(getPrefix()).append(".pallet.ID = " + palletId );
+        sqlBuilder.append(" AND ").append(getPrefix()).append(".inv_onhand.status < 6 ");
         sqlBuilder.append(" GROUP BY ").append(getPrefix()).append(".item_master.DSGThaiItemDescription,");
         sqlBuilder.append(" ").append(getPrefix()).append(".warehouse.warehouse_code,").append(getPrefix()).append(".pallet.pallet_barcode,");
         sqlBuilder.append(" ").append(getPrefix()).append(".location.location_barcode,").append(getPrefix()).append(".pallet.create_date,").append(getPrefix()).append(".inv_onhand.grade,");
@@ -369,6 +370,7 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
         sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".working_area");
         sqlBuilder.append(" ON  ").append(getPrefix()).append(".inv_onhand.working_area_id = ").append(getPrefix()).append(".working_area.id");
         sqlBuilder.append(" WHERE ").append(getPrefix()).append(".inv_onhand.pallet_id = " + palletId );
+        sqlBuilder.append(" AND ").append(getPrefix()).append(".inv_onhand.status < 6 ");
         sqlBuilder.append(" GROUP BY ").append(getPrefix()).append(".item_master.ItemId,");
         sqlBuilder.append(" ").append(getPrefix()).append(".item_master.DSGThaiItemDescription,").append(getPrefix()).append(".shift.name,");
         sqlBuilder.append(" ").append(getPrefix()).append(".working_area.name,").append(getPrefix()).append(".inv_onhand.batchno");
