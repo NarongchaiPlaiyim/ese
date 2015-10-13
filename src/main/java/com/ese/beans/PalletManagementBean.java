@@ -126,8 +126,10 @@ public class PalletManagementBean extends Bean {
     public void onClickPalletTB(){
         log.debug("onClickPalletTB(). {}", palletMeanegementView);
         isCheckClosePallet = false;
-        if (!Utils.isZero(palletMeanegementView.getQty())) {
-            isCheckPrintTag = false;
+
+        isCheckPrintTag = false;
+        if (Utils.isZero(palletMeanegementView.getQty())) {
+            isCheckPrintTag = true;
         }
 
         isCheckLocation = true;
