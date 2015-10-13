@@ -239,7 +239,13 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
 
 
         sqlBuilder.append(" SELECT DISTINCT");
-        sqlBuilder.append(" Count(").append(getPrefix()).append(".inv_onhand.id) AS COUNT_ID,");
+//        sqlBuilder.append(" Count(").append(getPrefix()).append(".inv_onhand.id) AS COUNT_ID,");
+//        sqlBuilder.append(" (SELECT COUNT (id) as COUNT_ID FROM ").append(getPrefix()).append(".inv_onhand where pallet_id = " + palletId + " and status < 6) , ");
+        sqlBuilder.append("SELECT COUNT (")
+                .append(getPrefix()).append(".inv_onhand.id  AS Count_id")
+                .append(" FROM ").append(getPrefix()).append(".inv_onhand")
+                .append(" WHERE ").append(".inv_onhand.pallet_id = ").append(palletId)
+                .append(" AND ").append(getPrefix()).append(".inv_onhand.status < 6");
         sqlBuilder.append(" ").append(getPrefix()).append(".item_master.DSGThaiItemDescription AS DESCRIPTION,");
         sqlBuilder.append(" ").append(getPrefix()).append(".warehouse.warehouse_code AS WAREHOUSE_CODE,");
         sqlBuilder.append(" ").append(getPrefix()).append(".pallet.pallet_barcode AS PALLET_BARCODE,");

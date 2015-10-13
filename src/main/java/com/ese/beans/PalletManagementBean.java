@@ -11,14 +11,11 @@ import com.ese.utils.MessageDialog;
 import com.ese.utils.Utils;
 import lombok.Getter;
 import lombok.Setter;
-import org.primefaces.context.RequestContext;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import java.io.Serializable;
 import java.util.List;
 
 @Getter
@@ -128,12 +125,14 @@ public class PalletManagementBean extends Bean {
 
     public void onClickPalletTB(){
         log.debug("onClickPalletTB(). {}", palletMeanegementView);
-        isCheckPrintTag = false;
         isCheckClosePallet = false;
+        if (!Utils.isZero(palletMeanegementView.getQty())) {
+            isCheckPrintTag = false;
+        }
+
+        isCheckLocation = true;
         if (palletMeanegementView.getStatus().getId() > 2){
             isCheckLocation = false;
-        } else {
-            isCheckLocation = true;
         }
 
         if (palletMeanegementView.getIsFoil() == 1){

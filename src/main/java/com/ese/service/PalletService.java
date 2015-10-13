@@ -2,11 +2,11 @@ package com.ese.service;
 
 import com.ese.model.dao.LocationDAO;
 import com.ese.model.dao.MSLocationItemsDAO;
+import com.ese.model.dao.PalletDAO;
 import com.ese.model.dao.WorkingAreaDAO;
 import com.ese.model.db.MSLocationModel;
 import com.ese.model.db.MSWorkingAreaModel;
 import com.ese.model.db.PalletModel;
-import com.ese.model.dao.PalletDAO;
 import com.ese.model.view.LocationItemView;
 import com.ese.model.view.PalletManagementView;
 import com.ese.model.view.report.PalletManagemengModelReport;
@@ -18,8 +18,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -97,7 +95,7 @@ public class PalletService extends Service{
         String partReport = "";
         PalletModel palletModel = null;
         List<PalletManagemengModelReport> reportViews = null;
-        HashMap map = new HashMap<String, Object>();
+        HashMap<String, Object> map = new HashMap();
 
         try {
             palletModel = palletDAO.findByID(palletId);
