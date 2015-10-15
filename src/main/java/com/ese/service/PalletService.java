@@ -129,9 +129,9 @@ public class PalletService extends Service{
 
             if (palletModel.getStatus() == 3){
                 palletDAO.updateLocationByStatusPrinted(palletModel.getMsLocationModel().getId());
-            } else {
+            }/* else {
                 palletDAO.updateLocationByStatusLocated(model.getId());
-            }
+            } */
 
             //บวกของใหม่  ลบของเก่า
             palletDAO.updateLocationByOld(model.getId());

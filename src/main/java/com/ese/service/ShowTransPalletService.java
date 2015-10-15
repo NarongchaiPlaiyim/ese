@@ -8,7 +8,6 @@ import com.ese.model.db.MSLocationModel;
 import com.ese.model.db.PalletModel;
 import com.ese.model.db.StockInOutLineModel;
 import com.ese.model.view.LocationItemView;
-import com.ese.model.view.PalletManagementView;
 import com.ese.model.view.PalletTransferView;
 import com.ese.model.view.report.PalletManagemengModelReport;
 import com.ese.transform.PalletManagementTransform;
@@ -113,10 +112,10 @@ public class ShowTransPalletService extends Service{
             if (palletModel.getStatus() == 3){
                 //Print Tag
                 palletDAO.updateLocationByStatusPrinted(palletModel.getMsLocationModel().getId());
-            } else {
+            } /*else {
                 //Find Location
                 palletDAO.updateLocationByStatusLocated(model.getId());
-            }
+            }*/
 
             //บวกของใหม่  ลบของเก่า 
             palletDAO.updateLocationByOld(model.getId());

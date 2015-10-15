@@ -142,31 +142,47 @@ public class StockMovementOutDAO extends GenericDAO<StockMovementOutModel, Integ
 //        sqlBuilder.append(" COALESCE(").append(getPrefix()).append(".location.location_barcode,l2.location_barcode)");
 
 
-        sqlBuilder.append(" SELECT ")
-                .append(getPrefix()).append(".stock_movement_out.stock_inout_id AS STOCK_INOUT_ID, ")
-                .append(getPrefix()).append(".stock_movement_out.pallet_barcode AS PALLET_BARCODE, ")
-                .append(getPrefix()).append(".stock_movement_out.sn_barcode AS SN_BARCODE, ")
-                .append(getPrefix()).append(".stock_movement_out.batchno AS BATCH_NO, ")
-                .append(getPrefix()).append(".item_master.ItemId AS ITEM_ID, ")
-                .append(getPrefix()).append(".item_master.DSGThaiItemDescription AS ITEM_DESC ")
-                .append(" FROM ")
-                .append(getPrefix()).append(".stock_movement_out INNER JOIN ")
-                .append(getPrefix()).append(".inv_buffer ON ")
-                .append(getPrefix()).append(".stock_movement_out.sn_barcode = ")
-                .append(getPrefix()).append(".inv_buffer.sn_barcode ")
-                .append(" INNER JOIN ")
-                .append(getPrefix()).append(".item_master ON ")
-                .append(getPrefix()).append(".inv_buffer.item_id = ")
-                .append(getPrefix()).append(".item_master.id ")
+        sqlBuilder.append(" select ")
+                .append("  coalesce(inv.sn_barcode, ").append(getPrefix()).append(".inv_buffer.sn_barcode) as SN_BARCODE ")
+                .append(" ,coalesce(").append(getPrefix()).append(".pallet.pallet_barcode, p.pallet_barcode) as PALLET_BARCODE ")
+                .append(" ,coalesce(").append(getPrefix()).append(".item_master.itemid, item.itemid) as ITEM_ID ")
+                .append(" ,coalesce(").append(getPrefix()).append(".item_master.dsgthaiitemdescription, item.dsgthaiitemdescription) as ITEM_DESC ")
+                .append(" ,coalesce(").append(getPrefix()).append(".inv_buffer.batchno, inv.batchno) as BATCH_NO ")
+                .append(" from ").append(getPrefix()).append(".stock_movement_out ")
+                .append(" left join ").append(getPrefix()).append(".inv_buffer on ").append(getPrefix()).append(".stock_movement_out.sn_barcode = ").append(getPrefix()).append(".inv_buffer.sn_barcode ")
+                .append(" left join ").append(getPrefix()).append(".pallet p on ").append(getPrefix()).append(".inv_buffer.pallet_id = p.id ")
+                .append(" left join ").append(getPrefix()).append(".pallet on ").append(getPrefix()).append(".stock_movement_out.pallet_barcode = ").append(getPrefix()).append(".pallet.pallet_barcode ")
+                .append(" left join ").append(getPrefix()).append(".inv_buffer inv on ").append(getPrefix()).append(".pallet.id = inv.pallet_id ")
+                .append(" left join ").append(getPrefix()).append(".item_master on ").append(getPrefix()).append(".inv_buffer.item_id = ").append(getPrefix()).append(".item_master.id ")
+                .append(" left join ").append(getPrefix()).append(".item_master item on inv.item_id = item.id ")
                 .append(" where ")
                 .append(getPrefix()).append(".stock_movement_out.stock_inout_id = ").append(stockInOutId);
+
+//        sqlBuilder.append(" SELECT ")
+//                .append(getPrefix()).append(".stock_movement_out.stock_inout_id AS STOCK_INOUT_ID, ")
+//                .append(getPrefix()).append(".stock_movement_out.pallet_barcode AS PALLET_BARCODE, ") //
+//                .append(getPrefix()).append(".stock_movement_out.sn_barcode AS SN_BARCODE, ") //
+//                .append(getPrefix()).append(".stock_movement_out.batchno AS BATCH_NO, ")  //
+//                .append(getPrefix()).append(".item_master.ItemId AS ITEM_ID, ")    //
+//                .append(getPrefix()).append(".item_master.DSGThaiItemDescription AS ITEM_DESC ") //
+//                .append(" FROM ")
+//                .append(getPrefix()).append(".stock_movement_out INNER JOIN ")
+//                .append(getPrefix()).append(".inv_buffer ON ")
+//                .append(getPrefix()).append(".stock_movement_out.sn_barcode = ")
+//                .append(getPrefix()).append(".inv_buffer.sn_barcode ")
+//                .append(" INNER JOIN ")
+//                .append(getPrefix()).append(".item_master ON ")
+//                .append(getPrefix()).append(".inv_buffer.item_id = ")
+//                .append(getPrefix()).append(".item_master.id ")
+//                .append(" where ")
+//                .append(getPrefix()).append(".stock_movement_out.stock_inout_id = ").append(stockInOutId);
 
         log.debug(sqlBuilder.toString());
 
         try {
             SQLQuery query = getSession().createSQLQuery(sqlBuilder.toString())
-                    .addScalar("STOCK_INOUT_ID", IntegerType.INSTANCE)
-                    .addScalar("PALLET_BARCODE", StringType.INSTANCE)
+//                    .addScalar("STOCK_INOUT_ID", IntegerType.INSTANCE)
+                    .addScalar("PALLET_BARCODE" , StringType.INSTANCE)
                     .addScalar("SN_BARCODE", StringType.INSTANCE)
                     .addScalar("BATCH_NO", StringType.INSTANCE)
                     .addScalar("ITEM_ID", StringType.INSTANCE)
@@ -182,17 +198,19 @@ public class StockMovementOutDAO extends GenericDAO<StockMovementOutModel, Integ
             for (Object[] entity : objects) {
                 SubIncomingViewReport subIncomingViewReport = new SubIncomingViewReport();
                 subIncomingViewReport.setNo(i);
-                subIncomingViewReport.setStockInoutId(Utils.parseInt(entity[0]));
+//                subIncomingViewReport.setStockInoutId(Utils.parseInt(entity[0]));
+
+                subIncomingViewReport.setSnBarcode(Utils.parseString(entity[0]));
                 subIncomingViewReport.setPalletBarcode(Utils.parseString(entity[1]));
-                subIncomingViewReport.setSnBarcode(Utils.parseString(entity[2]));
-                subIncomingViewReport.setBatchNo(Utils.parseString(entity[3]));
-                subIncomingViewReport.setItemNo(Utils.parseString(entity[4]));
-                subIncomingViewReport.setItemDesc(Utils.parseString(entity[5]));
+                subIncomingViewReport.setItemNo(Utils.parseString(entity[2]));
+                subIncomingViewReport.setItemDesc(Utils.parseString(entity[3]));
+                subIncomingViewReport.setBatchNo(Utils.parseString(entity[4]));
+
 //                subIncomingViewReport.setItemInternal(Utils.parseString(entity[6]));
 //                subIncomingViewReport.setWarehouseBarcode(Utils.parseString(entity[7]));
 //                subIncomingViewReport.setLocationBarcode(Utils.parseString(entity[8]));
 //                subIncomingViewReport.setQty(Utils.parseInt(entity[9]));
-//                subIncomingViewReportsList.add(subIncomingViewReport);
+                subIncomingViewReportsList.add(subIncomingViewReport);
                 i++;
             }
         } catch (Exception e) {
