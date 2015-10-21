@@ -110,27 +110,55 @@ public class StockMovementInDAO extends GenericDAO<StockMovementInModel, Integer
 
 
 
-        sqlBuilder.append(" SELECT ")
-                .append(getPrefix()).append(".stock_movement_in.stock_inout_id AS STOCK_INOUT_ID, ")
-                .append(getPrefix()).append(".pallet.pallet_barcode AS PALLET_BARCODE, ")
-                .append(getPrefix()).append(".stock_movement_in.sn_barcode AS SN_BARCODE, ")
-                .append(getPrefix()).append(".inv_buffer.batchno AS BATCH_NO, ")
-                .append(getPrefix()).append(".item_master.ItemId AS ITEM_ID, ")
-                .append(getPrefix()).append(".item_master.DSGThaiItemDescription AS ITEM_DESC ")
+//        sqlBuilder.append(" SELECT ")
+//                .append(getPrefix()).append(".stock_movement_in.stock_inout_id AS STOCK_INOUT_ID, ")
+//                .append(getPrefix()).append(".pallet.pallet_barcode AS PALLET_BARCODE, ")
+//                .append(getPrefix()).append(".stock_movement_in.sn_barcode AS SN_BARCODE, ")
+//                .append(getPrefix()).append(".inv_buffer.batchno AS BATCH_NO, ")
+//                .append(getPrefix()).append(".item_master.ItemId AS ITEM_ID, ")
+//                .append(getPrefix()).append(".item_master.DSGThaiItemDescription AS ITEM_DESC ")
+//                .append(" FROM ")
+//                .append(getPrefix()).append(".stock_movement_in INNER JOIN ")
+//                .append(getPrefix()).append(".inv_buffer ON ")
+//                .append(getPrefix()).append(".stock_movement_in.sn_barcode = ")
+//                .append(getPrefix()).append(".inv_buffer.sn_barcode ")
+//                .append(" INNER JOIN ")
+//                .append(getPrefix()).append(".item_master ON ")
+//                .append(getPrefix()).append(".inv_buffer.item_id = ")
+//                .append(getPrefix()).append(".item_master.id INNER JOIN ")
+//                .append(getPrefix()).append(".pallet ON ")
+//                .append(getPrefix()).append(".inv_buffer.pallet_id = ")
+//                .append(getPrefix()).append(".pallet.id ")
+//                .append(" where ")
+//                .append(getPrefix()).append(".stock_movement_in.stock_inout_id = ").append(stockInOutId);
+
+        sqlBuilder.append(" select ")
+                .append(" count(").append(getPrefix()).append(".stock_movement_in.stock_inout_id) as STOCK_INOUT_ID, ")
+                .append(" ").append(getPrefix()).append(".pallet.pallet_barcode as PALLET_BARCODE, ")
+                .append(" ").append(getPrefix()).append(".stock_movement_in.sn_barcode as SN_BARCODE, ")
+                .append(" ").append(getPrefix()).append(".inv_onhand.batchno as BATCH_NO, ")
+                .append(" ").append(getPrefix()).append(".working_area.name as WORKING_NAME, ")
+                .append(" ").append(getPrefix()).append(".location.location_barcode as LOCATION_BARCODE, ")
+                .append(" ").append(getPrefix()).append(".item_master.ItemId as ITEM_ID, ")
+                .append(" ").append(getPrefix()).append(".item_master.DSGThaiItemDescription as ITEM_DESC")
                 .append(" FROM ")
-                .append(getPrefix()).append(".stock_movement_in INNER JOIN ")
-                .append(getPrefix()).append(".inv_buffer ON ")
-                .append(getPrefix()).append(".stock_movement_in.sn_barcode = ")
-                .append(getPrefix()).append(".inv_buffer.sn_barcode ")
-                .append(" INNER JOIN ")
-                .append(getPrefix()).append(".item_master ON ")
-                .append(getPrefix()).append(".inv_buffer.item_id = ")
-                .append(getPrefix()).append(".item_master.id INNER JOIN ")
-                .append(getPrefix()).append(".pallet ON ")
-                .append(getPrefix()).append(".inv_buffer.pallet_id = ")
-                .append(getPrefix()).append(".pallet.id ")
-                .append(" where ")
-                .append(getPrefix()).append(".stock_movement_in.stock_inout_id = ").append(stockInOutId);
+                .append(getPrefix()).append(".stock_movement_in ")
+                .append(" INNER JOIN ").append(getPrefix()).append(".inv_onhand ON ")
+                .append(getPrefix()).append(".stock_movement_in.sn_barcode = ").append(getPrefix()).append(".inv_onhand.sn_barcode ")
+                .append(" INNER JOIN ").append(getPrefix()).append(".item_master ON ")
+                .append(getPrefix()).append(".inv_onhand.item_id = ").append(getPrefix()).append(".item_master.id ")
+
+                .append(" INNER JOIN ").append(getPrefix()).append(".location ON ")
+                .append(getPrefix()).append(".inv_onhand.location_id = ").append(getPrefix()).append(".location.id ")
+                .append(" INNER JOIN ").append(getPrefix()).append(".working_area ON ")
+                .append(getPrefix()).append(".inv_onhand.working_area_id = ").append(getPrefix()).append(".working_area.id ")
+
+                .append(" INNER JOIN ").append(getPrefix()).append(".pallet ON ")
+                .append(getPrefix()).append(".inv_onhand.pallet_id = ").append(getPrefix()).append(".pallet.id ")
+                .append(" where ").append(getPrefix()).append(".stock_movement_in.stock_inout_id = ").append(stockInOutId)
+                .append(" GROUP BY ").append(getPrefix()).append(".stock_movement_in.stock_inout_id, ").append(getPrefix()).append(".pallet.pallet_barcode, ")
+                .append(getPrefix()).append(".stock_movement_in.sn_barcode, ").append(getPrefix()).append(".inv_onhand.batchno, ").append(getPrefix()).append(".working_area.name, ")
+                .append(getPrefix()).append(".location.location_barcode, ").append(getPrefix()).append(".item_master.ItemId, ").append(getPrefix()).append(".item_master.DSGThaiItemDescription");
 
 
         log.debug(sqlBuilder.toString());
@@ -141,6 +169,8 @@ public class StockMovementInDAO extends GenericDAO<StockMovementInModel, Integer
                     .addScalar("PALLET_BARCODE", StringType.INSTANCE)
                     .addScalar("SN_BARCODE", StringType.INSTANCE)
                     .addScalar("BATCH_NO", StringType.INSTANCE)
+                    .addScalar("WORKING_NAME", StringType.INSTANCE)
+                    .addScalar("LOCATION_BARCODE", StringType.INSTANCE)
                     .addScalar("ITEM_ID", StringType.INSTANCE)
                     .addScalar("ITEM_DESC", StringType.INSTANCE);
 //                    .addScalar("ITEM_INTERNAL", StringType.INSTANCE)
@@ -158,8 +188,10 @@ public class StockMovementInDAO extends GenericDAO<StockMovementInModel, Integer
                 subIncomingViewReport.setPalletBarcode(Utils.parseString(entity[1]));
                 subIncomingViewReport.setSnBarcode(Utils.parseString(entity[2]));
                 subIncomingViewReport.setBatchNo(Utils.parseString(entity[3]));
-                subIncomingViewReport.setItemNo(Utils.parseString(entity[4]));
-                subIncomingViewReport.setItemDesc(Utils.parseString(entity[5]));
+                subIncomingViewReport.setWorkingName(Utils.parseString(entity[4]));
+                subIncomingViewReport.setLocationBarcode(Utils.parseString(entity[5]));
+                subIncomingViewReport.setItemNo(Utils.parseString(entity[6]));
+                subIncomingViewReport.setItemDesc(Utils.parseString(entity[7]));
 //                subIncomingViewReport.setItemInternal(Utils.parseString(entity[6]));
 //                subIncomingViewReport.setWarehouseBarcode(Utils.parseString(entity[7]));
 //                subIncomingViewReport.setLocationBarcode(Utils.parseString(entity[8]));

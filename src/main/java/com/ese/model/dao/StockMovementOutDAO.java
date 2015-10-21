@@ -98,6 +98,7 @@ public class StockMovementOutDAO extends GenericDAO<StockMovementOutModel, Integ
         StringBuilder sqlBuilder = new StringBuilder();
 
 
+
 //        sqlBuilder.append(" select ")
 //                .append("  coalesce(inv.sn_barcode, ").append(getPrefix()).append(".inv_buffer.sn_barcode) as SN_BARCODE ")
 //                .append(" ,coalesce(").append(getPrefix()).append(".pallet.pallet_barcode, p.pallet_barcode) as PALLET_BARCODE ")
@@ -115,21 +116,25 @@ public class StockMovementOutDAO extends GenericDAO<StockMovementOutModel, Integ
 //                .append(getPrefix()).append(".stock_movement_out.stock_inout_id = ").append(stockInOutId);
 
         sqlBuilder.append(" select ")
-                .append(" ").append(getPrefix()).append(".stock_movement_out.stock_inout_id AS STOCK_INOUT_ID")
-                .append(" ,coalesce(").append(getPrefix()).append(".pallet.pallet_barcode, p.pallet_barcode) as PALLET_BARCODE ")
-                .append(" ,coalesce(inv.sn_barcode, ").append(getPrefix()).append(".inv_buffer.sn_barcode) as SN_BARCODE ")
-                .append(" ,coalesce(").append(getPrefix()).append(".inv_buffer.batchno, inv.batchno) as BATCH_NO ")
-                .append(" ,coalesce(").append(getPrefix()).append(".item_master.itemid, item.itemid) as ITEM_ID ")
-                .append(" ,coalesce(").append(getPrefix()).append(".item_master.dsgthaiitemdescription, item.dsgthaiitemdescription) as ITEM_DESC ")
+                .append(" ").append(getPrefix()).append(".stock_movement_out.STOCK_INOUT_ID as STOCK_INOUT_ID, ")
+                .append(" coalesce(").append(getPrefix()).append(".pallet.pallet_barcode,p.pallet_barcode) as PALLET_BARCODE, ")
+                .append(" coalesce(inv.sn_barcode,inv_buffer.sn_barcode) as SN_BARCODE, ")
+                .append(" coalesce(").append(getPrefix()).append(".inv_buffer.batchno,inv.batchno) as BATCH_NO, ")
+                .append(" coalesce(").append(getPrefix()).append(".item_master.itemid,item.itemid) as ITEM_ID, ")
+                .append(" coalesce(").append(getPrefix()).append(".item_master.dsgthaiitemdescription,item.dsgthaiitemdescription) as ITEM_DESC ")
                 .append(" from ").append(getPrefix()).append(".stock_movement_out ")
-                .append(" left join ").append(getPrefix()).append(".inv_buffer on ").append(getPrefix()).append(".stock_movement_out.sn_barcode = ").append(getPrefix()).append(".inv_buffer.sn_barcode ")
-                .append(" left join ").append(getPrefix()).append(".pallet p on ").append(getPrefix()).append(".inv_buffer.pallet_id = p.id ")
-                .append(" left join ").append(getPrefix()).append(".pallet on ").append(getPrefix()).append(".stock_movement_out.pallet_barcode = ").append(getPrefix()).append(".pallet.pallet_barcode ")
-                .append(" left join ").append(getPrefix()).append(".inv_buffer inv on ").append(getPrefix()).append(".pallet.id = inv.pallet_id ")
-                .append(" left join ").append(getPrefix()).append(".item_master on ").append(getPrefix()).append(".inv_buffer.item_id = ").append(getPrefix()).append(".item_master.id ")
+                .append(" left join ").append(getPrefix()).append(".inv_buffer on ")
+                .append(getPrefix()).append(".stock_movement_out.sn_barcode = ").append(getPrefix()).append(".inv_buffer.sn_barcode ")
+                .append(" left join ").append(getPrefix()).append(".pallet p on ")
+                .append(getPrefix()).append(".inv_buffer.pallet_id = p.id ")
+                .append(" left join ").append(getPrefix()).append(".pallet on ")
+                .append(getPrefix()).append(".stock_movement_out.pallet_barcode = ").append(getPrefix()).append(".pallet.pallet_barcode ")
+                .append(" left join ").append(getPrefix()).append(".inv_buffer inv on ")
+                .append(getPrefix()).append(".pallet.id = inv.pallet_id ")
+                .append(" left join ").append(getPrefix()).append(".item_master on ")
+                .append(getPrefix()).append(".inv_buffer.item_id = ").append(getPrefix()).append(".item_master.id ")
                 .append(" left join ").append(getPrefix()).append(".item_master item on inv.item_id = item.id ")
-                .append(" where ")
-                .append(getPrefix()).append(".stock_movement_out.stock_inout_id = ").append(stockInOutId);
+                .append(" where ").append(getPrefix()).append(".stock_movement_out.stock_inout_id = ").append(stockInOutId);
 
         log.debug(sqlBuilder.toString());
 
@@ -153,12 +158,11 @@ public class StockMovementOutDAO extends GenericDAO<StockMovementOutModel, Integ
                 SubIncomingViewReport subIncomingViewReport = new SubIncomingViewReport();
                 subIncomingViewReport.setNo(i);
                 subIncomingViewReport.setStockInoutId(Utils.parseInt(entity[0]));
-                subIncomingViewReport.setPalletBarcode(Utils.parseString(entity[1]));
-                subIncomingViewReport.setSnBarcode(Utils.parseString(entity[2]));
-                subIncomingViewReport.setBatchNo(Utils.parseString(entity[3]));
-                subIncomingViewReport.setItemNo(Utils.parseString(entity[4]));
-                subIncomingViewReport.setItemDesc(Utils.parseString(entity[5]));
-
+                subIncomingViewReport.setSnBarcode(Utils.parseString(entity[1]));
+                subIncomingViewReport.setPalletBarcode(Utils.parseString(entity[2]));
+                subIncomingViewReport.setItemNo(Utils.parseString(entity[3]));
+                subIncomingViewReport.setItemDesc(Utils.parseString(entity[4]));
+                subIncomingViewReport.setBatchNo(Utils.parseString(entity[5]));
 
 //                subIncomingViewReport.setItemInternal(Utils.parseString(entity[6]));
 //                subIncomingViewReport.setWarehouseBarcode(Utils.parseString(entity[7]));

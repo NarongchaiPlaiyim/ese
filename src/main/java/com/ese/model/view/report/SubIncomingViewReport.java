@@ -17,4 +17,5 @@ public class SubIncomingViewReport {
     private String warehouseBarcode;
     private String locationBarcode;
     private int qty;
+    private String workingName;
 }

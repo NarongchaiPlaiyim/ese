@@ -17,10 +17,7 @@ import org.hibernate.type.StringType;
 import org.hibernate.type.TimestampType;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Repository
 public class StockInOutDAO extends GenericDAO<StockInOutModel, Integer> {
@@ -29,6 +26,10 @@ public class StockInOutDAO extends GenericDAO<StockInOutModel, Integer> {
         List<StockInOutModel> stockInOutModelList = Utils.getEmptyList();
 
         try {
+            System.setProperty("user.timezone", "GMT+07:00");
+            System.setProperty("user.language", "en");
+            System.setProperty("user.country", "US");
+            Locale.setDefault(Locale.US);
             Criteria criteria = getCriteria();
             criteria.add(Restrictions.ilike("docNo", "TR%"));
             criteria.add(Restrictions.ge("docDate", Utils.minDateTime()));
@@ -45,6 +46,10 @@ public class StockInOutDAO extends GenericDAO<StockInOutModel, Integer> {
     public List<StockInOutModel> findByDocNoINAndCurrentDate(){
         List<StockInOutModel> stockInOutModelList = Utils.getEmptyList();
         try {
+            System.setProperty("user.timezone", "GMT+07:00");
+            System.setProperty("user.language", "en");
+            System.setProperty("user.country", "US");
+            Locale.setDefault(Locale.US);
             Criteria criteria = getCriteria();
             criteria.add(Restrictions.like("docNo", "IN%"));
             criteria.add(Restrictions.ge("docDate", Utils.minDateTime()));
@@ -61,6 +66,10 @@ public class StockInOutDAO extends GenericDAO<StockInOutModel, Integer> {
     public List<StockInOutModel> findByDocNoIOUAndCurrentDate(){
         List<StockInOutModel> stockInOutModelList = Utils.getEmptyList();
         try {
+            System.setProperty("user.timezone", "GMT+07:00");
+            System.setProperty("user.language", "en");
+            System.setProperty("user.country", "US");
+            Locale.setDefault(Locale.US);
             Criteria criteria = getCriteria();
             criteria.add(Restrictions.like("docNo", "OU%"));
             criteria.add(Restrictions.ge("docDate", Utils.minDateTime()));
@@ -77,6 +86,10 @@ public class StockInOutDAO extends GenericDAO<StockInOutModel, Integer> {
     public List<StockInOutModel> findByDocNoQRndCurrentDate(){
         List<StockInOutModel> stockInOutModelList = Utils.getEmptyList();
         try {
+            System.setProperty("user.timezone", "GMT+07:00");
+            System.setProperty("user.language", "en");
+            System.setProperty("user.country", "US");
+            Locale.setDefault(Locale.US);
             Criteria criteria = getCriteria();
             criteria.add(Restrictions.like("docNo", "QR%"));
             criteria.add(Restrictions.ge("docDate", Utils.minDateTime()));
@@ -94,6 +107,10 @@ public class StockInOutDAO extends GenericDAO<StockInOutModel, Integer> {
         log.debug("search {}", stockTransferView.toString());
         List<StockInOutModel> stockInOutModelList = Utils.getEmptyList();
         try {
+            System.setProperty("user.timezone", "GMT+07:00");
+            System.setProperty("user.language", "en");
+            System.setProperty("user.country", "US");
+            Locale.setDefault(Locale.US);
             Criteria criteria = getCriteria();
 
             if (!Utils.isNull(stockTransferView.getDocNo()) && !Utils.isZero(stockTransferView.getDocNo().length())){
@@ -119,6 +136,10 @@ public class StockInOutDAO extends GenericDAO<StockInOutModel, Integer> {
     public List<StockInOutModel> findBySearchIN(IncomingView incomingView){
         List<StockInOutModel> stockInOutModelList = Utils.getEmptyList();
         try {
+            System.setProperty("user.timezone", "GMT+07:00");
+            System.setProperty("user.language", "en");
+            System.setProperty("user.country", "US");
+            Locale.setDefault(Locale.US);
             Criteria criteria = getCriteria();
             criteria.add(Restrictions.like("docNo", "IN%"));
             if (!Utils.isZero(incomingView.getDocNoteId())){
@@ -129,6 +150,8 @@ public class StockInOutDAO extends GenericDAO<StockInOutModel, Integer> {
 //            criteria.add(Restrictions.le("docDate", incomingView.getToDate()));
             criteria.add(Restrictions.eq("isValid", 1));
             criteria.addOrder(Order.desc("updateDate"));
+//            log.debug("SQL : [{}] - [{}]", Utils.minDateTime(incomingView.getFormDate()), Utils.maxDateTime(incomingView.getToDate()));
+//            log.debug("[{}]", Locale.getDefault());
             stockInOutModelList = criteria.list();
         } catch (Exception e) {
             log.debug("Exception error findBySearch : ", e);
@@ -139,6 +162,10 @@ public class StockInOutDAO extends GenericDAO<StockInOutModel, Integer> {
     public List<StockInOutModel> findBySearchIOU(IssuingView issuingView){
         List<StockInOutModel> stockInOutModelList = Utils.getEmptyList();
         try {
+            System.setProperty("user.timezone", "GMT+07:00");
+            System.setProperty("user.language", "en");
+            System.setProperty("user.country", "US");
+            Locale.setDefault(Locale.US);
             Criteria criteria = getCriteria();
             criteria.add(Restrictions.like("docNo", "OU%"));
             if (!Utils.isZero(issuingView.getDocNoteId())){
@@ -159,6 +186,10 @@ public class StockInOutDAO extends GenericDAO<StockInOutModel, Integer> {
     public List<StockInOutModel> findBySearchQR(QuarantineView quarantineView){
         List<StockInOutModel> stockInOutModelList = Utils.getEmptyList();
         try {
+            System.setProperty("user.timezone", "GMT+07:00");
+            System.setProperty("user.language", "en");
+            System.setProperty("user.country", "US");
+            Locale.setDefault(Locale.US);
             Criteria criteria = getCriteria();
             criteria.add(Restrictions.like("docNo", "QR%"));
             criteria.add(Restrictions.between("docDate", Utils.minDateTime(quarantineView.getFormDate()), Utils.maxDateTime(quarantineView.getToDate())));
