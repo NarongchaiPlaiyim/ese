@@ -158,11 +158,12 @@ public class StockMovementOutDAO extends GenericDAO<StockMovementOutModel, Integ
                 SubIncomingViewReport subIncomingViewReport = new SubIncomingViewReport();
                 subIncomingViewReport.setNo(i);
                 subIncomingViewReport.setStockInoutId(Utils.parseInt(entity[0]));
-                subIncomingViewReport.setSnBarcode(Utils.parseString(entity[1]));
-                subIncomingViewReport.setPalletBarcode(Utils.parseString(entity[2]));
-                subIncomingViewReport.setItemNo(Utils.parseString(entity[3]));
-                subIncomingViewReport.setItemDesc(Utils.parseString(entity[4]));
-                subIncomingViewReport.setBatchNo(Utils.parseString(entity[5]));
+                subIncomingViewReport.setPalletBarcode(Utils.parseString(entity[1]));
+                subIncomingViewReport.setSnBarcode(Utils.parseString(entity[2]));
+                subIncomingViewReport.setBatchNo(Utils.parseString(entity[3]));
+                subIncomingViewReport.setItemNo(Utils.parseString(entity[4]));
+                subIncomingViewReport.setItemDesc(Utils.parseString(entity[5]));
+
 
 //                subIncomingViewReport.setItemInternal(Utils.parseString(entity[6]));
 //                subIncomingViewReport.setWarehouseBarcode(Utils.parseString(entity[7]));
