@@ -152,7 +152,7 @@ public class StockMovementInDAO extends GenericDAO<StockMovementInModel, Integer
                 .append(" INNER JOIN ").append(getPrefix()).append(".working_area ON ")
                 .append(getPrefix()).append(".inv_onhand.working_area_id = ").append(getPrefix()).append(".working_area.id ")
 
-                .append(" INNER JOIN ").append(getPrefix()).append(".pallet ON ")
+                .append(" LEFT JOIN ").append(getPrefix()).append(".pallet ON ")
                 .append(getPrefix()).append(".inv_onhand.pallet_id = ").append(getPrefix()).append(".pallet.id ")
                 .append(" where ").append(getPrefix()).append(".stock_movement_in.stock_inout_id = ").append(stockInOutId)
                 .append(" GROUP BY ").append(getPrefix()).append(".stock_movement_in.stock_inout_id, ").append(getPrefix()).append(".pallet.pallet_barcode, ")
