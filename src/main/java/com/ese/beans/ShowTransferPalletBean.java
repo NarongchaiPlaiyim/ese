@@ -119,6 +119,7 @@ public class ShowTransferPalletBean extends Bean{
     public void onPrintTag(String redirect){
         pmvId = selectPallet.getId();
         showTransPalletService.onUpdateByPrintTag(selectPallet, redirect);
+        log.debug("-------- ");
         showDialog(MessageDialog.UPDATE.getMessageHeader(), MessageDialog.UPDATE.getMessage(), "msgBoxSystemMessageDlg2");
     }
 
