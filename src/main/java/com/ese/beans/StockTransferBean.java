@@ -91,6 +91,8 @@ public class StockTransferBean extends Bean{
         flagBtnShowTransferPallet = Boolean.TRUE;
         flagBtnPrint = Boolean.TRUE;
         flagDocNo = Boolean.FALSE;
+        flagBtnPost = Boolean.TRUE;
+        flagBtnSave = Boolean.FALSE;
         stockInOutModel = new StockInOutModel();
         stockInOutModel.setDocNo(Utils.getDocumentNo());
         stockInOutModel.setDocDate(Utils.currentDate());
@@ -115,6 +117,10 @@ public class StockTransferBean extends Bean{
 
     public void onSearch(){
         stockInOutModel = new StockInOutModel();
+        flagBtnPrint = Boolean.TRUE;
+        flagBtnShowTransferPallet = Boolean.TRUE;
+        flagDocNo = Boolean.FALSE;
+        flagBtnPost = Boolean.TRUE;
         stockInOutModelList = stockTransferService.search(stockTransferView);
     }
 

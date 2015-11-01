@@ -238,44 +238,38 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
 //        sqlBuilder.append(" ").append(getPrefix()).append(".working_area.name,").append(getPrefix()).append(".inv_onhand.batchno");
 
 
-        sqlBuilder.append(" SELECT DISTINCT");
-//        sqlBuilder.append(" Count(").append(getPrefix()).append(".inv_onhand.id) AS COUNT_ID,");
-//        sqlBuilder.append(" (SELECT COUNT (id) as COUNT_ID FROM ").append(getPrefix()).append(".inv_onhand where pallet_id = " + palletId + " and status < 6) , ");
-        sqlBuilder.append("SELECT COUNT (")
-                .append(getPrefix()).append(".inv_onhand.id  AS Count_id")
-                .append(" FROM ").append(getPrefix()).append(".inv_onhand")
-                .append(" WHERE ").append(".inv_onhand.pallet_id = ").append(palletId)
-                .append(" AND ").append(getPrefix()).append(".inv_onhand.status < 6");
-        sqlBuilder.append(" ").append(getPrefix()).append(".item_master.DSGThaiItemDescription AS DESCRIPTION,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".warehouse.warehouse_code AS WAREHOUSE_CODE,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".pallet.pallet_barcode AS PALLET_BARCODE,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".location.location_barcode AS LOCATION_BARCODE,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".pallet.create_date AS CREATE_DATE,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".inv_onhand.grade AS GRADE,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".inv_onhand.batchno AS BATHCH_NO,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".working_area.name AS WORKING_NAME,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".pallet.seq AS SEQ,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".item_master.ItemId AS ITEM_ID");
-        sqlBuilder.append(" FROM ").append(getPrefix()).append(".pallet");
-        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".item_master");
-        sqlBuilder.append(" ON  ").append(getPrefix()).append(".pallet.item_id = ").append(getPrefix()).append(".item_master.id");
-        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".warehouse");
-        sqlBuilder.append(" ON ").append(getPrefix()).append(".pallet.warehouse_id = ").append(getPrefix()).append(".warehouse.id");
-        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".working_area");
-        sqlBuilder.append(" ON ").append(getPrefix()).append(".pallet.working_area_id = ").append(getPrefix()).append(".working_area.id");
-        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".location");
-        sqlBuilder.append(" ON ").append(getPrefix()).append(".pallet.location_id = ").append(getPrefix()).append(".location.id");
-        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".inv_onhand");
-        sqlBuilder.append(" ON ").append(getPrefix()).append(".pallet.id = ").append(getPrefix()).append(".inv_onhand.pallet_id");
-        sqlBuilder.append(" WHERE ").append(getPrefix()).append(".pallet.ID = " + palletId );
-        sqlBuilder.append(" AND ").append(getPrefix()).append(".inv_onhand.status < 6 ");
-        sqlBuilder.append(" GROUP BY ").append(getPrefix()).append(".item_master.DSGThaiItemDescription,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".warehouse.warehouse_code,").append(getPrefix()).append(".pallet.pallet_barcode,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".location.location_barcode,").append(getPrefix()).append(".pallet.create_date,").append(getPrefix()).append(".inv_onhand.grade,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".working_area.name,").append(getPrefix()).append(".inv_onhand.batchno,");
-        sqlBuilder.append(" ").append(getPrefix()).append(".pallet.seq,").append(getPrefix()).append(".item_master.itemid");
 
-        log.debug(sqlBuilder.toString());
+            sqlBuilder.append(" SELECT DISTINCT");
+            sqlBuilder.append(" Count(").append(getPrefix()).append(".inv_onhand.id) AS COUNT_ID,");
+            sqlBuilder.append(" ").append(getPrefix()).append(".item_master.DSGThaiItemDescription AS DESCRIPTION,");
+            sqlBuilder.append(" ").append(getPrefix()).append(".warehouse.warehouse_code AS WAREHOUSE_CODE,");
+            sqlBuilder.append(" ").append(getPrefix()).append(".pallet.pallet_barcode AS PALLET_BARCODE,");
+            sqlBuilder.append(" ").append(getPrefix()).append(".location.location_barcode AS LOCATION_BARCODE,");
+            sqlBuilder.append(" ").append(getPrefix()).append(".pallet.create_date AS CREATE_DATE,");
+            sqlBuilder.append(" ").append(getPrefix()).append(".inv_onhand.grade AS GRADE,");
+            sqlBuilder.append(" ").append(getPrefix()).append(".inv_onhand.batchno AS BATHCH_NO,");
+            sqlBuilder.append(" ").append(getPrefix()).append(".working_area.name AS WORKING_NAME,");
+            sqlBuilder.append(" ").append(getPrefix()).append(".pallet.seq AS SEQ,");
+            sqlBuilder.append(" ").append(getPrefix()).append(".item_master.ItemId AS ITEM_ID");
+            sqlBuilder.append(" FROM ").append(getPrefix()).append(".pallet");
+            sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".item_master");
+            sqlBuilder.append(" ON  ").append(getPrefix()).append(".pallet.item_id = ").append(getPrefix()).append(".item_master.id");
+            sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".warehouse");
+            sqlBuilder.append(" ON ").append(getPrefix()).append(".pallet.warehouse_id = ").append(getPrefix()).append(".warehouse.id");
+            sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".working_area");
+            sqlBuilder.append(" ON ").append(getPrefix()).append(".pallet.working_area_id = ").append(getPrefix()).append(".working_area.id");
+            sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".location");
+            sqlBuilder.append(" ON ").append(getPrefix()).append(".pallet.location_id = ").append(getPrefix()).append(".location.id");
+            sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".inv_onhand");
+            sqlBuilder.append(" ON ").append(getPrefix()).append(".pallet.id = ").append(getPrefix()).append(".inv_onhand.pallet_id");
+            sqlBuilder.append(" WHERE ").append(getPrefix()).append(".pallet.ID = " + palletId);
+            sqlBuilder.append(" AND ").append(getPrefix()).append(".inv_onhand.status < 6 ");
+            sqlBuilder.append(" GROUP BY ").append(getPrefix()).append(".item_master.DSGThaiItemDescription,");
+            sqlBuilder.append(" ").append(getPrefix()).append(".warehouse.warehouse_code,").append(getPrefix()).append(".pallet.pallet_barcode,");
+            sqlBuilder.append(" ").append(getPrefix()).append(".location.location_barcode,").append(getPrefix()).append(".pallet.create_date,").append(getPrefix()).append(".inv_onhand.grade,");
+            sqlBuilder.append(" ").append(getPrefix()).append(".working_area.name,").append(getPrefix()).append(".inv_onhand.batchno,");
+            sqlBuilder.append(" ").append(getPrefix()).append(".pallet.seq,").append(getPrefix()).append(".item_master.itemid");
+            log.debug(sqlBuilder.toString());
 
         try {
             SQLQuery query = getSession().createSQLQuery(sqlBuilder.toString())
