@@ -1,34 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Isuuing_subreport1" pageWidth="595" pageHeight="842" columnWidth="539" leftMargin="28" rightMargin="28" topMargin="0" bottomMargin="0" uuid="ae07b9af-0bbe-4d34-8866-a6f9d158b54a">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Issuing_subreport1" pageWidth="595" pageHeight="842" columnWidth="539" leftMargin="28" rightMargin="28" topMargin="0" bottomMargin="0" uuid="ae07b9af-0bbe-4d34-8866-a6f9d158b54a">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<field name="stockInoutId" class="java.lang.Integer"/>
-	<field name="snBarcode" class="java.lang.String"/>
 	<field name="palletBarcode" class="java.lang.String"/>
+	<field name="snBarcode" class="java.lang.String"/>
 	<field name="batchNo" class="java.lang.String"/>
 	<field name="itemNo" class="java.lang.String"/>
 	<field name="itemDesc" class="java.lang.String"/>
+	<field name="itemInternal" class="java.lang.String"/>
+	<field name="warehouseBarcode" class="java.lang.String"/>
+	<field name="locationBarcode" class="java.lang.String"/>
+	<variable name="Qty_sum" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$V{Item_COUNT}]]></variableExpression>
+	</variable>
+	<group name="ItemId">
+		<groupExpression><![CDATA[$F{itemNo}]]></groupExpression>
+	</group>
+	<group name="pallet_barcode"/>
 	<group name="Item">
 		<groupExpression><![CDATA[$F{itemNo}]]></groupExpression>
 		<groupHeader>
 			<band height="42">
-				<textField isBlankWhenNull="true">
-					<reportElement x="0" y="0" width="503" height="20" uuid="866d40e9-898f-4427-adad-84f65794310c"/>
-					<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+				<staticText>
+					<reportElement x="437" y="20" width="65" height="22" uuid="ed897160-c885-449d-a83e-7b9464f36e02"/>
+					<box>
+						<pen lineWidth="1.0"/>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
 						<bottomPen lineWidth="1.0"/>
 						<rightPen lineWidth="1.0"/>
 					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Tahoma" size="12"/>
+					</textElement>
+					<text><![CDATA[Batchno]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="502" y="20" width="37" height="22" uuid="07214f55-a8eb-44bb-89d0-f71702170937"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Tahoma" size="12"/>
+					</textElement>
+					<text><![CDATA[QTY]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="75" y="0" width="464" height="20" uuid="866d40e9-898f-4427-adad-84f65794310c"/>
+					<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0"/>
 					<textElement>
 						<font fontName="Tahoma" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA["   "+ $F{itemNo} +"   "+ $F{itemDesc}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="42" y="20" width="191" height="22" uuid="f57a4c24-4678-4df4-afe7-fe6bb11181bb"/>
-					<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<reportElement x="0" y="20" width="180" height="22" uuid="f57a4c24-4678-4df4-afe7-fe6bb11181bb"/>
+					<box>
+						<pen lineWidth="1.0"/>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
 						<bottomPen lineWidth="1.0"/>
@@ -40,8 +74,9 @@
 					<text><![CDATA[Pallet Barcode]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="234" y="20" width="172" height="22" uuid="c8f639f6-ab65-4e17-9d84-d6bf23121a31"/>
-					<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<reportElement x="180" y="20" width="93" height="22" uuid="c8f639f6-ab65-4e17-9d84-d6bf23121a31"/>
+					<box>
+						<pen lineWidth="1.0"/>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
 						<bottomPen lineWidth="1.0"/>
@@ -53,8 +88,9 @@
 					<text><![CDATA[SN Barcode]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="0" y="20" width="42" height="22" uuid="2d3580f2-5764-43ff-b6e3-88e0c102969f"/>
-					<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<reportElement x="273" y="20" width="90" height="22" uuid="c8c6b55c-6c9f-4c06-bbc9-fb5c9861de42"/>
+					<box>
+						<pen lineWidth="1.0"/>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
 						<bottomPen lineWidth="1.0"/>
@@ -63,11 +99,12 @@
 					<textElement textAlignment="Center">
 						<font fontName="Tahoma" size="12"/>
 					</textElement>
-					<text><![CDATA[No]]></text>
+					<text><![CDATA[Warehouse]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="406" y="20" width="97" height="22" uuid="ed897160-c885-449d-a83e-7b9464f36e02"/>
+					<reportElement x="363" y="20" width="74" height="22" uuid="16fecd62-8c03-4755-b54c-928d8f30a548"/>
 					<box>
+						<pen lineWidth="1.0"/>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
 						<bottomPen lineWidth="1.0"/>
@@ -76,12 +113,40 @@
 					<textElement textAlignment="Center">
 						<font fontName="Tahoma" size="12"/>
 					</textElement>
-					<text><![CDATA[Batchno]]></text>
+					<text><![CDATA[Location]]></text>
 				</staticText>
+				<textField>
+					<reportElement x="0" y="0" width="75" height="20" uuid="832e2aea-c913-49bd-b18f-36609586831d"/>
+					<textElement>
+						<font fontName="Tahoma" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{itemInternal}]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band/>
+			<band height="21">
+				<staticText>
+					<reportElement x="0" y="1" width="100" height="20" uuid="34efb400-c576-46a2-bfb3-3c0154db2232"/>
+					<textElement textAlignment="Center">
+						<font fontName="Tahoma" size="12"/>
+					</textElement>
+					<text><![CDATA[Total Qty]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="0" width="539" height="1" uuid="22931598-fd48-4655-92d4-c6466272e8c0"/>
+				</line>
+				<textField>
+					<reportElement x="502" y="0" width="37" height="21" uuid="1aed62db-c5a1-4e44-90d3-f1d03464c0a3"/>
+					<textElement textAlignment="Center">
+						<font fontName="Tahoma" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Item_COUNT}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="20" width="539" height="1" uuid="298e1353-7757-4bc2-8106-a72cf0019558"/>
+				</line>
+			</band>
 		</groupFooter>
 	</group>
 	<background>
@@ -99,56 +164,46 @@
 	<detail>
 		<band height="23" splitType="Stretch">
 			<textField isBlankWhenNull="true">
-				<reportElement x="42" y="0" width="191" height="23" uuid="717a87d2-f3ab-4a3e-85ad-c95dd8ab8a1b"/>
-				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center">
+				<reportElement x="0" y="0" width="180" height="23" uuid="717a87d2-f3ab-4a3e-85ad-c95dd8ab8a1b"/>
+				<textElement>
 					<font fontName="Tahoma" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{palletBarcode}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="234" y="0" width="172" height="23" uuid="8d4295e6-2c94-409e-a62f-abe862d7d52a"/>
-				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
+				<reportElement x="180" y="0" width="93" height="23" uuid="8d4295e6-2c94-409e-a62f-abe862d7d52a"/>
 				<textElement textAlignment="Center">
 					<font fontName="Tahoma" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{snBarcode}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="0" y="0" width="42" height="23" uuid="446c2308-af42-4b59-bab5-b7ebc4f23f33"/>
-				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center">
-					<font fontName="Tahoma" size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{Item_COUNT}]]></textFieldExpression>
-			</textField>
 			<textField>
-				<reportElement x="406" y="0" width="97" height="23" uuid="e47e3bfa-0f91-4de7-9fb4-accd7ea26b8c"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
+				<reportElement x="437" y="0" width="65" height="23" uuid="e47e3bfa-0f91-4de7-9fb4-accd7ea26b8c"/>
 				<textElement textAlignment="Center">
 					<font fontName="Tahoma" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{batchNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="502" y="0" width="37" height="23" uuid="dae3d72b-de1b-447f-aa3e-92feb4cbf268"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[1]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="273" y="0" width="90" height="23" uuid="75c3d6b1-cd75-4fe1-bb0f-1b41658c32cc"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{warehouseBarcode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="363" y="0" width="74" height="23" uuid="58aeb95d-1be4-4875-8028-2ebfcf4d74b8"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{locationBarcode}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -159,6 +214,24 @@
 		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band splitType="Stretch"/>
+		<band height="50">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="265dfc75-7175-4752-8e15-36eb886d92cf"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="12"/>
+				</textElement>
+				<text><![CDATA[Grand Total Qty]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="502" y="0" width="37" height="20" uuid="004956f7-ca69-4f03-ba3d-47b7c5315cac"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Qty_sum}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="0" width="539" height="1" uuid="6f2b88c5-25ad-44d8-a992-2e9f514eb63c"/>
+			</line>
+		</band>
 	</summary>
 </jasperReport>
