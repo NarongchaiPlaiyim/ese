@@ -7,10 +7,11 @@
 	<field name="palletBarcode" class="java.lang.String"/>
 	<field name="snBarcode" class="java.lang.String"/>
 	<field name="batchNo" class="java.lang.String"/>
-	<field name="workingName" class="java.lang.String"/>
+	<field name="warehouseBarcode" class="java.lang.String"/>
 	<field name="locationBarcode" class="java.lang.String"/>
 	<field name="itemNo" class="java.lang.String"/>
 	<field name="itemDesc" class="java.lang.String"/>
+	<field name="itemInternal" class="java.lang.String"/>
 	<variable name="Sum" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$F{stockInoutId}]]></variableExpression>
 	</variable>
@@ -19,10 +20,9 @@
 		<groupHeader>
 			<band height="42">
 				<textField isBlankWhenNull="true">
-					<reportElement x="0" y="0" width="539" height="20" uuid="866d40e9-898f-4427-adad-84f65794310c"/>
+					<reportElement x="75" y="0" width="437" height="20" uuid="866d40e9-898f-4427-adad-84f65794310c"/>
 					<box topPadding="2">
 						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
 						<bottomPen lineWidth="1.0"/>
 						<rightPen lineWidth="1.0"/>
 					</box>
@@ -58,7 +58,7 @@
 					<text><![CDATA[SN Barcode]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="403" y="20" width="89" height="22" uuid="ed897160-c885-449d-a83e-7b9464f36e02"/>
+					<reportElement x="403" y="20" width="62" height="22" uuid="ed897160-c885-449d-a83e-7b9464f36e02"/>
 					<box topPadding="2">
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -71,7 +71,7 @@
 					<text><![CDATA[Batchno]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Transparent" x="241" y="20" width="74" height="22" uuid="34fcddc9-ba74-4e56-89a8-9b0fcf2762d3"/>
+					<reportElement mode="Transparent" x="241" y="20" width="64" height="22" uuid="34fcddc9-ba74-4e56-89a8-9b0fcf2762d3"/>
 					<box topPadding="2">
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -84,7 +84,7 @@
 					<text><![CDATA[Warehouse]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="315" y="20" width="88" height="22" uuid="cd837929-4f75-4fb4-aad5-7c9c519ba0f5"/>
+					<reportElement x="305" y="20" width="98" height="22" uuid="cd837929-4f75-4fb4-aad5-7c9c519ba0f5"/>
 					<box topPadding="2">
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -97,7 +97,7 @@
 					<text><![CDATA[location_barcode]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="492" y="20" width="47" height="22" uuid="baec5dec-69ba-41c0-96a6-5b419b0afedb"/>
+					<reportElement x="465" y="20" width="47" height="22" uuid="baec5dec-69ba-41c0-96a6-5b419b0afedb"/>
 					<box topPadding="2">
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -109,6 +109,20 @@
 					</textElement>
 					<text><![CDATA[Qty]]></text>
 				</staticText>
+				<textField>
+					<reportElement x="0" y="0" width="75" height="20" uuid="b75d4f1e-57f0-47f3-b57c-7ea61b97f920"/>
+					<box>
+						<pen lineWidth="1.0" lineStyle="Solid"/>
+						<topPen lineWidth="1.0" lineStyle="Solid"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid"/>
+					</box>
+					<textElement>
+						<font fontName="Tahoma" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{itemInternal}]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupHeader>
 		<groupFooter>
@@ -158,7 +172,7 @@
 				<textFieldExpression><![CDATA[$F{snBarcode}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="403" y="0" width="89" height="23" uuid="e47e3bfa-0f91-4de7-9fb4-accd7ea26b8c"/>
+				<reportElement x="403" y="0" width="62" height="23" uuid="e47e3bfa-0f91-4de7-9fb4-accd7ea26b8c"/>
 				<box topPadding="2">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -172,7 +186,7 @@
 				<textFieldExpression><![CDATA[$F{batchNo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="241" y="0" width="74" height="23" uuid="c227fd62-3072-4c88-a273-b7bb5f6722db"/>
+				<reportElement x="241" y="0" width="64" height="23" uuid="c227fd62-3072-4c88-a273-b7bb5f6722db"/>
 				<box topPadding="2">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -183,10 +197,10 @@
 				<textElement textAlignment="Center">
 					<font fontName="Tahoma" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{workingName}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{warehouseBarcode}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="315" y="0" width="88" height="23" uuid="1623272a-3cd7-4566-8ebb-30776e78a12d"/>
+				<reportElement x="305" y="0" width="98" height="23" uuid="1623272a-3cd7-4566-8ebb-30776e78a12d"/>
 				<box topPadding="2">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -200,7 +214,7 @@
 				<textFieldExpression><![CDATA[$F{locationBarcode}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="492" y="0" width="47" height="23" uuid="d8206267-a877-4c27-908b-d478b2be37df"/>
+				<reportElement x="465" y="0" width="47" height="23" uuid="d8206267-a877-4c27-908b-d478b2be37df"/>
 				<box topPadding="2">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -224,7 +238,7 @@
 	<summary>
 		<band height="50">
 			<textField>
-				<reportElement x="492" y="0" width="47" height="20" uuid="f11747c1-02a7-41cf-ba43-a9fb7e8e8252"/>
+				<reportElement x="465" y="0" width="47" height="20" uuid="f11747c1-02a7-41cf-ba43-a9fb7e8e8252"/>
 				<box topPadding="2">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -238,7 +252,7 @@
 				<textFieldExpression><![CDATA[$V{Sum}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="403" y="0" width="89" height="20" uuid="6f9578fb-b42b-410e-a85f-d1c6681e3a75"/>
+				<reportElement x="403" y="0" width="62" height="20" uuid="6f9578fb-b42b-410e-a85f-d1c6681e3a75"/>
 				<box>
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>

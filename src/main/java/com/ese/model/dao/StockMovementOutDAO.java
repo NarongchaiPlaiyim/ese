@@ -141,7 +141,7 @@ public class StockMovementOutDAO extends GenericDAO<StockMovementOutModel, Integ
         sqlBuilder.append(" SELECT ")
                 .append(" ").append(getPrefix()).append(".stock_movement_out.STOCK_INOUT_ID AS STOCK_INOUT_ID, ")
                 .append(" coalesce(").append(getPrefix()).append(".pallet.pallet_barcode,p.pallet_barcode) AS PALLET_BARCODE, ")
-                .append(" COALESCE(inv.sn_barcode,").append(getPrefix()).append("inv_buffer.sn_barcode) AS SN_BARCODE, ")
+                .append(" COALESCE(inv.sn_barcode,").append(getPrefix()).append(".inv_buffer.sn_barcode) AS SN_BARCODE, ")
                 .append(" coalesce(").append(getPrefix()).append(".inv_buffer.batchno,inv.batchno) AS BATCH_NO, ")
                 .append(" coalesce(").append(getPrefix()).append(".item_mASter.itemid,item.itemid) AS ITEM_ID, ")
                 .append(" coalesce(").append(getPrefix()).append(".item_mASter.dsgthaiitemdescriptiON,item.dsgthaiitemdescriptiON) AS ITEM_DESC, ")
