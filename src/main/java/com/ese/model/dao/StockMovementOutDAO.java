@@ -139,42 +139,33 @@ public class StockMovementOutDAO extends GenericDAO<StockMovementOutModel, Integ
 //                .append(" where ").append(getPrefix()).append(".stock_movement_out.stock_inout_id = ").append(stockInOutId);
 
         sqlBuilder.append(" SELECT ")
-                .append(" ").append(getPrefix()).append(".stock_movement_out.STOCK_INOUT_ID AS STOCK_INOUT_ID, ")
-                .append(" coalesce(").append(getPrefix()).append(".pallet.pallet_barcode,p.pallet_barcode) AS PALLET_BARCODE, ")
-                .append(" COALESCE(inv.sn_barcode,").append(getPrefix()).append(".inv_buffer.sn_barcode) AS SN_BARCODE, ")
-                .append(" coalesce(").append(getPrefix()).append(".inv_buffer.batchno,inv.batchno) AS BATCH_NO, ")
-                .append(" coalesce(").append(getPrefix()).append(".item_mASter.itemid,item.itemid) AS ITEM_ID, ")
-                .append(" coalesce(").append(getPrefix()).append(".item_mASter.dsgthaiitemdescriptiON,item.dsgthaiitemdescriptiON) AS ITEM_DESC, ")
-                .append(" coalesce(").append(getPrefix()).append(".item_mASter.DSG_InternalItemId,item.DSG_InternalItemId) AS ITEM_INTERNAL, ")
-                .append(" coalesce(").append(getPrefix()).append(".warehouse.warehouse_name,w2.warehouse_name) AS WAREHOUSE, ")
-                .append(" coalesce(").append(getPrefix()).append(".locatiON.locatiON_barcode,loc2.locatiON_barcode) AS LOCATION ")
-                .append(" FROM ").append(getPrefix()).append(".stock_movement_out ")
-
-                .append(" LEFT JOIN ").append(getPrefix()).append(".inv_buffer ")
-                .append(" ON ").append(getPrefix()).append(".stock_movement_out.sn_barcode = ").append(getPrefix()).append(".inv_buffer.sn_barcode ")
-
-                .append(" LEFT JOIN ").append(getPrefix()).append(".pallet p ")
-                .append(" ON ").append(getPrefix()).append(".inv_buffer.pallet_id = p.id ")
-
+                .append(" ").append(getPrefix()).append(".inv_buffer.stock_inout_id AS STOCK_INOUT_ID, ")
+                .append(" ").append(getPrefix()).append(".pallet.pallet_barcode AS PALLET_BARCODE, ")
+                .append(" COALESCE(").append(getPrefix()).append(".stock_movement_out.sn_barcode,' ') AS SN_BARCODE, ")
+                .append(" ").append(getPrefix()).append(".inv_buffer.batchno AS BATCH_NO, ")
+                .append(" ").append(getPrefix()).append(".item_master.ItemId AS ITEM_ID, ")
+                .append(" ").append(getPrefix()).append(".item_master.DSGThaiItemDescription AS ITEM_DESC, ")
+                .append(" COALESCE(").append(getPrefix()).append(".item_master.DSG_InternalItemId,' ') AS ITEM_INTERNAL, ")
+                .append(" ").append(getPrefix()).append(".warehouse.warehouse_code  AS WAREHOUSE, ")
+                .append(" ").append(getPrefix()).append(".location.location_barcode AS LOCATION, ")
+                .append(" COUNT(").append(getPrefix()).append(".inv_buffer.id) AS QTY ")
+                .append(" FROM ").append(getPrefix()).append(".inv_buffer ")
+                .append(" LEFT JOIN ").append(getPrefix()).append(".stock_movement_out ")
+                .append(" ON ").append(getPrefix()).append(".inv_buffer.sn_barcode = ").append(getPrefix()).append(".stock_movement_out.sn_barcode ")
                 .append(" LEFT JOIN ").append(getPrefix()).append(".pallet ")
-                .append(" ON ").append(getPrefix()).append(".stock_movement_out.pallet_barcode = ").append(getPrefix()).append(".pallet.pallet_barcode ")
-
-                .append(" LEFT JOIN ").append(getPrefix()).append(".inv_buffer inv ")
-                .append(" ON ").append(getPrefix()).append(".pallet.id = inv.pallet_id ")
-
-                .append(" LEFT JOIN ").append(getPrefix()).append(".item_mASter ")
-                .append(" ON ").append(getPrefix()).append(".inv_buffer.item_id = ").append(getPrefix()).append(".item_mASter.id ")
-
-                .append(" LEFT JOIN ").append(getPrefix()).append(".item_mASter item ON inv.item_id = item.id  ")
-
+                .append(" ON ").append(getPrefix()).append(".inv_buffer.pallet_id = ").append(getPrefix()).append(".pallet.id ")
+                .append(" LEFT JOIN ").append(getPrefix()).append(".location ")
+                .append(" ON ").append(getPrefix()).append(".pallet.location_id = ").append(getPrefix()).append(".location.id ")
                 .append(" LEFT JOIN ").append(getPrefix()).append(".warehouse ")
-                .append(" ON ").append(getPrefix()).append(".warehouse.id = ").append(getPrefix()).append(".pallet.warehouse_id ")
-
-                .append(" LEFT JOIN ").append(getPrefix()).append(".warehouse w2 ON w2.id = p.warehouse_id ")
-                .append(" LEFT JOIN ").append(getPrefix()).append(".locatiON ON locatiON.id = pallet.locatiON_id ")
-                .append(" LEFT JOIN ").append(getPrefix()).append(".locatiON loc2 ON loc2.id = p.locatiON_id ")
-
-                .append(" WHERE ").append(getPrefix()).append(".stock_movement_out.stock_inout_id = ").append(stockInOutId);
+                .append(" ON ").append(getPrefix()).append(".pallet.warehouse_id = ").append(getPrefix()).append(".warehouse.id ")
+                .append(" LEFT JOIN ").append(getPrefix()).append(".item_master ")
+                .append(" ON ").append(getPrefix()).append(".inv_buffer.item_id = ").append(getPrefix()).append(".item_master.id ")
+                .append(" WHERE ").append(getPrefix()).append(".inv_buffer.stock_inout_id = ").append(stockInOutId)
+                .append(" GROUP BY ").append(getPrefix()).append(".item_master.ItemId, ").append(getPrefix()).append(".stock_movement_out.sn_barcode, ")
+                .append(getPrefix()).append(".pallet.pallet_barcode, ").append(getPrefix()).append(".inv_buffer.batchno, ")
+                .append(getPrefix()).append(".inv_buffer.stock_inout_id, ").append(getPrefix()).append(".item_master.DSGThaiItemDescription, ")
+                .append(getPrefix()).append(".item_master.DSG_InternalItemId, ").append(getPrefix()).append(".warehouse.warehouse_code, ")
+                .append(getPrefix()).append(".location.location_barcode ");
 
 
 
@@ -190,8 +181,8 @@ public class StockMovementOutDAO extends GenericDAO<StockMovementOutModel, Integ
                     .addScalar("ITEM_DESC", StringType.INSTANCE)
                     .addScalar("ITEM_INTERNAL", StringType.INSTANCE)
                     .addScalar("WAREHOUSE", StringType.INSTANCE)
-                    .addScalar("LOCATION", StringType.INSTANCE);
-//                    .addScalar("QTY", IntegerType.INSTANCE);
+                    .addScalar("LOCATION", StringType.INSTANCE)
+                    .addScalar("QTY", IntegerType.INSTANCE);
             List<Object[]> objects = query.list();
 
             int i = 1;
@@ -208,7 +199,7 @@ public class StockMovementOutDAO extends GenericDAO<StockMovementOutModel, Integ
                 subIncomingViewReport.setItemInternal(Utils.parseString(entity[6]));
                 subIncomingViewReport.setWarehouseBarcode(Utils.parseString(entity[7]));
                 subIncomingViewReport.setLocationBarcode(Utils.parseString(entity[8]));
-//                subIncomingViewReport.setQty(Utils.parseInt(entity[9]));
+                subIncomingViewReport.setQty(Utils.parseInt(entity[9]));
                 subIncomingViewReportsList.add(subIncomingViewReport);
                 i++;
             }
