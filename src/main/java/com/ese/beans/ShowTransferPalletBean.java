@@ -2,10 +2,8 @@ package com.ese.beans;
 
 import com.ese.model.db.MSLocationModel;
 import com.ese.model.db.MSWarehouseModel;
-import com.ese.model.db.PalletModel;
 import com.ese.model.db.StockInOutModel;
 import com.ese.model.view.LocationItemView;
-import com.ese.model.view.PalletManagementView;
 import com.ese.model.view.PalletTransferView;
 import com.ese.service.LocationItemService;
 import com.ese.service.LocationService;
@@ -13,7 +11,6 @@ import com.ese.service.ShowTransPalletService;
 import com.ese.service.WarehouseService;
 import com.ese.utils.FacesUtil;
 import com.ese.utils.MessageDialog;
-import com.ese.utils.Utils;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -119,7 +116,6 @@ public class ShowTransferPalletBean extends Bean{
     public void onPrintTag(String redirect){
         pmvId = selectPallet.getId();
         showTransPalletService.onUpdateByPrintTag(selectPallet, redirect);
-        log.debug("-------- ");
         showDialog(MessageDialog.UPDATE.getMessageHeader(), MessageDialog.UPDATE.getMessage(), "msgBoxSystemMessageDlg2");
     }
 

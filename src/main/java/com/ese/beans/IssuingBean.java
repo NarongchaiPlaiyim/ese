@@ -144,4 +144,5 @@ public class IssuingBean extends Bean {
     public void onPrint(){
         issuingService.printReport(stockInOutModel.getId());
     }
+
 }

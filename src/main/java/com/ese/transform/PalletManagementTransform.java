@@ -136,7 +136,7 @@ public class PalletManagementTransform extends Transform {
     }
 
     public int transformStatusInt(StatusValue status){
-        log.debug("transformStatusInt().");
+        log.debug("transformStatusInt : {}", status.getId());
         return status.getId();
     }
 

@@ -155,8 +155,7 @@ public class PalletManagementBean extends Bean {
         log.debug("OnPrintTag(). {}",palletMeanegementView);
         pmvId = palletMeanegementView.getId();
         palletService.onUpdateByPrintTag(palletMeanegementView, redirect);
-        setMessage(MessageDialog.UPDATE.getMessage());
-        setMessageHeader(MessageDialog.UPDATE.getMessageHeader());
+        showDialog(MessageDialog.UPDATE.getMessageHeader(), MessageDialog.UPDATE.getMessage(), "msgBoxSystemMessageDlg2");
         onCreation();
         statusOnShow = 0;
     }

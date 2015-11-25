@@ -81,8 +81,8 @@ public class ShowTransPalletService extends Service{
         try{
             if (!Utils.isNull(palletManagementView)){
                 palletModel = palletDAO.findByID(palletManagementView.getId());
-
-                if (palletModel.getStatus() == 20){
+                log.debug("Status : {}", palletModel.getStatus());
+                if (palletModel.getStatus() == 2){
                     palletModel.setStatus(palletModel.getStatus() + 1);
                 } else {
                     palletModel.setStatus(palletModel.getStatus());
