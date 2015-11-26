@@ -814,3 +814,24 @@ function wireUpEvents() {
         }
     });
 }
+
+function onKeyPressazAZ09(event){
+    if (event.charCode >= 48 && event.charCode <= 57 || // 0-9
+        event.charCode >= 65 && event.charCode <= 90 || // A-Z
+        event.charCode >= 97 && event.charCode <= 122){ // a-z
+        //alert(event.charCode);
+        return true;
+    }
+    return false;
+}
+
+function onKeyUpazAZ09(event){
+    if (event.altKey == false && event.ctrlKey == false){
+        if ((event.keyCode >= 48 && event.keyCode <= 57 && event.shiftKey== false) ||
+            (event.keyCode >= 65 && event.keyCode <= 90) ||
+            (event.keyCode >= 97 && event.keyCode <= 122)) {
+            return true;
+        }
+    }
+    return false;
+}
