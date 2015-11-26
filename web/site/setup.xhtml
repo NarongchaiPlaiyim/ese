@@ -351,6 +351,8 @@
                                                         <td colspan="2">
                                                             <p:inputText id="inoutCode" style="min-width: 200px; width: 200px; max-width: 200px;"
                                                                          value="#{setup.stockInOutNoteView.inoutCode}"
+                                                                         onkeyup="return onKeyUpazAZ09(event)"
+                                                                         onkeypress="return onKeyPressazAZ09(event)"
                                                                          required="#{not empty param[addStockInOutNote.clientId]}"/>
                                                         </td>
                                                     </tr>
@@ -360,6 +362,8 @@
                                                         </td>
                                                         <td colspan="2">
                                                             <p:inputText id="inoutNote" style="min-width: 200px; width: 200px; max-width: 200px;"
+                                                                         onkeyup="return onKeyUpazAZ09(event)"
+                                                                         onkeypress="return onKeyPressazAZ09(event)"
                                                                          value="#{setup.stockInOutNoteView.inoutNote}"/>
                                                         </td>
                                                     </tr>

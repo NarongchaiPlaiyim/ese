@@ -16,6 +16,8 @@ public class ReceivingReportView {
     private String itemName;
     private String itemDesc;
     private String grade;
+    private int receive;
+    private int located;
     private int qty;
 
     private int sum;
@@ -35,6 +37,8 @@ public class ReceivingReportView {
                 .append("itemDesc", itemDesc)
                 .append("grade", grade)
                 .append("qty", qty)
+                .append("receive", receive)
+                .append("located", located)
                 .append("sum", sum)
                 .toString();
     }

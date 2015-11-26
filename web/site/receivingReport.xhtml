@@ -111,13 +111,19 @@
                                     <p:column headerText="Grade" sortBy="#{receivingReport.grade}" filterBy="#{receivingReport.grade}" style="min-width: 60px; width: 60px; max-width: 60px;" styleClass="left" filterMatchMode="contains">
                                         <h:outputText value="#{receivingReport.grade}"/>
                                     </p:column>
+                                    <p:column headerText="Receive" sortBy="#{receivingReport.receive}" filterBy="#{receivingReport.receive}" style="min-width: 60px; width: 60px; max-width: 60px;" styleClass="left" filterMatchMode="contains">
+                                        <h:outputText value="#{receivingReport.receive}"/>
+                                    </p:column>
+                                    <p:column headerText="Located" sortBy="#{receivingReport.located}" filterBy="#{receivingReport.located}" style="min-width: 60px; width: 60px; max-width: 60px;" styleClass="left" filterMatchMode="contains">
+                                        <h:outputText value="#{receivingReport.located}"/>
+                                    </p:column>
                                     <p:column headerText="Qty" sortBy="#{receivingReport.qty}" filterBy="#{receivingReport.qty}" style="min-width: 40px; width: 40px; max-width: 40px;" styleClass="left"  filterMatchMode="contains">
                                         <h:outputText value="#{receivingReport.qty}"/>
                                     </p:column>
 
                                     <p:columnGroup id="summary" type="footer">
                                         <p:row>
-                                            <p:column colspan="7" style="text-align: right" footerText="Total"/>
+                                            <p:column colspan="9" style="text-align: right" footerText="Total"/>
                                             <p:outputPanel autoUpdate="true">
                                                 <p:column>
                                                     <f:facet name="footer">

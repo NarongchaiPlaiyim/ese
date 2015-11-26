@@ -17,7 +17,7 @@ import java.util.List;
 public class ReceivingReportDAO extends GenericDAO<ReceivingReportView, Integer>{
 
     public List<ReceivingReportView> findReceivingReport(String startDate, String endDate){
-        log.debug("------ {} : {}", startDate, endDate);
+        log.debug("Date. {} : {}", startDate, endDate);
         List<ReceivingReportView> receivingReportViewList = new ArrayList<ReceivingReportView>();
         StringBuilder queryInvOnhandView = new StringBuilder();
         queryInvOnhandView.append(" SELECT ");
@@ -27,6 +27,15 @@ public class ReceivingReportDAO extends GenericDAO<ReceivingReportView, Integer>
         queryInvOnhandView.append(" ").append(getPrefix()).append(".inv_onhand_view.itemid AS ITEM_NAME,");
         queryInvOnhandView.append(" ").append(getPrefix()).append(".inv_onhand_view.item_description AS ITEM_DESC,");
         queryInvOnhandView.append(" ").append(getPrefix()).append(".inv_onhand_view.grade AS GRADE,");
+
+        queryInvOnhandView.append(" (SELECT COUNT(inv1.id) FROM ").append(getPrefix()).append(".inv_onhand_view inv1 ");
+        queryInvOnhandView.append(" WHERE inv1.status = 1 and (CONVERT(CHAR(10), inv1.receiving_date, 120) = ");
+        queryInvOnhandView.append(" CONVERT(CHAR(10), ").append(getPrefix()).append(".inv_onhand_view.receiving_date, 120))) AS RECEIVE ,");
+
+        queryInvOnhandView.append(" COUNT(").append(getPrefix()).append(".inv_onhand_view.id) - (SELECT COUNT(inv1.id) FROM ");
+        queryInvOnhandView.append(" ").append(getPrefix()).append(".inv_onhand_view inv1 WHERE inv1.status = 1 AND (CONVERT(CHAR(10), inv1.receiving_date, 120) =");
+        queryInvOnhandView.append(" CONVERT(CHAR(10) ,").append(getPrefix()).append(".inv_onhand_view.receiving_date, 120))) AS LOCATED ,");
+
         queryInvOnhandView.append(" COUNT(").append(getPrefix()).append(".inv_onhand_view.id) AS QTY ");
         queryInvOnhandView.append(" FROM ").append(getPrefix()).append(".inv_onhand_view");
 
@@ -43,6 +52,7 @@ public class ReceivingReportDAO extends GenericDAO<ReceivingReportView, Integer>
         queryInvOnhandView.append(" GROUP BY ").append(getPrefix()).append(".inv_onhand_view.name, ").append(getPrefix()).append(".inv_onhand_view.ItemId, ")
                 .append(getPrefix()).append(".inv_onhand_view.warehouse_code, ").append(getPrefix()).append(".inv_onhand_view.grade, ").append(getPrefix()).append(".inv_onhand_view.item_description, ")
                 .append(" CONVERT(CHAR(10), ").append(getPrefix()).append(".inv_onhand_view.receiving_date, 120)");
+
         queryInvOnhandView.append(" ORDER BY ").append(getPrefix()).append(".inv_onhand_view.warehouse_code, ").append(getPrefix()).append(".inv_onhand_view.name, ")
                 .append(getPrefix()).append(".inv_onhand_view.ItemId");
 
@@ -56,6 +66,8 @@ public class ReceivingReportDAO extends GenericDAO<ReceivingReportView, Integer>
                     .addScalar("ITEM_NAME", StringType.INSTANCE)
                     .addScalar("ITEM_DESC", StringType.INSTANCE)
                     .addScalar("GRADE", StringType.INSTANCE)
+                    .addScalar("RECEIVE", IntegerType.INSTANCE)
+                    .addScalar("LOCATED", IntegerType.INSTANCE)
                     .addScalar("QTY", IntegerType.INSTANCE);
             List<Object[]> objects = query.list();
 
@@ -68,8 +80,10 @@ public class ReceivingReportDAO extends GenericDAO<ReceivingReportView, Integer>
                 reportView.setItemName(Utils.parseString(entity[3]));
                 reportView.setItemDesc(Utils.parseString(entity[4]));
                 reportView.setGrade(Utils.parseString(entity[5]));
-                reportView.setQty(Utils.parseInt(entity[6]));
-                sum += Utils.parseInt(entity[6]);
+                reportView.setReceive(Utils.parseInt(entity[6]));
+                reportView.setLocated(Utils.parseInt(entity[7]));
+                reportView.setQty(Utils.parseInt(entity[8]));
+                sum += Utils.parseInt(entity[8]);
 
                 receivingReportViewList.add(reportView);
             }
