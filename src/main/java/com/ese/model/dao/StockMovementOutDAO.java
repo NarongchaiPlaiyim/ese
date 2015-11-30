@@ -67,11 +67,11 @@ public class StockMovementOutDAO extends GenericDAO<StockMovementOutModel, Integ
         sqlBuilder.append(" ").append(getPrefix()).append(".stock_movement_out.status AS STATUS ");
 
         sqlBuilder.append(" FROM ").append(getPrefix()).append(".stock_movement_out");
-        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".item_master");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".item_master");
         sqlBuilder.append(" ON  ").append(getPrefix()).append(".stock_movement_out.item_id = ").append(getPrefix()).append(".item_master.id ");
-        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".location");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".location");
         sqlBuilder.append(" ON  ").append(getPrefix()).append(".stock_movement_out.location_id = ").append(getPrefix()).append(".location.id ");
-        sqlBuilder.append(" INNER JOIN ").append(getPrefix()).append(".warehouse");
+        sqlBuilder.append(" LEFT JOIN ").append(getPrefix()).append(".warehouse");
         sqlBuilder.append(" ON  ").append(getPrefix()).append(".location.warehouse_id = ").append(getPrefix()).append(".warehouse.id");
 
         sqlBuilder.append(" WHERE ").append(getPrefix()).append(".stock_movement_out.stock_inout_id = ").append(stockInOutId);

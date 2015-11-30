@@ -30,11 +30,13 @@ public class ReceivingReportDAO extends GenericDAO<ReceivingReportView, Integer>
 
         queryInvOnhandView.append(" (SELECT COUNT(inv1.id) FROM ").append(getPrefix()).append(".inv_onhand_view inv1 ");
         queryInvOnhandView.append(" WHERE inv1.status = 1 and (CONVERT(CHAR(10), inv1.receiving_date, 120) = ");
-        queryInvOnhandView.append(" CONVERT(CHAR(10), ").append(getPrefix()).append(".inv_onhand_view.receiving_date, 120))) AS RECEIVE ,");
+        queryInvOnhandView.append(" CONVERT(CHAR(10), ").append(getPrefix()).append(".inv_onhand_view.receiving_date, 120) ");
+        queryInvOnhandView.append(" AND inv1.ItemId = ").append(getPrefix()).append(".inv_onhand_view.itemid))  AS RECEIVE,");
 
         queryInvOnhandView.append(" COUNT(").append(getPrefix()).append(".inv_onhand_view.id) - (SELECT COUNT(inv1.id) FROM ");
         queryInvOnhandView.append(" ").append(getPrefix()).append(".inv_onhand_view inv1 WHERE inv1.status = 1 AND (CONVERT(CHAR(10), inv1.receiving_date, 120) =");
-        queryInvOnhandView.append(" CONVERT(CHAR(10) ,").append(getPrefix()).append(".inv_onhand_view.receiving_date, 120))) AS LOCATED ,");
+        queryInvOnhandView.append(" CONVERT(CHAR(10) ,").append(getPrefix()).append(".inv_onhand_view.receiving_date, 120) ");
+        queryInvOnhandView.append(" AND inv1.ItemId = ").append(getPrefix()).append(".inv_onhand_view.itemid))  AS LOCATED,");
 
         queryInvOnhandView.append(" COUNT(").append(getPrefix()).append(".inv_onhand_view.id) AS QTY ");
         queryInvOnhandView.append(" FROM ").append(getPrefix()).append(".inv_onhand_view");
