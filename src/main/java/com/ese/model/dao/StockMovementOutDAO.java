@@ -183,7 +183,7 @@ public class StockMovementOutDAO extends GenericDAO<StockMovementOutModel, Integ
                 .append(" GROUP BY ").append(getPrefix()).append(".item_master.DSG_InternalItemId, ").append(getPrefix()).append(".item_master.ItemId, ")
                 .append(getPrefix()).append(".item_master.DSGThaiItemDescription, ").append(getPrefix()).append(".pallet.pallet_barcode, ")
                 .append(getPrefix()).append(".warehouse.warehouse_code, ").append(getPrefix()).append(".location.location_barcode, ")
-                .append(getPrefix()).append(".inv_movement_out_buffer.batchno, ").append(getPrefix()).append(".inv_movement_out_buffer.stock_inout_id , ")
+                .append(getPrefix()).append(".inv_movement_out_buffer.batchno, ").append(getPrefix()).append(".inv_movement_out_buffer.stock_inout_id ")
                 .append(" ORDER BY ").append(getPrefix()).append(".item_master.DSG_InternalItemId, ").append(getPrefix()).append(".inv_movement_out_buffer.batchno");
 
 
