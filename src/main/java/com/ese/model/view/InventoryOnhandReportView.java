@@ -9,6 +9,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 @Setter
 public class InventoryOnhandReportView {
     private String itemCode;
+    private String itemDesc;
     private String warehouseName;
     private String locationBarcode;
     private String batchNo;
@@ -42,6 +43,7 @@ public class InventoryOnhandReportView {
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("itemCode", itemCode)
+                .append("itemDesc", itemDesc)
                 .append("warehouseName", warehouseName)
                 .append("locationBarcode", locationBarcode)
                 .append("batchNo", batchNo)
