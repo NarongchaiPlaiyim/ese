@@ -26,7 +26,7 @@ public class InventoryOnhandReportDAO extends GenericDAO<InventoryOnhandReportVi
         sqlReport.append(" ").append(getPrefix()).append(".inv_onhand_view.warehouse_code AS WAREHOUSE,");
 
         sqlReport.append(" (SELECT COUNT( ").append(getPrefix()).append(".inv_onhand.id) FROM ").append(getPrefix()).append(".inv_onhand WHERE  ")
-                .append(getPrefix()).append(".inv_onhand.status <=6 AND ").append(getPrefix()).append(".inv_onhand.location_id = ").append(getPrefix()).append(".inv_onhand_view.location_id AND ")
+                .append(getPrefix()).append(".inv_onhand.status < 6 AND ").append(getPrefix()).append(".inv_onhand.location_id = ").append(getPrefix()).append(".inv_onhand_view.location_id AND ")
                 .append(getPrefix()).append(".inv_onhand_view.item_id = ").append(getPrefix()).append(".inv_onhand_view.item_id AND ").append(getPrefix()).append(".inv_onhand.batchno = ")
                 .append(getPrefix()).append(".inv_onhand_view.batchno) AS AVALIABLE,");
 
@@ -67,64 +67,59 @@ public class InventoryOnhandReportDAO extends GenericDAO<InventoryOnhandReportVi
 
             //AVALIABLE = 5, RESERVED_QTY = 6, PICKED_QTY = 7
 
+            int availableQty = 0;
+            int availableAmount = 0;
+
+            int reservedQty = 0;
+            int reservedAmount = 0;
+
+            int pickQty = 0;
+            int pickAmount = 0;
+
             for (Object[] entity : objects){
-                InventoryOnhandReportView reportView = new InventoryOnhandReportView();
-                AvailivbleView availivbleView = new AvailivbleView();
-                ReservedView reservedView = new ReservedView();
-                PickView pickView = new PickView();
+
+                availableQty = Utils.parseInt(entity[5]) - Utils.parseInt(entity[6]) - Utils.parseInt(entity[7]);
+                availableAmount = Utils.multiply(Utils.parseInt(entity[5]), Utils.parseInt(entity[8]));
+
+                reservedQty = Utils.parseInt(entity[6]) - Utils.parseInt(entity[7]);
+                reservedAmount = Utils.multiply(Utils.parseInt(entity[6]), Utils.parseInt(entity[8]));
+
+                pickQty = Utils.parseInt(entity[7]);
+                pickAmount = Utils.multiply(Utils.parseInt(entity[7]), Utils.parseInt(entity[8]));
+
+                if (availableQty + reservedQty + pickQty > 0){
+                    InventoryOnhandReportView reportView = new InventoryOnhandReportView();
+                    AvailivbleView availivbleView = new AvailivbleView();
+                    ReservedView reservedView = new ReservedView();
+                    PickView pickView = new PickView();
 //                PackView packView = new PackView();
-                PhysicalView physicalView = new PhysicalView();
+                    PhysicalView physicalView = new PhysicalView();
 
-                reportView.setItemCode(Utils.parseString(entity[0]));
-                reportView.setItemDesc(Utils.parseString(entity[1]));
-                reportView.setBatchNo(Utils.parseString(entity[2]));
-                reportView.setLocationBarcode(Utils.parseString(entity[3]));
-                reportView.setWarehouseName(Utils.parseString(entity[4]));
+                    reportView.setItemCode(Utils.parseString(entity[0]));
+                    reportView.setItemDesc(Utils.parseString(entity[1]));
+                    reportView.setBatchNo(Utils.parseString(entity[2]));
+                    reportView.setLocationBarcode(Utils.parseString(entity[3]));
+                    reportView.setWarehouseName(Utils.parseString(entity[4]));
 
-                availivbleView.setQty(Utils.parseInt(entity[5]) - Utils.parseInt(entity[6]) - Utils.parseInt(entity[7]));
-                availivbleView.setAmount(Utils.multiply(Utils.parseInt(entity[5]), Utils.parseInt(entity[8])));
+                    availivbleView.setQty(availableQty);
+                    availivbleView.setAmount(availableAmount);
 
-                reservedView.setQty(Utils.parseInt(entity[6]) - Utils.parseInt(entity[7]));
-                reservedView.setAmount(Utils.multiply(Utils.parseInt(entity[6]), Utils.parseInt(entity[8])));
+                    reservedView.setQty(reservedQty);
+                    reservedView.setAmount(reservedAmount);
 
-                pickView.setQty(Utils.parseInt(entity[7]));
-                pickView.setAmount(Utils.multiply(Utils.parseInt(entity[7]), Utils.parseInt(entity[8])));
+                    pickView.setQty(pickQty);
+                    pickView.setAmount(pickAmount);
 
-                physicalView.setQty(availivbleView.getQty() + reservedView.getQty() + pickView.getQty());
-                physicalView.setAmount(availivbleView.getAmount() + reservedView.getAmount() + pickView.getAmount());
+                    physicalView.setQty(availableQty + reservedQty + pickQty);
+                    physicalView.setAmount(availableAmount + reservedAmount + pickAmount);
 
-                reportView.setAvailableView(availivbleView);
-                reportView.setReservedView(reservedView);
-                reportView.setPickView(pickView);
-                reportView.setPhysicalView(physicalView);
+                    reportView.setAvailableView(availivbleView);
+                    reportView.setReservedView(reservedView);
+                    reportView.setPickView(pickView);
+                    reportView.setPhysicalView(physicalView);
 
-//                if (Utils.parseInt(entity[6]) == 2){
-//                    availivbleView.setQty(Utils.parseInt(entity[4]));
-//                    availivbleView.setAmount(Utils.parseInt(entity[5]));
-//                    physicalView.setQty(Utils.parseInt(entity[4]));
-//                    physicalView.setAmount(Utils.parseInt(entity[5]));
-//                } else if (Utils.parseInt(entity[6]) == 3){
-//                    reservedView.setQty(Utils.parseInt(entity[4]));
-//                    reservedView.setAmount(Utils.parseInt(entity[5]));
-//                    physicalView.setQty(Utils.parseInt(entity[4]));
-//                    physicalView.setAmount(Utils.parseInt(entity[5]));
-//                } else if (Utils.parseInt(entity[6]) == 4){
-//                    pickView.setQty(Utils.parseInt(entity[4]));
-//                    pickView.setAmount(Utils.parseInt(entity[5]));
-//                    physicalView.setQty(Utils.parseInt(entity[4]));
-//                    physicalView.setAmount(Utils.parseInt(entity[5]));
-//                } else if (Utils.parseInt(entity[6]) == 5){
-//                    packView.setQty(Utils.parseInt(entity[4]));
-//                    packView.setAmount(Utils.parseInt(entity[5]));
-//                }
-//
-//                reportView.setAvailableView(availivbleView);
-//                reportView.setReservedView(reservedView);
-//                reportView.setPickView(pickView);
-//                reportView.setPackView(packView);
-//                reportView.setPhysicalView(physicalView);
-
-                reportViewList.add(reportView);
+                    reportViewList.add(reportView);
+                }
             }
 
         } catch (Exception e) {
