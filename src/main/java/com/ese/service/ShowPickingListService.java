@@ -1,7 +1,5 @@
 package com.ese.service;
 
-import com.ese.model.StatusValue;
-import com.ese.model.TableValue;
 import com.ese.model.dao.*;
 import com.ese.model.db.*;
 import com.ese.model.view.*;
@@ -25,6 +23,8 @@ public class ShowPickingListService extends Service {
     @Resource private ItemSequenceDAO itemSequenceDAO;
     @Resource private ItemDAO itemDAO;
     @Resource private AxInventPickingListJourDAO axInventPickingListJourDAO;
+    @Resource private AxTruckDAO axTruckDAO;
+    @Resource private AxEmplTableDAO axEmplTableDAO;
 
     public List<PickingOrderModel> getPickingByLoadingOrderId(int loadingOrderId){
         return pickingOrderDAO.findByLoadingOrder(loadingOrderId);
@@ -70,6 +70,8 @@ public class ShowPickingListService extends Service {
             containerModel.setLoadingOrderModel(loadingOrderModel);
             containerModel.setQuantity(containerView.getQuantity());
             containerModel.setSealNo(containerView.getSealNo());
+            containerModel.setAxTruckModel(axTruckDAO.findByID(containerView.getAxTruckModel()));
+            containerModel.setAxEmpltableModel(axEmplTableDAO.findByID(containerView.getAxEmpltableModel()));
             containerModel.setCreateBy(staffModel);
             containerModel.setCreateDate(Utils.currentDate());
             containerModel.setUpdateBy(staffModel);
@@ -86,6 +88,8 @@ public class ShowPickingListService extends Service {
             containerModel.setCreateDate(Utils.currentDate());
             containerModel.setUpdateBy(staffModel);
             containerModel.setUpdateDate(Utils.currentDate());
+            containerModel.setAxTruckModel(axTruckDAO.findByID(containerView.getAxTruckModel()));
+            containerModel.setAxEmpltableModel(axEmplTableDAO.findByID(containerView.getAxEmpltableModel()));
 
             containerDAO.update(containerModel);
         }
@@ -102,6 +106,15 @@ public class ShowPickingListService extends Service {
         containerView.setSealNo(containerModel.getSealNo());
         containerView.setQuantity(containerModel.getQuantity());
         containerView.setLoadingOrderModel(containerModel.getLoadingOrderModel());
+
+        if (!Utils.isNull(containerModel.getAxTruckModel())){
+            containerView.setAxTruckModel(containerModel.getAxTruckModel().getId());
+        }
+
+        if (!Utils.isNull(containerModel.getAxEmpltableModel())){
+            containerView.setAxEmpltableModel(containerModel.getAxEmpltableModel().getId());
+        }
+
         containerModel.setCreateBy(containerModel.getCreateBy());
         containerView.setCreateDate(containerModel.getCreateDate());
         containerView.setUpdateBy(containerModel.getUpdateBy());
@@ -159,6 +172,24 @@ public class ShowPickingListService extends Service {
             itemSequenceModel.setUpdateBy(staffModel);
             itemSequenceModel.setUpdateDate(Utils.currentDate());
             itemSequenceDAO.update(itemSequenceModel);
+        }
+    }
+
+    public List<AXTruckModel> findAllTruck(){
+        try {
+            return axTruckDAO.findAll();
+        } catch (Exception e) {
+            log.debug("Exception error findAllTruck()", e);
+            return null;
+        }
+    }
+
+    public List<AxEmpltableModel> findAllEmpl(){
+        try {
+            return axEmplTableDAO.findAll();
+        } catch (Exception e) {
+            log.debug("Exception error findAllEmpl()", e);
+            return null;
         }
     }
 }

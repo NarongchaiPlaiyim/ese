@@ -5,7 +5,6 @@ import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.annotations.Proxy;
-import org.hibernate.annotations.Subselect;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -76,6 +75,9 @@ public class PalletModel extends AbstractModel{
     @Column(name="set_to_transfer", nullable=false, columnDefinition="int default 0")
     private int setToTransfer;
 
+    @Column(name="set_to_movement", nullable=false, columnDefinition="int default 0")
+    private int setToMovement;
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
@@ -97,6 +99,7 @@ public class PalletModel extends AbstractModel{
                 .append("isCombine", isCombine)
                 .append("isFoil", isFoil)
                 .append("setToTransfer", setToTransfer)
+                .append("setToMovement", setToMovement)
                 .toString();
     }
 }

@@ -3,7 +3,6 @@
 <f:view xmlns="http://www.w3.org/1999/xhtml"
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:h="http://java.sun.com/jsf/html"
-        xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:p="http://primefaces.org/ui">
     <h:head>
     </h:head>
@@ -32,6 +31,34 @@
                 <td style="min-width: 80px; width: 80px; max-width: 80px;" class="left" />
                 <td style="min-width: 250px; width: 250px; max-width: 250px;" class="left" />
                 <td style="min-width: 170px; width: 170px; max-width: 170px;" class="left" />
+            </tr>
+            <tr>
+                <td style="width: 130px">
+                    <h:outputLabel value="Truck :"/>
+                </td>
+                <td style="width: 100px">
+                    <p:selectOneMenu id="truck" value="#{showPickingListBean.containerView.axTruckModel}"
+                                     style="#{msg.get('fix.size.200')} margin-top: 4px">
+                        <f:selectItem itemLabel="- Please Select -" itemValue=""/>
+                        <f:selectItems value="#{showPickingListBean.axTruckModelList}"
+                                       var="truck"
+                                       itemLabel="#{truck.truckId} #{truck.truckDesc}"
+                                       itemValue="#{truck.id}"/>
+                    </p:selectOneMenu>
+                </td>
+                <td style="width: 130px">
+                    <h:outputLabel value="Driver :"/>
+                </td>
+                <td style="width: 100px">
+                    <p:selectOneMenu id="empltable" value="#{showPickingListBean.containerView.axEmpltableModel}"
+                                     style="#{msg.get('fix.size.200')} margin-top: 4px">
+                        <f:selectItem itemLabel="- Please Select -" itemValue=""/>
+                        <f:selectItems value="#{showPickingListBean.axEmpltableModelList}"
+                                       var="empl"
+                                       itemLabel="#{empl.emplId} #{empl.name} #{empl.alias}"
+                                       itemValue="#{empl.id}"/>
+                    </p:selectOneMenu>
+                </td>
             </tr>
             <tr>
                 <td>
@@ -73,9 +100,15 @@
                      rowKey="#{containertModel.id}"
                      rowIndexVar="rowIndex">
             <p:ajax event="rowSelect" listener="#{showPickingListBean.onClickTableContainer()}"
-                    update=":containerForm:txtConNo, :containerForm:txtSealNo, :containerForm:txtQty, :containerForm:lblMode"/>
+                    update=":containerForm:txtConNo, :containerForm:txtSealNo, :containerForm:txtQty, :containerForm:lblMode, :containerForm:truck, :containerForm:empltable"/>
             <p:column headerText="No" style="min-width: 5px; width: 5px; max-width: 5px;">
                 <h:outputText value="#{rowIndex+1}" styleClass="center" />
+            </p:column>
+            <p:column headerText="Truck" sortBy="#{containertModel.axTruckModel}" filterBy="#{containertModel.axTruckModel}" filterMatchMode="contains" style="min-width: 50px; width: 50px; max-width: 50px;" styleClass="center">
+                <h:outputText value="#{containertModel.axTruckModel.truckId} #{containertModel.axTruckModel.truckDesc}"/>
+            </p:column>
+            <p:column headerText="Driver" sortBy="#{containertModel.axEmpltableModel.id}" filterBy="#{containertModel.axEmpltableModel.id}" filterMatchMode="contains" style="min-width: 50px; width: 50px; max-width: 50px;" styleClass="center">
+                <h:outputText value="#{containertModel.axEmpltableModel.emplId} #{containertModel.axEmpltableModel.name} #{containertModel.axEmpltableModel.alias}"/>
             </p:column>
             <p:column headerText="Container No." sortBy="#{containertModel.containerNo}" filterBy="#{containertModel.containerNo}" filterMatchMode="contains" style="min-width: 50px; width: 50px; max-width: 50px;" styleClass="center">
                 <h:outputText value="#{containertModel.containerNo}"/>

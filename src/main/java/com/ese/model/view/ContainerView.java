@@ -6,9 +6,6 @@ import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import javax.persistence.Column;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import java.util.Date;
 
 @Getter
@@ -23,6 +20,12 @@ public class ContainerView {
     private Date createDate;
     private Integer updateBy;
     private Date updateDate;
+    private int axTruckModel;
+    private int axEmpltableModel;
+
+    public ContainerView() {
+
+    }
 
     @Override
     public String toString() {
@@ -36,6 +39,8 @@ public class ContainerView {
                 .append("createDate", createDate)
                 .append("updateBy", updateBy)
                 .append("updateDate", updateDate)
+                .append("axTruckModel", axTruckModel)
+                .append("axEmpltableModel", axEmpltableModel)
                 .toString();
     }
 }

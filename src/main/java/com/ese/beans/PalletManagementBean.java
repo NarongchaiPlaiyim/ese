@@ -133,7 +133,7 @@ public class PalletManagementBean extends Bean {
         }
 
         isCheckLocation = true;
-        if (palletMeanegementView.getStatus().getId() > 2){
+        if (palletMeanegementView.getStatus().getId() > 2 && palletMeanegementView.getSetToMovement() == 0){
             isCheckLocation = false;
         }
 

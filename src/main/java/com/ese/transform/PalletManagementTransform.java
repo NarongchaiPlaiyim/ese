@@ -110,7 +110,7 @@ public class PalletManagementTransform extends Transform {
         palletMeanegementView.setIsFoil(palletModel.getIsFoil());
         palletMeanegementView.setSetToTransfer(palletModel.getSetToTransfer());
         palletMeanegementView.setSeq(palletModel.getSeq());
-
+        palletMeanegementView.setSetToMovement(palletModel.getSetToMovement());
 //        if (Utils.isZero(palletModel.getIsCombine())){
 //            palletMeanegementView.setIsCombine("red");
 //        } else {
@@ -181,6 +181,7 @@ public class PalletManagementTransform extends Transform {
         palletModel.setSetToTransfer(palletManagementView.getSetToTransfer());
         palletModel.setSeq(palletManagementView.getSeq());
         palletModel.setIsFoil(palletManagementView.getIsFoil());
+        palletModel.setSetToMovement(palletManagementView.getSetToMovement());
 
 //        if ("red".equalsIgnoreCase(palletManagementView.getIsCombine())){
 //            palletModel.setIsCombine(0);
