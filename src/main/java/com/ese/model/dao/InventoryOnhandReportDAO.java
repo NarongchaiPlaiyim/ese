@@ -27,7 +27,7 @@ public class InventoryOnhandReportDAO extends GenericDAO<InventoryOnhandReportVi
 
         sqlReport.append(" (SELECT COUNT( ").append(getPrefix()).append(".inv_onhand.id) FROM ").append(getPrefix()).append(".inv_onhand WHERE  ")
                 .append(getPrefix()).append(".inv_onhand.status < 6 AND ").append(getPrefix()).append(".inv_onhand.location_id = ").append(getPrefix()).append(".inv_onhand_view.location_id AND ")
-                .append(getPrefix()).append(".inv_onhand_view.item_id = ").append(getPrefix()).append(".inv_onhand_view.item_id AND ").append(getPrefix()).append(".inv_onhand.batchno = ")
+                .append(getPrefix()).append(".inv_onhand.item_id = ").append(getPrefix()).append(".inv_onhand_view.item_id AND ").append(getPrefix()).append(".inv_onhand.batchno = ")
                 .append(getPrefix()).append(".inv_onhand_view.batchno) AS AVALIABLE,");
 
         sqlReport.append(" (SELECT ").append(getPrefix()).append(".location_qty.reserved_qty FROM ").append(getPrefix()).append(".location_qty WHERE ")
