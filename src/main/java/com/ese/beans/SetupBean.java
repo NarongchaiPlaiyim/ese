@@ -4,15 +4,10 @@ import com.ese.model.db.*;
 import com.ese.model.view.*;
 import com.ese.model.view.dilog.WarehouseDialogView;
 import com.ese.service.*;
-import com.ese.utils.FacesUtil;
 import com.ese.utils.MessageDialog;
 import com.ese.utils.Utils;
-import com.ese.service.LocationService;
-import com.ese.service.SetupService;
-import com.ese.service.WarehouseService;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -299,15 +294,18 @@ public class SetupBean extends Bean{
     public void onSaveStockInOutNote(){
         log.debug("onSaveStockInOutNote().");
 
-
-        stockInOutNoteService.onSaveStockInOutNote(stockInOutNoteView);
-        if (Utils.isZero(stockInOutNoteView.getId())){
-            showDialogSaved();
+        if(stockInOutNoteView.getInoutCode().trim().length() < 5 || stockInOutNoteView.getInoutNote().trim().length() < 5){
+            showDialog(MessageDialog.ERROR.getMessageHeader(), "กรุณากรอก Code และ Note อย่างน้อย 5 ตัวอักษร");
         } else {
-            showDialogUpdated();
+            stockInOutNoteService.onSaveStockInOutNote(stockInOutNoteView);
+            if (Utils.isZero(stockInOutNoteView.getId())){
+                showDialogSaved();
+            } else {
+                showDialogUpdated();
+            }
+            OnLoadStockInOutNote();
+            stockInOutNoteModel = new MSStockInOutNoteModel();
         }
-        OnLoadStockInOutNote();
-        stockInOutNoteModel = new MSStockInOutNoteModel();
     }
 
     public void onDeleteStockInOutNote(){

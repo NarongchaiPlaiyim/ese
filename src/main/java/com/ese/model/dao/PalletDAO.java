@@ -514,6 +514,7 @@ public class PalletDAO extends GenericDAO<PalletModel, Integer>{
         StringBuilder whereSql = new StringBuilder();
         whereSql.append(" WHERE ").append(getPrefix()).append(".pallet.isvalid = 1");
         whereSql.append(" AND ").append(getPrefix()).append(".pallet.status = 4");
+        whereSql.append(" AND ").append(getPrefix()).append(".pallet.set_to_movement = 0");
         if (!Utils.isNull(palletTag) && !Utils.isZero(palletTag.length())){
             whereSql.append(" AND ").append(getPrefix()).append(".pallet.pallet_barcode LIKE '%").append(palletTag).append("%'");
         }

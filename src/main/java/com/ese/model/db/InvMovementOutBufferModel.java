@@ -8,12 +8,15 @@ import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 
+/**
+ * Created by pakorn on 01/12/2015.
+ */
 @Getter
 @Setter
 @Entity
-@Table(name = "inv_onhand")
+@Table(name = "inv_movement_out_buffer")
 @Proxy(lazy=false)
-public class InvOnHandModel extends AbstractModel{
+public class InvMovementOutBufferModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

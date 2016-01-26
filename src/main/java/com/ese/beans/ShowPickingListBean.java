@@ -2,7 +2,6 @@ package com.ese.beans;
 
 import com.ese.model.db.*;
 import com.ese.model.view.ContainerView;
-import com.ese.model.view.LoadingOrderView;
 import com.ese.service.ShowPickingListService;
 import com.ese.utils.FacesUtil;
 import com.ese.utils.MessageDialog;
@@ -30,6 +29,8 @@ public class ShowPickingListBean extends Bean {
     private List<ContainerModel> containerModelList;
     private List<ContainerItemModel> containerItemModelList;
     private List<ItemSequenceModel> itemSequenceModelList;
+    private List<AXTruckModel> axTruckModelList;
+    private List<AxEmpltableModel> axEmpltableModelList;
     @NotNull private ContainerModel containerModel;
     @NotNull private PickingOrderModel pickingOrderModel;
     @NotNull private LoadingOrderModel loadingOrderModel;
@@ -53,10 +54,21 @@ public class ShowPickingListBean extends Bean {
 
     private void init(){
         tableOnload();
+        loadTruck();
+        loadEmpl();
+        containerView = new ContainerView();
     }
 
     private void tableOnload(){
         pickingOrderModelList =  showPickingListService.getPickingByLoadingOrderId(loadingOrderModel.getId());
+    }
+
+    private void loadTruck(){
+        axTruckModelList = showPickingListService.findAllTruck();
+    }
+
+    private void loadEmpl(){
+        axEmpltableModelList = showPickingListService.findAllEmpl();
     }
 
     public void onClose(){

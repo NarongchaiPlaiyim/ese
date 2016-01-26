@@ -31,6 +31,14 @@ public class ContainerModel extends AbstractModel{
     @Column(name = "quantity")
     private int quantity;
 
+    @OneToOne
+    @JoinColumn(name = "truck_id")
+    private AXTruckModel axTruckModel;
+
+    @OneToOne
+    @JoinColumn(name = "emplid")
+    private AxEmpltableModel axEmpltableModel;
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
@@ -39,6 +47,8 @@ public class ContainerModel extends AbstractModel{
                 .append("containerNo", containerNo)
                 .append("sealNo", sealNo)
                 .append("quantity", quantity)
+                .append("axTruckModel", axTruckModel)
+                .append("axEmpltableModel", axEmpltableModel)
                 .toString();
     }
 }
