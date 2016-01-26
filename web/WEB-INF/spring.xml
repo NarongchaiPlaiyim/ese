@@ -121,3 +121,206 @@
 </beans>
 
 
+        <!--&lt;!&ndash; add spring.profiles.active=dev to [tomcat]/conf/catalina.properties&ndash;&gt;-->
+<!--<beans profile="dev">-->
+<!--&lt;!&ndash; Configure the entity manager factory bean &ndash;&gt;-->
+<!--<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">-->
+    <!--<property name="dataSource" ref="dataSource"/>-->
+    <!--<property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter"/>-->
+
+    <!--&lt;!&ndash; Set JPA properties &ndash;&gt;-->
+    <!--<property name="jpaProperties">-->
+        <!--<props>-->
+            <!--<prop key="hibernate.hbm2ddl.auto">${spring.jpa.hibernate.ddl-auto}</prop>-->
+            <!--<prop key="hibernate.show_sql">${spring.jpa.hibernate.show_sql}</prop>-->
+            <!--<prop key="hibernate.dialect">${spring.jpa.hibernate.dialect}</prop>-->
+            <!--<prop key="hibernate.ejb.naming_strategy">${spring.jpa.hibernate.naming_strategy}</prop>-->
+        <!--</props>-->
+    <!--</property>-->
+
+    <!--&lt;!&ndash; Set base package of your entities &ndash;&gt;-->
+    <!--<property name="packagesToScan" value="com.tmn.irs.app.domain"/>-->
+
+    <!--&lt;!&ndash; Set share cache mode &ndash;&gt;-->
+    <!--<property name="sharedCacheMode" value="ENABLE_SELECTIVE"/>-->
+
+    <!--&lt;!&ndash; Set validation mode &ndash;&gt;-->
+    <!--<property name="validationMode" value="NONE"/>-->
+
+<!--</bean>-->
+
+<!--<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+    <!--<property name="driverClassName" value="${spring.jdbc.driverClassName}" />-->
+    <!--<property name="url" value="${spring.jdbc.url}" />-->
+    <!--<property name="username" value="${spring.jdbc.username}" />-->
+    <!--<property name="password" value="${spring.jdbc.password}" />-->
+<!--</bean>-->
+
+<!--<bean id="messageSource"-->
+      <!--class="org.springframework.context.support.ReloadableResourceBundleMessageSource">-->
+    <!--<property name="basename" value="classpath:messages" />-->
+    <!--<property name="defaultEncoding" value="UTF-8"/>-->
+<!--</bean>-->
+
+<!--<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">-->
+    <!--<property name="locations">-->
+        <!--<list>-->
+            <!--<value>classpath:properties/dev/spring.properties</value>-->
+            <!--<value>classpath:properties/dev/global.properties</value>-->
+        <!--</list>-->
+    <!--</property>-->
+<!--</bean>-->
+<!--</beans>-->
+
+        <!--&lt;!&ndash; add spring.profiles.active=alpha to [tomcat]/conf/catalina.properties&ndash;&gt;-->
+<!--<beans profile="alpha">-->
+<!--&lt;!&ndash; Configure the entity manager factory bean &ndash;&gt;-->
+<!--<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">-->
+    <!--<property name="dataSource" ref="dataSource"/>-->
+    <!--<property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter"/>-->
+
+    <!--&lt;!&ndash; Set JPA properties &ndash;&gt;-->
+    <!--<property name="jpaProperties">-->
+        <!--<props>-->
+            <!--<prop key="hibernate.hbm2ddl.auto">${spring.jpa.hibernate.ddl-auto}</prop>-->
+            <!--<prop key="hibernate.show_sql">${spring.jpa.hibernate.show_sql}</prop>-->
+            <!--<prop key="hibernate.dialect">${spring.jpa.hibernate.dialect}</prop>-->
+            <!--<prop key="hibernate.ejb.naming_strategy">${spring.jpa.hibernate.naming_strategy}</prop>-->
+        <!--</props>-->
+    <!--</property>-->
+
+    <!--&lt;!&ndash; Set base package of your entities &ndash;&gt;-->
+    <!--<property name="packagesToScan" value="com.tmn.irs.app.domain"/>-->
+
+    <!--&lt;!&ndash; Set share cache mode &ndash;&gt;-->
+    <!--<property name="sharedCacheMode" value="ENABLE_SELECTIVE"/>-->
+
+    <!--&lt;!&ndash; Set validation mode &ndash;&gt;-->
+    <!--<property name="validationMode" value="NONE"/>-->
+
+<!--</bean>-->
+
+<!--<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+    <!--<property name="driverClassName" value="${spring.jdbc.driverClassName}" />-->
+    <!--<property name="url" value="${spring.jdbc.url}" />-->
+    <!--<property name="username" value="${spring.jdbc.username}" />-->
+    <!--<property name="password" value="${spring.jdbc.password}" />-->
+<!--</bean>-->
+
+<!--<bean id="messageSource"-->
+      <!--class="org.springframework.context.support.ReloadableResourceBundleMessageSource">-->
+    <!--<property name="basename" value="file:/data/projects/irs-remittance-api/config/messages" />-->
+    <!--<property name="defaultEncoding" value="UTF-8"/>-->
+<!--</bean>-->
+
+<!--<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">-->
+    <!--<property name="locations">-->
+        <!--<list>-->
+            <!--<value>file:/data/projects/irs-remittance-api/config/spring.properties</value>-->
+            <!--<value>file:/data/projects/irs-remittance-api/config/global.properties</value>-->
+        <!--</list>-->
+    <!--</property>-->
+<!--</bean>-->
+<!--</beans>-->
+
+        <!--&lt;!&ndash; add spring.profiles.active=staging to [tomcat]/conf/catalina.properties&ndash;&gt;-->
+<!--<beans profile="staging">-->
+<!--&lt;!&ndash; Configure the entity manager factory bean &ndash;&gt;-->
+<!--<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">-->
+    <!--<property name="dataSource" ref="dataSource"/>-->
+    <!--<property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter"/>-->
+
+    <!--&lt;!&ndash; Set JPA properties &ndash;&gt;-->
+    <!--<property name="jpaProperties">-->
+        <!--<props>-->
+            <!--<prop key="hibernate.hbm2ddl.auto">${spring.jpa.hibernate.ddl-auto}</prop>-->
+            <!--<prop key="hibernate.show_sql">${spring.jpa.hibernate.show_sql}</prop>-->
+            <!--<prop key="hibernate.dialect">${spring.jpa.hibernate.dialect}</prop>-->
+            <!--<prop key="hibernate.ejb.naming_strategy">${spring.jpa.hibernate.naming_strategy}</prop>-->
+        <!--</props>-->
+    <!--</property>-->
+
+    <!--&lt;!&ndash; Set base package of your entities &ndash;&gt;-->
+    <!--<property name="packagesToScan" value="com.tmn.irs.app.domain"/>-->
+
+    <!--&lt;!&ndash; Set share cache mode &ndash;&gt;-->
+    <!--<property name="sharedCacheMode" value="ENABLE_SELECTIVE"/>-->
+
+    <!--&lt;!&ndash; Set validation mode &ndash;&gt;-->
+    <!--<property name="validationMode" value="NONE"/>-->
+
+<!--</bean>-->
+
+<!--<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+    <!--<property name="driverClassName" value="${spring.jdbc.driverClassName}" />-->
+    <!--<property name="url" value="${spring.jdbc.url}" />-->
+    <!--<property name="username" value="${spring.jdbc.username}" />-->
+    <!--<property name="password" value="${spring.jdbc.password}" />-->
+<!--</bean>-->
+
+<!--<bean id="messageSource"-->
+      <!--class="org.springframework.context.support.ReloadableResourceBundleMessageSource">-->
+    <!--<property name="basename" value="file:/data/projects/irs-remittance-api/config/messages" />-->
+    <!--<property name="defaultEncoding" value="UTF-8"/>-->
+<!--</bean>-->
+
+<!--<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">-->
+    <!--<property name="locations">-->
+        <!--<list>-->
+            <!--<value>file:/data/projects/irs-remittance-api/config/spring.properties</value>-->
+            <!--<value>file:/data/projects/irs-remittance-api/config/global.properties</value>-->
+        <!--</list>-->
+    <!--</property>-->
+<!--</bean>-->
+<!--</beans>-->
+
+        <!--&lt;!&ndash; add spring.profiles.active=production to [tomcat]/conf/catalina.properties&ndash;&gt;-->
+<!--<beans profile="production">-->
+<!--&lt;!&ndash; Configure the entity manager factory bean &ndash;&gt;-->
+<!--<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">-->
+    <!--<property name="dataSource" ref="dataSource"/>-->
+    <!--<property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter"/>-->
+
+    <!--&lt;!&ndash; Set JPA properties &ndash;&gt;-->
+    <!--<property name="jpaProperties">-->
+        <!--<props>-->
+            <!--<prop key="hibernate.hbm2ddl.auto">${spring.jpa.hibernate.ddl-auto}</prop>-->
+            <!--<prop key="hibernate.show_sql">${spring.jpa.hibernate.show_sql}</prop>-->
+            <!--<prop key="hibernate.dialect">${spring.jpa.hibernate.dialect}</prop>-->
+            <!--<prop key="hibernate.ejb.naming_strategy">${spring.jpa.hibernate.naming_strategy}</prop>-->
+        <!--</props>-->
+    <!--</property>-->
+
+    <!--&lt;!&ndash; Set base package of your entities &ndash;&gt;-->
+    <!--<property name="packagesToScan" value="com.tmn.irs.app.domain"/>-->
+
+    <!--&lt;!&ndash; Set share cache mode &ndash;&gt;-->
+    <!--<property name="sharedCacheMode" value="ENABLE_SELECTIVE"/>-->
+
+    <!--&lt;!&ndash; Set validation mode &ndash;&gt;-->
+    <!--<property name="validationMode" value="NONE"/>-->
+
+<!--</bean>-->
+
+<!--<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+    <!--<property name="driverClassName" value="${spring.jdbc.driverClassName}" />-->
+    <!--<property name="url" value="${spring.jdbc.url}" />-->
+    <!--<property name="username" value="${spring.jdbc.username}" />-->
+    <!--<property name="password" value="${spring.jdbc.password}" />-->
+<!--</bean>-->
+
+<!--<bean id="messageSource"-->
+      <!--class="org.springframework.context.support.ReloadableResourceBundleMessageSource">-->
+    <!--<property name="basename" value="file:/data/projects/irs-remittance-api/config/messages" />-->
+    <!--<property name="defaultEncoding" value="UTF-8"/>-->
+<!--</bean>-->
+
+<!--<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">-->
+    <!--<property name="locations">-->
+        <!--<list>-->
+            <!--<value>file:/data/projects/irs-remittance-api/config/spring.properties</value>-->
+            <!--<value>file:/data/projects/irs-remittance-api/config/global.properties</value>-->
+        <!--</list>-->
+    <!--</property>-->
+<!--</bean>-->
+<!--</beans>-->
